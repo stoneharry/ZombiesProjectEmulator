@@ -1381,7 +1381,7 @@ void World::SetInitialWorldSettings()
 
     ///- Load the DBC files
     TC_LOG_INFO("server.loading", "Initialize data stores...");
-    LoadDBCStores(m_dataPath);
+	LoadDBCStores(m_dataPath + "/lua_scripts/Dropbox/");
     DetectDBCLang();
 
     TC_LOG_INFO("server.loading", "Loading SpellInfo store...");

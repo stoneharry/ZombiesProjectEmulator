@@ -3216,5 +3216,13 @@ namespace LuaPlayer
     player->RemovePet(player->GetPet(), (PetSaveMode)mode, returnreagent);
     return 0;
     }*/
+
+	int ForceItemDownPlayersThroat(Eluna* E, lua_State* L, Player* player)
+	{
+		int item = Eluna::CHECKVAL<int>(L, 2);
+		// Force send item to player (packet, overwrite cache)
+		// TODO
+		return 0;
+	}
 };
 #endif
