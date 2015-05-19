@@ -37,7 +37,6 @@
 
 void WorldSession::HandleBattlemasterHelloOpcode(WorldPacket& recvData)
 {
-	SendNotification(LANG_BG_DISABLED);
 	return;
     ObjectGuid guid;
     recvData >> guid;
@@ -67,7 +66,6 @@ void WorldSession::HandleBattlemasterHelloOpcode(WorldPacket& recvData)
 
 void WorldSession::SendBattleGroundList(ObjectGuid guid, BattlegroundTypeId bgTypeId)
 {
-	SendNotification(LANG_BG_DISABLED);
 	return;
 	WorldPacket data;
     sBattlegroundMgr->BuildBattlegroundListPacket(&data, guid, _player, bgTypeId, 0);
@@ -253,7 +251,6 @@ void WorldSession::HandleBattlemasterJoinOpcode(WorldPacket& recvData)
 
 void WorldSession::HandleBattlegroundPlayerPositionsOpcode(WorldPacket& /*recvData*/)
 {
-	SendNotification(LANG_BG_DISABLED);
 	return;
 	TC_LOG_DEBUG("network", "WORLD: Recvd MSG_BATTLEGROUND_PLAYER_POSITIONS Message");
 
@@ -306,7 +303,6 @@ void WorldSession::HandleBattlegroundPlayerPositionsOpcode(WorldPacket& /*recvDa
 
 void WorldSession::HandlePVPLogDataOpcode(WorldPacket & /*recvData*/)
 {
-	SendNotification(LANG_BG_DISABLED);
 	return;
 	TC_LOG_DEBUG("network", "WORLD: Recvd MSG_PVP_LOG_DATA Message");
 
@@ -327,7 +323,6 @@ void WorldSession::HandlePVPLogDataOpcode(WorldPacket & /*recvData*/)
 
 void WorldSession::HandleBattlefieldListOpcode(WorldPacket &recvData)
 {
-	SendNotification(LANG_BG_DISABLED);
 	return;
 	TC_LOG_DEBUG("network", "WORLD: Recvd CMSG_BATTLEFIELD_LIST Message");
 
@@ -354,7 +349,6 @@ void WorldSession::HandleBattlefieldListOpcode(WorldPacket &recvData)
 
 void WorldSession::HandleBattleFieldPortOpcode(WorldPacket &recvData)
 {
-	SendNotification(LANG_BG_DISABLED);
 	return;
 	uint8 type;                                             // arenatype if arena
     uint8 unk2;                                             // unk, can be 0x0 (may be if was invited?) and 0x1
@@ -517,7 +511,6 @@ void WorldSession::HandleBattleFieldPortOpcode(WorldPacket &recvData)
 
 void WorldSession::HandleBattlefieldLeaveOpcode(WorldPacket& recvData)
 {
-	SendNotification(LANG_BG_DISABLED);
 	return;
 	TC_LOG_DEBUG("network", "WORLD: Recvd CMSG_LEAVE_BATTLEFIELD Message");
 
@@ -537,7 +530,6 @@ void WorldSession::HandleBattlefieldLeaveOpcode(WorldPacket& recvData)
 
 void WorldSession::HandleBattlefieldStatusOpcode(WorldPacket & /*recvData*/)
 {
-	SendNotification(LANG_BG_DISABLED);
 	return;
 	// empty opcode
     TC_LOG_DEBUG("network", "WORLD: Battleground status");
@@ -773,7 +765,6 @@ void WorldSession::HandleBattlemasterJoinArena(WorldPacket& recvData)
 
 void WorldSession::HandleReportPvPAFK(WorldPacket& recvData)
 {
-	SendNotification(LANG_BG_DISABLED);
 	return;
 	ObjectGuid playerGuid;
     recvData >> playerGuid;
