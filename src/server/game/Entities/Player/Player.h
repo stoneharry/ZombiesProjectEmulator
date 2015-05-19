@@ -2682,7 +2682,7 @@ class Player : public Unit, public GridObject<Player>
 
         uint32 _activeCheats;
 
-		uint8 deathsLeft;
+		int8 deathsLeft;
 };
 
 void AddItemsSetItem(Player* player, Item* item);

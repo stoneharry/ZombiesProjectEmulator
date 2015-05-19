@@ -27087,17 +27087,28 @@ void Player::OnCharacterDeath(std::string causeOfDeath)
 			}
 		}
 		else
+		{
+			deathsLeft = -3;
 			LockCharacter();
+		}
 	}
 	LogDeath(causeOfDeath);
 }
 
 void Player::LockCharacter()
 {
-	//ToDo
+	std::ostringstream newName;
+	newName << GetName() << " (LOCKED)";
+	SetName(newName.str());
+	sWorld->UpdateCharacterNameData(GetGUID(), newName.str());
+	sWorld->BanAccount(BAN_CHARACTER, GetName(), "-1", "Death", "Player::LockCharacter");
+	if (GetSession())
+		GetSession()->KickPlayer();
 }
 
 void Player::LogDeath(std::string causeOfDeath)
 {
-	//ToDo
+	std::ostringstream causeLog;
+	causeLog << "Death by: " << causeOfDeath << " remaining lives were " << deathsLeft;
+	CharacterDatabase.PExecute("INSERT INTO `character_death_log` (time, guid, name, ip, causeLog) VALUES (NOW(), %u, %s, %s, %s)", GetGUIDLow(), this->GetName().c_str(), GetSession()->GetRemoteAddress().c_str(), causeLog.str().c_str());
 }

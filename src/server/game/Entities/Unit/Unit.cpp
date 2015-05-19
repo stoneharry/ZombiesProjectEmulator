@@ -735,6 +735,23 @@ uint32 Unit::DealDamage(Unit* victim, uint32 damage, CleanDamage const* cleanDam
             victim->ToPlayer()->UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_TOTAL_DAMAGE_RECEIVED, health);
 
         Kill(victim, durabilityLoss);
+		if (Player * pVic = victim->ToPlayer())
+		{
+			std::ostringstream deathLog;
+			if (victim == this)
+				deathLog << "Killed himself via ";
+			else
+				deathLog << "Murdered by " << GetName() << " " << GetGUIDLow() << " via ";
+			if (spellProto)
+				deathLog << " spell: " << spellProto->SpellName[LOCALE_enUS] << " dealing " << damage << " damage";
+			else if (damagetype != SELF_DAMAGE)
+				deathLog << damage << " possible melee damage";
+			else if (!durabilityLoss)
+				deathLog << " possible fall to the void.";
+			else
+				deathLog << " fall damage.";
+			pVic->OnCharacterDeath(deathLog.str());
+		}
     }
     else
     {
