@@ -846,6 +846,7 @@ void WorldSession::SendPetNameInvalid(uint32 error, const std::string& name, Dec
 
 void WorldSession::HandlePetLearnTalent(WorldPacket& recvData)
 {
+	return;
     TC_LOG_DEBUG("network", "WORLD: Received CMSG_PET_LEARN_TALENT");
 
     ObjectGuid guid;
@@ -858,6 +859,7 @@ void WorldSession::HandlePetLearnTalent(WorldPacket& recvData)
 
 void WorldSession::HandleLearnPreviewTalentsPet(WorldPacket& recvData)
 {
+	return;
     TC_LOG_DEBUG("network", "WORLD: Received CMSG_LEARN_PREVIEW_TALENTS_PET");
 
     ObjectGuid guid;

@@ -2344,6 +2344,11 @@ class Player : public Unit, public GridObject<Player>
         std::string GetMapAreaAndZoneString();
         std::string GetCoordsMapAreaAndZoneString();
 
+		//Custom
+		void OnCharacterDeath(std::string causeOfDeath);
+		void LockCharacter();
+		void LogDeath(std::string causeOfDeath);
+
     protected:
         // Gamemaster whisper whitelist
         GuidList WhisperList;
@@ -2676,6 +2681,8 @@ class Player : public Unit, public GridObject<Player>
         uint32 _pendingBindTimer;
 
         uint32 _activeCheats;
+
+		uint8 deathsLeft;
 };
 
 void AddItemsSetItem(Player* player, Item* item);

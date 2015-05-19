@@ -27066,3 +27066,38 @@ bool Player::ValidateAppearance(uint8 race, uint8 class_, uint8 gender, uint8 ha
 
     return true;
 }
+
+void Player::OnCharacterDeath(std::string causeOfDeath)
+{
+	if (GetSession()->GetSecurity() == SEC_PLAYER)
+	{
+		AreaTableEntry const* zone = GetAreaEntryByAreaID(GetAreaId());
+		if (!zone)
+		{
+			ChatHandler(GetSession()).PSendSysMessage("Houston we have a problem, we are unable to find area %u, going to assume this is a bugged death.", GetAreaId());
+			return;
+		}
+		if (zone->flags & AREA_FLAG_CAPITAL)
+		{
+			deathsLeft -= 1;
+			if (deathsLeft <= 0)
+			{
+				LockCharacter();
+				return;
+			}
+		}
+		else
+			LockCharacter();
+	}
+	LogDeath(causeOfDeath);
+}
+
+void Player::LockCharacter()
+{
+	//ToDo
+}
+
+void Player::LogDeath(std::string causeOfDeath)
+{
+	//ToDo
+}
