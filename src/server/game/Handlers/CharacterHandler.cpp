@@ -995,7 +995,7 @@ void WorldSession::HandlePlayerLogin(LoginQueryHolder* holder)
     _player->UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_ON_LOGIN, 1);
 
     sScriptMgr->OnPlayerLogin(pCurrChar, firstLogin);
-
+	SendLfgDisabled();
     delete holder;
 }
 
