@@ -43,7 +43,8 @@ public:
         {
             { "ip",      rbac::RBAC_PERM_COMMAND_LOOKUP_PLAYER_IP,      true, &HandleLookupPlayerIpCommand,        "", NULL },
             { "account", rbac::RBAC_PERM_COMMAND_LOOKUP_PLAYER_ACCOUNT, true, &HandleLookupPlayerAccountCommand,   "", NULL },
-            { "email",   rbac::RBAC_PERM_COMMAND_LOOKUP_PLAYER_EMAIL,   true, &HandleLookupPlayerEmailCommand,     "", NULL },
+			{ "death", rbac::RBAC_PERM_COMMAND_LOOKUP_PLAYER_ACCOUNT, true, &HandleLookupPlayerDeathCommand, "", NULL },
+			{ "email", rbac::RBAC_PERM_COMMAND_LOOKUP_PLAYER_EMAIL, true, &HandleLookupPlayerEmailCommand, "", NULL },
             { NULL,      0,                                      false, NULL,                                "", NULL }
         };
 
@@ -1430,6 +1431,49 @@ public:
 
         return true;
     }
+
+	static bool HandleLookupPlayerDeathCommand(ChatHandler* handler, char const* args)
+	{
+		uint32 guid;
+		int32 limit;
+		char* limitStr;
+
+		Player* target = handler->getSelectedPlayer();
+		if (!*args)
+		{
+			// NULL only if used from console
+			if (!target || target == handler->GetSession()->GetPlayer())
+				return false;
+
+			guid = target->GetGUIDLow();
+			limit = -1;
+		}
+		else
+		{
+			guid = atoi(strtok((char*)args, " "));
+			limitStr = strtok(NULL, " ");
+			limit = limitStr ? atoi(limitStr) : 1000;
+		}
+
+		QueryResult result = CharacterDatabase.PQuery("SELECT * FROM `character_death_log` where guid = %u LIMIT %u", guid, limit);
+		if (!result)
+		{
+			handler->PSendSysMessage("No results found for player guid %u.", guid);
+			return true;
+		}
+		do
+		{
+			Field* fields = result->Fetch();
+			const char* time = fields[0].GetCString();
+			const char* playername = fields[2].GetCString();
+			const char* ip = fields[3].GetCString();
+			const char* causelog = fields[4].GetCString();
+			handler->PSendSysMessage("%s, %s, %s, %s", time, playername, ip, causelog);
+		}while (result->NextRow());
+
+		return true;
+	}
+
 };
 
 void AddSC_lookup_commandscript()
