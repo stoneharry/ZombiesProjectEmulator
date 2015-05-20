@@ -1446,7 +1446,7 @@ public:
 				return false;
 
 			guid = target->GetGUIDLow();
-			limit = -1;
+			limit = 1000;
 		}
 		else
 		{
