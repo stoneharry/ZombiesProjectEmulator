@@ -2889,7 +2889,7 @@ void Player::SetGameMaster(bool on)
         }
 
         // restore FFA PvP Server state
-        if (sWorld->IsFFAPvPRealm())
+		if (sWorld->IsFFAPvPRealm() && IsAbleToFFA(GetAreaId()))
             SetByteFlag(UNIT_FIELD_BYTES_2, 1, UNIT_BYTE2_FLAG_FFA_PVP);
 
         // restore FFA PvP area state, remove not allowed for GM mounts
@@ -7207,7 +7207,7 @@ bool Player::RewardHonor(Unit* victim, uint32 groupsize, int32 honor, bool pvpto
 
         if (Player* plrVictim = victim->ToPlayer())
         {
-            if (GetTeam() == plrVictim->GetTeam() && !sWorld->IsFFAPvPRealm())
+			if (GetTeam() == plrVictim->GetTeam() && !sWorld->IsFFAPvPRealm() && !IsAbleToFFA(GetAreaId()))
                 return false;
 
             uint8 k_level = getLevel();
@@ -21982,7 +21982,7 @@ void Player::UpdatePvPState(bool onlyFFA)
     /// @todo should we always synchronize UNIT_FIELD_BYTES_2, 1 of controller and controlled?
     // no, we shouldn't, those are checked for affecting player by client
     if (!pvpInfo.IsInNoPvPArea && !IsGameMaster()
-        && (pvpInfo.IsInFFAPvPArea || sWorld->IsFFAPvPRealm()))
+		&& (pvpInfo.IsInFFAPvPArea || sWorld->IsFFAPvPRealm() && IsAbleToFFA(GetAreaId())))
     {
         if (!IsFFAPvP())
         {
@@ -27109,6 +27109,20 @@ void Player::LockCharacter()
 void Player::LogDeath(std::string causeOfDeath)
 {
 	std::ostringstream causeLog;
-	causeLog << "Death by: " << causeOfDeath << " remaining lives were " << deathsLeft;
-	CharacterDatabase.PExecute("INSERT INTO `character_death_log` (time, guid, name, ip, causeLog) VALUES (NOW(), %u, %s, %s, %s)", GetGUIDLow(), this->GetName().c_str(), GetSession()->GetRemoteAddress().c_str(), causeLog.str().c_str());
+	causeLog << causeOfDeath << " remaining lives were " << deathsLeft;
+	CharacterDatabase.PExecute("INSERT INTO `character_death_log` (time, guid, name, ip, causeLog) VALUES (NOW(), %u, %s, %s, %s)", GetGUIDLow(), GetName().c_str(), GetSession()->GetRemoteAddress().c_str(), causeLog.str().c_str());
+}
+
+bool Player::IsAbleToFFA(uint32 areaid)
+{
+	AreaTableEntry const* zone = GetAreaEntryByAreaID(areaid);
+	if (!zone)
+	{
+		ChatHandler(GetSession()).PSendSysMessage("Houston we have a problem, we are unable to find area %u, please report this area to your closest developer.", areaid);
+		return false;
+	}
+	if (zone->flags & AREA_FLAG_CAPITAL || zone->flags & AREA_FLAG_SANCTUARY)
+		return false;
+
+	return true;
 }

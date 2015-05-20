@@ -741,9 +741,9 @@ uint32 Unit::DealDamage(Unit* victim, uint32 damage, CleanDamage const* cleanDam
 			if (victim == this)
 				deathLog << "Killed himself via ";
 			else
-				deathLog << "Murdered by " << GetName() << " " << GetGUIDLow() << " via ";
+				deathLog << "Murdered by " << GetName() << " Entry: " << GetGUIDLow() << " via ";
 			if (spellProto)
-				deathLog << " spell: " << spellProto->SpellName[LOCALE_enUS] << " dealing " << damage << " damage";
+				deathLog << " Spell: " << spellProto->SpellName[LOCALE_enUS] << " dealing " << damage << " damage";
 			else if (damagetype != SELF_DAMAGE)
 				deathLog << damage << " possible melee damage";
 			else if (!durabilityLoss)

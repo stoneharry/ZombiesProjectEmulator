@@ -945,7 +945,7 @@ void WorldSession::HandleAreaTriggerOpcode(WorldPacket& recvData)
         player->InnEnter(time(NULL), atEntry->mapid, atEntry->x, atEntry->y, atEntry->z);
         player->SetRestType(REST_TYPE_IN_TAVERN);
 
-        if (sWorld->IsFFAPvPRealm())
+		if (sWorld->IsFFAPvPRealm() && !player->IsAbleToFFA(player->GetAreaId()))
             player->RemoveByteFlag(UNIT_FIELD_BYTES_2, 1, UNIT_BYTE2_FLAG_FFA_PVP);
 
         return;
