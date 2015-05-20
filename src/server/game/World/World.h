@@ -42,6 +42,8 @@ class Player;
 class WorldSocket;
 class SystemMgr;
 
+#define WS_DEATH_RESET_TIME 20002                    // Custom worldstate
+
 // ServerMessages.dbc
 enum ServerMessageType
 {
@@ -760,7 +762,8 @@ class World
         void   ResetEventSeasonalQuests(uint16 event_id);
 
         void ReloadRBAC();
-
+		//Custom
+		void FlushDeathsIfNeeded();
     protected:
         void _UpdateGameTime();
         // callback for UpdateRealmCharacters
@@ -863,6 +866,7 @@ class World
 
         void ProcessQueryCallbacks();
         std::deque<std::future<PreparedQueryResult>> m_realmCharCallbacks;
+		time_t nextDeathReset;
 };
 
 extern uint32 realmID;

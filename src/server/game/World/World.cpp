@@ -1885,6 +1885,11 @@ void World::SetInitialWorldSettings()
 
     if (uint32 realmId = sConfigMgr->GetIntDefault("RealmID", 0)) // 0 reserved for auth
         sLog->SetRealmId(realmId);
+	time_t wstime = time_t(sWorld->getWorldState(WS_DEATH_RESET_TIME));
+	if (wstime < time(NULL))
+		nextDeathReset = time(NULL);
+	else
+		nextDeathReset = wstime;
 }
 
 void World::DetectDBCLang()
@@ -2178,7 +2183,7 @@ void World::Update(uint32 diff)
 
     // And last, but not least handle the issued cli commands
     ProcessCliCommands();
-
+	FlushDeathsIfNeeded();
     sScriptMgr->OnWorldUpdate(diff);
 }
 
@@ -3264,4 +3269,24 @@ void World::ReloadRBAC()
     for (SessionMap::const_iterator itr = m_sessions.begin(); itr != m_sessions.end(); ++itr)
         if (WorldSession* session = itr->second)
             session->InvalidateRBACData();
+}
+
+void World::FlushDeathsIfNeeded()
+{
+	//nextDeathReset
+	if (time(NULL) > nextDeathReset)
+	{
+		nextDeathReset = nextDeathReset + DAY;
+		sWorld->setWorldState(WS_DEATH_RESET_TIME, uint64(nextDeathReset));
+		SessionMap::const_iterator itr;
+		for (itr = m_sessions.begin(); itr != m_sessions.end(); ++itr)
+		{
+			if (itr->second &&
+				itr->second->GetPlayer())
+			{
+				itr->second->GetPlayer()->SetDeathsLeft(3);
+			}
+		}
+		CharacterDatabase.PExecute("update characters set deathsLeft = 3 where deathsLeft >= 1");
+	}
 }

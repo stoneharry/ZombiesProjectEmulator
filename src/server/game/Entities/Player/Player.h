@@ -2349,6 +2349,8 @@ class Player : public Unit, public GridObject<Player>
 		void LockCharacter();
 		void LogDeath(std::string causeOfDeath);
 		bool IsAbleToFFA(uint32 areaid);
+		uint8 GetDeathsLeft() { return deathsLeft; }
+		void SetDeathsLeft(uint8 deaths) { deathsLeft = deaths; }
     protected:
         // Gamemaster whisper whitelist
         GuidList WhisperList;
