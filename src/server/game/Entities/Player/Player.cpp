@@ -27110,7 +27110,7 @@ void Player::LogDeath(std::string causeOfDeath)
 {
 	std::ostringstream causeLog;
 	causeLog << causeOfDeath << " remaining lives were " << deathsLeft;
-	CharacterDatabase.PExecute("INSERT INTO `character_death_log` (time, guid, name, ip, causeLog) VALUES (NOW(), %u, %s, %s, %s)", GetGUIDLow(), GetName().c_str(), GetSession()->GetRemoteAddress().c_str(), causeLog.str().c_str());
+	CharacterDatabase.PExecute("INSERT INTO `character_death_log` (time, guid, name, ip, causeLog) VALUES (NOW(), '%u', '%s', '%s', '%s')", GetGUIDLow(), GetName().c_str(), GetSession()->GetRemoteAddress().c_str(), causeLog.str().c_str());
 }
 
 bool Player::IsAbleToFFA(uint32 areaid)
