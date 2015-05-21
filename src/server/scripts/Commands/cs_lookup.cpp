@@ -1435,7 +1435,7 @@ public:
 	static bool HandleLookupPlayerDeathCommand(ChatHandler* handler, char const* args)
 	{
 		uint32 guid;
-		int32 limit;
+		uint32 limit = 1000;
 		char* limitStr;
 
 		Player* target = handler->getSelectedPlayer();
@@ -1446,7 +1446,6 @@ public:
 				return false;
 
 			guid = target->GetGUIDLow();
-			limit = 1000;
 		}
 		else
 		{
