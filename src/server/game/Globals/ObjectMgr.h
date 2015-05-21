@@ -967,7 +967,7 @@ class ObjectMgr
         void LoadCreatureLocales();
         void LoadCreatureTemplates();
         void LoadCreatureTemplateAddons();
-        void LoadCreatureTemplate(Field* fields);
+        void LoadCreatureTemplate(Field* fields, bool loading = false);
         void CheckCreatureTemplate(CreatureTemplate const* cInfo);
         void LoadTempSummons();
         void LoadCreatures();
@@ -1305,6 +1305,10 @@ class ObjectMgr
         void LoadFactionChangeTitles();
 
         bool IsTransportMap(uint32 mapId) const { return _transportMaps.count(mapId) != 0; }
+
+		//Custom
+		void LoadItemTemplate(uint32 entry); //For adding or reloading a single entry
+
 
     private:
         // first free id for selected id type

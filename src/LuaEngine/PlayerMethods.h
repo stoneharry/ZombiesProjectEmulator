@@ -3301,7 +3301,7 @@ namespace LuaPlayer
 					else
 					{
 						data << uint32(spell->RecoveryTime);
-						data << uint32(spell->CategoryEntry);
+						data << uint32(spell->GetCategory());
 						data << uint32(spell->CategoryRecoveryTime);
 					}
 				}
