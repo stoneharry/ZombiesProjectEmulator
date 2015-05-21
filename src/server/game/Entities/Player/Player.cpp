@@ -27081,21 +27081,13 @@ void Player::OnCharacterDeath(std::string causeOfDeath)
 			return;
 		}
 		if (zone->flags & AREA_FLAG_CAPITAL)
-		{
 			deathsLeft -= 1;
-			if (deathsLeft <= 0)
-			{
-				LockCharacter();
-				return;
-			}
-		}
 		else
-		{
 			deathsLeft = -3;
-			LockCharacter();
-		}
 	}
 	LogDeath(causeOfDeath);
+	if (deathsLeft <= 0)
+		LockCharacter();
 }
 
 void Player::LockCharacter()
