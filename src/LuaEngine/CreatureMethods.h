@@ -1221,6 +1221,14 @@ namespace LuaCreature
         creature->AddLootMode(lootMode);
         return 0;
     }
+
+	int DeleteFromDB(Eluna* /*E*/, lua_State* /*L*/, Creature* creature)
+	{
+		creature->CombatStop();
+		creature->DeleteFromDB();
+		creature->AddObjectToRemoveList();
+		return 0;
+	}
 #endif
 };
 #endif
