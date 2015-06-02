@@ -7499,7 +7499,7 @@ void Player::UpdateArea(uint32 newArea)
 
     // previously this was in UpdateZone (but after UpdateArea) so nothing will break
     pvpInfo.IsInNoPvPArea = false;
-    if (area && area->IsSanctuary())    // in sanctuary
+	if (area && area->IsSanctuary() || HasAuraType(SPELL_AURA_SANCTUARY))    // in sanctuary
     {
         SetByteFlag(UNIT_FIELD_BYTES_2, 1, UNIT_BYTE2_FLAG_SANCTUARY);
         pvpInfo.IsInNoPvPArea = true;
@@ -7585,7 +7585,7 @@ void Player::UpdateZone(uint32 newZone, uint32 newArea)
 
     if (zone->flags & AREA_FLAG_CAPITAL)                     // Is in a capital city
     {
-        if (!pvpInfo.IsHostile || zone->IsSanctuary())
+		if (!pvpInfo.IsHostile || zone->IsSanctuary() || HasAuraType(SPELL_AURA_SANCTUARY))
         {
             SetFlag(PLAYER_FLAGS, PLAYER_FLAGS_RESTING);
             SetRestType(REST_TYPE_IN_CITY);
@@ -27116,7 +27116,7 @@ bool Player::IsAbleToFFA(uint32 areaid)
 		ChatHandler(GetSession()).PSendSysMessage("Houston we have a problem, we are unable to find area %u, please report this area to your closest developer.", areaid);
 		return false;
 	}
-	if (zone->flags & AREA_FLAG_CAPITAL || zone->flags & AREA_FLAG_SANCTUARY)
+	if (zone->flags & AREA_FLAG_CAPITAL || zone->flags & AREA_FLAG_SANCTUARY || HasAuraType(SPELL_AURA_SANCTUARY))
 		return false;
 
 	return true;
