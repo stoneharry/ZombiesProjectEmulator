@@ -846,6 +846,7 @@ ElunaRegister<Creature> CreatureMethods[] =
     { "SelectVictim", &LuaCreature::SelectVictim },
     { "MoveWaypoint", &LuaCreature::MoveWaypoint },
     { "UpdateEntry", &LuaCreature::UpdateEntry },
+	{ "DeleteFromDB", &LuaCreature::DeleteFromDB },
 
     { NULL, NULL },
 };
