@@ -23264,6 +23264,26 @@ void Player::LearnDefaultSkills()
 
         LearnDefaultSkill(skillId, itr->Rank);
     }
+	// Learn skills here because screw working with the DBCs - Harry
+	SetSkill(44, 0, 1, 5);
+	SetSkill(172, 0, 1, 5);
+	SetSkill(43, 0, 1, 5);
+	SetSkill(55, 0, 1, 5);
+	SetSkill(54, 0, 1, 5);
+	SetSkill(160, 0, 1, 5);
+	SetSkill(162, 0, 1, 5);
+	SetSkill(173, 0, 1, 5);
+	SetSkill(136, 0, 1, 5);
+	SetSkill(229, 0, 1, 5);
+	SetSkill(183, 0, 1, 5);
+	SetSkill(95, 0, 1, 5);
+	SetSkill(118, 0, 1, 5);
+	SetSkill(98, 0, 1, 5);
+	SetSkill(415, 0, 1, 5);
+	SetSkill(414, 0, 1, 5);
+	SetSkill(413, 0, 1, 5);
+	SetSkill(293, 0, 1, 5);
+	SetSkill(95, 0, 1, 5);
 }
 
 void Player::LearnDefaultSkill(uint32 skillId, uint16 rank)
