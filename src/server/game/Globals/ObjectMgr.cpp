@@ -439,7 +439,7 @@ void ObjectMgr::LoadCreatureTemplate(Field* fields, bool loading)
 {
     uint32 entry = fields[0].GetUInt32();
 	if (!loading && !sObjectMgr->GetCreatureTemplate(entry))
-		_creatureTemplateStore.size() + 1;
+		_creatureTemplateStore.rehash(_creatureTemplateStore.size() + 1);
     CreatureTemplate& creatureTemplate = _creatureTemplateStore[entry];
 
     creatureTemplate.Entry = entry;
