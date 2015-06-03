@@ -6531,5 +6531,5 @@ void AuraEffect::HandleSanctuary(AuraApplication const* aurApp, uint8 mode, bool
 	if (aurApp->GetTarget()->GetTypeId() != TYPEID_PLAYER)
 		return;
 
-	aurApp->GetTarget()->ToPlayer()->UpdateArea(aurApp->GetTarget()->GetAreaId);
+	aurApp->GetTarget()->ToPlayer()->UpdateArea(aurApp->GetTarget()->GetAreaId());
 }

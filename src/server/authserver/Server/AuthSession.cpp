@@ -397,13 +397,13 @@ AuthSession::~AuthSession(void)
 	}
 	catch (...) { }
 	try {
-	if (_patcher)
-	{
-		_patcher->stop();
-		delete _patcher;
-		_patcher = NULL;
-	}
-	catch (...) {}
+		if (_patcher)
+		{
+			_patcher->stop();
+			delete _patcher;
+			_patcher = NULL;
+		}
+	} catch (...) {}
 }
 
 enum class BufferSizes : uint32

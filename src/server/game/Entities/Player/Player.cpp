@@ -23278,12 +23278,13 @@ void Player::LearnDefaultSkills()
 	SetSkill(183, 0, 1, 5);
 	SetSkill(95, 0, 1, 5);
 	SetSkill(118, 0, 1, 5);
-	SetSkill(98, 0, 1, 5);
-	SetSkill(415, 0, 1, 5);
-	SetSkill(414, 0, 1, 5);
-	SetSkill(413, 0, 1, 5);
-	SetSkill(293, 0, 1, 5);
+	SetSkill(98, 0, 300, 300); // common
+	SetSkill(415, 0, 1, 1); // cloth
+	SetSkill(414, 0, 1, 1); // leather
+	SetSkill(413, 0, 1, 1); // mail
+	SetSkill(293, 0, 1, 1); // plate
 	SetSkill(95, 0, 1, 5);
+	LearnSpell(199, false, true); // 2h mace
 }
 
 void Player::LearnDefaultSkill(uint32 skillId, uint16 rank)
@@ -25166,14 +25167,14 @@ void Player::_LoadSkills(PreparedQueryResult result)
             uint16 max      = fields[2].GetUInt16();
 
             SkillRaceClassInfoEntry const* rcEntry = GetSkillRaceClassInfo(skill, getRace(), getClass());
-            if (!rcEntry)
+            /*if (!rcEntry)
             {
                 TC_LOG_ERROR("entities.player", "Character: %s (GUID: %u Race: %u Class: %u) has skill %u not allowed for his race/class combination",
                     GetName().c_str(), GetGUIDLow(), uint32(getRace()), uint32(getClass()), skill);
 
                 mSkillStatus.insert(SkillStatusMap::value_type(skill, SkillStatusData(0, SKILL_DELETED)));
                 continue;
-            }
+            }*/
 
             // set fixed skill ranges
             switch (GetSkillRangeType(rcEntry))
