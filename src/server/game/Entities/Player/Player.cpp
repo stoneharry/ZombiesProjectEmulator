@@ -25177,19 +25177,21 @@ void Player::_LoadSkills(PreparedQueryResult result)
             }*/
 
             // set fixed skill ranges
-            switch (GetSkillRangeType(rcEntry))
-            {
-                case SKILL_RANGE_LANGUAGE:                      // 300..300
-                    value = max = 300;
-                    break;
-                case SKILL_RANGE_MONO:                          // 1..1, grey monolite bar
-                    value = max = 1;
-                    break;
-                case SKILL_RANGE_LEVEL:
-                    max = GetMaxSkillValueForLevel();
-                default:
-                    break;
-            }
+			if (rcEntry) {
+				switch (GetSkillRangeType(rcEntry))
+				{
+					case SKILL_RANGE_LANGUAGE:                      // 300..300
+						value = max = 300;
+						break;
+					case SKILL_RANGE_MONO:                          // 1..1, grey monolite bar
+						value = max = 1;
+						break;
+					case SKILL_RANGE_LEVEL:
+						max = GetMaxSkillValueForLevel();
+					default:
+						break;
+				}
+			}
 
             if (value == 0)
             {
@@ -25205,18 +25207,20 @@ void Player::_LoadSkills(PreparedQueryResult result)
                 continue;
             }
 
-            uint16 skillStep = 0;
-            if (SkillTiersEntry const* skillTier = sSkillTiersStore.LookupEntry(rcEntry->SkillTier))
-            {
-                for (uint32 i = 0; i < MAX_SKILL_STEP; ++i)
-                {
-                    if (skillTier->MaxSkill[skillStep] == max)
-                    {
-                        skillStep = i + 1;
-                        break;
-                    }
-                }
-            }
+			uint16 skillStep = 0;
+			if (rcEntry) {
+				if (SkillTiersEntry const* skillTier = sSkillTiersStore.LookupEntry(rcEntry->SkillTier))
+				{
+					for (uint32 i = 0; i < MAX_SKILL_STEP; ++i)
+					{
+						if (skillTier->MaxSkill[skillStep] == max)
+						{
+							skillStep = i + 1;
+							break;
+						}
+					}
+				}
+			}
 
             SetUInt32Value(PLAYER_SKILL_INDEX(count), MAKE_PAIR32(skill, skillStep));
 
