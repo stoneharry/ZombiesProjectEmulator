@@ -907,6 +907,7 @@ public:
 			WorldDatabase.PExecute("UPDATE `creature_addon` SET `bytes1`=%u WHERE  `guid`=%u", bytevalue, target->GetGUIDLow());
 		else
 			WorldDatabase.PExecute("INSERT INTO `creature_addon` (`guid`, `bytes1`) VALUES (%u, %u)", target->GetGUIDLow(), bytevalue);
+		return true;
 	}
 
 	static bool HandleModifyBytes2Command(ChatHandler* handler, const char* args)
@@ -933,6 +934,7 @@ public:
 			WorldDatabase.PExecute("UPDATE `creature_addon` SET `bytes2`=%u WHERE  `guid`=%u", bytevalue, target->GetGUIDLow());
 		else
 			WorldDatabase.PExecute("INSERT INTO `creature_addon` (`guid`, `bytes2`) VALUES (%u, %u)", target->GetGUIDLow(), bytevalue);
+		return true;
 	}
 
     static bool HandleModifyHonorCommand (ChatHandler* handler, const char* args)
