@@ -2158,6 +2158,14 @@ TempSummon* WorldObject::SummonCreature(uint32 id, float x, float y, float z, fl
     return SummonCreature(id, pos, spwtype, despwtime, 0);
 }
 
+TempSummon* WorldObject::SummonCreatureRandomPoint(uint32 id, float x, float y, float z, float dist, float ang, TempSummonType spwtype, uint32 despwtime) const
+{
+
+	const Position src = { x, y, z, ang };
+	Position spawnpos = GetRandomPoint(src, dist);
+	return SummonCreature(id, spawnpos, spwtype, despwtime, 0);
+}
+
 GameObject* WorldObject::SummonGameObject(uint32 entry, float x, float y, float z, float ang, float rotation0, float rotation1, float rotation2, float rotation3, uint32 respawnTime)
 {
     if (!IsInWorld())

@@ -225,6 +225,7 @@ ElunaRegister<WorldObject> WorldObjectMethods[] =
     { "SummonGameObject", &LuaWorldObject::SummonGameObject },            // :SummonGameObject(entry, x, y, z, o[, respawnDelay]) - Spawns an object to location. Returns the object or nil
     { "SpawnCreature", &LuaWorldObject::SpawnCreature },                  // :SpawnCreature(entry, x, y, z, o[, spawnType, despawnDelay]) - Spawns a creature to location that despawns after given time (0 for infinite). Returns the creature or nil
     { "SendPacket", &LuaWorldObject::SendPacket },                        // :SendPacket(packet) - Sends a specified packet to everyone around
+	{ "SpawnCreatureRandom", &LuaWorldObject::SpawnCreatureRandom}, // same as summoncreature but random position summoning.
     { "RegisterEvent", &LuaWorldObject::RegisterEvent },
     { "RemoveEventById", &LuaWorldObject::RemoveEventById },
     { "RemoveEvents", &LuaWorldObject::RemoveEvents },
