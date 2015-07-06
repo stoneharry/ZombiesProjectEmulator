@@ -17875,7 +17875,7 @@ bool Player::LoadFromDB(ObjectGuid guid, SQLQueryHolder *holder)
 
     // RaF stuff.
     m_grantableLevels = fields[66].GetUInt8();
-	SetDeathsLeft(fields[67].GetUInt8());
+	SetDeathsLeft(fields[67].GetInt8());
     if (GetSession()->IsARecruiter() || (GetSession()->GetRecruiterId() != 0))
         SetFlag(UNIT_DYNAMIC_FLAGS, UNIT_DYNFLAG_REFER_A_FRIEND);
 
@@ -19488,7 +19488,7 @@ void Player::SaveToDB(bool create /*=false*/)
         stmt->setUInt32(index++, m_grantableLevels);
 
         stmt->setUInt8(index++, IsInWorld() && !GetSession()->PlayerLogout() ? 1 : 0);
-		stmt->setUInt8(index++, GetDeathsLeft());
+		stmt->setInt8(index++, GetDeathsLeft());
         // Index
         stmt->setUInt32(index++, GetGUIDLow());
     }
