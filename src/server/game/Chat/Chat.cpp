@@ -701,7 +701,7 @@ size_t ChatHandler::BuildChatPacket(WorldPacket& data, ChatMsg chatType, Languag
     if (sender)
     {
         senderGUID = sender->GetGUID();
-        senderName = sender->GetNameForLocaleIdx(locale);
+		senderName = sender->GetName();
         if (Player const* playerSender = sender->ToPlayer())
         {
             chatTag = playerSender->GetChatTag();
@@ -712,7 +712,7 @@ size_t ChatHandler::BuildChatPacket(WorldPacket& data, ChatMsg chatType, Languag
     if (receiver)
     {
         receiverGUID = receiver->GetGUID();
-        receiverName = receiver->GetNameForLocaleIdx(locale);
+        receiverName = receiver->GetName();
     }
 
     return BuildChatPacket(data, chatType, language, senderGUID, receiverGUID, message, chatTag, senderName, receiverName, achievementId, gmMessage, channelName);

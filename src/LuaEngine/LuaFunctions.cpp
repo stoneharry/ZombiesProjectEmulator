@@ -738,6 +738,7 @@ ElunaRegister<Player> PlayerMethods[] =
     { "SummonPlayer", &LuaPlayer::SummonPlayer },                                         // :SummonPlayer(player, map, x, y, z, zoneId[, delay]) - Sends a popup to the player asking if he wants to be summoned if yes, teleported to coords. ZoneID defines the location name shown in the popup Delay is the time until the popup closes automatically.
     { "SaveToDB", &LuaPlayer::SaveToDB },                                                 // :SaveToDB() - Saves to database
 	{ "ForceItemDownPlayersThroat", &LuaPlayer::ForceItemDownPlayersThroat },
+	{ "QuestKillCredit", &LuaPlayer::QuestKillCredit },
 #ifdef CLASSIC
     { "UpdateHonor", &LuaPlayer::UpdateHonor },                                             // :UpdateHonor() - Updates Player Honor
     { "ResetHonor", &LuaPlayer::ResetHonor },                                               // :ResetHonor() - Resets Player Honor
