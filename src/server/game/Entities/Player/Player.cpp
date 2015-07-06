@@ -23265,26 +23265,40 @@ void Player::LearnDefaultSkills()
         LearnDefaultSkill(skillId, itr->Rank);
     }
 	// Learn skills here because screw working with the DBCs - Harry
-	SetSkill(44, 0, 1, 5);
-	SetSkill(172, 0, 1, 5);
-	SetSkill(43, 0, 1, 5);
-	SetSkill(55, 0, 1, 5);
-	SetSkill(54, 0, 1, 5);
-	SetSkill(160, 0, 1, 5);
-	SetSkill(162, 0, 1, 5);
-	SetSkill(173, 0, 1, 5);
-	SetSkill(136, 0, 1, 5);
-	SetSkill(229, 0, 1, 5);
-	SetSkill(183, 0, 1, 5);
-	SetSkill(95, 0, 1, 5);
-	SetSkill(118, 0, 1, 5);
+	SetSkill(44, 0, 1, 5); // axes
+	SetSkill(172, 0, 1, 5); // t-axes
+	SetSkill(43, 0, 1, 5); // swords
+	SetSkill(55, 0, 1, 5); // t-swords
+	SetSkill(54, 0, 1, 5); // maces
+	SetSkill(160, 0, 1, 5); // t-maces
+	SetSkill(162, 0, 1, 5); // ???
+	SetSkill(173, 0, 1, 5); // daggers
+	SetSkill(136, 0, 1, 5); // staves
+	SetSkill(229, 0, 1, 5); // polearms
+	SetSkill(183, 0, 1, 5); // ???
+	SetSkill(118, 0, 1, 5); // ???
 	SetSkill(98, 0, 300, 300); // common
 	SetSkill(415, 0, 1, 1); // cloth
 	SetSkill(414, 0, 1, 1); // leather
 	SetSkill(413, 0, 1, 1); // mail
 	SetSkill(293, 0, 1, 1); // plate
-	SetSkill(95, 0, 1, 5);
-	LearnSpell(199, false, true); // 2h mace
+	SetSkill(95, 0, 1, 5); // ???
+	SetSkill(433, 0, 1, 1); // Shields
+
+	SetSkill(38, 0, 1, 1); // Categories
+	SetSkill(39, 0, 1, 1);
+	SetSkill(253, 0, 1, 1); // End Categories
+
+	// uint32 spellId, bool active, bool learning, bool dependent, bool disabled, bool loading /*= false*/, bool fromSkill /*= false*/
+	AddSpell(668, true, true, true, false); // Common
+	AddSpell(199, true, true, true, false); // 2h Mace
+	AddSpell(107, true, true, true, false); // Block
+	AddSpell(3127, true, true, true, false); // Parry
+
+	/*LearnSpell(668, false, false); // Common
+	LearnSpell(199, false, false); // 2h mace
+	LearnSpell(107, false, false); // block
+	LearnSpell(3127, false, false); // Parry*/
 }
 
 void Player::LearnDefaultSkill(uint32 skillId, uint16 rank)
