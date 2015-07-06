@@ -5527,6 +5527,13 @@ uint32 Player::DurabilityRepair(uint16 pos, bool cost, float discountMod, bool g
 
 void Player::RepopAtGraveyard()
 {
+
+	if (deathsLeft <= 0)
+	{
+		LockCharacter();
+		return;
+	}
+
     // note: this can be called also when the player is alive
     // for example from WorldSession::HandleMovementOpcodes
 
@@ -27111,8 +27118,6 @@ void Player::OnCharacterDeath(std::string causeOfDeath)
 			deathsLeft = -3;
 	}
 	LogDeath(causeOfDeath);
-	if (deathsLeft <= 0)
-		LockCharacter();
 }
 
 void Player::LockCharacter()
@@ -27123,7 +27128,7 @@ void Player::LockCharacter()
 	sWorld->UpdateCharacterNameData(GetGUID(), newName.str());
 	sWorld->BanAccount(BAN_CHARACTER, GetName(), "-1", "Death", "Player::LockCharacter");
 	if (GetSession())
-		GetSession()->KickPlayer();
+		GetSession()->LogoutPlayer(true);
 }
 
 void Player::LogDeath(std::string causeOfDeath)
