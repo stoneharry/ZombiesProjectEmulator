@@ -3353,7 +3353,7 @@ namespace LuaPlayer
 	int QuestKillCredit(Eluna* E, lua_State* L, Player* player)
 	{
 		uint32 id = Eluna::CHECKVAL<uint32>(L, 2);
-		player->KillCreditGO(id);
+		player->KilledMonsterCredit(id);
 		return 0;
 	}
 };
