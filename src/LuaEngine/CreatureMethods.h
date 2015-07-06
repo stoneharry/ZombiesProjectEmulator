@@ -1229,6 +1229,13 @@ namespace LuaCreature
 		creature->AddObjectToRemoveList();
 		return 0;
 	}
+
+	int SetReactState(Eluna* /*E*/, lua_State* L, Creature* creature)
+	{
+		uint32 state = Eluna::CHECKVAL<uint32>(L, 2);
+		creature->SetReactState(ReactStates(state));
+		return 0;
+	}
 #endif
 };
 #endif

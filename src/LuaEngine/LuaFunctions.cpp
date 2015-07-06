@@ -848,6 +848,7 @@ ElunaRegister<Creature> CreatureMethods[] =
     { "MoveWaypoint", &LuaCreature::MoveWaypoint },
     { "UpdateEntry", &LuaCreature::UpdateEntry },
 	{ "DeleteFromDB", &LuaCreature::DeleteFromDB },
+	{ "SetReactState", &LuaCreature::SetReactState },
 
     { NULL, NULL },
 };

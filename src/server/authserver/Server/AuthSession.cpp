@@ -388,22 +388,17 @@ void Patcher::Initialize()
 // Close patch file descriptor before leaving
 AuthSession::~AuthSession(void)
 {
-	try {
-		if (patch)
-		{
-			fclose(patch); // access violation on this line
-			patch = NULL;
-		}
+	if (patch)
+	{
+		fclose(patch); // access violation on this line
+		patch = NULL;
 	}
-	catch (...) { }
-	try {
-		if (_patcher)
-		{
-			_patcher->stop();
-			delete _patcher;
-			_patcher = NULL;
-		}
-	} catch (...) {}
+	if (_patcher)
+	{
+		_patcher->stop();
+		delete _patcher;
+		_patcher = NULL;
+	}
 }
 
 enum class BufferSizes : uint32
