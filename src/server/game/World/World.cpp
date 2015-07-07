@@ -2539,7 +2539,7 @@ BanReturn World::BanCharacter(std::string const& name, std::string const& durati
     CharacterDatabase.Execute(stmt);
 
     if (pBanned)
-        pBanned->GetSession()->KickPlayer();
+        pBanned->GetSession()->LogoutPlayer(true);
 
     return BAN_SUCCESS;
 }

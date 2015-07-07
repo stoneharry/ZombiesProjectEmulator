@@ -27091,8 +27091,8 @@ void Player::OnCharacterDeath(std::string causeOfDeath)
 			deathsLeft -= 1;
 		else
 			deathsLeft = -3;
+		LogDeath(causeOfDeath); // No need to log GM's death
 	}
-	LogDeath(causeOfDeath);
 }
 
 void Player::LockCharacter()
@@ -27102,16 +27102,18 @@ void Player::LockCharacter()
 	newName << GetName() << " (LOCKED)";
 	SetName(newName.str());
 	sWorld->UpdateCharacterNameData(GetGUID(), newName.str());
-	sWorld->BanAccount(BAN_CHARACTER, GetName(), "-1", "Death", "Player::LockCharacter");
-	if (GetSession())
-		GetSession()->LogoutPlayer(true);
+	//sWorld->BanAccount(BAN_CHARACTER, GetName(), "-1", "Death", "Player::LockCharacter");
+	sWorld->BanCharacter(GetName(), "-1", "Death", "Player::LockCharacter");
+	//if (GetSession())
+	//	GetSession()->LogoutPlayer(true);
 }
 
 void Player::LogDeath(std::string causeOfDeath)
 {
 	std::ostringstream causeLog;
-	causeLog << causeOfDeath << " remaining lives were " << deathsLeft;
-	CharacterDatabase.PExecute("INSERT INTO `character_death_log` (time, guid, name, ip, causeLog) VALUES (NOW(), '%u', '%s', '%s', '%s')", GetGUIDLow(), GetName().c_str(), GetSession()->GetRemoteAddress().c_str(), causeLog.str().c_str());
+	// A int8 is a signed char, this is not treated as a number. Cast to a int16 and it is a number.
+	causeLog << causeOfDeath << " remaining lives were " << static_cast<int16>(deathsLeft);
+	CharacterDatabase.PExecute("INSERT INTO `character_death_log` (time, guid, name, ip, causeLog) VALUES (NOW(), '%u', \"%s\", '%s', \"%s\")", GetGUIDLow(), GetName().c_str(), GetSession()->GetRemoteAddress().c_str(), causeLog.str().c_str());
 }
 
 bool Player::IsAbleToFFA(uint32 areaid)
