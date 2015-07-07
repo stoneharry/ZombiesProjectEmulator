@@ -1308,23 +1308,14 @@ namespace LuaUnit
 
     int SendChatMessageToPlayer(Eluna* /*E*/, lua_State* L, Unit* unit)
     {
-        uint8 type = Eluna::CHECKVAL<uint8>(L, 2);
-        uint32 lang = Eluna::CHECKVAL<uint32>(L, 3);
-        std::string msg = Eluna::CHECKVAL<std::string>(L, 4);
-        Player* target = Eluna::CHECKOBJ<Player>(L, 5);
+        uint32 lang = Eluna::CHECKVAL<uint32>(L, 2);
+        std::string msg = Eluna::CHECKVAL<std::string>(L, 3);
+        Player* target = Eluna::CHECKOBJ<Player>(L, 4);
 
-        if (type >= MAX_CHAT_MSG_TYPE)
-            return luaL_argerror(L, 2, "valid ChatMsg expected");
         if (lang >= LANGUAGES_COUNT)
             return luaL_argerror(L, 3, "valid Language expected");
 
-        WorldPacket data;
-#ifdef TRINITY
-        ChatHandler::BuildChatPacket(data, ChatMsg(type), Language(lang), unit, target, msg);
-#else
-        ChatHandler::BuildChatPacket(data, ChatMsg(type), msg.c_str(), Language(lang), 0, unit->GET_GUID(), unit->GetName(), target->GET_GUID(), target->GetName());
-#endif
-        target->GetSession()->SendPacket(&data);
+		unit->Say(msg, Language(lang), target);
         return 0;
     }
 
