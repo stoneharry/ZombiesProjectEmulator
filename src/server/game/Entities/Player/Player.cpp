@@ -27077,6 +27077,8 @@ bool Player::ValidateAppearance(uint8 race, uint8 class_, uint8 gender, uint8 ha
 
 void Player::OnCharacterDeath(std::string causeOfDeath)
 {
+	if (HasAuraType(SPELL_AURA_IGNORE_DEATH))
+		return;
 	if (GetSession()->GetSecurity() == SEC_PLAYER)
 	{
 		AreaTableEntry const* zone = GetAreaEntryByAreaID(GetAreaId());

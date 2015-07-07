@@ -374,6 +374,7 @@ pAuraEffectHandler AuraEffectHandler[TOTAL_AURAS]=
     &AuraEffect::HandleNoImmediateEffect,                         //315 SPELL_AURA_UNDERWATER_WALKING todo
     &AuraEffect::HandleNoImmediateEffect,                         //316 SPELL_AURA_PERIODIC_HASTE implemented in AuraEffect::CalculatePeriodic
 	&AuraEffect::HandleSanctuary,                                 //317 SPELL_AURA_SANCTUARY
+	&AuraEffect::HandleNoImmediateEffect,                         //318 SPELL_AURA_IGNORE_DEATH
 };
 
 AuraEffect::AuraEffect(Aura* base, uint8 effIndex, int32 *baseAmount, Unit* caster):
