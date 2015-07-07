@@ -27097,6 +27097,7 @@ void Player::OnCharacterDeath(std::string causeOfDeath)
 
 void Player::LockCharacter()
 {
+	ResurrectPlayer(1.f);
 	std::ostringstream newName;
 	newName << GetName() << " (LOCKED)";
 	SetName(newName.str());
