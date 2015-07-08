@@ -1267,8 +1267,10 @@ namespace LuaUnit
     int Mount(Eluna* /*E*/, lua_State* L, Unit* unit)
     {
         uint32 displayId = Eluna::CHECKVAL<uint32>(L, 2);
+		uint32 vehicleId = Eluna::CHECKVAL<uint32>(L, 3, 0);
+		uint32 creatureId = Eluna::CHECKVAL<uint32>(L, 4, 0);
 
-        unit->Mount(displayId);
+        unit->Mount(displayId, vehicleId, creatureId);
         return 0;
     }
 
