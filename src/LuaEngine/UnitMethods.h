@@ -1319,6 +1319,21 @@ namespace LuaUnit
         return 0;
     }
 
+	int SendChatMessageDirectlyToPlayer(Eluna* /*E*/, lua_State* L, Unit* unit)
+	{
+		std::string msg = Eluna::CHECKVAL<std::string>(L, 2);
+		uint32 msgType = Eluna::CHECKVAL<uint32>(L, 3);
+		uint32 lang = Eluna::CHECKVAL<uint32>(L, 4);
+		Player* packetTarget = Eluna::CHECKOBJ<Player>(L, 5);
+		Player* target = Eluna::CHECKOBJ<Player>(L, 6);
+
+		if (lang >= LANGUAGES_COUNT)
+			return luaL_argerror(L, 3, "valid Language expected");
+
+		unit->SendMessageToPlayer(msg, ChatMsg(msgType), Language(lang), packetTarget, target);
+		return 0;
+	}
+
     // static void PrepareMove(Unit* unit)
     // {
     //     unit->GetMotionMaster()->MovementExpired(); // Chase

@@ -389,7 +389,8 @@ ElunaRegister<Unit> UnitMethods[] =
     { "StopSpellCast", &LuaUnit::StopSpellCast },                     // :StopSpellCast([spellId]) - Stops the unit from casting a spell. If a spellId is defined, it will stop that unit from casting that spell
     { "InterruptSpell", &LuaUnit::InterruptSpell },                   // :InterruptSpell(spellType[, delayed]) - Interrupts the unit's spell by the spellType. If delayed is true it will skip if the spell is delayed.
     { "SendChatMessageToPlayer", &LuaUnit::SendChatMessageToPlayer }, // :SendChatMessageToPlayer(type, lang, msg, target) - Unit sends a chat message to the given target player
-    { "Emote", &LuaUnit::Emote },                                     // :Emote(emote)
+	{ "SendChatMessageDirectlyToPlayer", &LuaUnit::SendChatMessageDirectlyToPlayer }, // :SendChatMessageToPlayer(msg, msgtype, lang, packetatarget, target) - Unit sends a chat message directly to a player.
+	{ "Emote", &LuaUnit::Emote },                                     // :Emote(emote)
     { "CountPctFromCurHealth", &LuaUnit::CountPctFromCurHealth },     // :CountPctFromCurHealth(int32 pct)
     { "CountPctFromMaxHealth", &LuaUnit::CountPctFromMaxHealth },     // :CountPctFromMaxHealth()
     { "Dismount", &LuaUnit::Dismount },                               // :Dismount() - Dismounts the unit.

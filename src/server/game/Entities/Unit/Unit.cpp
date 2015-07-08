@@ -17993,3 +17993,10 @@ void Unit::Whisper(uint32 textId, Player* target, bool isBossWhisper /*= false*/
     ChatHandler::BuildChatPacket(data, isBossWhisper ? CHAT_MSG_RAID_BOSS_WHISPER : CHAT_MSG_MONSTER_WHISPER, LANG_UNIVERSAL, this, target, bct->GetText(locale, getGender()), 0, "", locale);
     target->SendDirectMessage(&data);
 }
+
+void Unit::SendMessageToPlayer(std::string const& text, ChatMsg chatType, Language language, Player *packetTarget, WorldObject const* target)
+{
+	WorldPacket data;
+	ChatHandler::BuildChatPacket(data, chatType, language, this, target, text);
+	packetTarget->SendDirectMessage(&data);
+}

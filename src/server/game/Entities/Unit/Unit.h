@@ -2171,6 +2171,7 @@ class Unit : public WorldObject
         void Yell(uint32 textId, WorldObject const* target = nullptr);
         void TextEmote(uint32 textId, WorldObject const* target = nullptr, bool isBossEmote = false);
         void Whisper(uint32 textId, Player* target, bool isBossWhisper = false);
+		void SendMessageToPlayer(std::string const& text, ChatMsg chatType, Language language, Player *packetTarget, WorldObject const* target = nullptr);
 
     protected:
         explicit Unit (bool isWorldObject);
