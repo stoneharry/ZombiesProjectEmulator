@@ -375,6 +375,7 @@ pAuraEffectHandler AuraEffectHandler[TOTAL_AURAS]=
     &AuraEffect::HandleNoImmediateEffect,                         //316 SPELL_AURA_PERIODIC_HASTE implemented in AuraEffect::CalculatePeriodic
 	&AuraEffect::HandleSanctuary,                                 //317 SPELL_AURA_SANCTUARY
 	&AuraEffect::HandleNoImmediateEffect,                         //318 SPELL_AURA_IGNORE_DEATH
+	&AuraEffect::HandleLearnSpell,                                //319 SPELL_AURA_LEARN_SPELL
 };
 
 AuraEffect::AuraEffect(Aura* base, uint8 effIndex, int32 *baseAmount, Unit* caster):
@@ -6523,7 +6524,6 @@ void AuraEffect::HandleRaidProcFromChargeWithValueAuraProc(AuraApplication* aurA
     target->CastCustomSpell(target, triggerSpellId, &value, NULL, NULL, true, NULL, this, GetCasterGUID());
 }
 
-//HandleSanctuary
 void AuraEffect::HandleSanctuary(AuraApplication const* aurApp, uint8 mode, bool apply) const
 {
 	if (!(mode & AURA_EFFECT_HANDLE_REAL))
@@ -6533,4 +6533,20 @@ void AuraEffect::HandleSanctuary(AuraApplication const* aurApp, uint8 mode, bool
 		return;
 
 	aurApp->GetTarget()->ToPlayer()->UpdateArea(aurApp->GetTarget()->GetAreaId());
+}
+
+void AuraEffect::HandleLearnSpell(AuraApplication const* aurApp, uint8 mode, bool apply) const
+{
+	if (!(mode & AURA_EFFECT_HANDLE_REAL))
+		return;
+
+	if (aurApp->GetTarget()->GetTypeId() != TYPEID_PLAYER)
+		return;
+
+	Player * target = aurApp->GetTarget()->ToPlayer();
+
+	if (apply && !target->HasSpell(GetAmount()))
+		target->LearnSpell(GetAmount(), false);
+	else
+		target->RemoveSpell(GetAmount());
 }

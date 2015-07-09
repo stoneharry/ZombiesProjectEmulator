@@ -378,7 +378,8 @@ enum AuraType
     SPELL_AURA_PERIODIC_HASTE                               = 316,
 	SPELL_AURA_SANCTUARY									= 317,
 	SPELL_AURA_IGNORE_DEATH                                 = 318,
-	TOTAL_AURAS = 319
+	SPELL_AURA_LEARN_SPELL                                  = 319,
+	TOTAL_AURAS = 320
 };
 
 enum AuraObjectType
