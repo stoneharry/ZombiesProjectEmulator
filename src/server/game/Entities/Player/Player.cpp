@@ -23255,12 +23255,45 @@ void Player::LearnDefaultSkills()
 	//SetSkill(39, 0, 1, 1);
 	//SetSkill(253, 0, 1, 1); // End Categories
 
-	// uint32 spellId, bool active, bool learning, bool dependent, bool disabled, bool loading /*= false*/, bool fromSkill /*= false*/
-	AddSpell(668, true, true, true, false); // Common
-	AddSpell(199, true, true, true, false); // 2h Mace
-	AddSpell(107, true, true, true, false); // Block
-	AddSpell(3127, true, true, true, false); // Parry
-	AddSpell(3365, true, true, true, false); // Opening (REQUIRED - for opening chests etc)
+	int spellsToAdd[34] = {
+		668, // Common
+		199, // 2h Mace
+		107, // Block
+		3127, // Parry
+		8386, // Attacking
+		264, // Bows
+		5011, // Crossbows
+		6233, // Closing
+		6246, // Closing
+		21652, // Closing
+		9078, // Cloth
+		1180, // Daggers
+		204, // Defense
+		16092, // Defensive State (DND)
+		3050, // Detect
+		674, // Dual Wield
+		7266, // Duel
+		2382, // Generic
+		9125, // Generic
+		7267, // Grovel
+		266, // Guns
+		668, // Language Common
+		203, // Unarmed
+		7355, // Stuck
+		522, // SPELLDEFENSE (DND)
+		22027, // Remove Insignia
+		3365, // Opening
+		68398, // Opening
+		61437, // Opening
+		22810, // Opening - No Text
+		21651, // Opening
+		6478, // Opening
+		6477, // Opening
+		6247 // Opening
+	};
+	for (int i = 0; i < 34; ++i)
+		AddSpell(spellsToAdd[i], true, true, true, false);
+	
 }
 
 void Player::LearnDefaultSkill(uint32 skillId, uint16 rank)
