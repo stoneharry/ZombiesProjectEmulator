@@ -23260,11 +23260,7 @@ void Player::LearnDefaultSkills()
 	AddSpell(199, true, true, true, false); // 2h Mace
 	AddSpell(107, true, true, true, false); // Block
 	AddSpell(3127, true, true, true, false); // Parry
-
-	/*LearnSpell(668, false, false); // Common
-	LearnSpell(199, false, false); // 2h mace
-	LearnSpell(107, false, false); // block
-	LearnSpell(3127, false, false); // Parry*/
+	AddSpell(3365, true, true, true, false); // Opening (REQUIRED - for opening chests etc)
 }
 
 void Player::LearnDefaultSkill(uint32 skillId, uint16 rank)
@@ -27091,7 +27087,7 @@ void Player::OnCharacterDeath(std::string causeOfDeath)
 			deathsLeft -= 1;
 		else
 			deathsLeft = -3;
-		LogDeath(causeOfDeath); // No need to log GM's death
+		LogDeath(causeOfDeath);
 	}
 }
 
@@ -27099,13 +27095,10 @@ void Player::LockCharacter()
 {
 	ResurrectPlayer(1.f);
 	std::ostringstream newName;
-	newName << GetName() << " (LOCKED)";
+	newName << GetName() << " (DEAD)";
 	SetName(newName.str());
 	sWorld->UpdateCharacterNameData(GetGUID(), newName.str());
-	//sWorld->BanAccount(BAN_CHARACTER, GetName(), "-1", "Death", "Player::LockCharacter");
 	sWorld->BanCharacter(GetName(), "-1", "Death", "Player::LockCharacter");
-	//if (GetSession())
-	//	GetSession()->LogoutPlayer(true);
 }
 
 void Player::LogDeath(std::string causeOfDeath)
