@@ -194,6 +194,8 @@ ElunaRegister<WorldObject> WorldObjectMethods[] =
 #if (!defined(TBC) && !defined(CLASSIC))
     { "GetPhaseMask", &LuaWorldObject::GetPhaseMask },                    // :GetPhaseMask()
 #endif
+	{ "GetCanSeePhaseOne", &LuaWorldObject::GetCanSeePhaseOne },
+	{ "SetCanSeePhaseOne", &LuaWorldObject::SetCanSeePhaseOne },
     { "GetInstanceId", &LuaWorldObject::GetInstanceId },                  // :GetInstanceId()
     { "GetAreaId", &LuaWorldObject::GetAreaId },                          // :GetAreaId()
     { "GetZoneId", &LuaWorldObject::GetZoneId },                          // :GetZoneId()

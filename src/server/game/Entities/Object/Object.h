@@ -590,11 +590,16 @@ class WorldObject : public Object, public WorldLocation
         uint32 GetInstanceId() const { return m_InstanceId; }
 
         virtual void SetPhaseMask(uint32 newPhaseMask, bool update);
-        uint32 GetPhaseMask() const { return m_phaseMask; }
+		uint32 GetPhaseMask() const { return m_phaseMask; }
+
+		bool m_canSeePhaseOne;
+		void SetCanSeePhaseOne(bool canSee) { m_canSeePhaseOne = canSee; }
+		bool GetCanSeePhaseOne() const { return m_canSeePhaseOne; }
+
         bool InSamePhase(WorldObject const* obj) const;
         bool InSamePhase(uint32 phasemask) const {
 			if (phasemask == 1)
-				return true;
+				return GetCanSeePhaseOne();
 			uint32 phase = GetPhaseMask();
 			if (phasemask < 32)
 				return (phase & phasemask) != 0;

@@ -9,40 +9,53 @@
 
 namespace LuaWorldObject
 {
-    /**
-     * Returns the name of the [WorldObject]
-     *
-     * @return string name
-     */
-    int GetName(Eluna* /*E*/, lua_State* L, WorldObject* obj)
-    {
-        Eluna::Push(L, obj->GetName());
-        return 1;
-    }
+	/**
+	 * Returns the name of the [WorldObject]
+	 *
+	 * @return string name
+	 */
+	int GetName(Eluna* /*E*/, lua_State* L, WorldObject* obj)
+	{
+		Eluna::Push(L, obj->GetName());
+		return 1;
+	}
 
-    /**
-     * Returns the current [Map] object of the [WorldObject]
-     *
-     * @return [Map] mapObject
-     */
-    int GetMap(Eluna* /*E*/, lua_State* L, WorldObject* obj)
-    {
-        Eluna::Push(L, obj->GetMap());
-        return 1;
-    }
+	/**
+	 * Returns the current [Map] object of the [WorldObject]
+	 *
+	 * @return [Map] mapObject
+	 */
+	int GetMap(Eluna* /*E*/, lua_State* L, WorldObject* obj)
+	{
+		Eluna::Push(L, obj->GetMap());
+		return 1;
+	}
 
 #if (!defined(TBC) && !defined(CLASSIC))
-    /**
-     * Returns the current phase of the [WorldObject]
-     *
-     * @return uint32 phase
-     */
-    int GetPhaseMask(Eluna* /*E*/, lua_State* L, WorldObject* obj)
-    {
-        Eluna::Push(L, obj->GetPhaseMask());
-        return 1;
-    }
+	/**
+	 * Returns the current phase of the [WorldObject]
+	 *
+	 * @return uint32 phase
+	 */
+	int GetPhaseMask(Eluna* /*E*/, lua_State* L, WorldObject* obj)
+	{
+		Eluna::Push(L, obj->GetPhaseMask());
+		return 1;
+	}
 #endif
+
+	int GetCanSeePhaseOne(Eluna* /*E*/, lua_State* L, WorldObject* obj)
+	{
+		Eluna::Push(L, obj->GetCanSeePhaseOne());
+		return 1;
+	}
+
+	int SetCanSeePhaseOne(Eluna* /*E*/, lua_State* L, WorldObject * obj)
+	{
+		bool canSee = Eluna::CHECKVAL<bool>(L, 2);
+		obj->SetCanSeePhaseOne(canSee);
+		return 0;
+	}
 
     /**
      * Returns the current instance ID of the [WorldObject]
