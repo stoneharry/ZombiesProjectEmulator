@@ -592,7 +592,14 @@ class WorldObject : public Object, public WorldLocation
         virtual void SetPhaseMask(uint32 newPhaseMask, bool update);
         uint32 GetPhaseMask() const { return m_phaseMask; }
         bool InSamePhase(WorldObject const* obj) const;
-        bool InSamePhase(uint32 phasemask) const { return (GetPhaseMask() & phasemask) != 0; }
+        bool InSamePhase(uint32 phasemask) const {
+			if (phasemask == 1)
+				return true;
+			uint32 phase = GetPhaseMask();
+			if (phasemask < 32)
+				return (phase & phasemask) != 0;
+			return (phase == phasemask);
+		}
 
         uint32 GetZoneId() const;
         uint32 GetAreaId() const;
