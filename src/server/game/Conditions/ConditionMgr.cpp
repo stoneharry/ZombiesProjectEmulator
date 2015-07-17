@@ -392,13 +392,16 @@ bool Condition::Meets(ConditionSourceInfo& sourceInfo)
         }
         case CONDITION_PHASEMASK:
 		{
-			uint32 phasemask = object->GetPhaseMask();
-			if (phasemask == 1)
+			if (ConditionValue1 == 1)
 				condMeets = object->GetCanSeePhaseOne();
-			else if (phasemask < 32)
-				condMeets = (phasemask & phasemask) != 0;
 			else
-				condMeets = (phasemask == phasemask);
+			{
+				uint32 phasemask = object->GetPhaseMask();
+				if (phasemask < 32)
+					condMeets = (phasemask & ConditionValue1) != 0;
+				else
+					condMeets = (ConditionValue1 == phasemask);
+			}
             break;
         }
         case CONDITION_TITLE:
