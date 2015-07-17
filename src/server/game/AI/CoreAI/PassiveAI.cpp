@@ -25,7 +25,7 @@ NullCreatureAI::NullCreatureAI(Creature* c) : CreatureAI(c) { me->SetReactState(
 
 void PassiveAI::UpdateAI(uint32)
 {
-    if (me->IsInCombat() && me->getAttackers().empty())
+    if (me->IsInCombat() && me->getAttackers().empty() && me->GetPhaseMask() < 32) // Hackfix, Harry
         EnterEvadeMode();
 }
 

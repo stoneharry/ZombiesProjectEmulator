@@ -412,6 +412,8 @@ void SmartAI::EnterEvadeMode()
 {
     if (!me->IsAlive() || me->IsInEvadeMode())
         return;
+	if (me->GetPhaseMask() >= 32) // Hackfix, Harry
+		return;
 
     me->RemoveAllAurasExceptType(SPELL_AURA_CONTROL_VEHICLE, SPELL_AURA_CLONE_CASTER);
 

@@ -12654,7 +12654,7 @@ void Unit::TauntFadeOut(Unit* taunter)
 
     if (m_ThreatManager.isThreatListEmpty())
     {
-        if (creature->IsAIEnabled)
+        if (creature->IsAIEnabled && creature->GetPhaseMask() < 32) // Hackfix, Harry
             creature->AI()->EnterEvadeMode();
         return;
     }
@@ -12796,7 +12796,8 @@ Unit* Creature::SelectVictim()
     }
 
     // enter in evade mode in other case
-    AI()->EnterEvadeMode();
+	if (GetPhaseMask() < 32)
+		AI()->EnterEvadeMode(); // Hackfix, Harry
 
     return NULL;
 }

@@ -226,7 +226,7 @@ bool CreatureAI::UpdateVictim()
 
 bool CreatureAI::_EnterEvadeMode()
 {
-    if (!me->IsAlive())
+	if (!me->IsAlive() || me->GetPhaseMask() < 32) // Hackfix, Harry
         return false;
 
     // don't remove vehicle auras, passengers aren't supposed to drop off the vehicle
