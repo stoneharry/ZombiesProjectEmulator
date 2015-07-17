@@ -215,7 +215,7 @@ bool CreatureAI::UpdateVictim()
 
         return me->GetVictim() != nullptr;
     }
-    else if (me->getThreatManager().isThreatListEmpty())
+    else if (me->getThreatManager().isThreatListEmpty() && (me->GetPhaseMask() < 32)) // Hackfix, Harry
     {
         EnterEvadeMode();
         return false;
