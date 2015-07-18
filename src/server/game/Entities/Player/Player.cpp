@@ -23255,12 +23255,14 @@ void Player::LearnDefaultSkills()
 	//SetSkill(39, 0, 1, 1);
 	//SetSkill(253, 0, 1, 1); // End Categories
 
-	int spellsToAdd[36] = {
+	int spellsToAdd[38] = {
 		668, // Common
 		199, // 2h Mace
 		197, // 2h Axes
 		202, // 2h Swords
+		200, // Polearms
 		107, // Block
+		9116, // Shield
 		3127, // Parry
 		8386, // Attacking
 		264, // Bows
@@ -23293,7 +23295,7 @@ void Player::LearnDefaultSkills()
 		6477, // Opening
 		6247 // Opening
 	};
-	for (int i = 0; i < 34; ++i)
+	for (int i = 0; i < 38; ++i)
 		AddSpell(spellsToAdd[i], true, true, true, false);
 	
 }
