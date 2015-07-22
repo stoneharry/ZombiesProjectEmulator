@@ -1239,12 +1239,12 @@ namespace LuaUnit
         return 0;
     }
 
-    /*int SetCanFly(Eluna* E, lua_State* L, Unit* unit)
+    int SetCanFly(Eluna* E, lua_State* L, Unit* unit)
     {
-    bool apply = Eluna::CHECKVAL<bool>(L, 2, true);
-    unit->SetCanFly(apply);
-    return 0;
-    }*/
+		bool apply = Eluna::CHECKVAL<bool>(L, 2, true);
+		unit->SetCanFly(apply);
+		return 0;
+    }
 
     /*int SetVisible(Eluna* E, lua_State* L, Unit* unit)
     {

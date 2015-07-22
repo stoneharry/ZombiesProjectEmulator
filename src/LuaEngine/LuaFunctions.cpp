@@ -220,6 +220,11 @@ ElunaRegister<WorldObject> WorldObjectMethods[] =
     { "GetRelativePoint", &LuaWorldObject::GetRelativePoint },            // :GetRelativePoint(dist, rad) - Returns the x, y and z of a point dist away from worldobject.
     { "GetAngle", &LuaWorldObject::GetAngle },                            // :GetAngle(WorldObject or x, y) - Returns angle between world object and target or x and y coords.
 
+	// Setters
+#if (!defined(TBC) && !defined(CLASSIC))
+	{ "SetPhaseMask", &LuaWorldObject::SetPhaseMask },                    // :SetPhaseMask(newPhaseMask) - Sets the world objects phase mask to that specified
+#endif
+
     // Boolean
     { "IsWithinLoS", &LuaWorldObject::IsWithinLoS },
 
@@ -311,7 +316,7 @@ ElunaRegister<Unit> UnitMethods[] =
     { "SetFFA", &LuaUnit::SetFFA },                           // :SetFFA([apply]) - Sets the units FFA tag on or off
     { "SetSanctuary", &LuaUnit::SetSanctuary },               // :SetSanctuary([apply]) - Enables or disables units sanctuary flag
 #endif
-    // {"SetCanFly", &LuaUnit::SetCanFly},                  // :SetCanFly(apply)
+    {"SetCanFly", &LuaUnit::SetCanFly},                  // :SetCanFly(apply)
     // {"SetVisible", &LuaUnit::SetVisible},                // :SetVisible(x)
     { "SetOwnerGUID", &LuaUnit::SetOwnerGUID },               // :SetOwnerGUID(guid) - Sets the guid of the owner
     { "SetName", &LuaUnit::SetName },                         // :SetName(name) - Sets the unit's name

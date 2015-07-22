@@ -42,6 +42,13 @@ namespace LuaWorldObject
 		Eluna::Push(L, obj->GetPhaseMask());
 		return 1;
 	}
+
+	int SetPhaseMask(Eluna* /*E*/, lua_State* L, WorldObject* obj)
+	{
+		uint32 newPhaseMask = Eluna::CHECKVAL<bool>(L, 2);
+		obj->SetPhaseMask(newPhaseMask, true);
+		return 0;
+	}
 #endif
 
 	int GetCanSeePhaseOne(Eluna* /*E*/, lua_State* L, WorldObject* obj)
