@@ -1477,7 +1477,7 @@ namespace LuaUnit
     int SendUnitSay(Eluna* /*E*/, lua_State* L, Unit* unit)
     {
         const char* msg = Eluna::CHECKVAL<const char*>(L, 2);
-        uint32 language = Eluna::CHECKVAL<uint32>(L, 3);
+        uint32 language = Eluna::CHECKVAL<uint32>(L, 3, 0);
         if (std::string(msg).length() > 0)
 #ifdef TRINITY
             unit->Say(msg, (Language)language, unit);
