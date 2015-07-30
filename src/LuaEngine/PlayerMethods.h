@@ -3078,7 +3078,8 @@ namespace LuaPlayer
         uint32 data = Eluna::CHECKVAL<uint32>(L, 6);
         std::string iconText = Eluna::CHECKVAL<std::string>(L, 7);
 
-        WorldPacket packet(SMSG_GOSSIP_POI, 4 + 4 + 4 + 4 + 4 + 10);
+		int length = 20 + iconText.size();
+		WorldPacket packet(SMSG_GOSSIP_POI, length);
         packet << flags;
         packet << x;
         packet << y;
