@@ -1308,14 +1308,13 @@ namespace LuaGlobalFunctions
         float o = Eluna::CHECKVAL<float>(L, 8);
         bool save = Eluna::CHECKVAL<bool>(L, 9, false);
         uint32 durorresptime = Eluna::CHECKVAL<uint32>(L, 10, 0);
-#if (!defined(TBC) && !defined(CLASSIC))
         uint32 phase = Eluna::CHECKVAL<uint32>(L, 11, PHASEMASK_NORMAL);
         if (!phase)
         {
             Eluna::Push(L);
             return 1;
         }
-#endif
+		bool addToActive = Eluna::CHECKVAL<bool>(L, 12, false);
 
 #ifndef TRINITY
         Map* map = eMapMgr->FindMap(mapID, instanceID);
@@ -1539,7 +1538,7 @@ namespace LuaGlobalFunctions
             }
             else
             {
-                TempSummon* creature = map->SummonCreature(entry, pos, NULL, durorresptime);
+				TempSummon* creature = map->SummonCreature(entry, pos, NULL, durorresptime, 0, 0, 0, addToActive);
                 if (!creature)
                 {
                     Eluna::Push(L);
