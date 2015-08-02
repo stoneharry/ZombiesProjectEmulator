@@ -224,6 +224,7 @@ ElunaRegister<WorldObject> WorldObjectMethods[] =
 #if (!defined(TBC) && !defined(CLASSIC))
 	{ "SetPhaseMask", &LuaWorldObject::SetPhaseMask },                    // :SetPhaseMask(newPhaseMask) - Sets the world objects phase mask to that specified
 #endif
+	{ "SetActive", &LuaWorldObject::SetActive },
 
     // Boolean
     { "IsWithinLoS", &LuaWorldObject::IsWithinLoS },

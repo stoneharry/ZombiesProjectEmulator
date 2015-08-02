@@ -51,6 +51,13 @@ namespace LuaWorldObject
 	}
 #endif
 
+	int SetActive(Eluna* E, lua_State* L, WorldObject* obj)
+	{
+		bool x = Eluna::CHECKVAL<bool>(L, 2, true);
+		obj->setActive(x);
+		return 0;
+	}
+
 	int GetCanSeePhaseOne(Eluna* /*E*/, lua_State* L, WorldObject* obj)
 	{
 		Eluna::Push(L, obj->GetCanSeePhaseOne());
