@@ -28,6 +28,7 @@
 #include <map>
 #include <vector>
 #include <list>
+#include "..\Globals\VirtualItemMgr.h"
 
 enum RollType
 {
@@ -354,6 +355,14 @@ struct Loot
         for (QuestItemMap::const_iterator itr = PlayerNonQuestNonFFAConditionalItems.begin(); itr != PlayerNonQuestNonFFAConditionalItems.end(); ++itr)
             delete itr->second;
         PlayerNonQuestNonFFAConditionalItems.clear();
+
+        for (auto& item : items)
+            if (!item.is_looted)
+                sVirtualItemMgr.Remove(item.itemid);
+
+        for (auto& item : quest_items)
+            if (!item.is_looted)
+                sVirtualItemMgr.Remove(item.itemid);
 
         PlayersLooting.clear();
         items.clear();

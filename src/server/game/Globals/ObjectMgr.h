@@ -979,6 +979,7 @@ class ObjectMgr
         void LoadGameObjectLocales();
         void LoadGameobjects();
         void LoadItemTemplates();
+        void LoadVirtualItemTemplates();
         void LoadItemLocales();
         void LoadItemSetNames();
         void LoadItemSetNameLocales();

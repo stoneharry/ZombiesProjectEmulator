@@ -28,6 +28,7 @@
 #include "ConditionMgr.h"
 #include "Player.h"
 #include "WorldSession.h"
+#include "VirtualItemMgr.h"
 
 void AddItemsSetItem(Player* player, Item* item)
 {
@@ -259,6 +260,18 @@ bool Item::Create(uint32 guidlow, uint32 itemid, Player const* owner)
 {
     Object::_Create(guidlow, 0, HIGHGUID_ITEM);
 
+    ItemTemplate const* itemProto = sObjectMgr->GetItemTemplate(itemid);
+    if (!itemProto)
+        return false;
+
+    if (VirtualItemMgr::IsVirtualTemplate(itemProto))
+    {
+        itemProto = sVirtualItemMgr.GenerateVirtualTemplate(itemProto, BIND_ITEM);
+        itemid = itemProto->ItemId;
+    }
+    else
+        sVirtualItemMgr.SetVirtualTemplateMemoryBind(itemid, BIND_ITEM);
+
     SetEntry(itemid);
     SetObjectScale(1.0f);
 
@@ -267,10 +280,6 @@ bool Item::Create(uint32 guidlow, uint32 itemid, Player const* owner)
         SetGuidValue(ITEM_FIELD_OWNER, owner->GetGUID());
         SetGuidValue(ITEM_FIELD_CONTAINED, owner->GetGUID());
     }
-
-    ItemTemplate const* itemProto = sObjectMgr->GetItemTemplate(itemid);
-    if (!itemProto)
-        return false;
 
     SetUInt32Value(ITEM_FIELD_STACK_COUNT, 1);
     SetUInt32Value(ITEM_FIELD_MAXDURABILITY, itemProto->MaxDurability);
@@ -363,6 +372,41 @@ void Item::SaveToDB(SQLTransaction& trans)
                 stmt->setUInt32(1, guid);
                 trans->Append(stmt);
             }
+
+            if (uState == ITEM_NEW)
+            {
+                if (VirtualItemTemplate const* itemTemplate = sVirtualItemMgr.GetVirtualTemplate(GetEntry()))
+                {
+                    uint8 i = 0;
+                    stmt = CharacterDatabase.GetPreparedStatement(CHAR_INS_VIRTUAL_TEMPLATE);
+                    stmt->setUInt32(i++, itemTemplate->ItemId);
+                    stmt->setUInt32(i++, itemTemplate->base_entry);
+                    stmt->setUInt32(i++, GetGUIDLow());
+                    stmt->setUInt8(i++, itemTemplate->Quality);
+                    stmt->setUInt8(i++, itemTemplate->StatsCount);
+                    for (uint8 j = 0; j < MAX_ITEM_PROTO_STATS; ++j)
+                    {
+                        if (j < itemTemplate->StatsCount)
+                        {
+                            stmt->setUInt8(i++, itemTemplate->ItemStat[j].ItemStatType);
+                            stmt->setInt16(i++, itemTemplate->ItemStat[j].ItemStatValue);
+                        }
+                        else
+                        {
+                            stmt->setUInt8(i++, 0);
+                            stmt->setInt16(i++, 0);
+                        }
+                    }
+                    stmt->setUInt16(i++, itemTemplate->Armor);
+                    stmt->setUInt8(i++, itemTemplate->HolyRes);
+                    stmt->setUInt8(i++, itemTemplate->FireRes);
+                    stmt->setUInt8(i++, itemTemplate->NatureRes);
+                    stmt->setUInt8(i++, itemTemplate->FrostRes);
+                    stmt->setUInt8(i++, itemTemplate->ShadowRes);
+                    stmt->setUInt8(i++, itemTemplate->ArcaneRes);
+                    trans->Append(stmt);
+                }
+            }
             break;
         }
         case ITEM_REMOVED:
@@ -385,6 +429,7 @@ void Item::SaveToDB(SQLTransaction& trans)
             if (!loot.isLooted())
                 ItemContainerDeleteLootMoneyAndLootItemsFromDB();
 
+            sVirtualItemMgr.Remove(GetEntry());
             delete this;
             return;
         }
@@ -698,6 +743,8 @@ void Item::SetState(ItemUpdateState state, Player* forplayer)
             RemoveFromUpdateQueueOf(forplayer);
             forplayer->DeleteRefundReference(GetGUID());
         }
+
+        sVirtualItemMgr.Remove(GetEntry());
         delete this;
         return;
     }

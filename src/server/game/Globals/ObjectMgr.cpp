@@ -50,6 +50,7 @@
 #include "Vehicle.h"
 #include "WaypointManager.h"
 #include "World.h"
+#include "VirtualItemMgr.h"
 
 ScriptMapMap sSpellScripts;
 ScriptMapMap sEventScripts;
@@ -2821,6 +2822,12 @@ void ObjectMgr::LoadItemTemplates()
             itemTemplate.FlagsCu &= ~ITEM_FLAGS_CU_DURATION_REAL_TIME;
         }
 
+        if (itemTemplate.FlagsCu & ITEM_FLAGS_CU_VIRTUAL_ITEM_BASE && !VirtualItemMgr::IsVirtualTemplate(&itemTemplate))
+        {
+            TC_LOG_ERROR("sql.sql", "Item (Entry %u) has flag ITEM_FLAGS_CU_VIRTUAL_ITEM_BASE but it is not a valid virtual item template", entry);
+            itemTemplate.FlagsCu &= ~ITEM_FLAGS_CU_VIRTUAL_ITEM_BASE;
+        }
+
         ++count;
     }
     while (result->NextRow());
@@ -2851,13 +2858,71 @@ void ObjectMgr::LoadItemTemplates()
     TC_LOG_INFO("server.loading", ">> Loaded %u item templates in %u ms", count, GetMSTimeDiffToNow(oldMSTime));
 }
 
+void ObjectMgr::LoadVirtualItemTemplates()
+{
+    uint32 oldMSTime = getMSTime();
+
+    CharacterDatabase.DirectExecute("DELETE FROM item_template_virtual WHERE entry NOT IN ( SELECT itemEntry FROM item_instance WHERE itemEntry IS NOT NULL )");
+    QueryResult result = CharacterDatabase.Query("SELECT entry, base_entry, Quality, StatsCount, "
+        "stat_type1, stat_value1, stat_type2, stat_value2, stat_type3, stat_value3, stat_type4, stat_value4, stat_type5, stat_value5, "
+        "stat_type6, stat_value6, stat_type7, stat_value7, stat_type8, stat_value8, stat_type9, stat_value9, stat_type10, stat_value10, "
+        "armor, holy_res, fire_res, nature_res, frost_res, shadow_res, arcane_res "
+        "FROM item_template_virtual");
+
+    if (!result)
+    {
+        TC_LOG_INFO("server.loading", ">> Loaded 0 virtual item templates. DB table `item_template_virtual` is empty.");
+        return;
+    }
+
+    uint32 count = 0;
+
+    do
+    {
+        Field* fields = result->Fetch();
+
+        uint8 i = 0;
+        uint32 entry = fields[i++].GetUInt32();
+        uint32 base_entry = fields[i++].GetUInt32();
+
+        ItemTemplate const* base = GetItemTemplate(base_entry);
+        if (!base)
+            continue;
+
+        // only item bound templates are saved to DB
+        VirtualItemTemplate* itemTemplate = new VirtualItemTemplate(base, BIND_ITEM);
+
+        itemTemplate->ItemId = entry;
+        itemTemplate->base_entry = base_entry;
+        itemTemplate->Quality = uint32(fields[i++].GetUInt8());
+        itemTemplate->StatsCount = uint32(fields[i++].GetUInt8());
+        for (uint8 j = 0; j < MAX_ITEM_PROTO_STATS; ++j)
+        {
+            itemTemplate->ItemStat[j].ItemStatType = uint32(fields[i++].GetUInt8());
+            itemTemplate->ItemStat[j].ItemStatValue = int32(fields[i++].GetInt16());
+        }
+        itemTemplate->Armor = uint32(fields[i++].GetUInt16());
+        itemTemplate->HolyRes = uint32(fields[i++].GetUInt8());
+        itemTemplate->FireRes = uint32(fields[i++].GetUInt8());
+        itemTemplate->NatureRes = uint32(fields[i++].GetUInt8());
+        itemTemplate->FrostRes = uint32(fields[i++].GetUInt8());
+        itemTemplate->ShadowRes = uint32(fields[i++].GetUInt8());
+        itemTemplate->ArcaneRes = uint32(fields[i++].GetUInt8());
+
+        sVirtualItemMgr.InsertEntry(itemTemplate);
+        ++count;
+    } while (result->NextRow());
+
+    TC_LOG_INFO("server.loading", ">> Loaded %u virtual item templates in %u ms", count, GetMSTimeDiffToNow(oldMSTime));
+}
+
 ItemTemplate const* ObjectMgr::GetItemTemplate(uint32 entry)
 {
     ItemTemplateContainer::const_iterator itr = _itemTemplateStore.find(entry);
     if (itr != _itemTemplateStore.end())
         return &(itr->second);
 
-    return NULL;
+    return sVirtualItemMgr.GetVirtualTemplate(entry);
 }
 
 void ObjectMgr::LoadItemSetNameLocales()
