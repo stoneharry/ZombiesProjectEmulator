@@ -27,6 +27,7 @@
 #include "Group.h"
 #include "Player.h"
 #include "Containers.h"
+#include "VirtualItemMgr.h"
 
 static Rates const qualityToRate[MAX_ITEM_QUALITY] =
 {
@@ -418,6 +419,8 @@ void Loot::AddItem(LootStoreItem const& item)
     ItemTemplate const* proto = sObjectMgr->GetItemTemplate(item.itemid);
     if (!proto)
         return;
+    if (VirtualItemMgr::IsVirtualTemplate(proto))
+        proto = sVirtualItemMgr.GenerateVirtualTemplate(proto, BIND_LOOT);
 
     uint32 count = urand(item.mincount, item.maxcount);
     uint32 stacks = count / proto->GetMaxStackSize() + ((count % proto->GetMaxStackSize()) ? 1 : 0);
@@ -428,6 +431,8 @@ void Loot::AddItem(LootStoreItem const& item)
     for (uint32 i = 0; i < stacks && lootItems.size() < limit; ++i)
     {
         LootItem generatedLoot(item);
+        if (item.itemid != proto->ItemId)
+            generatedLoot.itemid = proto->ItemId;
         generatedLoot.count = std::min(count, proto->GetMaxStackSize());
         lootItems.push_back(generatedLoot);
         count -= proto->GetMaxStackSize();

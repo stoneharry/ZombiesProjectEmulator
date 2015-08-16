@@ -1675,6 +1675,20 @@ namespace LuaUnit
         return 0;
     }
 
+	int PlayMusic(Eluna* /*E*/, lua_State* L, Unit* unit)
+	{
+		uint32 soundId = Eluna::CHECKVAL<uint32>(L, 2);
+		Player* player = Eluna::CHECKOBJ<Player>(L, 3, false);
+
+		WorldPacket data(SMSG_PLAY_MUSIC, 4);
+		data << uint32(soundId);
+		if (player)
+			player->SendDirectMessage(&data);
+		else
+			unit->SendMessageToSet(&data, true);
+		return 0;
+	}
+
     int AddUnitState(Eluna* /*E*/, lua_State* L, Unit* unit)
     {
         uint32 state = Eluna::CHECKVAL<uint32>(L, 2);
