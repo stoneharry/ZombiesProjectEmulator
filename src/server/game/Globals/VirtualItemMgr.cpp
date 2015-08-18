@@ -4,7 +4,11 @@
 #include <algorithm>
 #include <cstdlib>
 
-VirtualModifier::PremadeStatGroup const VirtualModifier::premadeStatGroups;
+VirtualModifier::StatGroupData const VirtualModifier::premadeStatGroupData;
+
+VirtualModifier::VirtualModifier() : ilevel(0), quality(MAX_ITEM_QUALITY), statpool(-1), statgroup(STAT_GROUP_RANDOM)
+{
+}
 
 float VirtualModifier::GetSlotStatModifier(InventoryType invtype)
 {
@@ -75,6 +79,12 @@ float VirtualModifier::GetStatRate(ItemModType stat)
         return 1.0f;
     }
     return 1.0f;
+}
+
+VirtualItemMgr & VirtualItemMgr::instance()
+{
+    static VirtualItemMgr obj;
+    return obj;
 }
 
 VirtualItemMgr::VirtualItemMgr()
@@ -210,16 +220,29 @@ void VirtualItemMgr::GenerateStats(ItemTemplate* output, VirtualModifier const& 
         pool = modifier.statpool;
     ASSERT(pool >= 0 && pool < 0x7FFF);
 
+    // select stat group
+    StatGroup statgroupid = modifier.statgroup;
+    if (modifier.statgroup == STAT_GROUP_RANDOM && output->Class == ITEM_CLASS_ARMOR)
+    {
+        std::vector<StatGroup> const& statgroups = modifier.premadeStatGroupData.GetArmorSubclassStatGroups((ItemSubclassArmor)output->SubClass);
+        if (!statgroups.empty())
+            statgroupid = statgroups[urand(0, statgroups.size() - 1)];
+        }
+    if (statgroupid == STAT_GROUP_RANDOM)
+        statgroupid = static_cast<StatGroup>(urand(0, STAT_GROUP_COUNT - 1));
+    ASSERT(statgroupid < STAT_GROUP_COUNT); // must not be random anymore
+    std::vector<ItemModType> const& statgroup = modifier.premadeStatGroupData.GetStatGroupStats(statgroupid);
+
     std::vector<ItemModType> selectedStats;
     std::vector<int16> distributedPool;
-    if (!modifier.statgroup.empty())
+    if (statscount && !statgroup.empty())
     {
         // select stats from preselected stat group
         for (uint32 i = 0; i < statscount; ++i)
-            selectedStats.push_back(modifier.statgroup[urand(0, modifier.statgroup.size() - 1)]);
+            selectedStats.push_back(statgroup[urand(0, statgroup.size() - 1)]);
 
         // distribute pool to stats
-        static const float mineachpct = 0.10f;
+        const float mineachpct = 0.5f / selectedStats.size();
         ASSERT(mineachpct <= 1.0f / selectedStats.size() && mineachpct >= 0.0);
 
         // calculate min amount and take that from the randomly distributed pool
@@ -230,7 +253,7 @@ void VirtualItemMgr::GenerateStats(ItemTemplate* output, VirtualModifier const& 
         // then add those to distributedPool along with the minimum amounts
         std::vector<int16> fences;
         fences.push_back(0);
-        for (uint32 i = 1; i < selectedStats.size(); ++i)
+        for (int32 i = 1; i < int32(selectedStats.size()); ++i)
             fences.push_back(urand(0, workpool));
         fences.push_back(workpool);
         std::sort(fences.begin(), fences.end());
@@ -258,6 +281,22 @@ void VirtualItemMgr::GenerateStats(ItemTemplate* output, VirtualModifier const& 
     }
     statscount = setStats;
 
+    // set socket colors
+    std::vector<SocketColor> const& socketcolors = modifier.premadeStatGroupData.GetStatGroupSockets(statgroupid);
+    if (!socketcolors.empty())
+    {
+        for (int32 i = 0; i < MAX_ITEM_PROTO_SOCKETS; ++i)
+        {
+            if (!output->Socket[i].Color)
+                continue;
+            if (output->Socket[i].Color != SOCKET_COLOR_RED &&
+                output->Socket[i].Color != SOCKET_COLOR_BLUE &&
+                output->Socket[i].Color != SOCKET_COLOR_YELLOW)
+                continue;
+            output->Socket[i].Color = socketcolors[urand(0, socketcolors.size() - 1)];
+        }
+    }
+
     // apply other item data
     output->Quality = quality;
     output->StatsCount = statscount; // remember to modify in stat generation if two same stats are picked
@@ -274,6 +313,14 @@ void VirtualItemMgr::SetVirtualTemplateMemoryBind(uint32 entry, MemoryBind bindi
     if (it == store.end())
         return;
     it->second->memoryBinding = binding;
+}
+
+bool VirtualItemMgr::IsVirtualTemplate(ItemTemplate const * base)
+{
+    return (base->FlagsCu & ITEM_FLAGS_CU_VIRTUAL_ITEM_BASE) != 0 &&
+        (base->Class == ITEM_CLASS_WEAPON || base->Class == ITEM_CLASS_ARMOR) &&
+        base->RandomProperty == 0 && base->RandomSuffix == 0 &&
+        base->ScalingStatDistribution == 0 && base->ScalingStatValue == 0;
 }
 
 // does not directly remove the item. Removing delayed until actual delete
@@ -409,9 +456,9 @@ void VirtualItemMgr::ClearFreedEntries()
     freed_entries.clear();
 }
 
-VirtualModifier::PremadeStatGroup::PremadeStatGroup()
+VirtualModifier::StatGroupData::StatGroupData()
 {
-    premade[STAT_GROUP_HEALING] = {
+    stat_group_stats[STAT_GROUP_HEALING] = {
         ITEM_MOD_STAMINA,
         ITEM_MOD_INTELLECT,
         ITEM_MOD_SPIRIT,
@@ -420,7 +467,7 @@ VirtualModifier::PremadeStatGroup::PremadeStatGroup()
         ITEM_MOD_MANA_REGENERATION,
         ITEM_MOD_SPELL_POWER
     };
-    premade[STAT_GROUP_INT_DPS] = {
+    stat_group_stats[STAT_GROUP_INT_DPS] = {
         ITEM_MOD_STAMINA,
         ITEM_MOD_INTELLECT,
         ITEM_MOD_HIT_SPELL_RATING,
@@ -430,7 +477,7 @@ VirtualModifier::PremadeStatGroup::PremadeStatGroup()
         ITEM_MOD_SPELL_POWER,
         ITEM_MOD_SPELL_PENETRATION
     };
-    premade[STAT_GROUP_STR_DPS] = {
+    stat_group_stats[STAT_GROUP_STR_DPS] = {
         ITEM_MOD_STAMINA,
         ITEM_MOD_STRENGTH,
         ITEM_MOD_HIT_MELEE_RATING,
@@ -440,7 +487,7 @@ VirtualModifier::PremadeStatGroup::PremadeStatGroup()
         ITEM_MOD_ATTACK_POWER,
         ITEM_MOD_ARMOR_PENETRATION_RATING
     };
-    premade[STAT_GROUP_STR_TANK] = {
+    stat_group_stats[STAT_GROUP_STR_TANK] = {
         ITEM_MOD_STAMINA,
         ITEM_MOD_STRENGTH,
         ITEM_MOD_HEALTH,
@@ -450,7 +497,7 @@ VirtualModifier::PremadeStatGroup::PremadeStatGroup()
         ITEM_MOD_HIT_RATING,
         ITEM_MOD_HEALTH_REGEN
     };
-    premade[STAT_GROUP_AGI_DPS] = {
+    stat_group_stats[STAT_GROUP_AGI_DPS] = {
         ITEM_MOD_STAMINA,
         ITEM_MOD_AGILITY,
         ITEM_MOD_HIT_MELEE_RATING,
@@ -460,7 +507,7 @@ VirtualModifier::PremadeStatGroup::PremadeStatGroup()
         ITEM_MOD_ATTACK_POWER,
         ITEM_MOD_ARMOR_PENETRATION_RATING
     };
-    premade[STAT_GROUP_AGI_TANK] = {
+    stat_group_stats[STAT_GROUP_AGI_TANK] = {
         ITEM_MOD_STAMINA,
         ITEM_MOD_AGILITY,
         ITEM_MOD_HEALTH,
@@ -470,7 +517,7 @@ VirtualModifier::PremadeStatGroup::PremadeStatGroup()
         ITEM_MOD_HIT_RATING,
         ITEM_MOD_HEALTH_REGEN
     };
-    premade[STAT_GROUP_AGI_RANGED] = {
+    stat_group_stats[STAT_GROUP_AGI_RANGED] = {
         ITEM_MOD_STAMINA,
         ITEM_MOD_AGILITY,
         ITEM_MOD_HIT_RANGED_RATING,
@@ -480,13 +527,86 @@ VirtualModifier::PremadeStatGroup::PremadeStatGroup()
         ITEM_MOD_RANGED_ATTACK_POWER,
         ITEM_MOD_ARMOR_PENETRATION_RATING
     };
+
+    // socket groups
+    stat_group_sockets[STAT_GROUP_HEALING] = {
+        SOCKET_COLOR_BLUE
+    };
+
+    stat_group_sockets[STAT_GROUP_INT_DPS] = {
+        SOCKET_COLOR_BLUE
+    };
+
+    stat_group_sockets[STAT_GROUP_STR_DPS] = {
+        SOCKET_COLOR_YELLOW
+    };
+
+    stat_group_sockets[STAT_GROUP_STR_TANK] = {
+        SOCKET_COLOR_RED
+    };
+
+    stat_group_sockets[STAT_GROUP_AGI_DPS] = {
+        SOCKET_COLOR_YELLOW
+    };
+
+    stat_group_sockets[STAT_GROUP_AGI_TANK] = {
+        SOCKET_COLOR_RED
+    };
+
+    stat_group_sockets[STAT_GROUP_AGI_RANGED] = {
+        SOCKET_COLOR_YELLOW
+    };
+
+    // type stat groups
+    armor_type_stat_groups[ITEM_SUBCLASS_ARMOR_CLOTH] = {
+        STAT_GROUP_HEALING,
+        STAT_GROUP_INT_DPS
+    };
+
+    armor_type_stat_groups[ITEM_SUBCLASS_ARMOR_LEATHER] = {
+        STAT_GROUP_HEALING,
+        STAT_GROUP_INT_DPS,
+        STAT_GROUP_AGI_DPS,
+        STAT_GROUP_AGI_TANK,
+        STAT_GROUP_AGI_RANGED
+    };
+
+    armor_type_stat_groups[ITEM_SUBCLASS_ARMOR_MAIL] = {
+        STAT_GROUP_HEALING,
+        STAT_GROUP_STR_DPS,
+        STAT_GROUP_STR_TANK,
+        STAT_GROUP_AGI_DPS,
+        STAT_GROUP_AGI_RANGED
+    };
+
+    armor_type_stat_groups[ITEM_SUBCLASS_ARMOR_PLATE] = {
+        STAT_GROUP_HEALING,
+        STAT_GROUP_INT_DPS,
+        STAT_GROUP_STR_DPS,
+        STAT_GROUP_STR_TANK
+    };
+
 }
 
-std::vector<ItemModType> const & VirtualModifier::PremadeStatGroup::Get(StatGroup group) const
+std::vector<ItemModType> const & VirtualModifier::StatGroupData::GetStatGroupStats(StatGroup group) const
 {
     if (group == STAT_GROUP_RANDOM)
         group = static_cast<StatGroup>(urand(0, STAT_GROUP_COUNT - 1));
     ASSERT(group < STAT_GROUP_COUNT);
 
-    return premade[group];
+    return stat_group_stats[group];
+}
+
+std::vector<SocketColor> const & VirtualModifier::StatGroupData::GetStatGroupSockets(StatGroup group) const
+{
+    if (group == STAT_GROUP_RANDOM)
+        group = static_cast<StatGroup>(urand(0, STAT_GROUP_COUNT - 1));
+    ASSERT(group < STAT_GROUP_COUNT);
+
+    return stat_group_sockets[group];
+}
+
+std::vector<StatGroup> const & VirtualModifier::StatGroupData::GetArmorSubclassStatGroups(ItemSubclassArmor subclass) const
+{
+    return armor_type_stat_groups[subclass];
 }

@@ -1255,6 +1255,11 @@ void WorldSession::HandleSocketOpcode(WorldPacket& recvData)
         // tried to put meta gem in normal socket
         if (itemProto->Socket[i].Color != SOCKET_COLOR_META && GemProps[i]->color == SOCKET_COLOR_META)
             return;
+
+        // Tried to equip a gem of the wrong color into a socket
+        // Not the best way to handle this. We should simply disable the effect rather than not allowing the gem to be socketed.
+        if (itemProto->Socket[i].Color != GemProps[i]->color)
+            return;
     }
 
     uint32 GemEnchants[MAX_GEM_SOCKETS];
