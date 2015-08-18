@@ -6549,7 +6549,7 @@ void AuraEffect::HandleLearnSpell(AuraApplication const* aurApp, uint8 mode, boo
 		target->LearnSpell(GetAmount(), false);
 	else
 	{
-		if (!target->GetSession()->PlayerLogout())
-			target->RemoveSpell(GetAmount());
+		if (!target->GetSession()->PlayerLogout() && !target->GetSession()->isLogingOut())
+			target->RemoveSpell(GetAmount(), true, false);
 	}
 }
