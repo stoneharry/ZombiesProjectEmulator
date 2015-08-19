@@ -14,13 +14,13 @@ class World;
 
 enum StatGroup
 {
-   STAT_GROUP_HEALING,
-   STAT_GROUP_INT_DPS,
-   STAT_GROUP_STR_DPS,
-   STAT_GROUP_STR_TANK,
-   STAT_GROUP_AGI_DPS,
-   STAT_GROUP_AGI_TANK,
-   STAT_GROUP_AGI_RANGED,
+    STAT_GROUP_HEALING,
+    STAT_GROUP_INT_DPS,
+    STAT_GROUP_STR_DPS,
+    STAT_GROUP_STR_TANK,
+    STAT_GROUP_AGI_DPS,
+    STAT_GROUP_AGI_TANK,
+    STAT_GROUP_AGI_RANGED,
     STAT_GROUP_COUNT,
     STAT_GROUP_RANDOM = STAT_GROUP_COUNT,
 };
@@ -45,23 +45,25 @@ struct VirtualItemTemplate : ItemTemplate
 
 struct VirtualModifier
 {
-    VirtualModifier() : ilevel(0), quality(MAX_ITEM_QUALITY), statpool(-1), statgroup(premadeStatGroups.Get(STAT_GROUP_RANDOM))
-    {
-    }
+    VirtualModifier();
     uint8 ilevel;
     uint8 quality;
     int16 statpool;
-    std::vector<ItemModType> const& statgroup;
+    StatGroup statgroup;
 
-    class PremadeStatGroup
+    class StatGroupData
     {
     public:
-        PremadeStatGroup();
-        std::vector<ItemModType> const& Get(StatGroup group) const;
+        StatGroupData();
+        std::vector<ItemModType> const& GetStatGroupStats(StatGroup group) const;
+        std::vector<SocketColor> const& GetStatGroupSockets(StatGroup group) const;
+        std::vector<StatGroup> const& GetArmorSubclassStatGroups(ItemSubclassArmor subclass) const;
     private:
-        std::vector<ItemModType> premade[STAT_GROUP_COUNT];
+        std::vector<ItemModType> stat_group_stats[STAT_GROUP_COUNT];
+        std::vector<SocketColor> stat_group_sockets[STAT_GROUP_COUNT];
+        std::vector<StatGroup> armor_type_stat_groups[MAX_ITEM_SUBCLASS_ARMOR];
     };
-    static PremadeStatGroup const premadeStatGroups;
+    static StatGroupData const premadeStatGroupData;
 
     static float GetSlotStatModifier(InventoryType invtype);
     static float GetStatRate(ItemModType stat);
@@ -82,11 +84,7 @@ public:
     static const uint32 maxEntry = 0xFFFFFF;
     static_assert(minEntry < maxEntry, "Min entry must be smaller than max entry");
 
-    static VirtualItemMgr& instance()
-    {
-        static VirtualItemMgr obj;
-        return obj;
-    }
+    static VirtualItemMgr& instance();
 
     VirtualItemMgr();
     ~VirtualItemMgr();
@@ -101,13 +99,7 @@ public:
     VirtualItemTemplate* GenerateVirtualTemplate(ItemTemplate const* base, MemoryBind binding, VirtualModifier const& modifier = VirtualModifier());
     void GenerateStats(ItemTemplate* output, VirtualModifier const& modifier = VirtualModifier()) const;
     void SetVirtualTemplateMemoryBind(uint32 entry, MemoryBind binding);
-    static bool IsVirtualTemplate(ItemTemplate const* base)
-    {
-        return (base->FlagsCu & ITEM_FLAGS_CU_VIRTUAL_ITEM_BASE) != 0 &&
-            (base->Class == ITEM_CLASS_WEAPON || base->Class == ITEM_CLASS_ARMOR) &&
-            base->RandomProperty == 0 && base->RandomSuffix == 0 &&
-            base->ScalingStatDistribution == 0 && base->ScalingStatValue == 0;
-    }
+    static bool IsVirtualTemplate(ItemTemplate const* base);
 
 private:
 

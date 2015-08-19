@@ -2866,7 +2866,7 @@ void ObjectMgr::LoadVirtualItemTemplates()
     QueryResult result = CharacterDatabase.Query("SELECT entry, base_entry, Quality, StatsCount, "
         "stat_type1, stat_value1, stat_type2, stat_value2, stat_type3, stat_value3, stat_type4, stat_value4, stat_type5, stat_value5, "
         "stat_type6, stat_value6, stat_type7, stat_value7, stat_type8, stat_value8, stat_type9, stat_value9, stat_type10, stat_value10, "
-        "armor, holy_res, fire_res, nature_res, frost_res, shadow_res, arcane_res "
+        "armor, socket1, socket2, socket3 "
         "FROM item_template_virtual");
 
     if (!result)
@@ -2902,12 +2902,8 @@ void ObjectMgr::LoadVirtualItemTemplates()
             itemTemplate->ItemStat[j].ItemStatValue = int32(fields[i++].GetInt16());
         }
         itemTemplate->Armor = uint32(fields[i++].GetUInt16());
-        itemTemplate->HolyRes = uint32(fields[i++].GetUInt8());
-        itemTemplate->FireRes = uint32(fields[i++].GetUInt8());
-        itemTemplate->NatureRes = uint32(fields[i++].GetUInt8());
-        itemTemplate->FrostRes = uint32(fields[i++].GetUInt8());
-        itemTemplate->ShadowRes = uint32(fields[i++].GetUInt8());
-        itemTemplate->ArcaneRes = uint32(fields[i++].GetUInt8());
+        for (uint8 j = 0; j < MAX_ITEM_PROTO_SOCKETS; ++j)
+            itemTemplate->Socket[j].Color = uint32(fields[i++].GetUInt8());
 
         sVirtualItemMgr.InsertEntry(itemTemplate);
         ++count;

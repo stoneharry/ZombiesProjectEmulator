@@ -398,12 +398,8 @@ void Item::SaveToDB(SQLTransaction& trans)
                         }
                     }
                     stmt->setUInt16(i++, itemTemplate->Armor);
-                    stmt->setUInt8(i++, itemTemplate->HolyRes);
-                    stmt->setUInt8(i++, itemTemplate->FireRes);
-                    stmt->setUInt8(i++, itemTemplate->NatureRes);
-                    stmt->setUInt8(i++, itemTemplate->FrostRes);
-                    stmt->setUInt8(i++, itemTemplate->ShadowRes);
-                    stmt->setUInt8(i++, itemTemplate->ArcaneRes);
+                    for (uint8 j = 0; j < MAX_ITEM_PROTO_SOCKETS; ++j)
+                        stmt->setInt8(i++, itemTemplate->Socket[j].Color);
                     trans->Append(stmt);
                 }
             }
