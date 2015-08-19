@@ -1258,8 +1258,11 @@ void WorldSession::HandleSocketOpcode(WorldPacket& recvData)
 
         // Tried to equip a gem of the wrong color into a socket
         // Not the best way to handle this. We should simply disable the effect rather than not allowing the gem to be socketed.
-        if (itemProto->Socket[i].Color != GemProps[i]->color)
-            return;
+		if (itemProto->Socket[i].Color != GemProps[i]->color)
+		{
+			_player->SendEquipError(EQUIP_ERR_ITEM_DOESNT_GO_TO_SLOT, itemTarget, NULL);
+			return;
+		}
     }
 
     uint32 GemEnchants[MAX_GEM_SOCKETS];
