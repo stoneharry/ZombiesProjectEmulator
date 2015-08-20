@@ -6546,10 +6546,12 @@ void AuraEffect::HandleLearnSpell(AuraApplication const* aurApp, uint8 mode, boo
 	Player * target = aurApp->GetTarget()->ToPlayer();
 
 	if (apply && !target->HasSpell(GetAmount()))
-		target->LearnSpell(GetAmount(), false);
+		target->AddTemporarySpell(GetAmount(), true);
 	else
 	{
 		if (!target->GetSession()->PlayerLogout() && !target->GetSession()->isLogingOut())
-			target->RemoveSpell(GetAmount(), false, false);
+			target->RemoveTemporarySpell(GetAmount(), true);
+		else
+			target->RemoveTemporarySpell(GetAmount(), false);
 	}
 }

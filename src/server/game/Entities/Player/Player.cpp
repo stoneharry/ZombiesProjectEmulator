@@ -3850,7 +3850,7 @@ bool Player::AddSpell(uint32 spellId, bool active, bool learning, bool dependent
     return active && !disabled && !superceded_old;
 }
 
-void Player::AddTemporarySpell(uint32 spellId)
+void Player::AddTemporarySpell(uint32 spellId, bool packet)
 {
     PlayerSpellMap::iterator itr = m_spells.find(spellId);
     // spell already added - do not do anything
@@ -3862,9 +3862,16 @@ void Player::AddTemporarySpell(uint32 spellId)
     newspell->dependent = false;
     newspell->disabled  = false;
     m_spells[spellId]   = newspell;
+	if (packet)
+	{
+		WorldPacket data(SMSG_LEARNED_SPELL, 6);
+		data << uint32(spellId);
+		data << uint16(0);
+		GetSession()->SendPacket(&data);
+	}
 }
 
-void Player::RemoveTemporarySpell(uint32 spellId)
+void Player::RemoveTemporarySpell(uint32 spellId, bool packet)
 {
     PlayerSpellMap::iterator itr = m_spells.find(spellId);
     // spell already not in list - do not do anything
@@ -3875,6 +3882,13 @@ void Player::RemoveTemporarySpell(uint32 spellId)
         return;
     delete itr->second;
     m_spells.erase(itr);
+	RemoveOwnedAura(spellId, GetGUID());
+	if (packet)
+	{
+		WorldPacket data(SMSG_REMOVED_SPELL, 4);
+		data << uint32(spellId);
+		GetSession()->SendPacket(&data);
+	}
 }
 
 bool Player::IsNeedCastPassiveSpellAtLearn(SpellInfo const* spellInfo) const
