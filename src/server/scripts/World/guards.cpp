@@ -37,14 +37,14 @@ EndContentData */
 
 enum GuardGeneric
 {
-    GENERIC_CREATURE_COOLDOWN       = 5000,
+    GENERIC_CREATURE_COOLDOWN = 5000,
 
-    SAY_GUARD_SIL_AGGRO             = 0,
+    SAY_GUARD_SIL_AGGRO = 0,
 
-    NPC_CENARION_HOLD_INFANTRY      = 15184,
-    NPC_STORMWIND_CITY_GUARD        = 68,
-    NPC_STORMWIND_CITY_PATROLLER    = 1976,
-    NPC_ORGRIMMAR_GRUNT             = 3296
+    NPC_CENARION_HOLD_INFANTRY = 15184,
+    NPC_STORMWIND_CITY_GUARD = 68,
+    NPC_STORMWIND_CITY_PATROLLER = 1976,
+    NPC_ORGRIMMAR_GRUNT = 3296
 };
 
 class guard_generic : public CreatureScript
@@ -80,7 +80,7 @@ public:
 
         void UpdateAI(uint32 diff) override
         {
-             //Always decrease our global cooldown first
+            //Always decrease our global cooldown first
             if (globalCooldown > diff)
                 globalCooldown -= diff;
             else
@@ -106,7 +106,8 @@ public:
                         buffTimer = 600000;
                     }                                                   //Try again in 30 seconds
                     else buffTimer = 30000;
-                } else buffTimer -= diff;
+                }
+                else buffTimer -= diff;
             }
 
             //Return since we have no target
@@ -204,26 +205,26 @@ public:
         {
             switch (emote)
             {
-                case TEXT_EMOTE_KISS:
-                    me->HandleEmoteCommand(EMOTE_ONESHOT_BOW);
-                    break;
+            case TEXT_EMOTE_KISS:
+                me->HandleEmoteCommand(EMOTE_ONESHOT_BOW);
+                break;
 
-                case TEXT_EMOTE_WAVE:
-                    me->HandleEmoteCommand(EMOTE_ONESHOT_WAVE);
-                    break;
+            case TEXT_EMOTE_WAVE:
+                me->HandleEmoteCommand(EMOTE_ONESHOT_WAVE);
+                break;
 
-                case TEXT_EMOTE_SALUTE:
-                    me->HandleEmoteCommand(EMOTE_ONESHOT_SALUTE);
-                    break;
+            case TEXT_EMOTE_SALUTE:
+                me->HandleEmoteCommand(EMOTE_ONESHOT_SALUTE);
+                break;
 
-                case TEXT_EMOTE_SHY:
-                    me->HandleEmoteCommand(EMOTE_ONESHOT_FLEX);
-                    break;
+            case TEXT_EMOTE_SHY:
+                me->HandleEmoteCommand(EMOTE_ONESHOT_FLEX);
+                break;
 
-                case TEXT_EMOTE_RUDE:
-                case TEXT_EMOTE_CHICKEN:
-                    me->HandleEmoteCommand(EMOTE_ONESHOT_POINT);
-                    break;
+            case TEXT_EMOTE_RUDE:
+            case TEXT_EMOTE_CHICKEN:
+                me->HandleEmoteCommand(EMOTE_ONESHOT_POINT);
+                break;
             }
         }
 
@@ -231,12 +232,12 @@ public:
         {
             switch (me->GetEntry())
             {
-                case NPC_STORMWIND_CITY_GUARD:
-                case NPC_STORMWIND_CITY_PATROLLER:
-                case NPC_ORGRIMMAR_GRUNT:
-                    break;
-                default:
-                    return;
+            case NPC_STORMWIND_CITY_GUARD:
+            case NPC_STORMWIND_CITY_PATROLLER:
+            case NPC_ORGRIMMAR_GRUNT:
+                break;
+            default:
+                return;
             }
 
             if (!me->IsFriendlyTo(player))
@@ -252,7 +253,7 @@ public:
 
     CreatureAI* GetAI(Creature* creature) const override
     {
-       return new guard_genericAI(creature);
+        return new guard_genericAI(creature);
     }
 };
 
@@ -260,8 +261,8 @@ enum GuardShattrath
 {
     SPELL_BANISHED_SHATTRATH_A = 36642,
     SPELL_BANISHED_SHATTRATH_S = 36671,
-    SPELL_BANISH_TELEPORT      = 36643,
-    SPELL_EXILE                = 39533
+    SPELL_BANISH_TELEPORT = 36643,
+    SPELL_EXILE = 39533
 };
 
 class guard_shattrath_scryer : public CreatureScript
@@ -306,7 +307,8 @@ public:
                     playerGUID.Clear();
                     exileTimer = 8500;
                     canTeleport = false;
-                } else exileTimer -= diff;
+                }
+                else exileTimer -= diff;
             }
             else if (banishTimer <= diff)
             {
@@ -319,7 +321,8 @@ public:
                     if (playerGUID)
                         canTeleport = true;
                 }
-            } else banishTimer -= diff;
+            }
+            else banishTimer -= diff;
 
             DoMeleeAttackIfReady();
         }
@@ -379,7 +382,8 @@ public:
                     playerGUID.Clear();
                     exileTimer = 8500;
                     canTeleport = false;
-                } else exileTimer -= diff;
+                }
+                else exileTimer -= diff;
             }
             else if (banishTimer <= diff)
             {
@@ -392,7 +396,8 @@ public:
                     if (playerGUID)
                         canTeleport = true;
                 }
-            } else banishTimer -= diff;
+            }
+            else banishTimer -= diff;
 
             DoMeleeAttackIfReady();
         }

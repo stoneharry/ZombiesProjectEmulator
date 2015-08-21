@@ -280,21 +280,21 @@ public:
 
         //if (!manageMemory)
         //{
-            lua_getglobal(L, ELUNA_OBJECT_STORE);
-            ASSERT(lua_istable(L, -1));
-            lua_pushfstring(L, "%p", obj);
-            lua_gettable(L, -2);
-            if (ElunaObject* elunaObj = Eluna::CHECKTYPE(L, -1, tname, false))
-            {
-                // set userdata valid
-                elunaObj->SetValid(true);
+        lua_getglobal(L, ELUNA_OBJECT_STORE);
+        ASSERT(lua_istable(L, -1));
+        lua_pushfstring(L, "%p", obj);
+        lua_gettable(L, -2);
+        if (ElunaObject* elunaObj = Eluna::CHECKTYPE(L, -1, tname, false))
+        {
+            // set userdata valid
+            elunaObj->SetValid(true);
 
-                // remove userdata_table, leave userdata
-                lua_remove(L, -2);
-                return 1;
-            }
-            lua_remove(L, -1);
-            // left userdata_table in stack
+            // remove userdata_table, leave userdata
+            lua_remove(L, -2);
+            return 1;
+        }
+        lua_remove(L, -1);
+        // left userdata_table in stack
         //}
 
         // Create new userdata
@@ -321,10 +321,10 @@ public:
 
         //if (!manageMemory)
         //{
-            lua_pushfstring(L, "%p", obj);
-            lua_pushvalue(L, -2);
-            lua_settable(L, -4);
-            lua_remove(L, -2);
+        lua_pushfstring(L, "%p", obj);
+        lua_pushvalue(L, -2);
+        lua_settable(L, -4);
+        lua_remove(L, -2);
         //}
         return 1;
     }

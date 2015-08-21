@@ -28,26 +28,26 @@ Category: Scholomance
 
 enum Say
 {
-    EMOTE_FRENZY_KILL           = 0,
+    EMOTE_FRENZY_KILL = 0,
 };
 
 enum Spells
 {
-    SPELL_REND                  = 16509,
-    SPELL_BACKHAND              = 18103,
-    SPELL_FRENZY                = 8269
+    SPELL_REND = 16509,
+    SPELL_BACKHAND = 18103,
+    SPELL_FRENZY = 8269
 };
 
 enum Events
 {
-    EVENT_REND                  = 1,
-    EVENT_BACKHAND              = 2,
-    EVENT_FRENZY                = 3
+    EVENT_REND = 1,
+    EVENT_BACKHAND = 2,
+    EVENT_FRENZY = 3
 };
 
 class boss_doctor_theolen_krastinov : public CreatureScript
 {
-    public: boss_doctor_theolen_krastinov() : CreatureScript("boss_doctor_theolen_krastinov") { }
+public: boss_doctor_theolen_krastinov() : CreatureScript("boss_doctor_theolen_krastinov") { }
 
         struct boss_theolenkrastinovAI : public BossAI
         {
@@ -75,21 +75,21 @@ class boss_doctor_theolen_krastinov : public CreatureScript
                 {
                     switch (eventId)
                     {
-                        case EVENT_REND:
-                            DoCastVictim(SPELL_REND, true);
-                            events.ScheduleEvent(EVENT_REND, 10000);
-                            break;
-                        case EVENT_BACKHAND:
-                            DoCastVictim(SPELL_BACKHAND, true);
-                            events.ScheduleEvent(EVENT_BACKHAND, 10000);
-                            break;
-                        case EVENT_FRENZY:
-                            DoCast(me, SPELL_FRENZY, true);
-                            Talk(EMOTE_FRENZY_KILL);
-                            events.ScheduleEvent(EVENT_FRENZY, 120000);
-                            break;
-                        default:
-                            break;
+                    case EVENT_REND:
+                        DoCastVictim(SPELL_REND, true);
+                        events.ScheduleEvent(EVENT_REND, 10000);
+                        break;
+                    case EVENT_BACKHAND:
+                        DoCastVictim(SPELL_BACKHAND, true);
+                        events.ScheduleEvent(EVENT_BACKHAND, 10000);
+                        break;
+                    case EVENT_FRENZY:
+                        DoCast(me, SPELL_FRENZY, true);
+                        Talk(EMOTE_FRENZY_KILL);
+                        events.ScheduleEvent(EVENT_FRENZY, 120000);
+                        break;
+                    default:
+                        break;
                     }
                 }
 

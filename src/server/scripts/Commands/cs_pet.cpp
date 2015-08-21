@@ -31,16 +31,16 @@ public:
     {
         static ChatCommand petCommandTable[] =
         {
-            { "create",  rbac::RBAC_PERM_COMMAND_PET_CREATE,  false, &HandlePetCreateCommand,  "", NULL },
-            { "learn",   rbac::RBAC_PERM_COMMAND_PET_LEARN,   false, &HandlePetLearnCommand,   "", NULL },
+            { "create", rbac::RBAC_PERM_COMMAND_PET_CREATE, false, &HandlePetCreateCommand, "", NULL },
+            { "learn", rbac::RBAC_PERM_COMMAND_PET_LEARN, false, &HandlePetLearnCommand, "", NULL },
             { "unlearn", rbac::RBAC_PERM_COMMAND_PET_UNLEARN, false, &HandlePetUnlearnCommand, "", NULL },
-            { NULL,      0,                             false, NULL,                     "", NULL }
+            { NULL, 0, false, NULL, "", NULL }
         };
 
         static ChatCommand commandTable[] =
         {
             { "pet", rbac::RBAC_PERM_COMMAND_PET, false, NULL, "", petCommandTable },
-            { NULL,  0,                     false, NULL, "", NULL }
+            { NULL, 0, false, NULL, "", NULL }
         };
         return commandTable;
     }
@@ -97,7 +97,7 @@ public:
         }
 
         // prepare visual effect for levelup
-        pet->SetUInt32Value(UNIT_FIELD_LEVEL, creatureTarget->getLevel()-1);
+        pet->SetUInt32Value(UNIT_FIELD_LEVEL, creatureTarget->getLevel() - 1);
 
         pet->GetCharmInfo()->SetPetNumber(sObjectMgr->GeneratePetNumber(), true);
         // this enables pet details window (Shift+P)

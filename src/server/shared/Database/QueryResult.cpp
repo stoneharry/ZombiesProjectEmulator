@@ -52,9 +52,9 @@ m_length(NULL)
     m_isNull = new my_bool[m_fieldCount];
     m_length = new unsigned long[m_fieldCount];
 
-    memset(m_isNull, 0, sizeof(my_bool) * m_fieldCount);
-    memset(m_rBind, 0, sizeof(MYSQL_BIND) * m_fieldCount);
-    memset(m_length, 0, sizeof(unsigned long) * m_fieldCount);
+    memset(m_isNull, 0, sizeof(my_bool)* m_fieldCount);
+    memset(m_rBind, 0, sizeof(MYSQL_BIND)* m_fieldCount);
+    memset(m_length, 0, sizeof(unsigned long)* m_fieldCount);
 
     //- This is where we store the (entire) resultset
     if (mysql_stmt_store_result(m_stmt))
@@ -106,29 +106,29 @@ m_length(NULL)
         {
             if (!*m_rBind[fIndex].is_null)
                 m_rows[uint32(m_rowPosition)][fIndex].SetByteValue(m_rBind[fIndex].buffer,
-                                                            m_rBind[fIndex].buffer_length,
-                                                            m_rBind[fIndex].buffer_type,
-                                                           *m_rBind[fIndex].length);
+                m_rBind[fIndex].buffer_length,
+                m_rBind[fIndex].buffer_type,
+                *m_rBind[fIndex].length);
             else
                 switch (m_rBind[fIndex].buffer_type)
-                {
-                    case MYSQL_TYPE_TINY_BLOB:
-                    case MYSQL_TYPE_MEDIUM_BLOB:
-                    case MYSQL_TYPE_LONG_BLOB:
-                    case MYSQL_TYPE_BLOB:
-                    case MYSQL_TYPE_STRING:
-                    case MYSQL_TYPE_VAR_STRING:
+            {
+                case MYSQL_TYPE_TINY_BLOB:
+                case MYSQL_TYPE_MEDIUM_BLOB:
+                case MYSQL_TYPE_LONG_BLOB:
+                case MYSQL_TYPE_BLOB:
+                case MYSQL_TYPE_STRING:
+                case MYSQL_TYPE_VAR_STRING:
                     m_rows[uint32(m_rowPosition)][fIndex].SetByteValue("",
-                                                            m_rBind[fIndex].buffer_length,
-                                                            m_rBind[fIndex].buffer_type,
-                                                           *m_rBind[fIndex].length);
+                        m_rBind[fIndex].buffer_length,
+                        m_rBind[fIndex].buffer_type,
+                        *m_rBind[fIndex].length);
                     break;
-                    default:
+                default:
                     m_rows[uint32(m_rowPosition)][fIndex].SetByteValue(nullptr,
-                                                            m_rBind[fIndex].buffer_length,
-                                                            m_rBind[fIndex].buffer_type,
-                                                           *m_rBind[fIndex].length);
-                }
+                        m_rBind[fIndex].buffer_length,
+                        m_rBind[fIndex].buffer_type,
+                        *m_rBind[fIndex].length);
+            }
         }
         m_rowPosition++;
     }
@@ -194,7 +194,7 @@ void ResultSet::CleanUp()
 {
     if (_currentRow)
     {
-        delete [] _currentRow;
+        delete[] _currentRow;
         _currentRow = NULL;
     }
 
@@ -220,5 +220,5 @@ void PreparedResultSet::CleanUp()
 void PreparedResultSet::FreeBindBuffer()
 {
     for (uint32 i = 0; i < m_fieldCount; ++i)
-        free (m_rBind[i].buffer);
+        free(m_rBind[i].buffer);
 }

@@ -41,10 +41,10 @@
 
 enum Spells
 {
-    SPELL_UNBALANCING_STRIKE   = 26613,
-    SPELL_DISRUPTING_SHOUT     = 29107,
-    SPELL_JAGGED_KNIFE         = 55550,
-    SPELL_HOPELESS             = 29125
+    SPELL_UNBALANCING_STRIKE = 26613,
+    SPELL_DISRUPTING_SHOUT = 29107,
+    SPELL_JAGGED_KNIFE = 55550,
+    SPELL_HOPELESS = 29125
 };
 
 enum Events
@@ -113,23 +113,23 @@ public:
             {
                 switch (eventId)
                 {
-                    case EVENT_STRIKE:
-                        DoCastVictim(SPELL_UNBALANCING_STRIKE);
-                        events.ScheduleEvent(EVENT_STRIKE, 30000);
-                        return;
-                    case EVENT_SHOUT:
-                        DoCastAOE(SPELL_DISRUPTING_SHOUT);
-                        events.ScheduleEvent(EVENT_SHOUT, 25000);
-                        return;
-                    case EVENT_KNIFE:
-                        if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0, 45.0f))
-                            DoCast(target, SPELL_JAGGED_KNIFE);
-                        events.ScheduleEvent(EVENT_KNIFE, 10000);
-                        return;
-                    case EVENT_COMMAND:
-                        DoPlaySoundToSet(me, SOUND_COMMND);
-                        events.ScheduleEvent(EVENT_COMMAND, 40000);
-                        return;
+                case EVENT_STRIKE:
+                    DoCastVictim(SPELL_UNBALANCING_STRIKE);
+                    events.ScheduleEvent(EVENT_STRIKE, 30000);
+                    return;
+                case EVENT_SHOUT:
+                    DoCastAOE(SPELL_DISRUPTING_SHOUT);
+                    events.ScheduleEvent(EVENT_SHOUT, 25000);
+                    return;
+                case EVENT_KNIFE:
+                    if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0, 45.0f))
+                        DoCast(target, SPELL_JAGGED_KNIFE);
+                    events.ScheduleEvent(EVENT_KNIFE, 10000);
+                    return;
+                case EVENT_COMMAND:
+                    DoPlaySoundToSet(me, SOUND_COMMND);
+                    events.ScheduleEvent(EVENT_COMMAND, 40000);
+                    return;
                 }
             }
 

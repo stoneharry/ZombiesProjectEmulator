@@ -24,14 +24,14 @@
 
 enum Spells
 {
-    SPELL_BLESSING_OF_BLACKFATHOM                           = 8733,
-    SPELL_RAVAGE                                            = 8391,
-    SPELL_FROST_NOVA                                        = 865,
-    SPELL_FROST_BOLT_VOLLEY                                 = 8398,
-    SPELL_TELEPORT_DARNASSUS                                = 9268
+    SPELL_BLESSING_OF_BLACKFATHOM = 8733,
+    SPELL_RAVAGE = 8391,
+    SPELL_FROST_NOVA = 865,
+    SPELL_FROST_BOLT_VOLLEY = 8398,
+    SPELL_TELEPORT_DARNASSUS = 9268
 };
 
-const Position HomePosition = {-815.817f, -145.299f, -25.870f, 0};
+const Position HomePosition = { -815.817f, -145.299f, -25.870f, 0 };
 
 class go_blackfathom_altar : public GameObjectScript
 {
@@ -143,43 +143,44 @@ public:
 
             switch (me->GetEntry())
             {
-                case NPC_AKU_MAI_SNAPJAW:
-                {
-                    if (ravageTimer <= diff)
-                    {
-                        DoCastVictim(SPELL_RAVAGE);
-                        ravageTimer = urand(9000, 14000);
-                    } else ravageTimer -= diff;
-                    break;
-                }
-                case NPC_MURKSHALLOW_SOFTSHELL:
-                case NPC_BARBED_CRUSTACEAN:
-                {
-                    if (!Flee && HealthBelowPct(15))
-                    {
-                        Flee = true;
-                        me->DoFleeToGetAssistance();
-                    }
-                    break;
-                }
-                case NPC_AKU_MAI_SERVANT:
-                {
-                    if (frostBoltVolleyTimer <= diff)
-                    {
-                        if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
-                            DoCast(target, SPELL_FROST_BOLT_VOLLEY);
-                        frostBoltVolleyTimer = urand(5000, 8000);
-                    }
-                    else frostBoltVolleyTimer -= diff;
+            case NPC_AKU_MAI_SNAPJAW:
+            {
+                                        if (ravageTimer <= diff)
+                                        {
+                                            DoCastVictim(SPELL_RAVAGE);
+                                            ravageTimer = urand(9000, 14000);
+                                        }
+                                        else ravageTimer -= diff;
+                                        break;
+            }
+            case NPC_MURKSHALLOW_SOFTSHELL:
+            case NPC_BARBED_CRUSTACEAN:
+            {
+                                          if (!Flee && HealthBelowPct(15))
+                                          {
+                                              Flee = true;
+                                              me->DoFleeToGetAssistance();
+                                          }
+                                          break;
+            }
+            case NPC_AKU_MAI_SERVANT:
+            {
+                                        if (frostBoltVolleyTimer <= diff)
+                                        {
+                                            if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
+                                                DoCast(target, SPELL_FROST_BOLT_VOLLEY);
+                                            frostBoltVolleyTimer = urand(5000, 8000);
+                                        }
+                                        else frostBoltVolleyTimer -= diff;
 
-                    if (frostNovaTimer <= diff)
-                    {
-                        DoCastAOE(SPELL_FROST_NOVA, false);
-                        frostNovaTimer = urand(25000, 30000);
-                    }
-                    else frostNovaTimer -= diff;
-                    break;
-                }
+                                        if (frostNovaTimer <= diff)
+                                        {
+                                            DoCastAOE(SPELL_FROST_NOVA, false);
+                                            frostNovaTimer = urand(25000, 30000);
+                                        }
+                                        else frostNovaTimer -= diff;
+                                        break;
+            }
             }
 
             DoMeleeAttackIfReady();
@@ -217,12 +218,12 @@ public:
         {
             switch (waypointId)
             {
-                case 4:
-                    SetEscortPaused(true);
-                    me->SetFacingTo(1.775791f);
-                    me->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
-                    Talk(SAY_MORRIDUNE_2);
-                    break;
+            case 4:
+                SetEscortPaused(true);
+                me->SetFacingTo(1.775791f);
+                me->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
+                Talk(SAY_MORRIDUNE_2);
+                break;
             }
         }
 

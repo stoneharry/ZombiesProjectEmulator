@@ -74,9 +74,9 @@ EndScriptData */
 
 enum Spells
 {
-    SPELL_KNOCKAWAY                 = 10101,
-    SPELL_PUMMEL                    = 15615,
-    SPELL_SHOOT                     = 16496
+    SPELL_KNOCKAWAY = 10101,
+    SPELL_PUMMEL = 15615,
+    SPELL_SHOOT = 16496
     //SPELL_SUMMONCRIMSONRIFLEMAN     = 17279
 };
 
@@ -146,7 +146,8 @@ public:
                 }
                 //12 seconds until we should cast this again
                 Pummel_Timer = 12000;
-            } else Pummel_Timer -= diff;
+            }
+            else Pummel_Timer -= diff;
 
             //KnockAway
             if (KnockAway_Timer <= diff)
@@ -158,7 +159,8 @@ public:
                 }
                 //14 seconds until we should cast this again
                 KnockAway_Timer = 14000;
-            } else KnockAway_Timer -= diff;
+            }
+            else KnockAway_Timer -= diff;
 
             //Shoot
             if (Shoot_Timer <= diff)
@@ -167,7 +169,8 @@ public:
                 DoCastVictim(SPELL_SHOOT);
                 //1 seconds until we should cast this again
                 Shoot_Timer = 1000;
-            } else Shoot_Timer -= diff;
+            }
+            else Shoot_Timer -= diff;
 
             //SummonRifleman
             if (SummonRifleman_Timer <= diff)
@@ -223,7 +226,8 @@ public:
                 }
                 //30 seconds until we should cast this again
                 SummonRifleman_Timer = 30000;
-            } else SummonRifleman_Timer -= diff;
+            }
+            else SummonRifleman_Timer -= diff;
 
             DoMeleeAttackIfReady();
         }

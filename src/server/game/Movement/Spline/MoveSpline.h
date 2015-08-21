@@ -43,10 +43,10 @@ namespace Movement
         typedef Spline<int32> MySpline;
         enum UpdateResult
         {
-            Result_None         = 0x01,
-            Result_Arrived      = 0x02,
-            Result_NextCycle    = 0x04,
-            Result_NextSegment  = 0x08
+            Result_None = 0x01,
+            Result_Arrived = 0x02,
+            Result_NextCycle = 0x04,
+            Result_NextSegment = 0x08
         };
         friend class PacketBuilder;
 
@@ -100,7 +100,7 @@ namespace Movement
         {
             ASSERT(Initialized());
             do
-                handler(_updateState(difftime));
+            handler(_updateState(difftime));
             while (difftime > 0);
         }
 

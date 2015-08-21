@@ -33,18 +33,18 @@ Category: Caverns of Time, The Black Morass
 
 enum Misc
 {
-    SPELL_RIFT_CHANNEL                = 31387,
-    RIFT_BOSS                         = 1
+    SPELL_RIFT_CHANNEL = 31387,
+    RIFT_BOSS = 1
 };
 
 inline uint32 RandRiftBoss() { return ((rand32() % 2) ? NPC_RIFT_KEEPER : NPC_RIFT_LORD); }
 
-float PortalLocation[4][4]=
+float PortalLocation[4][4] =
 {
-    {-2041.06f, 7042.08f, 29.99f, 1.30f},
-    {-1968.18f, 7042.11f, 21.93f, 2.12f},
-    {-1885.82f, 7107.36f, 22.32f, 3.07f},
-    {-1928.11f, 7175.95f, 22.11f, 3.44f}
+    { -2041.06f, 7042.08f, 29.99f, 1.30f },
+    { -1968.18f, 7042.11f, 21.93f, 2.12f },
+    { -1885.82f, 7107.36f, 22.32f, 3.07f },
+    { -1928.11f, 7175.95f, 22.11f, 3.44f }
 };
 
 struct Wave
@@ -53,14 +53,14 @@ struct Wave
     uint32 NextPortalTime;                                  //time to next portal, or 0 if portal boss need to be killed
 };
 
-static Wave RiftWaves[]=
+static Wave RiftWaves[] =
 {
-    { RIFT_BOSS,                0 },
-    { NPC_CRONO_LORD_DEJA,      0 },
-    { RIFT_BOSS,           120000 },
-    { NPC_TEMPORUS,        140000 },
-    { RIFT_BOSS,           120000 },
-    { NPC_AEONUS,               0 }
+    { RIFT_BOSS, 0 },
+    { NPC_CRONO_LORD_DEJA, 0 },
+    { RIFT_BOSS, 120000 },
+    { NPC_TEMPORUS, 140000 },
+    { RIFT_BOSS, 120000 },
+    { NPC_AEONUS, 0 }
 };
 
 enum EventIds
@@ -100,12 +100,12 @@ public:
         {
             memset(&m_auiEncounter, 0, sizeof(m_auiEncounter));
 
-            mRiftPortalCount    = 0;
-            mShieldPercent      = 100;
-            mRiftWaveCount      = 0;
-            mRiftWaveId         = 0;
+            mRiftPortalCount = 0;
+            mShieldPercent = 100;
+            mRiftWaveCount = 0;
+            mRiftWaveId = 0;
 
-            _currentRiftId      = 0;
+            _currentRiftId = 0;
         }
 
         void InitWorldState(bool Enable = true)
@@ -343,8 +343,8 @@ public:
                 Events.RescheduleEvent(EVENT_NEXT_PORTAL, nextPortalTime);
         }
 
-        protected:
-            EventMap Events;
+    protected:
+        EventMap Events;
     };
 
 };

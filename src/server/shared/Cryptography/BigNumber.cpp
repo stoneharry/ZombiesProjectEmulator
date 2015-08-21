@@ -23,15 +23,15 @@
 #include <memory>
 
 BigNumber::BigNumber()
-    : _bn(BN_new())
+: _bn(BN_new())
 { }
 
 BigNumber::BigNumber(BigNumber const& bn)
-    : _bn(BN_dup(bn._bn))
+: _bn(BN_dup(bn._bn))
 { }
 
 BigNumber::BigNumber(uint32 val)
-    : _bn(BN_new())
+: _bn(BN_new())
 {
     BN_set_word(_bn, val);
 }

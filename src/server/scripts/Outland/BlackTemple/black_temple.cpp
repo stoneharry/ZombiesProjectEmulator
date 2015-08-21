@@ -30,26 +30,26 @@ Comment:  Spirit of Olum: Player Teleporter to Seer Kanai Teleport after defeati
 enum Spells
 {
     // Spirit of Olum
-    SPELL_TELEPORT                   = 41566,
+    SPELL_TELEPORT = 41566,
     // Wrathbone Flayer
-    SPELL_CLEAVE                     = 15496,
-    SPELL_IGNORED                    = 39544,
-    SPELL_SUMMON_CHANNEL             = 40094
+    SPELL_CLEAVE = 15496,
+    SPELL_IGNORED = 39544,
+    SPELL_SUMMON_CHANNEL = 40094
 };
 
 enum Creatures
 {
-    NPC_BLOOD_MAGE                   = 22945,
-    NPC_DEATHSHAPER                  = 22882
+    NPC_BLOOD_MAGE = 22945,
+    NPC_DEATHSHAPER = 22882
 };
 
 enum Events
 {
     // Wrathbone Flayer
-    EVENT_GET_CHANNELERS             = 1,
-    EVENT_SET_CHANNELERS             = 2,
-    EVENT_CLEAVE                     = 3,
-    EVENT_IGNORED                    = 4,
+    EVENT_GET_CHANNELERS = 1,
+    EVENT_SET_CHANNELERS = 2,
+    EVENT_CLEAVE = 3,
+    EVENT_IGNORED = 4,
 };
 
 // ########################################################
@@ -132,50 +132,50 @@ public:
                 {
                     switch (eventId)
                     {
-                        case EVENT_GET_CHANNELERS:
-                        {
-                            std::list<Creature*> BloodMageList;
-                            me->GetCreatureListWithEntryInGrid(BloodMageList, NPC_BLOOD_MAGE, 15.0f);
+                    case EVENT_GET_CHANNELERS:
+                    {
+                                                 std::list<Creature*> BloodMageList;
+                                                 me->GetCreatureListWithEntryInGrid(BloodMageList, NPC_BLOOD_MAGE, 15.0f);
 
-                            if (!BloodMageList.empty())
-                                for (std::list<Creature*>::const_iterator itr = BloodMageList.begin(); itr != BloodMageList.end(); ++itr)
-                                {
-                                    _bloodmageList.push_back((*itr)->GetGUID());
-                                    if ((*itr)->isDead())
-                                        (*itr)->Respawn();
-                                }
+                                                 if (!BloodMageList.empty())
+                                                 for (std::list<Creature*>::const_iterator itr = BloodMageList.begin(); itr != BloodMageList.end(); ++itr)
+                                                 {
+                                                     _bloodmageList.push_back((*itr)->GetGUID());
+                                                     if ((*itr)->isDead())
+                                                         (*itr)->Respawn();
+                                                 }
 
-                            std::list<Creature*> DeathShaperList;
-                            me->GetCreatureListWithEntryInGrid(DeathShaperList, NPC_DEATHSHAPER, 15.0f);
+                                                 std::list<Creature*> DeathShaperList;
+                                                 me->GetCreatureListWithEntryInGrid(DeathShaperList, NPC_DEATHSHAPER, 15.0f);
 
-                            if (!DeathShaperList.empty())
-                                for (std::list<Creature*>::const_iterator itr = DeathShaperList.begin(); itr != DeathShaperList.end(); ++itr)
-                                {
-                                    _deathshaperList.push_back((*itr)->GetGUID());
-                                    if ((*itr)->isDead())
-                                        (*itr)->Respawn();
-                                }
+                                                 if (!DeathShaperList.empty())
+                                                 for (std::list<Creature*>::const_iterator itr = DeathShaperList.begin(); itr != DeathShaperList.end(); ++itr)
+                                                 {
+                                                     _deathshaperList.push_back((*itr)->GetGUID());
+                                                     if ((*itr)->isDead())
+                                                         (*itr)->Respawn();
+                                                 }
 
-                            _events.ScheduleEvent(EVENT_SET_CHANNELERS, 3000);
+                                                 _events.ScheduleEvent(EVENT_SET_CHANNELERS, 3000);
 
-                            break;
-                        }
-                        case EVENT_SET_CHANNELERS:
-                        {
-                            for (ObjectGuid guid : _bloodmageList)
-                                if (Creature* bloodmage = ObjectAccessor::GetCreature(*me, guid))
-                                    bloodmage->CastSpell((Unit*)NULL, SPELL_SUMMON_CHANNEL);
+                                                 break;
+                    }
+                    case EVENT_SET_CHANNELERS:
+                    {
+                                                 for (ObjectGuid guid : _bloodmageList)
+                                                 if (Creature* bloodmage = ObjectAccessor::GetCreature(*me, guid))
+                                                     bloodmage->CastSpell((Unit*)NULL, SPELL_SUMMON_CHANNEL);
 
-                            for (ObjectGuid guid : _deathshaperList)
-                                if (Creature* deathshaper = ObjectAccessor::GetCreature(*me, guid))
-                                    deathshaper->CastSpell((Unit*)NULL, SPELL_SUMMON_CHANNEL);
+                                                 for (ObjectGuid guid : _deathshaperList)
+                                                 if (Creature* deathshaper = ObjectAccessor::GetCreature(*me, guid))
+                                                     deathshaper->CastSpell((Unit*)NULL, SPELL_SUMMON_CHANNEL);
 
-                            _events.ScheduleEvent(EVENT_SET_CHANNELERS, 12000);
+                                                 _events.ScheduleEvent(EVENT_SET_CHANNELERS, 12000);
 
-                            break;
-                        }
-                        default:
-                            break;
+                                                 break;
+                    }
+                    default:
+                        break;
                     }
                 }
             }
@@ -189,29 +189,29 @@ public:
             {
                 switch (eventId)
                 {
-                    case EVENT_CLEAVE:
-                        DoCastVictim(SPELL_CLEAVE);
-                        _events.ScheduleEvent(EVENT_CLEAVE, urand (1000, 2000));
-                        break;
-                    case EVENT_IGNORED:
-                        if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
-                            DoCast(target, SPELL_IGNORED);
-                        _events.ScheduleEvent(EVENT_IGNORED, 10000);
-                        break;
-                    default:
-                        break;
+                case EVENT_CLEAVE:
+                    DoCastVictim(SPELL_CLEAVE);
+                    _events.ScheduleEvent(EVENT_CLEAVE, urand(1000, 2000));
+                    break;
+                case EVENT_IGNORED:
+                    if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
+                        DoCast(target, SPELL_IGNORED);
+                    _events.ScheduleEvent(EVENT_IGNORED, 10000);
+                    break;
+                default:
+                    break;
                 }
             }
             DoMeleeAttackIfReady();
         }
 
-        private:
-            InstanceScript* _instance;
-            EventMap _events;
-            GuidList _bloodmageList;
-            GuidList _deathshaperList;
-            bool _enteredCombat;
-        };
+    private:
+        InstanceScript* _instance;
+        EventMap _events;
+        GuidList _bloodmageList;
+        GuidList _deathshaperList;
+        bool _enteredCombat;
+    };
 
     CreatureAI* GetAI(Creature* creature) const override
     {

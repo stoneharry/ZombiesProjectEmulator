@@ -50,11 +50,11 @@ void Transaction::Cleanup()
         SQLElementData const &data = m_queries.front();
         switch (data.type)
         {
-            case SQL_ELEMENT_PREPARED:
-                delete data.element.stmt;
+        case SQL_ELEMENT_PREPARED:
+            delete data.element.stmt;
             break;
-            case SQL_ELEMENT_RAW:
-                free((void*)(data.element.query));
+        case SQL_ELEMENT_RAW:
+            free((void*)(data.element.query));
             break;
         }
 
@@ -76,8 +76,8 @@ bool TransactionTask::Execute()
         std::lock_guard<std::mutex> lock(_deadlockLock);
         uint8 loopBreaker = 5;  // Handle MySQL Errno 1213 without extending deadlock to the core itself
         for (uint8 i = 0; i < loopBreaker; ++i)
-            if (!m_conn->ExecuteTransaction(m_trans))
-                return true;
+        if (!m_conn->ExecuteTransaction(m_trans))
+            return true;
     }
 
     // Clean up now.

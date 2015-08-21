@@ -37,22 +37,22 @@ public:
     {
         static ChatCommand honorAddCommandTable[] =
         {
-            { "kill", rbac::RBAC_PERM_COMMAND_HONOR_ADD_KILL, false, &HandleHonorAddKillCommand,         "", NULL },
-            { "",     rbac::RBAC_PERM_COMMAND_HONOR_ADD,      false, &HandleHonorAddCommand,             "", NULL },
-            { NULL,   0,                                false, NULL,                               "", NULL }
+            { "kill", rbac::RBAC_PERM_COMMAND_HONOR_ADD_KILL, false, &HandleHonorAddKillCommand, "", NULL },
+            { "", rbac::RBAC_PERM_COMMAND_HONOR_ADD, false, &HandleHonorAddCommand, "", NULL },
+            { NULL, 0, false, NULL, "", NULL }
         };
 
         static ChatCommand honorCommandTable[] =
         {
-            { "add",    rbac::RBAC_PERM_COMMAND_HONOR_ADD,    false, NULL,               "", honorAddCommandTable },
-            { "update", rbac::RBAC_PERM_COMMAND_HONOR_UPDATE, false, &HandleHonorUpdateCommand,          "", NULL },
-            { NULL,     0,                              false, NULL,                               "", NULL }
+            { "add", rbac::RBAC_PERM_COMMAND_HONOR_ADD, false, NULL, "", honorAddCommandTable },
+            { "update", rbac::RBAC_PERM_COMMAND_HONOR_UPDATE, false, &HandleHonorUpdateCommand, "", NULL },
+            { NULL, 0, false, NULL, "", NULL }
         };
 
         static ChatCommand commandTable[] =
         {
             { "honor", rbac::RBAC_PERM_COMMAND_HONOR, false, NULL, "", honorCommandTable },
-            { NULL,    0,                       false, NULL, "", NULL }
+            { NULL, 0, false, NULL, "", NULL }
         };
         return commandTable;
     }
@@ -91,8 +91,8 @@ public:
 
         // check online security
         if (Player* player = target->ToPlayer())
-            if (handler->HasLowerSecurity(player, ObjectGuid::Empty))
-                return false;
+        if (handler->HasLowerSecurity(player, ObjectGuid::Empty))
+            return false;
 
         handler->GetSession()->GetPlayer()->RewardHonor(target, 1);
         return true;

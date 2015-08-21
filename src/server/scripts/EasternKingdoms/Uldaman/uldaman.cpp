@@ -40,74 +40,75 @@ EndContentData */
 
 enum Spells
 {
-    SPELL_CRYSTALLINE_SLUMBER   = 3636,
+    SPELL_CRYSTALLINE_SLUMBER = 3636,
 };
 
 class npc_jadespine_basilisk : public CreatureScript
 {
-    public:
+public:
 
-        npc_jadespine_basilisk()
-            : CreatureScript("npc_jadespine_basilisk")
+    npc_jadespine_basilisk()
+        : CreatureScript("npc_jadespine_basilisk")
+    {
+    }
+
+    struct npc_jadespine_basiliskAI : public ScriptedAI
+    {
+        npc_jadespine_basiliskAI(Creature* creature) : ScriptedAI(creature)
+        {
+            Initialize();
+        }
+
+        void Initialize()
+        {
+            uiCslumberTimer = 2000;
+        }
+
+        uint32 uiCslumberTimer;
+
+        void Reset() override
+        {
+            Initialize();
+        }
+
+        void EnterCombat(Unit* /*who*/) override
         {
         }
 
-        struct npc_jadespine_basiliskAI : public ScriptedAI
+        void UpdateAI(uint32 uiDiff) override
         {
-            npc_jadespine_basiliskAI(Creature* creature) : ScriptedAI(creature)
+            //Return since we have no target
+            if (!UpdateVictim())
+                return;
+
+            //uiCslumberTimer
+            if (uiCslumberTimer <= uiDiff)
             {
-                Initialize();
+                //Cast
+                DoCastVictim(SPELL_CRYSTALLINE_SLUMBER, true);
+
+                //Stop attacking target thast asleep and pick new target
+                uiCslumberTimer = 28000;
+
+                Unit* target = SelectTarget(SELECT_TARGET_TOPAGGRO, 0);
+
+                if (!target || target == me->GetVictim())
+                    target = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true);
+
+                if (target)
+                    me->TauntApply(target);
+
             }
+            else uiCslumberTimer -= uiDiff;
 
-            void Initialize()
-            {
-                uiCslumberTimer = 2000;
-            }
-
-            uint32 uiCslumberTimer;
-
-            void Reset() override
-            {
-                Initialize();
-            }
-
-            void EnterCombat(Unit* /*who*/) override
-            {
-            }
-
-            void UpdateAI(uint32 uiDiff) override
-            {
-                //Return since we have no target
-                if (!UpdateVictim())
-                    return;
-
-                //uiCslumberTimer
-                if (uiCslumberTimer <= uiDiff)
-                {
-                    //Cast
-                    DoCastVictim(SPELL_CRYSTALLINE_SLUMBER, true);
-
-                    //Stop attacking target thast asleep and pick new target
-                    uiCslumberTimer = 28000;
-
-                    Unit* target = SelectTarget(SELECT_TARGET_TOPAGGRO, 0);
-
-                    if (!target || target == me->GetVictim())
-                        target = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true);
-
-                    if (target)
-                        me->TauntApply(target);
-
-                } else uiCslumberTimer -= uiDiff;
-
-                DoMeleeAttackIfReady();
-            }
-        };
-
-        CreatureAI* GetAI(Creature* creature) const override
-        {
-            return new npc_jadespine_basiliskAI(creature);
+            DoMeleeAttackIfReady();
         }
+    };
+
+    CreatureAI* GetAI(Creature* creature) const override
+    {
+        return new npc_jadespine_basiliskAI(creature);
+    }
 };
 
 /*######
@@ -136,20 +137,20 @@ public:
 
 class AreaTrigger_at_map_chamber : public AreaTriggerScript
 {
-    public:
+public:
 
-        AreaTrigger_at_map_chamber()
-            : AreaTriggerScript("at_map_chamber")
-        {
-        }
+    AreaTrigger_at_map_chamber()
+        : AreaTriggerScript("at_map_chamber")
+    {
+    }
 
-        bool OnTrigger(Player* player, AreaTriggerEntry const* /*trigger*/) override
-        {
-            if (player->GetQuestStatus(QUEST_HIDDEN_CHAMBER) == QUEST_STATUS_INCOMPLETE)
-                player->AreaExploredOrEventHappens(QUEST_HIDDEN_CHAMBER);
+    bool OnTrigger(Player* player, AreaTriggerEntry const* /*trigger*/) override
+    {
+        if (player->GetQuestStatus(QUEST_HIDDEN_CHAMBER) == QUEST_STATUS_INCOMPLETE)
+            player->AreaExploredOrEventHappens(QUEST_HIDDEN_CHAMBER);
 
-            return true;
-        }
+        return true;
+    }
 };
 
 void AddSC_uldaman()

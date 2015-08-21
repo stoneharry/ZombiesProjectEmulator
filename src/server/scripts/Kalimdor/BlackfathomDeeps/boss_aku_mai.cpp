@@ -21,13 +21,13 @@
 
 enum Spells
 {
-    SPELL_POISON_CLOUD     = 3815,
-    SPELL_FRENZIED_RAGE    = 3490
+    SPELL_POISON_CLOUD = 3815,
+    SPELL_FRENZIED_RAGE = 3490
 };
 
 enum Events
 {
-    EVENT_POISON_CLOUD     = 1,
+    EVENT_POISON_CLOUD = 1,
     EVENT_FRENZIED_RAGE
 };
 
@@ -73,17 +73,17 @@ public:
         {
             switch (eventId)
             {
-                case EVENT_POISON_CLOUD:
-                    DoCastVictim(SPELL_POISON_CLOUD);
-                    events.ScheduleEvent(EVENT_POISON_CLOUD, urand(25000, 50000));
-                    break;
-                default:
-                    break;
+            case EVENT_POISON_CLOUD:
+                DoCastVictim(SPELL_POISON_CLOUD);
+                events.ScheduleEvent(EVENT_POISON_CLOUD, urand(25000, 50000));
+                break;
+            default:
+                break;
             }
         }
 
-        private:
-            bool IsEnraged;
+    private:
+        bool IsEnraged;
     };
 
     CreatureAI* GetAI(Creature* creature) const override

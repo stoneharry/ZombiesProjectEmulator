@@ -68,31 +68,31 @@ void OPvPCapturePointZM_Beacon::ChangeState()
 
     switch (m_State)
     {
-        case OBJECTIVESTATE_ALLIANCE:
-        {
-            m_TowerState = ZM_TOWERSTATE_A;
-            uint32 alliance_towers = ((OutdoorPvPZM*)m_PvP)->GetAllianceTowersControlled();
-            if (alliance_towers < ZM_NUM_BEACONS)
-                ((OutdoorPvPZM*)m_PvP)->SetAllianceTowersControlled(++alliance_towers);
-            m_PvP->SendDefenseMessage(ZM_GRAVEYARD_ZONE, ZMBeaconCaptureA[m_TowerType]);
-            break;
-        }
-        case OBJECTIVESTATE_HORDE:
-        {
-            m_TowerState = ZM_TOWERSTATE_H;
-            uint32 horde_towers = ((OutdoorPvPZM*)m_PvP)->GetHordeTowersControlled();
-            if (horde_towers < ZM_NUM_BEACONS)
-                ((OutdoorPvPZM*)m_PvP)->SetHordeTowersControlled(++horde_towers);
-            m_PvP->SendDefenseMessage(ZM_GRAVEYARD_ZONE, ZMBeaconCaptureH[m_TowerType]);
-            break;
-        }
-        case OBJECTIVESTATE_NEUTRAL:
-        case OBJECTIVESTATE_NEUTRAL_ALLIANCE_CHALLENGE:
-        case OBJECTIVESTATE_NEUTRAL_HORDE_CHALLENGE:
-        case OBJECTIVESTATE_ALLIANCE_HORDE_CHALLENGE:
-        case OBJECTIVESTATE_HORDE_ALLIANCE_CHALLENGE:
-            m_TowerState = ZM_TOWERSTATE_N;
-            break;
+    case OBJECTIVESTATE_ALLIANCE:
+    {
+                                    m_TowerState = ZM_TOWERSTATE_A;
+                                    uint32 alliance_towers = ((OutdoorPvPZM*)m_PvP)->GetAllianceTowersControlled();
+                                    if (alliance_towers < ZM_NUM_BEACONS)
+                                        ((OutdoorPvPZM*)m_PvP)->SetAllianceTowersControlled(++alliance_towers);
+                                    m_PvP->SendDefenseMessage(ZM_GRAVEYARD_ZONE, ZMBeaconCaptureA[m_TowerType]);
+                                    break;
+    }
+    case OBJECTIVESTATE_HORDE:
+    {
+                                 m_TowerState = ZM_TOWERSTATE_H;
+                                 uint32 horde_towers = ((OutdoorPvPZM*)m_PvP)->GetHordeTowersControlled();
+                                 if (horde_towers < ZM_NUM_BEACONS)
+                                     ((OutdoorPvPZM*)m_PvP)->SetHordeTowersControlled(++horde_towers);
+                                 m_PvP->SendDefenseMessage(ZM_GRAVEYARD_ZONE, ZMBeaconCaptureH[m_TowerType]);
+                                 break;
+    }
+    case OBJECTIVESTATE_NEUTRAL:
+    case OBJECTIVESTATE_NEUTRAL_ALLIANCE_CHALLENGE:
+    case OBJECTIVESTATE_NEUTRAL_HORDE_CHALLENGE:
+    case OBJECTIVESTATE_ALLIANCE_HORDE_CHALLENGE:
+    case OBJECTIVESTATE_HORDE_ALLIANCE_CHALLENGE:
+        m_TowerState = ZM_TOWERSTATE_N;
+        break;
     }
 
     UpdateTowerState();
@@ -244,10 +244,10 @@ void OPvPCapturePointZM_GraveYard::FillInitialWorldStates(WorldPacket &data)
     data << ZM_MAP_GRAVEYARD_H << uint32((m_GraveYardState & ZM_GRAVEYARD_H) != 0);
     data << ZM_MAP_GRAVEYARD_A << uint32((m_GraveYardState & ZM_GRAVEYARD_A) != 0);
 
-    data << ZM_MAP_ALLIANCE_FLAG_READY  << uint32(m_BothControllingFaction == ALLIANCE);
-    data << ZM_MAP_ALLIANCE_FLAG_NOT_READY  << uint32(m_BothControllingFaction != ALLIANCE);
-    data << ZM_MAP_HORDE_FLAG_READY  << uint32(m_BothControllingFaction == HORDE);
-    data << ZM_MAP_HORDE_FLAG_NOT_READY  << uint32(m_BothControllingFaction != HORDE);
+    data << ZM_MAP_ALLIANCE_FLAG_READY << uint32(m_BothControllingFaction == ALLIANCE);
+    data << ZM_MAP_ALLIANCE_FLAG_NOT_READY << uint32(m_BothControllingFaction != ALLIANCE);
+    data << ZM_MAP_HORDE_FLAG_READY << uint32(m_BothControllingFaction == HORDE);
+    data << ZM_MAP_HORDE_FLAG_NOT_READY << uint32(m_BothControllingFaction != HORDE);
 }
 
 void OPvPCapturePointZM_GraveYard::SetBeaconState(uint32 controlling_faction)
@@ -283,8 +283,8 @@ void OPvPCapturePointZM_GraveYard::SetBeaconState(uint32 controlling_faction)
                 Player* p = ObjectAccessor::FindPlayer(m_FlagCarrierGUID);
                 if (p)
                 {
-                   p->RemoveAurasDueToSpell(ZM_BATTLE_STANDARD_A);
-                   p->RemoveAurasDueToSpell(ZM_BATTLE_STANDARD_H);
+                    p->RemoveAurasDueToSpell(ZM_BATTLE_STANDARD_A);
+                    p->RemoveAurasDueToSpell(ZM_BATTLE_STANDARD_H);
                 }
                 m_FlagCarrierGUID.Clear();
             }
@@ -410,13 +410,13 @@ void OutdoorPvPZM::SendRemoveWorldStates(Player* player)
 
 class OutdoorPvP_zangarmarsh : public OutdoorPvPScript
 {
-    public:
-        OutdoorPvP_zangarmarsh() : OutdoorPvPScript("outdoorpvp_zm") { }
+public:
+    OutdoorPvP_zangarmarsh() : OutdoorPvPScript("outdoorpvp_zm") { }
 
-        OutdoorPvP* GetOutdoorPvP() const override
-        {
-            return new OutdoorPvPZM();
-        }
+    OutdoorPvP* GetOutdoorPvP() const override
+    {
+        return new OutdoorPvPZM();
+    }
 };
 
 void AddSC_outdoorpvp_zm()

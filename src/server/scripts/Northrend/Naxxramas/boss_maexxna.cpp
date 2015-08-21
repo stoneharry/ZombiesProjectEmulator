@@ -22,25 +22,25 @@
 
 enum Spells
 {
-    SPELL_WEB_WRAP              = 28622,
-    SPELL_WEB_SPRAY             = 29484,
-    SPELL_POISON_SHOCK          = 28741,
-    SPELL_NECROTIC_POISON       = 28776,
-    SPELL_FRENZY                = 54123
+    SPELL_WEB_WRAP = 28622,
+    SPELL_WEB_SPRAY = 29484,
+    SPELL_POISON_SHOCK = 28741,
+    SPELL_NECROTIC_POISON = 28776,
+    SPELL_FRENZY = 54123
 };
 
 enum Creatures
 {
-    NPC_WEB_WRAP                = 16486,
-    NPC_SPIDERLING              = 17055,
+    NPC_WEB_WRAP = 16486,
+    NPC_SPIDERLING = 17055,
 };
 
 #define MAX_POS_WRAP            3
 const Position PosWrap[MAX_POS_WRAP] =
 {
-    {3546.796f, -3869.082f, 296.450f, 0.0f},
-    {3531.271f, -3847.424f, 299.450f, 0.0f},
-    {3497.067f, -3843.384f, 302.384f, 0.0f},
+    { 3546.796f, -3869.082f, 296.450f, 0.0f },
+    { 3531.271f, -3847.424f, 299.450f, 0.0f },
+    { 3497.067f, -3843.384f, 302.384f, 0.0f },
 };
 
 enum Events
@@ -106,44 +106,44 @@ public:
             {
                 switch (eventId)
                 {
-                    case EVENT_WRAP:
-                        /// @todo Add missing text
-                        for (uint8 i = 0; i < RAID_MODE(1, 2); ++i)
+                case EVENT_WRAP:
+                    /// @todo Add missing text
+                    for (uint8 i = 0; i < RAID_MODE(1, 2); ++i)
+                    {
+                        if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 1, 0, true, -SPELL_WEB_WRAP))
                         {
-                            if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 1, 0, true, -SPELL_WEB_WRAP))
-                            {
-                                target->RemoveAura(sSpellMgr->GetSpellIdForDifficulty(SPELL_WEB_SPRAY, me));
-                                uint8 pos = rand32() % MAX_POS_WRAP;
-                                target->GetMotionMaster()->MoveJump(PosWrap[pos].GetPositionX(), PosWrap[pos].GetPositionY(), PosWrap[pos].GetPositionZ(), 20, 20);
-                                if (Creature* wrap = DoSummon(NPC_WEB_WRAP, PosWrap[pos], 0, TEMPSUMMON_CORPSE_DESPAWN))
-                                    wrap->AI()->SetGUID(target->GetGUID());
-                            }
+                            target->RemoveAura(sSpellMgr->GetSpellIdForDifficulty(SPELL_WEB_SPRAY, me));
+                            uint8 pos = rand32() % MAX_POS_WRAP;
+                            target->GetMotionMaster()->MoveJump(PosWrap[pos].GetPositionX(), PosWrap[pos].GetPositionY(), PosWrap[pos].GetPositionZ(), 20, 20);
+                            if (Creature* wrap = DoSummon(NPC_WEB_WRAP, PosWrap[pos], 0, TEMPSUMMON_CORPSE_DESPAWN))
+                                wrap->AI()->SetGUID(target->GetGUID());
                         }
-                        events.ScheduleEvent(EVENT_WRAP, 40000);
-                        break;
-                    case EVENT_SPRAY:
-                        DoCastAOE(SPELL_WEB_SPRAY);
-                        events.ScheduleEvent(EVENT_SPRAY, 40000);
-                        break;
-                    case EVENT_SHOCK:
-                        DoCastAOE(SPELL_POISON_SHOCK);
-                        events.ScheduleEvent(EVENT_SHOCK, urand(10000, 20000));
-                        break;
-                    case EVENT_POISON:
-                        DoCastVictim(SPELL_NECROTIC_POISON);
-                        events.ScheduleEvent(EVENT_POISON, urand(10000, 20000));
-                        break;
-                    case EVENT_FRENZY:
-                        DoCast(me, SPELL_FRENZY, true);
-                        events.ScheduleEvent(EVENT_FRENZY, 600000);
-                        break;
-                    case EVENT_SUMMON:
-                        /// @todo Add missing text
-                        uint8 amount = urand(8, 10);
-                        for (uint8 i = 0; i < amount; ++i)
-                            DoSummon(NPC_SPIDERLING, me, 0, TEMPSUMMON_CORPSE_DESPAWN);
-                        events.ScheduleEvent(EVENT_SUMMON, 40000);
-                        break;
+                    }
+                    events.ScheduleEvent(EVENT_WRAP, 40000);
+                    break;
+                case EVENT_SPRAY:
+                    DoCastAOE(SPELL_WEB_SPRAY);
+                    events.ScheduleEvent(EVENT_SPRAY, 40000);
+                    break;
+                case EVENT_SHOCK:
+                    DoCastAOE(SPELL_POISON_SHOCK);
+                    events.ScheduleEvent(EVENT_SHOCK, urand(10000, 20000));
+                    break;
+                case EVENT_POISON:
+                    DoCastVictim(SPELL_NECROTIC_POISON);
+                    events.ScheduleEvent(EVENT_POISON, urand(10000, 20000));
+                    break;
+                case EVENT_FRENZY:
+                    DoCast(me, SPELL_FRENZY, true);
+                    events.ScheduleEvent(EVENT_FRENZY, 600000);
+                    break;
+                case EVENT_SUMMON:
+                    /// @todo Add missing text
+                    uint8 amount = urand(8, 10);
+                    for (uint8 i = 0; i < amount; ++i)
+                        DoSummon(NPC_SPIDERLING, me, 0, TEMPSUMMON_CORPSE_DESPAWN);
+                    events.ScheduleEvent(EVENT_SUMMON, 40000);
+                    break;
                 }
             }
 
@@ -173,15 +173,15 @@ public:
         {
             victimGUID = guid;
             if (me->m_spells[0] && victimGUID)
-                if (Unit* victim = ObjectAccessor::GetUnit(*me, victimGUID))
-                    victim->CastSpell(victim, me->m_spells[0], true, NULL, NULL, me->GetGUID());
+            if (Unit* victim = ObjectAccessor::GetUnit(*me, victimGUID))
+                victim->CastSpell(victim, me->m_spells[0], true, NULL, NULL, me->GetGUID());
         }
 
         void JustDied(Unit* /*killer*/) override
         {
             if (me->m_spells[0] && victimGUID)
-                if (Unit* victim = ObjectAccessor::GetUnit(*me, victimGUID))
-                    victim->RemoveAurasDueToSpell(me->m_spells[0], me->GetGUID());
+            if (Unit* victim = ObjectAccessor::GetUnit(*me, victimGUID))
+                victim->RemoveAurasDueToSpell(me->m_spells[0], me->GetGUID());
         }
     };
 

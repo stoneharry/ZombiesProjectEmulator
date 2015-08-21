@@ -29,43 +29,43 @@ EndScriptData */
 
 enum HighKingMaulgar
 {
-    SAY_AGGRO                   = 0,
-    SAY_ENRAGE                  = 1,
-    SAY_OGRE_DEATH              = 2,
-    SAY_SLAY                    = 3,
-    SAY_DEATH                   = 4,
+    SAY_AGGRO = 0,
+    SAY_ENRAGE = 1,
+    SAY_OGRE_DEATH = 2,
+    SAY_SLAY = 3,
+    SAY_DEATH = 4,
 
     // High King Maulgar
-    SPELL_ARCING_SMASH          = 39144,
-    SPELL_MIGHTY_BLOW           = 33230,
-    SPELL_WHIRLWIND             = 33238,
-    SPELL_BERSERKER_C           = 26561,
-    SPELL_ROAR                  = 16508,
-    SPELL_FLURRY                = 33232,
-    SPELL_DUAL_WIELD            = 29651,
+    SPELL_ARCING_SMASH = 39144,
+    SPELL_MIGHTY_BLOW = 33230,
+    SPELL_WHIRLWIND = 33238,
+    SPELL_BERSERKER_C = 26561,
+    SPELL_ROAR = 16508,
+    SPELL_FLURRY = 33232,
+    SPELL_DUAL_WIELD = 29651,
 
     // Olm the Summoner
-    SPELL_DARK_DECAY            = 33129,
-    SPELL_DEATH_COIL            = 33130,
-    SPELL_SUMMON_WFH            = 33131,
+    SPELL_DARK_DECAY = 33129,
+    SPELL_DEATH_COIL = 33130,
+    SPELL_SUMMON_WFH = 33131,
 
     // Kiggler the Craed
-    SPELL_GREATER_POLYMORPH     = 33173,
-    SPELL_LIGHTNING_BOLT        = 36152,
-    SPELL_ARCANE_SHOCK          = 33175,
-    SPELL_ARCANE_EXPLOSION      = 33237,
+    SPELL_GREATER_POLYMORPH = 33173,
+    SPELL_LIGHTNING_BOLT = 36152,
+    SPELL_ARCANE_SHOCK = 33175,
+    SPELL_ARCANE_EXPLOSION = 33237,
 
     // Blindeye the Seer
-    SPELL_GREATER_PW_SHIELD     = 33147,
-    SPELL_HEAL                  = 33144,
-    SPELL_PRAYER_OH             = 33152,
+    SPELL_GREATER_PW_SHIELD = 33147,
+    SPELL_HEAL = 33144,
+    SPELL_PRAYER_OH = 33152,
 
     // Krosh Firehand
-    SPELL_GREATER_FIREBALL      = 33051,
-    SPELL_SPELLSHIELD           = 33054,
-    SPELL_BLAST_WAVE            = 33061,
+    SPELL_GREATER_FIREBALL = 33051,
+    SPELL_SPELLSHIELD = 33054,
+    SPELL_BLAST_WAVE = 33061,
 
-    ACTION_ADD_DEATH            = 1
+    ACTION_ADD_DEATH = 1
 };
 
 class boss_high_king_maulgar : public CreatureScript
@@ -146,21 +146,24 @@ public:
             {
                 DoCastVictim(SPELL_ARCING_SMASH);
                 ArcingSmash_Timer = 10000;
-            } else ArcingSmash_Timer -= diff;
+            }
+            else ArcingSmash_Timer -= diff;
 
             //Whirlwind_Timer
-                   if (Whirlwind_Timer <= diff)
-                   {
-                        DoCastVictim(SPELL_WHIRLWIND);
-                        Whirlwind_Timer = 55000;
-                   } else Whirlwind_Timer -= diff;
+            if (Whirlwind_Timer <= diff)
+            {
+                DoCastVictim(SPELL_WHIRLWIND);
+                Whirlwind_Timer = 55000;
+            }
+            else Whirlwind_Timer -= diff;
 
             //MightyBlow_Timer
             if (MightyBlow_Timer <= diff)
             {
                 DoCastVictim(SPELL_MIGHTY_BLOW);
                 MightyBlow_Timer = 30000 + rand32() % 10000;
-            } else MightyBlow_Timer -= diff;
+            }
+            else MightyBlow_Timer -= diff;
 
             //Entering Phase 2
             if (!Phase2 && HealthBelowPct(50))
@@ -170,7 +173,7 @@ public:
 
                 DoCast(me, SPELL_DUAL_WIELD, true);
                 me->SetUInt32Value(UNIT_VIRTUAL_ITEM_SLOT_ID, 0);
-                me->SetUInt32Value(UNIT_VIRTUAL_ITEM_SLOT_ID+1, 0);
+                me->SetUInt32Value(UNIT_VIRTUAL_ITEM_SLOT_ID + 1, 0);
             }
 
             if (Phase2)
@@ -186,14 +189,16 @@ public:
                         DoCast(target, SPELL_BERSERKER_C);
                     }
                     Charging_Timer = 20000;
-                } else Charging_Timer -= diff;
+                }
+                else Charging_Timer -= diff;
 
                 //Intimidating Roar
                 if (Roar_Timer <= diff)
                 {
                     DoCast(me, SPELL_ROAR);
                     Roar_Timer = 40000 + (rand32() % 10000);
-                } else Roar_Timer -= diff;
+                }
+                else Roar_Timer -= diff;
             }
 
             DoMeleeAttackIfReady();
@@ -278,14 +283,16 @@ public:
             {
                 DoCastVictim(SPELL_DARK_DECAY);
                 DarkDecay_Timer = 20000;
-            } else DarkDecay_Timer -= diff;
+            }
+            else DarkDecay_Timer -= diff;
 
             //Summon_Timer
             if (Summon_Timer <= diff)
             {
                 DoCast(me, SPELL_SUMMON_WFH);
                 Summon_Timer = 30000;
-            } else Summon_Timer -= diff;
+            }
+            else Summon_Timer -= diff;
 
             //DeathCoil Timer /need correct timer
             if (DeathCoil_Timer <= diff)
@@ -295,7 +302,8 @@ public:
                 if (target)
                     DoCast(target, SPELL_DEATH_COIL);
                 DeathCoil_Timer = 20000;
-            } else DeathCoil_Timer -= diff;
+            }
+            else DeathCoil_Timer -= diff;
 
             DoMeleeAttackIfReady();
         }
@@ -369,28 +377,32 @@ public:
                     DoCast(target, SPELL_GREATER_POLYMORPH);
 
                 GreaterPolymorph_Timer = urand(15000, 20000);
-            } else GreaterPolymorph_Timer -= diff;
+            }
+            else GreaterPolymorph_Timer -= diff;
 
             //LightningBolt_Timer
             if (LightningBolt_Timer <= diff)
             {
                 DoCastVictim(SPELL_LIGHTNING_BOLT);
                 LightningBolt_Timer = 15000;
-            } else LightningBolt_Timer -= diff;
+            }
+            else LightningBolt_Timer -= diff;
 
             //ArcaneShock_Timer
             if (ArcaneShock_Timer <= diff)
             {
                 DoCastVictim(SPELL_ARCANE_SHOCK);
                 ArcaneShock_Timer = 20000;
-            } else ArcaneShock_Timer -= diff;
+            }
+            else ArcaneShock_Timer -= diff;
 
             //ArcaneExplosion_Timer
             if (ArcaneExplosion_Timer <= diff)
             {
                 DoCastVictim(SPELL_ARCANE_EXPLOSION);
                 ArcaneExplosion_Timer = 30000;
-            } else ArcaneExplosion_Timer -= diff;
+            }
+            else ArcaneExplosion_Timer -= diff;
 
             DoMeleeAttackIfReady();
         }
@@ -449,7 +461,7 @@ public:
             instance->SetBossState(DATA_MAULGAR, DONE);
         }
 
-         void UpdateAI(uint32 diff) override
+        void UpdateAI(uint32 diff) override
         {
             if (!UpdateVictim())
                 return;
@@ -459,21 +471,24 @@ public:
             {
                 DoCast(me, SPELL_GREATER_PW_SHIELD);
                 GreaterPowerWordShield_Timer = 40000;
-            } else GreaterPowerWordShield_Timer -= diff;
+            }
+            else GreaterPowerWordShield_Timer -= diff;
 
             //Heal_Timer
             if (Heal_Timer <= diff)
             {
                 DoCast(me, SPELL_HEAL);
                 Heal_Timer = urand(15000, 40000);
-            } else Heal_Timer -= diff;
+            }
+            else Heal_Timer -= diff;
 
             //PrayerofHealing_Timer
             if (PrayerofHealing_Timer <= diff)
             {
                 DoCast(me, SPELL_PRAYER_OH);
                 PrayerofHealing_Timer = urand(35000, 50000);
-            } else PrayerofHealing_Timer -= diff;
+            }
+            else PrayerofHealing_Timer -= diff;
 
             DoMeleeAttackIfReady();
         }
@@ -542,7 +557,8 @@ public:
             {
                 DoCastVictim(SPELL_GREATER_FIREBALL);
                 GreaterFireball_Timer = 2000;
-            } else GreaterFireball_Timer -= diff;
+            }
+            else GreaterFireball_Timer -= diff;
 
             //SpellShield_Timer
             if (SpellShield_Timer <= diff)
@@ -550,7 +566,8 @@ public:
                 me->InterruptNonMeleeSpells(false);
                 DoCastVictim(SPELL_SPELLSHIELD);
                 SpellShield_Timer = 30000;
-            } else SpellShield_Timer -= diff;
+            }
+            else SpellShield_Timer -= diff;
 
             //BlastWave_Timer
             if (BlastWave_Timer <= diff)
@@ -558,10 +575,10 @@ public:
                 Unit* target = NULL;
                 std::list<HostileReference*> t_list = me->getThreatManager().getThreatList();
                 std::vector<Unit*> target_list;
-                for (std::list<HostileReference*>::const_iterator itr = t_list.begin(); itr!= t_list.end(); ++itr)
+                for (std::list<HostileReference*>::const_iterator itr = t_list.begin(); itr != t_list.end(); ++itr)
                 {
                     target = ObjectAccessor::GetUnit(*me, (*itr)->getUnitGuid());
-                                                                //15 yard radius minimum
+                    //15 yard radius minimum
                     if (target && target->IsWithinDist(me, 15, false))
                         target_list.push_back(target);
                     target = NULL;
@@ -572,7 +589,8 @@ public:
                 me->InterruptNonMeleeSpells(false);
                 DoCast(target, SPELL_BLAST_WAVE);
                 BlastWave_Timer = 60000;
-            } else BlastWave_Timer -= diff;
+            }
+            else BlastWave_Timer -= diff;
         }
     };
 

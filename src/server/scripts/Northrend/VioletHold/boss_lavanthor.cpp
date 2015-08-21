@@ -21,13 +21,13 @@
 
 enum Spells
 {
-  SPELL_CAUTERIZING_FLAMES                      = 59466, //Only in heroic
-  SPELL_FIREBOLT                                = 54235,
-  H_SPELL_FIREBOLT                              = 59468,
-  SPELL_FLAME_BREATH                            = 54282,
-  H_SPELL_FLAME_BREATH                          = 59469,
-  SPELL_LAVA_BURN                               = 54249,
-  H_SPELL_LAVA_BURN                             = 59594
+    SPELL_CAUTERIZING_FLAMES = 59466, //Only in heroic
+    SPELL_FIREBOLT = 54235,
+    H_SPELL_FIREBOLT = 59468,
+    SPELL_FLAME_BREATH = 54282,
+    H_SPELL_FLAME_BREATH = 59469,
+    SPELL_LAVA_BURN = 54249,
+    H_SPELL_LAVA_BURN = 59594
 };
 
 class boss_lavanthor : public CreatureScript
@@ -75,15 +75,15 @@ public:
         void EnterCombat(Unit* /*who*/) override
         {
             if (GameObject* pDoor = instance->instance->GetGameObject(instance->GetGuidData(DATA_LAVANTHOR_CELL)))
-                    if (pDoor->GetGoState() == GO_STATE_READY)
-                    {
-                        EnterEvadeMode();
-                        return;
-                    }
-                if (instance->GetData(DATA_WAVE_COUNT) == 6)
-                    instance->SetData(DATA_1ST_BOSS_EVENT, IN_PROGRESS);
-                else if (instance->GetData(DATA_WAVE_COUNT) == 12)
-                    instance->SetData(DATA_2ND_BOSS_EVENT, IN_PROGRESS);
+            if (pDoor->GetGoState() == GO_STATE_READY)
+            {
+                EnterEvadeMode();
+                return;
+            }
+            if (instance->GetData(DATA_WAVE_COUNT) == 6)
+                instance->SetData(DATA_1ST_BOSS_EVENT, IN_PROGRESS);
+            else if (instance->GetData(DATA_WAVE_COUNT) == 12)
+                instance->SetData(DATA_2ND_BOSS_EVENT, IN_PROGRESS);
         }
 
         void AttackStart(Unit* who) override
@@ -113,13 +113,15 @@ public:
             {
                 DoCastVictim(SPELL_FIREBOLT);
                 uiFireboltTimer = urand(5000, 13000);
-            } else uiFireboltTimer -= diff;
+            }
+            else uiFireboltTimer -= diff;
 
             if (uiFlameBreathTimer <= diff)
             {
                 DoCastVictim(SPELL_FLAME_BREATH);
                 uiFlameBreathTimer = urand(10000, 15000);
-            } else uiFlameBreathTimer -= diff;
+            }
+            else uiFlameBreathTimer -= diff;
 
             if (uiLavaBurnTimer <= diff)
             {
@@ -133,7 +135,8 @@ public:
                 {
                     DoCastVictim(SPELL_CAUTERIZING_FLAMES);
                     uiCauterizingFlamesTimer = urand(10000, 16000);
-                } else uiCauterizingFlamesTimer -= diff;
+                }
+                else uiCauterizingFlamesTimer -= diff;
             }
 
             DoMeleeAttackIfReady();

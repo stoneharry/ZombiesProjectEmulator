@@ -28,21 +28,21 @@ EndScriptData */
 
 enum Curator
 {
-    SAY_AGGRO                       = 0,
-    SAY_SUMMON                      = 1,
-    SAY_EVOCATE                     = 2,
-    SAY_ENRAGE                      = 3,
-    SAY_KILL                        = 4,
-    SAY_DEATH                       = 5,
+    SAY_AGGRO = 0,
+    SAY_SUMMON = 1,
+    SAY_EVOCATE = 2,
+    SAY_ENRAGE = 3,
+    SAY_KILL = 4,
+    SAY_DEATH = 5,
 
     //Flare spell info
-    SPELL_ASTRAL_FLARE_PASSIVE      = 30234,               //Visual effect + Flare damage
+    SPELL_ASTRAL_FLARE_PASSIVE = 30234,               //Visual effect + Flare damage
 
     //Curator spell info
-    SPELL_HATEFUL_BOLT              = 30383,
-    SPELL_EVOCATION                 = 30254,
-    SPELL_ENRAGE                    = 30403,               //Arcane Infusion: Transforms Curator and adds damage.
-    SPELL_BERSERK                   = 26662,
+    SPELL_HATEFUL_BOLT = 30383,
+    SPELL_EVOCATION = 30254,
+    SPELL_ENRAGE = 30403,               //Arcane Infusion: Transforms Curator and adds damage.
+    SPELL_BERSERK = 26662,
 };
 
 
@@ -128,7 +128,8 @@ public:
 
                 //don't know if he's supposed to do summon/evocate after hard enrage (probably not)
                 Enraged = true;
-            } else BerserkTimer -= diff;
+            }
+            else BerserkTimer -= diff;
 
             if (Evocating)
             {
@@ -161,7 +162,7 @@ public:
                         me->ModifyPower(POWER_MANA, -mana);
 
                         //if this get's us below 10%, then we evocate (the 10th should be summoned now)
-                        if (me->GetPower(POWER_MANA)*100 / me->GetMaxPower(POWER_MANA) < 10)
+                        if (me->GetPower(POWER_MANA) * 100 / me->GetMaxPower(POWER_MANA) < 10)
                         {
                             Talk(SAY_EVOCATE);
                             me->InterruptNonMeleeSpells(false);
@@ -180,7 +181,8 @@ public:
                     }
 
                     AddTimer = 10000;
-                } else AddTimer -= diff;
+                }
+                else AddTimer -= diff;
 
                 if (!HealthAbovePct(15))
                 {
@@ -199,7 +201,8 @@ public:
 
                 if (Unit* target = SelectTarget(SELECT_TARGET_TOPAGGRO, 1))
                     DoCast(target, SPELL_HATEFUL_BOLT);
-            } else HatefulBoltTimer -= diff;
+            }
+            else HatefulBoltTimer -= diff;
 
             DoMeleeAttackIfReady();
         }

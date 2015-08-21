@@ -40,19 +40,19 @@ public:
     {
         static ChatCommand instanceCommandTable[] =
         {
-            { "listbinds",    rbac::RBAC_PERM_COMMAND_INSTANCE_LISTBINDS,     false, &HandleInstanceListBindsCommand,    "", NULL },
-            { "unbind",       rbac::RBAC_PERM_COMMAND_INSTANCE_UNBIND,        false, &HandleInstanceUnbindCommand,       "", NULL },
-            { "stats",        rbac::RBAC_PERM_COMMAND_INSTANCE_STATS,          true, &HandleInstanceStatsCommand,        "", NULL },
-            { "savedata",     rbac::RBAC_PERM_COMMAND_INSTANCE_SAVEDATA,      false, &HandleInstanceSaveDataCommand,     "", NULL },
+            { "listbinds", rbac::RBAC_PERM_COMMAND_INSTANCE_LISTBINDS, false, &HandleInstanceListBindsCommand, "", NULL },
+            { "unbind", rbac::RBAC_PERM_COMMAND_INSTANCE_UNBIND, false, &HandleInstanceUnbindCommand, "", NULL },
+            { "stats", rbac::RBAC_PERM_COMMAND_INSTANCE_STATS, true, &HandleInstanceStatsCommand, "", NULL },
+            { "savedata", rbac::RBAC_PERM_COMMAND_INSTANCE_SAVEDATA, false, &HandleInstanceSaveDataCommand, "", NULL },
             { "setbossstate", rbac::RBAC_PERM_COMMAND_INSTANCE_SET_BOSS_STATE, true, &HandleInstanceSetBossStateCommand, "", NULL },
             { "getbossstate", rbac::RBAC_PERM_COMMAND_INSTANCE_GET_BOSS_STATE, true, &HandleInstanceGetBossStateCommand, "", NULL },
-            { NULL,           0,                                              false, NULL,                               "", NULL }
+            { NULL, 0, false, NULL, "", NULL }
         };
 
         static ChatCommand commandTable[] =
         {
-            { "instance", rbac::RBAC_PERM_COMMAND_INSTANCE,  true, NULL, "", instanceCommandTable },
-            { NULL,       0,                          false, NULL, "", NULL }
+            { "instance", rbac::RBAC_PERM_COMMAND_INSTANCE, true, NULL, "", instanceCommandTable },
+            { NULL, 0, false, NULL, "", NULL }
         };
 
         return commandTable;
@@ -84,7 +84,7 @@ public:
             {
                 InstanceSave* save = itr->second.save;
                 std::string timeleft = GetTimeString(save->GetResetTime() - time(NULL));
-                handler->PSendSysMessage(LANG_COMMAND_LIST_BIND_INFO, itr->first, save->GetInstanceId(), itr->second.perm ? "yes" : "no",  save->GetDifficulty(), save->CanReset() ? "yes" : "no", timeleft.c_str());
+                handler->PSendSysMessage(LANG_COMMAND_LIST_BIND_INFO, itr->first, save->GetInstanceId(), itr->second.perm ? "yes" : "no", save->GetDifficulty(), save->CanReset() ? "yes" : "no", timeleft.c_str());
                 counter++;
             }
         }

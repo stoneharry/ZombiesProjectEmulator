@@ -47,17 +47,17 @@ public:
         static ChatCommand mmapCommandTable[] =
         {
             { "loadedtiles", rbac::RBAC_PERM_COMMAND_MMAP_LOADEDTILES, false, &HandleMmapLoadedTilesCommand, "", NULL },
-            { "loc",         rbac::RBAC_PERM_COMMAND_MMAP_LOC,         false, &HandleMmapLocCommand,         "", NULL },
-            { "path",        rbac::RBAC_PERM_COMMAND_MMAP_PATH,        false, &HandleMmapPathCommand,        "", NULL },
-            { "stats",       rbac::RBAC_PERM_COMMAND_MMAP_STATS,       false, &HandleMmapStatsCommand,       "", NULL },
-            { "testarea",    rbac::RBAC_PERM_COMMAND_MMAP_TESTAREA,    false, &HandleMmapTestArea,           "", NULL },
-            { NULL,          0,                                  false, NULL,                          "", NULL }
+            { "loc", rbac::RBAC_PERM_COMMAND_MMAP_LOC, false, &HandleMmapLocCommand, "", NULL },
+            { "path", rbac::RBAC_PERM_COMMAND_MMAP_PATH, false, &HandleMmapPathCommand, "", NULL },
+            { "stats", rbac::RBAC_PERM_COMMAND_MMAP_STATS, false, &HandleMmapStatsCommand, "", NULL },
+            { "testarea", rbac::RBAC_PERM_COMMAND_MMAP_TESTAREA, false, &HandleMmapTestArea, "", NULL },
+            { NULL, 0, false, NULL, "", NULL }
         };
 
         static ChatCommand commandTable[] =
         {
-            { "mmap", rbac::RBAC_PERM_COMMAND_MMAP, true, NULL, "", mmapCommandTable  },
-            { NULL,   0,                     false, NULL, "", NULL }
+            { "mmap", rbac::RBAC_PERM_COMMAND_MMAP, true, NULL, "", mmapCommandTable },
+            { NULL, 0, false, NULL, "", NULL }
         };
         return commandTable;
     }
@@ -143,8 +143,8 @@ public:
         float const* min = navmesh->getParams()->orig;
         float x, y, z;
         player->GetPosition(x, y, z);
-        float location[VERTEX_SIZE] = {y, z, x};
-        float extents[VERTEX_SIZE] = {3.0f, 5.0f, 3.0f};
+        float location[VERTEX_SIZE] = { y, z, x };
+        float extents[VERTEX_SIZE] = { 3.0f, 5.0f, 3.0f };
 
         int32 tilex = int32((y - min[0]) / SIZE_OF_GRIDS);
         int32 tiley = int32((x - min[2]) / SIZE_OF_GRIDS);

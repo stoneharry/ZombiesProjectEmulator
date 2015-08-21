@@ -30,13 +30,13 @@ struct ServerPktHeader
      */
     ServerPktHeader(uint32 size, uint16 cmd) : size(size)
     {
-        uint8 headerIndex=0;
+        uint8 headerIndex = 0;
         if (isLargePacket())
         {
             TC_LOG_DEBUG("network", "initializing large server to client packet. Size: %u, cmd: %u", size, cmd);
             header[headerIndex++] = 0x80 | (0xFF & (size >> 16));
         }
-        header[headerIndex++] = 0xFF &(size >> 8);
+        header[headerIndex++] = 0xFF & (size >> 8);
         header[headerIndex++] = 0xFF & size;
 
         header[headerIndex++] = 0xFF & cmd;

@@ -37,19 +37,19 @@ EndContentData */
 
 enum AmeData
 {
-    SAY_READY               = 0,
-    SAY_AGGRO1              = 1,
-    SAY_SEARCH              = 2,
-    SAY_AGGRO2              = 3,
-    SAY_AGGRO3              = 4,
-    SAY_FINISH              = 5,
+    SAY_READY = 0,
+    SAY_AGGRO1 = 1,
+    SAY_SEARCH = 2,
+    SAY_AGGRO2 = 3,
+    SAY_AGGRO3 = 4,
+    SAY_FINISH = 5,
 
     SPELL_DEMORALIZINGSHOUT = 13730,
 
-    QUEST_CHASING_AME       = 4245,
-    ENTRY_TARLORD           = 6519,
-    ENTRY_TARLORD1          = 6519,
-    ENTRY_STOMPER           = 6513,
+    QUEST_CHASING_AME = 4245,
+    ENTRY_TARLORD = 6519,
+    ENTRY_TARLORD1 = 6519,
+    ENTRY_STOMPER = 6513,
 };
 
 class npc_ame : public CreatureScript
@@ -95,25 +95,25 @@ public:
             {
                 switch (waypointId)
                 {
-                    case 19:
-                        me->SummonCreature(ENTRY_STOMPER, -6391.69f, -1730.49f, -272.83f, 4.96f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 25000);
-                        Talk(SAY_AGGRO1, player);
-                        break;
-                    case 28:
-                        Talk(SAY_SEARCH, player);
-                        break;
-                    case 38:
-                        me->SummonCreature(ENTRY_TARLORD, -6370.75f, -1382.84f, -270.51f, 6.06f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 25000);
-                        Talk(SAY_AGGRO2, player);
-                        break;
-                    case 49:
-                        me->SummonCreature(ENTRY_TARLORD1, -6324.44f, -1181.05f, -270.17f, 4.34f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 25000);
-                        Talk(SAY_AGGRO3, player);
-                        break;
-                    case 55:
-                        Talk(SAY_FINISH, player);
-                        player->GroupEventHappens(QUEST_CHASING_AME, me);
-                        break;
+                case 19:
+                    me->SummonCreature(ENTRY_STOMPER, -6391.69f, -1730.49f, -272.83f, 4.96f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 25000);
+                    Talk(SAY_AGGRO1, player);
+                    break;
+                case 28:
+                    Talk(SAY_SEARCH, player);
+                    break;
+                case 38:
+                    me->SummonCreature(ENTRY_TARLORD, -6370.75f, -1382.84f, -270.51f, 6.06f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 25000);
+                    Talk(SAY_AGGRO2, player);
+                    break;
+                case 49:
+                    me->SummonCreature(ENTRY_TARLORD1, -6324.44f, -1181.05f, -270.17f, 4.34f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 25000);
+                    Talk(SAY_AGGRO3, player);
+                    break;
+                case 55:
+                    Talk(SAY_FINISH, player);
+                    player->GroupEventHappens(QUEST_CHASING_AME, me);
+                    break;
                 }
             }
         }
@@ -144,7 +144,8 @@ public:
             {
                 DoCastVictim(SPELL_DEMORALIZINGSHOUT);
                 DemoralizingShoutTimer = 70000;
-            } else DemoralizingShoutTimer -= diff;
+            }
+            else DemoralizingShoutTimer -= diff;
         }
     };
 };
@@ -155,25 +156,25 @@ public:
 
 enum Ringo
 {
-    SAY_RIN_START               = 0,
+    SAY_RIN_START = 0,
 
-    SAY_FAINT                   = 1,
+    SAY_FAINT = 1,
 
-    SAY_WAKE                    = 2,
+    SAY_WAKE = 2,
 
-    SAY_RIN_END_1               = 3,
-    SAY_SPR_END_2               = 0,
-    SAY_RIN_END_3               = 4,
-    EMOTE_RIN_END_4             = 5,
-    EMOTE_RIN_END_5             = 6,
-    SAY_RIN_END_6               = 7,
-    SAY_SPR_END_7               = 1,
-    EMOTE_RIN_END_8             = 8,
+    SAY_RIN_END_1 = 3,
+    SAY_SPR_END_2 = 0,
+    SAY_RIN_END_3 = 4,
+    EMOTE_RIN_END_4 = 5,
+    EMOTE_RIN_END_5 = 6,
+    SAY_RIN_END_6 = 7,
+    SAY_SPR_END_7 = 1,
+    EMOTE_RIN_END_8 = 8,
 
-    SPELL_REVIVE_RINGO          = 15591,
-    QUEST_A_LITTLE_HELP         = 4491,
-    NPC_SPRAGGLE                = 9997,
-    FACTION_ESCORTEE            = 113
+    SPELL_REVIVE_RINGO = 15591,
+    QUEST_A_LITTLE_HELP = 4491,
+    NPC_SPRAGGLE = 9997,
+    FACTION_ESCORTEE = 113
 };
 
 class npc_ringo : public CreatureScript
@@ -295,43 +296,43 @@ public:
 
                         switch (EndEventProgress)
                         {
-                            case 1:
-                                Talk(SAY_RIN_END_1);
-                                EndEventTimer = 3000;
-                                break;
-                            case 2:
-                                spraggle->AI()->Talk(SAY_SPR_END_2);
-                                EndEventTimer = 5000;
-                                break;
-                            case 3:
-                                Talk(SAY_RIN_END_3);
-                                EndEventTimer = 1000;
-                                break;
-                            case 4:
-                                Talk(EMOTE_RIN_END_4);
-                                SetFaint();
-                                EndEventTimer = 9000;
-                                break;
-                            case 5:
-                                Talk(EMOTE_RIN_END_5);
-                                ClearFaint();
-                                EndEventTimer = 1000;
-                                break;
-                            case 6:
-                                Talk(SAY_RIN_END_6);
-                                EndEventTimer = 3000;
-                                break;
-                            case 7:
-                                spraggle->AI()->Talk(SAY_SPR_END_7);
-                                EndEventTimer = 10000;
-                                break;
-                            case 8:
-                                Talk(EMOTE_RIN_END_8);
-                                EndEventTimer = 5000;
-                                break;
-                            case 9:
-                                SetFollowComplete();
-                                break;
+                        case 1:
+                            Talk(SAY_RIN_END_1);
+                            EndEventTimer = 3000;
+                            break;
+                        case 2:
+                            spraggle->AI()->Talk(SAY_SPR_END_2);
+                            EndEventTimer = 5000;
+                            break;
+                        case 3:
+                            Talk(SAY_RIN_END_3);
+                            EndEventTimer = 1000;
+                            break;
+                        case 4:
+                            Talk(EMOTE_RIN_END_4);
+                            SetFaint();
+                            EndEventTimer = 9000;
+                            break;
+                        case 5:
+                            Talk(EMOTE_RIN_END_5);
+                            ClearFaint();
+                            EndEventTimer = 1000;
+                            break;
+                        case 6:
+                            Talk(SAY_RIN_END_6);
+                            EndEventTimer = 3000;
+                            break;
+                        case 7:
+                            spraggle->AI()->Talk(SAY_SPR_END_7);
+                            EndEventTimer = 10000;
+                            break;
+                        case 8:
+                            Talk(EMOTE_RIN_END_8);
+                            EndEventTimer = 5000;
+                            break;
+                        case 9:
+                            SetFollowComplete();
+                            break;
                         }
 
                         ++EndEventProgress;

@@ -35,17 +35,17 @@ public:
     {
         static ChatCommand battlefieldcommandTable[] =
         {
-            { "start",          rbac::RBAC_PERM_COMMAND_BF_START,  false, &HandleBattlefieldStart,  "", NULL },
-            { "stop",           rbac::RBAC_PERM_COMMAND_BF_STOP,   false, &HandleBattlefieldEnd,    "", NULL },
-            { "switch",         rbac::RBAC_PERM_COMMAND_BF_SWITCH, false, &HandleBattlefieldSwitch, "", NULL },
-            { "timer",          rbac::RBAC_PERM_COMMAND_BF_TIMER,  false, &HandleBattlefieldTimer,  "", NULL },
-            { "enable",         rbac::RBAC_PERM_COMMAND_BF_ENABLE, false, &HandleBattlefieldEnable, "", NULL },
-            { NULL,             0,                           false, NULL,                     "", NULL }
+            { "start", rbac::RBAC_PERM_COMMAND_BF_START, false, &HandleBattlefieldStart, "", NULL },
+            { "stop", rbac::RBAC_PERM_COMMAND_BF_STOP, false, &HandleBattlefieldEnd, "", NULL },
+            { "switch", rbac::RBAC_PERM_COMMAND_BF_SWITCH, false, &HandleBattlefieldSwitch, "", NULL },
+            { "timer", rbac::RBAC_PERM_COMMAND_BF_TIMER, false, &HandleBattlefieldTimer, "", NULL },
+            { "enable", rbac::RBAC_PERM_COMMAND_BF_ENABLE, false, &HandleBattlefieldEnable, "", NULL },
+            { NULL, 0, false, NULL, "", NULL }
         };
         static ChatCommand commandTable[] =
         {
-            { "bf",             rbac::RBAC_PERM_COMMAND_BF,        false, NULL,                     "", battlefieldcommandTable },
-            { NULL,             0,                           false, NULL,                     "", NULL }
+            { "bf", rbac::RBAC_PERM_COMMAND_BF, false, NULL, "", battlefieldcommandTable },
+            { NULL, 0, false, NULL, "", NULL }
         };
         return commandTable;
     }

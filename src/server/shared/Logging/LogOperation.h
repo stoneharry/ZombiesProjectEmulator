@@ -25,18 +25,18 @@ struct LogMessage;
 
 class LogOperation
 {
-    public:
-        LogOperation(Logger const* _logger, std::unique_ptr<LogMessage>&& _msg)
-            : logger(_logger), msg(std::forward<std::unique_ptr<LogMessage>>(_msg))
-        { }
+public:
+    LogOperation(Logger const* _logger, std::unique_ptr<LogMessage>&& _msg)
+        : logger(_logger), msg(std::forward<std::unique_ptr<LogMessage>>(_msg))
+    { }
 
-        ~LogOperation() { }
+    ~LogOperation() { }
 
-        int call();
+    int call();
 
-    protected:
-        Logger const* logger;
-        std::unique_ptr<LogMessage> msg;
+protected:
+    Logger const* logger;
+    std::unique_ptr<LogMessage> msg;
 };
 
 #endif

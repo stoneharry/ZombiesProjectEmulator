@@ -38,13 +38,13 @@ class Aura;
 /* differeces from off:
     -you can uninvite yourself - is is useful
     -you can accept invitation even if leader went offline
-*/
+    */
 /* todo:
     -group_destroyed msg is sent but not shown
     -reduce xp gaining when in raid group
     -quest sharing has to be corrected
     -FIX sending PartyMemberStats
-*/
+    */
 
 void WorldSession::SendPartyResult(PartyOperation operation, const std::string& member, PartyResult res, uint32 val /* = 0 */)
 {
@@ -454,12 +454,12 @@ void WorldSession::HandleLootRoll(WorldPacket& recvData)
 
     switch (rollType)
     {
-        case ROLL_NEED:
-            GetPlayer()->UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_ROLL_NEED, 1);
-            break;
-        case ROLL_GREED:
-            GetPlayer()->UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_ROLL_GREED, 1);
-            break;
+    case ROLL_NEED:
+        GetPlayer()->UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_ROLL_NEED, 1);
+        break;
+    case ROLL_GREED:
+        GetPlayer()->UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_ROLL_GREED, 1);
+        break;
     }
 }
 
@@ -480,7 +480,7 @@ void WorldSession::HandleMinimapPingOpcode(WorldPacket& recvData)
     /********************/
 
     // everything's fine, do it
-    WorldPacket data(MSG_MINIMAP_PING, (8+4+4));
+    WorldPacket data(MSG_MINIMAP_PING, (8 + 4 + 4));
     data << uint64(GetPlayer()->GetGUID());
     data << float(x);
     data << float(y);
@@ -505,7 +505,7 @@ void WorldSession::HandleRandomRollOpcode(WorldPacket& recvData)
 
     //TC_LOG_DEBUG("ROLL: MIN: %u, MAX: %u, ROLL: %u", minimum, maximum, roll);
 
-    WorldPacket data(MSG_RANDOM_ROLL, 4+4+4+8);
+    WorldPacket data(MSG_RANDOM_ROLL, 4 + 4 + 4 + 8);
     data << uint32(minimum);
     data << uint32(maximum);
     data << uint32(roll);
@@ -654,15 +654,15 @@ void WorldSession::HandlePartyAssignmentOpcode(WorldPacket& recvData)
 
     switch (assignment)
     {
-        case GROUP_ASSIGN_MAINASSIST:
-            group->RemoveUniqueGroupMemberFlag(MEMBER_FLAG_MAINASSIST);
-            group->SetGroupMemberFlag(guid, apply, MEMBER_FLAG_MAINASSIST);
-            break;
-        case GROUP_ASSIGN_MAINTANK:
-            group->RemoveUniqueGroupMemberFlag(MEMBER_FLAG_MAINTANK);           // Remove main assist flag from current if any.
-            group->SetGroupMemberFlag(guid, apply, MEMBER_FLAG_MAINTANK);
-        default:
-            break;
+    case GROUP_ASSIGN_MAINASSIST:
+        group->RemoveUniqueGroupMemberFlag(MEMBER_FLAG_MAINASSIST);
+        group->SetGroupMemberFlag(guid, apply, MEMBER_FLAG_MAINASSIST);
+        break;
+    case GROUP_ASSIGN_MAINTANK:
+        group->RemoveUniqueGroupMemberFlag(MEMBER_FLAG_MAINTANK);           // Remove main assist flag from current if any.
+        group->SetGroupMemberFlag(guid, apply, MEMBER_FLAG_MAINTANK);
+    default:
+        break;
     }
 
     group->SendUpdate();
@@ -730,8 +730,8 @@ void WorldSession::BuildPartyMemberStatsChangedPacket(Player* player, WorldPacke
 
     uint32 byteCount = 0;
     for (int i = 1; i < GROUP_UPDATE_FLAGS_COUNT; ++i)
-        if (mask & (1 << i))
-            byteCount += GroupUpdateLength[i];
+    if (mask & (1 << i))
+        byteCount += GroupUpdateLength[i];
 
     data->Initialize(SMSG_PARTY_MEMBER_STATS, 8 + 4 + byteCount);
     *data << player->GetPackGUID();
@@ -810,9 +810,9 @@ void WorldSession::BuildPartyMemberStatsChangedPacket(Player* player, WorldPacke
     if (mask & GROUP_UPDATE_FLAG_PET_GUID)
     {
         if (pet)
-            *data << (uint64) pet->GetGUID();
+            *data << (uint64)pet->GetGUID();
         else
-            *data << (uint64) 0;
+            *data << (uint64)0;
     }
 
     if (mask & GROUP_UPDATE_FLAG_PET_NAME)
@@ -910,7 +910,7 @@ void WorldSession::HandleRequestPartyMemberStatsOpcode(WorldPacket &recvData)
     Player* player = ObjectAccessor::FindConnectedPlayer(Guid);
     if (!player)
     {
-        WorldPacket data(SMSG_PARTY_MEMBER_STATS_FULL, 3+4+2);
+        WorldPacket data(SMSG_PARTY_MEMBER_STATS_FULL, 3 + 4 + 2);
         data << uint8(0);                                   // only for SMSG_PARTY_MEMBER_STATS_FULL, probably arena/bg related
         data << Guid.WriteAsPacked();
         data << uint32(GROUP_UPDATE_FLAG_STATUS);
@@ -922,21 +922,21 @@ void WorldSession::HandleRequestPartyMemberStatsOpcode(WorldPacket &recvData)
     Pet* pet = player->GetPet();
     Powers powerType = player->getPowerType();
 
-    WorldPacket data(SMSG_PARTY_MEMBER_STATS_FULL, 4+2+2+2+1+2*6+8+1+8);
+    WorldPacket data(SMSG_PARTY_MEMBER_STATS_FULL, 4 + 2 + 2 + 2 + 1 + 2 * 6 + 8 + 1 + 8);
     data << uint8(0);                                       // only for SMSG_PARTY_MEMBER_STATS_FULL, probably arena/bg related
     data << player->GetPackGUID();
 
     uint32 updateFlags = GROUP_UPDATE_FLAG_STATUS | GROUP_UPDATE_FLAG_CUR_HP | GROUP_UPDATE_FLAG_MAX_HP
-                      | GROUP_UPDATE_FLAG_CUR_POWER | GROUP_UPDATE_FLAG_MAX_POWER | GROUP_UPDATE_FLAG_LEVEL
-                      | GROUP_UPDATE_FLAG_ZONE | GROUP_UPDATE_FLAG_POSITION | GROUP_UPDATE_FLAG_AURAS
-                      | GROUP_UPDATE_FLAG_PET_NAME | GROUP_UPDATE_FLAG_PET_MODEL_ID | GROUP_UPDATE_FLAG_PET_AURAS;
+        | GROUP_UPDATE_FLAG_CUR_POWER | GROUP_UPDATE_FLAG_MAX_POWER | GROUP_UPDATE_FLAG_LEVEL
+        | GROUP_UPDATE_FLAG_ZONE | GROUP_UPDATE_FLAG_POSITION | GROUP_UPDATE_FLAG_AURAS
+        | GROUP_UPDATE_FLAG_PET_NAME | GROUP_UPDATE_FLAG_PET_MODEL_ID | GROUP_UPDATE_FLAG_PET_AURAS;
 
     if (powerType != POWER_MANA)
         updateFlags |= GROUP_UPDATE_FLAG_POWER_TYPE;
 
     if (pet)
         updateFlags |= GROUP_UPDATE_FLAG_PET_GUID | GROUP_UPDATE_FLAG_PET_CUR_HP | GROUP_UPDATE_FLAG_PET_MAX_HP
-                    | GROUP_UPDATE_FLAG_PET_POWER_TYPE | GROUP_UPDATE_FLAG_PET_CUR_POWER | GROUP_UPDATE_FLAG_PET_MAX_POWER;
+        | GROUP_UPDATE_FLAG_PET_POWER_TYPE | GROUP_UPDATE_FLAG_PET_CUR_POWER | GROUP_UPDATE_FLAG_PET_MAX_POWER;
 
     if (player->GetVehicle())
         updateFlags |= GROUP_UPDATE_FLAG_VEHICLE_SEAT;
@@ -1044,7 +1044,7 @@ void WorldSession::HandleRequestPartyMemberStatsOpcode(WorldPacket &recvData)
 
 /*void WorldSession::HandleGroupCancelOpcode(WorldPacket& recvData)
 {
-    TC_LOG_DEBUG("WORLD: got CMSG_GROUP_CANCEL.");
+TC_LOG_DEBUG("WORLD: got CMSG_GROUP_CANCEL.");
 }*/
 
 void WorldSession::HandleOptOutOfLootOpcode(WorldPacket& recvData)

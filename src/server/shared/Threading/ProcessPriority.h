@@ -28,7 +28,7 @@
 
 void SetProcessPriority(const std::string& logChannel)
 {
-// Suppresses Mac OS X Warning since logChannel isn't used.
+    // Suppresses Mac OS X Warning since logChannel isn't used.
 #if PLATFORM_APPLE
     (void)logChannel;
 #endif
@@ -76,9 +76,9 @@ void SetProcessPriority(const std::string& logChannel)
         cpu_set_t mask;
         CPU_ZERO(&mask);
 
-        for (unsigned int i = 0; i < sizeof(affinity) * 8; ++i)
-            if (affinity & (1 << i))
-                CPU_SET(i, &mask);
+        for (unsigned int i = 0; i < sizeof(affinity)* 8; ++i)
+        if (affinity & (1 << i))
+            CPU_SET(i, &mask);
 
         if (sched_setaffinity(0, sizeof(mask), &mask))
             TC_LOG_ERROR(logChannel, "Can't set used processors (hex): %x, error: %s", affinity, strerror(errno));

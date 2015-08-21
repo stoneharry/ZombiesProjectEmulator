@@ -22,22 +22,22 @@
 
 enum Spells
 {
-    SPELL_CARRION_SWARM     = 31306,
-    SPELL_SLEEP             = 31298,
-    SPELL_VAMPIRIC_AURA     = 38196,
-    SPELL_INFERNO           = 31299,
-    SPELL_IMMOLATION        = 31303,
-    SPELL_INFERNO_EFFECT    = 31302,
+    SPELL_CARRION_SWARM = 31306,
+    SPELL_SLEEP = 31298,
+    SPELL_VAMPIRIC_AURA = 38196,
+    SPELL_INFERNO = 31299,
+    SPELL_IMMOLATION = 31303,
+    SPELL_INFERNO_EFFECT = 31302,
 };
 
 enum Texts
 {
-    SAY_ONDEATH         = 0,
-    SAY_ONSLAY          = 1,
-    SAY_SWARM           = 2,
-    SAY_SLEEP           = 3,
-    SAY_INFERNO         = 4,
-    SAY_ONAGGRO         = 5,
+    SAY_ONDEATH = 0,
+    SAY_ONSLAY = 1,
+    SAY_SWARM = 2,
+    SAY_SLEEP = 3,
+    SAY_INFERNO = 4,
+    SAY_ONAGGRO = 5,
 };
 
 class boss_anetheron : public CreatureScript
@@ -123,14 +123,14 @@ public:
                 if (!go)
                 {
                     go = true;
-                    AddWaypoint(0, 4896.08f,    -1576.35f,    1333.65f);
-                    AddWaypoint(1, 4898.68f,    -1615.02f,    1329.48f);
-                    AddWaypoint(2, 4907.12f,    -1667.08f,    1321.00f);
-                    AddWaypoint(3, 4963.18f,    -1699.35f,    1340.51f);
-                    AddWaypoint(4, 4989.16f,    -1716.67f,    1335.74f);
-                    AddWaypoint(5, 5026.27f,    -1736.89f,    1323.02f);
-                    AddWaypoint(6, 5037.77f,    -1770.56f,    1324.36f);
-                    AddWaypoint(7, 5067.23f,    -1789.95f,    1321.17f);
+                    AddWaypoint(0, 4896.08f, -1576.35f, 1333.65f);
+                    AddWaypoint(1, 4898.68f, -1615.02f, 1329.48f);
+                    AddWaypoint(2, 4907.12f, -1667.08f, 1321.00f);
+                    AddWaypoint(3, 4963.18f, -1699.35f, 1340.51f);
+                    AddWaypoint(4, 4989.16f, -1716.67f, 1335.74f);
+                    AddWaypoint(5, 5026.27f, -1736.89f, 1323.02f);
+                    AddWaypoint(6, 5037.77f, -1770.56f, 1324.36f);
+                    AddWaypoint(7, 5067.23f, -1789.95f, 1321.17f);
                     Start(false, true);
                     SetDespawnAtEnd(false);
                 }
@@ -147,7 +147,8 @@ public:
 
                 SwarmTimer = urand(45000, 60000);
                 Talk(SAY_SWARM);
-            } else SwarmTimer -= diff;
+            }
+            else SwarmTimer -= diff;
 
             if (SleepTimer <= diff)
             {
@@ -158,18 +159,21 @@ public:
                 }
                 SleepTimer = 60000;
                 Talk(SAY_SLEEP);
-            } else SleepTimer -= diff;
+            }
+            else SleepTimer -= diff;
             if (AuraTimer <= diff)
             {
                 DoCast(me, SPELL_VAMPIRIC_AURA, true);
                 AuraTimer = urand(10000, 20000);
-            } else AuraTimer -= diff;
+            }
+            else AuraTimer -= diff;
             if (InfernoTimer <= diff)
             {
                 DoCast(SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true), SPELL_INFERNO);
                 InfernoTimer = 45000;
                 Talk(SAY_INFERNO);
-            } else InfernoTimer -= diff;
+            }
+            else InfernoTimer -= diff;
 
             DoMeleeAttackIfReady();
         }
@@ -243,7 +247,8 @@ public:
                     }
                 }
                 CheckTimer = 5000;
-            } else CheckTimer -= diff;
+            }
+            else CheckTimer -= diff;
 
             //Return since we have no target
             if (!UpdateVictim())
@@ -253,7 +258,8 @@ public:
             {
                 DoCast(me, SPELL_IMMOLATION);
                 ImmolationTimer = 5000;
-            } else ImmolationTimer -= diff;
+            }
+            else ImmolationTimer -= diff;
 
             DoMeleeAttackIfReady();
         }

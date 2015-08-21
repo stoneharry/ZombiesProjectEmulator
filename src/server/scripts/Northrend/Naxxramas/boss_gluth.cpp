@@ -21,28 +21,28 @@
 
 enum Spells
 {
-    SPELL_MORTAL_WOUND      = 25646,
-    SPELL_ENRAGE            = 28371,
-    SPELL_DECIMATE          = 28374,
-    SPELL_BERSERK           = 26662,
-    SPELL_INFECTED_WOUND    = 29306
+    SPELL_MORTAL_WOUND = 25646,
+    SPELL_ENRAGE = 28371,
+    SPELL_DECIMATE = 28374,
+    SPELL_BERSERK = 26662,
+    SPELL_INFECTED_WOUND = 29306
 };
 
 enum Creatures
 {
-    NPC_ZOMBIE              = 16360
+    NPC_ZOMBIE = 16360
 };
 
 Position const PosSummon[3] =
 {
-    {3267.9f, -3172.1f, 297.42f, 0.94f},
-    {3253.2f, -3132.3f, 297.42f, 0},
-    {3308.3f, -3185.8f, 297.42f, 1.58f},
+    { 3267.9f, -3172.1f, 297.42f, 0.94f },
+    { 3253.2f, -3132.3f, 297.42f, 0 },
+    { 3308.3f, -3185.8f, 297.42f, 1.58f },
 };
 
 enum Events
 {
-    EVENT_WOUND     = 1,
+    EVENT_WOUND = 1,
     EVENT_ENRAGE,
     EVENT_DECIMATE,
     EVENT_BERSERK,
@@ -87,7 +87,7 @@ public:
             events.ScheduleEvent(EVENT_WOUND, 10000);
             events.ScheduleEvent(EVENT_ENRAGE, 15000);
             events.ScheduleEvent(EVENT_DECIMATE, 105000);
-            events.ScheduleEvent(EVENT_BERSERK, 8*60000);
+            events.ScheduleEvent(EVENT_BERSERK, 8 * 60000);
             events.ScheduleEvent(EVENT_SUMMON, 15000);
         }
 
@@ -109,29 +109,29 @@ public:
             {
                 switch (eventId)
                 {
-                    case EVENT_WOUND:
-                        DoCastVictim(SPELL_MORTAL_WOUND);
-                        events.ScheduleEvent(EVENT_WOUND, 10000);
-                        break;
-                    case EVENT_ENRAGE:
-                        /// @todo Add missing text
-                        DoCast(me, SPELL_ENRAGE);
-                        events.ScheduleEvent(EVENT_ENRAGE, 15000);
-                        break;
-                    case EVENT_DECIMATE:
-                        /// @todo Add missing text
-                        DoCastAOE(SPELL_DECIMATE);
-                        events.ScheduleEvent(EVENT_DECIMATE, 105000);
-                        break;
-                    case EVENT_BERSERK:
-                        DoCast(me, SPELL_BERSERK);
-                        events.ScheduleEvent(EVENT_BERSERK, 5*60000);
-                        break;
-                    case EVENT_SUMMON:
-                        for (int32 i = 0; i < RAID_MODE(1, 2); ++i)
-                            DoSummon(NPC_ZOMBIE, PosSummon[rand32() % RAID_MODE(1, 3)]);
-                        events.ScheduleEvent(EVENT_SUMMON, 10000);
-                        break;
+                case EVENT_WOUND:
+                    DoCastVictim(SPELL_MORTAL_WOUND);
+                    events.ScheduleEvent(EVENT_WOUND, 10000);
+                    break;
+                case EVENT_ENRAGE:
+                    /// @todo Add missing text
+                    DoCast(me, SPELL_ENRAGE);
+                    events.ScheduleEvent(EVENT_ENRAGE, 15000);
+                    break;
+                case EVENT_DECIMATE:
+                    /// @todo Add missing text
+                    DoCastAOE(SPELL_DECIMATE);
+                    events.ScheduleEvent(EVENT_DECIMATE, 105000);
+                    break;
+                case EVENT_BERSERK:
+                    DoCast(me, SPELL_BERSERK);
+                    events.ScheduleEvent(EVENT_BERSERK, 5 * 60000);
+                    break;
+                case EVENT_SUMMON:
+                    for (int32 i = 0; i < RAID_MODE(1, 2); ++i)
+                        DoSummon(NPC_ZOMBIE, PosSummon[rand32() % RAID_MODE(1, 3)]);
+                    events.ScheduleEvent(EVENT_SUMMON, 10000);
+                    break;
                 }
             }
 

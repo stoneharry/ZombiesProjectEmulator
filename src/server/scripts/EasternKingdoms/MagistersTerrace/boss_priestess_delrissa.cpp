@@ -32,63 +32,63 @@ struct Speech
     int32 id;
 };
 
-static Speech LackeyDeath[]=
+static Speech LackeyDeath[] =
 {
-    {1},
-    {2},
-    {3},
-    {4},
+    { 1 },
+    { 2 },
+    { 3 },
+    { 4 },
 };
 
-static Speech PlayerDeath[]=
+static Speech PlayerDeath[] =
 {
-    {5},
-    {6},
-    {7},
-    {8},
-    {9},
+    { 5 },
+    { 6 },
+    { 7 },
+    { 8 },
+    { 9 },
 };
 
 enum Yells
 {
-    SAY_AGGRO               = 0,
-    SAY_DEATH               = 10,
+    SAY_AGGRO = 0,
+    SAY_DEATH = 10,
 };
 
 enum Spells
 {
-    SPELL_DISPEL_MAGIC          = 27609,
-    SPELL_FLASH_HEAL            = 17843,
-    SPELL_SW_PAIN_NORMAL        = 14032,
-    SPELL_SW_PAIN_HEROIC        = 15654,
-    SPELL_SHIELD                = 44291,
-    SPELL_RENEW_NORMAL          = 44174,
-    SPELL_RENEW_HEROIC          = 46192,
+    SPELL_DISPEL_MAGIC = 27609,
+    SPELL_FLASH_HEAL = 17843,
+    SPELL_SW_PAIN_NORMAL = 14032,
+    SPELL_SW_PAIN_HEROIC = 15654,
+    SPELL_SHIELD = 44291,
+    SPELL_RENEW_NORMAL = 44174,
+    SPELL_RENEW_HEROIC = 46192,
 
     // Apoko
-    SPELL_WINDFURY_TOTEM        = 27621,
-    SPELL_WAR_STOMP             = 46026,
-    SPELL_PURGE                 = 27626,
-    SPELL_LESSER_HEALING_WAVE   = 44256,
-    SPELL_FROST_SHOCK           = 21401,
-    SPELL_FIRE_NOVA_TOTEM       = 44257,
-    SPELL_EARTHBIND_TOTEM       = 15786
+    SPELL_WINDFURY_TOTEM = 27621,
+    SPELL_WAR_STOMP = 46026,
+    SPELL_PURGE = 27626,
+    SPELL_LESSER_HEALING_WAVE = 44256,
+    SPELL_FROST_SHOCK = 21401,
+    SPELL_FIRE_NOVA_TOTEM = 44257,
+    SPELL_EARTHBIND_TOTEM = 15786
 };
 
 enum Misc
 {
-    MAX_ACTIVE_LACKEY       = 4
+    MAX_ACTIVE_LACKEY = 4
 };
 
 const float fOrientation = 4.98f;
 const float fZLocation = -19.921f;
 
-float LackeyLocations[4][2]=
+float LackeyLocations[4][2] =
 {
-    {123.77f, 17.6007f},
-    {131.731f, 15.0827f},
-    {121.563f, 15.6213f},
-    {129.988f, 17.2355f},
+    { 123.77f, 17.6007f },
+    { 131.731f, 15.0827f },
+    { 121.563f, 15.6213f },
+    { 129.988f, 17.2355f },
 };
 
 const uint32 m_auiAddEntries[] =
@@ -262,13 +262,14 @@ public:
             {
                 float x, y, z, o;
                 me->GetHomePosition(x, y, z, o);
-                if (me->GetPositionZ() >= z+10)
+                if (me->GetPositionZ() >= z + 10)
                 {
                     EnterEvadeMode();
                     return;
                 }
                 ResetTimer = 5000;
-            } else ResetTimer -= diff;
+            }
+            else ResetTimer -= diff;
 
             if (HealTimer <= diff)
             {
@@ -285,33 +286,36 @@ public:
 
                 DoCast(target, SPELL_FLASH_HEAL);
                 HealTimer = 15000;
-            } else HealTimer -= diff;
+            }
+            else HealTimer -= diff;
 
             if (RenewTimer <= diff)
             {
                 Unit* target = me;
 
                 if (urand(0, 1))
-                    if (Unit* pAdd = ObjectAccessor::GetUnit(*me, m_auiLackeyGUID[rand32() % MAX_ACTIVE_LACKEY]))
-                        if (pAdd->IsAlive())
-                            target = pAdd;
+                if (Unit* pAdd = ObjectAccessor::GetUnit(*me, m_auiLackeyGUID[rand32() % MAX_ACTIVE_LACKEY]))
+                if (pAdd->IsAlive())
+                    target = pAdd;
 
                 DoCast(target, SPELL_RENEW_NORMAL);
                 RenewTimer = 5000;
-            } else RenewTimer -= diff;
+            }
+            else RenewTimer -= diff;
 
             if (ShieldTimer <= diff)
             {
                 Unit* target = me;
 
                 if (urand(0, 1))
-                    if (Unit* pAdd = ObjectAccessor::GetUnit(*me, m_auiLackeyGUID[rand32() % MAX_ACTIVE_LACKEY]))
-                        if (pAdd->IsAlive() && !pAdd->HasAura(SPELL_SHIELD))
-                            target = pAdd;
+                if (Unit* pAdd = ObjectAccessor::GetUnit(*me, m_auiLackeyGUID[rand32() % MAX_ACTIVE_LACKEY]))
+                if (pAdd->IsAlive() && !pAdd->HasAura(SPELL_SHIELD))
+                    target = pAdd;
 
                 DoCast(target, SPELL_SHIELD);
                 ShieldTimer = 7500;
-            } else ShieldTimer -= diff;
+            }
+            else ShieldTimer -= diff;
 
             if (DispelTimer <= diff)
             {
@@ -324,16 +328,17 @@ public:
                     if (urand(0, 1))
                         target = me;
                     else
-                        if (Unit* pAdd = ObjectAccessor::GetUnit(*me, m_auiLackeyGUID[rand32() % MAX_ACTIVE_LACKEY]))
-                            if (pAdd->IsAlive())
-                                target = pAdd;
+                    if (Unit* pAdd = ObjectAccessor::GetUnit(*me, m_auiLackeyGUID[rand32() % MAX_ACTIVE_LACKEY]))
+                    if (pAdd->IsAlive())
+                        target = pAdd;
                 }
 
                 if (target)
                     DoCast(target, SPELL_DISPEL_MAGIC);
 
                 DispelTimer = 12000;
-            } else DispelTimer -= diff;
+            }
+            else DispelTimer -= diff;
 
             if (SWPainTimer <= diff)
             {
@@ -341,7 +346,8 @@ public:
                     DoCast(target, SPELL_SW_PAIN_NORMAL);
 
                 SWPainTimer = 10000;
-            } else SWPainTimer -= diff;
+            }
+            else SWPainTimer -= diff;
 
             DoMeleeAttackIfReady();
         }
@@ -350,7 +356,7 @@ public:
 
 enum HealingPotion
 {
-    SPELL_HEALING_POTION    = 15503
+    SPELL_HEALING_POTION = 15503
 };
 
 //all 8 possible lackey use this common
@@ -476,18 +482,19 @@ struct boss_priestess_lackey_commonAI : public ScriptedAI
         {
             DoResetThreat();
             ResetThreatTimer = urand(5000, 20000);
-        } else ResetThreatTimer -= diff;
+        }
+        else ResetThreatTimer -= diff;
     }
 };
 
 enum RogueSpells
 {
-    SPELL_KIDNEY_SHOT       = 27615,
-    SPELL_GOUGE             = 12540,
-    SPELL_KICK              = 27613,
-    SPELL_VANISH            = 44290,
-    SPELL_BACKSTAB          = 15657,
-    SPELL_EVISCERATE        = 27611
+    SPELL_KIDNEY_SHOT = 27615,
+    SPELL_GOUGE = 12540,
+    SPELL_KICK = 27613,
+    SPELL_VANISH = 44290,
+    SPELL_BACKSTAB = 15657,
+    SPELL_EVISCERATE = 27611
 };
 
 class boss_kagani_nightstrike : public CreatureScript
@@ -554,7 +561,8 @@ public:
                 InVanish = true;
                 Vanish_Timer = 30000;
                 Wait_Timer = 10000;
-            } else Vanish_Timer -= diff;
+            }
+            else Vanish_Timer -= diff;
 
             if (InVanish)
             {
@@ -564,26 +572,30 @@ public:
                     DoCastVictim(SPELL_KIDNEY_SHOT, true);
                     me->SetVisible(true);       // ...? Hacklike
                     InVanish = false;
-                } else Wait_Timer -= diff;
+                }
+                else Wait_Timer -= diff;
             }
 
             if (Gouge_Timer <= diff)
             {
                 DoCastVictim(SPELL_GOUGE);
                 Gouge_Timer = 5500;
-            } else Gouge_Timer -= diff;
+            }
+            else Gouge_Timer -= diff;
 
             if (Kick_Timer <= diff)
             {
                 DoCastVictim(SPELL_KICK);
                 Kick_Timer = 7000;
-            } else Kick_Timer -= diff;
+            }
+            else Kick_Timer -= diff;
 
             if (Eviscerate_Timer <= diff)
             {
                 DoCastVictim(SPELL_EVISCERATE);
                 Eviscerate_Timer = 4000;
-            } else Eviscerate_Timer -= diff;
+            }
+            else Eviscerate_Timer -= diff;
 
             if (!InVanish)
                 DoMeleeAttackIfReady();
@@ -593,13 +605,13 @@ public:
 
 enum WarlockSpells
 {
-    SPELL_IMMOLATE              = 44267,
-    SPELL_SHADOW_BOLT           = 12471,
-    SPELL_SEED_OF_CORRUPTION    = 44141,
-    SPELL_CURSE_OF_AGONY        = 14875,
-    SPELL_FEAR                  = 38595,
-    SPELL_IMP_FIREBALL          = 44164,
-    SPELL_SUMMON_IMP            = 44163
+    SPELL_IMMOLATE = 44267,
+    SPELL_SHADOW_BOLT = 12471,
+    SPELL_SEED_OF_CORRUPTION = 44141,
+    SPELL_CURSE_OF_AGONY = 14875,
+    SPELL_FEAR = 38595,
+    SPELL_IMP_FIREBALL = 44164,
+    SPELL_SUMMON_IMP = 44163
 };
 
 class boss_ellris_duskhallow : public CreatureScript
@@ -658,13 +670,15 @@ public:
             {
                 DoCastVictim(SPELL_IMMOLATE);
                 Immolate_Timer = 6000;
-            } else Immolate_Timer -= diff;
+            }
+            else Immolate_Timer -= diff;
 
             if (Shadow_Bolt_Timer <= diff)
             {
                 DoCastVictim(SPELL_SHADOW_BOLT);
                 Shadow_Bolt_Timer = 5000;
-            } else Shadow_Bolt_Timer -= diff;
+            }
+            else Shadow_Bolt_Timer -= diff;
 
             if (Seed_of_Corruption_Timer <= diff)
             {
@@ -672,7 +686,8 @@ public:
                     DoCast(unit, SPELL_SEED_OF_CORRUPTION);
 
                 Seed_of_Corruption_Timer = 10000;
-            } else Seed_of_Corruption_Timer -= diff;
+            }
+            else Seed_of_Corruption_Timer -= diff;
 
             if (Curse_of_Agony_Timer <= diff)
             {
@@ -680,7 +695,8 @@ public:
                     DoCast(unit, SPELL_CURSE_OF_AGONY);
 
                 Curse_of_Agony_Timer = 13000;
-            } else Curse_of_Agony_Timer -= diff;
+            }
+            else Curse_of_Agony_Timer -= diff;
 
             if (Fear_Timer <= diff)
             {
@@ -688,7 +704,8 @@ public:
                     DoCast(unit, SPELL_FEAR);
 
                 Fear_Timer = 10000;
-            } else Fear_Timer -= diff;
+            }
+            else Fear_Timer -= diff;
 
             DoMeleeAttackIfReady();
         }
@@ -697,8 +714,8 @@ public:
 
 enum KickDown
 {
-    SPELL_KNOCKDOWN     = 11428,
-    SPELL_SNAP_KICK     = 46182
+    SPELL_KNOCKDOWN = 11428,
+    SPELL_SNAP_KICK = 46182
 };
 
 class boss_eramas_brightblaze : public CreatureScript
@@ -746,13 +763,15 @@ public:
             {
                 DoCastVictim(SPELL_KNOCKDOWN);
                 Knockdown_Timer = 6000;
-            } else Knockdown_Timer -= diff;
+            }
+            else Knockdown_Timer -= diff;
 
             if (Snap_Kick_Timer <= diff)
             {
                 DoCastVictim(SPELL_SNAP_KICK);
-                Snap_Kick_Timer  = 4500;
-            } else Snap_Kick_Timer -= diff;
+                Snap_Kick_Timer = 4500;
+            }
+            else Snap_Kick_Timer -= diff;
 
             DoMeleeAttackIfReady();
         }
@@ -761,13 +780,13 @@ public:
 
 enum MageSpells
 {
-    SPELL_POLYMORPH         = 13323,
-    SPELL_ICE_BLOCK         = 27619,
-    SPELL_BLIZZARD          = 44178,
-    SPELL_ICE_LANCE         = 46194,
-    SPELL_CONE_OF_COLD      = 38384,
-    SPELL_FROSTBOLT         = 15043,
-    SPELL_BLINK             = 14514
+    SPELL_POLYMORPH = 13323,
+    SPELL_ICE_BLOCK = 27619,
+    SPELL_BLIZZARD = 44178,
+    SPELL_ICE_LANCE = 46194,
+    SPELL_CONE_OF_COLD = 38384,
+    SPELL_FROSTBOLT = 15043,
+    SPELL_BLINK = 14514
 };
 
 class boss_yazzai : public CreatureScript
@@ -834,7 +853,8 @@ public:
                     DoCast(target, SPELL_POLYMORPH);
                     Polymorph_Timer = 20000;
                 }
-            } else Polymorph_Timer -= diff;
+            }
+            else Polymorph_Timer -= diff;
 
             if (HealthBelowPct(35) && !HasIceBlocked)
             {
@@ -848,31 +868,35 @@ public:
                     DoCast(unit, SPELL_BLIZZARD);
 
                 Blizzard_Timer = 8000;
-            } else Blizzard_Timer -= diff;
+            }
+            else Blizzard_Timer -= diff;
 
             if (Ice_Lance_Timer <= diff)
             {
                 DoCastVictim(SPELL_ICE_LANCE);
                 Ice_Lance_Timer = 12000;
-            } else Ice_Lance_Timer -= diff;
+            }
+            else Ice_Lance_Timer -= diff;
 
             if (Cone_of_Cold_Timer <= diff)
             {
                 DoCastVictim(SPELL_CONE_OF_COLD);
                 Cone_of_Cold_Timer = 10000;
-            } else Cone_of_Cold_Timer -= diff;
+            }
+            else Cone_of_Cold_Timer -= diff;
 
             if (Frostbolt_Timer <= diff)
             {
                 DoCastVictim(SPELL_FROSTBOLT);
                 Frostbolt_Timer = 8000;
-            } else Frostbolt_Timer -= diff;
+            }
+            else Frostbolt_Timer -= diff;
 
             if (Blink_Timer <= diff)
             {
                 bool InMeleeRange = false;
                 ThreatContainer::StorageType const &t_list = me->getThreatManager().getThreatList();
-                for (ThreatContainer::StorageType::const_iterator itr = t_list.begin(); itr!= t_list.end(); ++itr)
+                for (ThreatContainer::StorageType::const_iterator itr = t_list.begin(); itr != t_list.end(); ++itr)
                 {
                     if (Unit* target = ObjectAccessor::GetUnit(*me, (*itr)->getUnitGuid()))
                     {
@@ -890,7 +914,8 @@ public:
                     DoCast(me, SPELL_BLINK);
 
                 Blink_Timer = 8000;
-            } else Blink_Timer -= diff;
+            }
+            else Blink_Timer -= diff;
 
             DoMeleeAttackIfReady();
         }
@@ -899,13 +924,13 @@ public:
 
 enum WarriorSpells
 {
-    SPELL_INTERCEPT_STUN        = 27577,
-    SPELL_DISARM                = 27581,
-    SPELL_PIERCING_HOWL         = 23600,
-    SPELL_FRIGHTENING_SHOUT     = 19134,
-    SPELL_HAMSTRING             = 27584,
-    SPELL_BATTLE_SHOUT          = 27578,
-    SPELL_MORTAL_STRIKE         = 44268
+    SPELL_INTERCEPT_STUN = 27577,
+    SPELL_DISARM = 27581,
+    SPELL_PIERCING_HOWL = 23600,
+    SPELL_FRIGHTENING_SHOUT = 19134,
+    SPELL_HAMSTRING = 27584,
+    SPELL_BATTLE_SHOUT = 27578,
+    SPELL_MORTAL_STRIKE = 44268
 };
 
 class boss_warlord_salaris : public CreatureScript
@@ -966,7 +991,7 @@ public:
             {
                 bool InMeleeRange = false;
                 ThreatContainer::StorageType const &t_list = me->getThreatManager().getThreatList();
-                for (ThreatContainer::StorageType::const_iterator itr = t_list.begin(); itr!= t_list.end(); ++itr)
+                for (ThreatContainer::StorageType::const_iterator itr = t_list.begin(); itr != t_list.end(); ++itr)
                 {
                     if (Unit* target = ObjectAccessor::GetUnit(*me, (*itr)->getUnitGuid()))
                     {
@@ -987,37 +1012,43 @@ public:
                 }
 
                 Intercept_Stun_Timer = 10000;
-            } else Intercept_Stun_Timer -= diff;
+            }
+            else Intercept_Stun_Timer -= diff;
 
             if (Disarm_Timer <= diff)
             {
                 DoCastVictim(SPELL_DISARM);
                 Disarm_Timer = 6000;
-            } else Disarm_Timer -= diff;
+            }
+            else Disarm_Timer -= diff;
 
             if (Hamstring_Timer <= diff)
             {
                 DoCastVictim(SPELL_HAMSTRING);
                 Hamstring_Timer = 4500;
-            } else Hamstring_Timer -= diff;
+            }
+            else Hamstring_Timer -= diff;
 
             if (Mortal_Strike_Timer <= diff)
             {
                 DoCastVictim(SPELL_MORTAL_STRIKE);
                 Mortal_Strike_Timer = 4500;
-            } else Mortal_Strike_Timer -= diff;
+            }
+            else Mortal_Strike_Timer -= diff;
 
             if (Piercing_Howl_Timer <= diff)
             {
                 DoCastVictim(SPELL_PIERCING_HOWL);
                 Piercing_Howl_Timer = 10000;
-            } else Piercing_Howl_Timer -= diff;
+            }
+            else Piercing_Howl_Timer -= diff;
 
             if (Frightening_Shout_Timer <= diff)
             {
                 DoCastVictim(SPELL_FRIGHTENING_SHOUT);
                 Frightening_Shout_Timer = 18000;
-            } else Frightening_Shout_Timer -= diff;
+            }
+            else Frightening_Shout_Timer -= diff;
 
             DoMeleeAttackIfReady();
         }
@@ -1026,14 +1057,14 @@ public:
 
 enum HunterSpells
 {
-    SPELL_AIMED_SHOT            = 44271,
-    SPELL_SHOOT                 = 15620,
-    SPELL_CONCUSSIVE_SHOT       = 27634,
-    SPELL_MULTI_SHOT            = 31942,
-    SPELL_WING_CLIP             = 44286,
-    SPELL_FREEZING_TRAP         = 44136,
+    SPELL_AIMED_SHOT = 44271,
+    SPELL_SHOOT = 15620,
+    SPELL_CONCUSSIVE_SHOT = 27634,
+    SPELL_MULTI_SHOT = 31942,
+    SPELL_WING_CLIP = 44286,
+    SPELL_FREEZING_TRAP = 44136,
 
-    NPC_SLIVER                  = 24552
+    NPC_SLIVER = 24552
 };
 
 class boss_garaxxas : public CreatureScript
@@ -1102,7 +1133,8 @@ public:
                 {
                     DoCastVictim(SPELL_WING_CLIP);
                     Wing_Clip_Timer = 4000;
-                } else Wing_Clip_Timer -= diff;
+                }
+                else Wing_Clip_Timer -= diff;
 
                 if (Freezing_Trap_Timer <= diff)
                 {
@@ -1118,7 +1150,8 @@ public:
                         DoCastVictim(SPELL_FREEZING_TRAP);
                         Freezing_Trap_Timer = 15000;
                     }
-                } else Freezing_Trap_Timer -= diff;
+                }
+                else Freezing_Trap_Timer -= diff;
 
                 DoMeleeAttackIfReady();
             }
@@ -1128,25 +1161,29 @@ public:
                 {
                     DoCastVictim(SPELL_CONCUSSIVE_SHOT);
                     Concussive_Shot_Timer = 8000;
-                } else Concussive_Shot_Timer -= diff;
+                }
+                else Concussive_Shot_Timer -= diff;
 
                 if (Multi_Shot_Timer <= diff)
                 {
                     DoCastVictim(SPELL_MULTI_SHOT);
                     Multi_Shot_Timer = 10000;
-                } else Multi_Shot_Timer -= diff;
+                }
+                else Multi_Shot_Timer -= diff;
 
                 if (Aimed_Shot_Timer <= diff)
                 {
                     DoCastVictim(SPELL_AIMED_SHOT);
                     Aimed_Shot_Timer = 6000;
-                } else Aimed_Shot_Timer -= diff;
+                }
+                else Aimed_Shot_Timer -= diff;
 
                 if (Shoot_Timer <= diff)
                 {
                     DoCastVictim(SPELL_SHOOT);
                     Shoot_Timer = 2500;
-                } else Shoot_Timer -= diff;
+                }
+                else Shoot_Timer -= diff;
             }
         }
     };
@@ -1205,14 +1242,16 @@ public:
             {
                 DoCast(me, RAND(SPELL_WINDFURY_TOTEM, SPELL_FIRE_NOVA_TOTEM, SPELL_EARTHBIND_TOTEM));
                 ++Totem_Amount;
-                Totem_Timer = Totem_Amount*2000;
-            } else Totem_Timer -= diff;
+                Totem_Timer = Totem_Amount * 2000;
+            }
+            else Totem_Timer -= diff;
 
             if (War_Stomp_Timer <= diff)
             {
                 DoCast(me, SPELL_WAR_STOMP);
                 War_Stomp_Timer = 10000;
-            } else War_Stomp_Timer -= diff;
+            }
+            else War_Stomp_Timer -= diff;
 
             if (Purge_Timer <= diff)
             {
@@ -1220,19 +1259,22 @@ public:
                     DoCast(unit, SPELL_PURGE);
 
                 Purge_Timer = 15000;
-            } else Purge_Timer -= diff;
+            }
+            else Purge_Timer -= diff;
 
             if (Frost_Shock_Timer <= diff)
             {
                 DoCastVictim(SPELL_FROST_SHOCK);
                 Frost_Shock_Timer = 7000;
-            } else Frost_Shock_Timer -= diff;
+            }
+            else Frost_Shock_Timer -= diff;
 
             if (Healing_Wave_Timer <= diff)
             {
                 DoCast(me, SPELL_LESSER_HEALING_WAVE);
                 Healing_Wave_Timer = 5000;
-            } else Healing_Wave_Timer -= diff;
+            }
+            else Healing_Wave_Timer -= diff;
 
             DoMeleeAttackIfReady();
         }
@@ -1241,12 +1283,12 @@ public:
 
 enum EngineerSpells
 {
-    SPELL_GOBLIN_DRAGON_GUN     = 44272,
-    SPELL_ROCKET_LAUNCH         = 44137,
-    SPELL_RECOMBOBULATE         = 44274,
-    SPELL_HIGH_EXPLOSIVE_SHEEP  = 44276,
-    SPELL_FEL_IRON_BOMB         = 46024,
-    SPELL_SHEEP_EXPLOSION       = 44279
+    SPELL_GOBLIN_DRAGON_GUN = 44272,
+    SPELL_ROCKET_LAUNCH = 44137,
+    SPELL_RECOMBOBULATE = 44274,
+    SPELL_HIGH_EXPLOSIVE_SHEEP = 44276,
+    SPELL_FEL_IRON_BOMB = 46024,
+    SPELL_SHEEP_EXPLOSION = 44279
 };
 
 class boss_zelfan : public CreatureScript
@@ -1300,19 +1342,22 @@ public:
             {
                 DoCastVictim(SPELL_GOBLIN_DRAGON_GUN);
                 Goblin_Dragon_Gun_Timer = 10000;
-            } else Goblin_Dragon_Gun_Timer -= diff;
+            }
+            else Goblin_Dragon_Gun_Timer -= diff;
 
             if (Rocket_Launch_Timer <= diff)
             {
                 DoCastVictim(SPELL_ROCKET_LAUNCH);
                 Rocket_Launch_Timer = 9000;
-            } else Rocket_Launch_Timer -= diff;
+            }
+            else Rocket_Launch_Timer -= diff;
 
             if (Fel_Iron_Bomb_Timer <= diff)
             {
                 DoCastVictim(SPELL_FEL_IRON_BOMB);
                 Fel_Iron_Bomb_Timer = 15000;
-            } else Fel_Iron_Bomb_Timer -= diff;
+            }
+            else Fel_Iron_Bomb_Timer -= diff;
 
             if (Recombobulate_Timer <= diff)
             {
@@ -1328,13 +1373,15 @@ public:
                     }
                 }
                 Recombobulate_Timer = 2000;
-            } else Recombobulate_Timer -= diff;
+            }
+            else Recombobulate_Timer -= diff;
 
             if (High_Explosive_Sheep_Timer <= diff)
             {
                 DoCast(me, SPELL_HIGH_EXPLOSIVE_SHEEP);
                 High_Explosive_Sheep_Timer = 65000;
-            } else High_Explosive_Sheep_Timer -= diff;
+            }
+            else High_Explosive_Sheep_Timer -= diff;
 
             DoMeleeAttackIfReady();
         }
@@ -1345,12 +1392,12 @@ public:
 class npc_high_explosive_sheep : public CreatureScript
 {
 public:
-    npc_high_explosive_sheep() : CreatureScript("npc_high_explosive_sheep") { }
+npc_high_explosive_sheep() : CreatureScript("npc_high_explosive_sheep") { }
 
-    //CreatureAI* GetAI(Creature* creature) const override
-    //{
-    //    return new npc_high_explosive_sheepAI(creature);
-    //};
+//CreatureAI* GetAI(Creature* creature) const override
+//{
+//    return new npc_high_explosive_sheepAI(creature);
+//};
 };
 */
 

@@ -51,8 +51,8 @@ void AggressorAI::UpdateAI(uint32 /*diff*/)
 void CombatAI::InitializeAI()
 {
     for (uint32 i = 0; i < CREATURE_MAX_SPELLS; ++i)
-        if (me->m_spells[i] && sSpellMgr->GetSpellInfo(me->m_spells[i]))
-            spells.push_back(me->m_spells[i]);
+    if (me->m_spells[i] && sSpellMgr->GetSpellInfo(me->m_spells[i]))
+        spells.push_back(me->m_spells[i]);
 
     CreatureAI::InitializeAI();
 }
@@ -65,8 +65,8 @@ void CombatAI::Reset()
 void CombatAI::JustDied(Unit* killer)
 {
     for (SpellVct::iterator i = spells.begin(); i != spells.end(); ++i)
-        if (AISpellInfo[*i].condition == AICOND_DIE)
-            me->CastSpell(killer, *i, true);
+    if (AISpellInfo[*i].condition == AICOND_DIE)
+        me->CastSpell(killer, *i, true);
 }
 
 void CombatAI::EnterCombat(Unit* who)
@@ -114,8 +114,8 @@ void CasterAI::InitializeAI()
 
     m_attackDist = 30.0f;
     for (SpellVct::iterator itr = spells.begin(); itr != spells.end(); ++itr)
-        if (AISpellInfo[*itr].condition == AICOND_COMBAT && m_attackDist > GetAISpellInfo(*itr)->maxRange)
-            m_attackDist = GetAISpellInfo(*itr)->maxRange;
+    if (AISpellInfo[*itr].condition == AICOND_COMBAT && m_attackDist > GetAISpellInfo(*itr)->maxRange)
+        m_attackDist = GetAISpellInfo(*itr)->maxRange;
     if (m_attackDist == 30.0f)
         m_attackDist = MELEE_RANGE;
 }
@@ -309,18 +309,18 @@ void VehicleAI::CheckConditions(uint32 diff)
         if (!conditions.empty())
         {
             if (Vehicle* vehicleKit = me->GetVehicleKit())
-                for (SeatMap::iterator itr = vehicleKit->Seats.begin(); itr != vehicleKit->Seats.end(); ++itr)
-                    if (Unit* passenger = ObjectAccessor::GetUnit(*me, itr->second.Passenger.Guid))
+            for (SeatMap::iterator itr = vehicleKit->Seats.begin(); itr != vehicleKit->Seats.end(); ++itr)
+            if (Unit* passenger = ObjectAccessor::GetUnit(*me, itr->second.Passenger.Guid))
+            {
+                if (Player* player = passenger->ToPlayer())
+                {
+                    if (!sConditionMgr->IsObjectMeetToConditions(player, me, conditions))
                     {
-                        if (Player* player = passenger->ToPlayer())
-                        {
-                            if (!sConditionMgr->IsObjectMeetToConditions(player, me, conditions))
-                            {
-                                player->ExitVehicle();
-                                return; // check other pessanger in next tick
-                            }
-                        }
+                        player->ExitVehicle();
+                        return; // check other pessanger in next tick
                     }
+                }
+            }
         }
         m_ConditionsTimer = VEHICLE_CONDITION_CHECK_TIME;
     }

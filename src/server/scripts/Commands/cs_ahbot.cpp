@@ -31,46 +31,46 @@ static const uint32 ahbotQualityIds[MAX_AUCTION_QUALITY] =
 class ahbot_commandscript : public CommandScript
 {
 public:
-    ahbot_commandscript(): CommandScript("ahbot_commandscript") {}
+    ahbot_commandscript() : CommandScript("ahbot_commandscript") {}
 
     ChatCommand* GetCommands() const
     {
         static ChatCommand ahbotItemsAmountCommandTable[] =
         {
-            { "gray",           rbac::RBAC_PERM_COMMAND_AHBOT_ITEMS_GRAY,   true,  &HandleAHBotItemsAmountQualityCommand<AUCTION_QUALITY_GRAY>,     "", NULL },
-            { "white",          rbac::RBAC_PERM_COMMAND_AHBOT_ITEMS_WHITE,  true,  &HandleAHBotItemsAmountQualityCommand<AUCTION_QUALITY_WHITE>,    "", NULL },
-            { "green",          rbac::RBAC_PERM_COMMAND_AHBOT_ITEMS_GREEN,  true,  &HandleAHBotItemsAmountQualityCommand<AUCTION_QUALITY_GREEN>,    "", NULL },
-            { "blue",           rbac::RBAC_PERM_COMMAND_AHBOT_ITEMS_BLUE,   true,  &HandleAHBotItemsAmountQualityCommand<AUCTION_QUALITY_BLUE>,     "", NULL },
-            { "purple",         rbac::RBAC_PERM_COMMAND_AHBOT_ITEMS_PURPLE, true,  &HandleAHBotItemsAmountQualityCommand<AUCTION_QUALITY_PURPLE>,   "", NULL },
-            { "orange",         rbac::RBAC_PERM_COMMAND_AHBOT_ITEMS_ORANGE, true,  &HandleAHBotItemsAmountQualityCommand<AUCTION_QUALITY_ORANGE>,   "", NULL },
-            { "yellow",         rbac::RBAC_PERM_COMMAND_AHBOT_ITEMS_YELLOW, true,  &HandleAHBotItemsAmountQualityCommand<AUCTION_QUALITY_YELLOW>,   "", NULL },
-            { "",               rbac::RBAC_PERM_COMMAND_AHBOT_ITEMS,        true,  &HandleAHBotItemsAmountCommand,                                  "", NULL },
-            { NULL,             0,                  true,  NULL,                                                                                    "", NULL }
+            { "gray", rbac::RBAC_PERM_COMMAND_AHBOT_ITEMS_GRAY, true, &HandleAHBotItemsAmountQualityCommand<AUCTION_QUALITY_GRAY>, "", NULL },
+            { "white", rbac::RBAC_PERM_COMMAND_AHBOT_ITEMS_WHITE, true, &HandleAHBotItemsAmountQualityCommand<AUCTION_QUALITY_WHITE>, "", NULL },
+            { "green", rbac::RBAC_PERM_COMMAND_AHBOT_ITEMS_GREEN, true, &HandleAHBotItemsAmountQualityCommand<AUCTION_QUALITY_GREEN>, "", NULL },
+            { "blue", rbac::RBAC_PERM_COMMAND_AHBOT_ITEMS_BLUE, true, &HandleAHBotItemsAmountQualityCommand<AUCTION_QUALITY_BLUE>, "", NULL },
+            { "purple", rbac::RBAC_PERM_COMMAND_AHBOT_ITEMS_PURPLE, true, &HandleAHBotItemsAmountQualityCommand<AUCTION_QUALITY_PURPLE>, "", NULL },
+            { "orange", rbac::RBAC_PERM_COMMAND_AHBOT_ITEMS_ORANGE, true, &HandleAHBotItemsAmountQualityCommand<AUCTION_QUALITY_ORANGE>, "", NULL },
+            { "yellow", rbac::RBAC_PERM_COMMAND_AHBOT_ITEMS_YELLOW, true, &HandleAHBotItemsAmountQualityCommand<AUCTION_QUALITY_YELLOW>, "", NULL },
+            { "", rbac::RBAC_PERM_COMMAND_AHBOT_ITEMS, true, &HandleAHBotItemsAmountCommand, "", NULL },
+            { NULL, 0, true, NULL, "", NULL }
         };
 
         static ChatCommand ahbotItemsRatioCommandTable[] =
         {
-            { "alliance",       rbac::RBAC_PERM_COMMAND_AHBOT_RATIO_ALLIANCE, true,  &HandleAHBotItemsRatioHouseCommand<AUCTION_HOUSE_ALLIANCE>,    "", NULL },
-            { "horde",          rbac::RBAC_PERM_COMMAND_AHBOT_RATIO_HORDE,    true,  &HandleAHBotItemsRatioHouseCommand<AUCTION_HOUSE_HORDE>,       "", NULL },
-            { "neutral",        rbac::RBAC_PERM_COMMAND_AHBOT_RATIO_NEUTRAL,  true,  &HandleAHBotItemsRatioHouseCommand<AUCTION_HOUSE_NEUTRAL>,     "", NULL },
-            { "",               rbac::RBAC_PERM_COMMAND_AHBOT_RATIO,          true,  &HandleAHBotItemsRatioCommand,                                 "", NULL },
-            { NULL,             0,                  true,  NULL,                                                                                    "", NULL }
+            { "alliance", rbac::RBAC_PERM_COMMAND_AHBOT_RATIO_ALLIANCE, true, &HandleAHBotItemsRatioHouseCommand<AUCTION_HOUSE_ALLIANCE>, "", NULL },
+            { "horde", rbac::RBAC_PERM_COMMAND_AHBOT_RATIO_HORDE, true, &HandleAHBotItemsRatioHouseCommand<AUCTION_HOUSE_HORDE>, "", NULL },
+            { "neutral", rbac::RBAC_PERM_COMMAND_AHBOT_RATIO_NEUTRAL, true, &HandleAHBotItemsRatioHouseCommand<AUCTION_HOUSE_NEUTRAL>, "", NULL },
+            { "", rbac::RBAC_PERM_COMMAND_AHBOT_RATIO, true, &HandleAHBotItemsRatioCommand, "", NULL },
+            { NULL, 0, true, NULL, "", NULL }
         };
 
         static ChatCommand ahbotCommandTable[] =
         {
-            { "items",          rbac::RBAC_PERM_COMMAND_AHBOT_ITEMS,    true,   NULL,                       "", ahbotItemsAmountCommandTable },
-            { "ratio",          rbac::RBAC_PERM_COMMAND_AHBOT_RATIO,    true,   NULL,                       "", ahbotItemsRatioCommandTable },
-            { "rebuild",        rbac::RBAC_PERM_COMMAND_AHBOT_REBUILD,  true,   &HandleAHBotRebuildCommand, "", NULL },
-            { "reload",         rbac::RBAC_PERM_COMMAND_AHBOT_RELOAD,   true,   &HandleAHBotReloadCommand,  "", NULL },
-            { "status",         rbac::RBAC_PERM_COMMAND_AHBOT_STATUS,   true,   &HandleAHBotStatusCommand,  "", NULL },
-            { NULL,             0,                                      true,   NULL,                       "", NULL }
+            { "items", rbac::RBAC_PERM_COMMAND_AHBOT_ITEMS, true, NULL, "", ahbotItemsAmountCommandTable },
+            { "ratio", rbac::RBAC_PERM_COMMAND_AHBOT_RATIO, true, NULL, "", ahbotItemsRatioCommandTable },
+            { "rebuild", rbac::RBAC_PERM_COMMAND_AHBOT_REBUILD, true, &HandleAHBotRebuildCommand, "", NULL },
+            { "reload", rbac::RBAC_PERM_COMMAND_AHBOT_RELOAD, true, &HandleAHBotReloadCommand, "", NULL },
+            { "status", rbac::RBAC_PERM_COMMAND_AHBOT_STATUS, true, &HandleAHBotStatusCommand, "", NULL },
+            { NULL, 0, true, NULL, "", NULL }
         };
 
         static ChatCommand commandTable[] =
         {
-            { "ahbot",          rbac::RBAC_PERM_COMMAND_AHBOT,  false, NULL,    "", ahbotCommandTable },
-            { NULL,             0,                              false, NULL,    "", NULL }
+            { "ahbot", rbac::RBAC_PERM_COMMAND_AHBOT, false, NULL, "", ahbotCommandTable },
+            { NULL, 0, false, NULL, "", NULL }
         };
 
         return commandTable;
@@ -217,10 +217,10 @@ public:
 
             for (int i = 0; i < MAX_AUCTION_QUALITY; ++i)
                 handler->PSendSysMessage(fmtId, handler->GetTrinityString(ahbotQualityIds[i]),
-                    statusInfo[AUCTION_HOUSE_ALLIANCE].QualityInfo[i],
-                    statusInfo[AUCTION_HOUSE_HORDE].QualityInfo[i],
-                    statusInfo[AUCTION_HOUSE_NEUTRAL].QualityInfo[i],
-                    sAuctionBotConfig->GetConfigItemQualityAmount(AuctionQuality(i)));
+                statusInfo[AUCTION_HOUSE_ALLIANCE].QualityInfo[i],
+                statusInfo[AUCTION_HOUSE_HORDE].QualityInfo[i],
+                statusInfo[AUCTION_HOUSE_NEUTRAL].QualityInfo[i],
+                sAuctionBotConfig->GetConfigItemQualityAmount(AuctionQuality(i)));
         }
 
         if (!session)

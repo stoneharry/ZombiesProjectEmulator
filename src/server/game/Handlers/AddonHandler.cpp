@@ -58,13 +58,13 @@ bool AddonHandler::BuildAddonPacket(WorldPacket* source, WorldPacket* target)
             uint32 crc, unk2;
 
             // check next addon data format correctness
-            if (AddOnPacked.rpos()+1 > AddOnPacked.size())
+            if (AddOnPacked.rpos() + 1 > AddOnPacked.size())
                 return false;
 
             AddOnPacked >> addonName;
 
             // recheck next addon data format correctness
-            if (AddOnPacked.rpos()+1+4+4 > AddOnPacked.size())
+            if (AddOnPacked.rpos() + 1 + 4 + 4 > AddOnPacked.size())
                 return false;
 
             AddOnPacked >> enabled >> crc >> unk2;

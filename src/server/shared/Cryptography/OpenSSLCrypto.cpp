@@ -39,7 +39,7 @@ static void threadIdCallback(CRYPTO_THREADID * id)
 void OpenSSLCrypto::threadsSetup()
 {
     cryptoLocks.resize(CRYPTO_num_locks());
-    for(int i = 0 ; i < CRYPTO_num_locks(); ++i)
+    for (int i = 0; i < CRYPTO_num_locks(); ++i)
     {
         cryptoLocks[i] = new std::mutex;
     }
@@ -51,7 +51,7 @@ void OpenSSLCrypto::threadsCleanup()
 {
     CRYPTO_set_locking_callback(NULL);
     CRYPTO_THREADID_set_callback(NULL);
-    for(int i = 0 ; i < CRYPTO_num_locks(); ++i)
+    for (int i = 0; i < CRYPTO_num_locks(); ++i)
     {
         delete cryptoLocks[i];
     }

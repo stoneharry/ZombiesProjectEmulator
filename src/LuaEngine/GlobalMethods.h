@@ -364,10 +364,10 @@ namespace LuaGlobalFunctions
      * Low GUID is an ID to distinct the objects of the same type.
      *
      * [Player] and [Creature] for example can have the same low GUID but not GUID.
-     * 
+     *
      * On TrinityCore all low GUIDs are different for all objects of the same type.
      * For example creatures in instances are assigned new GUIDs when the Map is created.
-     * 
+     *
      * On MaNGOS and cMaNGOS low GUIDs are unique only on the same map.
      * For example creatures in instances use the same low GUID assigned for that spawn in the database.
      * This is why to identify a creature you have to know the instanceId and low GUID. See [Map:GetIntstanceId]
@@ -1314,7 +1314,7 @@ namespace LuaGlobalFunctions
             Eluna::Push(L);
             return 1;
         }
-		bool addToActive = Eluna::CHECKVAL<bool>(L, 12, false);
+        bool addToActive = Eluna::CHECKVAL<bool>(L, 12, false);
 
 #ifndef TRINITY
         Map* map = eMapMgr->FindMap(mapID, instanceID);
@@ -1538,7 +1538,7 @@ namespace LuaGlobalFunctions
             }
             else
             {
-				TempSummon* creature = map->SummonCreature(entry, pos, NULL, durorresptime, 0, 0, 0, addToActive);
+                TempSummon* creature = map->SummonCreature(entry, pos, NULL, durorresptime, 0, 0, 0, addToActive);
                 if (!creature)
                 {
                     Eluna::Push(L);
@@ -1748,25 +1748,25 @@ namespace LuaGlobalFunctions
 
         switch (banMode)
         {
-            case BAN_ACCOUNT:
+        case BAN_ACCOUNT:
 #ifdef CATA
-                if (!Utf8ToUpperOnlyLatin(nameOrIP))
-                    return 0;
-#else
-                if (!AccountMgr::normalizeString(nameOrIP))
-                    return 0;
-#endif
-                break;
-            case BAN_CHARACTER:
-                if (!normalizePlayerName(nameOrIP))
-                    return 0;
-                break;
-            case BAN_IP:
-                if (!IsIPAddress(nameOrIP.c_str()))
-                    return 0;
-                break;
-            default:
+            if (!Utf8ToUpperOnlyLatin(nameOrIP))
                 return 0;
+#else
+            if (!AccountMgr::normalizeString(nameOrIP))
+                return 0;
+#endif
+            break;
+        case BAN_CHARACTER:
+            if (!normalizePlayerName(nameOrIP))
+                return 0;
+            break;
+        case BAN_IP:
+            if (!IsIPAddress(nameOrIP.c_str()))
+                return 0;
+            break;
+        default:
+            return 0;
         }
 
         eWorld->BanAccount((BanMode)banMode, nameOrIP, duration, reason, whoBanned);
@@ -2044,8 +2044,8 @@ namespace LuaGlobalFunctions
             nodes.push_back(entry);
 
             while (end != start) // remove args
-                if (!lua_isnone(L, --end))
-                    lua_remove(L, end);
+            if (!lua_isnone(L, --end))
+                lua_remove(L, end);
             // Stack: {nodes}, mountA, mountH, price, pathid, {nodes}, key, value
 
             lua_pop(L, 1);

@@ -67,7 +67,7 @@ void MapManager::Initialize()
 
 void MapManager::InitializeVisibilityDistanceInfo()
 {
-    for (MapMapType::iterator iter=i_maps.begin(); iter != i_maps.end(); ++iter)
+    for (MapMapType::iterator iter = i_maps.begin(); iter != i_maps.end(); ++iter)
         (*iter).second->InitVisibilityDistance();
 }
 
@@ -205,19 +205,19 @@ bool MapManager::CanPlayerEnter(uint32 mapid, Player* player, bool loginCheck)
     {
         InstanceGroupBind* boundInstance = group->GetBoundInstance(entry);
         if (boundInstance && boundInstance->save)
-            if (Map* boundMap = sMapMgr->FindMap(mapid, boundInstance->save->GetInstanceId()))
-                if (!loginCheck && !boundMap->CanEnter(player))
-                    return false;
-            /*
-                This check has to be moved to InstanceMap::CanEnter()
-                // Player permanently bounded to different instance than groups one
-                InstancePlayerBind* playerBoundedInstance = player->GetBoundInstance(mapid, player->GetDifficulty(entry->IsRaid()));
-                if (playerBoundedInstance && playerBoundedInstance->perm && playerBoundedInstance->save &&
-                    boundedInstance->save->GetInstanceId() != playerBoundedInstance->save->GetInstanceId())
-                {
-                    /// @todo send some kind of error message to the player
-                    return false;
-                }*/
+        if (Map* boundMap = sMapMgr->FindMap(mapid, boundInstance->save->GetInstanceId()))
+        if (!loginCheck && !boundMap->CanEnter(player))
+            return false;
+        /*
+            This check has to be moved to InstanceMap::CanEnter()
+            // Player permanently bounded to different instance than groups one
+            InstancePlayerBind* playerBoundedInstance = player->GetBoundInstance(mapid, player->GetDifficulty(entry->IsRaid()));
+            if (playerBoundedInstance && playerBoundedInstance->perm && playerBoundedInstance->save &&
+            boundedInstance->save->GetInstanceId() != playerBoundedInstance->save->GetInstanceId())
+            {
+            /// @todo send some kind of error message to the player
+            return false;
+            }*/
     }
 
     // players are only allowed to enter 5 instances per hour
@@ -315,7 +315,7 @@ uint32 MapManager::GetNumInstances()
             continue;
         MapInstanced::InstancedMaps &maps = ((MapInstanced*)map)->GetInstancedMaps();
         for (MapInstanced::InstancedMaps::iterator mitr = maps.begin(); mitr != maps.end(); ++mitr)
-            if (mitr->second->IsDungeon()) ret++;
+        if (mitr->second->IsDungeon()) ret++;
     }
     return ret;
 }
@@ -332,8 +332,8 @@ uint32 MapManager::GetNumPlayersInInstances()
             continue;
         MapInstanced::InstancedMaps &maps = ((MapInstanced*)map)->GetInstancedMaps();
         for (MapInstanced::InstancedMaps::iterator mitr = maps.begin(); mitr != maps.end(); ++mitr)
-            if (mitr->second->IsDungeon())
-                ret += ((InstanceMap*)mitr->second)->GetPlayers().getSize();
+        if (mitr->second->IsDungeon())
+            ret += ((InstanceMap*)mitr->second)->GetPlayers().getSize();
     }
     return ret;
 }

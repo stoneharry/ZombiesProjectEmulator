@@ -57,7 +57,7 @@ EndContentData */
 
 enum CatFigurine
 {
-    SPELL_SUMMON_GHOST_SABER    = 5968,
+    SPELL_SUMMON_GHOST_SABER = 5968,
 };
 
 class go_cat_figurine : public GameObjectScript
@@ -96,7 +96,7 @@ public:
 
 enum GildedBrazier
 {
-    NPC_STILLBLADE        = 17716,
+    NPC_STILLBLADE = 17716,
     QUEST_THE_FIRST_TRIAL = 9678
 };
 
@@ -201,12 +201,12 @@ public:
 
 enum EthereumPrison
 {
-    SPELL_REP_LC        = 39456,
-    SPELL_REP_SHAT      = 39457,
-    SPELL_REP_CE        = 39460,
-    SPELL_REP_CON       = 39474,
-    SPELL_REP_KT        = 39475,
-    SPELL_REP_SPOR      = 39476
+    SPELL_REP_LC = 39456,
+    SPELL_REP_SHAT = 39457,
+    SPELL_REP_CE = 39460,
+    SPELL_REP_CON = 39474,
+    SPELL_REP_KT = 39475,
+    SPELL_REP_SPOR = 39476
 };
 
 const uint32 NpcPrisonEntry[] =
@@ -236,12 +236,12 @@ public:
 
                     switch (pFaction->faction)
                     {
-                        case 1011: Spell = SPELL_REP_LC; break;
-                        case 935: Spell = SPELL_REP_SHAT; break;
-                        case 942: Spell = SPELL_REP_CE; break;
-                        case 933: Spell = SPELL_REP_CON; break;
-                        case 989: Spell = SPELL_REP_KT; break;
-                        case 970: Spell = SPELL_REP_SPOR; break;
+                    case 1011: Spell = SPELL_REP_LC; break;
+                    case 935: Spell = SPELL_REP_SHAT; break;
+                    case 942: Spell = SPELL_REP_CE; break;
+                    case 933: Spell = SPELL_REP_CON; break;
+                    case 989: Spell = SPELL_REP_KT; break;
+                    case 970: Spell = SPELL_REP_SPOR; break;
                     }
 
                     if (Spell)
@@ -288,7 +288,7 @@ public:
 
 enum ResoniteCask
 {
-    NPC_GOGGEROC    = 11920
+    NPC_GOGGEROC = 11920
 };
 
 class go_resonite_cask : public GameObjectScript
@@ -311,7 +311,7 @@ public:
 
 enum SacredFireOfLife
 {
-    NPC_ARIKARA     = 10882
+    NPC_ARIKARA = 10882
 };
 
 class go_sacred_fire_of_life : public GameObjectScript
@@ -334,12 +334,12 @@ public:
 
 enum ShrineOfTheBirds
 {
-    NPC_HAWK_GUARD      = 22992,
-    NPC_EAGLE_GUARD     = 22993,
-    NPC_FALCON_GUARD    = 22994,
-    GO_SHRINE_HAWK      = 185551,
-    GO_SHRINE_EAGLE     = 185547,
-    GO_SHRINE_FALCON    = 185553
+    NPC_HAWK_GUARD = 22992,
+    NPC_EAGLE_GUARD = 22993,
+    NPC_FALCON_GUARD = 22994,
+    GO_SHRINE_HAWK = 185551,
+    GO_SHRINE_EAGLE = 185547,
+    GO_SHRINE_FALCON = 185553
 };
 
 class go_shrine_of_the_birds : public GameObjectScript
@@ -356,15 +356,15 @@ public:
 
         switch (go->GetEntry())
         {
-            case GO_SHRINE_HAWK:
-                BirdEntry = NPC_HAWK_GUARD;
-                break;
-            case GO_SHRINE_EAGLE:
-                BirdEntry = NPC_EAGLE_GUARD;
-                break;
-            case GO_SHRINE_FALCON:
-                BirdEntry = NPC_FALCON_GUARD;
-                break;
+        case GO_SHRINE_HAWK:
+            BirdEntry = NPC_HAWK_GUARD;
+            break;
+        case GO_SHRINE_EAGLE:
+            BirdEntry = NPC_EAGLE_GUARD;
+            break;
+        case GO_SHRINE_FALCON:
+            BirdEntry = NPC_FALCON_GUARD;
+            break;
         }
 
         if (BirdEntry)
@@ -380,9 +380,9 @@ public:
 
 enum Southfury
 {
-    NPC_RIZZLE                  = 23002,
-    SPELL_BLACKJACK             = 39865, //stuns player
-    SPELL_SUMMON_RIZZLE         = 39866
+    NPC_RIZZLE = 23002,
+    SPELL_BLACKJACK = 39865, //stuns player
+    SPELL_SUMMON_RIZZLE = 39866
 };
 
 class go_southfury_moonstone : public GameObjectScript
@@ -408,8 +408,8 @@ public:
 
 enum DalaranCrystal
 {
-    QUEST_LEARN_LEAVE_RETURN    = 12790,
-    QUEST_TELE_CRYSTAL_FLAG     = 12845
+    QUEST_LEARN_LEAVE_RETURN = 12790,
+    QUEST_TELE_CRYSTAL_FLAG = 12845
 };
 
 #define GO_TELE_TO_DALARAN_CRYSTAL_FAILED   "This teleport crystal cannot be used until the teleport crystal in Dalaran has been used at least once."
@@ -460,8 +460,8 @@ public:
 
 enum FelCrystalforge
 {
-    SPELL_CREATE_1_FLASK_OF_BEAST   = 40964,
-    SPELL_CREATE_5_FLASK_OF_BEAST   = 40965,
+    SPELL_CREATE_1_FLASK_OF_BEAST = 40964,
+    SPELL_CREATE_5_FLASK_OF_BEAST = 40965,
 };
 
 class go_fel_crystalforge : public GameObjectScript
@@ -487,21 +487,21 @@ public:
         player->PlayerTalkClass->ClearMenus();
         switch (action)
         {
-            case GOSSIP_ACTION_INFO_DEF:
-                player->CastSpell(player, SPELL_CREATE_1_FLASK_OF_BEAST, false);
-                player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_FEL_CRYSTALFORGE_ITEM_RETURN, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+2);
-                player->SEND_GOSSIP_MENU(GOSSIP_FEL_CRYSTALFORGE_ITEM_TEXT_RETURN, go->GetGUID());
-                break;
-            case GOSSIP_ACTION_INFO_DEF + 1:
-                player->CastSpell(player, SPELL_CREATE_5_FLASK_OF_BEAST, false);
-                player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_FEL_CRYSTALFORGE_ITEM_RETURN, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+2);
-                player->SEND_GOSSIP_MENU(GOSSIP_FEL_CRYSTALFORGE_ITEM_TEXT_RETURN, go->GetGUID());
-                break;
-            case GOSSIP_ACTION_INFO_DEF + 2:
-                player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_FEL_CRYSTALFORGE_ITEM_1, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF);
-                player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_FEL_CRYSTALFORGE_ITEM_5, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
-                player->SEND_GOSSIP_MENU(GOSSIP_FEL_CRYSTALFORGE_TEXT, go->GetGUID());
-                break;
+        case GOSSIP_ACTION_INFO_DEF:
+            player->CastSpell(player, SPELL_CREATE_1_FLASK_OF_BEAST, false);
+            player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_FEL_CRYSTALFORGE_ITEM_RETURN, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 2);
+            player->SEND_GOSSIP_MENU(GOSSIP_FEL_CRYSTALFORGE_ITEM_TEXT_RETURN, go->GetGUID());
+            break;
+        case GOSSIP_ACTION_INFO_DEF + 1:
+            player->CastSpell(player, SPELL_CREATE_5_FLASK_OF_BEAST, false);
+            player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_FEL_CRYSTALFORGE_ITEM_RETURN, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 2);
+            player->SEND_GOSSIP_MENU(GOSSIP_FEL_CRYSTALFORGE_ITEM_TEXT_RETURN, go->GetGUID());
+            break;
+        case GOSSIP_ACTION_INFO_DEF + 2:
+            player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_FEL_CRYSTALFORGE_ITEM_1, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF);
+            player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_FEL_CRYSTALFORGE_ITEM_5, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
+            player->SEND_GOSSIP_MENU(GOSSIP_FEL_CRYSTALFORGE_TEXT, go->GetGUID());
+            break;
         }
         return true;
     }
@@ -519,8 +519,8 @@ public:
 
 enum BashirCrystalforge
 {
-    SPELL_CREATE_1_FLASK_OF_SORCERER   = 40968,
-    SPELL_CREATE_5_FLASK_OF_SORCERER   = 40970,
+    SPELL_CREATE_1_FLASK_OF_SORCERER = 40968,
+    SPELL_CREATE_5_FLASK_OF_SORCERER = 40970,
 };
 
 class go_bashir_crystalforge : public GameObjectScript
@@ -546,21 +546,21 @@ public:
         player->PlayerTalkClass->ClearMenus();
         switch (action)
         {
-            case GOSSIP_ACTION_INFO_DEF:
-                player->CastSpell(player, SPELL_CREATE_1_FLASK_OF_SORCERER, false);
-                player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_BASHIR_CRYSTALFORGE_ITEM_RETURN, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+2);
-                player->SEND_GOSSIP_MENU(GOSSIP_BASHIR_CRYSTALFORGE_ITEM_TEXT_RETURN, go->GetGUID());
-                break;
-            case GOSSIP_ACTION_INFO_DEF + 1:
-                player->CastSpell(player, SPELL_CREATE_5_FLASK_OF_SORCERER, false);
-                player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_BASHIR_CRYSTALFORGE_ITEM_RETURN, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+2);
-                player->SEND_GOSSIP_MENU(GOSSIP_BASHIR_CRYSTALFORGE_ITEM_TEXT_RETURN, go->GetGUID());
-                break;
-            case GOSSIP_ACTION_INFO_DEF + 2:
-                player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_BASHIR_CRYSTALFORGE_ITEM_1, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF);
-                player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_BASHIR_CRYSTALFORGE_ITEM_5, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
-                player->SEND_GOSSIP_MENU(GOSSIP_BASHIR_CRYSTALFORGE_TEXT, go->GetGUID());
-                break;
+        case GOSSIP_ACTION_INFO_DEF:
+            player->CastSpell(player, SPELL_CREATE_1_FLASK_OF_SORCERER, false);
+            player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_BASHIR_CRYSTALFORGE_ITEM_RETURN, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 2);
+            player->SEND_GOSSIP_MENU(GOSSIP_BASHIR_CRYSTALFORGE_ITEM_TEXT_RETURN, go->GetGUID());
+            break;
+        case GOSSIP_ACTION_INFO_DEF + 1:
+            player->CastSpell(player, SPELL_CREATE_5_FLASK_OF_SORCERER, false);
+            player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_BASHIR_CRYSTALFORGE_ITEM_RETURN, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 2);
+            player->SEND_GOSSIP_MENU(GOSSIP_BASHIR_CRYSTALFORGE_ITEM_TEXT_RETURN, go->GetGUID());
+            break;
+        case GOSSIP_ACTION_INFO_DEF + 2:
+            player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_BASHIR_CRYSTALFORGE_ITEM_1, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF);
+            player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_BASHIR_CRYSTALFORGE_ITEM_5, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
+            player->SEND_GOSSIP_MENU(GOSSIP_BASHIR_CRYSTALFORGE_TEXT, go->GetGUID());
+            break;
         }
         return true;
     }
@@ -596,36 +596,36 @@ public:
     {
         switch (go->GetEntry())
         {
-            case MATRIX_PUNCHOGRAPH_3005_A:
-                if (player->HasItemCount(ITEM_WHITE_PUNCH_CARD))
-                {
-                    player->DestroyItemCount(ITEM_WHITE_PUNCH_CARD, 1, true);
-                    player->CastSpell(player, SPELL_YELLOW_PUNCH_CARD, true);
-                }
-                break;
-            case MATRIX_PUNCHOGRAPH_3005_B:
-                if (player->HasItemCount(ITEM_YELLOW_PUNCH_CARD))
-                {
-                    player->DestroyItemCount(ITEM_YELLOW_PUNCH_CARD, 1, true);
-                    player->CastSpell(player, SPELL_BLUE_PUNCH_CARD, true);
-                }
-                break;
-            case MATRIX_PUNCHOGRAPH_3005_C:
-                if (player->HasItemCount(ITEM_BLUE_PUNCH_CARD))
-                {
-                    player->DestroyItemCount(ITEM_BLUE_PUNCH_CARD, 1, true);
-                    player->CastSpell(player, SPELL_RED_PUNCH_CARD, true);
-                }
-                break;
-            case MATRIX_PUNCHOGRAPH_3005_D:
-                if (player->HasItemCount(ITEM_RED_PUNCH_CARD))
-                {
-                    player->DestroyItemCount(ITEM_RED_PUNCH_CARD, 1, true);
-                    player->CastSpell(player, SPELL_PRISMATIC_PUNCH_CARD, true);
-                }
-                break;
-            default:
-                break;
+        case MATRIX_PUNCHOGRAPH_3005_A:
+            if (player->HasItemCount(ITEM_WHITE_PUNCH_CARD))
+            {
+                player->DestroyItemCount(ITEM_WHITE_PUNCH_CARD, 1, true);
+                player->CastSpell(player, SPELL_YELLOW_PUNCH_CARD, true);
+            }
+            break;
+        case MATRIX_PUNCHOGRAPH_3005_B:
+            if (player->HasItemCount(ITEM_YELLOW_PUNCH_CARD))
+            {
+                player->DestroyItemCount(ITEM_YELLOW_PUNCH_CARD, 1, true);
+                player->CastSpell(player, SPELL_BLUE_PUNCH_CARD, true);
+            }
+            break;
+        case MATRIX_PUNCHOGRAPH_3005_C:
+            if (player->HasItemCount(ITEM_BLUE_PUNCH_CARD))
+            {
+                player->DestroyItemCount(ITEM_BLUE_PUNCH_CARD, 1, true);
+                player->CastSpell(player, SPELL_RED_PUNCH_CARD, true);
+            }
+            break;
+        case MATRIX_PUNCHOGRAPH_3005_D:
+            if (player->HasItemCount(ITEM_RED_PUNCH_CARD))
+            {
+                player->DestroyItemCount(ITEM_RED_PUNCH_CARD, 1, true);
+                player->CastSpell(player, SPELL_PRISMATIC_PUNCH_CARD, true);
+            }
+            break;
+        default:
+            break;
         }
         return false;
     }
@@ -664,8 +664,8 @@ public:
 
 enum ArcanePrison
 {
-    QUEST_PRISON_BREAK                  = 11587,
-    SPELL_ARCANE_PRISONER_KILL_CREDIT   = 45456
+    QUEST_PRISON_BREAK = 11587,
+    SPELL_ARCANE_PRISONER_KILL_CREDIT = 45456
 };
 
 class go_arcane_prison : public GameObjectScript
@@ -691,7 +691,7 @@ public:
 
 enum BloodFilledOrb
 {
-    NPC_ZELEMAR     = 17830
+    NPC_ZELEMAR = 17830
 
 };
 
@@ -715,14 +715,14 @@ public:
 
 enum JotunheimCage
 {
-    NPC_EBON_BLADE_PRISONER_HUMAN   = 30186,
-    NPC_EBON_BLADE_PRISONER_NE      = 30194,
-    NPC_EBON_BLADE_PRISONER_TROLL   = 30196,
-    NPC_EBON_BLADE_PRISONER_ORC     = 30195,
+    NPC_EBON_BLADE_PRISONER_HUMAN = 30186,
+    NPC_EBON_BLADE_PRISONER_NE = 30194,
+    NPC_EBON_BLADE_PRISONER_TROLL = 30196,
+    NPC_EBON_BLADE_PRISONER_ORC = 30195,
 
-    SPELL_SUMMON_BLADE_KNIGHT_H     = 56207,
-    SPELL_SUMMON_BLADE_KNIGHT_NE    = 56209,
-    SPELL_SUMMON_BLADE_KNIGHT_ORC   = 56212,
+    SPELL_SUMMON_BLADE_KNIGHT_H = 56207,
+    SPELL_SUMMON_BLADE_KNIGHT_NE = 56209,
+    SPELL_SUMMON_BLADE_KNIGHT_ORC = 56212,
     SPELL_SUMMON_BLADE_KNIGHT_TROLL = 56214
 };
 
@@ -752,18 +752,18 @@ public:
         player->KilledMonsterCredit(NPC_EBON_BLADE_PRISONER_HUMAN);
         switch (pPrisoner->GetEntry())
         {
-            case NPC_EBON_BLADE_PRISONER_HUMAN:
-                player->CastSpell(player, SPELL_SUMMON_BLADE_KNIGHT_H, true);
-                break;
-            case NPC_EBON_BLADE_PRISONER_NE:
-                player->CastSpell(player, SPELL_SUMMON_BLADE_KNIGHT_NE, true);
-                break;
-            case NPC_EBON_BLADE_PRISONER_TROLL:
-                player->CastSpell(player, SPELL_SUMMON_BLADE_KNIGHT_TROLL, true);
-                break;
-            case NPC_EBON_BLADE_PRISONER_ORC:
-                player->CastSpell(player, SPELL_SUMMON_BLADE_KNIGHT_ORC, true);
-                break;
+        case NPC_EBON_BLADE_PRISONER_HUMAN:
+            player->CastSpell(player, SPELL_SUMMON_BLADE_KNIGHT_H, true);
+            break;
+        case NPC_EBON_BLADE_PRISONER_NE:
+            player->CastSpell(player, SPELL_SUMMON_BLADE_KNIGHT_NE, true);
+            break;
+        case NPC_EBON_BLADE_PRISONER_TROLL:
+            player->CastSpell(player, SPELL_SUMMON_BLADE_KNIGHT_TROLL, true);
+            break;
+        case NPC_EBON_BLADE_PRISONER_ORC:
+            player->CastSpell(player, SPELL_SUMMON_BLADE_KNIGHT_ORC, true);
+            break;
         }
         return true;
     }
@@ -798,8 +798,8 @@ public:
 
 enum InconspicuousLandmark
 {
-    SPELL_SUMMON_PIRATES_TREASURE_AND_TRIGGER_MOB    = 11462,
-    ITEM_CUERGOS_KEY                                 = 9275,
+    SPELL_SUMMON_PIRATES_TREASURE_AND_TRIGGER_MOB = 11462,
+    ITEM_CUERGOS_KEY = 9275,
 };
 
 class go_inconspicuous_landmark : public GameObjectScript
@@ -824,103 +824,103 @@ public:
 
 enum SoulWellData
 {
-    GO_SOUL_WELL_R1                     = 181621,
-    GO_SOUL_WELL_R2                     = 193169,
+    GO_SOUL_WELL_R1 = 181621,
+    GO_SOUL_WELL_R2 = 193169,
 
-    SPELL_IMPROVED_HEALTH_STONE_R1      = 18692,
-    SPELL_IMPROVED_HEALTH_STONE_R2      = 18693,
+    SPELL_IMPROVED_HEALTH_STONE_R1 = 18692,
+    SPELL_IMPROVED_HEALTH_STONE_R2 = 18693,
 
     SPELL_CREATE_MASTER_HEALTH_STONE_R0 = 34130,
     SPELL_CREATE_MASTER_HEALTH_STONE_R1 = 34149,
     SPELL_CREATE_MASTER_HEALTH_STONE_R2 = 34150,
 
-    SPELL_CREATE_FEL_HEALTH_STONE_R0    = 58890,
-    SPELL_CREATE_FEL_HEALTH_STONE_R1    = 58896,
-    SPELL_CREATE_FEL_HEALTH_STONE_R2    = 58898,
+    SPELL_CREATE_FEL_HEALTH_STONE_R0 = 58890,
+    SPELL_CREATE_FEL_HEALTH_STONE_R1 = 58896,
+    SPELL_CREATE_FEL_HEALTH_STONE_R2 = 58898,
 };
 
 class go_soulwell : public GameObjectScript
 {
-    public:
-        go_soulwell() : GameObjectScript("go_soulwell") { }
+public:
+    go_soulwell() : GameObjectScript("go_soulwell") { }
 
-        struct go_soulwellAI : public GameObjectAI
+    struct go_soulwellAI : public GameObjectAI
+    {
+        go_soulwellAI(GameObject* go) : GameObjectAI(go)
         {
-            go_soulwellAI(GameObject* go) : GameObjectAI(go)
+            _stoneSpell = 0;
+            _stoneId = 0;
+            switch (go->GetEntry())
             {
-                _stoneSpell = 0;
-                _stoneId = 0;
-                switch (go->GetEntry())
+            case GO_SOUL_WELL_R1:
+                _stoneSpell = SPELL_CREATE_MASTER_HEALTH_STONE_R0;
+                if (Unit* owner = go->GetOwner())
                 {
-                    case GO_SOUL_WELL_R1:
-                        _stoneSpell = SPELL_CREATE_MASTER_HEALTH_STONE_R0;
-                        if (Unit* owner = go->GetOwner())
-                        {
-                            if (owner->HasAura(SPELL_IMPROVED_HEALTH_STONE_R1))
-                                _stoneSpell = SPELL_CREATE_MASTER_HEALTH_STONE_R1;
-                            else if (owner->HasAura(SPELL_CREATE_MASTER_HEALTH_STONE_R2))
-                                _stoneSpell = SPELL_CREATE_MASTER_HEALTH_STONE_R2;
-                        }
-                        break;
-                    case GO_SOUL_WELL_R2:
-                        _stoneSpell = SPELL_CREATE_FEL_HEALTH_STONE_R0;
-                        if (Unit* owner = go->GetOwner())
-                        {
-                            if (owner->HasAura(SPELL_IMPROVED_HEALTH_STONE_R1))
-                                _stoneSpell = SPELL_CREATE_FEL_HEALTH_STONE_R1;
-                            else if (owner->HasAura(SPELL_CREATE_MASTER_HEALTH_STONE_R2))
-                                _stoneSpell = SPELL_CREATE_FEL_HEALTH_STONE_R2;
-                        }
-                        break;
+                    if (owner->HasAura(SPELL_IMPROVED_HEALTH_STONE_R1))
+                        _stoneSpell = SPELL_CREATE_MASTER_HEALTH_STONE_R1;
+                    else if (owner->HasAura(SPELL_CREATE_MASTER_HEALTH_STONE_R2))
+                        _stoneSpell = SPELL_CREATE_MASTER_HEALTH_STONE_R2;
                 }
-                if (_stoneSpell == 0) // Should never happen
-                    return;
-
-                SpellInfo const* spellInfo = sSpellMgr->GetSpellInfo(_stoneSpell);
-                if (!spellInfo)
-                    return;
-
-                _stoneId = spellInfo->Effects[EFFECT_0].ItemType;
-            }
-
-            /// Due to the fact that this GameObject triggers CMSG_GAMEOBJECT_USE
-            /// _and_ CMSG_GAMEOBJECT_REPORT_USE, this GossipHello hook is called
-            /// twice. The script's handling is fine as it won't remove two charges
-            /// on the well. We have to find how to segregate REPORT_USE and USE.
-            bool GossipHello(Player* player) override
-            {
-                Unit* owner = go->GetOwner();
-                if (_stoneSpell == 0 || _stoneId == 0)
-                    return true;
-
-                if (!owner || owner->GetTypeId() != TYPEID_PLAYER || !player->IsInSameRaidWith(owner->ToPlayer()))
-                    return true;
-
-                // Don't try to add a stone if we already have one.
-                if (player->HasItemCount(_stoneId))
+                break;
+            case GO_SOUL_WELL_R2:
+                _stoneSpell = SPELL_CREATE_FEL_HEALTH_STONE_R0;
+                if (Unit* owner = go->GetOwner())
                 {
-                    if (SpellInfo const* spell = sSpellMgr->GetSpellInfo(_stoneSpell))
-                        Spell::SendCastResult(player, spell, 0, SPELL_FAILED_TOO_MANY_OF_ITEM);
-                    return true;
+                    if (owner->HasAura(SPELL_IMPROVED_HEALTH_STONE_R1))
+                        _stoneSpell = SPELL_CREATE_FEL_HEALTH_STONE_R1;
+                    else if (owner->HasAura(SPELL_CREATE_MASTER_HEALTH_STONE_R2))
+                        _stoneSpell = SPELL_CREATE_FEL_HEALTH_STONE_R2;
                 }
-
-                owner->CastSpell(player, _stoneSpell, true);
-                // Item has to actually be created to remove a charge on the well.
-                if (player->HasItemCount(_stoneId))
-                    go->AddUse();
-
-                return false;
+                break;
             }
+            if (_stoneSpell == 0) // Should never happen
+                return;
 
-        private:
-            uint32 _stoneSpell;
-            uint32 _stoneId;
-        };
+            SpellInfo const* spellInfo = sSpellMgr->GetSpellInfo(_stoneSpell);
+            if (!spellInfo)
+                return;
 
-        GameObjectAI* GetAI(GameObject* go) const override
-        {
-            return new go_soulwellAI(go);
+            _stoneId = spellInfo->Effects[EFFECT_0].ItemType;
         }
+
+        /// Due to the fact that this GameObject triggers CMSG_GAMEOBJECT_USE
+        /// _and_ CMSG_GAMEOBJECT_REPORT_USE, this GossipHello hook is called
+        /// twice. The script's handling is fine as it won't remove two charges
+        /// on the well. We have to find how to segregate REPORT_USE and USE.
+        bool GossipHello(Player* player) override
+        {
+            Unit* owner = go->GetOwner();
+            if (_stoneSpell == 0 || _stoneId == 0)
+                return true;
+
+            if (!owner || owner->GetTypeId() != TYPEID_PLAYER || !player->IsInSameRaidWith(owner->ToPlayer()))
+                return true;
+
+            // Don't try to add a stone if we already have one.
+            if (player->HasItemCount(_stoneId))
+            {
+                if (SpellInfo const* spell = sSpellMgr->GetSpellInfo(_stoneSpell))
+                    Spell::SendCastResult(player, spell, 0, SPELL_FAILED_TOO_MANY_OF_ITEM);
+                return true;
+            }
+
+            owner->CastSpell(player, _stoneSpell, true);
+            // Item has to actually be created to remove a charge on the well.
+            if (player->HasItemCount(_stoneId))
+                go->AddUse();
+
+            return false;
+        }
+
+    private:
+        uint32 _stoneSpell;
+        uint32 _stoneId;
+    };
+
+    GameObjectAI* GetAI(GameObject* go) const override
+    {
+        return new go_soulwellAI(go);
+    }
 };
 
 /*######
@@ -930,11 +930,11 @@ class go_soulwell : public GameObjectScript
 
 enum PrisonersOfWyrmskull
 {
-    QUEST_PRISONERS_OF_WYRMSKULL                  = 11255,
-    NPC_PRISONER_PRIEST                           = 24086,
-    NPC_PRISONER_MAGE                             = 24088,
-    NPC_PRISONER_WARRIOR                          = 24089,
-    NPC_PRISONER_PALADIN                          = 24090
+    QUEST_PRISONERS_OF_WYRMSKULL = 11255,
+    NPC_PRISONER_PRIEST = 24086,
+    NPC_PRISONER_MAGE = 24088,
+    NPC_PRISONER_WARRIOR = 24089,
+    NPC_PRISONER_PALADIN = 24090
 };
 
 class go_dragonflayer_cage : public GameObjectScript
@@ -981,8 +981,8 @@ public:
 
 enum Tadpoles
 {
-    QUEST_OH_NOES_THE_TADPOLES                    = 11560,
-    NPC_WINTERFIN_TADPOLE                         = 25201
+    QUEST_OH_NOES_THE_TADPOLES = 11560,
+    NPC_WINTERFIN_TADPOLE = 25201
 };
 
 class go_tadpole_cage : public GameObjectScript
@@ -1016,14 +1016,14 @@ public:
 
 enum AmberpineOuthouse
 {
-    ITEM_ANDERHOLS_SLIDER_CIDER     = 37247,
-    NPC_OUTHOUSE_BUNNY              = 27326,
-    QUEST_DOING_YOUR_DUTY           = 12227,
-    SPELL_INDISPOSED                = 53017,
-    SPELL_INDISPOSED_III            = 48341,
-    SPELL_CREATE_AMBERSEEDS         = 48330,
-    GOSSIP_OUTHOUSE_INUSE           = 12775,
-    GOSSIP_OUTHOUSE_VACANT          = 12779
+    ITEM_ANDERHOLS_SLIDER_CIDER = 37247,
+    NPC_OUTHOUSE_BUNNY = 27326,
+    QUEST_DOING_YOUR_DUTY = 12227,
+    SPELL_INDISPOSED = 53017,
+    SPELL_INDISPOSED_III = 48341,
+    SPELL_CREATE_AMBERSEEDS = 48330,
+    GOSSIP_OUTHOUSE_INUSE = 12775,
+    GOSSIP_OUTHOUSE_VACANT = 12779
 };
 
 class go_amberpine_outhouse : public GameObjectScript
@@ -1048,7 +1048,7 @@ public:
     bool OnGossipSelect(Player* player, GameObject* go, uint32 /*sender*/, uint32 action) override
     {
         player->PlayerTalkClass->ClearMenus();
-        if (action == GOSSIP_ACTION_INFO_DEF +1)
+        if (action == GOSSIP_ACTION_INFO_DEF + 1)
         {
             player->CLOSE_GOSSIP_MENU();
             Creature* target = GetClosestCreatureWithEntry(player, NPC_OUTHOUSE_BUNNY, 3.0f);
@@ -1078,8 +1078,8 @@ public:
 
 enum Hives
 {
-    QUEST_HIVE_IN_THE_TOWER                       = 9544,
-    NPC_HIVE_AMBUSHER                             = 13301
+    QUEST_HIVE_IN_THE_TOWER = 9544,
+    NPC_HIVE_AMBUSHER = 13301
 };
 
 class go_hive_pod : public GameObjectScript
@@ -1090,22 +1090,22 @@ public:
     bool OnGossipHello(Player* player, GameObject* go) override
     {
         player->SendLoot(go->GetGUID(), LOOT_CORPSE);
-        go->SummonCreature(NPC_HIVE_AMBUSHER, go->GetPositionX()+1, go->GetPositionY(), go->GetPositionZ(), go->GetAngle(player), TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, 60000);
-        go->SummonCreature(NPC_HIVE_AMBUSHER, go->GetPositionX(), go->GetPositionY()+1, go->GetPositionZ(), go->GetAngle(player), TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, 60000);
+        go->SummonCreature(NPC_HIVE_AMBUSHER, go->GetPositionX() + 1, go->GetPositionY(), go->GetPositionZ(), go->GetAngle(player), TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, 60000);
+        go->SummonCreature(NPC_HIVE_AMBUSHER, go->GetPositionX(), go->GetPositionY() + 1, go->GetPositionZ(), go->GetAngle(player), TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, 60000);
         return true;
     }
 };
 
 class go_massive_seaforium_charge : public GameObjectScript
 {
-    public:
-        go_massive_seaforium_charge() : GameObjectScript("go_massive_seaforium_charge") { }
+public:
+    go_massive_seaforium_charge() : GameObjectScript("go_massive_seaforium_charge") { }
 
-        bool OnGossipHello(Player* /*player*/, GameObject* go) override
-        {
-            go->SetLootState(GO_JUST_DEACTIVATED);
-            return true;
-        }
+    bool OnGossipHello(Player* /*player*/, GameObject* go) override
+    {
+        go->SetLootState(GO_JUST_DEACTIVATED);
+        return true;
+    }
 };
 
 /*######
@@ -1114,34 +1114,34 @@ class go_massive_seaforium_charge : public GameObjectScript
 
 enum MissingFriends
 {
-   QUEST_MISSING_FRIENDS    = 10852,
-   NPC_CAPTIVE_CHILD        = 22314,
-   SAY_FREE_0               = 0,
+    QUEST_MISSING_FRIENDS = 10852,
+    NPC_CAPTIVE_CHILD = 22314,
+    SAY_FREE_0 = 0,
 };
 
 class go_veil_skith_cage : public GameObjectScript
 {
-    public:
-       go_veil_skith_cage() : GameObjectScript("go_veil_skith_cage") { }
+public:
+    go_veil_skith_cage() : GameObjectScript("go_veil_skith_cage") { }
 
-       bool OnGossipHello(Player* player, GameObject* go) override
-       {
-           go->UseDoorOrButton();
-           if (player->GetQuestStatus(QUEST_MISSING_FRIENDS) == QUEST_STATUS_INCOMPLETE)
-           {
-               std::list<Creature*> childrenList;
-               GetCreatureListWithEntryInGrid(childrenList, go, NPC_CAPTIVE_CHILD, INTERACTION_DISTANCE);
-               for (std::list<Creature*>::const_iterator itr = childrenList.begin(); itr != childrenList.end(); ++itr)
-               {
-                   player->KilledMonsterCredit(NPC_CAPTIVE_CHILD, (*itr)->GetGUID());
-                   (*itr)->DespawnOrUnsummon(5000);
-                   (*itr)->GetMotionMaster()->MovePoint(1, go->GetPositionX()+5, go->GetPositionY(), go->GetPositionZ());
-                   (*itr)->AI()->Talk(SAY_FREE_0);
-                   (*itr)->GetMotionMaster()->Clear();
-               }
-           }
-           return false;
-       }
+    bool OnGossipHello(Player* player, GameObject* go) override
+    {
+        go->UseDoorOrButton();
+        if (player->GetQuestStatus(QUEST_MISSING_FRIENDS) == QUEST_STATUS_INCOMPLETE)
+        {
+            std::list<Creature*> childrenList;
+            GetCreatureListWithEntryInGrid(childrenList, go, NPC_CAPTIVE_CHILD, INTERACTION_DISTANCE);
+            for (std::list<Creature*>::const_iterator itr = childrenList.begin(); itr != childrenList.end(); ++itr)
+            {
+                player->KilledMonsterCredit(NPC_CAPTIVE_CHILD, (*itr)->GetGUID());
+                (*itr)->DespawnOrUnsummon(5000);
+                (*itr)->GetMotionMaster()->MovePoint(1, go->GetPositionX() + 5, go->GetPositionY(), go->GetPositionZ());
+                (*itr)->AI()->Talk(SAY_FREE_0);
+                (*itr)->GetMotionMaster()->Clear();
+            }
+        }
+        return false;
+    }
 };
 
 /*######
@@ -1150,10 +1150,10 @@ class go_veil_skith_cage : public GameObjectScript
 
 enum TheCleansing
 {
-   QUEST_THE_CLEANSING_HORDE      = 11317,
-   QUEST_THE_CLEANSING_ALLIANCE   = 11322,
-   SPELL_CLEANSING_SOUL           = 43351,
-   SPELL_RECENT_MEDITATION        = 61720,
+    QUEST_THE_CLEANSING_HORDE = 11317,
+    QUEST_THE_CLEANSING_ALLIANCE = 11322,
+    SPELL_CLEANSING_SOUL = 43351,
+    SPELL_RECENT_MEDITATION = 61720,
 };
 
 class go_frostblade_shrine : public GameObjectScript
@@ -1165,12 +1165,12 @@ public:
     {
         go->UseDoorOrButton(10);
         if (!player->HasAura(SPELL_RECENT_MEDITATION))
-            if (player->GetQuestStatus(QUEST_THE_CLEANSING_HORDE) == QUEST_STATUS_INCOMPLETE || player->GetQuestStatus(QUEST_THE_CLEANSING_ALLIANCE) == QUEST_STATUS_INCOMPLETE)
-            {
-                player->CastSpell(player, SPELL_CLEANSING_SOUL);
-                player->SetStandState(UNIT_STAND_STATE_SIT);
-            }
-            return true;
+        if (player->GetQuestStatus(QUEST_THE_CLEANSING_HORDE) == QUEST_STATUS_INCOMPLETE || player->GetQuestStatus(QUEST_THE_CLEANSING_ALLIANCE) == QUEST_STATUS_INCOMPLETE)
+        {
+            player->CastSpell(player, SPELL_CLEANSING_SOUL);
+            player->SetStandState(UNIT_STAND_STATE_SIT);
+        }
+        return true;
     }
 };
 
@@ -1180,7 +1180,7 @@ public:
 
 enum MidsummerBonfire
 {
-    STAMP_OUT_BONFIRE_QUEST_COMPLETE    = 45458,
+    STAMP_OUT_BONFIRE_QUEST_COMPLETE = 45458,
 };
 
 class go_midsummer_bonfire : public GameObjectScript

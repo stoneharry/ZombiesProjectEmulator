@@ -36,22 +36,22 @@
 
 enum UnworthyInitiate
 {
-    SPELL_SOUL_PRISON_CHAIN_SELF    = 54612,
-    SPELL_SOUL_PRISON_CHAIN         = 54613,
-    SPELL_DK_INITIATE_VISUAL        = 51519,
+    SPELL_SOUL_PRISON_CHAIN_SELF = 54612,
+    SPELL_SOUL_PRISON_CHAIN = 54613,
+    SPELL_DK_INITIATE_VISUAL = 51519,
 
-    SPELL_ICY_TOUCH                 = 52372,
-    SPELL_PLAGUE_STRIKE             = 52373,
-    SPELL_BLOOD_STRIKE              = 52374,
-    SPELL_DEATH_COIL                = 52375,
+    SPELL_ICY_TOUCH = 52372,
+    SPELL_PLAGUE_STRIKE = 52373,
+    SPELL_BLOOD_STRIKE = 52374,
+    SPELL_DEATH_COIL = 52375,
 
-    SAY_EVENT_START                 = 0,
-    SAY_EVENT_ATTACK                = 1,
+    SAY_EVENT_START = 0,
+    SAY_EVENT_ATTACK = 1,
 
-    EVENT_ICY_TOUCH                 = 1,
-    EVENT_PLAGUE_STRIKE             = 2,
-    EVENT_BLOOD_STRIKE              = 3,
-    EVENT_DEATH_COIL                = 4
+    EVENT_ICY_TOUCH = 1,
+    EVENT_PLAGUE_STRIKE = 2,
+    EVENT_BLOOD_STRIKE = 3,
+    EVENT_DEATH_COIL = 4
 };
 
 enum UnworthyInitiatePhase
@@ -324,124 +324,124 @@ public:
     bool OnGossipHello(Player* player, GameObject* go) override
     {
         if (Creature* anchor = go->FindNearestCreature(29521, 15))
-            if (ObjectGuid prisonerGUID = anchor->AI()->GetGUID())
-                if (Creature* prisoner = ObjectAccessor::GetCreature(*player, prisonerGUID))
-                    ENSURE_AI(npc_unworthy_initiate::npc_unworthy_initiateAI, prisoner->AI())->EventStart(anchor, player);
+        if (ObjectGuid prisonerGUID = anchor->AI()->GetGUID())
+        if (Creature* prisoner = ObjectAccessor::GetCreature(*player, prisonerGUID))
+            ENSURE_AI(npc_unworthy_initiate::npc_unworthy_initiateAI, prisoner->AI())->EventStart(anchor, player);
 
         return false;
     }
 
 };
 
- /*######
+/*######
 ## npc_eye_of_acherus
 ######*/
 
 enum EyeOfAcherus
 {
-    SPELL_EYE_VISUAL            = 51892,
-    SPELL_EYE_FLIGHT_BOOST      = 51923,
-    SPELL_EYE_FLIGHT            = 51890,
+    SPELL_EYE_VISUAL = 51892,
+    SPELL_EYE_FLIGHT_BOOST = 51923,
+    SPELL_EYE_FLIGHT = 51890,
 
-    EVENT_MOVE_START            = 1,
+    EVENT_MOVE_START = 1,
 
-    TALK_MOVE_START             = 0,
-    TALK_CONTROL                = 1,
+    TALK_MOVE_START = 0,
+    TALK_CONTROL = 1,
 
-    POINT_EYE_FALL              = 1,
-    POINT_EYE_MOVE_END          = 3
+    POINT_EYE_FALL = 1,
+    POINT_EYE_MOVE_END = 3
 };
 
 Position const EyeOFAcherusFallPoint = { 2361.21f, -5660.45f, 496.7444f, 0.0f };
 
 class npc_eye_of_acherus : public CreatureScript
 {
-    public:
-        npc_eye_of_acherus() : CreatureScript("npc_eye_of_acherus") { }
+public:
+    npc_eye_of_acherus() : CreatureScript("npc_eye_of_acherus") { }
 
-        struct npc_eye_of_acherusAI : public ScriptedAI
+    struct npc_eye_of_acherusAI : public ScriptedAI
+    {
+        npc_eye_of_acherusAI(Creature* creature) : ScriptedAI(creature)
         {
-            npc_eye_of_acherusAI(Creature* creature) : ScriptedAI(creature)
-            {
-                me->SetDisplayId(me->GetCreatureTemplate()->Modelid1);
-                if (Player* owner = me->GetCharmerOrOwner()->ToPlayer())
-                    owner->SendAutoRepeatCancel(me);
+            me->SetDisplayId(me->GetCreatureTemplate()->Modelid1);
+            if (Player* owner = me->GetCharmerOrOwner()->ToPlayer())
+                owner->SendAutoRepeatCancel(me);
 
-                me->SetReactState(REACT_PASSIVE);
+            me->SetReactState(REACT_PASSIVE);
 
-                me->GetMotionMaster()->MovePoint(POINT_EYE_FALL, EyeOFAcherusFallPoint, false);
+            me->GetMotionMaster()->MovePoint(POINT_EYE_FALL, EyeOFAcherusFallPoint, false);
 
-                Movement::MoveSplineInit init(me);
-                init.MoveTo(EyeOFAcherusFallPoint.GetPositionX(), EyeOFAcherusFallPoint.GetPositionY(), EyeOFAcherusFallPoint.GetPositionZ(), false);
-                init.SetFall();
-                init.Launch();
-            }
-
-            void OnCharmed(bool /*apply*/) override { }
-
-            void UpdateAI(uint32 diff) override
-            {
-                _events.Update(diff);
-
-                while (uint32 eventId = _events.ExecuteEvent())
-                {
-                    switch (eventId)
-                    {
-                        case EVENT_MOVE_START:
-                        {
-                            DoCast(me, SPELL_EYE_FLIGHT_BOOST);
-
-                            me->SetControlled(false, UNIT_STATE_ROOT);
-                            if (Player* owner = me->GetCharmerOrOwner()->ToPlayer())
-                            {
-                                for (uint8 i = 0; i < MAX_MOVE_TYPE; ++i)
-                                    me->SetSpeed(UnitMoveType(i), owner->GetSpeedRate(UnitMoveType(i)), true);
-                                Talk(TALK_MOVE_START, owner);
-                            }
-                            me->GetMotionMaster()->MovePath(me->GetEntry() * 100, false);
-                            break;
-                        }
-                        default:
-                            break;
-                    }
-                }
-            }
-
-            void MovementInform(uint32 movementType, uint32 pointId) override
-            {
-                if (movementType == WAYPOINT_MOTION_TYPE && pointId == POINT_EYE_MOVE_END - 1)
-                {
-                    me->SetByteValue(UNIT_FIELD_BYTES_2, 0, SHEATH_STATE_MELEE);
-                    me->RemoveAllAuras();
-
-                    if (Player* owner = me->GetCharmerOrOwner()->ToPlayer())
-                    {
-                        owner->RemoveAura(SPELL_EYE_FLIGHT_BOOST);
-                        for (uint8 i = 0; i < MAX_MOVE_TYPE; ++i)
-                            me->SetSpeed(UnitMoveType(i), owner->GetSpeedRate(UnitMoveType(i)), true);
-
-                        Talk(TALK_CONTROL, owner);
-                    }
-                    me->SetDisableGravity(false);
-                    DoCast(me, SPELL_EYE_FLIGHT);
-                }
-
-                if (movementType == POINT_MOTION_TYPE && pointId == POINT_EYE_FALL)
-                {
-                    me->SetDisableGravity(true);
-                    me->SetControlled(true, UNIT_STATE_ROOT);
-                    _events.ScheduleEvent(EVENT_MOVE_START, 5000);
-                }
-            }
-
-        private:
-            EventMap _events;
-        };
-
-        CreatureAI* GetAI(Creature* creature) const override
-        {
-            return new npc_eye_of_acherusAI(creature);
+            Movement::MoveSplineInit init(me);
+            init.MoveTo(EyeOFAcherusFallPoint.GetPositionX(), EyeOFAcherusFallPoint.GetPositionY(), EyeOFAcherusFallPoint.GetPositionZ(), false);
+            init.SetFall();
+            init.Launch();
         }
+
+        void OnCharmed(bool /*apply*/) override { }
+
+        void UpdateAI(uint32 diff) override
+        {
+            _events.Update(diff);
+
+            while (uint32 eventId = _events.ExecuteEvent())
+            {
+                switch (eventId)
+                {
+                case EVENT_MOVE_START:
+                {
+                                         DoCast(me, SPELL_EYE_FLIGHT_BOOST);
+
+                                         me->SetControlled(false, UNIT_STATE_ROOT);
+                                         if (Player* owner = me->GetCharmerOrOwner()->ToPlayer())
+                                         {
+                                             for (uint8 i = 0; i < MAX_MOVE_TYPE; ++i)
+                                                 me->SetSpeed(UnitMoveType(i), owner->GetSpeedRate(UnitMoveType(i)), true);
+                                             Talk(TALK_MOVE_START, owner);
+                                         }
+                                         me->GetMotionMaster()->MovePath(me->GetEntry() * 100, false);
+                                         break;
+                }
+                default:
+                    break;
+                }
+            }
+        }
+
+        void MovementInform(uint32 movementType, uint32 pointId) override
+        {
+            if (movementType == WAYPOINT_MOTION_TYPE && pointId == POINT_EYE_MOVE_END - 1)
+            {
+                me->SetByteValue(UNIT_FIELD_BYTES_2, 0, SHEATH_STATE_MELEE);
+                me->RemoveAllAuras();
+
+                if (Player* owner = me->GetCharmerOrOwner()->ToPlayer())
+                {
+                    owner->RemoveAura(SPELL_EYE_FLIGHT_BOOST);
+                    for (uint8 i = 0; i < MAX_MOVE_TYPE; ++i)
+                        me->SetSpeed(UnitMoveType(i), owner->GetSpeedRate(UnitMoveType(i)), true);
+
+                    Talk(TALK_CONTROL, owner);
+                }
+                me->SetDisableGravity(false);
+                DoCast(me, SPELL_EYE_FLIGHT);
+            }
+
+            if (movementType == POINT_MOTION_TYPE && pointId == POINT_EYE_FALL)
+            {
+                me->SetDisableGravity(true);
+                me->SetControlled(true, UNIT_STATE_ROOT);
+                _events.ScheduleEvent(EVENT_MOVE_START, 5000);
+            }
+        }
+
+    private:
+        EventMap _events;
+    };
+
+    CreatureAI* GetAI(Creature* creature) const override
+    {
+        return new npc_eye_of_acherusAI(creature);
+    }
 };
 
 /*######
@@ -452,21 +452,21 @@ class npc_eye_of_acherus : public CreatureScript
 
 enum Spells_DKI
 {
-    SPELL_DUEL                  = 52996,
+    SPELL_DUEL = 52996,
     //SPELL_DUEL_TRIGGERED        = 52990,
-    SPELL_DUEL_VICTORY          = 52994,
-    SPELL_DUEL_FLAG             = 52991,
+    SPELL_DUEL_VICTORY = 52994,
+    SPELL_DUEL_FLAG = 52991,
 };
 
 enum Says_VBM
 {
-    SAY_DUEL                    = 0,
+    SAY_DUEL = 0,
 };
 
 enum Misc_VBN
 {
-    QUEST_DEATH_CHALLENGE       = 12733,
-    FACTION_HOSTILE             = 2068
+    QUEST_DEATH_CHALLENGE = 12733,
+    FACTION_HOSTILE = 2068
 };
 
 class npc_death_knight_initiate : public CreatureScript
@@ -560,7 +560,7 @@ public:
             }
         }
 
-       void DamageTaken(Unit* pDoneBy, uint32 &uiDamage) override
+        void DamageTaken(Unit* pDoneBy, uint32 &uiDamage) override
         {
             if (m_bIsDuelInProgress && pDoneBy->IsControlledByPlayer())
             {
@@ -633,95 +633,95 @@ public:
 
 enum DarkRiderOfAcherus
 {
-    SAY_DARK_RIDER              = 0,
-    SPELL_DESPAWN_HORSE         = 51918
+    SAY_DARK_RIDER = 0,
+    SPELL_DESPAWN_HORSE = 51918
 };
 
 class npc_dark_rider_of_acherus : public CreatureScript
 {
-    public:
-        npc_dark_rider_of_acherus() : CreatureScript("npc_dark_rider_of_acherus") { }
+public:
+    npc_dark_rider_of_acherus() : CreatureScript("npc_dark_rider_of_acherus") { }
 
-        struct npc_dark_rider_of_acherusAI : public ScriptedAI
+    struct npc_dark_rider_of_acherusAI : public ScriptedAI
+    {
+        npc_dark_rider_of_acherusAI(Creature* creature) : ScriptedAI(creature)
         {
-            npc_dark_rider_of_acherusAI(Creature* creature) : ScriptedAI(creature)
-            {
-                Initialize();
-            }
-
-            void Initialize()
-            {
-                PhaseTimer = 4000;
-                Phase = 0;
-                Intro = false;
-                TargetGUID.Clear();
-            }
-
-            void Reset() override
-            {
-                Initialize();
-            }
-
-            void UpdateAI(uint32 diff) override
-            {
-                if (!Intro || !TargetGUID)
-                    return;
-
-                if (PhaseTimer <= diff)
-                {
-                    switch (Phase)
-                    {
-                       case 0:
-                            Talk(SAY_DARK_RIDER);
-                            PhaseTimer = 5000;
-                            Phase = 1;
-                            break;
-                        case 1:
-                            if (Unit* target = ObjectAccessor::GetUnit(*me, TargetGUID))
-                                DoCast(target, SPELL_DESPAWN_HORSE, true);
-                            PhaseTimer = 3000;
-                            Phase = 2;
-                            break;
-                        case 2:
-                            me->SetVisible(false);
-                            PhaseTimer = 2000;
-                            Phase = 3;
-                            break;
-                        case 3:
-                            me->DespawnOrUnsummon();
-                            break;
-                        default:
-                            break;
-                    }
-                }
-                else
-                    PhaseTimer -= diff;
-            }
-
-            void InitDespawnHorse(Unit* who)
-            {
-                if (!who)
-                    return;
-
-                TargetGUID = who->GetGUID();
-                me->SetWalk(true);
-                me->SetSpeed(MOVE_RUN, 0.4f);
-                me->GetMotionMaster()->MoveChase(who);
-                me->SetTarget(TargetGUID);
-                Intro = true;
-            }
-
-        private:
-            uint32 PhaseTimer;
-            uint32 Phase;
-            bool Intro;
-            ObjectGuid TargetGUID;
-        };
-
-        CreatureAI* GetAI(Creature* creature) const override
-        {
-            return new npc_dark_rider_of_acherusAI(creature);
+            Initialize();
         }
+
+        void Initialize()
+        {
+            PhaseTimer = 4000;
+            Phase = 0;
+            Intro = false;
+            TargetGUID.Clear();
+        }
+
+        void Reset() override
+        {
+            Initialize();
+        }
+
+        void UpdateAI(uint32 diff) override
+        {
+            if (!Intro || !TargetGUID)
+                return;
+
+            if (PhaseTimer <= diff)
+            {
+                switch (Phase)
+                {
+                case 0:
+                    Talk(SAY_DARK_RIDER);
+                    PhaseTimer = 5000;
+                    Phase = 1;
+                    break;
+                case 1:
+                    if (Unit* target = ObjectAccessor::GetUnit(*me, TargetGUID))
+                        DoCast(target, SPELL_DESPAWN_HORSE, true);
+                    PhaseTimer = 3000;
+                    Phase = 2;
+                    break;
+                case 2:
+                    me->SetVisible(false);
+                    PhaseTimer = 2000;
+                    Phase = 3;
+                    break;
+                case 3:
+                    me->DespawnOrUnsummon();
+                    break;
+                default:
+                    break;
+                }
+            }
+            else
+                PhaseTimer -= diff;
+        }
+
+        void InitDespawnHorse(Unit* who)
+        {
+            if (!who)
+                return;
+
+            TargetGUID = who->GetGUID();
+            me->SetWalk(true);
+            me->SetSpeed(MOVE_RUN, 0.4f);
+            me->GetMotionMaster()->MoveChase(who);
+            me->SetTarget(TargetGUID);
+            Intro = true;
+        }
+
+    private:
+        uint32 PhaseTimer;
+        uint32 Phase;
+        bool Intro;
+        ObjectGuid TargetGUID;
+    };
+
+    CreatureAI* GetAI(Creature* creature) const override
+    {
+        return new npc_dark_rider_of_acherusAI(creature);
+    }
 };
 
 /*######
@@ -730,11 +730,11 @@ class npc_dark_rider_of_acherus : public CreatureScript
 
 enum Spells_Salanar
 {
-    SPELL_REALM_OF_SHADOWS            = 52693,
-    SPELL_EFFECT_STOLEN_HORSE         = 52263,
-    SPELL_DELIVER_STOLEN_HORSE        = 52264,
-    SPELL_CALL_DARK_RIDER             = 52266,
-    SPELL_EFFECT_OVERTAKE             = 52349
+    SPELL_REALM_OF_SHADOWS = 52693,
+    SPELL_EFFECT_STOLEN_HORSE = 52263,
+    SPELL_DELIVER_STOLEN_HORSE = 52264,
+    SPELL_CALL_DARK_RIDER = 52266,
+    SPELL_EFFECT_OVERTAKE = 52349
 };
 
 class npc_salanar_the_horseman : public CreatureScript
@@ -994,80 +994,80 @@ public:
 
 enum ScarletMinerCart
 {
-    SPELL_CART_CHECK        = 54173,
-    SPELL_SUMMON_CART       = 52463,
-    SPELL_SUMMON_MINER      = 52464,
-    SPELL_CART_DRAG         = 52465,
+    SPELL_CART_CHECK = 54173,
+    SPELL_SUMMON_CART = 52463,
+    SPELL_SUMMON_MINER = 52464,
+    SPELL_CART_DRAG = 52465,
 
-    NPC_MINER               = 28841
+    NPC_MINER = 28841
 };
 
 class npc_scarlet_miner_cart : public CreatureScript
 {
-    public:
-        npc_scarlet_miner_cart() : CreatureScript("npc_scarlet_miner_cart") { }
+public:
+    npc_scarlet_miner_cart() : CreatureScript("npc_scarlet_miner_cart") { }
 
-        struct npc_scarlet_miner_cartAI : public PassiveAI
+    struct npc_scarlet_miner_cartAI : public PassiveAI
+    {
+        npc_scarlet_miner_cartAI(Creature* creature) : PassiveAI(creature)
         {
-            npc_scarlet_miner_cartAI(Creature* creature) : PassiveAI(creature)
-            {
-                me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_IMMUNE_TO_PC);
-                me->SetDisplayId(me->GetCreatureTemplate()->Modelid1); // Modelid2 is a horse.
-            }
-
-            void JustSummoned(Creature* summon) override
-            {
-                if (summon->GetEntry() == NPC_MINER)
-                {
-                    _minerGUID = summon->GetGUID();
-                    summon->AI()->SetGUID(_playerGUID);
-                }
-            }
-
-            void SummonedCreatureDespawn(Creature* summon) override
-            {
-                if (summon->GetEntry() == NPC_MINER)
-                    _minerGUID.Clear();
-            }
-
-            void DoAction(int32 /*param*/) override
-            {
-                if (Creature* miner = ObjectAccessor::GetCreature(*me, _minerGUID))
-                {
-                    me->SetWalk(false);
-
-                    // Not 100% correct, but movement is smooth. Sometimes miner walks faster
-                    // than normal, this speed is fast enough to keep up at those times.
-                    me->SetSpeed(MOVE_RUN, 1.25f);
-
-                    me->GetMotionMaster()->MoveFollow(miner, 1.0f, 0);
-                }
-            }
-
-            void PassengerBoarded(Unit* who, int8 /*seatId*/, bool apply) override
-            {
-                if (apply)
-                {
-                    _playerGUID = who->GetGUID();
-                    me->CastSpell((Unit*)NULL, SPELL_SUMMON_MINER, true);
-                }
-                else
-                {
-                    _playerGUID.Clear();
-                    if (Creature* miner = ObjectAccessor::GetCreature(*me, _minerGUID))
-                        miner->DespawnOrUnsummon();
-                }
-            }
-
-        private:
-            ObjectGuid _minerGUID;
-            ObjectGuid _playerGUID;
-        };
-
-        CreatureAI* GetAI(Creature* creature) const override
-        {
-            return new npc_scarlet_miner_cartAI(creature);
+            me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_IMMUNE_TO_PC);
+            me->SetDisplayId(me->GetCreatureTemplate()->Modelid1); // Modelid2 is a horse.
         }
+
+        void JustSummoned(Creature* summon) override
+        {
+            if (summon->GetEntry() == NPC_MINER)
+            {
+                _minerGUID = summon->GetGUID();
+                summon->AI()->SetGUID(_playerGUID);
+            }
+        }
+
+        void SummonedCreatureDespawn(Creature* summon) override
+        {
+            if (summon->GetEntry() == NPC_MINER)
+                _minerGUID.Clear();
+        }
+
+        void DoAction(int32 /*param*/) override
+        {
+            if (Creature* miner = ObjectAccessor::GetCreature(*me, _minerGUID))
+            {
+                me->SetWalk(false);
+
+                // Not 100% correct, but movement is smooth. Sometimes miner walks faster
+                // than normal, this speed is fast enough to keep up at those times.
+                me->SetSpeed(MOVE_RUN, 1.25f);
+
+                me->GetMotionMaster()->MoveFollow(miner, 1.0f, 0);
+            }
+        }
+
+        void PassengerBoarded(Unit* who, int8 /*seatId*/, bool apply) override
+        {
+            if (apply)
+            {
+                _playerGUID = who->GetGUID();
+                me->CastSpell((Unit*)NULL, SPELL_SUMMON_MINER, true);
+            }
+            else
+            {
+                _playerGUID.Clear();
+                if (Creature* miner = ObjectAccessor::GetCreature(*me, _minerGUID))
+                    miner->DespawnOrUnsummon();
+            }
+        }
+
+    private:
+        ObjectGuid _minerGUID;
+        ObjectGuid _playerGUID;
+    };
+
+    CreatureAI* GetAI(Creature* creature) const override
+    {
+        return new npc_scarlet_miner_cartAI(creature);
+    }
 };
 
 /*####
@@ -1076,140 +1076,140 @@ class npc_scarlet_miner_cart : public CreatureScript
 
 enum Says_SM
 {
-    SAY_SCARLET_MINER_0         = 0,
-    SAY_SCARLET_MINER_1         = 1
+    SAY_SCARLET_MINER_0 = 0,
+    SAY_SCARLET_MINER_1 = 1
 };
 
 class npc_scarlet_miner : public CreatureScript
 {
-    public:
-        npc_scarlet_miner() : CreatureScript("npc_scarlet_miner") { }
+public:
+    npc_scarlet_miner() : CreatureScript("npc_scarlet_miner") { }
 
-        struct npc_scarlet_minerAI : public npc_escortAI
+    struct npc_scarlet_minerAI : public npc_escortAI
+    {
+        npc_scarlet_minerAI(Creature* creature) : npc_escortAI(creature)
         {
-            npc_scarlet_minerAI(Creature* creature) : npc_escortAI(creature)
+            Initialize();
+            me->SetReactState(REACT_PASSIVE);
+        }
+
+        void Initialize()
+        {
+            carGUID.Clear();
+            IntroTimer = 0;
+            IntroPhase = 0;
+        }
+
+        uint32 IntroTimer;
+        uint32 IntroPhase;
+        ObjectGuid carGUID;
+
+        void Reset() override
+        {
+            Initialize();
+        }
+
+        void IsSummonedBy(Unit* summoner) override
+        {
+            carGUID = summoner->GetGUID();
+        }
+
+        void InitWaypoint()
+        {
+            AddWaypoint(1, 2389.03f, -5902.74f, 109.014f, 5000);
+            AddWaypoint(2, 2341.812012f, -5900.484863f, 102.619743f);
+            AddWaypoint(3, 2306.561279f, -5901.738281f, 91.792419f);
+            AddWaypoint(4, 2300.098389f, -5912.618652f, 86.014885f);
+            AddWaypoint(5, 2294.142090f, -5927.274414f, 75.316849f);
+            AddWaypoint(6, 2286.984375f, -5944.955566f, 63.714966f);
+            AddWaypoint(7, 2280.001709f, -5961.186035f, 54.228283f);
+            AddWaypoint(8, 2259.389648f, -5974.197754f, 42.359348f);
+            AddWaypoint(9, 2242.882812f, -5984.642578f, 32.827850f);
+            AddWaypoint(10, 2217.265625f, -6028.959473f, 7.675705f);
+            AddWaypoint(11, 2202.595947f, -6061.325684f, 5.882018f);
+            AddWaypoint(12, 2188.974609f, -6080.866699f, 3.370027f);
+
+            if (urand(0, 1))
             {
-                Initialize();
-                me->SetReactState(REACT_PASSIVE);
+                AddWaypoint(13, 2176.483887f, -6110.407227f, 1.855181f);
+                AddWaypoint(14, 2172.516602f, -6146.752441f, 1.074235f);
+                AddWaypoint(15, 2138.918457f, -6158.920898f, 1.342926f);
+                AddWaypoint(16, 2129.866699f, -6174.107910f, 4.380779f);
+                AddWaypoint(17, 2117.709473f, -6193.830078f, 13.3542f, 10000);
             }
-
-            void Initialize()
+            else
             {
-                carGUID.Clear();
-                IntroTimer = 0;
-                IntroPhase = 0;
+                AddWaypoint(13, 2184.190186f, -6166.447266f, 0.968877f);
+                AddWaypoint(14, 2234.265625f, -6163.741211f, 0.916021f);
+                AddWaypoint(15, 2268.071777f, -6158.750977f, 1.822252f);
+                AddWaypoint(16, 2270.028320f, -6176.505859f, 6.340538f);
+                AddWaypoint(17, 2271.739014f, -6195.401855f, 13.3542f, 10000);
             }
+        }
 
-            uint32 IntroTimer;
-            uint32 IntroPhase;
-            ObjectGuid carGUID;
+        void SetGUID(ObjectGuid guid, int32 /*id = 0*/) override
+        {
+            InitWaypoint();
+            Start(false, false, guid);
+            SetDespawnAtFar(false);
+        }
 
-            void Reset() override
+        void WaypointReached(uint32 waypointId) override
+        {
+            switch (waypointId)
             {
-                Initialize();
-            }
-
-            void IsSummonedBy(Unit* summoner) override
-            {
-                carGUID = summoner->GetGUID();
-            }
-
-            void InitWaypoint()
-            {
-                AddWaypoint(1, 2389.03f,     -5902.74f,     109.014f, 5000);
-                AddWaypoint(2, 2341.812012f, -5900.484863f, 102.619743f);
-                AddWaypoint(3, 2306.561279f, -5901.738281f, 91.792419f);
-                AddWaypoint(4, 2300.098389f, -5912.618652f, 86.014885f);
-                AddWaypoint(5, 2294.142090f, -5927.274414f, 75.316849f);
-                AddWaypoint(6, 2286.984375f, -5944.955566f, 63.714966f);
-                AddWaypoint(7, 2280.001709f, -5961.186035f, 54.228283f);
-                AddWaypoint(8, 2259.389648f, -5974.197754f, 42.359348f);
-                AddWaypoint(9, 2242.882812f, -5984.642578f, 32.827850f);
-                AddWaypoint(10, 2217.265625f, -6028.959473f, 7.675705f);
-                AddWaypoint(11, 2202.595947f, -6061.325684f, 5.882018f);
-                AddWaypoint(12, 2188.974609f, -6080.866699f, 3.370027f);
-
-                if (urand(0, 1))
+            case 1:
+                if (Unit* car = ObjectAccessor::GetCreature(*me, carGUID))
+                    me->SetFacingToObject(car);
+                Talk(SAY_SCARLET_MINER_0);
+                SetRun(true);
+                IntroTimer = 4000;
+                IntroPhase = 1;
+                break;
+            case 17:
+                if (Unit* car = ObjectAccessor::GetCreature(*me, carGUID))
                 {
-                    AddWaypoint(13, 2176.483887f, -6110.407227f, 1.855181f);
-                    AddWaypoint(14, 2172.516602f, -6146.752441f, 1.074235f);
-                    AddWaypoint(15, 2138.918457f, -6158.920898f, 1.342926f);
-                    AddWaypoint(16, 2129.866699f, -6174.107910f, 4.380779f);
-                    AddWaypoint(17, 2117.709473f, -6193.830078f, 13.3542f, 10000);
+                    me->SetFacingToObject(car);
+                    car->RemoveAura(SPELL_CART_DRAG);
                 }
-                else
-                {
-                    AddWaypoint(13, 2184.190186f, -6166.447266f, 0.968877f);
-                    AddWaypoint(14, 2234.265625f, -6163.741211f, 0.916021f);
-                    AddWaypoint(15, 2268.071777f, -6158.750977f, 1.822252f);
-                    AddWaypoint(16, 2270.028320f, -6176.505859f, 6.340538f);
-                    AddWaypoint(17, 2271.739014f, -6195.401855f, 13.3542f, 10000);
-                }
+                Talk(SAY_SCARLET_MINER_1);
+                break;
+            default:
+                break;
             }
+        }
 
-            void SetGUID(ObjectGuid guid, int32 /*id = 0*/) override
+        void UpdateAI(uint32 diff) override
+        {
+            if (IntroPhase)
             {
-                InitWaypoint();
-                Start(false, false, guid);
-                SetDespawnAtFar(false);
-            }
-
-            void WaypointReached(uint32 waypointId) override
-            {
-                switch (waypointId)
+                if (IntroTimer <= diff)
                 {
-                    case 1:
-                        if (Unit* car = ObjectAccessor::GetCreature(*me, carGUID))
-                            me->SetFacingToObject(car);
-                        Talk(SAY_SCARLET_MINER_0);
-                        SetRun(true);
-                        IntroTimer = 4000;
-                        IntroPhase = 1;
-                        break;
-                    case 17:
-                        if (Unit* car = ObjectAccessor::GetCreature(*me, carGUID))
-                        {
-                            me->SetFacingToObject(car);
-                            car->RemoveAura(SPELL_CART_DRAG);
-                        }
-                        Talk(SAY_SCARLET_MINER_1);
-                        break;
-                    default:
-                        break;
-                }
-            }
-
-            void UpdateAI(uint32 diff) override
-            {
-                if (IntroPhase)
-                {
-                    if (IntroTimer <= diff)
+                    if (IntroPhase == 1)
                     {
-                        if (IntroPhase == 1)
-                        {
-                            if (Creature* car = ObjectAccessor::GetCreature(*me, carGUID))
-                                DoCast(car, SPELL_CART_DRAG);
-                            IntroTimer = 800;
-                            IntroPhase = 2;
-                        }
-                        else
-                        {
-                            if (Creature* car = ObjectAccessor::GetCreature(*me, carGUID))
-                                car->AI()->DoAction(0);
-                            IntroPhase = 0;
-                        }
+                        if (Creature* car = ObjectAccessor::GetCreature(*me, carGUID))
+                            DoCast(car, SPELL_CART_DRAG);
+                        IntroTimer = 800;
+                        IntroPhase = 2;
                     }
                     else
-                        IntroTimer -= diff;
+                    {
+                        if (Creature* car = ObjectAccessor::GetCreature(*me, carGUID))
+                            car->AI()->DoAction(0);
+                        IntroPhase = 0;
+                    }
                 }
-                npc_escortAI::UpdateAI(diff);
+                else
+                    IntroTimer -= diff;
             }
-        };
-
-        CreatureAI* GetAI(Creature* creature) const override
-        {
-            return new npc_scarlet_minerAI(creature);
+            npc_escortAI::UpdateAI(diff);
         }
+    };
+
+    CreatureAI* GetAI(Creature* creature) const override
+    {
+        return new npc_scarlet_minerAI(creature);
+    }
 };
 
 // npc 28912 quest 17217 boss 29001 mob 29007 go 191092

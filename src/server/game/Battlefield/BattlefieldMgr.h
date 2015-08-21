@@ -26,45 +26,45 @@ class ZoneScript;
 // class to handle player enter / leave / areatrigger / GO use events
 class BattlefieldMgr
 {
-    public:
-        static BattlefieldMgr* instance()
-        {
-            static BattlefieldMgr instance;
-            return &instance;
-        }
+public:
+    static BattlefieldMgr* instance()
+    {
+        static BattlefieldMgr instance;
+        return &instance;
+    }
 
-        // create battlefield events
-        void InitBattlefield();
+    // create battlefield events
+    void InitBattlefield();
 
-        // called when a player enters an battlefield area
-        void HandlePlayerEnterZone(Player* player, uint32 zoneId);
-        // called when player leaves an battlefield area
-        void HandlePlayerLeaveZone(Player* player, uint32 zoneId);
+    // called when a player enters an battlefield area
+    void HandlePlayerEnterZone(Player* player, uint32 zoneId);
+    // called when player leaves an battlefield area
+    void HandlePlayerLeaveZone(Player* player, uint32 zoneId);
 
-        // return assigned battlefield
-        Battlefield* GetBattlefieldToZoneId(uint32 zoneId);
-        Battlefield* GetBattlefieldByBattleId(uint32 battleId);
+    // return assigned battlefield
+    Battlefield* GetBattlefieldToZoneId(uint32 zoneId);
+    Battlefield* GetBattlefieldByBattleId(uint32 battleId);
 
-        ZoneScript* GetZoneScript(uint32 zoneId);
+    ZoneScript* GetZoneScript(uint32 zoneId);
 
-        void AddZone(uint32 zoneId, Battlefield* bf);
+    void AddZone(uint32 zoneId, Battlefield* bf);
 
-        void Update(uint32 diff);
+    void Update(uint32 diff);
 
-    private:
-        BattlefieldMgr();
-        ~BattlefieldMgr();
+private:
+    BattlefieldMgr();
+    ~BattlefieldMgr();
 
-        typedef std::vector<Battlefield*> BattlefieldSet;
-        typedef std::map<uint32 /*zoneId*/, Battlefield*> BattlefieldMap;
-        // contains all initiated battlefield events
-        // used when initing / cleaning up
-        BattlefieldSet _battlefieldSet;
-        // maps the zone ids to an battlefield event
-        // used in player event handling
-        BattlefieldMap _battlefieldMap;
-        // update interval
-        uint32 _updateTimer;
+    typedef std::vector<Battlefield*> BattlefieldSet;
+    typedef std::map<uint32 /*zoneId*/, Battlefield*> BattlefieldMap;
+    // contains all initiated battlefield events
+    // used when initing / cleaning up
+    BattlefieldSet _battlefieldSet;
+    // maps the zone ids to an battlefield event
+    // used in player event handling
+    BattlefieldMap _battlefieldMap;
+    // update interval
+    uint32 _updateTimer;
 };
 
 #define sBattlefieldMgr BattlefieldMgr::instance()

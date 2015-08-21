@@ -27,71 +27,71 @@ class Creature;
 
 class AggressorAI : public CreatureAI
 {
-    public:
-        explicit AggressorAI(Creature* c) : CreatureAI(c) { }
+public:
+    explicit AggressorAI(Creature* c) : CreatureAI(c) { }
 
-        void UpdateAI(uint32) override;
-        static int Permissible(const Creature*);
+    void UpdateAI(uint32) override;
+    static int Permissible(const Creature*);
 };
 
 typedef std::vector<uint32> SpellVct;
 
 class CombatAI : public CreatureAI
 {
-    public:
-        explicit CombatAI(Creature* c) : CreatureAI(c) { }
+public:
+    explicit CombatAI(Creature* c) : CreatureAI(c) { }
 
-        void InitializeAI() override;
-        void Reset() override;
-        void EnterCombat(Unit* who) override;
-        void JustDied(Unit* killer) override;
-        void UpdateAI(uint32 diff) override;
-        void SpellInterrupted(uint32 spellId, uint32 unTimeMs) override;
+    void InitializeAI() override;
+    void Reset() override;
+    void EnterCombat(Unit* who) override;
+    void JustDied(Unit* killer) override;
+    void UpdateAI(uint32 diff) override;
+    void SpellInterrupted(uint32 spellId, uint32 unTimeMs) override;
 
-        static int Permissible(Creature const* /*creature*/) { return PERMIT_BASE_NO; }
+    static int Permissible(Creature const* /*creature*/) { return PERMIT_BASE_NO; }
 
-    protected:
-        EventMap events;
-        SpellVct spells;
+protected:
+    EventMap events;
+    SpellVct spells;
 };
 
 class CasterAI : public CombatAI
 {
-    public:
-        explicit CasterAI(Creature* c) : CombatAI(c) { m_attackDist = MELEE_RANGE; }
-        void InitializeAI() override;
-        void AttackStart(Unit* victim) override { AttackStartCaster(victim, m_attackDist); }
-        void UpdateAI(uint32 diff) override;
-        void EnterCombat(Unit* /*who*/) override;
-    private:
-        float m_attackDist;
+public:
+    explicit CasterAI(Creature* c) : CombatAI(c) { m_attackDist = MELEE_RANGE; }
+    void InitializeAI() override;
+    void AttackStart(Unit* victim) override { AttackStartCaster(victim, m_attackDist); }
+    void UpdateAI(uint32 diff) override;
+    void EnterCombat(Unit* /*who*/) override;
+private:
+    float m_attackDist;
 };
 
 struct ArcherAI : public CreatureAI
 {
-    public:
-        explicit ArcherAI(Creature* c);
-        void AttackStart(Unit* who) override;
-        void UpdateAI(uint32 diff) override;
+public:
+    explicit ArcherAI(Creature* c);
+    void AttackStart(Unit* who) override;
+    void UpdateAI(uint32 diff) override;
 
-        static int Permissible(Creature const* /*creature*/) { return PERMIT_BASE_NO; }
+    static int Permissible(Creature const* /*creature*/) { return PERMIT_BASE_NO; }
 
-    protected:
-        float m_minRange;
+protected:
+    float m_minRange;
 };
 
 struct TurretAI : public CreatureAI
 {
-    public:
-        explicit TurretAI(Creature* c);
-        bool CanAIAttack(Unit const* who) const override;
-        void AttackStart(Unit* who) override;
-        void UpdateAI(uint32 diff) override;
+public:
+    explicit TurretAI(Creature* c);
+    bool CanAIAttack(Unit const* who) const override;
+    void AttackStart(Unit* who) override;
+    void UpdateAI(uint32 diff) override;
 
-        static int Permissible(Creature const* /*creature*/) { return PERMIT_BASE_NO; }
+    static int Permissible(Creature const* /*creature*/) { return PERMIT_BASE_NO; }
 
-    protected:
-        float m_minRange;
+protected:
+    float m_minRange;
 };
 
 #define VEHICLE_CONDITION_CHECK_TIME 1000
@@ -99,23 +99,23 @@ struct TurretAI : public CreatureAI
 
 struct VehicleAI : public CreatureAI
 {
-    public:
-        explicit VehicleAI(Creature* creature);
+public:
+    explicit VehicleAI(Creature* creature);
 
-        void UpdateAI(uint32 diff) override;
-        void MoveInLineOfSight(Unit*) override { }
-        void AttackStart(Unit*) override { }
-        void OnCharmed(bool apply) override;
+    void UpdateAI(uint32 diff) override;
+    void MoveInLineOfSight(Unit*) override { }
+    void AttackStart(Unit*) override { }
+    void OnCharmed(bool apply) override;
 
-        static int Permissible(Creature const* /*creature*/) { return PERMIT_BASE_NO; }
+    static int Permissible(Creature const* /*creature*/) { return PERMIT_BASE_NO; }
 
-    private:
-        void LoadConditions();
-        void CheckConditions(uint32 diff);
-        ConditionList conditions;
-        uint32 m_ConditionsTimer;
-        bool m_DoDismiss;
-        uint32 m_DismissTimer;
+private:
+    void LoadConditions();
+    void CheckConditions(uint32 diff);
+    ConditionList conditions;
+    uint32 m_ConditionsTimer;
+    bool m_DoDismiss;
+    uint32 m_DismissTimer;
 };
 
 #endif

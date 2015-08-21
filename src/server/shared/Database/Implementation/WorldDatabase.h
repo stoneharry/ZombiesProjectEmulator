@@ -23,13 +23,13 @@
 
 class WorldDatabaseConnection : public MySQLConnection
 {
-    public:
-        //- Constructors for sync and async connections
-        WorldDatabaseConnection(MySQLConnectionInfo& connInfo) : MySQLConnection(connInfo) { }
-        WorldDatabaseConnection(ProducerConsumerQueue<SQLOperation*>* q, MySQLConnectionInfo& connInfo) : MySQLConnection(q, connInfo) { }
+public:
+    //- Constructors for sync and async connections
+    WorldDatabaseConnection(MySQLConnectionInfo& connInfo) : MySQLConnection(connInfo) { }
+    WorldDatabaseConnection(ProducerConsumerQueue<SQLOperation*>* q, MySQLConnectionInfo& connInfo) : MySQLConnection(q, connInfo) { }
 
-        //- Loads database type specific prepared statements
-        void DoPrepareStatements() override;
+    //- Loads database type specific prepared statements
+    void DoPrepareStatements() override;
 };
 
 typedef DatabaseWorkerPool<WorldDatabaseConnection> WorldDatabaseWorkerPool;
@@ -40,7 +40,7 @@ enum WorldDatabaseStatements
         {DB}_{SEL/INS/UPD/DEL/REP}_{Summary of data changed}
         When updating more than one field, consider looking at the calling function
         name for a suiting suffix.
-    */
+        */
 
     WORLD_SEL_QUEST_POOLS,
     WORLD_DEL_CRELINKED_RESPAWN,

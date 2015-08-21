@@ -29,154 +29,154 @@ EndScriptData */
 
 enum Says
 {
-    SAY_TAUNT              = 0,
-    SAY_HEAL               = 1,
-    SAY_SURGE              = 2,
-    SAY_AGGRO              = 3,
-    SAY_KILL               = 4,
-    SAY_DIE                = 5
+    SAY_TAUNT = 0,
+    SAY_HEAL = 1,
+    SAY_SURGE = 2,
+    SAY_AGGRO = 3,
+    SAY_KILL = 4,
+    SAY_DIE = 5
 };
 
 enum Spells
 {
-    SPELL_MORTAL_WOUND     = 30641,
-    SPELL_SURGE            = 34645,
-    SPELL_RETALIATION      = 22857
+    SPELL_MORTAL_WOUND = 30641,
+    SPELL_SURGE = 34645,
+    SPELL_RETALIATION = 22857
 };
 
 enum Events
 {
-    EVENT_MORTAL_WOUND     = 1,
-    EVENT_SURGE            = 2,
-    EVENT_RETALIATION      = 3
+    EVENT_MORTAL_WOUND = 1,
+    EVENT_SURGE = 2,
+    EVENT_RETALIATION = 3
 };
 
 class boss_watchkeeper_gargolmar : public CreatureScript
 {
-    public:
-        boss_watchkeeper_gargolmar() : CreatureScript("boss_watchkeeper_gargolmar") { }
+public:
+    boss_watchkeeper_gargolmar() : CreatureScript("boss_watchkeeper_gargolmar") { }
 
-        struct boss_watchkeeper_gargolmarAI : public BossAI
+    struct boss_watchkeeper_gargolmarAI : public BossAI
+    {
+        boss_watchkeeper_gargolmarAI(Creature* creature) : BossAI(creature, DATA_WATCHKEEPER_GARGOLMAR)
         {
-            boss_watchkeeper_gargolmarAI(Creature* creature) : BossAI(creature, DATA_WATCHKEEPER_GARGOLMAR)
-            {
-                Initialize();
-            }
+            Initialize();
+        }
 
-            void Initialize()
-            {
-                hasTaunted = false;
-                yelledForHeal = false;
-                retaliation = false;
-            }
+        void Initialize()
+        {
+            hasTaunted = false;
+            yelledForHeal = false;
+            retaliation = false;
+        }
 
-            void Reset() override
-            {
-                Initialize();
-                _Reset();
-            }
+        void Reset() override
+        {
+            Initialize();
+            _Reset();
+        }
 
-            void EnterCombat(Unit* /*who*/) override
-            {
-                Talk(SAY_AGGRO);
-                events.ScheduleEvent(EVENT_MORTAL_WOUND, 5000);
-                events.ScheduleEvent(EVENT_SURGE, 4000);
-                _EnterCombat();
-            }
+        void EnterCombat(Unit* /*who*/) override
+        {
+            Talk(SAY_AGGRO);
+            events.ScheduleEvent(EVENT_MORTAL_WOUND, 5000);
+            events.ScheduleEvent(EVENT_SURGE, 4000);
+            _EnterCombat();
+        }
 
-            void MoveInLineOfSight(Unit* who) override
+        void MoveInLineOfSight(Unit* who) override
+        {
+            if (!me->GetVictim() && me->CanCreatureAttack(who))
             {
-                if (!me->GetVictim() && me->CanCreatureAttack(who))
-                {
-                    if (!me->CanFly() && me->GetDistanceZ(who) > CREATURE_Z_ATTACK_RANGE)
-                        return;
-
-                    float attackRadius = me->GetAttackDistance(who);
-                    if (me->IsWithinDistInMap(who, attackRadius) && me->IsWithinLOSInMap(who))
-                    {
-                        //who->RemoveSpellsCausingAura(SPELL_AURA_MOD_STEALTH);
-                        AttackStart(who);
-                    }
-                    else if (!hasTaunted && me->IsWithinDistInMap(who, 60.0f))
-                    {
-                        Talk(SAY_TAUNT);
-                        hasTaunted = true;
-                    }
-                }
-            }
-
-            void KilledUnit(Unit* /*victim*/) override
-            {
-                Talk(SAY_KILL);
-            }
-
-            void JustDied(Unit* /*killer*/) override
-            {
-                Talk(SAY_DIE);
-                _JustDied();
-            }
-
-            void UpdateAI(uint32 diff) override
-            {
-                if (!UpdateVictim())
+                if (!me->CanFly() && me->GetDistanceZ(who) > CREATURE_Z_ATTACK_RANGE)
                     return;
 
-                events.Update(diff);
-
-                while (uint32 eventId = events.ExecuteEvent())
+                float attackRadius = me->GetAttackDistance(who);
+                if (me->IsWithinDistInMap(who, attackRadius) && me->IsWithinLOSInMap(who))
                 {
-                    switch (eventId)
-                    {
-                        case EVENT_MORTAL_WOUND:
-                            DoCastVictim(SPELL_MORTAL_WOUND);
-                            events.ScheduleEvent(EVENT_MORTAL_WOUND, urand (5000, 13000));
-                            break;
-                        case EVENT_SURGE:
-                            Talk(SAY_SURGE);
-                            if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
-                                DoCast(target, SPELL_SURGE);
-                            events.ScheduleEvent(EVENT_SURGE, urand (5000, 13000));
-                            break;
-                        case EVENT_RETALIATION:
-                            DoCast(me, SPELL_RETALIATION);
-                            events.ScheduleEvent(EVENT_RETALIATION, 30000);
-                            break;
-                        default:
-                            break;
-                    }
+                    //who->RemoveSpellsCausingAura(SPELL_AURA_MOD_STEALTH);
+                    AttackStart(who);
                 }
-
-                if (!retaliation)
+                else if (!hasTaunted && me->IsWithinDistInMap(who, 60.0f))
                 {
-                    if (HealthBelowPct(20))
-                    {
-                        events.ScheduleEvent(EVENT_RETALIATION, 1000);
-                        retaliation = true;
-                    }
+                    Talk(SAY_TAUNT);
+                    hasTaunted = true;
                 }
+            }
+        }
 
-                if (!yelledForHeal)
+        void KilledUnit(Unit* /*victim*/) override
+        {
+            Talk(SAY_KILL);
+        }
+
+        void JustDied(Unit* /*killer*/) override
+        {
+            Talk(SAY_DIE);
+            _JustDied();
+        }
+
+        void UpdateAI(uint32 diff) override
+        {
+            if (!UpdateVictim())
+                return;
+
+            events.Update(diff);
+
+            while (uint32 eventId = events.ExecuteEvent())
+            {
+                switch (eventId)
                 {
-                    if (HealthBelowPct(40))
-                    {
-                        Talk(SAY_HEAL);
-                        yelledForHeal = true;
-                    }
+                case EVENT_MORTAL_WOUND:
+                    DoCastVictim(SPELL_MORTAL_WOUND);
+                    events.ScheduleEvent(EVENT_MORTAL_WOUND, urand(5000, 13000));
+                    break;
+                case EVENT_SURGE:
+                    Talk(SAY_SURGE);
+                    if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
+                        DoCast(target, SPELL_SURGE);
+                    events.ScheduleEvent(EVENT_SURGE, urand(5000, 13000));
+                    break;
+                case EVENT_RETALIATION:
+                    DoCast(me, SPELL_RETALIATION);
+                    events.ScheduleEvent(EVENT_RETALIATION, 30000);
+                    break;
+                default:
+                    break;
                 }
-
-                DoMeleeAttackIfReady();
             }
 
-            private:
-                bool hasTaunted;
-                bool yelledForHeal;
-                bool retaliation;
-        };
+            if (!retaliation)
+            {
+                if (HealthBelowPct(20))
+                {
+                    events.ScheduleEvent(EVENT_RETALIATION, 1000);
+                    retaliation = true;
+                }
+            }
 
-        CreatureAI* GetAI(Creature* creature) const override
-        {
-            return new boss_watchkeeper_gargolmarAI(creature);
+            if (!yelledForHeal)
+            {
+                if (HealthBelowPct(40))
+                {
+                    Talk(SAY_HEAL);
+                    yelledForHeal = true;
+                }
+            }
+
+            DoMeleeAttackIfReady();
         }
+
+    private:
+        bool hasTaunted;
+        bool yelledForHeal;
+        bool retaliation;
+    };
+
+    CreatureAI* GetAI(Creature* creature) const override
+    {
+        return new boss_watchkeeper_gargolmarAI(creature);
+    }
 };
 
 void AddSC_boss_watchkeeper_gargolmar()

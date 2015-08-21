@@ -23,13 +23,13 @@
 
 class LoginDatabaseConnection : public MySQLConnection
 {
-    public:
-        //- Constructors for sync and async connections
-        LoginDatabaseConnection(MySQLConnectionInfo& connInfo) : MySQLConnection(connInfo) { }
-        LoginDatabaseConnection(ProducerConsumerQueue<SQLOperation*>* q, MySQLConnectionInfo& connInfo) : MySQLConnection(q, connInfo) { }
+public:
+    //- Constructors for sync and async connections
+    LoginDatabaseConnection(MySQLConnectionInfo& connInfo) : MySQLConnection(connInfo) { }
+    LoginDatabaseConnection(ProducerConsumerQueue<SQLOperation*>* q, MySQLConnectionInfo& connInfo) : MySQLConnection(q, connInfo) { }
 
-        //- Loads database type specific prepared statements
-        void DoPrepareStatements() override;
+    //- Loads database type specific prepared statements
+    void DoPrepareStatements() override;
 };
 
 typedef DatabaseWorkerPool<LoginDatabaseConnection> LoginDatabaseWorkerPool;
@@ -40,7 +40,7 @@ enum LoginDatabaseStatements
         {DB}_{SEL/INS/UPD/DEL/REP}_{Summary of data changed}
         When updating more than one field, consider looking at the calling function
         name for a suiting suffix.
-    */
+        */
 
     LOGIN_SEL_REALMLIST,
     LOGIN_DEL_EXPIRED_IP_BANS,
@@ -130,7 +130,7 @@ enum LoginDatabaseStatements
 
     LOGIN_INS_ACCOUNT_MUTE,
     LOGIN_SEL_ACCOUNT_MUTE_INFO,
-	LOGIN_SEL_VERSIONS,
+    LOGIN_SEL_VERSIONS,
     MAX_LOGINDATABASE_STATEMENTS
 };
 

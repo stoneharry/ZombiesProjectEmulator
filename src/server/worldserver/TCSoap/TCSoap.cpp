@@ -46,7 +46,7 @@ void TCSoapThread(const std::string& host, uint16 port)
         if (!soap_valid_socket(soap_accept(&soap)))
             continue;   // ran into an accept timeout
 
-        TC_LOG_DEBUG("network.soap", "Accepted connection from IP=%d.%d.%d.%d", (int)(soap.ip>>24)&0xFF, (int)(soap.ip>>16)&0xFF, (int)(soap.ip>>8)&0xFF, (int)soap.ip&0xFF);
+        TC_LOG_DEBUG("network.soap", "Accepted connection from IP=%d.%d.%d.%d", (int)(soap.ip >> 24) & 0xFF, (int)(soap.ip >> 16) & 0xFF, (int)(soap.ip >> 8) & 0xFF, (int)soap.ip & 0xFF);
         struct soap* thread_soap = soap_copy(&soap);// make a safe copy
         process_message(thread_soap);
     }
@@ -137,10 +137,10 @@ void SOAPCommand::commandFinished(void* soapconnection, bool success)
 ////////////////////////////////////////////////////////////////////////////////
 
 struct Namespace namespaces[] =
-{   { "SOAP-ENV", "http://schemas.xmlsoap.org/soap/envelope/", NULL, NULL }, // must be first
-    { "SOAP-ENC", "http://schemas.xmlsoap.org/soap/encoding/", NULL, NULL }, // must be second
-    { "xsi", "http://www.w3.org/1999/XMLSchema-instance", "http://www.w3.org/*/XMLSchema-instance", NULL },
-    { "xsd", "http://www.w3.org/1999/XMLSchema",          "http://www.w3.org/*/XMLSchema", NULL },
-    { "ns1", "urn:TC", NULL, NULL },     // "ns1" namespace prefix
-    { NULL, NULL, NULL, NULL }
+{ { "SOAP-ENV", "http://schemas.xmlsoap.org/soap/envelope/", NULL, NULL }, // must be first
+{ "SOAP-ENC", "http://schemas.xmlsoap.org/soap/encoding/", NULL, NULL }, // must be second
+{ "xsi", "http://www.w3.org/1999/XMLSchema-instance", "http://www.w3.org/*/XMLSchema-instance", NULL },
+{ "xsd", "http://www.w3.org/1999/XMLSchema", "http://www.w3.org/*/XMLSchema", NULL },
+{ "ns1", "urn:TC", NULL, NULL },     // "ns1" namespace prefix
+{ NULL, NULL, NULL, NULL }
 };

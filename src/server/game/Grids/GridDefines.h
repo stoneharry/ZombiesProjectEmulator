@@ -67,12 +67,12 @@ typedef GridRefManager<Player>          PlayerMapType;
 
 enum GridMapTypeMask
 {
-    GRID_MAP_TYPE_MASK_CORPSE           = 0x01,
-    GRID_MAP_TYPE_MASK_CREATURE         = 0x02,
-    GRID_MAP_TYPE_MASK_DYNAMICOBJECT    = 0x04,
-    GRID_MAP_TYPE_MASK_GAMEOBJECT       = 0x08,
-    GRID_MAP_TYPE_MASK_PLAYER           = 0x10,
-    GRID_MAP_TYPE_MASK_ALL              = 0x1F
+    GRID_MAP_TYPE_MASK_CORPSE = 0x01,
+    GRID_MAP_TYPE_MASK_CREATURE = 0x02,
+    GRID_MAP_TYPE_MASK_DYNAMICOBJECT = 0x04,
+    GRID_MAP_TYPE_MASK_GAMEOBJECT = 0x08,
+    GRID_MAP_TYPE_MASK_PLAYER = 0x10,
+    GRID_MAP_TYPE_MASK_ALL = 0x1F
 };
 
 typedef Grid<Player, AllWorldObjectTypes, AllGridObjectTypes> GridType;
@@ -84,8 +84,8 @@ typedef TypeMapContainer<AllWorldObjectTypes> WorldTypeMapContainer;
 template<uint32 LIMIT>
 struct CoordPair
 {
-    CoordPair(uint32 x=0, uint32 y=0)
-        : x_coord(x), y_coord(y)
+    CoordPair(uint32 x = 0, uint32 y = 0)
+    : x_coord(x), y_coord(y)
     { }
 
     CoordPair(const CoordPair<LIMIT> &obj)
@@ -173,8 +173,8 @@ namespace Trinity
     inline RET_TYPE Compute(float x, float y, float center_offset, float size)
     {
         // calculate and store temporary values in double format for having same result as same mySQL calculations
-        double x_offset = (double(x) - center_offset)/size;
-        double y_offset = (double(y) - center_offset)/size;
+        double x_offset = (double(x) - center_offset) / size;
+        double y_offset = (double(y) - center_offset) / size;
 
         int x_val = int(x_offset + CENTER_VAL + 0.5f);
         int y_val = int(y_offset + CENTER_VAL + 0.5f);
@@ -193,8 +193,8 @@ namespace Trinity
 
     inline CellCoord ComputeCellCoord(float x, float y, float &x_off, float &y_off)
     {
-        double x_offset = (double(x) - CENTER_GRID_CELL_OFFSET)/SIZE_OF_GRID_CELL;
-        double y_offset = (double(y) - CENTER_GRID_CELL_OFFSET)/SIZE_OF_GRID_CELL;
+        double x_offset = (double(x) - CENTER_GRID_CELL_OFFSET) / SIZE_OF_GRID_CELL;
+        double y_offset = (double(y) - CENTER_GRID_CELL_OFFSET) / SIZE_OF_GRID_CELL;
 
         int x_val = int(x_offset + CENTER_GRID_CELL_ID + 0.5f);
         int y_val = int(y_offset + CENTER_GRID_CELL_ID + 0.5f);

@@ -19,8 +19,8 @@ using namespace Hooks;
 bool Eluna::OnDummyEffect(Unit* pCaster, uint32 spellId, SpellEffIndex effIndex, Creature* pTarget)
 {
     if (!CreatureEventBindings->HasEvents(CREATURE_EVENT_ON_DUMMY_EFFECT, pTarget->GetEntry()))
-        if (!CreatureUniqueBindings->HasEvents(CREATURE_EVENT_ON_DUMMY_EFFECT, pTarget->GET_GUID(), pTarget->GetInstanceId()))
-            return false;
+    if (!CreatureUniqueBindings->HasEvents(CREATURE_EVENT_ON_DUMMY_EFFECT, pTarget->GET_GUID(), pTarget->GetInstanceId()))
+        return false;
 
     LOCK_ELUNA;
     Push(pCaster);
@@ -74,8 +74,8 @@ bool Eluna::OnGossipSelectCode(Player* pPlayer, Creature* pCreature, uint32 send
 bool Eluna::OnQuestAccept(Player* pPlayer, Creature* pCreature, Quest const* pQuest)
 {
     if (!CreatureEventBindings->HasEvents(CREATURE_EVENT_ON_QUEST_ACCEPT, pCreature->GetEntry()))
-        if (!CreatureUniqueBindings->HasEvents(CREATURE_EVENT_ON_QUEST_ACCEPT, pCreature->GET_GUID(), pCreature->GetInstanceId()))
-            return false;
+    if (!CreatureUniqueBindings->HasEvents(CREATURE_EVENT_ON_QUEST_ACCEPT, pCreature->GET_GUID(), pCreature->GetInstanceId()))
+        return false;
 
     LOCK_ELUNA;
     Push(pPlayer);
@@ -87,8 +87,8 @@ bool Eluna::OnQuestAccept(Player* pPlayer, Creature* pCreature, Quest const* pQu
 bool Eluna::OnQuestReward(Player* pPlayer, Creature* pCreature, Quest const* pQuest, uint32 opt)
 {
     if (!CreatureEventBindings->HasEvents(CREATURE_EVENT_ON_QUEST_REWARD, pCreature->GetEntry()))
-        if (!CreatureUniqueBindings->HasEvents(CREATURE_EVENT_ON_QUEST_REWARD, pCreature->GET_GUID(), pCreature->GetInstanceId()))
-            return false;
+    if (!CreatureUniqueBindings->HasEvents(CREATURE_EVENT_ON_QUEST_REWARD, pCreature->GET_GUID(), pCreature->GetInstanceId()))
+        return false;
 
     LOCK_ELUNA;
     Push(pPlayer);
@@ -101,8 +101,8 @@ bool Eluna::OnQuestReward(Player* pPlayer, Creature* pCreature, Quest const* pQu
 uint32 Eluna::GetDialogStatus(Player* pPlayer, Creature* pCreature)
 {
     if (!CreatureEventBindings->HasEvents(CREATURE_EVENT_ON_DIALOG_STATUS, pCreature->GetEntry()))
-        if (!CreatureUniqueBindings->HasEvents(CREATURE_EVENT_ON_DIALOG_STATUS, pCreature->GET_GUID(), pCreature->GetInstanceId()))
-            return DIALOG_STATUS_SCRIPTED_NO_STATUS;
+    if (!CreatureUniqueBindings->HasEvents(CREATURE_EVENT_ON_DIALOG_STATUS, pCreature->GET_GUID(), pCreature->GetInstanceId()))
+        return DIALOG_STATUS_SCRIPTED_NO_STATUS;
 
     LOCK_ELUNA;
     Push(pPlayer);
@@ -114,8 +114,8 @@ uint32 Eluna::GetDialogStatus(Player* pPlayer, Creature* pCreature)
 void Eluna::OnAddToWorld(Creature* creature)
 {
     if (!CreatureEventBindings->HasEvents(CREATURE_EVENT_ON_ADD, creature->GetEntry()))
-        if (!CreatureUniqueBindings->HasEvents(CREATURE_EVENT_ON_ADD, creature->GET_GUID(), creature->GetInstanceId()))
-            return;
+    if (!CreatureUniqueBindings->HasEvents(CREATURE_EVENT_ON_ADD, creature->GET_GUID(), creature->GetInstanceId()))
+        return;
 
     LOCK_ELUNA;
     Push(creature);
@@ -125,8 +125,8 @@ void Eluna::OnAddToWorld(Creature* creature)
 void Eluna::OnRemoveFromWorld(Creature* creature)
 {
     if (!CreatureEventBindings->HasEvents(CREATURE_EVENT_ON_REMOVE, creature->GetEntry()))
-        if (!CreatureUniqueBindings->HasEvents(CREATURE_EVENT_ON_REMOVE, creature->GET_GUID(), creature->GetInstanceId()))
-            return;
+    if (!CreatureUniqueBindings->HasEvents(CREATURE_EVENT_ON_REMOVE, creature->GET_GUID(), creature->GetInstanceId()))
+        return;
 
     LOCK_ELUNA;
     Push(creature);
@@ -136,8 +136,8 @@ void Eluna::OnRemoveFromWorld(Creature* creature)
 bool Eluna::OnSummoned(Creature* pCreature, Unit* pSummoner)
 {
     if (!CreatureEventBindings->HasEvents(CREATURE_EVENT_ON_SUMMONED, pCreature->GetEntry()))
-        if (!CreatureUniqueBindings->HasEvents(CREATURE_EVENT_ON_SUMMONED, pCreature->GET_GUID(), pCreature->GetInstanceId()))
-            return false;
+    if (!CreatureUniqueBindings->HasEvents(CREATURE_EVENT_ON_SUMMONED, pCreature->GET_GUID(), pCreature->GetInstanceId()))
+        return false;
 
     LOCK_ELUNA;
     Push(pCreature);
@@ -148,8 +148,8 @@ bool Eluna::OnSummoned(Creature* pCreature, Unit* pSummoner)
 bool Eluna::UpdateAI(Creature* me, const uint32 diff)
 {
     if (!CreatureEventBindings->HasEvents(CREATURE_EVENT_ON_AIUPDATE, me->GetEntry()))
-        if (!CreatureUniqueBindings->HasEvents(CREATURE_EVENT_ON_AIUPDATE, me->GET_GUID(), me->GetInstanceId()))
-            return false;
+    if (!CreatureUniqueBindings->HasEvents(CREATURE_EVENT_ON_AIUPDATE, me->GET_GUID(), me->GetInstanceId()))
+        return false;
 
     LOCK_ELUNA;
     Push(me);
@@ -162,8 +162,8 @@ bool Eluna::UpdateAI(Creature* me, const uint32 diff)
 bool Eluna::EnterCombat(Creature* me, Unit* target)
 {
     if (!CreatureEventBindings->HasEvents(CREATURE_EVENT_ON_ENTER_COMBAT, me->GetEntry()))
-        if (!CreatureUniqueBindings->HasEvents(CREATURE_EVENT_ON_ENTER_COMBAT, me->GET_GUID(), me->GetInstanceId()))
-            return false;
+    if (!CreatureUniqueBindings->HasEvents(CREATURE_EVENT_ON_ENTER_COMBAT, me->GET_GUID(), me->GetInstanceId()))
+        return false;
 
     LOCK_ELUNA;
     Push(me);
@@ -175,8 +175,8 @@ bool Eluna::EnterCombat(Creature* me, Unit* target)
 bool Eluna::DamageTaken(Creature* me, Unit* attacker, uint32& damage)
 {
     if (!CreatureEventBindings->HasEvents(CREATURE_EVENT_ON_DAMAGE_TAKEN, me->GetEntry()))
-        if (!CreatureUniqueBindings->HasEvents(CREATURE_EVENT_ON_DAMAGE_TAKEN, me->GET_GUID(), me->GetInstanceId()))
-            return false;
+    if (!CreatureUniqueBindings->HasEvents(CREATURE_EVENT_ON_DAMAGE_TAKEN, me->GET_GUID(), me->GetInstanceId()))
+        return false;
 
     LOCK_ELUNA;
     bool result = false;
@@ -213,8 +213,8 @@ bool Eluna::JustDied(Creature* me, Unit* killer)
     On_Reset(me);
 
     if (!CreatureEventBindings->HasEvents(CREATURE_EVENT_ON_DIED, me->GetEntry()))
-        if (!CreatureUniqueBindings->HasEvents(CREATURE_EVENT_ON_DIED, me->GET_GUID(), me->GetInstanceId()))
-            return false;
+    if (!CreatureUniqueBindings->HasEvents(CREATURE_EVENT_ON_DIED, me->GET_GUID(), me->GetInstanceId()))
+        return false;
 
     LOCK_ELUNA;
     Push(me);
@@ -226,8 +226,8 @@ bool Eluna::JustDied(Creature* me, Unit* killer)
 bool Eluna::KilledUnit(Creature* me, Unit* victim)
 {
     if (!CreatureEventBindings->HasEvents(CREATURE_EVENT_ON_TARGET_DIED, me->GetEntry()))
-        if (!CreatureUniqueBindings->HasEvents(CREATURE_EVENT_ON_TARGET_DIED, me->GET_GUID(), me->GetInstanceId()))
-            return false;
+    if (!CreatureUniqueBindings->HasEvents(CREATURE_EVENT_ON_TARGET_DIED, me->GET_GUID(), me->GetInstanceId()))
+        return false;
 
     LOCK_ELUNA;
     Push(me);
@@ -239,8 +239,8 @@ bool Eluna::KilledUnit(Creature* me, Unit* victim)
 bool Eluna::JustSummoned(Creature* me, Creature* summon)
 {
     if (!CreatureEventBindings->HasEvents(CREATURE_EVENT_ON_JUST_SUMMONED_CREATURE, me->GetEntry()))
-        if (!CreatureUniqueBindings->HasEvents(CREATURE_EVENT_ON_JUST_SUMMONED_CREATURE, me->GET_GUID(), me->GetInstanceId()))
-            return false;
+    if (!CreatureUniqueBindings->HasEvents(CREATURE_EVENT_ON_JUST_SUMMONED_CREATURE, me->GET_GUID(), me->GetInstanceId()))
+        return false;
 
     LOCK_ELUNA;
     Push(me);
@@ -252,8 +252,8 @@ bool Eluna::JustSummoned(Creature* me, Creature* summon)
 bool Eluna::SummonedCreatureDespawn(Creature* me, Creature* summon)
 {
     if (!CreatureEventBindings->HasEvents(CREATURE_EVENT_ON_SUMMONED_CREATURE_DESPAWN, me->GetEntry()))
-        if (!CreatureUniqueBindings->HasEvents(CREATURE_EVENT_ON_SUMMONED_CREATURE_DESPAWN, me->GET_GUID(), me->GetInstanceId()))
-            return false;
+    if (!CreatureUniqueBindings->HasEvents(CREATURE_EVENT_ON_SUMMONED_CREATURE_DESPAWN, me->GET_GUID(), me->GetInstanceId()))
+        return false;
 
     LOCK_ELUNA;
     Push(me);
@@ -265,8 +265,8 @@ bool Eluna::SummonedCreatureDespawn(Creature* me, Creature* summon)
 bool Eluna::MovementInform(Creature* me, uint32 type, uint32 id)
 {
     if (!CreatureEventBindings->HasEvents(CREATURE_EVENT_ON_REACH_WP, me->GetEntry()))
-        if (!CreatureUniqueBindings->HasEvents(CREATURE_EVENT_ON_REACH_WP, me->GET_GUID(), me->GetInstanceId()))
-            return false;
+    if (!CreatureUniqueBindings->HasEvents(CREATURE_EVENT_ON_REACH_WP, me->GET_GUID(), me->GetInstanceId()))
+        return false;
 
     LOCK_ELUNA;
     Push(me);
@@ -279,8 +279,8 @@ bool Eluna::MovementInform(Creature* me, uint32 type, uint32 id)
 bool Eluna::AttackStart(Creature* me, Unit* target)
 {
     if (!CreatureEventBindings->HasEvents(CREATURE_EVENT_ON_PRE_COMBAT, me->GetEntry()))
-        if (!CreatureUniqueBindings->HasEvents(CREATURE_EVENT_ON_PRE_COMBAT, me->GET_GUID(), me->GetInstanceId()))
-            return false;
+    if (!CreatureUniqueBindings->HasEvents(CREATURE_EVENT_ON_PRE_COMBAT, me->GET_GUID(), me->GetInstanceId()))
+        return false;
 
     LOCK_ELUNA;
     Push(me);
@@ -294,8 +294,8 @@ bool Eluna::EnterEvadeMode(Creature* me)
     On_Reset(me);
 
     if (!CreatureEventBindings->HasEvents(CREATURE_EVENT_ON_LEAVE_COMBAT, me->GetEntry()))
-        if (!CreatureUniqueBindings->HasEvents(CREATURE_EVENT_ON_LEAVE_COMBAT, me->GET_GUID(), me->GetInstanceId()))
-            return false;
+    if (!CreatureUniqueBindings->HasEvents(CREATURE_EVENT_ON_LEAVE_COMBAT, me->GET_GUID(), me->GetInstanceId()))
+        return false;
 
     LOCK_ELUNA;
     Push(me);
@@ -306,8 +306,8 @@ bool Eluna::EnterEvadeMode(Creature* me)
 bool Eluna::AttackedBy(Creature* me, Unit* attacker)
 {
     if (!CreatureEventBindings->HasEvents(CREATURE_EVENT_ON_ATTACKED_AT, me->GetEntry()))
-        if (!CreatureUniqueBindings->HasEvents(CREATURE_EVENT_ON_ATTACKED_AT, me->GET_GUID(), me->GetInstanceId()))
-            return false;
+    if (!CreatureUniqueBindings->HasEvents(CREATURE_EVENT_ON_ATTACKED_AT, me->GET_GUID(), me->GetInstanceId()))
+        return false;
 
     LOCK_ELUNA;
     Push(me);
@@ -321,8 +321,8 @@ bool Eluna::JustRespawned(Creature* me)
     On_Reset(me);
 
     if (!CreatureEventBindings->HasEvents(CREATURE_EVENT_ON_SPAWN, me->GetEntry()))
-        if (!CreatureUniqueBindings->HasEvents(CREATURE_EVENT_ON_SPAWN, me->GET_GUID(), me->GetInstanceId()))
-            return false;
+    if (!CreatureUniqueBindings->HasEvents(CREATURE_EVENT_ON_SPAWN, me->GET_GUID(), me->GetInstanceId()))
+        return false;
 
     LOCK_ELUNA;
     Push(me);
@@ -333,8 +333,8 @@ bool Eluna::JustRespawned(Creature* me)
 bool Eluna::JustReachedHome(Creature* me)
 {
     if (!CreatureEventBindings->HasEvents(CREATURE_EVENT_ON_REACH_HOME, me->GetEntry()))
-        if (!CreatureUniqueBindings->HasEvents(CREATURE_EVENT_ON_REACH_HOME, me->GET_GUID(), me->GetInstanceId()))
-            return false;
+    if (!CreatureUniqueBindings->HasEvents(CREATURE_EVENT_ON_REACH_HOME, me->GET_GUID(), me->GetInstanceId()))
+        return false;
 
     LOCK_ELUNA;
     Push(me);
@@ -345,8 +345,8 @@ bool Eluna::JustReachedHome(Creature* me)
 bool Eluna::ReceiveEmote(Creature* me, Player* player, uint32 emoteId)
 {
     if (!CreatureEventBindings->HasEvents(CREATURE_EVENT_ON_RECEIVE_EMOTE, me->GetEntry()))
-        if (!CreatureUniqueBindings->HasEvents(CREATURE_EVENT_ON_RECEIVE_EMOTE, me->GET_GUID(), me->GetInstanceId()))
-            return false;
+    if (!CreatureUniqueBindings->HasEvents(CREATURE_EVENT_ON_RECEIVE_EMOTE, me->GET_GUID(), me->GetInstanceId()))
+        return false;
 
     LOCK_ELUNA;
     Push(me);
@@ -359,8 +359,8 @@ bool Eluna::ReceiveEmote(Creature* me, Player* player, uint32 emoteId)
 bool Eluna::CorpseRemoved(Creature* me, uint32& respawnDelay)
 {
     if (!CreatureEventBindings->HasEvents(CREATURE_EVENT_ON_CORPSE_REMOVED, me->GetEntry()))
-        if (!CreatureUniqueBindings->HasEvents(CREATURE_EVENT_ON_CORPSE_REMOVED, me->GET_GUID(), me->GetInstanceId()))
-            return false;
+    if (!CreatureUniqueBindings->HasEvents(CREATURE_EVENT_ON_CORPSE_REMOVED, me->GET_GUID(), me->GetInstanceId()))
+        return false;
 
     LOCK_ELUNA;
     bool result = false;
@@ -393,8 +393,8 @@ bool Eluna::CorpseRemoved(Creature* me, uint32& respawnDelay)
 bool Eluna::MoveInLineOfSight(Creature* me, Unit* who)
 {
     if (!CreatureEventBindings->HasEvents(CREATURE_EVENT_ON_MOVE_IN_LOS, me->GetEntry()))
-        if (!CreatureUniqueBindings->HasEvents(CREATURE_EVENT_ON_MOVE_IN_LOS, me->GET_GUID(), me->GetInstanceId()))
-            return false;
+    if (!CreatureUniqueBindings->HasEvents(CREATURE_EVENT_ON_MOVE_IN_LOS, me->GET_GUID(), me->GetInstanceId()))
+        return false;
 
     LOCK_ELUNA;
     Push(me);
@@ -406,8 +406,8 @@ bool Eluna::MoveInLineOfSight(Creature* me, Unit* who)
 void Eluna::On_Reset(Creature* me) // Not an override, custom
 {
     if (!CreatureEventBindings->HasEvents(CREATURE_EVENT_ON_RESET, me->GetEntry()))
-        if (!CreatureUniqueBindings->HasEvents(CREATURE_EVENT_ON_RESET, me->GET_GUID(), me->GetInstanceId()))
-            return;
+    if (!CreatureUniqueBindings->HasEvents(CREATURE_EVENT_ON_RESET, me->GET_GUID(), me->GetInstanceId()))
+        return;
 
     LOCK_ELUNA;
     Push(me);
@@ -418,8 +418,8 @@ void Eluna::On_Reset(Creature* me) // Not an override, custom
 bool Eluna::SpellHit(Creature* me, Unit* caster, SpellInfo const* spell)
 {
     if (!CreatureEventBindings->HasEvents(CREATURE_EVENT_ON_HIT_BY_SPELL, me->GetEntry()))
-        if (!CreatureUniqueBindings->HasEvents(CREATURE_EVENT_ON_HIT_BY_SPELL, me->GET_GUID(), me->GetInstanceId()))
-            return false;
+    if (!CreatureUniqueBindings->HasEvents(CREATURE_EVENT_ON_HIT_BY_SPELL, me->GET_GUID(), me->GetInstanceId()))
+        return false;
 
     LOCK_ELUNA;
     Push(me);
@@ -432,8 +432,8 @@ bool Eluna::SpellHit(Creature* me, Unit* caster, SpellInfo const* spell)
 bool Eluna::SpellHitTarget(Creature* me, Unit* target, SpellInfo const* spell)
 {
     if (!CreatureEventBindings->HasEvents(CREATURE_EVENT_ON_SPELL_HIT_TARGET, me->GetEntry()))
-        if (!CreatureUniqueBindings->HasEvents(CREATURE_EVENT_ON_SPELL_HIT_TARGET, me->GET_GUID(), me->GetInstanceId()))
-            return false;
+    if (!CreatureUniqueBindings->HasEvents(CREATURE_EVENT_ON_SPELL_HIT_TARGET, me->GET_GUID(), me->GetInstanceId()))
+        return false;
 
     LOCK_ELUNA;
     Push(me);
@@ -447,8 +447,8 @@ bool Eluna::SpellHitTarget(Creature* me, Unit* target, SpellInfo const* spell)
 bool Eluna::SummonedCreatureDies(Creature* me, Creature* summon, Unit* killer)
 {
     if (!CreatureEventBindings->HasEvents(CREATURE_EVENT_ON_SUMMONED_CREATURE_DIED, me->GetEntry()))
-        if (!CreatureUniqueBindings->HasEvents(CREATURE_EVENT_ON_SUMMONED_CREATURE_DIED, me->GET_GUID(), me->GetInstanceId()))
-            return false;
+    if (!CreatureUniqueBindings->HasEvents(CREATURE_EVENT_ON_SUMMONED_CREATURE_DIED, me->GET_GUID(), me->GetInstanceId()))
+        return false;
 
     LOCK_ELUNA;
     Push(me);
@@ -461,8 +461,8 @@ bool Eluna::SummonedCreatureDies(Creature* me, Creature* summon, Unit* killer)
 bool Eluna::OwnerAttackedBy(Creature* me, Unit* attacker)
 {
     if (!CreatureEventBindings->HasEvents(CREATURE_EVENT_ON_OWNER_ATTACKED_AT, me->GetEntry()))
-        if (!CreatureUniqueBindings->HasEvents(CREATURE_EVENT_ON_OWNER_ATTACKED_AT, me->GET_GUID(), me->GetInstanceId()))
-            return false;
+    if (!CreatureUniqueBindings->HasEvents(CREATURE_EVENT_ON_OWNER_ATTACKED_AT, me->GET_GUID(), me->GetInstanceId()))
+        return false;
 
     LOCK_ELUNA;
     Push(me);
@@ -474,8 +474,8 @@ bool Eluna::OwnerAttackedBy(Creature* me, Unit* attacker)
 bool Eluna::OwnerAttacked(Creature* me, Unit* target)
 {
     if (!CreatureEventBindings->HasEvents(CREATURE_EVENT_ON_OWNER_ATTACKED, me->GetEntry()))
-        if (!CreatureUniqueBindings->HasEvents(CREATURE_EVENT_ON_OWNER_ATTACKED, me->GET_GUID(), me->GetInstanceId()))
-            return false;
+    if (!CreatureUniqueBindings->HasEvents(CREATURE_EVENT_ON_OWNER_ATTACKED, me->GET_GUID(), me->GetInstanceId()))
+        return false;
 
     LOCK_ELUNA;
     Push(me);

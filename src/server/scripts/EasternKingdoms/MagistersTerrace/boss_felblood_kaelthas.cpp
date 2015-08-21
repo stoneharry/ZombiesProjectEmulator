@@ -31,60 +31,60 @@ EndScriptData */
 
 enum Says
 {
-    SAY_AGGRO                   = 0,                //This yell should be done when the room is cleared. For now, set it as a movelineofsight yell.
-    SAY_PHOENIX                 = 1,
-    SAY_FLAMESTRIKE             = 2,
-    SAY_GRAVITY_LAPSE           = 3,
-    SAY_TIRED                   = 4,
-    SAY_RECAST_GRAVITY          = 5,
-    SAY_DEATH                   = 6
+    SAY_AGGRO = 0,                //This yell should be done when the room is cleared. For now, set it as a movelineofsight yell.
+    SAY_PHOENIX = 1,
+    SAY_FLAMESTRIKE = 2,
+    SAY_GRAVITY_LAPSE = 3,
+    SAY_TIRED = 4,
+    SAY_RECAST_GRAVITY = 5,
+    SAY_DEATH = 6
 };
 
 
 enum Spells
 {
     // Phase 1 spells
-    SPELL_FIREBALL_NORMAL         = 44189,                 // Deals 2700-3300 damage at current target
-    SPELL_FIREBALL_HEROIC         = 46164,                 //       4950-6050
+    SPELL_FIREBALL_NORMAL = 44189,                 // Deals 2700-3300 damage at current target
+    SPELL_FIREBALL_HEROIC = 46164,                 //       4950-6050
 
-    SPELL_PHOENIX                 = 44194,                 // Summons a phoenix (Doesn't work?)
-    SPELL_PHOENIX_BURN            = 44197,                 // A spell Phoenix uses to damage everything around
-    SPELL_REBIRTH_DMG             = 44196,                 // DMG if a Phoenix rebirth happen
+    SPELL_PHOENIX = 44194,                 // Summons a phoenix (Doesn't work?)
+    SPELL_PHOENIX_BURN = 44197,                 // A spell Phoenix uses to damage everything around
+    SPELL_REBIRTH_DMG = 44196,                 // DMG if a Phoenix rebirth happen
 
-    SPELL_FLAMESTRIKE1_NORMAL     = 44190,                 // Damage part
-    SPELL_FLAMESTRIKE1_HEROIC     = 46163,                 // Heroic damage part
-    SPELL_FLAMESTRIKE2            = 44191,                 // Flamestrike indicator before the damage
-    SPELL_FLAMESTRIKE3            = 44192,                 // Summons the trigger + animation (projectile)
+    SPELL_FLAMESTRIKE1_NORMAL = 44190,                 // Damage part
+    SPELL_FLAMESTRIKE1_HEROIC = 46163,                 // Heroic damage part
+    SPELL_FLAMESTRIKE2 = 44191,                 // Flamestrike indicator before the damage
+    SPELL_FLAMESTRIKE3 = 44192,                 // Summons the trigger + animation (projectile)
 
-    SPELL_SHOCK_BARRIER           = 46165,                 // Heroic only; 10k damage shield, followed by Pyroblast
-    SPELL_PYROBLAST               = 36819,                 // Heroic only; 45-55k fire damage
+    SPELL_SHOCK_BARRIER = 46165,                 // Heroic only; 10k damage shield, followed by Pyroblast
+    SPELL_PYROBLAST = 36819,                 // Heroic only; 45-55k fire damage
 
-// Phase 2 spells
-    SPELL_GRAVITY_LAPSE_INITIAL   = 44224,                 // Cast at the beginning of every Gravity Lapse
-    SPELL_GRAVITY_LAPSE_CHANNEL   = 44251,                 // Channeled; blue beam animation to every enemy in range
-    SPELL_TELEPORT_CENTER         = 44218,                 // Should teleport people to the center. Requires DB entry in spell_target_position.
-    SPELL_GRAVITY_LAPSE_FLY       = 44227,                 // Hastens flyspeed and allows flying for 1 minute. For some reason removes 44226.
-    SPELL_GRAVITY_LAPSE_DOT       = 44226,                 // Knocks up in the air and applies a 300 DPS DoT.
-    SPELL_ARCANE_SPHERE_PASSIVE   = 44263,                 // Passive auras on Arcane Spheres
-    SPELL_POWER_FEEDBACK          = 44233                 // Stuns him, making him take 50% more damage for 10 seconds. Cast after Gravity Lapse
+    // Phase 2 spells
+    SPELL_GRAVITY_LAPSE_INITIAL = 44224,                 // Cast at the beginning of every Gravity Lapse
+    SPELL_GRAVITY_LAPSE_CHANNEL = 44251,                 // Channeled; blue beam animation to every enemy in range
+    SPELL_TELEPORT_CENTER = 44218,                 // Should teleport people to the center. Requires DB entry in spell_target_position.
+    SPELL_GRAVITY_LAPSE_FLY = 44227,                 // Hastens flyspeed and allows flying for 1 minute. For some reason removes 44226.
+    SPELL_GRAVITY_LAPSE_DOT = 44226,                 // Knocks up in the air and applies a 300 DPS DoT.
+    SPELL_ARCANE_SPHERE_PASSIVE = 44263,                 // Passive auras on Arcane Spheres
+    SPELL_POWER_FEEDBACK = 44233                 // Stuns him, making him take 50% more damage for 10 seconds. Cast after Gravity Lapse
 };
 
 
 
 enum Creatures
 {
-    CREATURE_PHOENIX              = 24674,
-    CREATURE_PHOENIX_EGG          = 24675,
-    CREATURE_ARCANE_SPHERE        = 24708
+    CREATURE_PHOENIX = 24674,
+    CREATURE_PHOENIX_EGG = 24675,
+    CREATURE_ARCANE_SPHERE = 24708
 };
 
 
 /** Locations **/
-float KaelLocations[3][2]=
+float KaelLocations[3][2] =
 {
-    {148.744659f, 181.377426f},
-    {140.823883f, 195.403046f},
-    {156.574188f, 195.650482f},
+    { 148.744659f, 181.377426f },
+    { 140.823883f, 195.403046f },
+    { 156.574188f, 195.650482f },
 };
 
 #define LOCATION_Z                  -16.727455f
@@ -288,143 +288,148 @@ public:
 
             switch (Phase)
             {
-                case 0:
-                {
-                    // *Heroic mode only:
-                    if (IsHeroic())
-                    {
-                        if (PyroblastTimer <= diff)
-                        {
-                            me->InterruptSpell(CURRENT_CHANNELED_SPELL);
-                            me->InterruptSpell(CURRENT_GENERIC_SPELL);
-                            DoCast(me, SPELL_SHOCK_BARRIER, true);
-                            DoCastVictim(SPELL_PYROBLAST);
-                            PyroblastTimer = 60000;
-                        } else PyroblastTimer -= diff;
-                    }
+            case 0:
+            {
+                      // *Heroic mode only:
+                      if (IsHeroic())
+                      {
+                          if (PyroblastTimer <= diff)
+                          {
+                              me->InterruptSpell(CURRENT_CHANNELED_SPELL);
+                              me->InterruptSpell(CURRENT_GENERIC_SPELL);
+                              DoCast(me, SPELL_SHOCK_BARRIER, true);
+                              DoCastVictim(SPELL_PYROBLAST);
+                              PyroblastTimer = 60000;
+                          }
+                          else PyroblastTimer -= diff;
+                      }
 
-                    if (FireballTimer <= diff)
-                    {
-                        DoCastVictim(SPELL_FIREBALL_NORMAL);
-                        FireballTimer = urand(2000, 6000);
-                    } else FireballTimer -= diff;
+                      if (FireballTimer <= diff)
+                      {
+                          DoCastVictim(SPELL_FIREBALL_NORMAL);
+                          FireballTimer = urand(2000, 6000);
+                      }
+                      else FireballTimer -= diff;
 
-                    if (PhoenixTimer <= diff)
-                    {
-                        Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 1);
+                      if (PhoenixTimer <= diff)
+                      {
+                          Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 1);
 
-                        uint8 random = urand(1, 2);
-                        float x = KaelLocations[random][0];
-                        float y = KaelLocations[random][1];
+                          uint8 random = urand(1, 2);
+                          float x = KaelLocations[random][0];
+                          float y = KaelLocations[random][1];
 
-                        Creature* Phoenix = me->SummonCreature(CREATURE_PHOENIX, x, y, LOCATION_Z, 0, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 60000);
-                        if (Phoenix)
-                        {
-                            Phoenix->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE + UNIT_FLAG_NON_ATTACKABLE);
-                            SetThreatList(Phoenix);
-                            Phoenix->AI()->AttackStart(target);
-                        }
+                          Creature* Phoenix = me->SummonCreature(CREATURE_PHOENIX, x, y, LOCATION_Z, 0, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 60000);
+                          if (Phoenix)
+                          {
+                              Phoenix->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE + UNIT_FLAG_NON_ATTACKABLE);
+                              SetThreatList(Phoenix);
+                              Phoenix->AI()->AttackStart(target);
+                          }
 
-                        Talk(SAY_PHOENIX);
+                          Talk(SAY_PHOENIX);
 
-                        PhoenixTimer = 60000;
-                    } else PhoenixTimer -= diff;
+                          PhoenixTimer = 60000;
+                      }
+                      else PhoenixTimer -= diff;
 
-                    if (FlameStrikeTimer <= diff)
-                    {
-                        if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
-                        {
-                            me->InterruptSpell(CURRENT_CHANNELED_SPELL);
-                            me->InterruptSpell(CURRENT_GENERIC_SPELL);
-                            DoCast(target, SPELL_FLAMESTRIKE3, true);
-                            Talk(SAY_FLAMESTRIKE);
-                        }
-                        FlameStrikeTimer = urand(15000, 25000);
-                    } else FlameStrikeTimer -= diff;
+                      if (FlameStrikeTimer <= diff)
+                      {
+                          if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
+                          {
+                              me->InterruptSpell(CURRENT_CHANNELED_SPELL);
+                              me->InterruptSpell(CURRENT_GENERIC_SPELL);
+                              DoCast(target, SPELL_FLAMESTRIKE3, true);
+                              Talk(SAY_FLAMESTRIKE);
+                          }
+                          FlameStrikeTimer = urand(15000, 25000);
+                      }
+                      else FlameStrikeTimer -= diff;
 
-                    // Below 50%
-                    if (HealthBelowPct(50))
-                    {
-                        me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_INTERRUPT_CAST, true);
-                        me->StopMoving();
-                        me->GetMotionMaster()->Clear();
-                        me->GetMotionMaster()->MoveIdle();
-                        GravityLapseTimer = 0;
-                        GravityLapsePhase = 0;
-                        Phase = 1;
-                    }
+                      // Below 50%
+                      if (HealthBelowPct(50))
+                      {
+                          me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_INTERRUPT_CAST, true);
+                          me->StopMoving();
+                          me->GetMotionMaster()->Clear();
+                          me->GetMotionMaster()->MoveIdle();
+                          GravityLapseTimer = 0;
+                          GravityLapsePhase = 0;
+                          Phase = 1;
+                      }
 
-                    DoMeleeAttackIfReady();
-                }
+                      DoMeleeAttackIfReady();
+            }
                 break;
 
-                case 1:
-                {
-                    if (GravityLapseTimer <= diff)
-                    {
-                        switch (GravityLapsePhase)
-                        {
-                            case 0:
-                                if (FirstGravityLapse)          // Different yells at 50%, and at every following Gravity Lapse
-                                {
-                                    Talk(SAY_GRAVITY_LAPSE);
-                                    FirstGravityLapse = false;
+            case 1:
+            {
+                      if (GravityLapseTimer <= diff)
+                      {
+                          switch (GravityLapsePhase)
+                          {
+                          case 0:
+                              if (FirstGravityLapse)          // Different yells at 50%, and at every following Gravity Lapse
+                              {
+                                  Talk(SAY_GRAVITY_LAPSE);
+                                  FirstGravityLapse = false;
 
-                                    instance->SetData(DATA_KAELTHAS_STATUES, 1);
-                                }
-                                else
-                                    Talk(SAY_RECAST_GRAVITY);
+                                  instance->SetData(DATA_KAELTHAS_STATUES, 1);
+                              }
+                              else
+                                  Talk(SAY_RECAST_GRAVITY);
 
-                                DoCast(me, SPELL_GRAVITY_LAPSE_INITIAL);
-                                GravityLapseTimer = 2000 + diff;// Don't interrupt the visual spell
-                                GravityLapsePhase = 1;
-                                break;
+                              DoCast(me, SPELL_GRAVITY_LAPSE_INITIAL);
+                              GravityLapseTimer = 2000 + diff;// Don't interrupt the visual spell
+                              GravityLapsePhase = 1;
+                              break;
 
-                            case 1:
-                                TeleportPlayersToSelf();
-                                GravityLapseTimer = 1000;
-                                GravityLapsePhase = 2;
-                                break;
+                          case 1:
+                              TeleportPlayersToSelf();
+                              GravityLapseTimer = 1000;
+                              GravityLapsePhase = 2;
+                              break;
 
-                            case 2:
-                                CastGravityLapseKnockUp();
-                                GravityLapseTimer = 1000;
-                                GravityLapsePhase = 3;
-                                break;
+                          case 2:
+                              CastGravityLapseKnockUp();
+                              GravityLapseTimer = 1000;
+                              GravityLapsePhase = 3;
+                              break;
 
-                            case 3:
-                                CastGravityLapseFly();
-                                GravityLapseTimer = 30000;
-                                GravityLapsePhase = 4;
+                          case 3:
+                              CastGravityLapseFly();
+                              GravityLapseTimer = 30000;
+                              GravityLapsePhase = 4;
 
-                                for (uint8 i = 0; i < 3; ++i)
-                                {
-                                    Unit* target = NULL;
-                                    target = SelectTarget(SELECT_TARGET_RANDOM, 0);
+                              for (uint8 i = 0; i < 3; ++i)
+                              {
+                                  Unit* target = NULL;
+                                  target = SelectTarget(SELECT_TARGET_RANDOM, 0);
 
-                                    Creature* Orb = DoSpawnCreature(CREATURE_ARCANE_SPHERE, 5, 5, 0, 0, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 30000);
-                                    if (Orb && target)
-                                    {
-                                        Orb->SetSpeed(MOVE_RUN, 0.5f);
-                                        Orb->AddThreat(target, 1000000.0f);
-                                        Orb->AI()->AttackStart(target);
-                                    }
-                                }
+                                  Creature* Orb = DoSpawnCreature(CREATURE_ARCANE_SPHERE, 5, 5, 0, 0, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 30000);
+                                  if (Orb && target)
+                                  {
+                                      Orb->SetSpeed(MOVE_RUN, 0.5f);
+                                      Orb->AddThreat(target, 1000000.0f);
+                                      Orb->AI()->AttackStart(target);
+                                  }
+                              }
 
-                                DoCast(me, SPELL_GRAVITY_LAPSE_CHANNEL);
-                                break;
+                              DoCast(me, SPELL_GRAVITY_LAPSE_CHANNEL);
+                              break;
 
-                            case 4:
-                                me->InterruptNonMeleeSpells(false);
-                                Talk(SAY_TIRED);
-                                DoCast(me, SPELL_POWER_FEEDBACK);
-                                RemoveGravityLapse();
-                                GravityLapseTimer = 10000;
-                                GravityLapsePhase = 0;
-                                break;
-                        }
-                    } else GravityLapseTimer -= diff;
-                }
+                          case 4:
+                              me->InterruptNonMeleeSpells(false);
+                              Talk(SAY_TIRED);
+                              DoCast(me, SPELL_POWER_FEEDBACK);
+                              RemoveGravityLapse();
+                              GravityLapseTimer = 10000;
+                              GravityLapsePhase = 0;
+                              break;
+                          }
+                      }
+                      else GravityLapseTimer -= diff;
+            }
                 break;
             }
         }
@@ -474,7 +479,8 @@ public:
             {
                 DoCast(me, SPELL_FLAMESTRIKE1_NORMAL, true);
                 me->Kill(me);
-            } else FlameStrikeTimer -= diff;
+            }
+            else FlameStrikeTimer -= diff;
         }
     };
 };
@@ -552,7 +558,7 @@ public:
                 me->GetMotionMaster()->Clear();
                 me->GetMotionMaster()->MoveIdle();
                 me->SetStandState(UNIT_STAND_STATE_DEAD);
-           }
+            }
         }
 
         void JustDied(Unit* /*killer*/) override
@@ -578,7 +584,8 @@ public:
                         me->SummonCreature(CREATURE_PHOENIX_EGG, 0.0f, 0.0f, 0.0f, 0.0f, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 45000);
                         me->DisappearAndDie();
                         Rebirth = false;
-                    } else Death_Timer -= diff;
+                    }
+                    else Death_Timer -= diff;
                 }
             }
 
@@ -637,7 +644,8 @@ public:
             {
                 me->SummonCreature(CREATURE_PHOENIX, 0.0f, 0.0f, 0.0f, 0.0f, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 60000);
                 me->Kill(me);
-            } else HatchTimer -= diff;
+            }
+            else HatchTimer -= diff;
         }
     };
 };
@@ -693,7 +701,8 @@ public:
                 }
 
                 ChangeTargetTimer = urand(5000, 15000);
-            } else ChangeTargetTimer -= diff;
+            }
+            else ChangeTargetTimer -= diff;
         }
     };
 };

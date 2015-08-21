@@ -29,9 +29,9 @@ EndScriptData */
 
 enum Spells
 {
-    SPELL_BANSHEEWAIL       = 16565,
-    SPELL_BANSHEECURSE      = 16867,
-    SPELL_SILENCE           = 18327
+    SPELL_BANSHEEWAIL = 16565,
+    SPELL_BANSHEECURSE = 16867,
+    SPELL_SILENCE = 18327
     //SPELL_POSSESS           = 17244
 };
 
@@ -94,7 +94,8 @@ public:
                     DoCastVictim(SPELL_BANSHEEWAIL);
                 //4 seconds until we should cast this again
                 BansheeWail_Timer = 4000;
-            } else BansheeWail_Timer -= diff;
+            }
+            else BansheeWail_Timer -= diff;
 
             //BansheeCurse
             if (BansheeCurse_Timer <= diff)
@@ -103,7 +104,8 @@ public:
                     DoCastVictim(SPELL_BANSHEECURSE);
                 //18 seconds until we should cast this again
                 BansheeCurse_Timer = 18000;
-            } else BansheeCurse_Timer -= diff;
+            }
+            else BansheeCurse_Timer -= diff;
 
             //Silence
             if (Silence_Timer <= diff)
@@ -112,7 +114,8 @@ public:
                     DoCastVictim(SPELL_SILENCE);
                 //13 seconds until we should cast this again
                 Silence_Timer = 13000;
-            } else Silence_Timer -= diff;
+            }
+            else Silence_Timer -= diff;
 
             DoMeleeAttackIfReady();
         }

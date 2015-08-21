@@ -75,7 +75,7 @@ namespace VMAP
                 if (origin[i] < MinB[i])
                 {
                     location[i] = MinB[i];
-                    Inside      = false;
+                    Inside = false;
 
                     // Calculate T distances to candidate planes
                     if (IR(dir[i]))
@@ -86,7 +86,7 @@ namespace VMAP
                 else if (origin[i] > MaxB[i])
                 {
                     location[i] = MaxB[i];
-                    Inside      = false;
+                    Inside = false;
 
                     // Calculate T distances to candidate planes
                     if (IR(dir[i]))

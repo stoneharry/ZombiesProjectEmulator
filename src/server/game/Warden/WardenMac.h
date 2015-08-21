@@ -30,17 +30,17 @@ class Warden;
 
 class WardenMac : public Warden
 {
-    public:
-        WardenMac();
-        ~WardenMac();
+public:
+    WardenMac();
+    ~WardenMac();
 
-        void Init(WorldSession* session, BigNumber* k) override;
-        ClientWardenModule* GetModuleForClient() override;
-        void InitializeModule() override;
-        void RequestHash() override;
-        void HandleHashResult(ByteBuffer& buff) override;
-        void RequestData() override;
-        void HandleData(ByteBuffer& buff) override;
+    void Init(WorldSession* session, BigNumber* k) override;
+    ClientWardenModule* GetModuleForClient() override;
+    void InitializeModule() override;
+    void RequestHash() override;
+    void HandleHashResult(ByteBuffer& buff) override;
+    void RequestData() override;
+    void HandleData(ByteBuffer& buff) override;
 };
 
 #endif

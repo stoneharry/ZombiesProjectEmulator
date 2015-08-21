@@ -39,40 +39,40 @@ public:
         {
             switch (creature->GetEntry())
             {
-                case NPC_SARTHARION:
-                    sartharionGUID = creature->GetGUID();
-                    break;
+            case NPC_SARTHARION:
+                sartharionGUID = creature->GetGUID();
+                break;
                 // Three dragons below set to active state once created.
                 // We must expect bigger raid to encounter main boss, and then three dragons must be active due to grid differences
-                case NPC_TENEBRON:
-                    tenebronGUID = creature->GetGUID();
-                    creature->setActive(true);
-                    break;
-                case NPC_SHADRON:
-                    shadronGUID = creature->GetGUID();
-                    creature->setActive(true);
-                    break;
-                case NPC_VESPERON:
-                    vesperonGUID = creature->GetGUID();
-                    creature->setActive(true);
-                    break;
+            case NPC_TENEBRON:
+                tenebronGUID = creature->GetGUID();
+                creature->setActive(true);
+                break;
+            case NPC_SHADRON:
+                shadronGUID = creature->GetGUID();
+                creature->setActive(true);
+                break;
+            case NPC_VESPERON:
+                vesperonGUID = creature->GetGUID();
+                creature->setActive(true);
+                break;
             }
         }
 
         bool SetBossState(uint32 type, EncounterState state) override
         {
             if (!InstanceScript::SetBossState(type, state))
-                 return false;
+                return false;
 
             switch (type)
             {
-                case DATA_SARTHARION:
-                case DATA_TENEBRON:
-                case DATA_SHADRON:
-                case DATA_VESPERON:
-                    break;
-                default:
-                    break;
+            case DATA_SARTHARION:
+            case DATA_TENEBRON:
+            case DATA_SHADRON:
+            case DATA_VESPERON:
+                break;
+            default:
+                break;
             }
             return true;
         }
@@ -81,14 +81,14 @@ public:
         {
             switch (Data)
             {
-                case DATA_SARTHARION:
-                    return sartharionGUID;
-                case DATA_TENEBRON:
-                    return tenebronGUID;
-                case DATA_SHADRON:
-                    return shadronGUID;
-                case DATA_VESPERON:
-                    return vesperonGUID;
+            case DATA_SARTHARION:
+                return sartharionGUID;
+            case DATA_TENEBRON:
+                return tenebronGUID;
+            case DATA_SHADRON:
+                return shadronGUID;
+            case DATA_VESPERON:
+                return vesperonGUID;
             }
             return ObjectGuid::Empty;
         }

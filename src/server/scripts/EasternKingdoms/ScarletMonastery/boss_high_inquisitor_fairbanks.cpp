@@ -29,12 +29,12 @@ EndScriptData */
 
 enum Spells
 {
-    SPELL_CURSEOFBLOOD              = 8282,
-    SPELL_DISPELMAGIC               = 15090,
-    SPELL_FEAR                      = 12096,
-    SPELL_HEAL                      = 12039,
-    SPELL_POWERWORDSHIELD           = 11647,
-    SPELL_SLEEP                     = 8399
+    SPELL_CURSEOFBLOOD = 8282,
+    SPELL_DISPELMAGIC = 15090,
+    SPELL_FEAR = 12096,
+    SPELL_HEAL = 12039,
+    SPELL_POWERWORDSHIELD = 11647,
+    SPELL_SLEEP = 8399
 };
 
 class boss_high_inquisitor_fairbanks : public CreatureScript

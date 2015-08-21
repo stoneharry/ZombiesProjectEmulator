@@ -21,28 +21,28 @@
 
 enum Spells
 {
-    SPELL_REPENTANCE    = 29511,
-    SPELL_HOLYFIRE      = 29522,
-    SPELL_HOLYWRATH     = 32445,
-    SPELL_HOLYGROUND    = 29512,
-    SPELL_BERSERK       = 26662
+    SPELL_REPENTANCE = 29511,
+    SPELL_HOLYFIRE = 29522,
+    SPELL_HOLYWRATH = 32445,
+    SPELL_HOLYGROUND = 29512,
+    SPELL_BERSERK = 26662
 };
 
 enum Yells
 {
-    SAY_AGGRO           = 0,
-    SAY_SLAY            = 1,
-    SAY_REPENTANCE      = 2,
-    SAY_DEATH           = 3
+    SAY_AGGRO = 0,
+    SAY_SLAY = 1,
+    SAY_REPENTANCE = 2,
+    SAY_DEATH = 3
 };
 
 enum Events
 {
-    EVENT_REPENTANCE    = 1,
-    EVENT_HOLYFIRE      = 2,
-    EVENT_HOLYWRATH     = 3,
-    EVENT_HOLYGROUND    = 4,
-    EVENT_ENRAGE        = 5
+    EVENT_REPENTANCE = 1,
+    EVENT_HOLYFIRE = 2,
+    EVENT_HOLYWRATH = 3,
+    EVENT_HOLYGROUND = 4,
+    EVENT_ENRAGE = 5
 };
 
 class boss_maiden_of_virtue : public CreatureScript
@@ -102,30 +102,30 @@ public:
             {
                 switch (eventId)
                 {
-                    case EVENT_REPENTANCE:
-                        DoCastVictim(SPELL_REPENTANCE);
-                        Talk(SAY_REPENTANCE);
-                        events.ScheduleEvent(EVENT_REPENTANCE, urand(33, 45) * IN_MILLISECONDS);
-                        break;
-                    case EVENT_HOLYFIRE:
-                        if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0, 50, true))
-                            DoCast(target, SPELL_HOLYFIRE);
-                        events.ScheduleEvent(EVENT_HOLYFIRE, 12 * IN_MILLISECONDS);
-                        break;
-                    case EVENT_HOLYWRATH:
-                        if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0, 80, true))
-                            DoCast(target, SPELL_HOLYWRATH);
-                        events.ScheduleEvent(EVENT_HOLYWRATH, urand(15, 25) * IN_MILLISECONDS);
-                        break;
-                    case EVENT_HOLYGROUND:
-                        DoCast(me, SPELL_HOLYGROUND, true);
-                        events.ScheduleEvent(EVENT_HOLYGROUND, 3 * IN_MILLISECONDS);
-                        break;
-                    case EVENT_ENRAGE:
-                        DoCast(me, SPELL_BERSERK, true);
-                        break;
-                    default:
-                        break;
+                case EVENT_REPENTANCE:
+                    DoCastVictim(SPELL_REPENTANCE);
+                    Talk(SAY_REPENTANCE);
+                    events.ScheduleEvent(EVENT_REPENTANCE, urand(33, 45) * IN_MILLISECONDS);
+                    break;
+                case EVENT_HOLYFIRE:
+                    if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0, 50, true))
+                        DoCast(target, SPELL_HOLYFIRE);
+                    events.ScheduleEvent(EVENT_HOLYFIRE, 12 * IN_MILLISECONDS);
+                    break;
+                case EVENT_HOLYWRATH:
+                    if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0, 80, true))
+                        DoCast(target, SPELL_HOLYWRATH);
+                    events.ScheduleEvent(EVENT_HOLYWRATH, urand(15, 25) * IN_MILLISECONDS);
+                    break;
+                case EVENT_HOLYGROUND:
+                    DoCast(me, SPELL_HOLYGROUND, true);
+                    events.ScheduleEvent(EVENT_HOLYGROUND, 3 * IN_MILLISECONDS);
+                    break;
+                case EVENT_ENRAGE:
+                    DoCast(me, SPELL_BERSERK, true);
+                    break;
+                default:
+                    break;
                 }
             }
 

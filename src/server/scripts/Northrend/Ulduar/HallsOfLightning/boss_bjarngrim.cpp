@@ -29,63 +29,63 @@ EndScriptData */
 
 enum Yells
 {
-    SAY_AGGRO                               = 0,
-    SAY_DEFENSIVE_STANCE                    = 1,
-    SAY_BATTLE_STANCE                       = 2,
-    SAY_BERSEKER_STANCE                     = 3,
-    SAY_SLAY                                = 4,
-    SAY_DEATH                               = 5,
-    EMOTE_DEFENSIVE_STANCE                  = 6,
-    EMOTE_BATTLE_STANCE                     = 7,
-    EMOTE_BERSEKER_STANCE                   = 8
+    SAY_AGGRO = 0,
+    SAY_DEFENSIVE_STANCE = 1,
+    SAY_BATTLE_STANCE = 2,
+    SAY_BERSEKER_STANCE = 3,
+    SAY_SLAY = 4,
+    SAY_DEATH = 5,
+    EMOTE_DEFENSIVE_STANCE = 6,
+    EMOTE_BATTLE_STANCE = 7,
+    EMOTE_BERSEKER_STANCE = 8
 };
 
 enum Spells
 {
-    SPELL_DEFENSIVE_STANCE                  = 53790,
+    SPELL_DEFENSIVE_STANCE = 53790,
     //SPELL_DEFENSIVE_AURA                    = 41105,
-    SPELL_SPELL_REFLECTION                  = 36096,
-    SPELL_PUMMEL                            = 12555,
-    SPELL_KNOCK_AWAY                        = 52029,
-    SPELL_IRONFORM                          = 52022,
+    SPELL_SPELL_REFLECTION = 36096,
+    SPELL_PUMMEL = 12555,
+    SPELL_KNOCK_AWAY = 52029,
+    SPELL_IRONFORM = 52022,
 
-    SPELL_BERSEKER_STANCE                   = 53791,
+    SPELL_BERSEKER_STANCE = 53791,
     //SPELL_BERSEKER_AURA                     = 41107,
-    SPELL_INTERCEPT                         = 58769,
-    SPELL_WHIRLWIND                         = 52027,
-    SPELL_CLEAVE                            = 15284,
+    SPELL_INTERCEPT = 58769,
+    SPELL_WHIRLWIND = 52027,
+    SPELL_CLEAVE = 15284,
 
-    SPELL_BATTLE_STANCE                     = 53792,
+    SPELL_BATTLE_STANCE = 53792,
     //SPELL_BATTLE_AURA                       = 41106,
-    SPELL_MORTAL_STRIKE                     = 16856,
-    SPELL_SLAM                              = 52026,
+    SPELL_MORTAL_STRIKE = 16856,
+    SPELL_SLAM = 52026,
 
     //OTHER SPELLS
     //SPELL_CHARGE_UP                         = 52098,      // only used when starting walk from one platform to the other
-    SPELL_TEMPORARY_ELECTRICAL_CHARGE       = 52092,      // triggered part of above
+    SPELL_TEMPORARY_ELECTRICAL_CHARGE = 52092,      // triggered part of above
 
-    SPELL_ARC_WELD                          = 59085,
-    SPELL_RENEW_STEEL_N                     = 52774,
-    SPELL_RENEW_STEEL_H                     = 59160
+    SPELL_ARC_WELD = 59085,
+    SPELL_RENEW_STEEL_N = 52774,
+    SPELL_RENEW_STEEL_H = 59160
 };
 
 enum Creatures
 {
-    NPC_STORMFORGED_LIEUTENANT              = 29240
+    NPC_STORMFORGED_LIEUTENANT = 29240
 };
 
 enum Equips
 {
-    EQUIP_SWORD                             = 37871,
-    EQUIP_SHIELD                            = 35642,
-    EQUIP_MACE                              = 43623
+    EQUIP_SWORD = 37871,
+    EQUIP_SHIELD = 35642,
+    EQUIP_MACE = 43623
 };
 
 enum Stanges
 {
-    STANCE_DEFENSIVE                        = 0,
-    STANCE_BERSERKER                        = 1,
-    STANCE_BATTLE                           = 2
+    STANCE_DEFENSIVE = 0,
+    STANCE_BERSERKER = 1,
+    STANCE_BATTLE = 2
 };
 
 /*######
@@ -162,8 +162,8 @@ public:
         void Reset() override
         {
             if (canBuff)
-                if (!me->HasAura(SPELL_TEMPORARY_ELECTRICAL_CHARGE))
-                    me->AddAura(SPELL_TEMPORARY_ELECTRICAL_CHARGE, me);
+            if (!me->HasAura(SPELL_TEMPORARY_ELECTRICAL_CHARGE))
+                me->AddAura(SPELL_TEMPORARY_ELECTRICAL_CHARGE, me);
 
             Initialize();
 
@@ -171,8 +171,8 @@ public:
             {
                 // Something isn't right here - m_auiStormforgedLieutenantGUID is never assinged to
                 if (Creature* pStormforgedLieutenant = ObjectAccessor::GetCreature(*me, m_auiStormforgedLieutenantGUID[i]))
-                    if (!pStormforgedLieutenant->IsAlive())
-                        pStormforgedLieutenant->Respawn();
+                if (!pStormforgedLieutenant->IsAlive())
+                    pStormforgedLieutenant->Respawn();
             }
 
             if (m_uiStance != STANCE_DEFENSIVE)
@@ -224,15 +224,15 @@ public:
         {
             switch (uiStance)
             {
-                case STANCE_DEFENSIVE:
-                    me->RemoveAurasDueToSpell(SPELL_DEFENSIVE_STANCE);
-                    break;
-                case STANCE_BERSERKER:
-                    me->RemoveAurasDueToSpell(SPELL_BERSEKER_STANCE);
-                    break;
-                case STANCE_BATTLE:
-                    me->RemoveAurasDueToSpell(SPELL_BATTLE_STANCE);
-                    break;
+            case STANCE_DEFENSIVE:
+                me->RemoveAurasDueToSpell(SPELL_DEFENSIVE_STANCE);
+                break;
+            case STANCE_BERSERKER:
+                me->RemoveAurasDueToSpell(SPELL_BERSEKER_STANCE);
+                break;
+            case STANCE_BATTLE:
+                me->RemoveAurasDueToSpell(SPELL_BATTLE_STANCE);
+                break;
             }
         }
 
@@ -260,24 +260,24 @@ public:
 
                 switch (m_uiStance)
                 {
-                    case STANCE_DEFENSIVE:
-                        Talk(SAY_DEFENSIVE_STANCE);
-                        Talk(EMOTE_DEFENSIVE_STANCE);
-                        DoCast(me, SPELL_DEFENSIVE_STANCE);
-                        SetEquipmentSlots(false, EQUIP_SWORD, EQUIP_SHIELD, EQUIP_NO_CHANGE);
-                        break;
-                    case STANCE_BERSERKER:
-                        Talk(SAY_BERSEKER_STANCE);
-                        Talk(EMOTE_BERSEKER_STANCE);
-                        DoCast(me, SPELL_BERSEKER_STANCE);
-                        SetEquipmentSlots(false, EQUIP_SWORD, EQUIP_SWORD, EQUIP_NO_CHANGE);
-                        break;
-                    case STANCE_BATTLE:
-                        Talk(SAY_BATTLE_STANCE);
-                        Talk(EMOTE_BATTLE_STANCE);
-                        DoCast(me, SPELL_BATTLE_STANCE);
-                        SetEquipmentSlots(false, EQUIP_MACE, EQUIP_UNEQUIP, EQUIP_NO_CHANGE);
-                        break;
+                case STANCE_DEFENSIVE:
+                    Talk(SAY_DEFENSIVE_STANCE);
+                    Talk(EMOTE_DEFENSIVE_STANCE);
+                    DoCast(me, SPELL_DEFENSIVE_STANCE);
+                    SetEquipmentSlots(false, EQUIP_SWORD, EQUIP_SHIELD, EQUIP_NO_CHANGE);
+                    break;
+                case STANCE_BERSERKER:
+                    Talk(SAY_BERSEKER_STANCE);
+                    Talk(EMOTE_BERSEKER_STANCE);
+                    DoCast(me, SPELL_BERSEKER_STANCE);
+                    SetEquipmentSlots(false, EQUIP_SWORD, EQUIP_SWORD, EQUIP_NO_CHANGE);
+                    break;
+                case STANCE_BATTLE:
+                    Talk(SAY_BATTLE_STANCE);
+                    Talk(EMOTE_BATTLE_STANCE);
+                    DoCast(me, SPELL_BATTLE_STANCE);
+                    SetEquipmentSlots(false, EQUIP_MACE, EQUIP_UNEQUIP, EQUIP_NO_CHANGE);
+                    break;
                 }
 
                 m_uiChangeStance_Timer = urand(20000, 25000);
@@ -288,91 +288,91 @@ public:
 
             switch (m_uiStance)
             {
-                case STANCE_DEFENSIVE:
-                {
-                    if (m_uiReflection_Timer <= uiDiff)
-                    {
-                        DoCast(me, SPELL_SPELL_REFLECTION);
-                        m_uiReflection_Timer = urand(8000, 9000);
-                    }
-                    else
-                        m_uiReflection_Timer -= uiDiff;
+            case STANCE_DEFENSIVE:
+            {
+                                     if (m_uiReflection_Timer <= uiDiff)
+                                     {
+                                         DoCast(me, SPELL_SPELL_REFLECTION);
+                                         m_uiReflection_Timer = urand(8000, 9000);
+                                     }
+                                     else
+                                         m_uiReflection_Timer -= uiDiff;
 
-                    if (m_uiKnockAway_Timer <= uiDiff)
-                    {
-                        DoCast(me, SPELL_KNOCK_AWAY);
-                        m_uiKnockAway_Timer = urand(20000, 21000);
-                    }
-                    else
-                        m_uiKnockAway_Timer -= uiDiff;
+                                     if (m_uiKnockAway_Timer <= uiDiff)
+                                     {
+                                         DoCast(me, SPELL_KNOCK_AWAY);
+                                         m_uiKnockAway_Timer = urand(20000, 21000);
+                                     }
+                                     else
+                                         m_uiKnockAway_Timer -= uiDiff;
 
-                    if (m_uiPummel_Timer <= uiDiff)
-                    {
-                        DoCastVictim(SPELL_PUMMEL);
-                        m_uiPummel_Timer = urand(10000, 11000);
-                    }
-                    else
-                        m_uiPummel_Timer -= uiDiff;
+                                     if (m_uiPummel_Timer <= uiDiff)
+                                     {
+                                         DoCastVictim(SPELL_PUMMEL);
+                                         m_uiPummel_Timer = urand(10000, 11000);
+                                     }
+                                     else
+                                         m_uiPummel_Timer -= uiDiff;
 
-                    if (m_uiIronform_Timer <= uiDiff)
-                    {
-                        DoCast(me, SPELL_IRONFORM);
-                        m_uiIronform_Timer = urand(25000, 26000);
-                    }
-                    else
-                        m_uiIronform_Timer -= uiDiff;
+                                     if (m_uiIronform_Timer <= uiDiff)
+                                     {
+                                         DoCast(me, SPELL_IRONFORM);
+                                         m_uiIronform_Timer = urand(25000, 26000);
+                                     }
+                                     else
+                                         m_uiIronform_Timer -= uiDiff;
 
-                    break;
-                }
-                case STANCE_BERSERKER:
-                {
-                    if (m_uiIntercept_Timer <= uiDiff)
-                    {
-                        //not much point is this, better random target and more often?
-                        DoCastVictim(SPELL_INTERCEPT);
-                        m_uiIntercept_Timer = urand(45000, 46000);
-                    }
-                    else
-                        m_uiIntercept_Timer -= uiDiff;
+                                     break;
+            }
+            case STANCE_BERSERKER:
+            {
+                                     if (m_uiIntercept_Timer <= uiDiff)
+                                     {
+                                         //not much point is this, better random target and more often?
+                                         DoCastVictim(SPELL_INTERCEPT);
+                                         m_uiIntercept_Timer = urand(45000, 46000);
+                                     }
+                                     else
+                                         m_uiIntercept_Timer -= uiDiff;
 
-                    if (m_uiWhirlwind_Timer <= uiDiff)
-                    {
-                        DoCast(me, SPELL_WHIRLWIND);
-                        m_uiWhirlwind_Timer = urand(10000, 11000);
-                    }
-                    else
-                        m_uiWhirlwind_Timer -= uiDiff;
+                                     if (m_uiWhirlwind_Timer <= uiDiff)
+                                     {
+                                         DoCast(me, SPELL_WHIRLWIND);
+                                         m_uiWhirlwind_Timer = urand(10000, 11000);
+                                     }
+                                     else
+                                         m_uiWhirlwind_Timer -= uiDiff;
 
-                    if (m_uiCleave_Timer <= uiDiff)
-                    {
-                        DoCastVictim(SPELL_CLEAVE);
-                        m_uiCleave_Timer = urand(8000, 9000);
-                    }
-                    else
-                        m_uiCleave_Timer -= uiDiff;
+                                     if (m_uiCleave_Timer <= uiDiff)
+                                     {
+                                         DoCastVictim(SPELL_CLEAVE);
+                                         m_uiCleave_Timer = urand(8000, 9000);
+                                     }
+                                     else
+                                         m_uiCleave_Timer -= uiDiff;
 
-                    break;
-                }
-                case STANCE_BATTLE:
-                {
-                    if (m_uiMortalStrike_Timer <= uiDiff)
-                    {
-                        DoCastVictim(SPELL_MORTAL_STRIKE);
-                        m_uiMortalStrike_Timer = urand(20000, 21000);
-                    }
-                    else
-                        m_uiMortalStrike_Timer -= uiDiff;
+                                     break;
+            }
+            case STANCE_BATTLE:
+            {
+                                  if (m_uiMortalStrike_Timer <= uiDiff)
+                                  {
+                                      DoCastVictim(SPELL_MORTAL_STRIKE);
+                                      m_uiMortalStrike_Timer = urand(20000, 21000);
+                                  }
+                                  else
+                                      m_uiMortalStrike_Timer -= uiDiff;
 
-                    if (m_uiSlam_Timer <= uiDiff)
-                    {
-                        DoCastVictim(SPELL_SLAM);
-                        m_uiSlam_Timer = urand(15000, 16000);
-                    }
-                    else
-                        m_uiSlam_Timer -= uiDiff;
+                                  if (m_uiSlam_Timer <= uiDiff)
+                                  {
+                                      DoCastVictim(SPELL_SLAM);
+                                      m_uiSlam_Timer = urand(15000, 16000);
+                                  }
+                                  else
+                                      m_uiSlam_Timer -= uiDiff;
 
-                    break;
-                }
+                                  break;
+            }
             }
 
             DoMeleeAttackIfReady();

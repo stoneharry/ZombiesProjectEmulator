@@ -40,13 +40,13 @@ EndContentData */
 ######*/
 enum Entries
 {
-    NPC_APOTHECARY_HANES         = 23784,
-    FACTION_ESCORTEE_A           = 774,
-    FACTION_ESCORTEE_H           = 775,
-    NPC_HANES_FIRE_TRIGGER       = 23968,
-    QUEST_TRAIL_OF_FIRE          = 11241,
+    NPC_APOTHECARY_HANES = 23784,
+    FACTION_ESCORTEE_A = 774,
+    FACTION_ESCORTEE_H = 775,
+    NPC_HANES_FIRE_TRIGGER = 23968,
+    QUEST_TRAIL_OF_FIRE = 11241,
     SPELL_COSMETIC_LOW_POLY_FIRE = 56274,
-    SPELL_HEALING_POTION         = 17534
+    SPELL_HEALING_POTION = 17534
 };
 
 class npc_apothecary_hanes : public CreatureScript
@@ -60,12 +60,12 @@ public:
         {
             switch (player->GetTeam())
             {
-                case ALLIANCE:
-                    creature->setFaction(FACTION_ESCORTEE_A);
-                    break;
-                case HORDE:
-                    creature->setFaction(FACTION_ESCORTEE_H);
-                    break;
+            case ALLIANCE:
+                creature->setFaction(FACTION_ESCORTEE_A);
+                break;
+            case HORDE:
+                creature->setFaction(FACTION_ESCORTEE_H);
+                break;
             }
             ENSURE_AI(npc_escortAI, (creature->AI()))->Start(true, false, player->GetGUID());
         }
@@ -106,7 +106,8 @@ public:
                 {
                     DoCast(me, SPELL_HEALING_POTION, true);
                     PotTimer = 10000;
-                } else PotTimer -= diff;
+                }
+                else PotTimer -= diff;
             }
             if (GetAttack() && UpdateVictim())
                 DoMeleeAttackIfReady();
@@ -120,44 +121,44 @@ public:
 
             switch (waypointId)
             {
-                case 1:
-                    me->SetReactState(REACT_AGGRESSIVE);
-                    SetRun(true);
-                    break;
-                case 23:
-                    player->GroupEventHappens(QUEST_TRAIL_OF_FIRE, me);
-                    me->DespawnOrUnsummon();
-                    break;
-                case 5:
-                    if (Unit* Trigger = me->FindNearestCreature(NPC_HANES_FIRE_TRIGGER, 10.0f))
-                        Trigger->CastSpell(Trigger, SPELL_COSMETIC_LOW_POLY_FIRE, false);
-                    SetRun(false);
-                    break;
-                case 6:
-                    if (Unit* Trigger = me->FindNearestCreature(NPC_HANES_FIRE_TRIGGER, 10.0f))
-                        Trigger->CastSpell(Trigger, SPELL_COSMETIC_LOW_POLY_FIRE, false);
-                    SetRun(true);
-                    break;
-                case 8:
-                    if (Unit* Trigger = me->FindNearestCreature(NPC_HANES_FIRE_TRIGGER, 10.0f))
-                        Trigger->CastSpell(Trigger, SPELL_COSMETIC_LOW_POLY_FIRE, false);
-                    SetRun(false);
-                    break;
-                case 9:
-                    if (Unit* Trigger = me->FindNearestCreature(NPC_HANES_FIRE_TRIGGER, 10.0f))
-                        Trigger->CastSpell(Trigger, SPELL_COSMETIC_LOW_POLY_FIRE, false);
-                    break;
-                case 10:
-                    SetRun(true);
-                    break;
-                case 13:
-                    SetRun(false);
-                    break;
-                case 14:
-                    if (Unit* Trigger = me->FindNearestCreature(NPC_HANES_FIRE_TRIGGER, 10.0f))
-                        Trigger->CastSpell(Trigger, SPELL_COSMETIC_LOW_POLY_FIRE, false);
-                    SetRun(true);
-                    break;
+            case 1:
+                me->SetReactState(REACT_AGGRESSIVE);
+                SetRun(true);
+                break;
+            case 23:
+                player->GroupEventHappens(QUEST_TRAIL_OF_FIRE, me);
+                me->DespawnOrUnsummon();
+                break;
+            case 5:
+                if (Unit* Trigger = me->FindNearestCreature(NPC_HANES_FIRE_TRIGGER, 10.0f))
+                    Trigger->CastSpell(Trigger, SPELL_COSMETIC_LOW_POLY_FIRE, false);
+                SetRun(false);
+                break;
+            case 6:
+                if (Unit* Trigger = me->FindNearestCreature(NPC_HANES_FIRE_TRIGGER, 10.0f))
+                    Trigger->CastSpell(Trigger, SPELL_COSMETIC_LOW_POLY_FIRE, false);
+                SetRun(true);
+                break;
+            case 8:
+                if (Unit* Trigger = me->FindNearestCreature(NPC_HANES_FIRE_TRIGGER, 10.0f))
+                    Trigger->CastSpell(Trigger, SPELL_COSMETIC_LOW_POLY_FIRE, false);
+                SetRun(false);
+                break;
+            case 9:
+                if (Unit* Trigger = me->FindNearestCreature(NPC_HANES_FIRE_TRIGGER, 10.0f))
+                    Trigger->CastSpell(Trigger, SPELL_COSMETIC_LOW_POLY_FIRE, false);
+                break;
+            case 10:
+                SetRun(true);
+                break;
+            case 13:
+                SetRun(false);
+                break;
+            case 14:
+                if (Unit* Trigger = me->FindNearestCreature(NPC_HANES_FIRE_TRIGGER, 10.0f))
+                    Trigger->CastSpell(Trigger, SPELL_COSMETIC_LOW_POLY_FIRE, false);
+                SetRun(true);
+                break;
             }
         }
     };
@@ -174,7 +175,7 @@ public:
 
 enum Plaguehound
 {
-    QUEST_SNIFF_OUT_ENEMY        = 11253
+    QUEST_SNIFF_OUT_ENEMY = 11253
 };
 
 class npc_plaguehound_tracker : public CreatureScript
@@ -191,9 +192,9 @@ public:
             ObjectGuid summonerGUID;
 
             if (me->IsSummon())
-                if (Unit* summoner = me->ToTempSummon()->GetSummoner())
-                    if (summoner->GetTypeId() == TYPEID_PLAYER)
-                        summonerGUID = summoner->GetGUID();
+            if (Unit* summoner = me->ToTempSummon()->GetSummoner())
+            if (summoner->GetTypeId() == TYPEID_PLAYER)
+                summonerGUID = summoner->GetGUID();
 
             if (!summonerGUID)
                 return;
@@ -247,24 +248,24 @@ public:
 
         if (player->GetQuestStatus(QUEST_REPORTS_FROM_THE_FIELD) == QUEST_STATUS_INCOMPLETE)
             switch (creature->GetEntry())
-            {
-                case NPC_RAZAEL:
-                    if (!player->GetReqKillOrCastCurrentCount(QUEST_REPORTS_FROM_THE_FIELD, NPC_RAZAEL))
-                    {
-                        player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_RAZAEL_REPORT, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
-                        player->SEND_GOSSIP_MENU(GOSSIP_TEXTID_RAZAEL1, creature->GetGUID());
-                        return true;
-                    }
+        {
+            case NPC_RAZAEL:
+                if (!player->GetReqKillOrCastCurrentCount(QUEST_REPORTS_FROM_THE_FIELD, NPC_RAZAEL))
+                {
+                    player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_RAZAEL_REPORT, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
+                    player->SEND_GOSSIP_MENU(GOSSIP_TEXTID_RAZAEL1, creature->GetGUID());
+                    return true;
+                }
                 break;
-                case NPC_LYANA:
-                    if (!player->GetReqKillOrCastCurrentCount(QUEST_REPORTS_FROM_THE_FIELD, NPC_LYANA))
-                    {
-                        player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_LYANA_REPORT, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 2);
-                        player->SEND_GOSSIP_MENU(GOSSIP_TEXTID_LYANA1, creature->GetGUID());
-                        return true;
-                    }
+            case NPC_LYANA:
+                if (!player->GetReqKillOrCastCurrentCount(QUEST_REPORTS_FROM_THE_FIELD, NPC_LYANA))
+                {
+                    player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_LYANA_REPORT, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 2);
+                    player->SEND_GOSSIP_MENU(GOSSIP_TEXTID_LYANA1, creature->GetGUID());
+                    return true;
+                }
                 break;
-            }
+        }
         player->SEND_GOSSIP_MENU(player->GetGossipTextId(creature), creature->GetGUID());
         return true;
     }
@@ -274,14 +275,14 @@ public:
         player->PlayerTalkClass->ClearMenus();
         switch (action)
         {
-            case GOSSIP_ACTION_INFO_DEF + 1:
-                player->SEND_GOSSIP_MENU(GOSSIP_TEXTID_RAZAEL2, creature->GetGUID());
-                player->TalkedToCreature(NPC_RAZAEL, creature->GetGUID());
-                break;
-            case GOSSIP_ACTION_INFO_DEF + 2:
-                player->SEND_GOSSIP_MENU(GOSSIP_TEXTID_LYANA2, creature->GetGUID());
-                player->TalkedToCreature(NPC_LYANA, creature->GetGUID());
-                break;
+        case GOSSIP_ACTION_INFO_DEF + 1:
+            player->SEND_GOSSIP_MENU(GOSSIP_TEXTID_RAZAEL2, creature->GetGUID());
+            player->TalkedToCreature(NPC_RAZAEL, creature->GetGUID());
+            break;
+        case GOSSIP_ACTION_INFO_DEF + 2:
+            player->SEND_GOSSIP_MENU(GOSSIP_TEXTID_LYANA2, creature->GetGUID());
+            player->TalkedToCreature(NPC_LYANA, creature->GetGUID());
+            break;
         }
         return true;
     }
@@ -293,20 +294,20 @@ public:
 
 enum Daegarnn
 {
-    QUEST_DEFEAT_AT_RING            = 11300,
+    QUEST_DEFEAT_AT_RING = 11300,
 
-    NPC_FIRJUS                      = 24213,
-    NPC_JLARBORN                    = 24215,
-    NPC_YOROS                       = 24214,
-    NPC_OLUF                        = 23931,
+    NPC_FIRJUS = 24213,
+    NPC_JLARBORN = 24215,
+    NPC_YOROS = 24214,
+    NPC_OLUF = 23931,
 
-    NPC_PRISONER_1                  = 24253,  // looks the same but has different abilities
-    NPC_PRISONER_2                  = 24254,
-    NPC_PRISONER_3                  = 24255,
+    NPC_PRISONER_1 = 24253,  // looks the same but has different abilities
+    NPC_PRISONER_2 = 24254,
+    NPC_PRISONER_3 = 24255,
 };
 
-static float afSummon[] = {838.81f, -4678.06f, -94.182f};
-static float afCenter[] = {801.88f, -4721.87f, -96.143f};
+static float afSummon[] = { 838.81f, -4678.06f, -94.182f };
+static float afCenter[] = { 801.88f, -4721.87f, -96.143f };
 
 class npc_daegarn : public CreatureScript
 {
@@ -374,7 +375,7 @@ public:
 
         void SummonGladiator(uint32 uiEntry)
         {
-            me->SummonCreature(uiEntry, afSummon[0], afSummon[1], afSummon[2], 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 30*IN_MILLISECONDS);
+            me->SummonCreature(uiEntry, afSummon[0], afSummon[1], afSummon[2], 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 30 * IN_MILLISECONDS);
         }
 
         void SummonedCreatureDies(Creature* summoned, Unit* /*killer*/) override
@@ -384,10 +385,10 @@ public:
             // will eventually reset the event if something goes wrong
             switch (summoned->GetEntry())
             {
-                case NPC_FIRJUS:    uiEntry = NPC_JLARBORN; break;
-                case NPC_JLARBORN:  uiEntry = NPC_YOROS;    break;
-                case NPC_YOROS:     uiEntry = NPC_OLUF;     break;
-                case NPC_OLUF:      Reset();                return;
+            case NPC_FIRJUS:    uiEntry = NPC_JLARBORN; break;
+            case NPC_JLARBORN:  uiEntry = NPC_YOROS;    break;
+            case NPC_YOROS:     uiEntry = NPC_OLUF;     break;
+            case NPC_OLUF:      Reset();                return;
             }
 
             SummonGladiator(uiEntry);
@@ -402,7 +403,7 @@ public:
 
 enum MindlessAbomination
 {
-    EVENT_CHECK_CHARMED                = 1
+    EVENT_CHECK_CHARMED = 1
 };
 
 class npc_mindless_abomination : public CreatureScript
@@ -427,12 +428,12 @@ public:
             {
                 switch (eventId)
                 {
-                    case EVENT_CHECK_CHARMED:
-                        if (!me->IsCharmedOwnedByPlayerOrPlayer())
-                            me->DespawnOrUnsummon();
-                        else
-                            events.ScheduleEvent(EVENT_CHECK_CHARMED, 1000);
-                        break;
+                case EVENT_CHECK_CHARMED:
+                    if (!me->IsCharmedOwnedByPlayerOrPlayer())
+                        me->DespawnOrUnsummon();
+                    else
+                        events.ScheduleEvent(EVENT_CHECK_CHARMED, 1000);
+                    break;
                 }
             }
         }
@@ -455,44 +456,44 @@ class spell_mindless_abomination_explosion_fx_master : public SpellScriptLoader
         SPELL_COSMETIC_BLOOD_EXPLOSION_GREEN_LARGE = 43401
     };
 
-    public:
-        spell_mindless_abomination_explosion_fx_master() : SpellScriptLoader("spell_mindless_abomination_explosion_fx_master") { }
+public:
+    spell_mindless_abomination_explosion_fx_master() : SpellScriptLoader("spell_mindless_abomination_explosion_fx_master") { }
 
-        class spell_mindless_abomination_explosion_fx_master_SpellScript : public SpellScript
+    class spell_mindless_abomination_explosion_fx_master_SpellScript : public SpellScript
+    {
+        PrepareSpellScript(spell_mindless_abomination_explosion_fx_master_SpellScript);
+
+        bool Validate(SpellInfo const* /*spellInfo*/) override
         {
-            PrepareSpellScript(spell_mindless_abomination_explosion_fx_master_SpellScript);
-
-            bool Validate(SpellInfo const* /*spellInfo*/) override
-            {
-                if (!sSpellMgr->GetSpellInfo(SPELL_RANDOM_CIRCUMFERENCE_POINT_POISON) || !sSpellMgr->GetSpellInfo(SPELL_COSMETIC_BLOOD_EXPLOSION_GREEN_LARGE))
-                    return false;
-                return true;
-            }
-
-            void HandleScript(SpellEffIndex /*eff*/)
-            {
-                Creature* caster = GetCaster()->ToCreature();
-                if (!caster)
-                    return;
-
-                caster->CastSpell(caster, SPELL_COSMETIC_BLOOD_EXPLOSION_GREEN_LARGE);
-
-                for (uint8 i = 0; i < 10; ++i)
-                    caster->CastSpell(caster, SPELL_RANDOM_CIRCUMFERENCE_POINT_POISON);
-
-                caster->DespawnOrUnsummon(4000);
-            }
-
-            void Register() override
-            {
-                OnEffectHitTarget += SpellEffectFn(spell_mindless_abomination_explosion_fx_master_SpellScript::HandleScript, EFFECT_0, SPELL_EFFECT_SCRIPT_EFFECT);
-            }
-        };
-
-        SpellScript* GetSpellScript() const override
-        {
-            return new spell_mindless_abomination_explosion_fx_master_SpellScript();
+            if (!sSpellMgr->GetSpellInfo(SPELL_RANDOM_CIRCUMFERENCE_POINT_POISON) || !sSpellMgr->GetSpellInfo(SPELL_COSMETIC_BLOOD_EXPLOSION_GREEN_LARGE))
+                return false;
+            return true;
         }
+
+        void HandleScript(SpellEffIndex /*eff*/)
+        {
+            Creature* caster = GetCaster()->ToCreature();
+            if (!caster)
+                return;
+
+            caster->CastSpell(caster, SPELL_COSMETIC_BLOOD_EXPLOSION_GREEN_LARGE);
+
+            for (uint8 i = 0; i < 10; ++i)
+                caster->CastSpell(caster, SPELL_RANDOM_CIRCUMFERENCE_POINT_POISON);
+
+            caster->DespawnOrUnsummon(4000);
+        }
+
+        void Register() override
+        {
+            OnEffectHitTarget += SpellEffectFn(spell_mindless_abomination_explosion_fx_master_SpellScript::HandleScript, EFFECT_0, SPELL_EFFECT_SCRIPT_EFFECT);
+        }
+    };
+
+    SpellScript* GetSpellScript() const override
+    {
+        return new spell_mindless_abomination_explosion_fx_master_SpellScript();
+    }
 };
 
 void AddSC_howling_fjord()
@@ -503,4 +504,4 @@ void AddSC_howling_fjord()
     new npc_daegarn();
     new npc_mindless_abomination();
     new spell_mindless_abomination_explosion_fx_master();
- }
+}

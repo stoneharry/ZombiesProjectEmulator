@@ -1424,6 +1424,6 @@ void AddCustomScripts()
 #ifdef SCRIPTS
     /* This is where custom scripts should be added. */
 
-	AddSC_GOMove_commandscript();
+    AddSC_GOMove_commandscript();
 #endif
 }

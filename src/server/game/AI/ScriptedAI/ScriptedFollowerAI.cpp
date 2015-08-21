@@ -32,13 +32,13 @@ const float MAX_PLAYER_DISTANCE = 100.0f;
 
 enum Points
 {
-    POINT_COMBAT_START  = 0xFFFFFF
+    POINT_COMBAT_START = 0xFFFFFF
 };
 
 FollowerAI::FollowerAI(Creature* creature) : ScriptedAI(creature),
-    m_uiUpdateFollowTimer(2500),
-    m_uiFollowState(STATE_FOLLOW_NONE),
-    m_pQuestForFollow(NULL)
+m_uiUpdateFollowTimer(2500),
+m_uiFollowState(STATE_FOLLOW_NONE),
+m_pQuestForFollow(NULL)
 { }
 
 void FollowerAI::AttackStart(Unit* who)

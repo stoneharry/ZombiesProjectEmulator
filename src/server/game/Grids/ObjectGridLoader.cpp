@@ -60,20 +60,20 @@ void ObjectGridEvacuator::Visit(GameObjectMapType &m)
 /// @todo to implement npc on transport, also need to load npcs at grid loading
 class ObjectWorldLoader
 {
-    public:
-        explicit ObjectWorldLoader(ObjectGridLoader& gloader)
-            : i_cell(gloader.i_cell), i_map(gloader.i_map), i_corpses (0)
-            { }
+public:
+    explicit ObjectWorldLoader(ObjectGridLoader& gloader)
+        : i_cell(gloader.i_cell), i_map(gloader.i_map), i_corpses(0)
+    { }
 
-        void Visit(CorpseMapType &m);
+    void Visit(CorpseMapType &m);
 
-        template<class T> void Visit(GridRefManager<T>&) { }
+    template<class T> void Visit(GridRefManager<T>&) { }
 
-    private:
-        Cell i_cell;
-        Map* i_map;
-    public:
-        uint32 i_corpses;
+private:
+    Cell i_cell;
+    Map* i_map;
+public:
+    uint32 i_corpses;
 };
 
 template<class T> void ObjectGridLoader::SetObjectCell(T* /*obj*/, CellCoord const& /*cellCoord*/) { }
@@ -187,10 +187,10 @@ void ObjectGridLoader::LoadN(void)
 {
     i_gameObjects = 0; i_creatures = 0; i_corpses = 0;
     i_cell.data.Part.cell_y = 0;
-    for (unsigned int x=0; x < MAX_NUMBER_OF_CELLS; ++x)
+    for (unsigned int x = 0; x < MAX_NUMBER_OF_CELLS; ++x)
     {
         i_cell.data.Part.cell_x = x;
-        for (unsigned int y=0; y < MAX_NUMBER_OF_CELLS; ++y)
+        for (unsigned int y = 0; y < MAX_NUMBER_OF_CELLS; ++y)
         {
             i_cell.data.Part.cell_y = y;
 

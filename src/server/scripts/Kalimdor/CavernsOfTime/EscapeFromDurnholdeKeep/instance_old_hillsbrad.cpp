@@ -104,15 +104,15 @@ public:
         {
             switch (creature->GetEntry())
             {
-                case THRALL_ENTRY:
-                    ThrallGUID = creature->GetGUID();
-                    break;
-                case TARETHA_ENTRY:
-                    TarethaGUID = creature->GetGUID();
-                    break;
-                case EPOCH_ENTRY:
-                    EpochGUID = creature->GetGUID();
-                    break;
+            case THRALL_ENTRY:
+                ThrallGUID = creature->GetGUID();
+                break;
+            case TARETHA_ENTRY:
+                TarethaGUID = creature->GetGUID();
+                break;
+            case EPOCH_ENTRY:
+                EpochGUID = creature->GetGUID();
+                break;
             }
         }
 
@@ -128,74 +128,74 @@ public:
 
             switch (type)
             {
-                case TYPE_BARREL_DIVERSION:
-                {
-                    if (data == IN_PROGRESS)
-                    {
-                        if (mBarrelCount >= 5)
-                            return;
+            case TYPE_BARREL_DIVERSION:
+            {
+                                          if (data == IN_PROGRESS)
+                                          {
+                                              if (mBarrelCount >= 5)
+                                                  return;
 
-                        ++mBarrelCount;
-                        DoUpdateWorldState(WORLD_STATE_OH, mBarrelCount);
+                                              ++mBarrelCount;
+                                              DoUpdateWorldState(WORLD_STATE_OH, mBarrelCount);
 
-                        TC_LOG_DEBUG("scripts", "Instance Old Hillsbrad: go_barrel_old_hillsbrad count %u", mBarrelCount);
+                                              TC_LOG_DEBUG("scripts", "Instance Old Hillsbrad: go_barrel_old_hillsbrad count %u", mBarrelCount);
 
-                        m_auiEncounter[0] = IN_PROGRESS;
+                                              m_auiEncounter[0] = IN_PROGRESS;
 
-                        if (mBarrelCount == 5)
-                        {
-                            UpdateQuestCredit();
-                            player->SummonCreature(DRAKE_ENTRY, 2128.43f, 71.01f, 64.42f, 1.74f, TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, 1800000);
-                            m_auiEncounter[0] = DONE;
-                        }
-                    }
-                    break;
-                }
-                case TYPE_THRALL_EVENT:
-                {
-                    if (data == FAIL)
-                    {
-                        if (mThrallEventCount <= 20)
-                        {
-                            ++mThrallEventCount;
-                            m_auiEncounter[1] = NOT_STARTED;
-                            TC_LOG_DEBUG("scripts", "Instance Old Hillsbrad: Thrall event failed %u times. Resetting all sub-events.", mThrallEventCount);
-                            m_auiEncounter[2] = NOT_STARTED;
-                            m_auiEncounter[3] = NOT_STARTED;
-                            m_auiEncounter[4] = NOT_STARTED;
-                            m_auiEncounter[5] = NOT_STARTED;
-                        }
-                        else if (mThrallEventCount > 20)
-                        {
-                            m_auiEncounter[1] = data;
-                            m_auiEncounter[2] = data;
-                            m_auiEncounter[3] = data;
-                            m_auiEncounter[4] = data;
-                            m_auiEncounter[5] = data;
-                            TC_LOG_DEBUG("scripts", "Instance Old Hillsbrad: Thrall event failed %u times. Resetting all sub-events.", mThrallEventCount);
-                        }
-                    }
-                    else
-                        m_auiEncounter[1] = data;
-                    TC_LOG_DEBUG("scripts", "Instance Old Hillsbrad: Thrall escort event adjusted to data %u.", data);
-                    break;
-                }
-                case TYPE_THRALL_PART1:
-                    m_auiEncounter[2] = data;
-                    TC_LOG_DEBUG("scripts", "Instance Old Hillsbrad: Thrall event part I adjusted to data %u.", data);
-                    break;
-                case TYPE_THRALL_PART2:
-                    m_auiEncounter[3] = data;
-                    TC_LOG_DEBUG("scripts", "Instance Old Hillsbrad: Thrall event part II adjusted to data %u.", data);
-                    break;
-                case TYPE_THRALL_PART3:
-                    m_auiEncounter[4] = data;
-                    TC_LOG_DEBUG("scripts", "Instance Old Hillsbrad: Thrall event part III adjusted to data %u.", data);
-                    break;
-                case TYPE_THRALL_PART4:
-                    m_auiEncounter[5] = data;
-                     TC_LOG_DEBUG("scripts", "Instance Old Hillsbrad: Thrall event part IV adjusted to data %u.", data);
-                    break;
+                                              if (mBarrelCount == 5)
+                                              {
+                                                  UpdateQuestCredit();
+                                                  player->SummonCreature(DRAKE_ENTRY, 2128.43f, 71.01f, 64.42f, 1.74f, TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, 1800000);
+                                                  m_auiEncounter[0] = DONE;
+                                              }
+                                          }
+                                          break;
+            }
+            case TYPE_THRALL_EVENT:
+            {
+                                      if (data == FAIL)
+                                      {
+                                          if (mThrallEventCount <= 20)
+                                          {
+                                              ++mThrallEventCount;
+                                              m_auiEncounter[1] = NOT_STARTED;
+                                              TC_LOG_DEBUG("scripts", "Instance Old Hillsbrad: Thrall event failed %u times. Resetting all sub-events.", mThrallEventCount);
+                                              m_auiEncounter[2] = NOT_STARTED;
+                                              m_auiEncounter[3] = NOT_STARTED;
+                                              m_auiEncounter[4] = NOT_STARTED;
+                                              m_auiEncounter[5] = NOT_STARTED;
+                                          }
+                                          else if (mThrallEventCount > 20)
+                                          {
+                                              m_auiEncounter[1] = data;
+                                              m_auiEncounter[2] = data;
+                                              m_auiEncounter[3] = data;
+                                              m_auiEncounter[4] = data;
+                                              m_auiEncounter[5] = data;
+                                              TC_LOG_DEBUG("scripts", "Instance Old Hillsbrad: Thrall event failed %u times. Resetting all sub-events.", mThrallEventCount);
+                                          }
+                                      }
+                                      else
+                                          m_auiEncounter[1] = data;
+                                      TC_LOG_DEBUG("scripts", "Instance Old Hillsbrad: Thrall escort event adjusted to data %u.", data);
+                                      break;
+            }
+            case TYPE_THRALL_PART1:
+                m_auiEncounter[2] = data;
+                TC_LOG_DEBUG("scripts", "Instance Old Hillsbrad: Thrall event part I adjusted to data %u.", data);
+                break;
+            case TYPE_THRALL_PART2:
+                m_auiEncounter[3] = data;
+                TC_LOG_DEBUG("scripts", "Instance Old Hillsbrad: Thrall event part II adjusted to data %u.", data);
+                break;
+            case TYPE_THRALL_PART3:
+                m_auiEncounter[4] = data;
+                TC_LOG_DEBUG("scripts", "Instance Old Hillsbrad: Thrall event part III adjusted to data %u.", data);
+                break;
+            case TYPE_THRALL_PART4:
+                m_auiEncounter[5] = data;
+                TC_LOG_DEBUG("scripts", "Instance Old Hillsbrad: Thrall event part IV adjusted to data %u.", data);
+                break;
             }
         }
 
@@ -203,18 +203,18 @@ public:
         {
             switch (data)
             {
-                case TYPE_BARREL_DIVERSION:
-                    return m_auiEncounter[0];
-                case TYPE_THRALL_EVENT:
-                    return m_auiEncounter[1];
-                case TYPE_THRALL_PART1:
-                    return m_auiEncounter[2];
-                case TYPE_THRALL_PART2:
-                    return m_auiEncounter[3];
-                case TYPE_THRALL_PART3:
-                    return m_auiEncounter[4];
-                case TYPE_THRALL_PART4:
-                    return m_auiEncounter[5];
+            case TYPE_BARREL_DIVERSION:
+                return m_auiEncounter[0];
+            case TYPE_THRALL_EVENT:
+                return m_auiEncounter[1];
+            case TYPE_THRALL_PART1:
+                return m_auiEncounter[2];
+            case TYPE_THRALL_PART2:
+                return m_auiEncounter[3];
+            case TYPE_THRALL_PART3:
+                return m_auiEncounter[4];
+            case TYPE_THRALL_PART4:
+                return m_auiEncounter[5];
             }
             return 0;
         }
@@ -223,12 +223,12 @@ public:
         {
             switch (data)
             {
-                case DATA_THRALL:
-                    return ThrallGUID;
-                case DATA_TARETHA:
-                    return TarethaGUID;
-                case DATA_EPOCH:
-                    return EpochGUID;
+            case DATA_THRALL:
+                return ThrallGUID;
+            case DATA_TARETHA:
+                return TarethaGUID;
+            case DATA_EPOCH:
+                return EpochGUID;
             }
             return ObjectGuid::Empty;
         }

@@ -38,15 +38,15 @@ public:
         static ChatCommand eventCommandTable[] =
         {
             { "activelist", rbac::RBAC_PERM_COMMAND_EVENT_ACTIVELIST, true, &HandleEventActiveListCommand, "", NULL },
-            { "start",      rbac::RBAC_PERM_COMMAND_EVENT_START,      true, &HandleEventStartCommand,      "", NULL },
-            { "stop",       rbac::RBAC_PERM_COMMAND_EVENT_STOP,       true, &HandleEventStopCommand,       "", NULL },
-            { "",           rbac::RBAC_PERM_COMMAND_EVENT,            true, &HandleEventInfoCommand,       "", NULL },
-            { NULL,         0,                                 false, NULL,                          "", NULL }
+            { "start", rbac::RBAC_PERM_COMMAND_EVENT_START, true, &HandleEventStartCommand, "", NULL },
+            { "stop", rbac::RBAC_PERM_COMMAND_EVENT_STOP, true, &HandleEventStopCommand, "", NULL },
+            { "", rbac::RBAC_PERM_COMMAND_EVENT, true, &HandleEventInfoCommand, "", NULL },
+            { NULL, 0, false, NULL, "", NULL }
         };
         static ChatCommand commandTable[] =
         {
             { "event", rbac::RBAC_PERM_COMMAND_EVENT, false, NULL, "", eventCommandTable },
-            { NULL,    0,                       false, NULL, "", NULL }
+            { NULL, 0, false, NULL, "", NULL }
         };
         return commandTable;
     }
@@ -86,7 +86,7 @@ public:
             return false;
 
         // id or [name] Shift-click form |color|Hgameevent:id|h[name]|h|r
-        char* id =  handler->extractKeyFromLink((char*)args, "Hgameevent");
+        char* id = handler->extractKeyFromLink((char*)args, "Hgameevent");
         if (!id)
             return false;
 
@@ -135,7 +135,7 @@ public:
             return false;
 
         // id or [name] Shift-click form |color|Hgameevent:id|h[name]|h|r
-        char* id =  handler->extractKeyFromLink((char*)args, "Hgameevent");
+        char* id = handler->extractKeyFromLink((char*)args, "Hgameevent");
         if (!id)
             return false;
 
@@ -176,7 +176,7 @@ public:
             return false;
 
         // id or [name] Shift-click form |color|Hgameevent:id|h[name]|h|r
-        char* id =  handler->extractKeyFromLink((char*)args, "Hgameevent");
+        char* id = handler->extractKeyFromLink((char*)args, "Hgameevent");
         if (!id)
             return false;
 

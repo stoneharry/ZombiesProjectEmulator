@@ -21,26 +21,26 @@
 
 enum Spells
 {
-    SPELL_ARCANE_VACUUM                         = 58694,
-    SPELL_BLIZZARD                              = 58693,
-    H_SPELL_BLIZZARD                            = 59369,
-    SPELL_MANA_DESTRUCTION                      = 59374,
-    SPELL_TAIL_SWEEP                            = 58690,
-    H_SPELL_TAIL_SWEEP                          = 59283,
-    SPELL_UNCONTROLLABLE_ENERGY                 = 58688,
-    H_SPELL_UNCONTROLLABLE_ENERGY               = 59281,
-    SPELL_TRANSFORM                             = 58668
+    SPELL_ARCANE_VACUUM = 58694,
+    SPELL_BLIZZARD = 58693,
+    H_SPELL_BLIZZARD = 59369,
+    SPELL_MANA_DESTRUCTION = 59374,
+    SPELL_TAIL_SWEEP = 58690,
+    H_SPELL_TAIL_SWEEP = 59283,
+    SPELL_UNCONTROLLABLE_ENERGY = 58688,
+    H_SPELL_UNCONTROLLABLE_ENERGY = 59281,
+    SPELL_TRANSFORM = 58668
 };
 
 enum Yells
 {
-    SAY_AGGRO                                   = 0,
-    SAY_SLAY                                    = 1,
-    SAY_DEATH                                   = 2,
-    SAY_SPAWN                                   = 3,
-    SAY_DISRUPTION                              = 4,
-    SAY_BREATH_ATTACK                           = 5,
-    SAY_SPECIAL_ATTACK                          = 6
+    SAY_AGGRO = 0,
+    SAY_SLAY = 1,
+    SAY_DEATH = 2,
+    SAY_SPAWN = 3,
+    SAY_DISRUPTION = 4,
+    SAY_BREATH_ATTACK = 5,
+    SAY_SPECIAL_ATTACK = 6
 };
 
 class boss_cyanigosa : public CreatureScript
@@ -110,26 +110,30 @@ public:
             {
                 DoCast(SPELL_ARCANE_VACUUM);
                 uiArcaneVacuumTimer = 10000;
-            } else uiArcaneVacuumTimer -= diff;
+            }
+            else uiArcaneVacuumTimer -= diff;
 
             if (uiBlizzardTimer <= diff)
             {
                 if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
                     DoCast(target, SPELL_BLIZZARD);
                 uiBlizzardTimer = 15000;
-            } else uiBlizzardTimer -= diff;
+            }
+            else uiBlizzardTimer -= diff;
 
             if (uiTailSweepTimer <= diff)
             {
                 DoCast(SPELL_TAIL_SWEEP);
                 uiTailSweepTimer = 20000;
-            } else uiTailSweepTimer -= diff;
+            }
+            else uiTailSweepTimer -= diff;
 
             if (uiUncontrollableEnergyTimer <= diff)
             {
                 DoCastVictim(SPELL_UNCONTROLLABLE_ENERGY);
                 uiUncontrollableEnergyTimer = 25000;
-            } else uiUncontrollableEnergyTimer -= diff;
+            }
+            else uiUncontrollableEnergyTimer -= diff;
 
             if (IsHeroic())
             {
@@ -138,7 +142,8 @@ public:
                     if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
                         DoCast(target, SPELL_MANA_DESTRUCTION);
                     uiManaDestructionTimer = 30000;
-                } else uiManaDestructionTimer -= diff;
+                }
+                else uiManaDestructionTimer -= diff;
             }
 
             DoMeleeAttackIfReady();
@@ -164,25 +169,25 @@ public:
 
 class achievement_defenseless : public AchievementCriteriaScript
 {
-    public:
-        achievement_defenseless() : AchievementCriteriaScript("achievement_defenseless")
-        {
-        }
+public:
+    achievement_defenseless() : AchievementCriteriaScript("achievement_defenseless")
+    {
+    }
 
-        bool OnCheck(Player* /*player*/, Unit* target) override
-        {
-            if (!target)
-                return false;
+    bool OnCheck(Player* /*player*/, Unit* target) override
+    {
+        if (!target)
+            return false;
 
-            InstanceScript* instance = target->GetInstanceScript();
-            if (!instance)
-                return false;
+        InstanceScript* instance = target->GetInstanceScript();
+        if (!instance)
+            return false;
 
-            if (!instance->GetData(DATA_DEFENSELESS))
-                return false;
+        if (!instance->GetData(DATA_DEFENSELESS))
+            return false;
 
-            return true;
-        }
+        return true;
+    }
 };
 
 void AddSC_boss_cyanigosa()

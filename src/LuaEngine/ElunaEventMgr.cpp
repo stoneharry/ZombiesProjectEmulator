@@ -126,8 +126,8 @@ EventMgr::~EventMgr()
     {
         ReadGuard guard(GetLock());
         if (!processors.empty())
-            for (ProcessorSet::const_iterator it = processors.begin(); it != processors.end(); ++it) // loop processors
-                (*it)->RemoveEvents_internal();
+        for (ProcessorSet::const_iterator it = processors.begin(); it != processors.end(); ++it) // loop processors
+            (*it)->RemoveEvents_internal();
         globalProcessor->RemoveEvents_internal();
     }
     delete globalProcessor;
@@ -138,8 +138,8 @@ void EventMgr::SetStates(LuaEventState state)
 {
     ReadGuard guard(GetLock());
     if (!processors.empty())
-        for (ProcessorSet::const_iterator it = processors.begin(); it != processors.end(); ++it) // loop processors
-            (*it)->SetStates(state);
+    for (ProcessorSet::const_iterator it = processors.begin(); it != processors.end(); ++it) // loop processors
+        (*it)->SetStates(state);
     globalProcessor->SetStates(state);
 }
 
@@ -147,7 +147,7 @@ void EventMgr::SetState(int eventId, LuaEventState state)
 {
     ReadGuard guard(GetLock());
     if (!processors.empty())
-        for (ProcessorSet::const_iterator it = processors.begin(); it != processors.end(); ++it) // loop processors
-            (*it)->SetState(eventId, state);
+    for (ProcessorSet::const_iterator it = processors.begin(); it != processors.end(); ++it) // loop processors
+        (*it)->SetState(eventId, state);
     globalProcessor->SetState(eventId, state);
 }

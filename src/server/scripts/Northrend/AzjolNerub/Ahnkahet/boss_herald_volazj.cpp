@@ -27,31 +27,31 @@
 
 enum Spells
 {
-    SPELL_INSANITY                                = 57496, //Dummy
-    INSANITY_VISUAL                               = 57561,
-    SPELL_INSANITY_TARGET                         = 57508,
-    SPELL_MIND_FLAY                               = 57941,
-    SPELL_SHADOW_BOLT_VOLLEY                      = 57942,
-    SPELL_SHIVER                                  = 57949,
-    SPELL_CLONE_PLAYER                            = 57507, //cast on player during insanity
-    SPELL_INSANITY_PHASING_1                      = 57508,
-    SPELL_INSANITY_PHASING_2                      = 57509,
-    SPELL_INSANITY_PHASING_3                      = 57510,
-    SPELL_INSANITY_PHASING_4                      = 57511,
-    SPELL_INSANITY_PHASING_5                      = 57512
+    SPELL_INSANITY = 57496, //Dummy
+    INSANITY_VISUAL = 57561,
+    SPELL_INSANITY_TARGET = 57508,
+    SPELL_MIND_FLAY = 57941,
+    SPELL_SHADOW_BOLT_VOLLEY = 57942,
+    SPELL_SHIVER = 57949,
+    SPELL_CLONE_PLAYER = 57507, //cast on player during insanity
+    SPELL_INSANITY_PHASING_1 = 57508,
+    SPELL_INSANITY_PHASING_2 = 57509,
+    SPELL_INSANITY_PHASING_3 = 57510,
+    SPELL_INSANITY_PHASING_4 = 57511,
+    SPELL_INSANITY_PHASING_5 = 57512
 };
 
 enum Yells
 {
-    SAY_AGGRO   = 0,
-    SAY_SLAY    = 1,
-    SAY_DEATH   = 2,
-    SAY_PHASE   = 3
+    SAY_AGGRO = 0,
+    SAY_SLAY = 1,
+    SAY_DEATH = 2,
+    SAY_PHASE = 3
 };
 
 enum Achievements
 {
-    ACHIEV_QUICK_DEMISE_START_EVENT               = 20382,
+    ACHIEV_QUICK_DEMISE_START_EVENT = 20382,
 };
 
 class boss_volazj : public CreatureScript
@@ -89,7 +89,7 @@ public:
         {
             if (damage > me->GetHealth())
                 return 0;
-            return 100*(me->GetHealth()-damage)/me->GetMaxHealth();
+            return 100 * (me->GetHealth() - damage) / me->GetMaxHealth();
         }
 
         void DamageTaken(Unit* /*pAttacker*/, uint32 &damage) override
@@ -97,7 +97,7 @@ public:
             if (me->HasFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE))
                 damage = 0;
 
-            if ((GetHealthPct(0) >= 66 && GetHealthPct(damage) < 66)||
+            if ((GetHealthPct(0) >= 66 && GetHealthPct(damage) < 66) ||
                 (GetHealthPct(0) >= 33 && GetHealthPct(damage) < 33))
             {
                 me->InterruptNonMeleeSpells(false);
@@ -122,7 +122,7 @@ public:
                     me->SetControlled(true, UNIT_STATE_STUNNED);
                 }
                 // phase mask
-                target->CastSpell(target, SPELL_INSANITY_TARGET+insanityHandled, true);
+                target->CastSpell(target, SPELL_INSANITY_TARGET + insanityHandled, true);
                 // summon twisted party members for this target
                 Map::PlayerList const &players = me->GetMap()->GetPlayers();
                 for (Map::PlayerList::const_iterator i = players.begin(); i != players.end(); ++i)
@@ -136,7 +136,7 @@ public:
                         // clone
                         player->CastSpell(summon, SPELL_CLONE_PLAYER, true);
                         // set phase
-                        summon->SetPhaseMask((1<<(4+insanityHandled)), true);
+                        summon->SetPhaseMask((1 << (4 + insanityHandled)), true);
                     }
                 }
                 ++insanityHandled;
@@ -161,7 +161,7 @@ public:
             instance->DoStopTimedAchievement(ACHIEVEMENT_TIMED_TYPE_EVENT, ACHIEV_QUICK_DEMISE_START_EVENT);
 
             // Visible for all players in insanity
-            me->SetPhaseMask((1|16|32|64|128|256), true);
+            me->SetPhaseMask((1 | 16 | 32 | 64 | 128 | 256), true);
 
             ResetPlayersPhaseMask();
 
@@ -189,21 +189,21 @@ public:
             uint32 spell = 0;
             switch (phase)
             {
-                case 16:
-                    spell = SPELL_INSANITY_PHASING_1;
-                    break;
-                case 32:
-                    spell = SPELL_INSANITY_PHASING_2;
-                    break;
-                case 64:
-                    spell = SPELL_INSANITY_PHASING_3;
-                    break;
-                case 128:
-                    spell = SPELL_INSANITY_PHASING_4;
-                    break;
-                case 256:
-                    spell = SPELL_INSANITY_PHASING_5;
-                    break;
+            case 16:
+                spell = SPELL_INSANITY_PHASING_1;
+                break;
+            case 32:
+                spell = SPELL_INSANITY_PHASING_2;
+                break;
+            case 64:
+                spell = SPELL_INSANITY_PHASING_3;
+                break;
+            case 128:
+                spell = SPELL_INSANITY_PHASING_4;
+                break;
+            case 256:
+                spell = SPELL_INSANITY_PHASING_5;
+                break;
             }
             return spell;
         }
@@ -272,21 +272,24 @@ public:
             if (uiMindFlayTimer <= diff)
             {
                 DoCastVictim(SPELL_MIND_FLAY);
-                uiMindFlayTimer = 20*IN_MILLISECONDS;
-            } else uiMindFlayTimer -= diff;
+                uiMindFlayTimer = 20 * IN_MILLISECONDS;
+            }
+            else uiMindFlayTimer -= diff;
 
             if (uiShadowBoltVolleyTimer <= diff)
             {
                 DoCastVictim(SPELL_SHADOW_BOLT_VOLLEY);
-                uiShadowBoltVolleyTimer = 5*IN_MILLISECONDS;
-            } else uiShadowBoltVolleyTimer -= diff;
+                uiShadowBoltVolleyTimer = 5 * IN_MILLISECONDS;
+            }
+            else uiShadowBoltVolleyTimer -= diff;
 
             if (uiShiverTimer <= diff)
             {
                 if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
                     DoCast(target, SPELL_SHIVER);
-                uiShiverTimer = 15*IN_MILLISECONDS;
-            } else uiShiverTimer -= diff;
+                uiShiverTimer = 15 * IN_MILLISECONDS;
+            }
+            else uiShiverTimer -= diff;
 
             DoMeleeAttackIfReady();
         }

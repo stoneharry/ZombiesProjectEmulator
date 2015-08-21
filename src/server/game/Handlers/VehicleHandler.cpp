@@ -70,58 +70,58 @@ void WorldSession::HandleChangeSeatsOnControlledVehicle(WorldPacket &recvData)
 
     switch (recvData.GetOpcode())
     {
-        case CMSG_REQUEST_VEHICLE_PREV_SEAT:
-            GetPlayer()->ChangeSeat(-1, false);
-            break;
-        case CMSG_REQUEST_VEHICLE_NEXT_SEAT:
-            GetPlayer()->ChangeSeat(-1, true);
-            break;
-        case CMSG_CHANGE_SEATS_ON_CONTROLLED_VEHICLE:
-        {
-            ObjectGuid guid;        // current vehicle guid
-            recvData >> guid.ReadAsPacked();
+    case CMSG_REQUEST_VEHICLE_PREV_SEAT:
+        GetPlayer()->ChangeSeat(-1, false);
+        break;
+    case CMSG_REQUEST_VEHICLE_NEXT_SEAT:
+        GetPlayer()->ChangeSeat(-1, true);
+        break;
+    case CMSG_CHANGE_SEATS_ON_CONTROLLED_VEHICLE:
+    {
+                                                    ObjectGuid guid;        // current vehicle guid
+                                                    recvData >> guid.ReadAsPacked();
 
-            MovementInfo movementInfo;
-            ReadMovementInfo(recvData, &movementInfo);
-            vehicle_base->m_movementInfo = movementInfo;
+                                                    MovementInfo movementInfo;
+                                                    ReadMovementInfo(recvData, &movementInfo);
+                                                    vehicle_base->m_movementInfo = movementInfo;
 
-            ObjectGuid accessory;        //  accessory guid
-            recvData >> accessory.ReadAsPacked();
+                                                    ObjectGuid accessory;        //  accessory guid
+                                                    recvData >> accessory.ReadAsPacked();
 
-            int8 seatId;
-            recvData >> seatId;
+                                                    int8 seatId;
+                                                    recvData >> seatId;
 
-            if (vehicle_base->GetGUID() != guid)
-                return;
+                                                    if (vehicle_base->GetGUID() != guid)
+                                                        return;
 
-            if (!accessory)
-                GetPlayer()->ChangeSeat(-1, seatId > 0); // prev/next
-            else if (Unit* vehUnit = ObjectAccessor::GetUnit(*GetPlayer(), accessory))
-            {
-                if (Vehicle* vehicle = vehUnit->GetVehicleKit())
-                    if (vehicle->HasEmptySeat(seatId))
-                        vehUnit->HandleSpellClick(GetPlayer(), seatId);
-            }
-            break;
-        }
-        case CMSG_REQUEST_VEHICLE_SWITCH_SEAT:
-        {
-            ObjectGuid guid;        // current vehicle guid
-            recvData >> guid.ReadAsPacked();
+                                                    if (!accessory)
+                                                        GetPlayer()->ChangeSeat(-1, seatId > 0); // prev/next
+                                                    else if (Unit* vehUnit = ObjectAccessor::GetUnit(*GetPlayer(), accessory))
+                                                    {
+                                                        if (Vehicle* vehicle = vehUnit->GetVehicleKit())
+                                                        if (vehicle->HasEmptySeat(seatId))
+                                                            vehUnit->HandleSpellClick(GetPlayer(), seatId);
+                                                    }
+                                                    break;
+    }
+    case CMSG_REQUEST_VEHICLE_SWITCH_SEAT:
+    {
+                                             ObjectGuid guid;        // current vehicle guid
+                                             recvData >> guid.ReadAsPacked();
 
-            int8 seatId;
-            recvData >> seatId;
+                                             int8 seatId;
+                                             recvData >> seatId;
 
-            if (vehicle_base->GetGUID() == guid)
-                GetPlayer()->ChangeSeat(seatId);
-            else if (Unit* vehUnit = ObjectAccessor::GetUnit(*GetPlayer(), guid))
-                if (Vehicle* vehicle = vehUnit->GetVehicleKit())
-                    if (vehicle->HasEmptySeat(seatId))
-                        vehUnit->HandleSpellClick(GetPlayer(), seatId);
-            break;
-        }
-        default:
-            break;
+                                             if (vehicle_base->GetGUID() == guid)
+                                                 GetPlayer()->ChangeSeat(seatId);
+                                             else if (Unit* vehUnit = ObjectAccessor::GetUnit(*GetPlayer(), guid))
+                                             if (Vehicle* vehicle = vehUnit->GetVehicleKit())
+                                             if (vehicle->HasEmptySeat(seatId))
+                                                 vehUnit->HandleSpellClick(GetPlayer(), seatId);
+                                             break;
+    }
+    default:
+        break;
     }
 }
 

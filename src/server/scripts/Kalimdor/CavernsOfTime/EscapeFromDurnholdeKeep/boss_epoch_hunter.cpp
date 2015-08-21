@@ -33,16 +33,16 @@ EndScriptData */
 
 enum EpochHunter
 {
-    SAY_ENTER                   = 0,
-    SAY_AGGRO                   = 1,
-    SAY_SLAY                    = 2,
-    SAY_BREATH                  = 3,
-    SAY_DEATH                   = 4,
+    SAY_ENTER = 0,
+    SAY_AGGRO = 1,
+    SAY_SLAY = 2,
+    SAY_BREATH = 3,
+    SAY_DEATH = 4,
 
-    SPELL_SAND_BREATH           = 31914,
-    SPELL_IMPENDING_DEATH       = 31916,
+    SPELL_SAND_BREATH = 31914,
+    SPELL_IMPENDING_DEATH = 31916,
     SPELL_MAGIC_DISRUPTION_AURA = 33834,
-    SPELL_WING_BUFFET           = 31475
+    SPELL_WING_BUFFET = 31475
 };
 
 class boss_epoch_hunter : public CreatureScript
@@ -118,26 +118,30 @@ public:
                 Talk(SAY_BREATH);
 
                 SandBreath_Timer = urand(10000, 20000);
-            } else SandBreath_Timer -= diff;
+            }
+            else SandBreath_Timer -= diff;
 
             if (ImpendingDeath_Timer <= diff)
             {
                 DoCastVictim(SPELL_IMPENDING_DEATH);
                 ImpendingDeath_Timer = 25000 + rand32() % 5000;
-            } else ImpendingDeath_Timer -= diff;
+            }
+            else ImpendingDeath_Timer -= diff;
 
             if (WingBuffet_Timer <= diff)
             {
                 if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
                     DoCast(target, SPELL_WING_BUFFET);
                 WingBuffet_Timer = 25000 + rand32() % 10000;
-            } else WingBuffet_Timer -= diff;
+            }
+            else WingBuffet_Timer -= diff;
 
             if (Mda_Timer <= diff)
             {
                 DoCast(me, SPELL_MAGIC_DISRUPTION_AURA);
                 Mda_Timer = 15000;
-            } else Mda_Timer -= diff;
+            }
+            else Mda_Timer -= diff;
 
             DoMeleeAttackIfReady();
         }

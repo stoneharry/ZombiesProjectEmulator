@@ -21,7 +21,7 @@
 
 /** ByteConverter reverse your byte order.  This is use
     for cross platform where they have different endians.
- */
+    */
 
 #include "Define.h"
 #include <algorithm>
@@ -60,9 +60,9 @@ template<typename T> void EndianConvert(T*);         // will generate link error
 template<typename T> void EndianConvertReverse(T*);  // will generate link error
 
 inline void EndianConvert(uint8&) { }
-inline void EndianConvert( int8&) { }
+inline void EndianConvert(int8&) { }
 inline void EndianConvertReverse(uint8&) { }
-inline void EndianConvertReverse( int8&) { }
+inline void EndianConvertReverse(int8&) { }
 
 #endif
 

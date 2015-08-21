@@ -9,67 +9,67 @@
 
 namespace LuaWorldObject
 {
-	/**
-	 * Returns the name of the [WorldObject]
-	 *
-	 * @return string name
-	 */
-	int GetName(Eluna* /*E*/, lua_State* L, WorldObject* obj)
-	{
-		Eluna::Push(L, obj->GetName());
-		return 1;
-	}
+    /**
+     * Returns the name of the [WorldObject]
+     *
+     * @return string name
+     */
+    int GetName(Eluna* /*E*/, lua_State* L, WorldObject* obj)
+    {
+        Eluna::Push(L, obj->GetName());
+        return 1;
+    }
 
-	/**
-	 * Returns the current [Map] object of the [WorldObject]
-	 *
-	 * @return [Map] mapObject
-	 */
-	int GetMap(Eluna* /*E*/, lua_State* L, WorldObject* obj)
-	{
-		Eluna::Push(L, obj->GetMap());
-		return 1;
-	}
+    /**
+     * Returns the current [Map] object of the [WorldObject]
+     *
+     * @return [Map] mapObject
+     */
+    int GetMap(Eluna* /*E*/, lua_State* L, WorldObject* obj)
+    {
+        Eluna::Push(L, obj->GetMap());
+        return 1;
+    }
 
 #if (!defined(TBC) && !defined(CLASSIC))
-	/**
-	 * Returns the current phase of the [WorldObject]
-	 *
-	 * @return uint32 phase
-	 */
-	int GetPhaseMask(Eluna* /*E*/, lua_State* L, WorldObject* obj)
-	{
-		Eluna::Push(L, obj->GetPhaseMask());
-		return 1;
-	}
+    /**
+     * Returns the current phase of the [WorldObject]
+     *
+     * @return uint32 phase
+     */
+    int GetPhaseMask(Eluna* /*E*/, lua_State* L, WorldObject* obj)
+    {
+        Eluna::Push(L, obj->GetPhaseMask());
+        return 1;
+    }
 
-	int SetPhaseMask(Eluna* /*E*/, lua_State* L, WorldObject* obj)
-	{
-		uint32 newPhaseMask = Eluna::CHECKVAL<bool>(L, 2);
-		obj->SetPhaseMask(newPhaseMask, true);
-		return 0;
-	}
+    int SetPhaseMask(Eluna* /*E*/, lua_State* L, WorldObject* obj)
+    {
+        uint32 newPhaseMask = Eluna::CHECKVAL<bool>(L, 2);
+        obj->SetPhaseMask(newPhaseMask, true);
+        return 0;
+    }
 #endif
 
-	int SetActive(Eluna* E, lua_State* L, WorldObject* obj)
-	{
-		bool x = Eluna::CHECKVAL<bool>(L, 2, true);
-		obj->setActive(x);
-		return 0;
-	}
+    int SetActive(Eluna* E, lua_State* L, WorldObject* obj)
+    {
+        bool x = Eluna::CHECKVAL<bool>(L, 2, true);
+        obj->setActive(x);
+        return 0;
+    }
 
-	int GetCanSeePhaseOne(Eluna* /*E*/, lua_State* L, WorldObject* obj)
-	{
-		Eluna::Push(L, obj->GetCanSeePhaseOne());
-		return 1;
-	}
+    int GetCanSeePhaseOne(Eluna* /*E*/, lua_State* L, WorldObject* obj)
+    {
+        Eluna::Push(L, obj->GetCanSeePhaseOne());
+        return 1;
+    }
 
-	int SetCanSeePhaseOne(Eluna* /*E*/, lua_State* L, WorldObject * obj)
-	{
-		bool canSee = Eluna::CHECKVAL<bool>(L, 2);
-		obj->SetCanSeePhaseOne(canSee);
-		return 0;
-	}
+    int SetCanSeePhaseOne(Eluna* /*E*/, lua_State* L, WorldObject * obj)
+    {
+        bool canSee = Eluna::CHECKVAL<bool>(L, 2);
+        obj->SetCanSeePhaseOne(canSee);
+        return 0;
+    }
 
     /**
      * Returns the current instance ID of the [WorldObject]
@@ -698,116 +698,116 @@ namespace LuaWorldObject
         TempSummonType type;
         switch (spawnType)
         {
-            case 1:
-                type = TEMPSUMMON_TIMED_OR_DEAD_DESPAWN;
-                break;
-            case 2:
-                type = TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN;
-                break;
-            case 3:
-                type = TEMPSUMMON_TIMED_DESPAWN;
-                break;
-            case 4:
+        case 1:
+            type = TEMPSUMMON_TIMED_OR_DEAD_DESPAWN;
+            break;
+        case 2:
+            type = TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN;
+            break;
+        case 3:
+            type = TEMPSUMMON_TIMED_DESPAWN;
+            break;
+        case 4:
 #ifdef TRINITY
-                type = TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT;
+            type = TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT;
 #else
-                type = TEMPSUMMON_TIMED_OOC_DESPAWN;
+            type = TEMPSUMMON_TIMED_OOC_DESPAWN;
 #endif
-                break;
-            case 5:
-                type = TEMPSUMMON_CORPSE_DESPAWN;
-                break;
-            case 6:
-                type = TEMPSUMMON_CORPSE_TIMED_DESPAWN;
-                break;
-            case 7:
-                type = TEMPSUMMON_DEAD_DESPAWN;
-                break;
-            case 8:
-                type = TEMPSUMMON_MANUAL_DESPAWN;
-                break;
+            break;
+        case 5:
+            type = TEMPSUMMON_CORPSE_DESPAWN;
+            break;
+        case 6:
+            type = TEMPSUMMON_CORPSE_TIMED_DESPAWN;
+            break;
+        case 7:
+            type = TEMPSUMMON_DEAD_DESPAWN;
+            break;
+        case 8:
+            type = TEMPSUMMON_MANUAL_DESPAWN;
+            break;
 #ifndef TRINITY
-            case 9:
-                type = TEMPSUMMON_TIMED_OOC_OR_CORPSE_DESPAWN;
-                break;
-            case 10:
-                type = TEMPSUMMON_TIMED_OOC_OR_DEAD_DESPAWN;
-                break;
+        case 9:
+            type = TEMPSUMMON_TIMED_OOC_OR_CORPSE_DESPAWN;
+            break;
+        case 10:
+            type = TEMPSUMMON_TIMED_OOC_OR_DEAD_DESPAWN;
+            break;
 #endif
-            default:
-                return luaL_argerror(L, 7, "valid SpawnType expected");
+        default:
+            return luaL_argerror(L, 7, "valid SpawnType expected");
         }
         Eluna::Push(L, obj->SummonCreature(entry, x, y, z, o, type, despawnTimer));
         return 1;
     }
-	/**
-	* Spawns the creature at random location near specified location.
-	*
-	* @param uint32 entry : [Creature]'s entry ID
-	* @param float x
-	* @param float y
-	* @param float z
-	* @param float o
-	* @param [TempSummonType] spawnType = 8 : defines how and when the creature despawns
-	* @param uint32 despawnTimer = 0 : despawn time in milliseconds
-	* @return [Creature] spawnedCreature
-	*/
-	int SpawnCreatureRandom(Eluna* /*E*/, lua_State* L, WorldObject* obj)
-	{
-		uint32 entry = Eluna::CHECKVAL<uint32>(L, 2);
-		float x = Eluna::CHECKVAL<float>(L, 3);
-		float y = Eluna::CHECKVAL<float>(L, 4);
-		float z = Eluna::CHECKVAL<float>(L, 5);
-		float o = Eluna::CHECKVAL<float>(L, 6);
-		float dist = Eluna::CHECKVAL<float>(L, 7);
-		uint32 spawnType = Eluna::CHECKVAL<uint32>(L, 8, 8);
-		uint32 despawnTimer = Eluna::CHECKVAL<uint32>(L, 9, 0);
+    /**
+    * Spawns the creature at random location near specified location.
+    *
+    * @param uint32 entry : [Creature]'s entry ID
+    * @param float x
+    * @param float y
+    * @param float z
+    * @param float o
+    * @param [TempSummonType] spawnType = 8 : defines how and when the creature despawns
+    * @param uint32 despawnTimer = 0 : despawn time in milliseconds
+    * @return [Creature] spawnedCreature
+    */
+    int SpawnCreatureRandom(Eluna* /*E*/, lua_State* L, WorldObject* obj)
+    {
+        uint32 entry = Eluna::CHECKVAL<uint32>(L, 2);
+        float x = Eluna::CHECKVAL<float>(L, 3);
+        float y = Eluna::CHECKVAL<float>(L, 4);
+        float z = Eluna::CHECKVAL<float>(L, 5);
+        float o = Eluna::CHECKVAL<float>(L, 6);
+        float dist = Eluna::CHECKVAL<float>(L, 7);
+        uint32 spawnType = Eluna::CHECKVAL<uint32>(L, 8, 8);
+        uint32 despawnTimer = Eluna::CHECKVAL<uint32>(L, 9, 0);
 
-		TempSummonType type;
-		switch (spawnType)
-		{
-		case 1:
-			type = TEMPSUMMON_TIMED_OR_DEAD_DESPAWN;
-			break;
-		case 2:
-			type = TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN;
-			break;
-		case 3:
-			type = TEMPSUMMON_TIMED_DESPAWN;
-			break;
-		case 4:
+        TempSummonType type;
+        switch (spawnType)
+        {
+        case 1:
+            type = TEMPSUMMON_TIMED_OR_DEAD_DESPAWN;
+            break;
+        case 2:
+            type = TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN;
+            break;
+        case 3:
+            type = TEMPSUMMON_TIMED_DESPAWN;
+            break;
+        case 4:
 #ifdef TRINITY
-			type = TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT;
+            type = TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT;
 #else
-			type = TEMPSUMMON_TIMED_OOC_DESPAWN;
+            type = TEMPSUMMON_TIMED_OOC_DESPAWN;
 #endif
-			break;
-		case 5:
-			type = TEMPSUMMON_CORPSE_DESPAWN;
-			break;
-		case 6:
-			type = TEMPSUMMON_CORPSE_TIMED_DESPAWN;
-			break;
-		case 7:
-			type = TEMPSUMMON_DEAD_DESPAWN;
-			break;
-		case 8:
-			type = TEMPSUMMON_MANUAL_DESPAWN;
-			break;
+            break;
+        case 5:
+            type = TEMPSUMMON_CORPSE_DESPAWN;
+            break;
+        case 6:
+            type = TEMPSUMMON_CORPSE_TIMED_DESPAWN;
+            break;
+        case 7:
+            type = TEMPSUMMON_DEAD_DESPAWN;
+            break;
+        case 8:
+            type = TEMPSUMMON_MANUAL_DESPAWN;
+            break;
 #ifndef TRINITY
-		case 9:
-			type = TEMPSUMMON_TIMED_OOC_OR_CORPSE_DESPAWN;
-			break;
-		case 10:
-			type = TEMPSUMMON_TIMED_OOC_OR_DEAD_DESPAWN;
-			break;
+        case 9:
+            type = TEMPSUMMON_TIMED_OOC_OR_CORPSE_DESPAWN;
+            break;
+        case 10:
+            type = TEMPSUMMON_TIMED_OOC_OR_DEAD_DESPAWN;
+            break;
 #endif
-		default:
-			return luaL_argerror(L, 7, "valid SpawnType expected");
-		}
-		Eluna::Push(L, obj->SummonCreatureRandomPoint(entry, x, y, z, dist, o, type, despawnTimer));
-		return 1;
-	}
+        default:
+            return luaL_argerror(L, 7, "valid SpawnType expected");
+        }
+        Eluna::Push(L, obj->SummonCreatureRandomPoint(entry, x, y, z, dist, o, type, despawnTimer));
+        return 1;
+    }
     /**
      * Registers a timed event to the [WorldObject]
      * When the passed function is called, the parameters `(eventId, delay, repeats, worldobject)` are passed to it.

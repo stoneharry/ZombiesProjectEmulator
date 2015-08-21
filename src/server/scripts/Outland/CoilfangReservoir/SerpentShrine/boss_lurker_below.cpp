@@ -31,29 +31,29 @@ EndScriptData */
 
 enum Spells
 {
-    SPELL_SPOUT             = 37433,
-    SPELL_SPOUT_ANIM        = 42835,
-    SPELL_SPOUT_BREATH      = 37431,
-    SPELL_KNOCKBACK         = 19813,
-    SPELL_GEYSER            = 37478,
-    SPELL_WHIRL             = 37660,
-    SPELL_WATERBOLT         = 37138,
-    SPELL_SUBMERGE          = 37550,
-    SPELL_EMERGE            = 20568,
+    SPELL_SPOUT = 37433,
+    SPELL_SPOUT_ANIM = 42835,
+    SPELL_SPOUT_BREATH = 37431,
+    SPELL_KNOCKBACK = 19813,
+    SPELL_GEYSER = 37478,
+    SPELL_WHIRL = 37660,
+    SPELL_WATERBOLT = 37138,
+    SPELL_SUBMERGE = 37550,
+    SPELL_EMERGE = 20568,
 
 
     // Ambusher spells
-    SPELL_SPREAD_SHOT       = 37790,
-    SPELL_SHOOT             = 37770,
+    SPELL_SPREAD_SHOT = 37790,
+    SPELL_SHOOT = 37770,
     // Guardian spells
-    SPELL_ARCINGSMASH       = 38761, // Wrong SpellId. Can't find the right one.
-    SPELL_HAMSTRING         = 26211
+    SPELL_ARCINGSMASH = 38761, // Wrong SpellId. Can't find the right one.
+    SPELL_HAMSTRING = 26211
 };
 
 enum Creatures
 {
-    NPC_COILFANG_GUARDIAN   = 21873,
-    NPC_COILFANG_AMBUSHER   = 21865
+    NPC_COILFANG_GUARDIAN = 21873,
+    NPC_COILFANG_AMBUSHER = 21865
 };
 
 #define EMOTE_SPOUT "The Lurker Below takes a deep breath."
@@ -63,15 +63,15 @@ enum Creatures
 float AddPos[9][3] =
 {
     // MOVE_AMBUSHER_1 X, Y, Z
-    {2.8553810f, -459.823914f, -19.182686f},
-    {12.400000f, -466.042267f, -19.182686f},
-    {51.366653f, -460.836060f, -19.182686f},
-    {62.597980f, -457.433044f, -19.182686f},
-    {77.607452f, -384.302765f, -19.182686f},
-    {63.897900f, -378.984924f, -19.182686f},
-    {34.447250f, -387.333618f, -19.182686f},
-    {14.388216f, -423.468018f, -19.625271f},
-    {42.471519f, -445.115295f, -19.769423f}
+    { 2.8553810f, -459.823914f, -19.182686f },
+    { 12.400000f, -466.042267f, -19.182686f },
+    { 51.366653f, -460.836060f, -19.182686f },
+    { 62.597980f, -457.433044f, -19.182686f },
+    { 77.607452f, -384.302765f, -19.182686f },
+    { 63.897900f, -378.984924f, -19.182686f },
+    { 34.447250f, -387.333618f, -19.182686f },
+    { 14.388216f, -423.468018f, -19.625271f },
+    { 42.471519f, -445.115295f, -19.769423f }
 };
 
 class boss_the_lurker_below : public CreatureScript
@@ -236,7 +236,8 @@ public:
                     DoCast(me, SPELL_SUBMERGE);
                     PhaseTimer = 60000; // 60secs submerged
                     Submerged = true;
-                } else PhaseTimer-=diff;
+                }
+                else PhaseTimer -= diff;
 
                 if (SpoutTimer <= diff)
                 {
@@ -247,14 +248,16 @@ public:
                     WhirlTimer = 20000; // whirl directly after spout
                     RotTimer = 20000;
                     return;
-                } else SpoutTimer -= diff;
+                }
+                else SpoutTimer -= diff;
 
                 // Whirl directly after a Spout and at random times
                 if (WhirlTimer <= diff)
                 {
                     WhirlTimer = 18000;
                     DoCast(me, SPELL_WHIRL);
-                } else WhirlTimer -= diff;
+                }
+                else WhirlTimer -= diff;
 
                 if (CheckTimer <= diff)//check if there are players in melee range
                 {
@@ -270,7 +273,8 @@ public:
                         }
                     }
                     CheckTimer = 2000;
-                } else CheckTimer -= diff;
+                }
+                else CheckTimer -= diff;
 
                 if (RotTimer)
                 {
@@ -280,7 +284,7 @@ public:
                         Map::PlayerList const &PlayerList = map->GetPlayers();
                         for (Map::PlayerList::const_iterator i = PlayerList.begin(); i != PlayerList.end(); ++i)
                         {
-                            if (i->GetSource() && i->GetSource()->IsAlive() && me->HasInArc(diff/20000.f*float(M_PI)*2.f, i->GetSource()) && me->IsWithinDist(i->GetSource(), SPOUT_DIST) && !i->GetSource()->IsInWater())
+                            if (i->GetSource() && i->GetSource()->IsAlive() && me->HasInArc(diff / 20000.f*float(M_PI)*2.f, i->GetSource()) && me->IsWithinDist(i->GetSource(), SPOUT_DIST) && !i->GetSource()->IsInWater())
                                 DoCast(i->GetSource(), SPELL_SPOUT, true); // only knock back players in arc, in 100yards, not in water
                         }
                     }
@@ -289,12 +293,14 @@ public:
                     {
                         DoCast(me, SPELL_SPOUT_ANIM, true);
                         SpoutAnimTimer = 1000;
-                    } else SpoutAnimTimer -= diff;
+                    }
+                    else SpoutAnimTimer -= diff;
 
                     if (RotTimer <= diff)
                     {
                         RotTimer = 0;
-                    } else RotTimer -= diff;
+                    }
+                    else RotTimer -= diff;
                     return;
                 }
 
@@ -306,7 +312,8 @@ public:
                     if (target)
                         DoCast(target, SPELL_GEYSER, true);
                     GeyserTimer = rand32() % 5000 + 15000;
-                } else GeyserTimer -= diff;
+                }
+                else GeyserTimer -= diff;
 
                 if (!InRange) // if on players in melee range cast Waterbolt
                 {
@@ -318,7 +325,8 @@ public:
                         if (target)
                             DoCast(target, SPELL_WATERBOLT, true);
                         WaterboltTimer = 3000;
-                    } else WaterboltTimer -= diff;
+                    }
+                    else WaterboltTimer -= diff;
                 }
 
                 if (!UpdateVictim())
@@ -341,7 +349,8 @@ public:
                     SpoutTimer = 3000; // directly cast Spout after emerging!
                     PhaseTimer = 120000;
                     return;
-                } else PhaseTimer-=diff;
+                }
+                else PhaseTimer -= diff;
 
                 if (me->getThreatManager().getThreatList().empty()) // check if should evade
                 {
@@ -357,13 +366,13 @@ public:
                     me->SetUInt32Value(UNIT_FIELD_FLAGS, UNIT_FLAG_IMMUNE_TO_PC);
                     // spawn adds
                     for (uint8 i = 0; i < 9; ++i)
-                        if (Creature* summoned = me->SummonCreature(i < 6 ? NPC_COILFANG_AMBUSHER : NPC_COILFANG_GUARDIAN, AddPos[i][0], AddPos[i][1], AddPos[i][2], 0, TEMPSUMMON_CORPSE_DESPAWN, 0))
-                            Summons.Summon(summoned);
+                    if (Creature* summoned = me->SummonCreature(i < 6 ? NPC_COILFANG_AMBUSHER : NPC_COILFANG_GUARDIAN, AddPos[i][0], AddPos[i][1], AddPos[i][2], 0, TEMPSUMMON_CORPSE_DESPAWN, 0))
+                        Summons.Summon(summoned);
                     Spawned = true;
                 }
             }
         }
-     };
+    };
 };
 
 class npc_coilfang_ambusher : public CreatureScript
@@ -417,7 +426,8 @@ public:
 
                 MultiShotTimer = 10000 + rand32() % 10000;
                 ShootBowTimer += 1500; // add global cooldown
-            } else MultiShotTimer -= diff;
+            }
+            else MultiShotTimer -= diff;
 
             if (ShootBowTimer <= diff)
             {
@@ -426,7 +436,8 @@ public:
                     me->CastCustomSpell(target, SPELL_SHOOT, &bp0, NULL, NULL, true);
                 ShootBowTimer = 4000 + rand32() % 5000;
                 MultiShotTimer += 1500; // add global cooldown
-            } else ShootBowTimer -= diff;
+            }
+            else ShootBowTimer -= diff;
         }
     };
 
@@ -434,25 +445,25 @@ public:
 
 class go_strange_pool : public GameObjectScript
 {
-    public:
-        go_strange_pool() : GameObjectScript("go_strange_pool") { }
+public:
+    go_strange_pool() : GameObjectScript("go_strange_pool") { }
 
-        bool OnGossipHello(Player* player, GameObject* go) override
+    bool OnGossipHello(Player* player, GameObject* go) override
+    {
+        // 25%
+        if (InstanceScript* instanceScript = go->GetInstanceScript())
+        if (!urand(0, 3))
         {
-            // 25%
-            if (InstanceScript* instanceScript = go->GetInstanceScript())
-                if (!urand(0, 3))
-                {
-                    if (instanceScript->GetData(DATA_STRANGE_POOL) == NOT_STARTED)
-                    {
-                        go->CastSpell(player, 54587);
-                        instanceScript->SetData(DATA_STRANGE_POOL, IN_PROGRESS);
-                    }
-                    return true;
-                }
-
-            return false;
+            if (instanceScript->GetData(DATA_STRANGE_POOL) == NOT_STARTED)
+            {
+                go->CastSpell(player, 54587);
+                instanceScript->SetData(DATA_STRANGE_POOL, IN_PROGRESS);
+            }
+            return true;
         }
+
+        return false;
+    }
 };
 
 void AddSC_boss_the_lurker_below()

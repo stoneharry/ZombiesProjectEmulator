@@ -40,23 +40,23 @@ public:
     {
         static ChatCommand goCommandTable[] =
         {
-            { "creature",  rbac::RBAC_PERM_COMMAND_GO_CREATURE,  false, &HandleGoCreatureCommand,  "", NULL },
+            { "creature", rbac::RBAC_PERM_COMMAND_GO_CREATURE, false, &HandleGoCreatureCommand, "", NULL },
             { "graveyard", rbac::RBAC_PERM_COMMAND_GO_GRAVEYARD, false, &HandleGoGraveyardCommand, "", NULL },
-            { "grid",      rbac::RBAC_PERM_COMMAND_GO_GRID,      false, &HandleGoGridCommand,      "", NULL },
-            { "object",    rbac::RBAC_PERM_COMMAND_GO_OBJECT,    false, &HandleGoObjectCommand,    "", NULL },
-            { "taxinode",  rbac::RBAC_PERM_COMMAND_GO_TAXINODE,  false, &HandleGoTaxinodeCommand,  "", NULL },
-            { "trigger",   rbac::RBAC_PERM_COMMAND_GO_TRIGGER,   false, &HandleGoTriggerCommand,   "", NULL },
-            { "zonexy",    rbac::RBAC_PERM_COMMAND_GO_ZONEXY,    false, &HandleGoZoneXYCommand,    "", NULL },
-            { "xyz",       rbac::RBAC_PERM_COMMAND_GO_XYZ,       false, &HandleGoXYZCommand,       "", NULL },
-            { "ticket",    rbac::RBAC_PERM_COMMAND_GO_TICKET,    false, &HandleGoTicketCommand,    "", NULL },
-            { "",          rbac::RBAC_PERM_COMMAND_GO,           false, &HandleGoXYZCommand,       "", NULL },
-            { NULL,        0,                              false, NULL,                      "", NULL }
+            { "grid", rbac::RBAC_PERM_COMMAND_GO_GRID, false, &HandleGoGridCommand, "", NULL },
+            { "object", rbac::RBAC_PERM_COMMAND_GO_OBJECT, false, &HandleGoObjectCommand, "", NULL },
+            { "taxinode", rbac::RBAC_PERM_COMMAND_GO_TAXINODE, false, &HandleGoTaxinodeCommand, "", NULL },
+            { "trigger", rbac::RBAC_PERM_COMMAND_GO_TRIGGER, false, &HandleGoTriggerCommand, "", NULL },
+            { "zonexy", rbac::RBAC_PERM_COMMAND_GO_ZONEXY, false, &HandleGoZoneXYCommand, "", NULL },
+            { "xyz", rbac::RBAC_PERM_COMMAND_GO_XYZ, false, &HandleGoXYZCommand, "", NULL },
+            { "ticket", rbac::RBAC_PERM_COMMAND_GO_TICKET, false, &HandleGoTicketCommand, "", NULL },
+            { "", rbac::RBAC_PERM_COMMAND_GO, false, &HandleGoXYZCommand, "", NULL },
+            { NULL, 0, false, NULL, "", NULL }
         };
 
         static ChatCommand commandTable[] =
         {
             { "go", rbac::RBAC_PERM_COMMAND_GO, false, NULL, "", goCommandTable },
-            { NULL, 0,                    false, NULL, "", NULL }
+            { NULL, 0, false, NULL, "", NULL }
         };
         return commandTable;
     }
@@ -116,7 +116,7 @@ public:
                 whereClause << ", creature_template WHERE creature.id = creature_template.entry AND creature_template.name " _LIKE_" '" << name << '\'';
             }
             else
-                whereClause <<  "WHERE guid = '" << guid << '\'';
+                whereClause << "WHERE guid = '" << guid << '\'';
         }
 
         QueryResult result = WorldDatabase.PQuery("SELECT position_x, position_y, position_z, orientation, map, guid, id FROM creature %s", whereClause.str().c_str());

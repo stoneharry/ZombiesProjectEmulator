@@ -37,8 +37,8 @@ bool GuardAI::CanSeeAlways(WorldObject const* obj)
 
     ThreatContainer::StorageType threatList = me->getThreatManager().getThreatList();
     for (ThreatContainer::StorageType::const_iterator itr = threatList.begin(); itr != threatList.end(); ++itr)
-        if ((*itr)->getUnitGuid() == obj->GetGUID())
-            return true;
+    if ((*itr)->getUnitGuid() == obj->GetGUID())
+        return true;
 
     return false;
 }

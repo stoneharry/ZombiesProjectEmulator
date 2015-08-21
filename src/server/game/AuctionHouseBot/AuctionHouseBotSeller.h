@@ -33,7 +33,7 @@ typedef std::vector<std::vector<uint32>> AllItemsArray;
 
 struct SellerItemClassInfo
 {
-    SellerItemClassInfo(): AmountOfItems(0), MissItems(0), Quantity(0), PriceRatio(0) {}
+    SellerItemClassInfo() : AmountOfItems(0), MissItems(0), Quantity(0), PriceRatio(0) {}
 
     uint32 AmountOfItems;
     uint32 MissItems;
@@ -43,7 +43,7 @@ struct SellerItemClassInfo
 
 struct SellerItemInfo
 {
-    SellerItemInfo(): AmountOfItems(0), MissItems(0), PriceRatio(0) {}
+    SellerItemInfo() : AmountOfItems(0), MissItems(0), PriceRatio(0) {}
 
     uint32 AmountOfItems;
     uint32 MissItems;
@@ -55,7 +55,7 @@ struct SellerItemInfo
 class SellerConfiguration
 {
 public:
-    SellerConfiguration(): LastMissedItem(0), _houseType(AUCTION_HOUSE_NEUTRAL), _minTime(1), _maxTime(72)
+    SellerConfiguration() : LastMissedItem(0), _houseType(AUCTION_HOUSE_NEUTRAL), _minTime(1), _maxTime(72)
     {
     }
 

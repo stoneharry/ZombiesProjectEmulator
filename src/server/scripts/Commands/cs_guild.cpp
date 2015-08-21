@@ -38,19 +38,19 @@ public:
     {
         static ChatCommand guildCommandTable[] =
         {
-            { "create",   rbac::RBAC_PERM_COMMAND_GUILD_CREATE,   true, &HandleGuildCreateCommand,           "", NULL },
-            { "delete",   rbac::RBAC_PERM_COMMAND_GUILD_DELETE,   true, &HandleGuildDeleteCommand,           "", NULL },
-            { "invite",   rbac::RBAC_PERM_COMMAND_GUILD_INVITE,   true, &HandleGuildInviteCommand,           "", NULL },
-            { "uninvite", rbac::RBAC_PERM_COMMAND_GUILD_UNINVITE, true, &HandleGuildUninviteCommand,         "", NULL },
-            { "rank",     rbac::RBAC_PERM_COMMAND_GUILD_RANK,     true, &HandleGuildRankCommand,             "", NULL },
-            { "rename",   rbac::RBAC_PERM_COMMAND_GUILD_RENAME,   true, &HandleGuildRenameCommand,           "", NULL },
-            { "info",     rbac::RBAC_PERM_COMMAND_GUILD_INFO,     true, &HandleGuildInfoCommand,             "", NULL },
-            { NULL,       0,                               false, NULL,                                "", NULL }
+            { "create", rbac::RBAC_PERM_COMMAND_GUILD_CREATE, true, &HandleGuildCreateCommand, "", NULL },
+            { "delete", rbac::RBAC_PERM_COMMAND_GUILD_DELETE, true, &HandleGuildDeleteCommand, "", NULL },
+            { "invite", rbac::RBAC_PERM_COMMAND_GUILD_INVITE, true, &HandleGuildInviteCommand, "", NULL },
+            { "uninvite", rbac::RBAC_PERM_COMMAND_GUILD_UNINVITE, true, &HandleGuildUninviteCommand, "", NULL },
+            { "rank", rbac::RBAC_PERM_COMMAND_GUILD_RANK, true, &HandleGuildRankCommand, "", NULL },
+            { "rename", rbac::RBAC_PERM_COMMAND_GUILD_RENAME, true, &HandleGuildRenameCommand, "", NULL },
+            { "info", rbac::RBAC_PERM_COMMAND_GUILD_INFO, true, &HandleGuildInfoCommand, "", NULL },
+            { NULL, 0, false, NULL, "", NULL }
         };
         static ChatCommand commandTable[] =
         {
-            { "guild", rbac::RBAC_PERM_COMMAND_GUILD,  true, NULL, "", guildCommandTable },
-            { NULL,    0,                       false, NULL, "", NULL }
+            { "guild", rbac::RBAC_PERM_COMMAND_GUILD, true, NULL, "", guildCommandTable },
+            { NULL, 0, false, NULL, "", NULL }
         };
         return commandTable;
     }

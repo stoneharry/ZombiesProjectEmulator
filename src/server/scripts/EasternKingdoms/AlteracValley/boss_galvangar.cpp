@@ -20,18 +20,18 @@
 
 enum Spells
 {
-    SPELL_CLEAVE                                  = 15284,
-    SPELL_FRIGHTENING_SHOUT                       = 19134,
-    SPELL_WHIRLWIND1                              = 15589,
-    SPELL_WHIRLWIND2                              = 13736,
-    SPELL_MORTAL_STRIKE                           = 16856
+    SPELL_CLEAVE = 15284,
+    SPELL_FRIGHTENING_SHOUT = 19134,
+    SPELL_WHIRLWIND1 = 15589,
+    SPELL_WHIRLWIND2 = 13736,
+    SPELL_MORTAL_STRIKE = 16856
 };
 
 enum Texts
 {
-    SAY_AGGRO                                    = 0,
-    SAY_EVADE                                    = 1,
-    SAY_BUFF                                     = 2
+    SAY_AGGRO = 0,
+    SAY_EVADE = 1,
+    SAY_BUFF = 2
 };
 
 enum Events
@@ -45,7 +45,7 @@ enum Events
 
 enum Action
 {
-    ACTION_BUFF_YELL                              = -30001 // shared from Battleground
+    ACTION_BUFF_YELL = -30001 // shared from Battleground
 };
 
 class boss_galvangar : public CreatureScript
@@ -104,28 +104,28 @@ public:
             {
                 switch (eventId)
                 {
-                    case EVENT_CLEAVE:
-                        DoCastVictim(SPELL_CLEAVE);
-                        events.ScheduleEvent(EVENT_CLEAVE, urand(10 * IN_MILLISECONDS, 16 * IN_MILLISECONDS));
-                        break;
-                    case EVENT_FRIGHTENING_SHOUT:
-                        DoCastVictim(SPELL_FRIGHTENING_SHOUT);
-                        events.ScheduleEvent(EVENT_FRIGHTENING_SHOUT, urand(10 * IN_MILLISECONDS, 15 * IN_MILLISECONDS));
-                        break;
-                    case EVENT_WHIRLWIND1:
-                        DoCastVictim(SPELL_WHIRLWIND1);
-                        events.ScheduleEvent(EVENT_WHIRLWIND1, urand(6 * IN_MILLISECONDS, 10 * IN_MILLISECONDS));
-                        break;
-                    case EVENT_WHIRLWIND2:
-                        DoCastVictim(SPELL_WHIRLWIND2);
-                        events.ScheduleEvent(EVENT_WHIRLWIND2, urand(10 * IN_MILLISECONDS, 25 * IN_MILLISECONDS));
-                        break;
-                    case EVENT_MORTAL_STRIKE:
-                        DoCastVictim(SPELL_MORTAL_STRIKE);
-                        events.ScheduleEvent(EVENT_MORTAL_STRIKE, urand(10 * IN_MILLISECONDS, 30 * IN_MILLISECONDS));
-                        break;
-                    default:
-                        break;
+                case EVENT_CLEAVE:
+                    DoCastVictim(SPELL_CLEAVE);
+                    events.ScheduleEvent(EVENT_CLEAVE, urand(10 * IN_MILLISECONDS, 16 * IN_MILLISECONDS));
+                    break;
+                case EVENT_FRIGHTENING_SHOUT:
+                    DoCastVictim(SPELL_FRIGHTENING_SHOUT);
+                    events.ScheduleEvent(EVENT_FRIGHTENING_SHOUT, urand(10 * IN_MILLISECONDS, 15 * IN_MILLISECONDS));
+                    break;
+                case EVENT_WHIRLWIND1:
+                    DoCastVictim(SPELL_WHIRLWIND1);
+                    events.ScheduleEvent(EVENT_WHIRLWIND1, urand(6 * IN_MILLISECONDS, 10 * IN_MILLISECONDS));
+                    break;
+                case EVENT_WHIRLWIND2:
+                    DoCastVictim(SPELL_WHIRLWIND2);
+                    events.ScheduleEvent(EVENT_WHIRLWIND2, urand(10 * IN_MILLISECONDS, 25 * IN_MILLISECONDS));
+                    break;
+                case EVENT_MORTAL_STRIKE:
+                    DoCastVictim(SPELL_MORTAL_STRIKE);
+                    events.ScheduleEvent(EVENT_MORTAL_STRIKE, urand(10 * IN_MILLISECONDS, 30 * IN_MILLISECONDS));
+                    break;
+                default:
+                    break;
                 }
             }
 

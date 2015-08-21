@@ -28,23 +28,23 @@ Category: Scholomance
 
 enum Spells
 {
-    SPELL_VOLATILEINFECTION     = 24928,
-    SPELL_DARKPLAGUE            = 18270,
-    SPELL_CORROSIVEACID         = 23313,
-    SPELL_NOXIOUSCATALYST       = 18151
+    SPELL_VOLATILEINFECTION = 24928,
+    SPELL_DARKPLAGUE = 18270,
+    SPELL_CORROSIVEACID = 23313,
+    SPELL_NOXIOUSCATALYST = 18151
 };
 
 enum Events
 {
-    EVENT_VOLATILEINFECTION     = 1,
-    EVENT_DARKPLAGUE            = 2,
-    EVENT_CORROSIVEACID         = 3,
-    EVENT_NOXIOUSCATALYST       = 4
+    EVENT_VOLATILEINFECTION = 1,
+    EVENT_DARKPLAGUE = 2,
+    EVENT_CORROSIVEACID = 3,
+    EVENT_NOXIOUSCATALYST = 4
 };
 
 class boss_lorekeeper_polkelt : public CreatureScript
 {
-    public: boss_lorekeeper_polkelt() : CreatureScript("boss_lorekeeper_polkelt") { }
+public: boss_lorekeeper_polkelt() : CreatureScript("boss_lorekeeper_polkelt") { }
 
         struct boss_lorekeeperpolkeltAI : public BossAI
         {
@@ -73,24 +73,24 @@ class boss_lorekeeper_polkelt : public CreatureScript
                 {
                     switch (eventId)
                     {
-                        case EVENT_VOLATILEINFECTION:
-                            DoCastVictim(SPELL_VOLATILEINFECTION, true);
-                            events.ScheduleEvent(EVENT_VOLATILEINFECTION, 32000);
-                            break;
-                        case EVENT_DARKPLAGUE:
-                            DoCastVictim(SPELL_DARKPLAGUE, true);
-                            events.ScheduleEvent(EVENT_DARKPLAGUE, 8000);
-                            break;
-                        case EVENT_CORROSIVEACID:
-                            DoCastVictim(SPELL_CORROSIVEACID, true);
-                            events.ScheduleEvent(EVENT_CORROSIVEACID, 25000);
-                            break;
-                        case EVENT_NOXIOUSCATALYST:
-                            DoCastVictim(SPELL_NOXIOUSCATALYST, true);
-                            events.ScheduleEvent(EVENT_NOXIOUSCATALYST, 38000);
-                            break;
-                        default:
-                            break;
+                    case EVENT_VOLATILEINFECTION:
+                        DoCastVictim(SPELL_VOLATILEINFECTION, true);
+                        events.ScheduleEvent(EVENT_VOLATILEINFECTION, 32000);
+                        break;
+                    case EVENT_DARKPLAGUE:
+                        DoCastVictim(SPELL_DARKPLAGUE, true);
+                        events.ScheduleEvent(EVENT_DARKPLAGUE, 8000);
+                        break;
+                    case EVENT_CORROSIVEACID:
+                        DoCastVictim(SPELL_CORROSIVEACID, true);
+                        events.ScheduleEvent(EVENT_CORROSIVEACID, 25000);
+                        break;
+                    case EVENT_NOXIOUSCATALYST:
+                        DoCastVictim(SPELL_NOXIOUSCATALYST, true);
+                        events.ScheduleEvent(EVENT_NOXIOUSCATALYST, 38000);
+                        break;
+                    default:
+                        break;
                     }
                 }
 

@@ -105,9 +105,9 @@ void CreatureAI::DoZoneInCombat(Creature* creature /*= NULL*/, float maxRangeToN
             /* Causes certain things to never leave the threat list (Priest Lightwell, etc):
             for (Unit::ControlList::const_iterator itr = player->m_Controlled.begin(); itr != player->m_Controlled.end(); ++itr)
             {
-                creature->SetInCombatWith(*itr);
-                (*itr)->SetInCombatWith(creature);
-                creature->AddThreat(*itr, 0.0f);
+            creature->SetInCombatWith(*itr);
+            (*itr)->SetInCombatWith(creature);
+            creature->AddThreat(*itr, 0.0f);
             }*/
         }
     }
@@ -171,8 +171,8 @@ void CreatureAI::EnterEvadeMode()
 
 /*void CreatureAI::AttackedBy(Unit* attacker)
 {
-    if (!me->GetVictim())
-        AttackStart(attacker);
+if (!me->GetVictim())
+AttackStart(attacker);
 }*/
 
 void CreatureAI::SetGazeOn(Unit* target)
@@ -226,7 +226,7 @@ bool CreatureAI::UpdateVictim()
 
 bool CreatureAI::_EnterEvadeMode()
 {
-	if (!me->IsAlive() && me->GetPhaseMask() < 32) // Hackfix, Harry
+    if (!me->IsAlive() && me->GetPhaseMask() < 32) // Hackfix, Harry
         return false;
 
     // don't remove vehicle auras, passengers aren't supposed to drop off the vehicle

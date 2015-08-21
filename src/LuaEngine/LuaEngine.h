@@ -165,8 +165,8 @@ private:
     // Some helpers for hooks to call event handlers.
     // The bodies of the templates are in HookHelpers.h, so if you want to use them you need to #include "HookHelpers.h".
     template<typename T> int SetupStack(EventBind<T>* event_bindings, EntryBind<T>* entry_bindings, UniqueBind<T>* guid_bindings, T event_id, uint32 entry, uint64 guid, uint32 instanceId, int number_of_arguments);
-                         int CallOneFunction(int number_of_functions, int number_of_arguments, int number_of_results);
-                         void CleanUpStack(int number_of_arguments);
+    int CallOneFunction(int number_of_functions, int number_of_arguments, int number_of_results);
+    void CleanUpStack(int number_of_arguments);
     template<typename T> void ReplaceArgument(T value, uint8 index);
     template<typename T> void CallAllFunctions(EventBind<T>* event_bindings, EntryBind<T>* entry_bindings, UniqueBind<T>* guid_bindings, T event_id, uint32 entry, uint64 guid, uint32 instanceId);
     template<typename T> bool CallAllFunctionsBool(EventBind<T>* event_bindings, EntryBind<T>* entry_bindings, UniqueBind<T>* guid_bindings, T event_id, uint32 entry, uint64 guid, uint32 instanceId, bool default_value);

@@ -48,20 +48,20 @@ EndContentData */
 
 enum AshyenAndKeleth
 {
-    GOSSIP_REWARD_BLESS         = 0,
+    GOSSIP_REWARD_BLESS = 0,
 
-    NPC_ASHYEN                  = 17900,
-    NPC_KELETH                  = 17901,
+    NPC_ASHYEN = 17900,
+    NPC_KELETH = 17901,
 
-    SPELL_BLESS_ASH_EXA         = 31815,
-    SPELL_BLESS_ASH_REV         = 31811,
-    SPELL_BLESS_ASH_HON         = 31810,
-    SPELL_BLESS_ASH_FRI         = 31808,
+    SPELL_BLESS_ASH_EXA = 31815,
+    SPELL_BLESS_ASH_REV = 31811,
+    SPELL_BLESS_ASH_HON = 31810,
+    SPELL_BLESS_ASH_FRI = 31808,
 
-    SPELL_BLESS_KEL_EXA         = 31814,
-    SPELL_BLESS_KEL_REV         = 31813,
-    SPELL_BLESS_KEL_HON         = 31812,
-    SPELL_BLESS_KEL_FRI         = 31807
+    SPELL_BLESS_KEL_EXA = 31814,
+    SPELL_BLESS_KEL_REV = 31813,
+    SPELL_BLESS_KEL_HON = 31812,
+    SPELL_BLESS_KEL_FRI = 31807
 };
 
 class npcs_ashyen_and_keleth : public CreatureScript
@@ -74,10 +74,10 @@ public:
         if (player->GetReputationRank(942) > REP_NEUTRAL)
         {
             if (creature->GetEntry() == NPC_ASHYEN)
-                player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_BLESS_ASH, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
+                player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_BLESS_ASH, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
 
             if (creature->GetEntry() == NPC_KELETH)
-                player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_BLESS_KEL, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
+                player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_BLESS_KEL, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
         }
         player->SEND_GOSSIP_MENU(player->GetGossipTextId(creature), creature->GetGUID());
 
@@ -87,7 +87,7 @@ public:
     bool OnGossipSelect(Player* player, Creature* creature, uint32 /*sender*/, uint32 action) override
     {
         player->PlayerTalkClass->ClearMenus();
-        if (action == GOSSIP_ACTION_INFO_DEF+1)
+        if (action == GOSSIP_ACTION_INFO_DEF + 1)
         {
             creature->setPowerType(POWER_MANA);
             creature->SetMaxPower(POWER_MANA, 200);             //set a "fake" mana value, we can't depend on database doing it in this case
@@ -98,20 +98,20 @@ public:
                 uint32 spell = 0;
                 switch (player->GetReputationRank(942))
                 {                                               //mark of lore
-                    case REP_FRIENDLY:
-                        spell = SPELL_BLESS_ASH_FRI;
-                        break;
-                    case REP_HONORED:
-                        spell = SPELL_BLESS_ASH_HON;
-                        break;
-                    case REP_REVERED:
-                        spell = SPELL_BLESS_ASH_REV;
-                        break;
-                    case REP_EXALTED:
-                        spell = SPELL_BLESS_ASH_EXA;
-                        break;
-                    default:
-                        break;
+                case REP_FRIENDLY:
+                    spell = SPELL_BLESS_ASH_FRI;
+                    break;
+                case REP_HONORED:
+                    spell = SPELL_BLESS_ASH_HON;
+                    break;
+                case REP_REVERED:
+                    spell = SPELL_BLESS_ASH_REV;
+                    break;
+                case REP_EXALTED:
+                    spell = SPELL_BLESS_ASH_EXA;
+                    break;
+                default:
+                    break;
                 }
 
                 if (spell)
@@ -126,20 +126,20 @@ public:
                 uint32 spell = 0;
                 switch (player->GetReputationRank(942))         //mark of war
                 {
-                    case REP_FRIENDLY:
-                        spell = SPELL_BLESS_KEL_FRI;
-                        break;
-                    case REP_HONORED:
-                        spell = SPELL_BLESS_KEL_HON;
-                        break;
-                    case REP_REVERED:
-                        spell = SPELL_BLESS_KEL_REV;
-                        break;
-                    case REP_EXALTED:
-                        spell = SPELL_BLESS_KEL_EXA;
-                        break;
-                    default:
-                        break;
+                case REP_FRIENDLY:
+                    spell = SPELL_BLESS_KEL_FRI;
+                    break;
+                case REP_HONORED:
+                    spell = SPELL_BLESS_KEL_HON;
+                    break;
+                case REP_REVERED:
+                    spell = SPELL_BLESS_KEL_REV;
+                    break;
+                case REP_EXALTED:
+                    spell = SPELL_BLESS_KEL_EXA;
+                    break;
+                default:
+                    break;
                 }
 
                 if (spell)
@@ -163,9 +163,9 @@ public:
 
 enum Cooshhooosh
 {
-    SPELL_LIGHTNING_BOLT    = 9532,
-    QUEST_CRACK_SKULLS      = 10009,
-    FACTION_HOSTILE_CO      = 45
+    SPELL_LIGHTNING_BOLT = 9532,
+    QUEST_CRACK_SKULLS = 10009,
+    FACTION_HOSTILE_CO = 45
 };
 
 class npc_cooshcoosh : public CreatureScript
@@ -207,7 +207,8 @@ public:
             {
                 DoCastVictim(SPELL_LIGHTNING_BOLT);
                 LightningBolt_Timer = 5000;
-            } else LightningBolt_Timer -= diff;
+            }
+            else LightningBolt_Timer -= diff;
 
             DoMeleeAttackIfReady();
         }
@@ -268,31 +269,31 @@ public:
         player->PlayerTalkClass->ClearMenus();
         switch (action)
         {
-            case GOSSIP_ACTION_INFO_DEF:
-                player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_KUR2, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
-                player->SEND_GOSSIP_MENU(9227, creature->GetGUID());
-                break;
-            case GOSSIP_ACTION_INFO_DEF + 1:
-                player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_KUR3, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 2);
-                player->SEND_GOSSIP_MENU(9229, creature->GetGUID());
-                break;
-            case GOSSIP_ACTION_INFO_DEF + 2:
-            {
-                if (!player->HasItemCount(24573))
-                {
-                    ItemPosCountVec dest;
-                    uint32 itemId = 24573;
-                    InventoryResult msg = player->CanStoreNewItem(NULL_BAG, NULL_SLOT, dest, itemId, 1, NULL);
-                    if (msg == EQUIP_ERR_OK)
-                    {
-                        player->StoreNewItem(dest, itemId, true);
-                    }
-                    else
-                        player->SendEquipError(msg, NULL, NULL, itemId);
-                }
-                player->SEND_GOSSIP_MENU(9231, creature->GetGUID());
-                break;
-            }
+        case GOSSIP_ACTION_INFO_DEF:
+            player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_KUR2, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
+            player->SEND_GOSSIP_MENU(9227, creature->GetGUID());
+            break;
+        case GOSSIP_ACTION_INFO_DEF + 1:
+            player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_KUR3, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 2);
+            player->SEND_GOSSIP_MENU(9229, creature->GetGUID());
+            break;
+        case GOSSIP_ACTION_INFO_DEF + 2:
+        {
+                                           if (!player->HasItemCount(24573))
+                                           {
+                                               ItemPosCountVec dest;
+                                               uint32 itemId = 24573;
+                                               InventoryResult msg = player->CanStoreNewItem(NULL_BAG, NULL_SLOT, dest, itemId, 1, NULL);
+                                               if (msg == EQUIP_ERR_OK)
+                                               {
+                                                   player->StoreNewItem(dest, itemId, true);
+                                               }
+                                               else
+                                                   player->SendEquipError(msg, NULL, NULL, itemId);
+                                           }
+                                           player->SEND_GOSSIP_MENU(9231, creature->GetGUID());
+                                           break;
+        }
         }
         return true;
     }
@@ -331,14 +332,14 @@ public:
 
 enum Kayra
 {
-    SAY_START           = 0,
-    SAY_AMBUSH1         = 1,
-    SAY_PROGRESS        = 2,
-    SAY_AMBUSH2         = 3,
-    SAY_END             = 4,
+    SAY_START = 0,
+    SAY_AMBUSH1 = 1,
+    SAY_PROGRESS = 2,
+    SAY_AMBUSH2 = 3,
+    SAY_END = 4,
 
-    QUEST_ESCAPE_FROM   = 9752,
-    NPC_SLAVEBINDER     = 18042
+    QUEST_ESCAPE_FROM = 9752,
+    NPC_SLAVEBINDER = 18042
 };
 
 class npc_kayra_longmane : public CreatureScript
@@ -360,27 +361,27 @@ public:
 
             switch (waypointId)
             {
-                case 4:
-                    Talk(SAY_AMBUSH1, player);
-                    DoSpawnCreature(NPC_SLAVEBINDER, -10.0f, -5.0f, 0.0f, 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 30000);
-                    DoSpawnCreature(NPC_SLAVEBINDER, -8.0f, 5.0f, 0.0f, 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 30000);
-                    break;
-                case 5:
-                    Talk(SAY_PROGRESS, player);
-                    SetRun();
-                    break;
-                case 16:
-                    Talk(SAY_AMBUSH2, player);
-                    DoSpawnCreature(NPC_SLAVEBINDER, -10.0f, -5.0f, 0.0f, 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 30000);
-                    DoSpawnCreature(NPC_SLAVEBINDER, -8.0f, 5.0f, 0.0f, 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 30000);
-                    break;
-                case 17:
-                    SetRun(false);
-                    break;
-                case 25:
-                    Talk(SAY_END, player);
-                    player->GroupEventHappens(QUEST_ESCAPE_FROM, me);
-                    break;
+            case 4:
+                Talk(SAY_AMBUSH1, player);
+                DoSpawnCreature(NPC_SLAVEBINDER, -10.0f, -5.0f, 0.0f, 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 30000);
+                DoSpawnCreature(NPC_SLAVEBINDER, -8.0f, 5.0f, 0.0f, 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 30000);
+                break;
+            case 5:
+                Talk(SAY_PROGRESS, player);
+                SetRun();
+                break;
+            case 16:
+                Talk(SAY_AMBUSH2, player);
+                DoSpawnCreature(NPC_SLAVEBINDER, -10.0f, -5.0f, 0.0f, 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 30000);
+                DoSpawnCreature(NPC_SLAVEBINDER, -8.0f, 5.0f, 0.0f, 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 30000);
+                break;
+            case 17:
+                SetRun(false);
+                break;
+            case 25:
+                Talk(SAY_END, player);
+                player->GroupEventHappens(QUEST_ESCAPE_FROM, me);
+                break;
             }
         }
     };
@@ -412,7 +413,7 @@ public:
 
 enum Timothy
 {
-    GOSSIP_TEXTID_TIMOTHY_DANIELS1      = 9239
+    GOSSIP_TEXTID_TIMOTHY_DANIELS1 = 9239
 };
 
 class npc_timothy_daniels : public CreatureScript
@@ -438,12 +439,12 @@ public:
         player->PlayerTalkClass->ClearMenus();
         switch (action)
         {
-            case GOSSIP_ACTION_INFO_DEF+1:
-                player->SEND_GOSSIP_MENU(GOSSIP_TEXTID_TIMOTHY_DANIELS1, creature->GetGUID());
-                break;
-            case GOSSIP_ACTION_TRADE:
-                player->GetSession()->SendListInventory(creature->GetGUID());
-                break;
+        case GOSSIP_ACTION_INFO_DEF + 1:
+            player->SEND_GOSSIP_MENU(GOSSIP_TEXTID_TIMOTHY_DANIELS1, creature->GetGUID());
+            break;
+        case GOSSIP_ACTION_TRADE:
+            player->GetSession()->SendListInventory(creature->GetGUID());
+            break;
         }
 
         return true;

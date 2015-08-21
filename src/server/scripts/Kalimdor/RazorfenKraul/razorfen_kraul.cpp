@@ -26,20 +26,20 @@
 
 enum Willix
 {
-    SAY_READY                   = 0,
-    SAY_POINT                   = 1,
-    SAY_AGGRO1                  = 2,
-    SAY_BLUELEAF                = 3,
-    SAY_DANGER                  = 4,
-    SAY_BAD                     = 5,
-    SAY_THINK                   = 6,
-    SAY_SOON                    = 7,
-    SAY_FINALY                  = 8,
-    SAY_WIN                     = 9,
-    SAY_END                     = 10,
+    SAY_READY = 0,
+    SAY_POINT = 1,
+    SAY_AGGRO1 = 2,
+    SAY_BLUELEAF = 3,
+    SAY_DANGER = 4,
+    SAY_BAD = 5,
+    SAY_THINK = 6,
+    SAY_SOON = 7,
+    SAY_FINALY = 8,
+    SAY_WIN = 9,
+    SAY_END = 10,
 
-    QUEST_WILLIX_THE_IMPORTER   = 1144,
-    ENTRY_BOAR                  = 4514
+    QUEST_WILLIX_THE_IMPORTER = 1144,
+    ENTRY_BOAR = 4514
 };
 
 class npc_willix : public CreatureScript
@@ -69,45 +69,45 @@ public:
 
             switch (waypointId)
             {
-                case 3:
-                    me->HandleEmoteCommand(EMOTE_STATE_POINT);
-                    Talk(SAY_POINT, player);
-                    break;
-                case 4:
-                    me->SummonCreature(ENTRY_BOAR, 2137.66f, 1843.98f, 48.08f, 1.54f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 25000);
-                    break;
-                case 8:
-                    Talk(SAY_BLUELEAF, player);
-                    break;
-                case 9:
-                    Talk(SAY_DANGER, player);
-                    break;
-                case 13:
-                    Talk(SAY_BAD, player);
-                    break;
-                case 14:
-                    me->SummonCreature(ENTRY_BOAR, 2078.91f, 1704.54f, 56.77f, 1.54f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 25000);
-                    break;
-                case 25:
-                    Talk(SAY_THINK, player);
-                    break;
-                case 31:
-                    Talk(SAY_SOON, player);
-                    break;
-                case 42:
-                    Talk(SAY_FINALY, player);
-                    break;
-                case 43:
-                    me->SummonCreature(ENTRY_BOAR, 1956.43f, 1596.97f, 81.75f, 1.54f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 25000);
-                    break;
-                case 45:
-                    Talk(SAY_WIN, player);
-                    me->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
-                    player->GroupEventHappens(QUEST_WILLIX_THE_IMPORTER, me);
-                    break;
-                case 46:
-                    Talk(SAY_END, player);
-                    break;
+            case 3:
+                me->HandleEmoteCommand(EMOTE_STATE_POINT);
+                Talk(SAY_POINT, player);
+                break;
+            case 4:
+                me->SummonCreature(ENTRY_BOAR, 2137.66f, 1843.98f, 48.08f, 1.54f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 25000);
+                break;
+            case 8:
+                Talk(SAY_BLUELEAF, player);
+                break;
+            case 9:
+                Talk(SAY_DANGER, player);
+                break;
+            case 13:
+                Talk(SAY_BAD, player);
+                break;
+            case 14:
+                me->SummonCreature(ENTRY_BOAR, 2078.91f, 1704.54f, 56.77f, 1.54f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 25000);
+                break;
+            case 25:
+                Talk(SAY_THINK, player);
+                break;
+            case 31:
+                Talk(SAY_SOON, player);
+                break;
+            case 42:
+                Talk(SAY_FINALY, player);
+                break;
+            case 43:
+                me->SummonCreature(ENTRY_BOAR, 1956.43f, 1596.97f, 81.75f, 1.54f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 25000);
+                break;
+            case 45:
+                Talk(SAY_WIN, player);
+                me->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
+                player->GroupEventHappens(QUEST_WILLIX_THE_IMPORTER, me);
+                break;
+            case 46:
+                Talk(SAY_END, player);
+                break;
             }
         }
 

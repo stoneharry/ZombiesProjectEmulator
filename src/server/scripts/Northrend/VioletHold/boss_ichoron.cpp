@@ -21,54 +21,54 @@
 
 enum Spells
 {
-    SPELL_DRAINED                               = 59820,
-    SPELL_FRENZY                                = 54312,
-    SPELL_FRENZY_H                              = 59522,
-    SPELL_PROTECTIVE_BUBBLE                     = 54306,
-    SPELL_WATER_BLAST                           = 54237,
-    SPELL_WATER_BLAST_H                         = 59520,
-    SPELL_WATER_BOLT_VOLLEY                     = 54241,
-    SPELL_WATER_BOLT_VOLLEY_H                   = 59521,
-    SPELL_SPLASH                                = 59516,
-    SPELL_WATER_GLOBULE                         = 54268
+    SPELL_DRAINED = 59820,
+    SPELL_FRENZY = 54312,
+    SPELL_FRENZY_H = 59522,
+    SPELL_PROTECTIVE_BUBBLE = 54306,
+    SPELL_WATER_BLAST = 54237,
+    SPELL_WATER_BLAST_H = 59520,
+    SPELL_WATER_BOLT_VOLLEY = 54241,
+    SPELL_WATER_BOLT_VOLLEY_H = 59521,
+    SPELL_SPLASH = 59516,
+    SPELL_WATER_GLOBULE = 54268
 };
 
 enum IchoronCreatures
 {
-    NPC_ICHOR_GLOBULE                           = 29321,
+    NPC_ICHOR_GLOBULE = 29321,
 };
 
 enum Yells
 {
-    SAY_AGGRO                                   = 0,
-    SAY_SLAY                                    = 1,
-    SAY_DEATH                                   = 2,
-    SAY_SPAWN                                   = 3,
-    SAY_ENRAGE                                  = 4,
-    SAY_SHATTER                                 = 5,
-    SAY_BUBBLE                                  = 6
+    SAY_AGGRO = 0,
+    SAY_SLAY = 1,
+    SAY_DEATH = 2,
+    SAY_SPAWN = 3,
+    SAY_ENRAGE = 4,
+    SAY_SHATTER = 5,
+    SAY_BUBBLE = 6
 };
 
 enum Actions
 {
-    ACTION_WATER_ELEMENT_HIT                    = 1,
-    ACTION_WATER_ELEMENT_KILLED                 = 2,
+    ACTION_WATER_ELEMENT_HIT = 1,
+    ACTION_WATER_ELEMENT_KILLED = 2,
 };
 
 /// @todo get those positions from spawn of creature 29326
 #define MAX_SPAWN_LOC 5
-static Position SpawnLoc[MAX_SPAWN_LOC]=
+static Position SpawnLoc[MAX_SPAWN_LOC] =
 {
-    {1840.64f, 795.407f, 44.079f, 1.676f},
-    {1886.24f, 757.733f, 47.750f, 5.201f},
-    {1877.91f, 845.915f, 43.417f, 3.560f},
-    {1918.97f, 850.645f, 47.225f, 4.136f},
-    {1935.50f, 796.224f, 52.492f, 4.224f},
+    { 1840.64f, 795.407f, 44.079f, 1.676f },
+    { 1886.24f, 757.733f, 47.750f, 5.201f },
+    { 1877.91f, 845.915f, 43.417f, 3.560f },
+    { 1918.97f, 850.645f, 47.225f, 4.136f },
+    { 1935.50f, 796.224f, 52.492f, 4.224f },
 };
 
 enum Misc
 {
-    DATA_DEHYDRATION                            = 1
+    DATA_DEHYDRATION = 1
 };
 
 class boss_ichoron : public CreatureScript
@@ -86,7 +86,7 @@ public:
         boss_ichoronAI(Creature* creature) : ScriptedAI(creature), m_waterElements(creature)
         {
             Initialize();
-            instance  = creature->GetInstanceScript();
+            instance = creature->GetInstanceScript();
         }
 
         void Initialize()
@@ -129,11 +129,11 @@ public:
             DoCast(me, SPELL_PROTECTIVE_BUBBLE);
 
             if (GameObject* pDoor = instance->instance->GetGameObject(instance->GetGuidData(DATA_ICHORON_CELL)))
-                if (pDoor->GetGoState() == GO_STATE_READY)
-                {
-                    EnterEvadeMode();
-                    return;
-                }
+            if (pDoor->GetGoState() == GO_STATE_READY)
+            {
+                EnterEvadeMode();
+                return;
+            }
             if (instance->GetData(DATA_WAVE_COUNT) == 6)
                 instance->SetData(DATA_1ST_BOSS_EVENT, IN_PROGRESS);
             else if (instance->GetData(DATA_WAVE_COUNT) == 12)
@@ -161,19 +161,19 @@ public:
 
             switch (param)
             {
-                case ACTION_WATER_ELEMENT_HIT:
-                    me->ModifyHealth(int32(me->CountPctFromMaxHealth(1)));
+            case ACTION_WATER_ELEMENT_HIT:
+                me->ModifyHealth(int32(me->CountPctFromMaxHealth(1)));
 
-                    if (bIsExploded)
-                        DoExplodeCompleted();
+                if (bIsExploded)
+                    DoExplodeCompleted();
 
-                    dehydration = false;
-                    break;
-                case ACTION_WATER_ELEMENT_KILLED:
-                    uint32 damage = me->CountPctFromMaxHealth(3);
-                    me->ModifyHealth(-int32(damage));
-                    me->LowerPlayerDamageReq(damage);
-                    break;
+                dehydration = false;
+                break;
+            case ACTION_WATER_ELEMENT_KILLED:
+                uint32 damage = me->CountPctFromMaxHealth(3);
+                me->ModifyHealth(-int32(damage));
+                me->LowerPlayerDamageReq(damage);
+                break;
             }
         }
 
@@ -237,7 +237,7 @@ public:
                             me->SetVisible(false);
                             for (uint8 i = 0; i < 10; i++)
                             {
-                                int tmp = urand(0, MAX_SPAWN_LOC-1);
+                                int tmp = urand(0, MAX_SPAWN_LOC - 1);
                                 me->SummonCreature(NPC_ICHOR_GLOBULE, SpawnLoc[tmp], TEMPSUMMON_CORPSE_DESPAWN);
                             }
                         }
@@ -248,12 +248,12 @@ public:
                         if (!m_waterElements.empty())
                         {
                             for (SummonList::const_iterator itr = m_waterElements.begin(); itr != m_waterElements.end(); ++itr)
-                                if (Creature* temp = ObjectAccessor::GetCreature(*me, *itr))
-                                    if (temp->IsAlive())
-                                    {
-                                        bIsWaterElementsAlive = true;
-                                        break;
-                                    }
+                            if (Creature* temp = ObjectAccessor::GetCreature(*me, *itr))
+                            if (temp->IsAlive())
+                            {
+                                bIsWaterElementsAlive = true;
+                                break;
+                            }
                         }
 
                         if (!bIsWaterElementsAlive)
@@ -392,8 +392,8 @@ public:
         {
             DoCast(me, SPELL_SPLASH);
             if (Creature* pIchoron = ObjectAccessor::GetCreature(*me, instance->GetGuidData(DATA_ICHORON)))
-                if (pIchoron->AI())
-                    pIchoron->AI()->DoAction(ACTION_WATER_ELEMENT_KILLED);
+            if (pIchoron->AI())
+                pIchoron->AI()->DoAction(ACTION_WATER_ELEMENT_KILLED);
         }
     };
 
@@ -401,22 +401,22 @@ public:
 
 class achievement_dehydration : public AchievementCriteriaScript
 {
-    public:
-        achievement_dehydration() : AchievementCriteriaScript("achievement_dehydration")
-        {
-        }
+public:
+    achievement_dehydration() : AchievementCriteriaScript("achievement_dehydration")
+    {
+    }
 
-        bool OnCheck(Player* /*player*/, Unit* target) override
-        {
-            if (!target)
-                return false;
-
-            if (Creature* Ichoron = target->ToCreature())
-                if (Ichoron->AI()->GetData(DATA_DEHYDRATION))
-                    return true;
-
+    bool OnCheck(Player* /*player*/, Unit* target) override
+    {
+        if (!target)
             return false;
-        }
+
+        if (Creature* Ichoron = target->ToCreature())
+        if (Ichoron->AI()->GetData(DATA_DEHYDRATION))
+            return true;
+
+        return false;
+    }
 };
 
 void AddSC_boss_ichoron()

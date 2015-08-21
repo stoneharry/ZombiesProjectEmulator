@@ -39,10 +39,10 @@ EndContentData */
 
 enum Calvin
 {
-    SAY_COMPLETE        = 0,
-    SPELL_DRINK         = 2639,                             // possibly not correct spell (but iconId is correct)
-    QUEST_590           = 590,
-    FACTION_HOSTILE     = 168
+    SAY_COMPLETE = 0,
+    SPELL_DRINK = 2639,                             // possibly not correct spell (but iconId is correct)
+    QUEST_590 = 590,
+    FACTION_HOSTILE = 168
 };
 
 class npc_calvin_montague : public CreatureScript
@@ -135,20 +135,20 @@ public:
 
                 switch (m_uiPhase)
                 {
-                    case 1:
-                        Talk(SAY_COMPLETE);
-                        ++m_uiPhase;
-                        break;
-                    case 2:
-                        if (Player* player = ObjectAccessor::GetPlayer(*me, m_uiPlayerGUID))
-                            player->AreaExploredOrEventHappens(QUEST_590);
+                case 1:
+                    Talk(SAY_COMPLETE);
+                    ++m_uiPhase;
+                    break;
+                case 2:
+                    if (Player* player = ObjectAccessor::GetPlayer(*me, m_uiPlayerGUID))
+                        player->AreaExploredOrEventHappens(QUEST_590);
 
-                        DoCast(me, SPELL_DRINK, true);
-                        ++m_uiPhase;
-                        break;
-                    case 3:
-                        EnterEvadeMode();
-                        break;
+                    DoCast(me, SPELL_DRINK, true);
+                    ++m_uiPhase;
+                    break;
+                case 3:
+                    EnterEvadeMode();
+                    break;
                 }
 
                 return;
@@ -169,10 +169,10 @@ public:
 
 enum Mausoleum
 {
-    QUEST_ULAG      = 1819,
-    NPC_ULAG        = 6390,
-    GO_TRIGGER      = 104593,
-    GO_DOOR         = 176594
+    QUEST_ULAG = 1819,
+    NPC_ULAG = 6390,
+    GO_TRIGGER = 104593,
+    GO_DOOR = 176594
 };
 
 class go_mausoleum_door : public GameObjectScript
@@ -186,12 +186,12 @@ public:
             return false;
 
         if (!player->FindNearestCreature(NPC_ULAG, 50.0f))
-            if (GameObject* pTrigger = player->FindNearestGameObject(GO_TRIGGER, 30.0f))
-            {
-                pTrigger->SetGoState(GO_STATE_READY);
-                player->SummonCreature(NPC_ULAG, 2390.26f, 336.47f, 40.01f, 2.26f, TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, 300000);
-                return false;
-            }
+        if (GameObject* pTrigger = player->FindNearestGameObject(GO_TRIGGER, 30.0f))
+        {
+            pTrigger->SetGoState(GO_STATE_READY);
+            player->SummonCreature(NPC_ULAG, 2390.26f, 336.47f, 40.01f, 2.26f, TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, 300000);
+            return false;
+        }
 
         return false;
     }

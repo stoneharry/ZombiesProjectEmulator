@@ -55,13 +55,13 @@ void SystemMgr::LoadScriptWaypoints()
         Field* pFields = result->Fetch();
         ScriptPointMove temp;
 
-        temp.uiCreatureEntry   = pFields[0].GetUInt32();
-        uint32 uiEntry          = temp.uiCreatureEntry;
-        temp.uiPointId         = pFields[1].GetUInt32();
-        temp.fX                = pFields[2].GetFloat();
-        temp.fY                = pFields[3].GetFloat();
-        temp.fZ                = pFields[4].GetFloat();
-        temp.uiWaitTime        = pFields[5].GetUInt32();
+        temp.uiCreatureEntry = pFields[0].GetUInt32();
+        uint32 uiEntry = temp.uiCreatureEntry;
+        temp.uiPointId = pFields[1].GetUInt32();
+        temp.fX = pFields[2].GetFloat();
+        temp.fY = pFields[3].GetFloat();
+        temp.fZ = pFields[4].GetFloat();
+        temp.uiWaitTime = pFields[5].GetUInt32();
 
         CreatureTemplate const* pCInfo = sObjectMgr->GetCreatureTemplate(temp.uiCreatureEntry);
 
@@ -76,8 +76,7 @@ void SystemMgr::LoadScriptWaypoints()
 
         m_mPointMoveMap[uiEntry].push_back(temp);
         ++count;
-    }
-    while (result->NextRow());
+    } while (result->NextRow());
 
     TC_LOG_INFO("server.loading", ">> Loaded %u Script Waypoint nodes in %u ms", count, GetMSTimeDiffToNow(oldMSTime));
 }

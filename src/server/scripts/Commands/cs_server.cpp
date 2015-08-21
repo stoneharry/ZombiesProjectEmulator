@@ -40,59 +40,59 @@ public:
         static ChatCommand serverIdleRestartCommandTable[] =
         {
             { "cancel", rbac::RBAC_PERM_COMMAND_SERVER_IDLERESTART_CANCEL, true, &HandleServerShutDownCancelCommand, "", NULL },
-            { ""   ,    rbac::RBAC_PERM_COMMAND_SERVER_IDLERESTART,        true, &HandleServerIdleRestartCommand,    "", NULL },
-            { NULL,     0,                                          false, NULL,                               "", NULL }
+            { "", rbac::RBAC_PERM_COMMAND_SERVER_IDLERESTART, true, &HandleServerIdleRestartCommand, "", NULL },
+            { NULL, 0, false, NULL, "", NULL }
         };
 
         static ChatCommand serverIdleShutdownCommandTable[] =
         {
             { "cancel", rbac::RBAC_PERM_COMMAND_SERVER_IDLESHUTDOWN_CANCEL, true, &HandleServerShutDownCancelCommand, "", NULL },
-            { ""   ,    rbac::RBAC_PERM_COMMAND_SERVER_IDLESHUTDOWN,        true, &HandleServerIdleShutDownCommand,   "", NULL },
-            { NULL,     0,                                           false, NULL,                               "", NULL }
+            { "", rbac::RBAC_PERM_COMMAND_SERVER_IDLESHUTDOWN, true, &HandleServerIdleShutDownCommand, "", NULL },
+            { NULL, 0, false, NULL, "", NULL }
         };
 
         static ChatCommand serverRestartCommandTable[] =
         {
             { "cancel", rbac::RBAC_PERM_COMMAND_SERVER_RESTART_CANCEL, true, &HandleServerShutDownCancelCommand, "", NULL },
-            { ""   ,    rbac::RBAC_PERM_COMMAND_SERVER_RESTART,        true, &HandleServerRestartCommand,        "", NULL },
-            { NULL,     0,                                      false, NULL,                               "", NULL }
+            { "", rbac::RBAC_PERM_COMMAND_SERVER_RESTART, true, &HandleServerRestartCommand, "", NULL },
+            { NULL, 0, false, NULL, "", NULL }
         };
 
         static ChatCommand serverShutdownCommandTable[] =
         {
             { "cancel", rbac::RBAC_PERM_COMMAND_SERVER_SHUTDOWN_CANCEL, true, &HandleServerShutDownCancelCommand, "", NULL },
-            { ""   ,    rbac::RBAC_PERM_COMMAND_SERVER_SHUTDOWN,        true, &HandleServerShutDownCommand,       "", NULL },
-            { NULL,     0,                                       false, NULL,                               "", NULL }
+            { "", rbac::RBAC_PERM_COMMAND_SERVER_SHUTDOWN, true, &HandleServerShutDownCommand, "", NULL },
+            { NULL, 0, false, NULL, "", NULL }
         };
 
         static ChatCommand serverSetCommandTable[] =
         {
             { "difftime", rbac::RBAC_PERM_COMMAND_SERVER_SET_DIFFTIME, true, &HandleServerSetDiffTimeCommand, "", NULL },
             { "loglevel", rbac::RBAC_PERM_COMMAND_SERVER_SET_LOGLEVEL, true, &HandleServerSetLogLevelCommand, "", NULL },
-            { "motd",     rbac::RBAC_PERM_COMMAND_SERVER_SET_MOTD,     true, &HandleServerSetMotdCommand,     "", NULL },
-            { "closed",   rbac::RBAC_PERM_COMMAND_SERVER_SET_CLOSED,   true, &HandleServerSetClosedCommand,   "", NULL },
-            { NULL,       0,                                false, NULL,                            "", NULL }
+            { "motd", rbac::RBAC_PERM_COMMAND_SERVER_SET_MOTD, true, &HandleServerSetMotdCommand, "", NULL },
+            { "closed", rbac::RBAC_PERM_COMMAND_SERVER_SET_CLOSED, true, &HandleServerSetClosedCommand, "", NULL },
+            { NULL, 0, false, NULL, "", NULL }
         };
 
         static ChatCommand serverCommandTable[] =
         {
-            { "corpses",      rbac::RBAC_PERM_COMMAND_SERVER_CORPSES,      true, &HandleServerCorpsesCommand, "", NULL },
-            { "exit",         rbac::RBAC_PERM_COMMAND_SERVER_EXIT,         true, &HandleServerExitCommand,    "", NULL },
-            { "idlerestart",  rbac::RBAC_PERM_COMMAND_SERVER_IDLERESTART,  true, NULL,                        "", serverIdleRestartCommandTable },
-            { "idleshutdown", rbac::RBAC_PERM_COMMAND_SERVER_IDLESHUTDOWN, true, NULL,                        "", serverIdleShutdownCommandTable },
-            { "info",         rbac::RBAC_PERM_COMMAND_SERVER_INFO,         true, &HandleServerInfoCommand,    "", NULL },
-            { "motd",         rbac::RBAC_PERM_COMMAND_SERVER_MOTD,         true, &HandleServerMotdCommand,    "", NULL },
-            { "plimit",       rbac::RBAC_PERM_COMMAND_SERVER_PLIMIT,       true, &HandleServerPLimitCommand,  "", NULL },
-            { "restart",      rbac::RBAC_PERM_COMMAND_SERVER_RESTART,      true, NULL,                        "", serverRestartCommandTable },
-            { "shutdown",     rbac::RBAC_PERM_COMMAND_SERVER_SHUTDOWN,     true, NULL,                        "", serverShutdownCommandTable },
-            { "set",          rbac::RBAC_PERM_COMMAND_SERVER_SET,          true, NULL,                        "", serverSetCommandTable },
-            { NULL,           0,                                    false, NULL,                        "", NULL }
+            { "corpses", rbac::RBAC_PERM_COMMAND_SERVER_CORPSES, true, &HandleServerCorpsesCommand, "", NULL },
+            { "exit", rbac::RBAC_PERM_COMMAND_SERVER_EXIT, true, &HandleServerExitCommand, "", NULL },
+            { "idlerestart", rbac::RBAC_PERM_COMMAND_SERVER_IDLERESTART, true, NULL, "", serverIdleRestartCommandTable },
+            { "idleshutdown", rbac::RBAC_PERM_COMMAND_SERVER_IDLESHUTDOWN, true, NULL, "", serverIdleShutdownCommandTable },
+            { "info", rbac::RBAC_PERM_COMMAND_SERVER_INFO, true, &HandleServerInfoCommand, "", NULL },
+            { "motd", rbac::RBAC_PERM_COMMAND_SERVER_MOTD, true, &HandleServerMotdCommand, "", NULL },
+            { "plimit", rbac::RBAC_PERM_COMMAND_SERVER_PLIMIT, true, &HandleServerPLimitCommand, "", NULL },
+            { "restart", rbac::RBAC_PERM_COMMAND_SERVER_RESTART, true, NULL, "", serverRestartCommandTable },
+            { "shutdown", rbac::RBAC_PERM_COMMAND_SERVER_SHUTDOWN, true, NULL, "", serverShutdownCommandTable },
+            { "set", rbac::RBAC_PERM_COMMAND_SERVER_SET, true, NULL, "", serverSetCommandTable },
+            { NULL, 0, false, NULL, "", NULL }
         };
 
-         static ChatCommand commandTable[] =
+        static ChatCommand commandTable[] =
         {
             { "server", rbac::RBAC_PERM_COMMAND_SERVER, true, NULL, "", serverCommandTable },
-            { NULL,     0,                       false, NULL, "", NULL }
+            { NULL, 0, false, NULL, "", NULL }
         };
         return commandTable;
     }
@@ -106,14 +106,14 @@ public:
 
     static bool HandleServerInfoCommand(ChatHandler* handler, char const* /*args*/)
     {
-        uint32 playersNum           = sWorld->GetPlayerCount();
-        uint32 maxPlayersNum        = sWorld->GetMaxPlayerCount();
-        uint32 activeClientsNum     = sWorld->GetActiveSessionCount();
-        uint32 queuedClientsNum     = sWorld->GetQueuedSessionCount();
-        uint32 maxActiveClientsNum  = sWorld->GetMaxActiveSessionCount();
-        uint32 maxQueuedClientsNum  = sWorld->GetMaxQueuedSessionCount();
-        std::string uptime          = secsToTimeString(sWorld->GetUptime());
-        uint32 updateTime           = sWorld->GetUpdateTime();
+        uint32 playersNum = sWorld->GetPlayerCount();
+        uint32 maxPlayersNum = sWorld->GetMaxPlayerCount();
+        uint32 activeClientsNum = sWorld->GetActiveSessionCount();
+        uint32 queuedClientsNum = sWorld->GetQueuedSessionCount();
+        uint32 maxActiveClientsNum = sWorld->GetMaxActiveSessionCount();
+        uint32 maxQueuedClientsNum = sWorld->GetMaxQueuedSessionCount();
+        std::string uptime = secsToTimeString(sWorld->GetUptime());
+        uint32 updateTime = sWorld->GetUpdateTime();
 
         handler->SendSysMessage(_FULLVERSION);
         handler->PSendSysMessage(LANG_CONNECTED_PLAYERS, playersNum, maxPlayersNum);
@@ -171,21 +171,21 @@ public:
         char const* secName = "";
         switch (allowedAccountType)
         {
-            case SEC_PLAYER:
-                secName = "Player";
-                break;
-            case SEC_MODERATOR:
-                secName = "Moderator";
-                break;
-            case SEC_GAMEMASTER:
-                secName = "Gamemaster";
-                break;
-            case SEC_ADMINISTRATOR:
-                secName = "Administrator";
-                break;
-            default:
-                secName = "<unknown>";
-                break;
+        case SEC_PLAYER:
+            secName = "Player";
+            break;
+        case SEC_MODERATOR:
+            secName = "Moderator";
+            break;
+        case SEC_GAMEMASTER:
+            secName = "Gamemaster";
+            break;
+        case SEC_ADMINISTRATOR:
+            secName = "Administrator";
+            break;
+        default:
+            secName = "<unknown>";
+            break;
         }
         handler->PSendSysMessage("Player limits: amount %u, min. security level %s.", playerAmountLimit, secName);
 
@@ -352,8 +352,8 @@ private:
 
         int32 exitCode = defaultExitCode;
         if (exitCodeStr)
-            if (!ParseExitCode(exitCodeStr, exitCode))
-                return false;
+        if (!ParseExitCode(exitCodeStr, exitCode))
+            return false;
 
         sWorld->ShutdownServ(delay, shutdownMask, static_cast<uint8>(exitCode), std::string(reason));
 

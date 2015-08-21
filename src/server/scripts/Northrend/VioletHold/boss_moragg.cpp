@@ -22,8 +22,8 @@
 //Spells
 enum Spells
 {
-    SPELL_CORROSIVE_SALIVA                     = 54527,
-    SPELL_OPTIC_LINK                           = 54396
+    SPELL_CORROSIVE_SALIVA = 54527,
+    SPELL_OPTIC_LINK = 54396
 };
 
 class boss_moragg : public CreatureScript
@@ -68,11 +68,11 @@ public:
         void EnterCombat(Unit* /*who*/) override
         {
             if (GameObject* pDoor = instance->instance->GetGameObject(instance->GetGuidData(DATA_MORAGG_CELL)))
-                if (pDoor->GetGoState() == GO_STATE_READY)
-                {
-                    EnterEvadeMode();
-                    return;
-                }
+            if (pDoor->GetGoState() == GO_STATE_READY)
+            {
+                EnterEvadeMode();
+                return;
+            }
             if (instance->GetData(DATA_WAVE_COUNT) == 6)
                 instance->SetData(DATA_1ST_BOSS_EVENT, IN_PROGRESS);
             else if (instance->GetData(DATA_WAVE_COUNT) == 12)
@@ -107,13 +107,15 @@ public:
                 if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
                     DoCast(target, SPELL_OPTIC_LINK);
                 uiOpticLinkTimer = 15000;
-            } else uiOpticLinkTimer -= diff;
+            }
+            else uiOpticLinkTimer -= diff;
 
             if (uiCorrosiveSalivaTimer <= diff)
             {
                 DoCastVictim(SPELL_CORROSIVE_SALIVA);
                 uiCorrosiveSalivaTimer = 10000;
-            } else uiCorrosiveSalivaTimer -= diff;
+            }
+            else uiCorrosiveSalivaTimer -= diff;
 
             DoMeleeAttackIfReady();
         }

@@ -151,7 +151,7 @@ bool DBUpdater<T>::CheckExecutable()
     if (!exists(exe))
     {
         // Check for mysql in path
-        std::vector<std::string> args = {"--version"};
+        std::vector<std::string> args = { "--version" };
         uint32 ret;
         try
         {
@@ -237,7 +237,7 @@ bool DBUpdater<T>::Update(DatabaseWorkerPool<T>& pool)
 
     UpdateFetcher updateFetcher(sourceDirectory, [&](std::string const& query) { DBUpdater<T>::Apply(pool, query); },
         [&](Path const& file) { DBUpdater<T>::ApplyFile(pool, file); },
-            [&](std::string const& query) -> QueryResult { return DBUpdater<T>::Retrieve(pool, query); });
+        [&](std::string const& query) -> QueryResult { return DBUpdater<T>::Retrieve(pool, query); });
 
     uint32 count;
     try
@@ -287,19 +287,19 @@ bool DBUpdater<T>::Populate(DatabaseWorkerPool<T>& pool)
     {
         switch (DBUpdater<T>::GetBaseLocationType())
         {
-            case LOCATION_REPOSITORY:
-            {
-                TC_LOG_ERROR("sql.updates", ">> Base file \"%s\" is missing, try to clone the source again.",
-                    base.generic_string().c_str());
+        case LOCATION_REPOSITORY:
+        {
+                                    TC_LOG_ERROR("sql.updates", ">> Base file \"%s\" is missing, try to clone the source again.",
+                                        base.generic_string().c_str());
 
-                break;
-            }
-            case LOCATION_DOWNLOAD:
-            {
-                TC_LOG_ERROR("sql.updates", ">> File \"%s\" is missing, download it from \"http://www.trinitycore.org/f/files/category/1-database/\"" \
-                    " and place it in your server directory.", base.filename().generic_string().c_str());
-                break;
-            }
+                                    break;
+        }
+        case LOCATION_DOWNLOAD:
+        {
+                                  TC_LOG_ERROR("sql.updates", ">> File \"%s\" is missing, download it from \"http://www.trinitycore.org/f/files/category/1-database/\"" \
+                                      " and place it in your server directory.", base.filename().generic_string().c_str());
+                                  break;
+        }
         }
         return false;
     }
@@ -368,8 +368,8 @@ void DBUpdater<T>::ApplyFile(DatabaseWorkerPool<T>& pool, std::string const& hos
     try
     {
         child c = execute(run_exe(DBUpdater<T>::GetMySqlCli().empty() ? "mysql" :
-                boost::filesystem::absolute(DBUpdater<T>::GetMySqlCli()).generic_string()),
-                    set_args(args), bind_stdin(source), throw_on_error());
+            boost::filesystem::absolute(DBUpdater<T>::GetMySqlCli()).generic_string()),
+            set_args(args), bind_stdin(source), throw_on_error());
 
         ret = wait_for_exit(c);
     }

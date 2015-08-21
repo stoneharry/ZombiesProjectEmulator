@@ -34,15 +34,15 @@
 
 enum Spells
 {
-    SPELL_ACID_CLOUD                              = 53400, // Victim
-    SPELL_LEECH_POISON                            = 53030, // Victim
-    SPELL_PIERCE_ARMOR                            = 53418, // Victim
-    SPELL_WEB_GRAB                                = 57731, // Victim
-    SPELL_WEB_FRONT_DOORS                         = 53177, // Self
-    SPELL_WEB_SIDE_DOORS                          = 53185, // Self
-    H_SPELL_ACID_CLOUD                            = 59419,
-    H_SPELL_LEECH_POISON                          = 59417,
-    H_SPELL_WEB_GRAB                              = 59421
+    SPELL_ACID_CLOUD = 53400, // Victim
+    SPELL_LEECH_POISON = 53030, // Victim
+    SPELL_PIERCE_ARMOR = 53418, // Victim
+    SPELL_WEB_GRAB = 57731, // Victim
+    SPELL_WEB_FRONT_DOORS = 53177, // Self
+    SPELL_WEB_SIDE_DOORS = 53185, // Self
+    H_SPELL_ACID_CLOUD = 59419,
+    H_SPELL_LEECH_POISON = 59417,
+    H_SPELL_WEB_GRAB = 59421
 };
 
 class boss_hadronox : public CreatureScript
@@ -122,11 +122,11 @@ public:
             if (!me->IsInCombat())
                 return;
 
-            float x=0.0f, y=0.0f, z=0.0f;
+            float x = 0.0f, y = 0.0f, z = 0.0f;
             me->GetRespawnPosition(x, y, z);
 
             if (uiCheckDistanceTimer <= uiDiff)
-                uiCheckDistanceTimer = 5*IN_MILLISECONDS;
+                uiCheckDistanceTimer = 5 * IN_MILLISECONDS;
             else
             {
                 uiCheckDistanceTimer -= uiDiff;
@@ -158,37 +158,42 @@ public:
             if (uiPierceTimer <= diff)
             {
                 DoCastVictim(SPELL_PIERCE_ARMOR);
-                uiPierceTimer = 8*IN_MILLISECONDS;
-            } else uiPierceTimer -= diff;
+                uiPierceTimer = 8 * IN_MILLISECONDS;
+            }
+            else uiPierceTimer -= diff;
 
             if (uiAcidTimer <= diff)
             {
                 if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
                     DoCast(target, SPELL_ACID_CLOUD);
 
-                uiAcidTimer = urand(20*IN_MILLISECONDS, 30*IN_MILLISECONDS);
-            } else uiAcidTimer -= diff;
+                uiAcidTimer = urand(20 * IN_MILLISECONDS, 30 * IN_MILLISECONDS);
+            }
+            else uiAcidTimer -= diff;
 
             if (uiLeechTimer <= diff)
             {
                 if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
                     DoCast(target, SPELL_LEECH_POISON);
 
-                uiLeechTimer = urand(11*IN_MILLISECONDS, 14*IN_MILLISECONDS);
-            } else uiLeechTimer -= diff;
+                uiLeechTimer = urand(11 * IN_MILLISECONDS, 14 * IN_MILLISECONDS);
+            }
+            else uiLeechTimer -= diff;
 
             if (uiGrabTimer <= diff)
             {
                 if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0)) // Draws all players (and attacking Mobs) to itself.
                     DoCast(target, SPELL_WEB_GRAB);
 
-                uiGrabTimer = urand(15*IN_MILLISECONDS, 30*IN_MILLISECONDS);
-            } else uiGrabTimer -= diff;
+                uiGrabTimer = urand(15 * IN_MILLISECONDS, 30 * IN_MILLISECONDS);
+            }
+            else uiGrabTimer -= diff;
 
             if (uiDoorsTimer <= diff)
             {
-                uiDoorsTimer = urand(30*IN_MILLISECONDS, 60*IN_MILLISECONDS);
-            } else uiDoorsTimer -= diff;
+                uiDoorsTimer = urand(30 * IN_MILLISECONDS, 60 * IN_MILLISECONDS);
+            }
+            else uiDoorsTimer -= diff;
 
             DoMeleeAttackIfReady();
         }

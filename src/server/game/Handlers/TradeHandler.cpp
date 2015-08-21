@@ -37,23 +37,23 @@ void WorldSession::SendTradeStatus(TradeStatusInfo const& info)
 
     switch (info.Status)
     {
-        case TRADE_STATUS_BEGIN_TRADE:
-            data << uint64(info.TraderGuid);                // CGTradeInfo::m_tradingPlayer
-            break;
-        case TRADE_STATUS_OPEN_WINDOW:
-            data << uint32(0);                              // CGTradeInfo::m_tradeID
-            break;
-        case TRADE_STATUS_CLOSE_WINDOW:
-            data << uint32(info.Result);                    // InventoryResult
-            data << uint8(info.IsTargetResult);             // bool isTargetError; used for: EQUIP_ERR_BAG_FULL, EQUIP_ERR_CANT_CARRY_MORE_OF_THIS, EQUIP_ERR_MISSING_REAGENT, EQUIP_ERR_ITEM_MAX_LIMIT_CATEGORY_COUNT_EXCEEDED
-            data << uint32(info.ItemLimitCategoryId);       // ItemLimitCategory.dbc entry
-            break;
-        case TRADE_STATUS_WRONG_REALM:
-        case TRADE_STATUS_NOT_ON_TAPLIST:
-            data << uint8(info.Slot);                       // Trade slot; -1 here clears CGTradeInfo::m_tradeMoney
-            break;
-        default:
-            break;
+    case TRADE_STATUS_BEGIN_TRADE:
+        data << uint64(info.TraderGuid);                // CGTradeInfo::m_tradingPlayer
+        break;
+    case TRADE_STATUS_OPEN_WINDOW:
+        data << uint32(0);                              // CGTradeInfo::m_tradeID
+        break;
+    case TRADE_STATUS_CLOSE_WINDOW:
+        data << uint32(info.Result);                    // InventoryResult
+        data << uint8(info.IsTargetResult);             // bool isTargetError; used for: EQUIP_ERR_BAG_FULL, EQUIP_ERR_CANT_CARRY_MORE_OF_THIS, EQUIP_ERR_MISSING_REAGENT, EQUIP_ERR_ITEM_MAX_LIMIT_CATEGORY_COUNT_EXCEEDED
+        data << uint32(info.ItemLimitCategoryId);       // ItemLimitCategory.dbc entry
+        break;
+    case TRADE_STATUS_WRONG_REALM:
+    case TRADE_STATUS_NOT_ON_TAPLIST:
+        data << uint8(info.Slot);                       // Trade slot; -1 here clears CGTradeInfo::m_tradeMoney
+        break;
+    default:
+        break;
     }
 
     SendPacket(&data);
@@ -75,7 +75,7 @@ void WorldSession::SendUpdateTrade(bool trader_data /*= true*/)
 {
     TradeData* view_trade = trader_data ? _player->GetTradeData()->GetTraderData() : _player->GetTradeData();
 
-    WorldPacket data(SMSG_TRADE_STATUS_EXTENDED, 1+4+4+4+4+4+7*(1+4+4+4+4+8+4+4+4+4+8+4+4+4+4+4+4));
+    WorldPacket data(SMSG_TRADE_STATUS_EXTENDED, 1 + 4 + 4 + 4 + 4 + 4 + 7 * (1 + 4 + 4 + 4 + 4 + 8 + 4 + 4 + 4 + 4 + 8 + 4 + 4 + 4 + 4 + 4 + 4));
     data << uint8(trader_data);                             // 1 means traders data, 0 means own
     data << uint32(0);                                      // CGTradeInfo::m_tradeID
     data << uint32(TRADE_SLOT_COUNT);                       // trade slots count/number?, = next field in most cases
@@ -92,22 +92,22 @@ void WorldSession::SendUpdateTrade(bool trader_data /*= true*/)
             data << uint32(item->GetTemplate()->ItemId);       // entry
             data << uint32(item->GetTemplate()->DisplayInfoID);// display id
             data << uint32(item->GetCount());               // stack count
-                                                            // wrapped: hide stats but show giftcreator name
+            // wrapped: hide stats but show giftcreator name
             data << uint32(item->HasFlag(ITEM_FIELD_FLAGS, ITEM_FLAG_WRAPPED) ? 1 : 0);
             data << uint64(item->GetGuidValue(ITEM_FIELD_GIFTCREATOR));
-                                                            // perm. enchantment and gems
+            // perm. enchantment and gems
             data << uint32(item->GetEnchantmentId(PERM_ENCHANTMENT_SLOT));
-            for (uint32 enchant_slot = SOCK_ENCHANTMENT_SLOT; enchant_slot < SOCK_ENCHANTMENT_SLOT+MAX_GEM_SOCKETS; ++enchant_slot)
+            for (uint32 enchant_slot = SOCK_ENCHANTMENT_SLOT; enchant_slot < SOCK_ENCHANTMENT_SLOT + MAX_GEM_SOCKETS; ++enchant_slot)
                 data << uint32(item->GetEnchantmentId(EnchantmentSlot(enchant_slot)));
-                                                            // creator
+            // creator
             data << uint64(item->GetGuidValue(ITEM_FIELD_CREATOR));
             data << uint32(item->GetSpellCharges());        // charges
             data << uint32(item->GetItemSuffixFactor());    // SuffixFactor
             data << uint32(item->GetItemRandomPropertyId());// random properties id
             data << uint32(item->GetTemplate()->LockID);       // lock id
-                                                            // max durability
+            // max durability
             data << uint32(item->GetUInt32Value(ITEM_FIELD_MAXDURABILITY));
-                                                            // durability
+            // durability
             data << uint32(item->GetUInt32Value(ITEM_FIELD_DURABILITY));
         }
         else
@@ -153,7 +153,7 @@ void WorldSession::moveItems(Item* myItems[], Item* hisItems[])
 
                 // adjust time (depends on /played)
                 if (myItems[i]->HasFlag(ITEM_FIELD_FLAGS, ITEM_FLAG_BOP_TRADEABLE))
-                    myItems[i]->SetUInt32Value(ITEM_FIELD_CREATE_PLAYED_TIME, trader->GetTotalPlayedTime()-(_player->GetTotalPlayedTime()-myItems[i]->GetUInt32Value(ITEM_FIELD_CREATE_PLAYED_TIME)));
+                    myItems[i]->SetUInt32Value(ITEM_FIELD_CREATE_PLAYED_TIME, trader->GetTotalPlayedTime() - (_player->GetTotalPlayedTime() - myItems[i]->GetUInt32Value(ITEM_FIELD_CREATE_PLAYED_TIME)));
                 // store
                 trader->MoveItemToInventory(traderDst, myItems[i], true, true);
             }
@@ -171,7 +171,7 @@ void WorldSession::moveItems(Item* myItems[], Item* hisItems[])
 
                 // adjust time (depends on /played)
                 if (hisItems[i]->HasFlag(ITEM_FIELD_FLAGS, ITEM_FLAG_BOP_TRADEABLE))
-                    hisItems[i]->SetUInt32Value(ITEM_FIELD_CREATE_PLAYED_TIME, _player->GetTotalPlayedTime()-(trader->GetTotalPlayedTime()-hisItems[i]->GetUInt32Value(ITEM_FIELD_CREATE_PLAYED_TIME)));
+                    hisItems[i]->SetUInt32Value(ITEM_FIELD_CREATE_PLAYED_TIME, _player->GetTotalPlayedTime() - (trader->GetTotalPlayedTime() - hisItems[i]->GetUInt32Value(ITEM_FIELD_CREATE_PLAYED_TIME)));
                 // store
                 _player->MoveItemToInventory(playerDst, hisItems[i], true, true);
             }
@@ -260,7 +260,7 @@ void WorldSession::HandleAcceptTradeOpcode(WorldPacket& /*recvPacket*/)
     if (!his_trade)
         return;
 
-    Item* myItems[TRADE_SLOT_TRADED_COUNT]  = { NULL, NULL, NULL, NULL, NULL, NULL };
+    Item* myItems[TRADE_SLOT_TRADED_COUNT] = { NULL, NULL, NULL, NULL, NULL, NULL };
     Item* hisItems[TRADE_SLOT_TRADED_COUNT] = { NULL, NULL, NULL, NULL, NULL, NULL };
 
     // set before checks for propertly undo at problems (it already set in to client)
@@ -678,7 +678,7 @@ void WorldSession::HandleInitiateTradeOpcode(WorldPacket& recvPacket)
 
     if (pOther->GetTeam() != _player->GetTeam() &&
         (!sWorld->getBoolConfig(CONFIG_ALLOW_TWO_SIDE_TRADE) &&
-         !GetPlayer()->GetSession()->HasPermission(rbac::RBAC_PERM_ALLOW_TWO_SIDE_TRADE)))
+        !GetPlayer()->GetSession()->HasPermission(rbac::RBAC_PERM_ALLOW_TWO_SIDE_TRADE)))
     {
         info.Status = TRADE_STATUS_WRONG_FACTION;
         SendTradeStatus(info);

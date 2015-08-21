@@ -355,8 +355,8 @@ Transport* TransportMgr::CreateTransport(uint32 entry, uint32 guid /*= 0*/, Map*
     {
         // SetZoneScript() is called after adding to map, so fetch the script using map
         if (map->IsDungeon())
-            if (InstanceScript* instance = static_cast<InstanceMap*>(map)->GetInstanceScript())
-                entry = instance->GetGameObjectEntry(0, entry);
+        if (InstanceScript* instance = static_cast<InstanceMap*>(map)->GetInstanceScript())
+            entry = instance->GetGameObjectEntry(0, entry);
 
         if (!entry)
             return NULL;
@@ -428,9 +428,9 @@ void TransportMgr::SpawnContinentTransports()
             uint32 entry = fields[1].GetUInt32();
 
             if (TransportTemplate const* tInfo = GetTransportTemplate(entry))
-                if (!tInfo->inInstance)
-                    if (CreateTransport(entry, guid))
-                        ++count;
+            if (!tInfo->inInstance)
+            if (CreateTransport(entry, guid))
+                ++count;
 
         } while (result->NextRow());
     }
@@ -457,8 +457,8 @@ TransportAnimationEntry const* TransportAnimation::GetAnimNode(uint32 time) cons
         return NULL;
 
     for (TransportPathContainer::const_reverse_iterator itr2 = Path.rbegin(); itr2 != Path.rend(); ++itr2)
-        if (time >= itr2->first)
-            return itr2->second;
+    if (time >= itr2->first)
+        return itr2->second;
 
     return Path.begin()->second;
 }

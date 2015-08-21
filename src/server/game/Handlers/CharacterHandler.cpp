@@ -52,15 +52,15 @@
 
 class LoginQueryHolder : public SQLQueryHolder
 {
-    private:
-        uint32 m_accountId;
-        ObjectGuid m_guid;
-    public:
-        LoginQueryHolder(uint32 accountId, ObjectGuid guid)
-            : m_accountId(accountId), m_guid(guid) { }
-        ObjectGuid GetGuid() const { return m_guid; }
-        uint32 GetAccountId() const { return m_accountId; }
-        bool Initialize();
+private:
+    uint32 m_accountId;
+    ObjectGuid m_guid;
+public:
+    LoginQueryHolder(uint32 accountId, ObjectGuid guid)
+        : m_accountId(accountId), m_guid(guid) { }
+    ObjectGuid GetGuid() const { return m_guid; }
+    uint32 GetAccountId() const { return m_accountId; }
+    bool Initialize();
 };
 
 bool LoginQueryHolder::Initialize()
@@ -234,8 +234,7 @@ void WorldSession::HandleCharEnum(PreparedQueryResult result)
                     sWorld->AddCharacterNameData(guid, (*result)[1].GetString(), (*result)[4].GetUInt8(), (*result)[2].GetUInt8(), (*result)[3].GetUInt8(), (*result)[7].GetUInt8());
                 ++num;
             }
-        }
-        while (result->NextRow());
+        } while (result->NextRow());
     }
 
     data.put<uint8>(0, num);
@@ -267,15 +266,15 @@ void WorldSession::HandleCharCreateOpcode(WorldPacket& recvData)
     CharacterCreateInfo createInfo;
 
     recvData >> createInfo.Name
-             >> createInfo.Race
-             >> createInfo.Class
-             >> createInfo.Gender
-             >> createInfo.Skin
-             >> createInfo.Face
-             >> createInfo.HairStyle
-             >> createInfo.HairColor
-             >> createInfo.FacialHair
-             >> createInfo.OutfitId;
+        >> createInfo.Race
+        >> createInfo.Class
+        >> createInfo.Gender
+        >> createInfo.Skin
+        >> createInfo.Face
+        >> createInfo.HairStyle
+        >> createInfo.HairColor
+        >> createInfo.FacialHair
+        >> createInfo.OutfitId;
 
     if (!HasPermission(rbac::RBAC_PERM_SKIP_CHECK_CHARACTER_CREATION_TEAMMASK))
     {
@@ -285,12 +284,12 @@ void WorldSession::HandleCharCreateOpcode(WorldPacket& recvData)
 
             switch (Player::TeamForRace(createInfo.Race))
             {
-                case ALLIANCE:
-                    disabled = (mask & (1 << 0)) != 0;
-                    break;
-                case HORDE:
-                    disabled = (mask & (1 << 1)) != 0;
-                    break;
+            case ALLIANCE:
+                disabled = (mask & (1 << 0)) != 0;
+                break;
+            case HORDE:
+                disabled = (mask & (1 << 1)) != 0;
+                break;
             }
 
             if (disabled)
@@ -407,249 +406,249 @@ void WorldSession::HandleCharCreateCallback(PreparedQueryResult result, Characte
     /** This is a series of callbacks executed consecutively as a result from the database becomes available.
         This is much more efficient than synchronous requests on packet handler, and much less DoS prone.
         It also prevents data syncrhonisation errors.
-    */
+        */
     switch (_charCreateCallback.GetStage())
     {
-        case 0:
-        {
-            if (result)
-            {
-                SendCharCreate(CHAR_CREATE_NAME_IN_USE);
-                delete createInfo;
-                _charCreateCallback.Reset();
-                return;
-            }
+    case 0:
+    {
+              if (result)
+              {
+                  SendCharCreate(CHAR_CREATE_NAME_IN_USE);
+                  delete createInfo;
+                  _charCreateCallback.Reset();
+                  return;
+              }
 
-            ASSERT(_charCreateCallback.GetParam() == createInfo);
+              ASSERT(_charCreateCallback.GetParam() == createInfo);
 
-            PreparedStatement* stmt = LoginDatabase.GetPreparedStatement(LOGIN_SEL_SUM_REALM_CHARACTERS);
-            stmt->setUInt32(0, GetAccountId());
+              PreparedStatement* stmt = LoginDatabase.GetPreparedStatement(LOGIN_SEL_SUM_REALM_CHARACTERS);
+              stmt->setUInt32(0, GetAccountId());
 
-            _charCreateCallback.FreeResult();
-            _charCreateCallback.SetFutureResult(LoginDatabase.AsyncQuery(stmt));
-            _charCreateCallback.NextStage();
-            break;
-        }
-        case 1:
-        {
-            uint16 acctCharCount = 0;
-            if (result)
-            {
-                Field* fields = result->Fetch();
-                // SELECT SUM(x) is MYSQL_TYPE_NEWDECIMAL - needs to be read as string
-                const char* ch = fields[0].GetCString();
-                if (ch)
-                    acctCharCount = atoi(ch);
-            }
+              _charCreateCallback.FreeResult();
+              _charCreateCallback.SetFutureResult(LoginDatabase.AsyncQuery(stmt));
+              _charCreateCallback.NextStage();
+              break;
+    }
+    case 1:
+    {
+              uint16 acctCharCount = 0;
+              if (result)
+              {
+                  Field* fields = result->Fetch();
+                  // SELECT SUM(x) is MYSQL_TYPE_NEWDECIMAL - needs to be read as string
+                  const char* ch = fields[0].GetCString();
+                  if (ch)
+                      acctCharCount = atoi(ch);
+              }
 
-            if (acctCharCount >= sWorld->getIntConfig(CONFIG_CHARACTERS_PER_ACCOUNT))
-            {
-                SendCharCreate(CHAR_CREATE_ACCOUNT_LIMIT);
-                delete createInfo;
-                _charCreateCallback.Reset();
-                return;
-            }
+              if (acctCharCount >= sWorld->getIntConfig(CONFIG_CHARACTERS_PER_ACCOUNT))
+              {
+                  SendCharCreate(CHAR_CREATE_ACCOUNT_LIMIT);
+                  delete createInfo;
+                  _charCreateCallback.Reset();
+                  return;
+              }
 
-            ASSERT(_charCreateCallback.GetParam() == createInfo);
+              ASSERT(_charCreateCallback.GetParam() == createInfo);
 
-            PreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_SEL_SUM_CHARS);
-            stmt->setUInt32(0, GetAccountId());
+              PreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_SEL_SUM_CHARS);
+              stmt->setUInt32(0, GetAccountId());
 
-            _charCreateCallback.FreeResult();
-            _charCreateCallback.SetFutureResult(CharacterDatabase.AsyncQuery(stmt));
-            _charCreateCallback.NextStage();
-            break;
-        }
-        case 2:
-        {
-            if (result)
-            {
-                Field* fields = result->Fetch();
-                createInfo->CharCount = uint8(fields[0].GetUInt64()); // SQL's COUNT() returns uint64 but it will always be less than uint8.Max
+              _charCreateCallback.FreeResult();
+              _charCreateCallback.SetFutureResult(CharacterDatabase.AsyncQuery(stmt));
+              _charCreateCallback.NextStage();
+              break;
+    }
+    case 2:
+    {
+              if (result)
+              {
+                  Field* fields = result->Fetch();
+                  createInfo->CharCount = uint8(fields[0].GetUInt64()); // SQL's COUNT() returns uint64 but it will always be less than uint8.Max
 
-                if (createInfo->CharCount >= sWorld->getIntConfig(CONFIG_CHARACTERS_PER_REALM))
-                {
-                    SendCharCreate(CHAR_CREATE_SERVER_LIMIT);
-                    delete createInfo;
-                    _charCreateCallback.Reset();
-                    return;
-                }
-            }
+                  if (createInfo->CharCount >= sWorld->getIntConfig(CONFIG_CHARACTERS_PER_REALM))
+                  {
+                      SendCharCreate(CHAR_CREATE_SERVER_LIMIT);
+                      delete createInfo;
+                      _charCreateCallback.Reset();
+                      return;
+                  }
+              }
 
-            bool allowTwoSideAccounts = !sWorld->IsPvPRealm() || HasPermission(rbac::RBAC_PERM_TWO_SIDE_CHARACTER_CREATION);
-            uint32 skipCinematics = sWorld->getIntConfig(CONFIG_SKIP_CINEMATICS);
+              bool allowTwoSideAccounts = !sWorld->IsPvPRealm() || HasPermission(rbac::RBAC_PERM_TWO_SIDE_CHARACTER_CREATION);
+              uint32 skipCinematics = sWorld->getIntConfig(CONFIG_SKIP_CINEMATICS);
 
-            _charCreateCallback.FreeResult();
+              _charCreateCallback.FreeResult();
 
-            if (!allowTwoSideAccounts || skipCinematics == 1 || createInfo->Class == CLASS_DEATH_KNIGHT)
-            {
-                PreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_SEL_CHAR_CREATE_INFO);
-                stmt->setUInt32(0, GetAccountId());
-                stmt->setUInt32(1, (skipCinematics == 1 || createInfo->Class == CLASS_DEATH_KNIGHT) ? 10 : 1);
-                _charCreateCallback.SetFutureResult(CharacterDatabase.AsyncQuery(stmt));
-                _charCreateCallback.NextStage();
-                return;
-            }
+              if (!allowTwoSideAccounts || skipCinematics == 1 || createInfo->Class == CLASS_DEATH_KNIGHT)
+              {
+                  PreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_SEL_CHAR_CREATE_INFO);
+                  stmt->setUInt32(0, GetAccountId());
+                  stmt->setUInt32(1, (skipCinematics == 1 || createInfo->Class == CLASS_DEATH_KNIGHT) ? 10 : 1);
+                  _charCreateCallback.SetFutureResult(CharacterDatabase.AsyncQuery(stmt));
+                  _charCreateCallback.NextStage();
+                  return;
+              }
 
-            _charCreateCallback.NextStage();
-            HandleCharCreateCallback(PreparedQueryResult(NULL), createInfo);   // Will jump to case 3
-            break;
-        }
-        case 3:
-        {
-            bool haveSameRace = false;
-            uint32 heroicReqLevel = sWorld->getIntConfig(CONFIG_CHARACTER_CREATING_MIN_LEVEL_FOR_HEROIC_CHARACTER);
-            bool hasHeroicReqLevel = (heroicReqLevel == 0);
-            bool allowTwoSideAccounts = !sWorld->IsPvPRealm() || HasPermission(rbac::RBAC_PERM_TWO_SIDE_CHARACTER_CREATION);
-            uint32 skipCinematics = sWorld->getIntConfig(CONFIG_SKIP_CINEMATICS);
-            bool checkHeroicReqs = createInfo->Class == CLASS_DEATH_KNIGHT && !HasPermission(rbac::RBAC_PERM_SKIP_CHECK_CHARACTER_CREATION_HEROIC_CHARACTER);
+              _charCreateCallback.NextStage();
+              HandleCharCreateCallback(PreparedQueryResult(NULL), createInfo);   // Will jump to case 3
+              break;
+    }
+    case 3:
+    {
+              bool haveSameRace = false;
+              uint32 heroicReqLevel = sWorld->getIntConfig(CONFIG_CHARACTER_CREATING_MIN_LEVEL_FOR_HEROIC_CHARACTER);
+              bool hasHeroicReqLevel = (heroicReqLevel == 0);
+              bool allowTwoSideAccounts = !sWorld->IsPvPRealm() || HasPermission(rbac::RBAC_PERM_TWO_SIDE_CHARACTER_CREATION);
+              uint32 skipCinematics = sWorld->getIntConfig(CONFIG_SKIP_CINEMATICS);
+              bool checkHeroicReqs = createInfo->Class == CLASS_DEATH_KNIGHT && !HasPermission(rbac::RBAC_PERM_SKIP_CHECK_CHARACTER_CREATION_HEROIC_CHARACTER);
 
-            if (result)
-            {
-                uint32 team = Player::TeamForRace(createInfo->Race);
-                uint32 freeHeroicSlots = sWorld->getIntConfig(CONFIG_HEROIC_CHARACTERS_PER_REALM);
+              if (result)
+              {
+                  uint32 team = Player::TeamForRace(createInfo->Race);
+                  uint32 freeHeroicSlots = sWorld->getIntConfig(CONFIG_HEROIC_CHARACTERS_PER_REALM);
 
-                Field* field = result->Fetch();
-                uint8 accRace  = field[1].GetUInt8();
+                  Field* field = result->Fetch();
+                  uint8 accRace = field[1].GetUInt8();
 
-                if (checkHeroicReqs)
-                {
-                    uint8 accClass = field[2].GetUInt8();
-                    if (accClass == CLASS_DEATH_KNIGHT)
-                    {
-                        if (freeHeroicSlots > 0)
-                            --freeHeroicSlots;
+                  if (checkHeroicReqs)
+                  {
+                      uint8 accClass = field[2].GetUInt8();
+                      if (accClass == CLASS_DEATH_KNIGHT)
+                      {
+                          if (freeHeroicSlots > 0)
+                              --freeHeroicSlots;
 
-                        if (freeHeroicSlots == 0)
-                        {
-                            SendCharCreate(CHAR_CREATE_UNIQUE_CLASS_LIMIT);
-                            delete createInfo;
-                            _charCreateCallback.Reset();
-                            return;
-                        }
-                    }
+                          if (freeHeroicSlots == 0)
+                          {
+                              SendCharCreate(CHAR_CREATE_UNIQUE_CLASS_LIMIT);
+                              delete createInfo;
+                              _charCreateCallback.Reset();
+                              return;
+                          }
+                      }
 
-                    if (!hasHeroicReqLevel)
-                    {
-                        uint8 accLevel = field[0].GetUInt8();
-                        if (accLevel >= heroicReqLevel)
-                            hasHeroicReqLevel = true;
-                    }
-                }
+                      if (!hasHeroicReqLevel)
+                      {
+                          uint8 accLevel = field[0].GetUInt8();
+                          if (accLevel >= heroicReqLevel)
+                              hasHeroicReqLevel = true;
+                      }
+                  }
 
-                // need to check team only for first character
-                /// @todo what to if account already has characters of both races?
-                if (!allowTwoSideAccounts)
-                {
-                    uint32 accTeam = 0;
-                    if (accRace > 0)
-                        accTeam = Player::TeamForRace(accRace);
+                  // need to check team only for first character
+                  /// @todo what to if account already has characters of both races?
+                  if (!allowTwoSideAccounts)
+                  {
+                      uint32 accTeam = 0;
+                      if (accRace > 0)
+                          accTeam = Player::TeamForRace(accRace);
 
-                    if (accTeam != team)
-                    {
-                        SendCharCreate(CHAR_CREATE_PVP_TEAMS_VIOLATION);
-                        delete createInfo;
-                        _charCreateCallback.Reset();
-                        return;
-                    }
-                }
+                      if (accTeam != team)
+                      {
+                          SendCharCreate(CHAR_CREATE_PVP_TEAMS_VIOLATION);
+                          delete createInfo;
+                          _charCreateCallback.Reset();
+                          return;
+                      }
+                  }
 
-                // search same race for cinematic or same class if need
-                /// @todo check if cinematic already shown? (already logged in?; cinematic field)
-                while ((skipCinematics == 1 && !haveSameRace) || createInfo->Class == CLASS_DEATH_KNIGHT)
-                {
-                    if (!result->NextRow())
-                        break;
+                  // search same race for cinematic or same class if need
+                  /// @todo check if cinematic already shown? (already logged in?; cinematic field)
+                  while ((skipCinematics == 1 && !haveSameRace) || createInfo->Class == CLASS_DEATH_KNIGHT)
+                  {
+                      if (!result->NextRow())
+                          break;
 
-                    field = result->Fetch();
-                    accRace = field[1].GetUInt8();
+                      field = result->Fetch();
+                      accRace = field[1].GetUInt8();
 
-                    if (!haveSameRace)
-                        haveSameRace = createInfo->Race == accRace;
+                      if (!haveSameRace)
+                          haveSameRace = createInfo->Race == accRace;
 
-                    if (checkHeroicReqs)
-                    {
-                        uint8 acc_class = field[2].GetUInt8();
-                        if (acc_class == CLASS_DEATH_KNIGHT)
-                        {
-                            if (freeHeroicSlots > 0)
-                                --freeHeroicSlots;
+                      if (checkHeroicReqs)
+                      {
+                          uint8 acc_class = field[2].GetUInt8();
+                          if (acc_class == CLASS_DEATH_KNIGHT)
+                          {
+                              if (freeHeroicSlots > 0)
+                                  --freeHeroicSlots;
 
-                            if (freeHeroicSlots == 0)
-                            {
-                                SendCharCreate(CHAR_CREATE_UNIQUE_CLASS_LIMIT);
-                                delete createInfo;
-                                _charCreateCallback.Reset();
-                                return;
-                            }
-                        }
+                              if (freeHeroicSlots == 0)
+                              {
+                                  SendCharCreate(CHAR_CREATE_UNIQUE_CLASS_LIMIT);
+                                  delete createInfo;
+                                  _charCreateCallback.Reset();
+                                  return;
+                              }
+                          }
 
-                        if (!hasHeroicReqLevel)
-                        {
-                            uint8 acc_level = field[0].GetUInt8();
-                            if (acc_level >= heroicReqLevel)
-                                hasHeroicReqLevel = true;
-                        }
-                    }
-                }
-            }
+                          if (!hasHeroicReqLevel)
+                          {
+                              uint8 acc_level = field[0].GetUInt8();
+                              if (acc_level >= heroicReqLevel)
+                                  hasHeroicReqLevel = true;
+                          }
+                      }
+                  }
+              }
 
-            if (checkHeroicReqs && !hasHeroicReqLevel)
-            {
-                SendCharCreate(CHAR_CREATE_LEVEL_REQUIREMENT);
-                delete createInfo;
-                _charCreateCallback.Reset();
-                return;
-            }
+              if (checkHeroicReqs && !hasHeroicReqLevel)
+              {
+                  SendCharCreate(CHAR_CREATE_LEVEL_REQUIREMENT);
+                  delete createInfo;
+                  _charCreateCallback.Reset();
+                  return;
+              }
 
-            Player newChar(this);
-            newChar.GetMotionMaster()->Initialize();
-            if (!newChar.Create(sObjectMgr->GenerateLowGuid(HIGHGUID_PLAYER), createInfo))
-            {
-                // Player not create (race/class/etc problem?)
-                newChar.CleanupsBeforeDelete();
+              Player newChar(this);
+              newChar.GetMotionMaster()->Initialize();
+              if (!newChar.Create(sObjectMgr->GenerateLowGuid(HIGHGUID_PLAYER), createInfo))
+              {
+                  // Player not create (race/class/etc problem?)
+                  newChar.CleanupsBeforeDelete();
 
-                SendCharCreate(CHAR_CREATE_ERROR);
-                delete createInfo;
-                _charCreateCallback.Reset();
-                return;
-            }
+                  SendCharCreate(CHAR_CREATE_ERROR);
+                  delete createInfo;
+                  _charCreateCallback.Reset();
+                  return;
+              }
 
-            if ((haveSameRace && skipCinematics == 1) || skipCinematics == 2)
-                newChar.setCinematic(1);                          // not show intro
+              if ((haveSameRace && skipCinematics == 1) || skipCinematics == 2)
+                  newChar.setCinematic(1);                          // not show intro
 
-            newChar.SetAtLoginFlag(AT_LOGIN_FIRST);               // First login
+              newChar.SetAtLoginFlag(AT_LOGIN_FIRST);               // First login
 
-            // Player created, save it now
-            newChar.SaveToDB(true);
-            createInfo->CharCount += 1;
+              // Player created, save it now
+              newChar.SaveToDB(true);
+              createInfo->CharCount += 1;
 
-            SQLTransaction trans = LoginDatabase.BeginTransaction();
+              SQLTransaction trans = LoginDatabase.BeginTransaction();
 
-            PreparedStatement* stmt = LoginDatabase.GetPreparedStatement(LOGIN_DEL_REALM_CHARACTERS_BY_REALM);
-            stmt->setUInt32(0, GetAccountId());
-            stmt->setUInt32(1, realmID);
-            trans->Append(stmt);
+              PreparedStatement* stmt = LoginDatabase.GetPreparedStatement(LOGIN_DEL_REALM_CHARACTERS_BY_REALM);
+              stmt->setUInt32(0, GetAccountId());
+              stmt->setUInt32(1, realmID);
+              trans->Append(stmt);
 
-            stmt = LoginDatabase.GetPreparedStatement(LOGIN_INS_REALM_CHARACTERS);
-            stmt->setUInt32(0, createInfo->CharCount);
-            stmt->setUInt32(1, GetAccountId());
-            stmt->setUInt32(2, realmID);
-            trans->Append(stmt);
+              stmt = LoginDatabase.GetPreparedStatement(LOGIN_INS_REALM_CHARACTERS);
+              stmt->setUInt32(0, createInfo->CharCount);
+              stmt->setUInt32(1, GetAccountId());
+              stmt->setUInt32(2, realmID);
+              trans->Append(stmt);
 
-            LoginDatabase.CommitTransaction(trans);
+              LoginDatabase.CommitTransaction(trans);
 
-            SendCharCreate(CHAR_CREATE_SUCCESS);
+              SendCharCreate(CHAR_CREATE_SUCCESS);
 
-            TC_LOG_INFO("entities.player.character", "Account: %d (IP: %s) Create Character:[%s] (GUID: %u)", GetAccountId(), GetRemoteAddress().c_str(), createInfo->Name.c_str(), newChar.GetGUIDLow());
-            sScriptMgr->OnPlayerCreate(&newChar);
-            sWorld->AddCharacterNameData(newChar.GetGUID(), newChar.GetName(), newChar.getGender(), newChar.getRace(), newChar.getClass(), newChar.getLevel());
+              TC_LOG_INFO("entities.player.character", "Account: %d (IP: %s) Create Character:[%s] (GUID: %u)", GetAccountId(), GetRemoteAddress().c_str(), createInfo->Name.c_str(), newChar.GetGUIDLow());
+              sScriptMgr->OnPlayerCreate(&newChar);
+              sWorld->AddCharacterNameData(newChar.GetGUID(), newChar.GetName(), newChar.getGender(), newChar.getRace(), newChar.getClass(), newChar.getLevel());
 
-            newChar.CleanupsBeforeDelete();
-            delete createInfo;
-            _charCreateCallback.Reset();
-            break;
-        }
+              newChar.CleanupsBeforeDelete();
+              delete createInfo;
+              _charCreateCallback.Reset();
+              break;
+    }
     }
 }
 
@@ -763,7 +762,7 @@ void WorldSession::HandlePlayerLogin(LoginQueryHolder* holder)
     ObjectGuid playerGuid = holder->GetGuid();
 
     Player* pCurrChar = new Player(this);
-     // for send server info and strings (config)
+    // for send server info and strings (config)
     ChatHandler chH = ChatHandler(pCurrChar->GetSession());
 
     // "GetAccountId() == db stored account id" checked in LoadFromDB (prevent login not own character using cheating tools)
@@ -802,22 +801,22 @@ void WorldSession::HandlePlayerLogin(LoginQueryHolder* holder)
         data.Initialize(SMSG_MOTD, 50);                     // new in 2.0.1
         data << (uint32)0;
 
-        uint32 linecount=0;
+        uint32 linecount = 0;
         std::string str_motd = sWorld->GetMotd();
         std::string::size_type pos, nextpos;
 
         pos = 0;
-        while ((nextpos= str_motd.find('@', pos)) != std::string::npos)
+        while ((nextpos = str_motd.find('@', pos)) != std::string::npos)
         {
             if (nextpos != pos)
             {
-                data << str_motd.substr(pos, nextpos-pos);
+                data << str_motd.substr(pos, nextpos - pos);
                 ++linecount;
             }
-            pos = nextpos+1;
+            pos = nextpos + 1;
         }
 
-        if (pos<str_motd.length())
+        if (pos < str_motd.length())
         {
             data << str_motd.substr(pos);
             ++linecount;
@@ -860,7 +859,7 @@ void WorldSession::HandlePlayerLogin(LoginQueryHolder* holder)
         }
     }
 
-    data.Initialize(SMSG_LEARNED_DANCE_MOVES, 4+4);
+    data.Initialize(SMSG_LEARNED_DANCE_MOVES, 4 + 4);
     data << uint32(0);
     data << uint32(0);
     SendPacket(&data);
@@ -948,7 +947,7 @@ void WorldSession::HandlePlayerLogin(LoginQueryHolder* holder)
     pCurrChar->LoadPet();
 
     // Set FFA PvP for non GM in non-rest mode
-	if (sWorld->IsFFAPvPRealm() && !pCurrChar->IsGameMaster() && !pCurrChar->IsAbleToFFA(pCurrChar->GetAreaId()))
+    if (sWorld->IsFFAPvPRealm() && !pCurrChar->IsGameMaster() && !pCurrChar->IsAbleToFFA(pCurrChar->GetAreaId()))
         pCurrChar->SetByteFlag(UNIT_FIELD_BYTES_2, 1, UNIT_BYTE2_FLAG_FFA_PVP);
 
     if (pCurrChar->HasFlag(PLAYER_FLAGS, PLAYER_FLAGS_CONTESTED_PVP))
@@ -995,7 +994,7 @@ void WorldSession::HandlePlayerLogin(LoginQueryHolder* holder)
     _player->UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_ON_LOGIN, 1);
 
     sScriptMgr->OnPlayerLogin(pCurrChar, firstLogin);
-	SendLfgDisabled();
+    SendLfgDisabled();
     delete holder;
 }
 
@@ -1084,7 +1083,7 @@ void WorldSession::HandleCharRenameOpcode(WorldPacket& recvData)
     CharacterRenameInfo renameInfo;
 
     recvData >> renameInfo.Guid
-             >> renameInfo.Name;
+        >> renameInfo.Name;
 
     // prevent character rename to invalid name
     if (!normalizePlayerName(renameInfo.Name))
@@ -1132,7 +1131,7 @@ void WorldSession::HandleChangePlayerNameOpcodeCallBack(PreparedQueryResult resu
 
     Field* fields = result->Fetch();
 
-    uint32 guidLow      = fields[0].GetUInt32();
+    uint32 guidLow = fields[0].GetUInt32();
     std::string oldName = fields[1].GetString();
 
     // Update name and at_login flag in the db
@@ -1225,7 +1224,7 @@ void WorldSession::HandleSetPlayerDeclinedNames(WorldPacket& recvData)
     stmt->setUInt32(0, guid.GetCounter());
 
     for (uint8 i = 0; i < 5; i++)
-        stmt->setString(i+1, declinedname.name[i]);
+        stmt->setString(i + 1, declinedname.name[i]);
 
     trans->Append(stmt);
 
@@ -1336,12 +1335,12 @@ void WorldSession::HandleCharCustomize(WorldPacket& recvData)
     }
 
     recvData >> customizeInfo.Name
-             >> customizeInfo.Gender
-             >> customizeInfo.Skin
-             >> customizeInfo.HairColor
-             >> customizeInfo.HairStyle
-             >> customizeInfo.FacialHair
-             >> customizeInfo.Face;
+        >> customizeInfo.Gender
+        >> customizeInfo.Skin
+        >> customizeInfo.HairColor
+        >> customizeInfo.HairStyle
+        >> customizeInfo.FacialHair
+        >> customizeInfo.Face;
 
     PreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_SEL_CHARACTER_NAME_DATA);
     stmt->setUInt32(0, customizeInfo.Guid.GetCounter());
@@ -1470,10 +1469,10 @@ void WorldSession::HandleEquipmentSetSave(WorldPacket& recvData)
 
     EquipmentSet eqSet;
 
-    eqSet.Guid      = setGuid;
-    eqSet.Name      = name;
-    eqSet.IconName  = iconName;
-    eqSet.state     = EQUIPMENT_SET_NEW;
+    eqSet.Guid = setGuid;
+    eqSet.Name = name;
+    eqSet.IconName = iconName;
+    eqSet.state = EQUIPMENT_SET_NEW;
 
     for (uint32 i = 0; i < EQUIPMENT_SLOT_END; ++i)
     {
@@ -1583,13 +1582,13 @@ void WorldSession::HandleCharFactionOrRaceChange(WorldPacket& recvData)
     }
 
     recvData >> factionChangeInfo.Name
-             >> factionChangeInfo.Gender
-             >> factionChangeInfo.Skin
-             >> factionChangeInfo.HairColor
-             >> factionChangeInfo.HairStyle
-             >> factionChangeInfo.FacialHair
-             >> factionChangeInfo.Face
-             >> factionChangeInfo.Race;
+        >> factionChangeInfo.Gender
+        >> factionChangeInfo.Skin
+        >> factionChangeInfo.HairColor
+        >> factionChangeInfo.HairStyle
+        >> factionChangeInfo.FacialHair
+        >> factionChangeInfo.Face
+        >> factionChangeInfo.Race;
 
     uint32 lowGuid = factionChangeInfo.Guid.GetCounter();
 
@@ -1702,15 +1701,15 @@ void WorldSession::HandleCharFactionOrRaceChange(WorldPacket& recvData)
         // Search each faction is targeted
         switch (factionChangeInfo.Race)
         {
-            case RACE_ORC:
-            case RACE_TAUREN:
-            case RACE_UNDEAD_PLAYER:
-            case RACE_TROLL:
-            case RACE_BLOODELF:
-                team = TEAM_HORDE;
-                break;
-            default:
-                break;
+        case RACE_ORC:
+        case RACE_TAUREN:
+        case RACE_UNDEAD_PLAYER:
+        case RACE_TROLL:
+        case RACE_BLOODELF:
+            team = TEAM_HORDE;
+            break;
+        default:
+            break;
         }
 
         // Switch Languages
@@ -1739,30 +1738,30 @@ void WorldSession::HandleCharFactionOrRaceChange(WorldPacket& recvData)
 
             switch (factionChangeInfo.Race)
             {
-                case RACE_DWARF:
-                    stmt->setUInt16(1, 111);
-                    break;
-                case RACE_DRAENEI:
-                    stmt->setUInt16(1, 759);
-                    break;
-                case RACE_GNOME:
-                    stmt->setUInt16(1, 313);
-                    break;
-                case RACE_NIGHTELF:
-                    stmt->setUInt16(1, 113);
-                    break;
-                case RACE_UNDEAD_PLAYER:
-                    stmt->setUInt16(1, 673);
-                    break;
-                case RACE_TAUREN:
-                    stmt->setUInt16(1, 115);
-                    break;
-                case RACE_TROLL:
-                    stmt->setUInt16(1, 315);
-                    break;
-                case RACE_BLOODELF:
-                    stmt->setUInt16(1, 137);
-                    break;
+            case RACE_DWARF:
+                stmt->setUInt16(1, 111);
+                break;
+            case RACE_DRAENEI:
+                stmt->setUInt16(1, 759);
+                break;
+            case RACE_GNOME:
+                stmt->setUInt16(1, 313);
+                break;
+            case RACE_NIGHTELF:
+                stmt->setUInt16(1, 113);
+                break;
+            case RACE_UNDEAD_PLAYER:
+                stmt->setUInt16(1, 673);
+                break;
+            case RACE_TAUREN:
+                stmt->setUInt16(1, 115);
+                break;
+            case RACE_TROLL:
+                stmt->setUInt16(1, 315);
+                break;
+            case RACE_BLOODELF:
+                stmt->setUInt16(1, 137);
+                break;
             }
 
             trans->Append(stmt);
@@ -1831,8 +1830,8 @@ void WorldSession::HandleCharFactionOrRaceChange(WorldPacket& recvData)
 
                 PreparedQueryResult result = CharacterDatabase.Query(stmt);
                 if (result)
-                    if (Guild* guild = sGuildMgr->GetGuildById((result->Fetch()[0]).GetUInt32()))
-                        guild->DeleteMember(factionChangeInfo.Guid, false, false, true);
+                if (Guild* guild = sGuildMgr->GetGuildById((result->Fetch()[0]).GetUInt32()))
+                    guild->DeleteMember(factionChangeInfo.Guid, false, false, true);
 
                 Player::LeaveAllArenaTeams(factionChangeInfo.Guid);
             }

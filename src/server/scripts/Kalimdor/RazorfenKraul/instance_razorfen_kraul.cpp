@@ -71,26 +71,26 @@ public:
         {
             switch (go->GetEntry())
             {
-                case 21099: DoorWardGUID = go->GetGUID(); break;
-                case 20920: go->SetUInt32Value(GAMEOBJECT_FACTION, 0); break; // big fat fugly hack
+            case 21099: DoorWardGUID = go->GetGUID(); break;
+            case 20920: go->SetUInt32Value(GAMEOBJECT_FACTION, 0); break; // big fat fugly hack
             }
         }
 
         void Update(uint32 /*diff*/) override
         {
             if (WardKeeperDeath == WARD_KEEPERS_NR)
-                if (GameObject* go = instance->GetGameObject(DoorWardGUID))
-                {
-                    go->SetUInt32Value(GAMEOBJECT_FLAGS, 33);
-                    go->SetGoState(GO_STATE_ACTIVE);
-                }
+            if (GameObject* go = instance->GetGameObject(DoorWardGUID))
+            {
+                go->SetUInt32Value(GAMEOBJECT_FLAGS, 33);
+                go->SetGoState(GO_STATE_ACTIVE);
+            }
         }
 
         void SetData(uint32 type, uint32 /*data*/) override
         {
             switch (type)
             {
-                case EVENT_WARD_KEEPER: WardKeeperDeath++; break;
+            case EVENT_WARD_KEEPER: WardKeeperDeath++; break;
             }
         }
 

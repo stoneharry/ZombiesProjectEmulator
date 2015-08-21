@@ -40,29 +40,29 @@ EndContentData */
 
 enum MagharCaptive
 {
-    SAY_MAG_START               = 0,
-    SAY_MAG_NO_ESCAPE           = 0,
-    SAY_MAG_MORE                = 1,
-    SAY_MAG_MORE_REPLY          = 0,
-    SAY_MAG_LIGHTNING           = 2,
-    SAY_MAG_SHOCK               = 3,
-    SAY_MAG_COMPLETE            = 4,
+    SAY_MAG_START = 0,
+    SAY_MAG_NO_ESCAPE = 0,
+    SAY_MAG_MORE = 1,
+    SAY_MAG_MORE_REPLY = 0,
+    SAY_MAG_LIGHTNING = 2,
+    SAY_MAG_SHOCK = 3,
+    SAY_MAG_COMPLETE = 4,
 
-    SPELL_CHAIN_LIGHTNING       = 16006,
-    SPELL_EARTHBIND_TOTEM       = 15786,
-    SPELL_FROST_SHOCK           = 12548,
-    SPELL_HEALING_WAVE          = 12491,
+    SPELL_CHAIN_LIGHTNING = 16006,
+    SPELL_EARTHBIND_TOTEM = 15786,
+    SPELL_FROST_SHOCK = 12548,
+    SPELL_HEALING_WAVE = 12491,
 
-    QUEST_TOTEM_KARDASH_H       = 9868,
+    QUEST_TOTEM_KARDASH_H = 9868,
 
-    NPC_MURK_RAIDER             = 18203,
-    NPC_MURK_BRUTE              = 18211,
-    NPC_MURK_SCAVENGER          = 18207,
-    NPC_MURK_PUTRIFIER          = 18202
+    NPC_MURK_RAIDER = 18203,
+    NPC_MURK_BRUTE = 18211,
+    NPC_MURK_SCAVENGER = 18207,
+    NPC_MURK_PUTRIFIER = 18202
 };
 
-static float m_afAmbushA[]= {-1568.805786f, 8533.873047f, 1.958f};
-static float m_afAmbushB[]= {-1491.554321f, 8506.483398f, 1.248f};
+static float m_afAmbushA[] = { -1568.805786f, 8533.873047f, 1.958f };
+static float m_afAmbushB[] = { -1491.554321f, 8506.483398f, 1.248f };
 
 class npc_maghar_captive : public CreatureScript
 {
@@ -80,8 +80,8 @@ public:
                 EscortAI->Start(true, false, player->GetGUID(), quest);
                 creature->AI()->Talk(SAY_MAG_START);
 
-                creature->SummonCreature(NPC_MURK_RAIDER, m_afAmbushA[0]+2.5f, m_afAmbushA[1]-2.5f, m_afAmbushA[2], 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 25000);
-                creature->SummonCreature(NPC_MURK_PUTRIFIER, m_afAmbushA[0]-2.5f, m_afAmbushA[1]+2.5f, m_afAmbushA[2], 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 25000);
+                creature->SummonCreature(NPC_MURK_RAIDER, m_afAmbushA[0] + 2.5f, m_afAmbushA[1] - 2.5f, m_afAmbushA[2], 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 25000);
+                creature->SummonCreature(NPC_MURK_PUTRIFIER, m_afAmbushA[0] - 2.5f, m_afAmbushA[1] + 2.5f, m_afAmbushA[2], 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 25000);
                 creature->SummonCreature(NPC_MURK_BRUTE, m_afAmbushA[0], m_afAmbushA[1], m_afAmbushA[2], 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 25000);
             }
         }
@@ -129,24 +129,24 @@ public:
         {
             switch (waypointId)
             {
-                case 7:
-                    Talk(SAY_MAG_MORE);
+            case 7:
+                Talk(SAY_MAG_MORE);
 
-                    if (Creature* temp = me->SummonCreature(NPC_MURK_PUTRIFIER, m_afAmbushB[0], m_afAmbushB[1], m_afAmbushB[2], 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 25000))
-                        temp->AI()->Talk(SAY_MAG_MORE_REPLY);
+                if (Creature* temp = me->SummonCreature(NPC_MURK_PUTRIFIER, m_afAmbushB[0], m_afAmbushB[1], m_afAmbushB[2], 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 25000))
+                    temp->AI()->Talk(SAY_MAG_MORE_REPLY);
 
-                    me->SummonCreature(NPC_MURK_PUTRIFIER, m_afAmbushB[0]-2.5f, m_afAmbushB[1]-2.5f, m_afAmbushB[2], 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 25000);
-                    me->SummonCreature(NPC_MURK_SCAVENGER, m_afAmbushB[0]+2.5f, m_afAmbushB[1]+2.5f, m_afAmbushB[2], 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 25000);
-                    me->SummonCreature(NPC_MURK_SCAVENGER, m_afAmbushB[0]+2.5f, m_afAmbushB[1]-2.5f, m_afAmbushB[2], 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 25000);
-                    break;
-                case 16:
-                    Talk(SAY_MAG_COMPLETE);
+                me->SummonCreature(NPC_MURK_PUTRIFIER, m_afAmbushB[0] - 2.5f, m_afAmbushB[1] - 2.5f, m_afAmbushB[2], 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 25000);
+                me->SummonCreature(NPC_MURK_SCAVENGER, m_afAmbushB[0] + 2.5f, m_afAmbushB[1] + 2.5f, m_afAmbushB[2], 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 25000);
+                me->SummonCreature(NPC_MURK_SCAVENGER, m_afAmbushB[0] + 2.5f, m_afAmbushB[1] - 2.5f, m_afAmbushB[2], 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 25000);
+                break;
+            case 16:
+                Talk(SAY_MAG_COMPLETE);
 
-                    if (Player* player = GetPlayerForEscort())
-                        player->GroupEventHappens(QUEST_TOTEM_KARDASH_H, me);
+                if (Player* player = GetPlayerForEscort())
+                    player->GroupEventHappens(QUEST_TOTEM_KARDASH_H, me);
 
-                    SetRun();
-                    break;
+                SetRun();
+                break;
             }
         }
 
@@ -266,126 +266,126 @@ public:
 
 enum CorkiData
 {
-  // first quest
-  QUEST_HELP                                    = 9923,
-  NPC_CORKI                                     = 18445,
-  NPC_CORKI_CREDIT_1                            = 18369,
-  GO_CORKIS_PRISON                              = 182349,
-  CORKI_SAY_THANKS                              = 0,
-  // 2nd quest
-  QUEST_CORKIS_GONE_MISSING_AGAIN               = 9924,
-  NPC_CORKI_2                                   = 20812,
-  GO_CORKIS_PRISON_2                            = 182350,
-  CORKI_SAY_PROMISE                             = 0,
-  // 3rd quest
-  QUEST_CHOWAR_THE_PILLAGER                     = 9955,
-  NPC_CORKI_3                                   = 18369,
-  NPC_CORKI_CREDIT_3                            = 18444,
-  GO_CORKIS_PRISON_3                            = 182521,
-  CORKI_SAY_LAST                                = 0
+    // first quest
+    QUEST_HELP = 9923,
+    NPC_CORKI = 18445,
+    NPC_CORKI_CREDIT_1 = 18369,
+    GO_CORKIS_PRISON = 182349,
+    CORKI_SAY_THANKS = 0,
+    // 2nd quest
+    QUEST_CORKIS_GONE_MISSING_AGAIN = 9924,
+    NPC_CORKI_2 = 20812,
+    GO_CORKIS_PRISON_2 = 182350,
+    CORKI_SAY_PROMISE = 0,
+    // 3rd quest
+    QUEST_CHOWAR_THE_PILLAGER = 9955,
+    NPC_CORKI_3 = 18369,
+    NPC_CORKI_CREDIT_3 = 18444,
+    GO_CORKIS_PRISON_3 = 182521,
+    CORKI_SAY_LAST = 0
 };
 
 class go_corkis_prison : public GameObjectScript
 {
 public:
-  go_corkis_prison() : GameObjectScript("go_corkis_prison") { }
+    go_corkis_prison() : GameObjectScript("go_corkis_prison") { }
 
-  bool OnGossipHello(Player* player, GameObject* go) override
-  {
-      go->SetGoState(GO_STATE_READY);
-      if (go->GetEntry() == GO_CORKIS_PRISON)
-      {
-          if (Creature* corki = go->FindNearestCreature(NPC_CORKI, 25, true))
-          {
-              corki->GetMotionMaster()->MovePoint(1, go->GetPositionX()+5, go->GetPositionY(), go->GetPositionZ());
-              if (player)
-                  player->KilledMonsterCredit(NPC_CORKI_CREDIT_1);
-          }
-      }
+    bool OnGossipHello(Player* player, GameObject* go) override
+    {
+        go->SetGoState(GO_STATE_READY);
+        if (go->GetEntry() == GO_CORKIS_PRISON)
+        {
+            if (Creature* corki = go->FindNearestCreature(NPC_CORKI, 25, true))
+            {
+                corki->GetMotionMaster()->MovePoint(1, go->GetPositionX() + 5, go->GetPositionY(), go->GetPositionZ());
+                if (player)
+                    player->KilledMonsterCredit(NPC_CORKI_CREDIT_1);
+            }
+        }
 
-      if (go->GetEntry() == GO_CORKIS_PRISON_2)
-      {
-          if (Creature* corki = go->FindNearestCreature(NPC_CORKI_2, 25, true))
-          {
-              corki->GetMotionMaster()->MovePoint(1, go->GetPositionX()-5, go->GetPositionY(), go->GetPositionZ());
-              if (player)
-                  player->KilledMonsterCredit(NPC_CORKI_2);
-          }
-      }
+        if (go->GetEntry() == GO_CORKIS_PRISON_2)
+        {
+            if (Creature* corki = go->FindNearestCreature(NPC_CORKI_2, 25, true))
+            {
+                corki->GetMotionMaster()->MovePoint(1, go->GetPositionX() - 5, go->GetPositionY(), go->GetPositionZ());
+                if (player)
+                    player->KilledMonsterCredit(NPC_CORKI_2);
+            }
+        }
 
-      if (go->GetEntry() == GO_CORKIS_PRISON_3)
-      {
-          if (Creature* corki = go->FindNearestCreature(NPC_CORKI_3, 25, true))
-          {
-              corki->GetMotionMaster()->MovePoint(1, go->GetPositionX()+4, go->GetPositionY(), go->GetPositionZ());
-              if (player)
-                  player->KilledMonsterCredit(NPC_CORKI_CREDIT_3);
-          }
-      }
-      return true;
-  }
+        if (go->GetEntry() == GO_CORKIS_PRISON_3)
+        {
+            if (Creature* corki = go->FindNearestCreature(NPC_CORKI_3, 25, true))
+            {
+                corki->GetMotionMaster()->MovePoint(1, go->GetPositionX() + 4, go->GetPositionY(), go->GetPositionZ());
+                if (player)
+                    player->KilledMonsterCredit(NPC_CORKI_CREDIT_3);
+            }
+        }
+        return true;
+    }
 };
 
 class npc_corki : public CreatureScript
 {
 public:
-  npc_corki() : CreatureScript("npc_corki") { }
+    npc_corki() : CreatureScript("npc_corki") { }
 
-  CreatureAI* GetAI(Creature* creature) const override
-  {
-      return new npc_corkiAI(creature);
-  }
+    CreatureAI* GetAI(Creature* creature) const override
+    {
+        return new npc_corkiAI(creature);
+    }
 
-  struct npc_corkiAI : public ScriptedAI
-  {
-      npc_corkiAI(Creature* creature) : ScriptedAI(creature)
-      {
-          Initialize();
-      }
+    struct npc_corkiAI : public ScriptedAI
+    {
+        npc_corkiAI(Creature* creature) : ScriptedAI(creature)
+        {
+            Initialize();
+        }
 
-      void Initialize()
-      {
-          Say_Timer = 5000;
-          ReleasedFromCage = false;
-      }
+        void Initialize()
+        {
+            Say_Timer = 5000;
+            ReleasedFromCage = false;
+        }
 
-      uint32 Say_Timer;
-      bool ReleasedFromCage;
+        uint32 Say_Timer;
+        bool ReleasedFromCage;
 
-      void Reset() override
-      {
-          Initialize();
-      }
+        void Reset() override
+        {
+            Initialize();
+        }
 
-      void UpdateAI(uint32 diff) override
-      {
-          if (ReleasedFromCage)
-          {
-              if (Say_Timer <= diff)
-              {
-                  me->DespawnOrUnsummon();
-                  ReleasedFromCage = false;
-              }
-              else
-                  Say_Timer -= diff;
-          }
-      }
+        void UpdateAI(uint32 diff) override
+        {
+            if (ReleasedFromCage)
+            {
+                if (Say_Timer <= diff)
+                {
+                    me->DespawnOrUnsummon();
+                    ReleasedFromCage = false;
+                }
+                else
+                    Say_Timer -= diff;
+            }
+        }
 
-      void MovementInform(uint32 type, uint32 id) override
-      {
-          if (type == POINT_MOTION_TYPE && id == 1)
-          {
-              Say_Timer = 5000;
-              ReleasedFromCage = true;
-              if (me->GetEntry() == NPC_CORKI)
-                  Talk(CORKI_SAY_THANKS);
-              if (me->GetEntry() == NPC_CORKI_2)
-                  Talk(CORKI_SAY_PROMISE);
-              if (me->GetEntry() == NPC_CORKI_3)
-                  Talk(CORKI_SAY_LAST);
-          }
-      };
-  };
+        void MovementInform(uint32 type, uint32 id) override
+        {
+            if (type == POINT_MOTION_TYPE && id == 1)
+            {
+                Say_Timer = 5000;
+                ReleasedFromCage = true;
+                if (me->GetEntry() == NPC_CORKI)
+                    Talk(CORKI_SAY_THANKS);
+                if (me->GetEntry() == NPC_CORKI_2)
+                    Talk(CORKI_SAY_PROMISE);
+                if (me->GetEntry() == NPC_CORKI_3)
+                    Talk(CORKI_SAY_LAST);
+            }
+        };
+    };
 };
 
 /*#####
@@ -394,29 +394,29 @@ public:
 
 enum KurenaiCaptive
 {
-    SAY_KUR_START                   = 0,
-    SAY_KUR_NO_ESCAPE               = 1,
-    SAY_KUR_MORE                    = 2,
-    SAY_KUR_MORE_TWO                = 3,
-    SAY_KUR_LIGHTNING               = 4,
-    SAY_KUR_SHOCK                   = 5,
-    SAY_KUR_COMPLETE                = 6,
+    SAY_KUR_START = 0,
+    SAY_KUR_NO_ESCAPE = 1,
+    SAY_KUR_MORE = 2,
+    SAY_KUR_MORE_TWO = 3,
+    SAY_KUR_LIGHTNING = 4,
+    SAY_KUR_SHOCK = 5,
+    SAY_KUR_COMPLETE = 6,
 
-    SPELL_KUR_CHAIN_LIGHTNING       = 16006,
-    SPELL_KUR_EARTHBIND_TOTEM       = 15786,
-    SPELL_KUR_FROST_SHOCK           = 12548,
-    SPELL_KUR_HEALING_WAVE          = 12491,
+    SPELL_KUR_CHAIN_LIGHTNING = 16006,
+    SPELL_KUR_EARTHBIND_TOTEM = 15786,
+    SPELL_KUR_FROST_SHOCK = 12548,
+    SPELL_KUR_HEALING_WAVE = 12491,
 
-    QUEST_TOTEM_KARDASH_A           = 9879,
+    QUEST_TOTEM_KARDASH_A = 9879,
 
-    NPC_KUR_MURK_RAIDER             = 18203,
-    NPC_KUR_MURK_BRUTE              = 18211,
-    NPC_KUR_MURK_SCAVENGER          = 18207,
-    NPC_KUR_MURK_PUTRIFIER          = 18202,
+    NPC_KUR_MURK_RAIDER = 18203,
+    NPC_KUR_MURK_BRUTE = 18211,
+    NPC_KUR_MURK_SCAVENGER = 18207,
+    NPC_KUR_MURK_PUTRIFIER = 18202,
 };
 
-static float kurenaiAmbushA[]= {-1568.805786f, 8533.873047f, 1.958f};
-static float kurenaiAmbushB[]= {-1491.554321f, 8506.483398f, 1.248f};
+static float kurenaiAmbushA[] = { -1568.805786f, 8533.873047f, 1.958f };
+static float kurenaiAmbushB[] = { -1491.554321f, 8506.483398f, 1.248f };
 
 class npc_kurenai_captive : public CreatureScript
 {
@@ -434,8 +434,8 @@ public:
                 EscortAI->Start(true, false, player->GetGUID(), quest);
                 creature->AI()->Talk(SAY_KUR_START);
 
-                creature->SummonCreature(NPC_KUR_MURK_RAIDER, kurenaiAmbushA[0]+2.5f, kurenaiAmbushA[1]-2.5f, kurenaiAmbushA[2], 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 25000);
-                creature->SummonCreature(NPC_KUR_MURK_BRUTE, kurenaiAmbushA[0]-2.5f, kurenaiAmbushA[1]+2.5f, kurenaiAmbushA[2], 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 25000);
+                creature->SummonCreature(NPC_KUR_MURK_RAIDER, kurenaiAmbushA[0] + 2.5f, kurenaiAmbushA[1] - 2.5f, kurenaiAmbushA[2], 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 25000);
+                creature->SummonCreature(NPC_KUR_MURK_BRUTE, kurenaiAmbushA[0] - 2.5f, kurenaiAmbushA[1] + 2.5f, kurenaiAmbushA[2], 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 25000);
                 creature->SummonCreature(NPC_KUR_MURK_SCAVENGER, kurenaiAmbushA[0], kurenaiAmbushA[1], kurenaiAmbushA[2], 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 25000);
             }
         }
@@ -491,28 +491,28 @@ public:
         {
             switch (waypointId)
             {
-                case 3:
-                {
-                    Talk(SAY_KUR_MORE);
+            case 3:
+            {
+                      Talk(SAY_KUR_MORE);
 
-                    if (me->SummonCreature(NPC_KUR_MURK_PUTRIFIER, kurenaiAmbushB[0], kurenaiAmbushB[1], kurenaiAmbushB[2], 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 25000))
-                        Talk(SAY_KUR_MORE_TWO);
+                      if (me->SummonCreature(NPC_KUR_MURK_PUTRIFIER, kurenaiAmbushB[0], kurenaiAmbushB[1], kurenaiAmbushB[2], 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 25000))
+                          Talk(SAY_KUR_MORE_TWO);
 
-                    me->SummonCreature(NPC_KUR_MURK_PUTRIFIER, kurenaiAmbushB[0]-2.5f, kurenaiAmbushB[1]-2.5f, kurenaiAmbushB[2], 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 25000);
-                    me->SummonCreature(NPC_KUR_MURK_SCAVENGER, kurenaiAmbushB[0]+2.5f, kurenaiAmbushB[1]+2.5f, kurenaiAmbushB[2], 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 25000);
-                    me->SummonCreature(NPC_KUR_MURK_SCAVENGER, kurenaiAmbushB[0]+2.5f, kurenaiAmbushB[1]-2.5f, kurenaiAmbushB[2], 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 25000);
-                    break;
-                }
-                case 7:
-                {
-                    Talk(SAY_KUR_COMPLETE);
+                      me->SummonCreature(NPC_KUR_MURK_PUTRIFIER, kurenaiAmbushB[0] - 2.5f, kurenaiAmbushB[1] - 2.5f, kurenaiAmbushB[2], 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 25000);
+                      me->SummonCreature(NPC_KUR_MURK_SCAVENGER, kurenaiAmbushB[0] + 2.5f, kurenaiAmbushB[1] + 2.5f, kurenaiAmbushB[2], 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 25000);
+                      me->SummonCreature(NPC_KUR_MURK_SCAVENGER, kurenaiAmbushB[0] + 2.5f, kurenaiAmbushB[1] - 2.5f, kurenaiAmbushB[2], 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 25000);
+                      break;
+            }
+            case 7:
+            {
+                      Talk(SAY_KUR_COMPLETE);
 
-                    if (Player* player = GetPlayerForEscort())
-                        player->GroupEventHappens(QUEST_TOTEM_KARDASH_A, me);
+                      if (Player* player = GetPlayerForEscort())
+                          player->GroupEventHappens(QUEST_TOTEM_KARDASH_A, me);
 
-                    SetRun();
-                    break;
-                }
+                      SetRun();
+                      break;
+            }
             }
         }
 
@@ -563,7 +563,8 @@ public:
             {
                 DoCastVictim(SPELL_KUR_CHAIN_LIGHTNING);
                 ChainLightningTimer = urand(7000, 14000);
-            } else ChainLightningTimer -= diff;
+            }
+            else ChainLightningTimer -= diff;
 
             if (HealthBelowPct(30))
             {
@@ -571,14 +572,16 @@ public:
                 {
                     DoCast(me, SPELL_KUR_HEALING_WAVE);
                     HealTimer = 5000;
-                } else HealTimer -= diff;
+                }
+                else HealTimer -= diff;
             }
 
             if (FrostShockTimer <= diff)
             {
                 DoCastVictim(SPELL_KUR_FROST_SHOCK);
                 FrostShockTimer = urand(7500, 15000);
-            } else FrostShockTimer -= diff;
+            }
+            else FrostShockTimer -= diff;
 
             DoMeleeAttackIfReady();
         }
@@ -591,32 +594,32 @@ public:
 
 enum FindingTheSurvivorsData
 {
-    QUEST_FINDING_THE_SURVIVORS                     = 9948,
-    NPC_MAGHAR_PRISONER                             = 18428,
+    QUEST_FINDING_THE_SURVIVORS = 9948,
+    NPC_MAGHAR_PRISONER = 18428,
 
-    SAY_FREE                                        = 0,
+    SAY_FREE = 0,
 };
 
 class go_warmaul_prison : public GameObjectScript
 {
-    public:
-        go_warmaul_prison() : GameObjectScript("go_warmaul_prison") { }
+public:
+    go_warmaul_prison() : GameObjectScript("go_warmaul_prison") { }
 
-        bool OnGossipHello(Player* player, GameObject* go) override
+    bool OnGossipHello(Player* player, GameObject* go) override
+    {
+        go->UseDoorOrButton();
+        if (player->GetQuestStatus(QUEST_FINDING_THE_SURVIVORS) != QUEST_STATUS_INCOMPLETE)
+            return false;
+
+        if (Creature* prisoner = go->FindNearestCreature(NPC_MAGHAR_PRISONER, 5.0f))
         {
-            go->UseDoorOrButton();
-            if (player->GetQuestStatus(QUEST_FINDING_THE_SURVIVORS) != QUEST_STATUS_INCOMPLETE)
-                return false;
+            player->KilledMonsterCredit(NPC_MAGHAR_PRISONER);
 
-            if (Creature* prisoner = go->FindNearestCreature(NPC_MAGHAR_PRISONER, 5.0f))
-            {
-                player->KilledMonsterCredit(NPC_MAGHAR_PRISONER);
-
-                prisoner->AI()->Talk(SAY_FREE, player);
-                prisoner->DespawnOrUnsummon(6000);
-            }
-            return true;
+            prisoner->AI()->Talk(SAY_FREE, player);
+            prisoner->DespawnOrUnsummon(6000);
         }
+        return true;
+    }
 };
 
 void AddSC_nagrand()

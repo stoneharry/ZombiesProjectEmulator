@@ -29,8 +29,8 @@ class Group;
 namespace lfg
 {
 
-class LFGPlayerScript : public PlayerScript
-{
+    class LFGPlayerScript : public PlayerScript
+    {
     public:
         LFGPlayerScript();
 
@@ -38,10 +38,10 @@ class LFGPlayerScript : public PlayerScript
         void OnLogout(Player* player) override;
         void OnLogin(Player* player, bool loginFirst) override;
         void OnMapChanged(Player* player) override;
-};
+    };
 
-class LFGGroupScript : public GroupScript
-{
+    class LFGGroupScript : public GroupScript
+    {
     public:
         LFGGroupScript();
 
@@ -51,6 +51,6 @@ class LFGGroupScript : public GroupScript
         void OnDisband(Group* group) override;
         void OnChangeLeader(Group* group, ObjectGuid newLeaderGuid, ObjectGuid oldLeaderGuid) override;
         void OnInviteMember(Group* group, ObjectGuid guid) override;
-};
+    };
 
 } // namespace lfg

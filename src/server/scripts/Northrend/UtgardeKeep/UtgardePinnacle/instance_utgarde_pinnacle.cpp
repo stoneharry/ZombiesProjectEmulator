@@ -21,174 +21,174 @@
 
 DoorData const doorData[] =
 {
-    { GO_SKADI_THE_RUTHLESS_DOOR,   DATA_SKADI_THE_RUTHLESS,    DOOR_TYPE_PASSAGE,  BOUNDARY_W    },
-    { GO_KING_YMIRON_DOOR,          DATA_KING_YMIRON,           DOOR_TYPE_PASSAGE,  BOUNDARY_N    },
-    { 0,                            0,                          DOOR_TYPE_ROOM,     BOUNDARY_NONE } // END
+    { GO_SKADI_THE_RUTHLESS_DOOR, DATA_SKADI_THE_RUTHLESS, DOOR_TYPE_PASSAGE, BOUNDARY_W },
+    { GO_KING_YMIRON_DOOR, DATA_KING_YMIRON, DOOR_TYPE_PASSAGE, BOUNDARY_N },
+    { 0, 0, DOOR_TYPE_ROOM, BOUNDARY_NONE } // END
 };
 
 class instance_utgarde_pinnacle : public InstanceMapScript
 {
-    public:
-        instance_utgarde_pinnacle() : InstanceMapScript(UPScriptName, 575) { }
+public:
+    instance_utgarde_pinnacle() : InstanceMapScript(UPScriptName, 575) { }
 
-        struct instance_utgarde_pinnacle_InstanceMapScript : public InstanceScript
+    struct instance_utgarde_pinnacle_InstanceMapScript : public InstanceScript
+    {
+        instance_utgarde_pinnacle_InstanceMapScript(Map* map) : InstanceScript(map)
         {
-            instance_utgarde_pinnacle_InstanceMapScript(Map* map) : InstanceScript(map)
-            {
-                SetHeaders(DataHeader);
-                SetBossNumber(EncounterCount);
-                LoadDoorData(doorData);
-            }
-
-            void OnCreatureCreate(Creature* creature) override
-            {
-                switch (creature->GetEntry())
-                {
-                    case NPC_SVALA_SORROWGRAVE:
-                        SvalaSorrowgraveGUID = creature->GetGUID();
-                        break;
-                    case NPC_GORTOK_PALEHOOF:
-                        GortokPalehoofGUID = creature->GetGUID();
-                        break;
-                    case NPC_SKADI_THE_RUTHLESS:
-                        SkadiTheRuthlessGUID = creature->GetGUID();
-                        break;
-                    case NPC_KING_YMIRON:
-                        KingYmironGUID = creature->GetGUID();
-                        break;
-                    case NPC_FRENZIED_WORGEN:
-                        FrenziedWorgenGUID = creature->GetGUID();
-                        break;
-                    case NPC_RAVENOUS_FURBOLG:
-                        RavenousFurbolgGUID = creature->GetGUID();
-                        break;
-                    case NPC_MASSIVE_JORMUNGAR:
-                        MassiveJormungarGUID = creature->GetGUID();
-                        break;
-                    case NPC_FEROCIOUS_RHINO:
-                        FerociousRhinoGUID = creature->GetGUID();
-                        break;
-                    case NPC_SVALA:
-                        SvalaGUID = creature->GetGUID();
-                        break;
-                    case NPC_PALEHOOF_ORB:
-                        PalehoofOrbGUID = creature->GetGUID();
-                        break;
-                    default:
-                        break;
-                }
-            }
-
-            void OnGameObjectCreate(GameObject* go) override
-            {
-                switch (go->GetEntry())
-                {
-                    case GO_UTGARDE_MIRROR:
-                        UtgardeMirrorGUID = go->GetGUID();
-                        break;
-                    case GO_GORTOK_PALEHOOF_SPHERE:
-                        GortokPalehoofSphereGUID = go->GetGUID();
-                        if (GetBossState(DATA_GORTOK_PALEHOOF) == DONE)
-                        {
-                            HandleGameObject(ObjectGuid::Empty, true, go);
-                            go->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_NOT_SELECTABLE);
-                        }
-                        break;
-                    case GO_SKADI_THE_RUTHLESS_DOOR:
-                    case GO_KING_YMIRON_DOOR:
-                        AddDoor(go, true);
-                        break;
-                    default:
-                        break;
-                }
-            }
-
-            void OnGameObjectRemove(GameObject* go) override
-            {
-                switch (go->GetEntry())
-                {
-                    case GO_SKADI_THE_RUTHLESS_DOOR:
-                    case GO_KING_YMIRON_DOOR:
-                        AddDoor(go, false);
-                        break;
-                    default:
-                        break;
-                }
-            }
-
-            void SetGuidData(uint32 type, ObjectGuid data) override
-            {
-                switch (type)
-                {
-                    case DATA_SACRIFICED_PLAYER:
-                        SacrificedPlayerGUID = data;
-                        break;
-                    default:
-                        break;
-                }
-            }
-
-            ObjectGuid GetGuidData(uint32 type) const override
-            {
-                switch (type)
-                {
-                    case DATA_SVALA_SORROWGRAVE:
-                        return SvalaSorrowgraveGUID;
-                    case DATA_GORTOK_PALEHOOF:
-                        return GortokPalehoofGUID;
-                    case DATA_SKADI_THE_RUTHLESS:
-                        return SkadiTheRuthlessGUID;
-                    case DATA_KING_YMIRON:
-                        return KingYmironGUID;
-                    case DATA_FRENZIED_WORGEN:
-                        return FrenziedWorgenGUID;
-                    case DATA_RAVENOUS_FURBOLG:
-                        return RavenousFurbolgGUID;
-                    case DATA_MASSIVE_JORMUNGAR:
-                        return MassiveJormungarGUID;
-                    case DATA_FEROCIOUS_RHINO:
-                        return FerociousRhinoGUID;
-                    case DATA_GORTOK_ORB:
-                        return PalehoofOrbGUID;
-                    case DATA_GORTOK_PALEHOOF_SPHERE:
-                        return GortokPalehoofSphereGUID;
-                    case DATA_UTGARDE_MIRROR:
-                        return UtgardeMirrorGUID;
-                    case DATA_SVALA:
-                        return SvalaGUID;
-                    case DATA_SACRIFICED_PLAYER:
-                        return SacrificedPlayerGUID;
-                    default:
-                        break;
-                }
-
-                return ObjectGuid::Empty;
-            }
-
-        protected:
-            ObjectGuid SvalaSorrowgraveGUID;
-            ObjectGuid GortokPalehoofGUID;
-            ObjectGuid SkadiTheRuthlessGUID;
-            ObjectGuid KingYmironGUID;
-
-            ObjectGuid UtgardeMirrorGUID;
-            ObjectGuid GortokPalehoofSphereGUID;
-
-            ObjectGuid FrenziedWorgenGUID;
-            ObjectGuid RavenousFurbolgGUID;
-            ObjectGuid FerociousRhinoGUID;
-            ObjectGuid MassiveJormungarGUID;
-
-            ObjectGuid PalehoofOrbGUID;
-
-            ObjectGuid SvalaGUID;
-            ObjectGuid SacrificedPlayerGUID;
-        };
-
-        InstanceScript* GetInstanceScript(InstanceMap* map) const override
-        {
-            return new instance_utgarde_pinnacle_InstanceMapScript(map);
+            SetHeaders(DataHeader);
+            SetBossNumber(EncounterCount);
+            LoadDoorData(doorData);
         }
+
+        void OnCreatureCreate(Creature* creature) override
+        {
+            switch (creature->GetEntry())
+            {
+            case NPC_SVALA_SORROWGRAVE:
+                SvalaSorrowgraveGUID = creature->GetGUID();
+                break;
+            case NPC_GORTOK_PALEHOOF:
+                GortokPalehoofGUID = creature->GetGUID();
+                break;
+            case NPC_SKADI_THE_RUTHLESS:
+                SkadiTheRuthlessGUID = creature->GetGUID();
+                break;
+            case NPC_KING_YMIRON:
+                KingYmironGUID = creature->GetGUID();
+                break;
+            case NPC_FRENZIED_WORGEN:
+                FrenziedWorgenGUID = creature->GetGUID();
+                break;
+            case NPC_RAVENOUS_FURBOLG:
+                RavenousFurbolgGUID = creature->GetGUID();
+                break;
+            case NPC_MASSIVE_JORMUNGAR:
+                MassiveJormungarGUID = creature->GetGUID();
+                break;
+            case NPC_FEROCIOUS_RHINO:
+                FerociousRhinoGUID = creature->GetGUID();
+                break;
+            case NPC_SVALA:
+                SvalaGUID = creature->GetGUID();
+                break;
+            case NPC_PALEHOOF_ORB:
+                PalehoofOrbGUID = creature->GetGUID();
+                break;
+            default:
+                break;
+            }
+        }
+
+        void OnGameObjectCreate(GameObject* go) override
+        {
+            switch (go->GetEntry())
+            {
+            case GO_UTGARDE_MIRROR:
+                UtgardeMirrorGUID = go->GetGUID();
+                break;
+            case GO_GORTOK_PALEHOOF_SPHERE:
+                GortokPalehoofSphereGUID = go->GetGUID();
+                if (GetBossState(DATA_GORTOK_PALEHOOF) == DONE)
+                {
+                    HandleGameObject(ObjectGuid::Empty, true, go);
+                    go->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_NOT_SELECTABLE);
+                }
+                break;
+            case GO_SKADI_THE_RUTHLESS_DOOR:
+            case GO_KING_YMIRON_DOOR:
+                AddDoor(go, true);
+                break;
+            default:
+                break;
+            }
+        }
+
+        void OnGameObjectRemove(GameObject* go) override
+        {
+            switch (go->GetEntry())
+            {
+            case GO_SKADI_THE_RUTHLESS_DOOR:
+            case GO_KING_YMIRON_DOOR:
+                AddDoor(go, false);
+                break;
+            default:
+                break;
+            }
+        }
+
+        void SetGuidData(uint32 type, ObjectGuid data) override
+        {
+            switch (type)
+            {
+            case DATA_SACRIFICED_PLAYER:
+                SacrificedPlayerGUID = data;
+                break;
+            default:
+                break;
+            }
+        }
+
+        ObjectGuid GetGuidData(uint32 type) const override
+        {
+            switch (type)
+            {
+            case DATA_SVALA_SORROWGRAVE:
+                return SvalaSorrowgraveGUID;
+            case DATA_GORTOK_PALEHOOF:
+                return GortokPalehoofGUID;
+            case DATA_SKADI_THE_RUTHLESS:
+                return SkadiTheRuthlessGUID;
+            case DATA_KING_YMIRON:
+                return KingYmironGUID;
+            case DATA_FRENZIED_WORGEN:
+                return FrenziedWorgenGUID;
+            case DATA_RAVENOUS_FURBOLG:
+                return RavenousFurbolgGUID;
+            case DATA_MASSIVE_JORMUNGAR:
+                return MassiveJormungarGUID;
+            case DATA_FEROCIOUS_RHINO:
+                return FerociousRhinoGUID;
+            case DATA_GORTOK_ORB:
+                return PalehoofOrbGUID;
+            case DATA_GORTOK_PALEHOOF_SPHERE:
+                return GortokPalehoofSphereGUID;
+            case DATA_UTGARDE_MIRROR:
+                return UtgardeMirrorGUID;
+            case DATA_SVALA:
+                return SvalaGUID;
+            case DATA_SACRIFICED_PLAYER:
+                return SacrificedPlayerGUID;
+            default:
+                break;
+            }
+
+            return ObjectGuid::Empty;
+        }
+
+    protected:
+        ObjectGuid SvalaSorrowgraveGUID;
+        ObjectGuid GortokPalehoofGUID;
+        ObjectGuid SkadiTheRuthlessGUID;
+        ObjectGuid KingYmironGUID;
+
+        ObjectGuid UtgardeMirrorGUID;
+        ObjectGuid GortokPalehoofSphereGUID;
+
+        ObjectGuid FrenziedWorgenGUID;
+        ObjectGuid RavenousFurbolgGUID;
+        ObjectGuid FerociousRhinoGUID;
+        ObjectGuid MassiveJormungarGUID;
+
+        ObjectGuid PalehoofOrbGUID;
+
+        ObjectGuid SvalaGUID;
+        ObjectGuid SacrificedPlayerGUID;
+    };
+
+    InstanceScript* GetInstanceScript(InstanceMap* map) const override
+    {
+        return new instance_utgarde_pinnacle_InstanceMapScript(map);
+    }
 };
 
 void AddSC_instance_utgarde_pinnacle()

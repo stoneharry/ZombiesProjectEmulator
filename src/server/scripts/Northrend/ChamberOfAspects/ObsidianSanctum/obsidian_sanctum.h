@@ -25,25 +25,25 @@ uint32 const EncounterCount = 5;
 
 enum DataTypes
 {
-    DATA_SARTHARION             = 0,
-    DATA_TENEBRON               = 1,
-    DATA_SHADRON                = 2,
-    DATA_VESPERON               = 3,
-    DATA_PORTAL_OPEN            = 4,
-    TWILIGHT_ACHIEVEMENTS       = 5
+    DATA_SARTHARION = 0,
+    DATA_TENEBRON = 1,
+    DATA_SHADRON = 2,
+    DATA_VESPERON = 3,
+    DATA_PORTAL_OPEN = 4,
+    TWILIGHT_ACHIEVEMENTS = 5
 };
 
 enum CreaturesIds
 {
-    NPC_SARTHARION              = 28860,
-    NPC_TENEBRON                = 30452,
-    NPC_SHADRON                 = 30451,
-    NPC_VESPERON                = 30449
+    NPC_SARTHARION = 28860,
+    NPC_TENEBRON = 30452,
+    NPC_SHADRON = 30451,
+    NPC_VESPERON = 30449
 };
 
 enum GameObjectIds
 {
-    GO_TWILIGHT_PORTAL          = 193988
+    GO_TWILIGHT_PORTAL = 193988
 };
 
 template<class AI>

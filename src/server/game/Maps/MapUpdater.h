@@ -30,37 +30,37 @@ class Map;
 
 class MapUpdater
 {
-    public:
+public:
 
-        MapUpdater() : _cancelationToken(false), pending_requests(0) {}
-        ~MapUpdater() { };
+    MapUpdater() : _cancelationToken(false), pending_requests(0) {}
+    ~MapUpdater() { };
 
-        friend class MapUpdateRequest;
+    friend class MapUpdateRequest;
 
-        void schedule_update(Map& map, uint32 diff);
+    void schedule_update(Map& map, uint32 diff);
 
-        void wait();
+    void wait();
 
-        void activate(size_t num_threads);
+    void activate(size_t num_threads);
 
-        void deactivate();
+    void deactivate();
 
-        bool activated();
+    bool activated();
 
-    private:
+private:
 
-        ProducerConsumerQueue<MapUpdateRequest*> _queue;
+    ProducerConsumerQueue<MapUpdateRequest*> _queue;
 
-        std::vector<std::thread> _workerThreads;
-        std::atomic<bool> _cancelationToken;
+    std::vector<std::thread> _workerThreads;
+    std::atomic<bool> _cancelationToken;
 
-        std::mutex _lock;
-        std::condition_variable _condition;
-        size_t pending_requests;
+    std::mutex _lock;
+    std::condition_variable _condition;
+    size_t pending_requests;
 
-        void update_finished();
+    void update_finished();
 
-        void WorkerThread();
+    void WorkerThread();
 };
 
 #endif //_MAP_UPDATER_H_INCLUDED

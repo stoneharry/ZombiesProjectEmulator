@@ -21,100 +21,100 @@
 
 enum Spells
 {
-    SPELL_CALL_OF_THE_GRAVE         = 17831,
-    SPELL_TERRIFY                   = 7399,
-    SPELL_SOUL_SIPHON               = 7290
+    SPELL_CALL_OF_THE_GRAVE = 17831,
+    SPELL_TERRIFY = 7399,
+    SPELL_SOUL_SIPHON = 7290
 };
 
 enum Events
 {
-    EVENT_CALL_OF_GRAVE             = 1,
+    EVENT_CALL_OF_GRAVE = 1,
     EVENT_TERRIFY,
     EVENT_SOUL_SIPHON
 };
 
 class boss_azshir_the_sleepless : public CreatureScript
 {
-    public:
-        boss_azshir_the_sleepless() : CreatureScript("boss_azshir_the_sleepless") { }
+public:
+    boss_azshir_the_sleepless() : CreatureScript("boss_azshir_the_sleepless") { }
 
-        struct boss_azshir_the_sleeplessAI : public BossAI
+    struct boss_azshir_the_sleeplessAI : public BossAI
+    {
+        boss_azshir_the_sleeplessAI(Creature* creature) : BossAI(creature, DATA_AZSHIR)
         {
-            boss_azshir_the_sleeplessAI(Creature* creature) : BossAI(creature, DATA_AZSHIR)
-            {
-                _siphon = false;
-            }
+            _siphon = false;
+        }
 
-            void Reset() override
-            {
-                _Reset();
-                _siphon = false;
-            }
+        void Reset() override
+        {
+            _Reset();
+            _siphon = false;
+        }
 
-            void EnterCombat(Unit* /*who*/) override
-            {
-                _EnterCombat();
-                events.ScheduleEvent(EVENT_CALL_OF_GRAVE, 30000);
-                events.ScheduleEvent(EVENT_TERRIFY, 20000);
-            }
+        void EnterCombat(Unit* /*who*/) override
+        {
+            _EnterCombat();
+            events.ScheduleEvent(EVENT_CALL_OF_GRAVE, 30000);
+            events.ScheduleEvent(EVENT_TERRIFY, 20000);
+        }
 
-            void JustDied(Unit* /*killer*/) override
-            {
-                _JustDied();
-            }
+        void JustDied(Unit* /*killer*/) override
+        {
+            _JustDied();
+        }
 
-            void DamageTaken(Unit* /*attacker*/, uint32& damage) override
+        void DamageTaken(Unit* /*attacker*/, uint32& damage) override
+        {
+            if (!_siphon && me->HealthBelowPctDamaged(50, damage))
             {
-                if (!_siphon && me->HealthBelowPctDamaged(50, damage))
+                DoCastVictim(SPELL_SOUL_SIPHON);
+                events.ScheduleEvent(EVENT_SOUL_SIPHON, 20000);
+                _siphon = true;
+            }
+        }
+
+        void UpdateAI(uint32 diff) override
+        {
+            if (!UpdateVictim())
+                return;
+
+            events.Update(diff);
+
+            if (me->HasUnitState(UNIT_STATE_CASTING))
+                return;
+
+            while (uint32 eventId = events.ExecuteEvent())
+            {
+                switch (eventId)
                 {
+                case EVENT_CALL_OF_GRAVE:
+                    DoCastVictim(SPELL_CALL_OF_THE_GRAVE);
+                    events.ScheduleEvent(EVENT_CALL_OF_GRAVE, 30000);
+                    break;
+                case EVENT_TERRIFY:
+                    DoCastVictim(SPELL_TERRIFY);
+                    events.ScheduleEvent(EVENT_TERRIFY, 20000);
+                    break;
+                case EVENT_SOUL_SIPHON:
                     DoCastVictim(SPELL_SOUL_SIPHON);
                     events.ScheduleEvent(EVENT_SOUL_SIPHON, 20000);
-                    _siphon = true;
+                    break;
+                default:
+                    break;
                 }
             }
 
-            void UpdateAI(uint32 diff) override
-            {
-                if (!UpdateVictim())
-                    return;
-
-                events.Update(diff);
-
-                if (me->HasUnitState(UNIT_STATE_CASTING))
-                    return;
-
-                while (uint32 eventId = events.ExecuteEvent())
-                {
-                    switch (eventId)
-                    {
-                        case EVENT_CALL_OF_GRAVE:
-                            DoCastVictim(SPELL_CALL_OF_THE_GRAVE);
-                            events.ScheduleEvent(EVENT_CALL_OF_GRAVE, 30000);
-                            break;
-                        case EVENT_TERRIFY:
-                            DoCastVictim(SPELL_TERRIFY);
-                            events.ScheduleEvent(EVENT_TERRIFY, 20000);
-                            break;
-                        case EVENT_SOUL_SIPHON:
-                            DoCastVictim(SPELL_SOUL_SIPHON);
-                            events.ScheduleEvent(EVENT_SOUL_SIPHON, 20000);
-                            break;
-                        default:
-                            break;
-                    }
-                }
-
-                DoMeleeAttackIfReady();
-            }
-
-        private:
-            bool _siphon;
-        };
-
-        CreatureAI* GetAI(Creature* creature) const override
-        {
-            return GetScarletMonasteryAI<boss_azshir_the_sleeplessAI>(creature);
+            DoMeleeAttackIfReady();
         }
+
+    private:
+        bool _siphon;
+    };
+
+    CreatureAI* GetAI(Creature* creature) const override
+    {
+        return GetScarletMonasteryAI<boss_azshir_the_sleeplessAI>(creature);
+    }
 };
 
 void AddSC_boss_azshir_the_sleepless()

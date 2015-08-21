@@ -52,13 +52,13 @@ public:
     bool OnGossipSelect(Player* player, Creature* creature, uint32 /*sender*/, uint32 action) override
     {
         player->PlayerTalkClass->ClearMenus();
-        if (action == GOSSIP_ACTION_INFO_DEF+1)
+        if (action == GOSSIP_ACTION_INFO_DEF + 1)
         {
             player->CLOSE_GOSSIP_MENU();
             creature->CastSpell(player, 6766, false);
 
         }
-        if (action == GOSSIP_ACTION_INFO_DEF+2)
+        if (action == GOSSIP_ACTION_INFO_DEF + 2)
         {
             player->CLOSE_GOSSIP_MENU();
             player->AreaExploredOrEventHappens(6627);
@@ -73,11 +73,11 @@ public:
 
         if (player->GetQuestStatus(6627) == QUEST_STATUS_INCOMPLETE)
         {
-            player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_HBD1, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
-            player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_HBD2, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+2);
-            player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_HBD3, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
-            player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_HBD4, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
-            player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_HBD5, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
+            player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_HBD1, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
+            player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_HBD2, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 2);
+            player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_HBD3, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
+            player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_HBD4, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
+            player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_HBD5, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
 
             player->SEND_GOSSIP_MENU(5820, creature->GetGUID());
         }
@@ -95,17 +95,17 @@ public:
 
 enum Kaya
 {
-    FACTION_ESCORTEE_H          = 775,
+    FACTION_ESCORTEE_H = 775,
 
-    NPC_GRIMTOTEM_RUFFIAN       = 11910,
-    NPC_GRIMTOTEM_BRUTE         = 11912,
-    NPC_GRIMTOTEM_SORCERER      = 11913,
+    NPC_GRIMTOTEM_RUFFIAN = 11910,
+    NPC_GRIMTOTEM_BRUTE = 11912,
+    NPC_GRIMTOTEM_SORCERER = 11913,
 
-    SAY_START                   = 0,
-    SAY_AMBUSH                  = 1,
-    SAY_END                     = 2,
+    SAY_START = 0,
+    SAY_AMBUSH = 1,
+    SAY_END = 2,
 
-    QUEST_PROTECT_KAYA          = 6523
+    QUEST_PROTECT_KAYA = 6523
 };
 
 class npc_kaya_flathoof : public CreatureScript
@@ -125,17 +125,17 @@ public:
 
             switch (waypointId)
             {
-                case 16:
-                    Talk(SAY_AMBUSH);
-                    me->SummonCreature(NPC_GRIMTOTEM_BRUTE, -48.53f, -503.34f, -46.31f, 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 30000);
-                    me->SummonCreature(NPC_GRIMTOTEM_RUFFIAN, -38.85f, -503.77f, -45.90f, 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 30000);
-                    me->SummonCreature(NPC_GRIMTOTEM_SORCERER, -36.37f, -496.23f, -45.71f, 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 30000);
-                    break;
-                case 18:
-                    me->SetInFront(player);
-                    Talk(SAY_END);
-                    player->GroupEventHappens(QUEST_PROTECT_KAYA, me);
-                    break;
+            case 16:
+                Talk(SAY_AMBUSH);
+                me->SummonCreature(NPC_GRIMTOTEM_BRUTE, -48.53f, -503.34f, -46.31f, 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 30000);
+                me->SummonCreature(NPC_GRIMTOTEM_RUFFIAN, -38.85f, -503.77f, -45.90f, 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 30000);
+                me->SummonCreature(NPC_GRIMTOTEM_SORCERER, -36.37f, -496.23f, -45.71f, 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 30000);
+                break;
+            case 18:
+                me->SetInFront(player);
+                Talk(SAY_END);
+                player->GroupEventHappens(QUEST_PROTECT_KAYA, me);
+                break;
             }
         }
 

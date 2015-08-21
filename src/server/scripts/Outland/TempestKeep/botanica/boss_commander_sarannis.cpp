@@ -22,31 +22,31 @@
 
 enum Says
 {
-    SAY_AGGRO                   = 0,
-    SAY_KILL                    = 1,
-    SAY_ARCANE_RESONANCE        = 2,
-    SAY_ARCANE_DEVASTATION      = 3,
-    EMOTE_SUMMON                = 4,
-    SAY_SUMMON                  = 5,
-    SAY_DEATH                   = 6
+    SAY_AGGRO = 0,
+    SAY_KILL = 1,
+    SAY_ARCANE_RESONANCE = 2,
+    SAY_ARCANE_DEVASTATION = 3,
+    EMOTE_SUMMON = 4,
+    SAY_SUMMON = 5,
+    SAY_DEATH = 6
 };
 
 enum Spells
 {
-    SPELL_ARCANE_RESONANCE      = 34794,
-    SPELL_ARCANE_DEVASTATION    = 34799,
+    SPELL_ARCANE_RESONANCE = 34794,
+    SPELL_ARCANE_DEVASTATION = 34799,
     SPELL_SUMMON_REINFORCEMENTS = 34803
 };
 
 enum Events
 {
-    EVENT_ARCANE_RESONANCE      = 1,
-    EVENT_ARCANE_DEVASTATION    = 2
+    EVENT_ARCANE_RESONANCE = 1,
+    EVENT_ARCANE_DEVASTATION = 2
 };
 
 class boss_commander_sarannis : public CreatureScript
 {
-    public: boss_commander_sarannis() : CreatureScript("boss_commander_sarannis") { }
+public: boss_commander_sarannis() : CreatureScript("boss_commander_sarannis") { }
 
         struct boss_commander_sarannisAI : public BossAI
         {
@@ -115,18 +115,18 @@ class boss_commander_sarannis : public CreatureScript
                 {
                     switch (eventId)
                     {
-                        case EVENT_ARCANE_RESONANCE:
-                            Talk(SAY_ARCANE_RESONANCE);
-                            DoCastVictim(SPELL_ARCANE_RESONANCE, true);
-                            events.ScheduleEvent(EVENT_ARCANE_RESONANCE, 42700);
-                            break;
-                        case EVENT_ARCANE_DEVASTATION:
-                            Talk(SAY_ARCANE_DEVASTATION);
-                            DoCastVictim(SPELL_ARCANE_DEVASTATION, true);
-                            events.ScheduleEvent(EVENT_ARCANE_DEVASTATION, urand(11000, 19200));
-                            break;
-                        default:
-                            break;
+                    case EVENT_ARCANE_RESONANCE:
+                        Talk(SAY_ARCANE_RESONANCE);
+                        DoCastVictim(SPELL_ARCANE_RESONANCE, true);
+                        events.ScheduleEvent(EVENT_ARCANE_RESONANCE, 42700);
+                        break;
+                    case EVENT_ARCANE_DEVASTATION:
+                        Talk(SAY_ARCANE_DEVASTATION);
+                        DoCastVictim(SPELL_ARCANE_DEVASTATION, true);
+                        events.ScheduleEvent(EVENT_ARCANE_DEVASTATION, urand(11000, 19200));
+                        break;
+                    default:
+                        break;
                     }
                 }
 
@@ -153,38 +153,38 @@ Position const PosSummonReinforcements[4] =
 
 enum Creatures
 {
-    NPC_SUMMONED_BLOODWARDER_MENDER     = 20083,
-    NPC_SUMMONED_BLOODWARDER_RESERVIST  = 20078
+    NPC_SUMMONED_BLOODWARDER_MENDER = 20083,
+    NPC_SUMMONED_BLOODWARDER_RESERVIST = 20078
 };
 
 class spell_commander_sarannis_summon_reinforcements : public SpellScriptLoader
 {
-    public:
-        spell_commander_sarannis_summon_reinforcements() : SpellScriptLoader("spell_commander_sarannis_summon_reinforcements") { }
+public:
+    spell_commander_sarannis_summon_reinforcements() : SpellScriptLoader("spell_commander_sarannis_summon_reinforcements") { }
 
-        class spell_commander_sarannis_summon_reinforcements_SpellScript : public SpellScript
+    class spell_commander_sarannis_summon_reinforcements_SpellScript : public SpellScript
+    {
+        PrepareSpellScript(spell_commander_sarannis_summon_reinforcements_SpellScript);
+
+        void HandleCast(SpellEffIndex /*effIndex*/)
         {
-            PrepareSpellScript(spell_commander_sarannis_summon_reinforcements_SpellScript);
-
-            void HandleCast(SpellEffIndex /*effIndex*/)
-            {
-                GetCaster()->SummonCreature(NPC_SUMMONED_BLOODWARDER_MENDER, PosSummonReinforcements[0], TEMPSUMMON_CORPSE_DESPAWN);
-                GetCaster()->SummonCreature(NPC_SUMMONED_BLOODWARDER_RESERVIST, PosSummonReinforcements[1], TEMPSUMMON_CORPSE_DESPAWN);
-                GetCaster()->SummonCreature(NPC_SUMMONED_BLOODWARDER_RESERVIST, PosSummonReinforcements[2], TEMPSUMMON_CORPSE_DESPAWN);
-                if (GetCaster()->GetMap()->IsHeroic())
-                    GetCaster()->SummonCreature(NPC_SUMMONED_BLOODWARDER_RESERVIST, PosSummonReinforcements[3], TEMPSUMMON_CORPSE_DESPAWN);
-            }
-
-            void Register() override
-            {
-                OnEffectHitTarget += SpellEffectFn(spell_commander_sarannis_summon_reinforcements_SpellScript::HandleCast, EFFECT_0, SPELL_EFFECT_DUMMY);
-            }
-        };
-
-        SpellScript* GetSpellScript() const override
-        {
-            return new spell_commander_sarannis_summon_reinforcements_SpellScript();
+            GetCaster()->SummonCreature(NPC_SUMMONED_BLOODWARDER_MENDER, PosSummonReinforcements[0], TEMPSUMMON_CORPSE_DESPAWN);
+            GetCaster()->SummonCreature(NPC_SUMMONED_BLOODWARDER_RESERVIST, PosSummonReinforcements[1], TEMPSUMMON_CORPSE_DESPAWN);
+            GetCaster()->SummonCreature(NPC_SUMMONED_BLOODWARDER_RESERVIST, PosSummonReinforcements[2], TEMPSUMMON_CORPSE_DESPAWN);
+            if (GetCaster()->GetMap()->IsHeroic())
+                GetCaster()->SummonCreature(NPC_SUMMONED_BLOODWARDER_RESERVIST, PosSummonReinforcements[3], TEMPSUMMON_CORPSE_DESPAWN);
         }
+
+        void Register() override
+        {
+            OnEffectHitTarget += SpellEffectFn(spell_commander_sarannis_summon_reinforcements_SpellScript::HandleCast, EFFECT_0, SPELL_EFFECT_DUMMY);
+        }
+    };
+
+    SpellScript* GetSpellScript() const override
+    {
+        return new spell_commander_sarannis_summon_reinforcements_SpellScript();
+    }
 };
 
 void AddSC_boss_commander_sarannis()

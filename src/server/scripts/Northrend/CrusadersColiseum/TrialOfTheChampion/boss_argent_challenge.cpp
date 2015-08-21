@@ -30,122 +30,122 @@ EndScriptData */
 /*
 enum Yells
 {
-    // Eadric the Pure
-    SAY_INTRO                   = 0,
-    SAY_AGGRO                   = 1,
-    EMOTE_RADIANCE              = 2,
-    EMOTE_HAMMER_RIGHTEOUS      = 3,
-    SAY_HAMMER_RIGHTEOUS        = 4,
-    SAY_KILL_PLAYER             = 5,
-    SAY_DEFEATED                = 6,
+// Eadric the Pure
+SAY_INTRO                   = 0,
+SAY_AGGRO                   = 1,
+EMOTE_RADIANCE              = 2,
+EMOTE_HAMMER_RIGHTEOUS      = 3,
+SAY_HAMMER_RIGHTEOUS        = 4,
+SAY_KILL_PLAYER             = 5,
+SAY_DEFEATED                = 6,
 
-    // Argent Confessor Paletress
-    SAY_INTRO_1                 = 0,
-    SAY_INTRO_2                 = 1,
-    SAY_AGGRO                   = 2,
-    SAY_MEMORY_SUMMON           = 3,
-    SAY_MEMORY_DEATH            = 4,
-    SAY_KILL_PLAYER             = 5,
-    SAY_DEFEATED                = 6,
+// Argent Confessor Paletress
+SAY_INTRO_1                 = 0,
+SAY_INTRO_2                 = 1,
+SAY_AGGRO                   = 2,
+SAY_MEMORY_SUMMON           = 3,
+SAY_MEMORY_DEATH            = 4,
+SAY_KILL_PLAYER             = 5,
+SAY_DEFEATED                = 6,
 
-    // Memory of X
-    EMOTE_WAKING_NIGHTMARE      = 0
+// Memory of X
+EMOTE_WAKING_NIGHTMARE      = 0
 };
 */
 enum Spells
 {
     // Eadric the Pure
-    SPELL_EADRIC_ACHIEVEMENT    = 68197,
-    SPELL_HAMMER_JUSTICE        = 66863,
-    SPELL_HAMMER_RIGHTEOUS      = 66867,
-    SPELL_RADIANCE              = 66935,
-    SPELL_VENGEANCE             = 66865,
+    SPELL_EADRIC_ACHIEVEMENT = 68197,
+    SPELL_HAMMER_JUSTICE = 66863,
+    SPELL_HAMMER_RIGHTEOUS = 66867,
+    SPELL_RADIANCE = 66935,
+    SPELL_VENGEANCE = 66865,
 
     // Paletress
-    SPELL_SMITE                 = 66536,
-    SPELL_SMITE_H               = 67674,
-    SPELL_HOLY_FIRE             = 66538,
-    SPELL_HOLY_FIRE_H           = 67676,
-    SPELL_RENEW                 = 66537,
-    SPELL_RENEW_H               = 67675,
-    SPELL_HOLY_NOVA             = 66546,
-    SPELL_SHIELD                = 66515,
-    SPELL_CONFESS               = 66680,
-    SPELL_SUMMON_MEMORY         = 66545,
+    SPELL_SMITE = 66536,
+    SPELL_SMITE_H = 67674,
+    SPELL_HOLY_FIRE = 66538,
+    SPELL_HOLY_FIRE_H = 67676,
+    SPELL_RENEW = 66537,
+    SPELL_RENEW_H = 67675,
+    SPELL_HOLY_NOVA = 66546,
+    SPELL_SHIELD = 66515,
+    SPELL_CONFESS = 66680,
+    SPELL_SUMMON_MEMORY = 66545,
 
     // Memory of X (Summon)
-    SPELL_MEMORY_ALGALON        = 66715,
-    SPELL_MEMORY_ARCHIMONDE     = 66704,
-    SPELL_MEMORY_CHROMAGGUS     = 66697,
-    SPELL_MEMORY_CYANIGOSA      = 66709,
-    SPELL_MEMORY_DELRISSA       = 66706,
-    SPELL_MEMORY_ECK            = 66710,
-    SPELL_MEMORY_ENTROPIUS      = 66707,
-    SPELL_MEMORY_GRUUL          = 66702,
-    SPELL_MEMORY_HAKKAR         = 66698,
-    SPELL_MEMORY_HEIGAN         = 66712,
-    SPELL_MEMORY_HEROD          = 66694,
-    SPELL_MEMORY_HOGGER         = 66543,
-    SPELL_MEMORY_IGNIS          = 66713,
-    SPELL_MEMORY_ILLIDAN        = 66705,
-    SPELL_MEMORY_INGVAR         = 66708,
-    SPELL_MEMORY_KALITHRESH     = 66700,
-    SPELL_MEMORY_LUCIFRON       = 66695,
-    SPELL_MEMORY_MALCHEZAAR     = 66701,
-    SPELL_MEMORY_MUTANUS        = 66692,
-    SPELL_MEMORY_ONYXIA         = 66711,
-    SPELL_MEMORY_THUNDERAAN     = 66696,
-    SPELL_MEMORY_VANCLEEF       = 66691,
-    SPELL_MEMORY_VASHJ          = 66703,
-    SPELL_MEMORY_VEKNILASH      = 66699,
-    SPELL_MEMORY_VEZAX          = 66714,
+    SPELL_MEMORY_ALGALON = 66715,
+    SPELL_MEMORY_ARCHIMONDE = 66704,
+    SPELL_MEMORY_CHROMAGGUS = 66697,
+    SPELL_MEMORY_CYANIGOSA = 66709,
+    SPELL_MEMORY_DELRISSA = 66706,
+    SPELL_MEMORY_ECK = 66710,
+    SPELL_MEMORY_ENTROPIUS = 66707,
+    SPELL_MEMORY_GRUUL = 66702,
+    SPELL_MEMORY_HAKKAR = 66698,
+    SPELL_MEMORY_HEIGAN = 66712,
+    SPELL_MEMORY_HEROD = 66694,
+    SPELL_MEMORY_HOGGER = 66543,
+    SPELL_MEMORY_IGNIS = 66713,
+    SPELL_MEMORY_ILLIDAN = 66705,
+    SPELL_MEMORY_INGVAR = 66708,
+    SPELL_MEMORY_KALITHRESH = 66700,
+    SPELL_MEMORY_LUCIFRON = 66695,
+    SPELL_MEMORY_MALCHEZAAR = 66701,
+    SPELL_MEMORY_MUTANUS = 66692,
+    SPELL_MEMORY_ONYXIA = 66711,
+    SPELL_MEMORY_THUNDERAAN = 66696,
+    SPELL_MEMORY_VANCLEEF = 66691,
+    SPELL_MEMORY_VASHJ = 66703,
+    SPELL_MEMORY_VEKNILASH = 66699,
+    SPELL_MEMORY_VEZAX = 66714,
 
     // Memory
-    SPELL_OLD_WOUNDS            = 66620,
-    SPELL_OLD_WOUNDS_H          = 67679,
-    SPELL_SHADOWS_PAST          = 66619,
-    SPELL_SHADOWS_PAST_H        = 67678,
-    SPELL_WAKING_NIGHTMARE      = 66552,
-    SPELL_WAKING_NIGHTMARE_H    = 67677
+    SPELL_OLD_WOUNDS = 66620,
+    SPELL_OLD_WOUNDS_H = 67679,
+    SPELL_SHADOWS_PAST = 66619,
+    SPELL_SHADOWS_PAST_H = 67678,
+    SPELL_WAKING_NIGHTMARE = 66552,
+    SPELL_WAKING_NIGHTMARE_H = 67677
 };
 
 class OrientationCheck : public std::unary_function<Unit*, bool>
 {
-    public:
-        explicit OrientationCheck(Unit* _caster) : caster(_caster) { }
-        bool operator()(WorldObject* object)
-        {
-            return !object->isInFront(caster, 2.5f) || !object->IsWithinDist(caster, 40.0f);
-        }
+public:
+    explicit OrientationCheck(Unit* _caster) : caster(_caster) { }
+    bool operator()(WorldObject* object)
+    {
+        return !object->isInFront(caster, 2.5f) || !object->IsWithinDist(caster, 40.0f);
+    }
 
-    private:
-        Unit* caster;
+private:
+    Unit* caster;
 };
 
 class spell_eadric_radiance : public SpellScriptLoader
 {
-    public:
-        spell_eadric_radiance() : SpellScriptLoader("spell_eadric_radiance") { }
-        class spell_eadric_radiance_SpellScript : public SpellScript
+public:
+    spell_eadric_radiance() : SpellScriptLoader("spell_eadric_radiance") { }
+    class spell_eadric_radiance_SpellScript : public SpellScript
+    {
+        PrepareSpellScript(spell_eadric_radiance_SpellScript);
+
+        void FilterTargets(std::list<WorldObject*>& unitList)
         {
-            PrepareSpellScript(spell_eadric_radiance_SpellScript);
-
-            void FilterTargets(std::list<WorldObject*>& unitList)
-            {
-                unitList.remove_if(OrientationCheck(GetCaster()));
-            }
-
-            void Register() override
-            {
-                OnObjectAreaTargetSelect += SpellObjectAreaTargetSelectFn(spell_eadric_radiance_SpellScript::FilterTargets, EFFECT_0, TARGET_UNIT_SRC_AREA_ENEMY);
-                OnObjectAreaTargetSelect += SpellObjectAreaTargetSelectFn(spell_eadric_radiance_SpellScript::FilterTargets, EFFECT_1, TARGET_UNIT_SRC_AREA_ENEMY);
-            }
-        };
-
-        SpellScript* GetSpellScript() const override
-        {
-            return new spell_eadric_radiance_SpellScript();
+            unitList.remove_if(OrientationCheck(GetCaster()));
         }
+
+        void Register() override
+        {
+            OnObjectAreaTargetSelect += SpellObjectAreaTargetSelectFn(spell_eadric_radiance_SpellScript::FilterTargets, EFFECT_0, TARGET_UNIT_SRC_AREA_ENEMY);
+            OnObjectAreaTargetSelect += SpellObjectAreaTargetSelectFn(spell_eadric_radiance_SpellScript::FilterTargets, EFFECT_1, TARGET_UNIT_SRC_AREA_ENEMY);
+        }
+    };
+
+    SpellScript* GetSpellScript() const override
+    {
+        return new spell_eadric_radiance_SpellScript();
+    }
 };
 
 class boss_eadric : public CreatureScript
@@ -213,7 +213,8 @@ public:
             {
                 me->GetMotionMaster()->MovePoint(0, 746.87f, 665.87f, 411.75f);
                 bDone = false;
-            } else uiResetTimer -= uiDiff;
+            }
+            else uiResetTimer -= uiDiff;
 
             if (!UpdateVictim())
                 return;
@@ -231,21 +232,24 @@ public:
                     }
                 }
                 uiHammerJusticeTimer = 25000;
-            } else uiHammerJusticeTimer -= uiDiff;
+            }
+            else uiHammerJusticeTimer -= uiDiff;
 
             if (uiVenganceTimer <= uiDiff)
             {
                 DoCast(me, SPELL_VENGEANCE);
 
                 uiVenganceTimer = 10000;
-            } else uiVenganceTimer -= uiDiff;
+            }
+            else uiVenganceTimer -= uiDiff;
 
             if (uiRadianceTimer <= uiDiff)
             {
                 DoCastAOE(SPELL_RADIANCE);
 
                 uiRadianceTimer = 16000;
-            } else uiRadianceTimer -= uiDiff;
+            }
+            else uiRadianceTimer -= uiDiff;
 
             DoMeleeAttackIfReady();
         }
@@ -304,8 +308,8 @@ public:
             Initialize();
 
             if (Creature* pMemory = ObjectAccessor::GetCreature(*me, MemoryGUID))
-                if (pMemory->IsAlive())
-                    pMemory->RemoveFromWorld();
+            if (pMemory->IsAlive())
+                pMemory->RemoveFromWorld();
         }
 
         void SetData(uint32 uiId, uint32 /*uiValue*/) override
@@ -341,7 +345,8 @@ public:
             {
                 me->GetMotionMaster()->MovePoint(0, 746.87f, 665.87f, 411.75f);
                 bDone = false;
-            } else uiResetTimer -= uiDiff;
+            }
+            else uiResetTimer -= uiDiff;
 
             if (!UpdateVictim())
                 return;
@@ -353,11 +358,12 @@ public:
                     if (target && target->IsAlive())
                         DoCast(target, SPELL_HOLY_FIRE);
                 }
-                 if (me->HasAura(SPELL_SHIELD))
+                if (me->HasAura(SPELL_SHIELD))
                     uiHolyFireTimer = 13000;
                 else
                     uiHolyFireTimer = urand(9000, 12000);
-            } else uiHolyFireTimer -= uiDiff;
+            }
+            else uiHolyFireTimer -= uiDiff;
 
             if (uiHolySmiteTimer <= uiDiff)
             {
@@ -370,7 +376,8 @@ public:
                     uiHolySmiteTimer = 9000;
                 else
                     uiHolySmiteTimer = urand(5000, 7000);
-            } else uiHolySmiteTimer -= uiDiff;
+            }
+            else uiHolySmiteTimer -= uiDiff;
 
             if (me->HasAura(SPELL_SHIELD))
             {
@@ -380,17 +387,18 @@ public:
                     uint8 uiTarget = urand(0, 1);
                     switch (uiTarget)
                     {
-                        case 0:
-                            DoCast(me, SPELL_RENEW);
-                            break;
-                        case 1:
-                            if (Creature* pMemory = ObjectAccessor::GetCreature(*me, MemoryGUID))
-                                if (pMemory->IsAlive())
-                                    DoCast(pMemory, SPELL_RENEW);
-                            break;
+                    case 0:
+                        DoCast(me, SPELL_RENEW);
+                        break;
+                    case 1:
+                        if (Creature* pMemory = ObjectAccessor::GetCreature(*me, MemoryGUID))
+                        if (pMemory->IsAlive())
+                            DoCast(pMemory, SPELL_RENEW);
+                        break;
                     }
                     uiRenewTimer = urand(15000, 17000);
-                } else uiRenewTimer -= uiDiff;
+                }
+                else uiRenewTimer -= uiDiff;
             }
 
             if (!bHealth && !HealthAbovePct(25))
@@ -460,13 +468,15 @@ public:
                         DoCast(target, SPELL_OLD_WOUNDS);
                 }
                 uiOldWoundsTimer = 12000;
-            }else uiOldWoundsTimer -= uiDiff;
+            }
+            else uiOldWoundsTimer -= uiDiff;
 
             if (uiWakingNightmare <= uiDiff)
             {
                 DoCast(me, SPELL_WAKING_NIGHTMARE);
                 uiWakingNightmare = 7000;
-            }else uiWakingNightmare -= uiDiff;
+            }
+            else uiWakingNightmare -= uiDiff;
 
             if (uiShadowPastTimer <= uiDiff)
             {
@@ -476,7 +486,8 @@ public:
                         DoCast(target, SPELL_SHADOWS_PAST);
                 }
                 uiShadowPastTimer = 5000;
-            }else uiShadowPastTimer -= uiDiff;
+            }
+            else uiShadowPastTimer -= uiDiff;
 
             DoMeleeAttackIfReady();
         }
@@ -484,9 +495,9 @@ public:
         void JustDied(Unit* /*killer*/) override
         {
             if (TempSummon* summ = me->ToTempSummon())
-                if (Unit* summoner = summ->GetSummoner())
-                    if (summoner->IsAlive())
-                        summoner->GetAI()->SetData(1, 0);
+            if (Unit* summoner = summ->GetSummoner())
+            if (summoner->IsAlive())
+                summoner->GetAI()->SetData(1, 0);
         }
     };
 
@@ -522,15 +533,15 @@ public:
             {
                 switch (uiWaypoint)
                 {
-                    case 0:
-                        me->SetFacingTo(5.81f);
-                        break;
-                    case 1:
-                        me->SetFacingTo(4.60f);
-                        break;
-                    case 2:
-                        me->SetFacingTo(2.79f);
-                        break;
+                case 0:
+                    me->SetFacingTo(5.81f);
+                    break;
+                case 1:
+                    me->SetFacingTo(4.60f);
+                    break;
+                case 2:
+                    me->SetFacingTo(2.79f);
+                    break;
                 }
             }
         }
@@ -539,48 +550,48 @@ public:
         {
             switch (me->GetEntry())
             {
-                case NPC_ARGENT_LIGHWIELDER:
-                    switch (uiType)
-                    {
-                        case 0:
-                            AddWaypoint(0, 712.14f, 628.42f, 411.88f);
-                            break;
-                        case 1:
-                            AddWaypoint(0, 742.44f, 650.29f, 411.79f);
-                            break;
-                        case 2:
-                            AddWaypoint(0, 783.33f, 615.29f, 411.84f);
-                            break;
-                    }
+            case NPC_ARGENT_LIGHWIELDER:
+                switch (uiType)
+                {
+                case 0:
+                    AddWaypoint(0, 712.14f, 628.42f, 411.88f);
                     break;
-                case NPC_ARGENT_MONK:
-                    switch (uiType)
-                    {
-                        case 0:
-                            AddWaypoint(0, 713.12f, 632.97f, 411.90f);
-                            break;
-                        case 1:
-                            AddWaypoint(0, 746.73f, 650.24f, 411.56f);
-                            break;
-                        case 2:
-                            AddWaypoint(0, 781.32f, 610.54f, 411.82f);
-                            break;
-                    }
+                case 1:
+                    AddWaypoint(0, 742.44f, 650.29f, 411.79f);
                     break;
-                case NPC_PRIESTESS:
-                    switch (uiType)
-                    {
-                        case 0:
-                            AddWaypoint(0, 715.06f, 637.07f, 411.91f);
-                            break;
-                        case 1:
-                            AddWaypoint(0, 750.72f, 650.20f, 411.77f);
-                            break;
-                        case 2:
-                            AddWaypoint(0, 779.77f, 607.03f, 411.81f);
-                            break;
-                    }
+                case 2:
+                    AddWaypoint(0, 783.33f, 615.29f, 411.84f);
                     break;
+                }
+                break;
+            case NPC_ARGENT_MONK:
+                switch (uiType)
+                {
+                case 0:
+                    AddWaypoint(0, 713.12f, 632.97f, 411.90f);
+                    break;
+                case 1:
+                    AddWaypoint(0, 746.73f, 650.24f, 411.56f);
+                    break;
+                case 2:
+                    AddWaypoint(0, 781.32f, 610.54f, 411.82f);
+                    break;
+                }
+                break;
+            case NPC_PRIESTESS:
+                switch (uiType)
+                {
+                case 0:
+                    AddWaypoint(0, 715.06f, 637.07f, 411.91f);
+                    break;
+                case 1:
+                    AddWaypoint(0, 750.72f, 650.20f, 411.77f);
+                    break;
+                case 2:
+                    AddWaypoint(0, 779.77f, 607.03f, 411.81f);
+                    break;
+                }
+                break;
             }
 
             Start(false, true);
@@ -641,47 +652,47 @@ uint32 const memorySpellId[25] =
 // 66545 - Summon Memory
 class spell_paletress_summon_memory : public SpellScriptLoader
 {
-    public:
-        spell_paletress_summon_memory() : SpellScriptLoader("spell_paletress_summon_memory") { }
+public:
+    spell_paletress_summon_memory() : SpellScriptLoader("spell_paletress_summon_memory") { }
 
-        class spell_paletress_summon_memory_SpellScript : public SpellScript
+    class spell_paletress_summon_memory_SpellScript : public SpellScript
+    {
+        PrepareSpellScript(spell_paletress_summon_memory_SpellScript);
+
+        bool Validate(SpellInfo const* /*spellInfo*/) override
         {
-            PrepareSpellScript(spell_paletress_summon_memory_SpellScript);
-
-            bool Validate(SpellInfo const* /*spellInfo*/) override
-            {
-                for (uint8 i = 0; i < 25; ++i)
-                    if (!sSpellMgr->GetSpellInfo(memorySpellId[i]))
-                        return false;
-                return true;
-            }
-
-            void FilterTargets(std::list<WorldObject*>& targets)
-            {
-                if (targets.empty())
-                    return;
-
-                WorldObject* target = Trinity::Containers::SelectRandomContainerElement(targets);
-                targets.clear();
-                targets.push_back(target);
-            }
-
-            void HandleScript(SpellEffIndex /*effIndex*/)
-            {
-                GetHitUnit()->CastSpell(GetHitUnit(), memorySpellId[urand(0, 24)], true, NULL, NULL, GetCaster()->GetGUID());
-            }
-
-            void Register() override
-            {
-                OnObjectAreaTargetSelect += SpellObjectAreaTargetSelectFn(spell_paletress_summon_memory_SpellScript::FilterTargets, EFFECT_0, TARGET_UNIT_SRC_AREA_ENEMY);
-                OnEffectHitTarget += SpellEffectFn(spell_paletress_summon_memory_SpellScript::HandleScript, EFFECT_0, SPELL_EFFECT_SCRIPT_EFFECT);
-            }
-        };
-
-        SpellScript* GetSpellScript() const override
-        {
-            return new spell_paletress_summon_memory_SpellScript();
+            for (uint8 i = 0; i < 25; ++i)
+            if (!sSpellMgr->GetSpellInfo(memorySpellId[i]))
+                return false;
+            return true;
         }
+
+        void FilterTargets(std::list<WorldObject*>& targets)
+        {
+            if (targets.empty())
+                return;
+
+            WorldObject* target = Trinity::Containers::SelectRandomContainerElement(targets);
+            targets.clear();
+            targets.push_back(target);
+        }
+
+        void HandleScript(SpellEffIndex /*effIndex*/)
+        {
+            GetHitUnit()->CastSpell(GetHitUnit(), memorySpellId[urand(0, 24)], true, NULL, NULL, GetCaster()->GetGUID());
+        }
+
+        void Register() override
+        {
+            OnObjectAreaTargetSelect += SpellObjectAreaTargetSelectFn(spell_paletress_summon_memory_SpellScript::FilterTargets, EFFECT_0, TARGET_UNIT_SRC_AREA_ENEMY);
+            OnEffectHitTarget += SpellEffectFn(spell_paletress_summon_memory_SpellScript::HandleScript, EFFECT_0, SPELL_EFFECT_SCRIPT_EFFECT);
+        }
+    };
+
+    SpellScript* GetSpellScript() const override
+    {
+        return new spell_paletress_summon_memory_SpellScript();
+    }
 };
 
 void AddSC_boss_argent_challenge()

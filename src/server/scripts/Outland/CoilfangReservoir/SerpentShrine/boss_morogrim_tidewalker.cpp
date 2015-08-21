@@ -30,57 +30,57 @@ EndScriptData */
 enum Yells
 {
     // Yell
-    SAY_AGGRO                       = 0,
-    SAY_SUMMON                      = 1,
-    SAY_SUMMON_BUBL                 = 2,
-    SAY_SLAY                        = 3,
-    SAY_DEATH                       = 4,
+    SAY_AGGRO = 0,
+    SAY_SUMMON = 1,
+    SAY_SUMMON_BUBL = 2,
+    SAY_SLAY = 3,
+    SAY_DEATH = 4,
     // Emotes
-    EMOTE_WATERY_GRAVE              = 5,
-    EMOTE_EARTHQUAKE                = 6,
-    EMOTE_WATERY_GLOBULES           = 7
+    EMOTE_WATERY_GRAVE = 5,
+    EMOTE_EARTHQUAKE = 6,
+    EMOTE_WATERY_GLOBULES = 7
 };
 
 enum Spells
 {
-    SPELL_TIDAL_WAVE                = 37730,
-    SPELL_WATERY_GRAVE              = 38049,
-    SPELL_EARTHQUAKE                = 37764,
-    SPELL_WATERY_GRAVE_EXPLOSION    = 37852,
+    SPELL_TIDAL_WAVE = 37730,
+    SPELL_WATERY_GRAVE = 38049,
+    SPELL_EARTHQUAKE = 37764,
+    SPELL_WATERY_GRAVE_EXPLOSION = 37852,
 
-    SPELL_WATERY_GRAVE_1            = 38023,
-    SPELL_WATERY_GRAVE_2            = 38024,
-    SPELL_WATERY_GRAVE_3            = 38025,
-    SPELL_WATERY_GRAVE_4            = 37850,
+    SPELL_WATERY_GRAVE_1 = 38023,
+    SPELL_WATERY_GRAVE_2 = 38024,
+    SPELL_WATERY_GRAVE_3 = 38025,
+    SPELL_WATERY_GRAVE_4 = 37850,
 
-    SPELL_SUMMON_WATER_GLOBULE_1    = 37854,
-    SPELL_SUMMON_WATER_GLOBULE_2    = 37858,
-    SPELL_SUMMON_WATER_GLOBULE_3    = 37860,
-    SPELL_SUMMON_WATER_GLOBULE_4    = 37861,
+    SPELL_SUMMON_WATER_GLOBULE_1 = 37854,
+    SPELL_SUMMON_WATER_GLOBULE_2 = 37858,
+    SPELL_SUMMON_WATER_GLOBULE_3 = 37860,
+    SPELL_SUMMON_WATER_GLOBULE_4 = 37861,
 
     // Water Globule
-    SPELL_GLOBULE_EXPLOSION         = 37871
+    SPELL_GLOBULE_EXPLOSION = 37871
 };
 
 enum Creatures
 {
     // Creatures
-    NPC_WATER_GLOBULE               = 21913,
-    NPC_TIDEWALKER_LURKER           = 21920
+    NPC_WATER_GLOBULE = 21913,
+    NPC_TIDEWALKER_LURKER = 21920
 };
 
 float MurlocCords[10][4] =
 {
-      {424.36f, -715.4f,  -7.14f,  0.124f},
-      {425.13f, -719.3f,  -7.14f,  0.124f},
-      {425.05f, -724.23f, -7.14f,  0.124f},
-      {424.91f, -728.68f, -7.14f,  0.124f},
-      {424.84f, -732.18f, -7.14f,  0.124f},
-      {321.05f, -734.2f,  -13.15f, 0.124f},
-      {321.05f, -729.4f,  -13.15f, 0.124f},
-      {321.05f, -724.03f, -13.15f, 0.124f},
-      {321.05f, -718.73f, -13.15f, 0.124f},
-      {321.05f, -714.24f, -13.15f, 0.124f}
+    { 424.36f, -715.4f, -7.14f, 0.124f },
+    { 425.13f, -719.3f, -7.14f, 0.124f },
+    { 425.05f, -724.23f, -7.14f, 0.124f },
+    { 424.91f, -728.68f, -7.14f, 0.124f },
+    { 424.84f, -732.18f, -7.14f, 0.124f },
+    { 321.05f, -734.2f, -13.15f, 0.124f },
+    { 321.05f, -729.4f, -13.15f, 0.124f },
+    { 321.05f, -724.03f, -13.15f, 0.124f },
+    { 321.05f, -718.73f, -13.15f, 0.124f },
+    { 321.05f, -714.24f, -13.15f, 0.124f }
 };
 
 //Morogrim Tidewalker AI
@@ -197,21 +197,23 @@ public:
                     for (uint8 i = 0; i < 10; ++i)
                     {
                         if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
-                            if (Creature* Murloc = me->SummonCreature(NPC_TIDEWALKER_LURKER, MurlocCords[i][0], MurlocCords[i][1], MurlocCords[i][2], MurlocCords[i][3], TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 10000))
-                                Murloc->AI()->AttackStart(target);
+                        if (Creature* Murloc = me->SummonCreature(NPC_TIDEWALKER_LURKER, MurlocCords[i][0], MurlocCords[i][1], MurlocCords[i][2], MurlocCords[i][3], TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 10000))
+                            Murloc->AI()->AttackStart(target);
                     }
                     Talk(EMOTE_EARTHQUAKE);
                     Earthquake = false;
                     Earthquake_Timer = 40000 + rand32() % 5000;
                 }
-            } else Earthquake_Timer -= diff;
+            }
+            else Earthquake_Timer -= diff;
 
             //TidalWave_Timer
             if (TidalWave_Timer <= diff)
             {
                 DoCastVictim(SPELL_TIDAL_WAVE);
                 TidalWave_Timer = 20000;
-            } else TidalWave_Timer -= diff;
+            }
+            else TidalWave_Timer -= diff;
 
             if (!Phase2)
             {
@@ -246,7 +248,8 @@ public:
 
                     Talk(EMOTE_WATERY_GRAVE);
                     WateryGrave_Timer = 30000;
-                } else WateryGrave_Timer -= diff;
+                }
+                else WateryGrave_Timer -= diff;
 
                 //Start Phase2
                 if (HealthBelowPct(25))
@@ -280,7 +283,8 @@ public:
                     }
                     Talk(EMOTE_WATERY_GLOBULES);
                     WateryGlobules_Timer = 25000;
-                } else WateryGlobules_Timer -= diff;
+                }
+                else WateryGlobules_Timer -= diff;
             }
 
             DoMeleeAttackIfReady();
@@ -355,7 +359,8 @@ public:
                     return;
                 }
                 Check_Timer = 500;
-            } else Check_Timer -= diff;
+            }
+            else Check_Timer -= diff;
 
             //do NOT deal any melee damage to the target.
         }

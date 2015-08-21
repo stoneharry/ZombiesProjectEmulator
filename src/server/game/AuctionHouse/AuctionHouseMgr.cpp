@@ -161,7 +161,7 @@ void AuctionHouseMgr::SendAuctionSalePendingMail(AuctionEntry* auction, SQLTrans
     // owner exist (online or offline)
     if (owner || owner_accId)
         MailDraft(auction->BuildAuctionMailSubject(AUCTION_SALE_PENDING), AuctionEntry::BuildAuctionMailBody(auction->bidder, auction->bid, auction->buyout, auction->deposit, auction->GetAuctionCut()))
-            .SendMailTo(trans, MailReceiver(owner, auction->owner), auction, MAIL_CHECK_MASK_COPIED);
+        .SendMailTo(trans, MailReceiver(owner, auction->owner), auction, MAIL_CHECK_MASK_COPIED);
 }
 
 //call this method to send mail to auction owner, when auction is successful, it does not clear ram
@@ -253,8 +253,8 @@ void AuctionHouseMgr::SendAuctionCancelledToBidderMail(AuctionEntry* auction, SQ
     // bidder exist
     if (bidder || bidder_accId)
         MailDraft(auction->BuildAuctionMailSubject(AUCTION_CANCELLED_TO_BIDDER), AuctionEntry::BuildAuctionMailBody(auction->owner, auction->bid, auction->buyout, auction->deposit, 0))
-            .AddMoney(auction->bid)
-            .SendMailTo(trans, MailReceiver(bidder, auction->bidder), auction, MAIL_CHECK_MASK_COPIED);
+        .AddMoney(auction->bid)
+        .SendMailTo(trans, MailReceiver(bidder, auction->bidder), auction, MAIL_CHECK_MASK_COPIED);
 }
 
 void AuctionHouseMgr::LoadAuctionItems()
@@ -287,8 +287,8 @@ void AuctionHouseMgr::LoadAuctionItems()
     {
         Field* fields = result->Fetch();
 
-        uint32 item_guid        = fields[11].GetUInt32();
-        uint32 itemEntry    = fields[12].GetUInt32();
+        uint32 item_guid = fields[11].GetUInt32();
+        uint32 itemEntry = fields[12].GetUInt32();
 
         ItemTemplate const* proto = sObjectMgr->GetItemTemplate(itemEntry);
         if (!proto)
@@ -306,8 +306,7 @@ void AuctionHouseMgr::LoadAuctionItems()
         AddAItem(item);
 
         ++count;
-    }
-    while (result->NextRow());
+    } while (result->NextRow());
 
     TC_LOG_INFO("server.loading", ">> Loaded %u auction items in %u ms", count, GetMSTimeDiffToNow(oldMSTime));
 
@@ -394,29 +393,29 @@ AuctionHouseEntry const* AuctionHouseMgr::GetAuctionHouseEntry(uint32 factionTem
         // but no easy way convert creature faction to player race faction for specific city
         switch (factionTemplateId)
         {
-            case   12: houseid = 1; break; // human
-            case   29: houseid = 6; break; // orc, and generic for horde
-            case   55: houseid = 2; break; // dwarf, and generic for alliance
-            case   68: houseid = 4; break; // undead
-            case   80: houseid = 3; break; // n-elf
-            case  104: houseid = 5; break; // trolls
-            case  120: houseid = 7; break; // booty bay, neutral
-            case  474: houseid = 7; break; // gadgetzan, neutral
-            case  855: houseid = 7; break; // everlook, neutral
-            case 1604: houseid = 6; break; // b-elfs,
-            default:                       // for unknown case
-            {
-                FactionTemplateEntry const* u_entry = sFactionTemplateStore.LookupEntry(factionTemplateId);
-                if (!u_entry)
-                    houseid = 7; // goblin auction house
-                else if (u_entry->ourMask & FACTION_MASK_ALLIANCE)
-                    houseid = 1; // human auction house
-                else if (u_entry->ourMask & FACTION_MASK_HORDE)
-                    houseid = 6; // orc auction house
-                else
-                    houseid = 7; // goblin auction house
-                break;
-            }
+        case   12: houseid = 1; break; // human
+        case   29: houseid = 6; break; // orc, and generic for horde
+        case   55: houseid = 2; break; // dwarf, and generic for alliance
+        case   68: houseid = 4; break; // undead
+        case   80: houseid = 3; break; // n-elf
+        case  104: houseid = 5; break; // trolls
+        case  120: houseid = 7; break; // booty bay, neutral
+        case  474: houseid = 7; break; // gadgetzan, neutral
+        case  855: houseid = 7; break; // everlook, neutral
+        case 1604: houseid = 6; break; // b-elfs,
+        default:                       // for unknown case
+        {
+                                           FactionTemplateEntry const* u_entry = sFactionTemplateStore.LookupEntry(factionTemplateId);
+                                           if (!u_entry)
+                                               houseid = 7; // goblin auction house
+                                           else if (u_entry->ourMask & FACTION_MASK_ALLIANCE)
+                                               houseid = 1; // human auction house
+                                           else if (u_entry->ourMask & FACTION_MASK_HORDE)
+                                               houseid = 6; // orc auction house
+                                           else
+                                               houseid = 7; // goblin auction house
+                                           break;
+        }
         }
     }
 
@@ -574,8 +573,8 @@ void AuctionHouseObject::BuildListAuctionItems(WorldPacket& data, Player* player
 
             // local name
             if (loc_idx >= 0)
-                if (ItemLocale const* il = sObjectMgr->GetItemLocale(proto->ItemId))
-                    ObjectMgr::GetLocaleString(il->Name, loc_idx, name);
+            if (ItemLocale const* il = sObjectMgr->GetItemLocale(proto->ItemId))
+                ObjectMgr::GetLocaleString(il->Name, loc_idx, name);
 
             // DO NOT use GetItemEnchantMod(proto->RandomProperty) as it may return a result
             //  that matches the search but it may not equal item->GetItemRandomPropertyId()

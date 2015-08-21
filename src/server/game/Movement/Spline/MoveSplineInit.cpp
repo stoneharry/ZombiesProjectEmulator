@@ -91,7 +91,7 @@ namespace Movement
         move_spline.onTransport = transport;
 
         uint32 moveFlags = unit->m_movementInfo.GetMovementFlags();
-        moveFlags |= (MOVEMENTFLAG_SPLINE_ENABLED|MOVEMENTFLAG_FORWARD);
+        moveFlags |= (MOVEMENTFLAG_SPLINE_ENABLED | MOVEMENTFLAG_FORWARD);
 
         if (moveFlags & MOVEMENTFLAG_ROOT)
             moveFlags &= ~MOVEMENTFLAG_MASK_MOVING;
@@ -226,8 +226,8 @@ namespace Movement
     Vector3 TransportPathTransform::operator()(Vector3 input)
     {
         if (_transformForTransport)
-            if (TransportBase* transport = _owner->GetDirectTransport())
-                transport->CalculatePassengerOffset(input.x, input.y, input.z);
+        if (TransportBase* transport = _owner->GetDirectTransport())
+            transport->CalculatePassengerOffset(input.x, input.y, input.z);
 
         return input;
     }

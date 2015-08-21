@@ -37,16 +37,16 @@ public:
     {
         static ChatCommand questCommandTable[] =
         {
-            { "add",      rbac::RBAC_PERM_COMMAND_QUEST_ADD,      false, &HandleQuestAdd,      "", NULL },
+            { "add", rbac::RBAC_PERM_COMMAND_QUEST_ADD, false, &HandleQuestAdd, "", NULL },
             { "complete", rbac::RBAC_PERM_COMMAND_QUEST_COMPLETE, false, &HandleQuestComplete, "", NULL },
-            { "remove",   rbac::RBAC_PERM_COMMAND_QUEST_REMOVE,   false, &HandleQuestRemove,   "", NULL },
-            { "reward",   rbac::RBAC_PERM_COMMAND_QUEST_REWARD,   false, &HandleQuestReward,   "", NULL },
-            { NULL,       0,                                false, NULL,                 "", NULL }
+            { "remove", rbac::RBAC_PERM_COMMAND_QUEST_REMOVE, false, &HandleQuestRemove, "", NULL },
+            { "reward", rbac::RBAC_PERM_COMMAND_QUEST_REWARD, false, &HandleQuestReward, "", NULL },
+            { NULL, 0, false, NULL, "", NULL }
         };
         static ChatCommand commandTable[] =
         {
-            { "quest", rbac::RBAC_PERM_COMMAND_QUEST,  false, NULL, "", questCommandTable },
-            { NULL,    0,                        false, NULL,              "", NULL }
+            { "quest", rbac::RBAC_PERM_COMMAND_QUEST, false, NULL, "", questCommandTable },
+            { NULL, 0, false, NULL, "", NULL }
         };
         return commandTable;
     }
@@ -80,7 +80,7 @@ public:
 
         // check item starting quest (it can work incorrectly if added without item in inventory)
         ItemTemplateContainer const* itc = sObjectMgr->GetItemTemplateStore();
-        ItemTemplateContainer::const_iterator result = find_if (itc->begin(), itc->end(), Finder<uint32, ItemTemplate>(entry, &ItemTemplate::StartQuest));
+        ItemTemplateContainer::const_iterator result = find_if(itc->begin(), itc->end(), Finder<uint32, ItemTemplate>(entry, &ItemTemplate::StartQuest));
 
         if (result != itc->end())
         {
@@ -188,11 +188,11 @@ public:
             uint32 curItemCount = player->GetItemCount(id, true);
 
             ItemPosCountVec dest;
-            uint8 msg = player->CanStoreNewItem(NULL_BAG, NULL_SLOT, dest, id, count-curItemCount);
+            uint8 msg = player->CanStoreNewItem(NULL_BAG, NULL_SLOT, dest, id, count - curItemCount);
             if (msg == EQUIP_ERR_OK)
             {
                 Item* item = player->StoreNewItem(dest, id, true);
-                player->SendNewItem(item, count-curItemCount, true, false);
+                player->SendNewItem(item, count - curItemCount, true, false);
             }
         }
 
@@ -205,12 +205,12 @@ public:
             if (creature > 0)
             {
                 if (CreatureTemplate const* creatureInfo = sObjectMgr->GetCreatureTemplate(creature))
-                    for (uint16 z = 0; z < creatureCount; ++z)
-                        player->KilledMonster(creatureInfo, ObjectGuid::Empty);
+                for (uint16 z = 0; z < creatureCount; ++z)
+                    player->KilledMonster(creatureInfo, ObjectGuid::Empty);
             }
             else if (creature < 0)
-                for (uint16 z = 0; z < creatureCount; ++z)
-                    player->KillCreditGO(creature);
+            for (uint16 z = 0; z < creatureCount; ++z)
+                player->KillCreditGO(creature);
         }
 
         // If the quest requires reputation to complete
@@ -219,8 +219,8 @@ public:
             uint32 repValue = quest->GetRepObjectiveValue();
             uint32 curRep = player->GetReputationMgr().GetReputation(repFaction);
             if (curRep < repValue)
-                if (FactionEntry const* factionEntry = sFactionStore.LookupEntry(repFaction))
-                    player->GetReputationMgr().SetReputation(factionEntry, repValue);
+            if (FactionEntry const* factionEntry = sFactionStore.LookupEntry(repFaction))
+                player->GetReputationMgr().SetReputation(factionEntry, repValue);
         }
 
         // If the quest requires a SECOND reputation to complete
@@ -229,8 +229,8 @@ public:
             uint32 repValue2 = quest->GetRepObjectiveValue2();
             uint32 curRep = player->GetReputationMgr().GetReputation(repFaction);
             if (curRep < repValue2)
-                if (FactionEntry const* factionEntry = sFactionStore.LookupEntry(repFaction))
-                    player->GetReputationMgr().SetReputation(factionEntry, repValue2);
+            if (FactionEntry const* factionEntry = sFactionStore.LookupEntry(repFaction))
+                player->GetReputationMgr().SetReputation(factionEntry, repValue2);
         }
 
         // If the quest requires money

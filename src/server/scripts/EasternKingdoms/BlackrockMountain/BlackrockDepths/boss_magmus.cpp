@@ -21,92 +21,92 @@
 
 enum Spells
 {
-    SPELL_FIERYBURST        = 13900,
-    SPELL_WARSTOMP          = 24375
+    SPELL_FIERYBURST = 13900,
+    SPELL_WARSTOMP = 24375
 };
 
 enum Events
 {
-    EVENT_FIERY_BURST       = 1,
-    EVENT_WARSTOMP          = 2
+    EVENT_FIERY_BURST = 1,
+    EVENT_WARSTOMP = 2
 };
 
 enum Phases
 {
-    PHASE_ONE               = 1,
-    PHASE_TWO               = 2
+    PHASE_ONE = 1,
+    PHASE_TWO = 2
 };
 
 class boss_magmus : public CreatureScript
 {
-    public:
-        boss_magmus() : CreatureScript("boss_magmus") { }
+public:
+    boss_magmus() : CreatureScript("boss_magmus") { }
 
-        struct boss_magmusAI : public ScriptedAI
+    struct boss_magmusAI : public ScriptedAI
+    {
+        boss_magmusAI(Creature* creature) : ScriptedAI(creature) { }
+
+        void Reset() override
         {
-            boss_magmusAI(Creature* creature) : ScriptedAI(creature) { }
-
-            void Reset() override
-            {
-                _events.Reset();
-            }
-
-            void EnterCombat(Unit* /*who*/) override
-            {
-                _events.SetPhase(PHASE_ONE);
-                _events.ScheduleEvent(EVENT_FIERY_BURST, 5000);
-            }
-
-            void DamageTaken(Unit* /*attacker*/, uint32& damage) override
-            {
-                if (me->HealthBelowPctDamaged(50, damage) && _events.IsInPhase(PHASE_ONE))
-                {
-                    _events.SetPhase(PHASE_TWO);
-                    _events.ScheduleEvent(EVENT_WARSTOMP, 0, 0, PHASE_TWO);
-                }
-            }
-
-            void UpdateAI(uint32 diff) override
-            {
-                if (!UpdateVictim())
-                    return;
-
-                _events.Update(diff);
-
-                while (uint32 eventId = _events.ExecuteEvent())
-                {
-                    switch (eventId)
-                    {
-                        case EVENT_FIERY_BURST:
-                            DoCastVictim(SPELL_FIERYBURST);
-                            _events.ScheduleEvent(EVENT_FIERY_BURST, 6000);
-                            break;
-                        case EVENT_WARSTOMP:
-                            DoCastVictim(SPELL_WARSTOMP);
-                            _events.ScheduleEvent(EVENT_WARSTOMP, 8000, 0, PHASE_TWO);
-                            break;
-                        default:
-                            break;
-                    }
-                }
-
-                DoMeleeAttackIfReady();
-            }
-
-            void JustDied(Unit* /*killer*/) override
-            {
-                if (InstanceScript* instance = me->GetInstanceScript())
-                    instance->HandleGameObject(instance->GetGuidData(DATA_THRONE_DOOR), true);
-            }
-
-        private:
-            EventMap _events;
-        };
-
-        CreatureAI* GetAI(Creature* creature) const override
-        {
-            return new boss_magmusAI(creature);
+            _events.Reset();
         }
+
+        void EnterCombat(Unit* /*who*/) override
+        {
+            _events.SetPhase(PHASE_ONE);
+            _events.ScheduleEvent(EVENT_FIERY_BURST, 5000);
+        }
+
+        void DamageTaken(Unit* /*attacker*/, uint32& damage) override
+        {
+            if (me->HealthBelowPctDamaged(50, damage) && _events.IsInPhase(PHASE_ONE))
+            {
+                _events.SetPhase(PHASE_TWO);
+                _events.ScheduleEvent(EVENT_WARSTOMP, 0, 0, PHASE_TWO);
+            }
+        }
+
+        void UpdateAI(uint32 diff) override
+        {
+            if (!UpdateVictim())
+                return;
+
+            _events.Update(diff);
+
+            while (uint32 eventId = _events.ExecuteEvent())
+            {
+                switch (eventId)
+                {
+                case EVENT_FIERY_BURST:
+                    DoCastVictim(SPELL_FIERYBURST);
+                    _events.ScheduleEvent(EVENT_FIERY_BURST, 6000);
+                    break;
+                case EVENT_WARSTOMP:
+                    DoCastVictim(SPELL_WARSTOMP);
+                    _events.ScheduleEvent(EVENT_WARSTOMP, 8000, 0, PHASE_TWO);
+                    break;
+                default:
+                    break;
+                }
+            }
+
+            DoMeleeAttackIfReady();
+        }
+
+        void JustDied(Unit* /*killer*/) override
+        {
+            if (InstanceScript* instance = me->GetInstanceScript())
+                instance->HandleGameObject(instance->GetGuidData(DATA_THRONE_DOOR), true);
+        }
+
+    private:
+        EventMap _events;
+    };
+
+    CreatureAI* GetAI(Creature* creature) const override
+    {
+        return new boss_magmusAI(creature);
+    }
 };
 
 void AddSC_boss_magmus()

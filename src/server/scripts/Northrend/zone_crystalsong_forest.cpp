@@ -38,10 +38,10 @@ enum Spells
 
 enum NPCs
 {
-    NPC_TRANSITUS_SHIELD_DUMMY   = 27306,
-    NPC_WARMAGE_SARINA           = 32369,
-    NPC_WARMAGE_HALISTER         = 32371,
-    NPC_WARMAGE_ILSUDRIA         = 32372
+    NPC_TRANSITUS_SHIELD_DUMMY = 27306,
+    NPC_WARMAGE_SARINA = 32369,
+    NPC_WARMAGE_HALISTER = 32371,
+    NPC_WARMAGE_ILSUDRIA = 32372
 };
 
 class npc_warmage_violetstand : public CreatureScript
@@ -90,8 +90,8 @@ public:
             else
             {
                 if (!targetGUID)
-                    if (Creature* pOrb = GetClosestCreatureWithEntry(me, NPC_TRANSITUS_SHIELD_DUMMY, 32.0f))
-                        targetGUID = pOrb->GetGUID();
+                if (Creature* pOrb = GetClosestCreatureWithEntry(me, NPC_TRANSITUS_SHIELD_DUMMY, 32.0f))
+                    targetGUID = pOrb->GetGUID();
 
             }
 

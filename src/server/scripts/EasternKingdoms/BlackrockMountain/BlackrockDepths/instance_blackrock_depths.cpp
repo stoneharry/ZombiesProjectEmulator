@@ -26,42 +26,42 @@
 
 enum Creatures
 {
-    NPC_EMPEROR             = 9019,
-    NPC_PHALANX             = 9502,
-    NPC_ANGERREL            = 9035,
-    NPC_DOPEREL             = 9040,
-    NPC_HATEREL             = 9034,
-    NPC_VILEREL             = 9036,
-    NPC_SEETHREL            = 9038,
-    NPC_GLOOMREL            = 9037,
-    NPC_DOOMREL             = 9039,
-    NPC_MAGMUS              = 9938,
-    NPC_MOIRA               = 8929
+    NPC_EMPEROR = 9019,
+    NPC_PHALANX = 9502,
+    NPC_ANGERREL = 9035,
+    NPC_DOPEREL = 9040,
+    NPC_HATEREL = 9034,
+    NPC_VILEREL = 9036,
+    NPC_SEETHREL = 9038,
+    NPC_GLOOMREL = 9037,
+    NPC_DOOMREL = 9039,
+    NPC_MAGMUS = 9938,
+    NPC_MOIRA = 8929
 };
 
 enum GameObjects
 {
-    GO_ARENA1               = 161525,
-    GO_ARENA2               = 161522,
-    GO_ARENA3               = 161524,
-    GO_ARENA4               = 161523,
-    GO_SHADOW_LOCK          = 161460,
-    GO_SHADOW_MECHANISM     = 161461,
-    GO_SHADOW_GIANT_DOOR    = 157923,
-    GO_SHADOW_DUMMY         = 161516,
-    GO_BAR_KEG_SHOT         = 170607,
-    GO_BAR_KEG_TRAP         = 171941,
-    GO_BAR_DOOR             = 170571,
-    GO_TOMB_ENTER           = 170576,
-    GO_TOMB_EXIT            = 170577,
-    GO_LYCEUM               = 170558,
-    GO_SF_N                 = 174745, // Shadowforge Brazier North
-    GO_SF_S                 = 174744, // Shadowforge Brazier South
-    GO_GOLEM_ROOM_N         = 170573, // Magmus door North
-    GO_GOLEM_ROOM_S         = 170574, // Magmus door Soutsh
-    GO_THRONE_ROOM          = 170575, // Throne door
-    GO_SPECTRAL_CHALICE     = 164869,
-    GO_CHEST_SEVEN          = 169243
+    GO_ARENA1 = 161525,
+    GO_ARENA2 = 161522,
+    GO_ARENA3 = 161524,
+    GO_ARENA4 = 161523,
+    GO_SHADOW_LOCK = 161460,
+    GO_SHADOW_MECHANISM = 161461,
+    GO_SHADOW_GIANT_DOOR = 157923,
+    GO_SHADOW_DUMMY = 161516,
+    GO_BAR_KEG_SHOT = 170607,
+    GO_BAR_KEG_TRAP = 171941,
+    GO_BAR_DOOR = 170571,
+    GO_TOMB_ENTER = 170576,
+    GO_TOMB_EXIT = 170577,
+    GO_LYCEUM = 170558,
+    GO_SF_N = 174745, // Shadowforge Brazier North
+    GO_SF_S = 174744, // Shadowforge Brazier South
+    GO_GOLEM_ROOM_N = 170573, // Magmus door North
+    GO_GOLEM_ROOM_S = 170574, // Magmus door Soutsh
+    GO_THRONE_ROOM = 170575, // Throne door
+    GO_SPECTRAL_CHALICE = 164869,
+    GO_CHEST_SEVEN = 169243
 };
 
 class instance_blackrock_depths : public InstanceMapScript
@@ -327,11 +327,11 @@ public:
 
             std::istringstream loadStream(in);
             loadStream >> encounter[0] >> encounter[1] >> encounter[2] >> encounter[3]
-            >> encounter[4] >> encounter[5] >> GhostKillCount;
+                >> encounter[4] >> encounter[5] >> GhostKillCount;
 
             for (uint8 i = 0; i < MAX_ENCOUNTER; ++i)
-                if (encounter[i] == IN_PROGRESS)
-                    encounter[i] = NOT_STARTED;
+            if (encounter[i] == IN_PROGRESS)
+                encounter[i] = NOT_STARTED;
             if (GhostKillCount > 0 && GhostKillCount < 7)
                 GhostKillCount = 0;//reset tomb of seven event
             if (GhostKillCount >= 7)
@@ -413,11 +413,12 @@ public:
                         {
                             if (!boss->IsAlive())
                             {
-                                GhostKillCount = i+1;
-                             }
+                                GhostKillCount = i + 1;
+                            }
                         }
                     }
-                } else TombTimer -= diff;
+                }
+                else TombTimer -= diff;
             }
             if (GhostKillCount >= 7 && TombEventStarterGUID)
                 TombOfSevenEnd();

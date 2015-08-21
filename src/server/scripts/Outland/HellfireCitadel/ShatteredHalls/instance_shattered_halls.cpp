@@ -29,92 +29,92 @@ EndScriptData */
 
 class instance_shattered_halls : public InstanceMapScript
 {
-    public:
-        instance_shattered_halls() : InstanceMapScript("instance_shattered_halls", 540) { }
+public:
+    instance_shattered_halls() : InstanceMapScript("instance_shattered_halls", 540) { }
 
-        InstanceScript* GetInstanceScript(InstanceMap* map) const override
+    InstanceScript* GetInstanceScript(InstanceMap* map) const override
+    {
+        return new instance_shattered_halls_InstanceMapScript(map);
+    }
+
+    struct instance_shattered_halls_InstanceMapScript : public InstanceScript
+    {
+        instance_shattered_halls_InstanceMapScript(Map* map) : InstanceScript(map)
         {
-            return new instance_shattered_halls_InstanceMapScript(map);
+            SetHeaders(DataHeader);
+            SetBossNumber(EncounterCount);
         }
 
-        struct instance_shattered_halls_InstanceMapScript : public InstanceScript
+        void OnGameObjectCreate(GameObject* go) override
         {
-            instance_shattered_halls_InstanceMapScript(Map* map) : InstanceScript(map)
+            switch (go->GetEntry())
             {
-                SetHeaders(DataHeader);
-                SetBossNumber(EncounterCount);
+            case GO_GRAND_WARLOCK_CHAMBER_DOOR_1:
+                nethekurseDoor1GUID = go->GetGUID();
+                break;
+            case GO_GRAND_WARLOCK_CHAMBER_DOOR_2:
+                nethekurseDoor2GUID = go->GetGUID();
+                break;
             }
+        }
 
-            void OnGameObjectCreate(GameObject* go) override
+        void OnCreatureCreate(Creature* creature) override
+        {
+            switch (creature->GetEntry())
             {
-                switch (go->GetEntry())
+            case NPC_GRAND_WARLOCK_NETHEKURSE:
+                nethekurseGUID = creature->GetGUID();
+                break;
+            }
+        }
+
+        bool SetBossState(uint32 type, EncounterState state) override
+        {
+            if (!InstanceScript::SetBossState(type, state))
+                return false;
+
+            switch (type)
+            {
+            case DATA_NETHEKURSE:
+                if (state == IN_PROGRESS)
                 {
-                    case GO_GRAND_WARLOCK_CHAMBER_DOOR_1:
-                        nethekurseDoor1GUID = go->GetGUID();
-                        break;
-                    case GO_GRAND_WARLOCK_CHAMBER_DOOR_2:
-                        nethekurseDoor2GUID = go->GetGUID();
-                        break;
+                    HandleGameObject(nethekurseDoor1GUID, false);
+                    HandleGameObject(nethekurseDoor2GUID, false);
                 }
-            }
-
-            void OnCreatureCreate(Creature* creature) override
-            {
-                switch (creature->GetEntry())
+                else
                 {
-                    case NPC_GRAND_WARLOCK_NETHEKURSE:
-                        nethekurseGUID = creature->GetGUID();
-                        break;
+                    HandleGameObject(nethekurseDoor1GUID, true);
+                    HandleGameObject(nethekurseDoor2GUID, true);
                 }
+                break;
+            case DATA_OMROGG:
+                break;
             }
+            return true;
+        }
 
-            bool SetBossState(uint32 type, EncounterState state) override
+        ObjectGuid GetGuidData(uint32 data) const override
+        {
+            switch (data)
             {
-                if (!InstanceScript::SetBossState(type, state))
-                    return false;
-
-                switch (type)
-                {
-                    case DATA_NETHEKURSE:
-                        if (state == IN_PROGRESS)
-                        {
-                            HandleGameObject(nethekurseDoor1GUID, false);
-                            HandleGameObject(nethekurseDoor2GUID, false);
-                        }
-                        else
-                        {
-                            HandleGameObject(nethekurseDoor1GUID, true);
-                            HandleGameObject(nethekurseDoor2GUID, true);
-                        }
-                        break;
-                    case DATA_OMROGG:
-                        break;
-                }
-                return true;
+            case NPC_GRAND_WARLOCK_NETHEKURSE:
+                return nethekurseGUID;
+                break;
+            case GO_GRAND_WARLOCK_CHAMBER_DOOR_1:
+                return nethekurseDoor1GUID;
+                break;
+            case GO_GRAND_WARLOCK_CHAMBER_DOOR_2:
+                return nethekurseDoor2GUID;
+                break;
             }
+            return ObjectGuid::Empty;
+        }
 
-            ObjectGuid GetGuidData(uint32 data) const override
-            {
-                switch (data)
-                {
-                    case NPC_GRAND_WARLOCK_NETHEKURSE:
-                        return nethekurseGUID;
-                        break;
-                    case GO_GRAND_WARLOCK_CHAMBER_DOOR_1:
-                        return nethekurseDoor1GUID;
-                        break;
-                    case GO_GRAND_WARLOCK_CHAMBER_DOOR_2:
-                        return nethekurseDoor2GUID;
-                        break;
-                }
-                return ObjectGuid::Empty;
-            }
-
-        protected:
-            ObjectGuid nethekurseGUID;
-            ObjectGuid nethekurseDoor1GUID;
-            ObjectGuid nethekurseDoor2GUID;
-        };
+    protected:
+        ObjectGuid nethekurseGUID;
+        ObjectGuid nethekurseDoor1GUID;
+        ObjectGuid nethekurseDoor2GUID;
+    };
 };
 
 void AddSC_instance_shattered_halls()

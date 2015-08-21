@@ -67,7 +67,7 @@ void CharacterDatabaseCleaner::CleanDatabase()
     TC_LOG_INFO("server.loading", ">> Cleaned character database in %u ms", GetMSTimeDiffToNow(oldMSTime));
 }
 
-void CharacterDatabaseCleaner::CheckUnique(const char* column, const char* table, bool (*check)(uint32))
+void CharacterDatabaseCleaner::CheckUnique(const char* column, const char* table, bool(*check)(uint32))
 {
     QueryResult result = CharacterDatabase.PQuery("SELECT DISTINCT %s FROM %s", column, table);
     if (!result)
@@ -96,8 +96,7 @@ void CharacterDatabaseCleaner::CheckUnique(const char* column, const char* table
 
             ss << id;
         }
-    }
-    while (result->NextRow());
+    } while (result->NextRow());
 
     if (found)
     {

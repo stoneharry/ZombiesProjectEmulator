@@ -38,20 +38,20 @@ public:
         static ChatCommand titlesSetCommandTable[] =
         {
             { "mask", rbac::RBAC_PERM_COMMAND_TITLES_SET_MASK, false, &HandleTitlesSetMaskCommand, "", NULL },
-            { NULL,   0,                                 false, NULL,                        "", NULL }
+            { NULL, 0, false, NULL, "", NULL }
         };
         static ChatCommand titlesCommandTable[] =
         {
-            { "add",     rbac::RBAC_PERM_COMMAND_TITLES_ADD,     false, &HandleTitlesAddCommand,     "", NULL },
+            { "add", rbac::RBAC_PERM_COMMAND_TITLES_ADD, false, &HandleTitlesAddCommand, "", NULL },
             { "current", rbac::RBAC_PERM_COMMAND_TITLES_CURRENT, false, &HandleTitlesCurrentCommand, "", NULL },
-            { "remove",  rbac::RBAC_PERM_COMMAND_TITLES_REMOVE,  false, &HandleTitlesRemoveCommand,  "", NULL },
-            { "set",     rbac::RBAC_PERM_COMMAND_TITLES_SET,     false, NULL,       "", titlesSetCommandTable },
-            { NULL,      0,                                false, NULL,                        "", NULL }
+            { "remove", rbac::RBAC_PERM_COMMAND_TITLES_REMOVE, false, &HandleTitlesRemoveCommand, "", NULL },
+            { "set", rbac::RBAC_PERM_COMMAND_TITLES_SET, false, NULL, "", titlesSetCommandTable },
+            { NULL, 0, false, NULL, "", NULL }
         };
         static ChatCommand commandTable[] =
         {
             { "titles", rbac::RBAC_PERM_COMMAND_TITLES, false, NULL, "", titlesCommandTable },
-            { NULL,     0,                        false, NULL, "", NULL }
+            { NULL, 0, false, NULL, "", NULL }
         };
         return commandTable;
     }
@@ -225,8 +225,8 @@ public:
         uint64 titles2 = titles;
 
         for (uint32 i = 1; i < sCharTitlesStore.GetNumRows(); ++i)
-            if (CharTitlesEntry const* tEntry = sCharTitlesStore.LookupEntry(i))
-                titles2 &= ~(uint64(1) << tEntry->bit_index);
+        if (CharTitlesEntry const* tEntry = sCharTitlesStore.LookupEntry(i))
+            titles2 &= ~(uint64(1) << tEntry->bit_index);
 
         titles &= ~titles2;                                     // remove not existed titles
 

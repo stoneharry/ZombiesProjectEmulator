@@ -119,19 +119,19 @@ namespace Trinity
 
             switch (content)
             {
-                case CONTENT_1_60:
-                    nBaseExp = 45;
-                    break;
-                case CONTENT_61_70:
-                    nBaseExp = 235;
-                    break;
-                case CONTENT_71_80:
-                    nBaseExp = 580;
-                    break;
-                default:
-                    TC_LOG_ERROR("misc", "BaseGain: Unsupported content level %u", content);
-                    nBaseExp = 45;
-                    break;
+            case CONTENT_1_60:
+                nBaseExp = 45;
+                break;
+            case CONTENT_61_70:
+                nBaseExp = 235;
+                break;
+            case CONTENT_71_80:
+                nBaseExp = 580;
+                break;
+            default:
+                TC_LOG_ERROR("misc", "BaseGain: Unsupported content level %u", content);
+                nBaseExp = 45;
+                break;
             }
 
             if (mob_level >= pl_level)
@@ -205,20 +205,20 @@ namespace Trinity
             {
                 switch (count)
                 {
-                    case 0:
-                    case 1:
-                    case 2:
-                        rate = 1.0f;
-                        break;
-                    case 3:
-                        rate = 1.166f;
-                        break;
-                    case 4:
-                        rate = 1.3f;
-                        break;
-                    case 5:
-                    default:
-                        rate = 1.4f;
+                case 0:
+                case 1:
+                case 2:
+                    rate = 1.0f;
+                    break;
+                case 3:
+                    rate = 1.166f;
+                    break;
+                case 4:
+                    rate = 1.3f;
+                    break;
+                case 5:
+                default:
+                    rate = 1.4f;
                 }
             }
 

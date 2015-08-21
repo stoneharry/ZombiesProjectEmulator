@@ -34,11 +34,11 @@ EndScriptData */
 
 enum CairneBloodhoof
 {
-    SPELL_BERSERKER_CHARGE  = 16636,
-    SPELL_CLEAVE            = 16044,
-    SPELL_MORTAL_STRIKE     = 16856,
-    SPELL_THUNDERCLAP       = 23931,
-    SPELL_UPPERCUT          = 22916
+    SPELL_BERSERKER_CHARGE = 16636,
+    SPELL_CLEAVE = 16044,
+    SPELL_MORTAL_STRIKE = 16856,
+    SPELL_THUNDERCLAP = 23931,
+    SPELL_UPPERCUT = 22916
 };
 
 #define GOSSIP_HCB "I know this is rather silly but a young ward who is a bit shy would like your hoofprint."
@@ -116,31 +116,36 @@ public:
                 if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
                     DoCast(target, SPELL_BERSERKER_CHARGE);
                 BerserkerChargeTimer = 25000;
-            } else BerserkerChargeTimer -= diff;
+            }
+            else BerserkerChargeTimer -= diff;
 
             if (UppercutTimer <= diff)
             {
                 DoCastVictim(SPELL_UPPERCUT);
                 UppercutTimer = 20000;
-            } else UppercutTimer -= diff;
+            }
+            else UppercutTimer -= diff;
 
             if (ThunderclapTimer <= diff)
             {
                 DoCastVictim(SPELL_THUNDERCLAP);
                 ThunderclapTimer = 15000;
-            } else ThunderclapTimer -= diff;
+            }
+            else ThunderclapTimer -= diff;
 
             if (MortalStrikeTimer <= diff)
             {
                 DoCastVictim(SPELL_MORTAL_STRIKE);
                 MortalStrikeTimer = 15000;
-            } else MortalStrikeTimer -= diff;
+            }
+            else MortalStrikeTimer -= diff;
 
             if (CleaveTimer <= diff)
             {
                 DoCastVictim(SPELL_CLEAVE);
                 CleaveTimer = 7000;
-            } else CleaveTimer -= diff;
+            }
+            else CleaveTimer -= diff;
 
             DoMeleeAttackIfReady();
         }

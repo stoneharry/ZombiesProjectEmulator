@@ -62,8 +62,8 @@ ArenaTeam* ArenaTeamMgr::GetArenaTeamByName(const std::string& arenaTeamName) co
 ArenaTeam* ArenaTeamMgr::GetArenaTeamByCaptain(ObjectGuid guid) const
 {
     for (ArenaTeamContainer::const_iterator itr = ArenaTeamStore.begin(); itr != ArenaTeamStore.end(); ++itr)
-        if (itr->second->GetCaptain() == guid)
-            return itr->second;
+    if (itr->second->GetCaptain() == guid)
+        return itr->second;
 
     return NULL;
 }
@@ -97,7 +97,7 @@ void ArenaTeamMgr::LoadArenaTeams()
 
     //                                                        0        1         2         3          4              5            6            7           8
     QueryResult result = CharacterDatabase.Query("SELECT arenaTeamId, name, captainGuid, type, backgroundColor, emblemStyle, emblemColor, borderStyle, borderColor, "
-    //      9        10        11         12           13       14
+        //      9        10        11         12           13       14
         "rating, weekGames, weekWins, seasonGames, seasonWins, rank FROM arena_team ORDER BY arenaTeamId ASC");
 
     if (!result)
@@ -129,8 +129,7 @@ void ArenaTeamMgr::LoadArenaTeams()
         AddArenaTeam(newArenaTeam);
 
         ++count;
-    }
-    while (result->NextRow());
+    } while (result->NextRow());
 
     TC_LOG_INFO("server.loading", ">> Loaded %u arena teams in %u ms", count, GetMSTimeDiffToNow(oldMSTime));
 }
@@ -147,8 +146,8 @@ void ArenaTeamMgr::DistributeArenaPoints()
 
     // At first update all points for all team members
     for (ArenaTeamContainer::iterator teamItr = GetArenaTeamMapBegin(); teamItr != GetArenaTeamMapEnd(); ++teamItr)
-        if (ArenaTeam* at = teamItr->second)
-            at->UpdateArenaPointsHelper(PlayerPoints);
+    if (ArenaTeam* at = teamItr->second)
+        at->UpdateArenaPointsHelper(PlayerPoints);
 
     SQLTransaction trans = CharacterDatabase.BeginTransaction();
 

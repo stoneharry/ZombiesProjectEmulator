@@ -80,7 +80,7 @@ namespace Trinity
     // Recursion
     template<class SPECIFIC_TYPE, class H, class T> SPECIFIC_TYPE* Insert(ContainerMapList<TypeList<H, T> >&elements, SPECIFIC_TYPE *obj)
     {
-        SPECIFIC_TYPE* t= Insert(elements._elements, obj);
+        SPECIFIC_TYPE* t = Insert(elements._elements, obj);
         return (t != NULL ? t : Insert(elements._TailElements, obj));
     }
 

@@ -50,35 +50,35 @@ struct WardenCheckResult
 
 class WardenCheckMgr
 {
-    private:
-        WardenCheckMgr();
-        ~WardenCheckMgr();
+private:
+    WardenCheckMgr();
+    ~WardenCheckMgr();
 
-    public:
-        static WardenCheckMgr* instance()
-        {
-            static WardenCheckMgr instance;
-            return &instance;
-        }
+public:
+    static WardenCheckMgr* instance()
+    {
+        static WardenCheckMgr instance;
+        return &instance;
+    }
 
-        // We have a linear key without any gaps, so we use vector for fast access
-        typedef std::vector<WardenCheck*> CheckContainer;
-        typedef std::map<uint32, WardenCheckResult*> CheckResultContainer;
+    // We have a linear key without any gaps, so we use vector for fast access
+    typedef std::vector<WardenCheck*> CheckContainer;
+    typedef std::map<uint32, WardenCheckResult*> CheckResultContainer;
 
-        WardenCheck* GetWardenDataById(uint16 Id);
-        WardenCheckResult* GetWardenResultById(uint16 Id);
+    WardenCheck* GetWardenDataById(uint16 Id);
+    WardenCheckResult* GetWardenResultById(uint16 Id);
 
-        std::vector<uint16> MemChecksIdPool;
-        std::vector<uint16> OtherChecksIdPool;
+    std::vector<uint16> MemChecksIdPool;
+    std::vector<uint16> OtherChecksIdPool;
 
-        void LoadWardenChecks();
-        void LoadWardenOverrides();
+    void LoadWardenChecks();
+    void LoadWardenOverrides();
 
-        boost::shared_mutex _checkStoreLock;
+    boost::shared_mutex _checkStoreLock;
 
-    private:
-        CheckContainer CheckStore;
-        CheckResultContainer CheckResultStore;
+private:
+    CheckContainer CheckStore;
+    CheckResultContainer CheckResultStore;
 };
 
 #define sWardenCheckMgr WardenCheckMgr::instance()

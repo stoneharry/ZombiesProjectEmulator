@@ -42,35 +42,35 @@ void BattlegroundDS::PostUpdateImpl(uint32 diff)
     {
         switch (eventId)
         {
-            case BG_DS_EVENT_WATERFALL_WARNING:
-                // Add the water
-                DoorClose(BG_DS_OBJECT_WATER_2);
-                _events.ScheduleEvent(BG_DS_EVENT_WATERFALL_ON, BG_DS_WATERFALL_WARNING_DURATION);
-                break;
-            case BG_DS_EVENT_WATERFALL_ON:
-                // Active collision and start knockback timer
-                DoorClose(BG_DS_OBJECT_WATER_1);
-                _events.ScheduleEvent(BG_DS_EVENT_WATERFALL_OFF, BG_DS_WATERFALL_DURATION);
-                _events.ScheduleEvent(BG_DS_EVENT_WATERFALL_KNOCKBACK, BG_DS_WATERFALL_KNOCKBACK_TIMER);
-                break;
-            case BG_DS_EVENT_WATERFALL_OFF:
-                // Remove collision and water
-                DoorOpen(BG_DS_OBJECT_WATER_1);
-                DoorOpen(BG_DS_OBJECT_WATER_2);
-                _events.CancelEvent(BG_DS_EVENT_WATERFALL_KNOCKBACK);
-                _events.ScheduleEvent(BG_DS_EVENT_WATERFALL_WARNING, urand(BG_DS_WATERFALL_TIMER_MIN, BG_DS_WATERFALL_TIMER_MAX));
-                break;
-            case BG_DS_EVENT_WATERFALL_KNOCKBACK:
-                // Repeat knockback while the waterfall still active
-                if (Creature* waterSpout = GetBGCreature(BG_DS_NPC_WATERFALL_KNOCKBACK))
-                    waterSpout->CastSpell(waterSpout, BG_DS_SPELL_WATER_SPOUT, true);
-                _events.ScheduleEvent(eventId, BG_DS_WATERFALL_KNOCKBACK_TIMER);
-                break;
-            case BG_DS_EVENT_PIPE_KNOCKBACK:
-                for (uint32 i = BG_DS_NPC_PIPE_KNOCKBACK_1; i <= BG_DS_NPC_PIPE_KNOCKBACK_2; ++i)
-                    if (Creature* waterSpout = GetBGCreature(i))
-                        waterSpout->CastSpell(waterSpout, BG_DS_SPELL_FLUSH, true);
-                break;
+        case BG_DS_EVENT_WATERFALL_WARNING:
+            // Add the water
+            DoorClose(BG_DS_OBJECT_WATER_2);
+            _events.ScheduleEvent(BG_DS_EVENT_WATERFALL_ON, BG_DS_WATERFALL_WARNING_DURATION);
+            break;
+        case BG_DS_EVENT_WATERFALL_ON:
+            // Active collision and start knockback timer
+            DoorClose(BG_DS_OBJECT_WATER_1);
+            _events.ScheduleEvent(BG_DS_EVENT_WATERFALL_OFF, BG_DS_WATERFALL_DURATION);
+            _events.ScheduleEvent(BG_DS_EVENT_WATERFALL_KNOCKBACK, BG_DS_WATERFALL_KNOCKBACK_TIMER);
+            break;
+        case BG_DS_EVENT_WATERFALL_OFF:
+            // Remove collision and water
+            DoorOpen(BG_DS_OBJECT_WATER_1);
+            DoorOpen(BG_DS_OBJECT_WATER_2);
+            _events.CancelEvent(BG_DS_EVENT_WATERFALL_KNOCKBACK);
+            _events.ScheduleEvent(BG_DS_EVENT_WATERFALL_WARNING, urand(BG_DS_WATERFALL_TIMER_MIN, BG_DS_WATERFALL_TIMER_MAX));
+            break;
+        case BG_DS_EVENT_WATERFALL_KNOCKBACK:
+            // Repeat knockback while the waterfall still active
+            if (Creature* waterSpout = GetBGCreature(BG_DS_NPC_WATERFALL_KNOCKBACK))
+                waterSpout->CastSpell(waterSpout, BG_DS_SPELL_WATER_SPOUT, true);
+            _events.ScheduleEvent(eventId, BG_DS_WATERFALL_KNOCKBACK_TIMER);
+            break;
+        case BG_DS_EVENT_PIPE_KNOCKBACK:
+            for (uint32 i = BG_DS_NPC_PIPE_KNOCKBACK_1; i <= BG_DS_NPC_PIPE_KNOCKBACK_2; ++i)
+            if (Creature* waterSpout = GetBGCreature(i))
+                waterSpout->CastSpell(waterSpout, BG_DS_SPELL_FLUSH, true);
+            break;
         }
     }
 
@@ -79,8 +79,8 @@ void BattlegroundDS::PostUpdateImpl(uint32 diff)
         if (_pipeKnockBackTimer < diff)
         {
             for (uint32 i = BG_DS_NPC_PIPE_KNOCKBACK_1; i <= BG_DS_NPC_PIPE_KNOCKBACK_2; ++i)
-                if (Creature* waterSpout = GetBGCreature(i))
-                    waterSpout->CastSpell(waterSpout, BG_DS_SPELL_FLUSH, true);
+            if (Creature* waterSpout = GetBGCreature(i))
+                waterSpout->CastSpell(waterSpout, BG_DS_SPELL_FLUSH, true);
 
             ++_pipeKnockBackCount;
             _pipeKnockBackTimer = BG_DS_PIPE_KNOCKBACK_DELAY;
@@ -118,8 +118,8 @@ void BattlegroundDS::StartingEventOpenDoors()
 
     // Remove effects of Demonic Circle Summon
     for (BattlegroundPlayerMap::const_iterator itr = GetPlayers().begin(); itr != GetPlayers().end(); ++itr)
-        if (Player* player = _GetPlayer(itr, "BattlegroundDS::StartingEventOpenDoors"))
-            player->RemoveAurasDueToSpell(SPELL_WARL_DEMONIC_CIRCLE);
+    if (Player* player = _GetPlayer(itr, "BattlegroundDS::StartingEventOpenDoors"))
+        player->RemoveAurasDueToSpell(SPELL_WARL_DEMONIC_CIRCLE);
 }
 
 void BattlegroundDS::HandleAreaTrigger(Player* player, uint32 trigger)
@@ -129,19 +129,19 @@ void BattlegroundDS::HandleAreaTrigger(Player* player, uint32 trigger)
 
     switch (trigger)
     {
-        case 5347:
-        case 5348:
-            // Remove effects of Demonic Circle Summon
-            player->RemoveAurasDueToSpell(SPELL_WARL_DEMONIC_CIRCLE);
+    case 5347:
+    case 5348:
+        // Remove effects of Demonic Circle Summon
+        player->RemoveAurasDueToSpell(SPELL_WARL_DEMONIC_CIRCLE);
 
-            // Someone has get back into the pipes and the knockback has already been performed,
-            // so we reset the knockback count for kicking the player again into the arena.
-            if (_pipeKnockBackCount >= BG_DS_PIPE_KNOCKBACK_TOTAL_COUNT)
-                _pipeKnockBackCount = 0;
-            break;
-        default:
-            Battleground::HandleAreaTrigger(player, trigger);
-            break;
+        // Someone has get back into the pipes and the knockback has already been performed,
+        // so we reset the knockback count for kicking the player again into the arena.
+        if (_pipeKnockBackCount >= BG_DS_PIPE_KNOCKBACK_TOTAL_COUNT)
+            _pipeKnockBackCount = 0;
+        break;
+    default:
+        Battleground::HandleAreaTrigger(player, trigger);
+        break;
     }
 }
 

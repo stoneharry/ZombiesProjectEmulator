@@ -23,16 +23,16 @@
 namespace lfg
 {
 
-enum LfgGroupEnum
-{
-    LFG_GROUP_MAX_KICKS                           = 3,
-};
+    enum LfgGroupEnum
+    {
+        LFG_GROUP_MAX_KICKS = 3,
+    };
 
-/**
-    Stores all lfg data needed about a group.
-*/
-class LfgGroupData
-{
+    /**
+        Stores all lfg data needed about a group.
+        */
+    class LfgGroupData
+    {
     public:
         LfgGroupData();
         ~LfgGroupData();
@@ -80,7 +80,7 @@ class LfgGroupData
         // Vote Kick
         uint8 m_KicksLeft;                                 ///< Number of kicks left
         bool m_VoteKickActive;
-};
+    };
 
 } // namespace lfg
 

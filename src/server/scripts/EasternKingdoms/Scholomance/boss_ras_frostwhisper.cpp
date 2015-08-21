@@ -20,12 +20,12 @@
 
 enum Spells
 {
-    SPELL_FROSTBOLT         = 21369,
-    SPELL_ICE_ARMOR         = 18100, // This is actually a buff he gives himself
-    SPELL_FREEZE            = 18763,
-    SPELL_FEAR              = 26070,
-    SPELL_CHILL_NOVA        = 18099,
-    SPELL_FROSTVOLLEY       = 8398
+    SPELL_FROSTBOLT = 21369,
+    SPELL_ICE_ARMOR = 18100, // This is actually a buff he gives himself
+    SPELL_FREEZE = 18763,
+    SPELL_FEAR = 26070,
+    SPELL_CHILL_NOVA = 18099,
+    SPELL_FROSTVOLLEY = 8398
 };
 
 enum Events
@@ -76,41 +76,41 @@ public:
             {
                 switch (eventId)
                 {
-                    case EVENT_ICE_ARMOR:
-                        DoCast(me, SPELL_ICE_ARMOR);
-                        events.ScheduleEvent(EVENT_ICE_ARMOR, 180000);
-                        break;
-                    case EVENT_FROSTBOLT:
-                        if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0, 40.0f, true))
-                            DoCast(target, SPELL_FROSTBOLT);
-                        events.ScheduleEvent(EVENT_FROSTBOLT, 8000);
-                        break;
-                    case EVENT_FREEZE:
-                        DoCastVictim(SPELL_FREEZE);
-                        events.ScheduleEvent(EVENT_FREEZE, 24000);
-                        break;
-                    case EVENT_FEAR:
-                        DoCastVictim(SPELL_FEAR);
-                        events.ScheduleEvent(EVENT_FEAR, 30000);
-                        break;
-                    case EVENT_CHILL_NOVA:
-                        DoCastVictim(SPELL_CHILL_NOVA);
-                        events.ScheduleEvent(EVENT_CHILL_NOVA, 14000);
-                        break;
-                    case EVENT_FROSTVOLLEY:
-                        DoCastVictim(SPELL_FROSTVOLLEY);
-                        events.ScheduleEvent(EVENT_FROSTVOLLEY, 15000);
-                        break;
-                    default:
-                        break;
+                case EVENT_ICE_ARMOR:
+                    DoCast(me, SPELL_ICE_ARMOR);
+                    events.ScheduleEvent(EVENT_ICE_ARMOR, 180000);
+                    break;
+                case EVENT_FROSTBOLT:
+                    if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0, 40.0f, true))
+                        DoCast(target, SPELL_FROSTBOLT);
+                    events.ScheduleEvent(EVENT_FROSTBOLT, 8000);
+                    break;
+                case EVENT_FREEZE:
+                    DoCastVictim(SPELL_FREEZE);
+                    events.ScheduleEvent(EVENT_FREEZE, 24000);
+                    break;
+                case EVENT_FEAR:
+                    DoCastVictim(SPELL_FEAR);
+                    events.ScheduleEvent(EVENT_FEAR, 30000);
+                    break;
+                case EVENT_CHILL_NOVA:
+                    DoCastVictim(SPELL_CHILL_NOVA);
+                    events.ScheduleEvent(EVENT_CHILL_NOVA, 14000);
+                    break;
+                case EVENT_FROSTVOLLEY:
+                    DoCastVictim(SPELL_FROSTVOLLEY);
+                    events.ScheduleEvent(EVENT_FROSTVOLLEY, 15000);
+                    break;
+                default:
+                    break;
                 }
             }
 
             DoMeleeAttackIfReady();
         }
 
-        private:
-            EventMap events;
+    private:
+        EventMap events;
     };
 
     CreatureAI* GetAI(Creature* creature) const override

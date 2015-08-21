@@ -1735,14 +1735,14 @@ namespace LuaPlayer
         Gender gender;
         switch (_gender)
         {
-            case 0:
-                gender = GENDER_MALE;
-                break;
-            case 1:
-                gender = GENDER_FEMALE;
-                break;
-            default:
-                return luaL_argerror(L, 2, "valid Gender expected");
+        case 0:
+            gender = GENDER_MALE;
+            break;
+        case 1:
+            gender = GENDER_FEMALE;
+            break;
+        default:
+            return luaL_argerror(L, 2, "valid Gender expected");
         }
 
         player->SetByteValue(UNIT_FIELD_BYTES_0, 2, gender);
@@ -3041,7 +3041,7 @@ namespace LuaPlayer
 
     /**
      * Clears the [Player]s currently open Gossip Menu
-     * 
+     *
      *     Note: This is ONLY needed when a [Player] is the sender of a Gossip Menu
      */
     int GossipClearMenu(Eluna* /*E*/, lua_State* /*L*/, Player* player)
@@ -3078,8 +3078,8 @@ namespace LuaPlayer
         uint32 data = Eluna::CHECKVAL<uint32>(L, 6);
         std::string iconText = Eluna::CHECKVAL<std::string>(L, 7);
 
-		int length = 20 + iconText.size();
-		WorldPacket packet(SMSG_GOSSIP_POI, length);
+        int length = 20 + iconText.size();
+        WorldPacket packet(SMSG_GOSSIP_POI, length);
         packet << flags;
         packet << x;
         packet << y;
@@ -3218,144 +3218,144 @@ namespace LuaPlayer
     return 0;
     }*/
 
-	int ForceItemDownPlayersThroat(Eluna* E, lua_State* L, Player* player)
-	{
-		int item = Eluna::CHECKVAL<int>(L, 2);
-		// Force send item to player (packet, overwrite cache)
-		ItemTemplate const* pProto = sObjectMgr->GetItemTemplate(item);
-		if (pProto)
-		{
-			WorldPacket data(SMSG_ITEM_QUERY_SINGLE_RESPONSE, 600);
-			data << pProto->ItemId;
-			data << pProto->Class;
-			data << pProto->SubClass;
-			data << pProto->SoundOverrideSubclass;
-			data << pProto->Name1;
-			data << uint8(0x00);
-			data << uint8(0x00);
-			data << uint8(0x00);
-			data << pProto->DisplayInfoID;
-			data << pProto->Quality;
-			data << pProto->Flags;
-			data << pProto->Flags2;
-			data << pProto->BuyPrice;
-			data << pProto->SellPrice;
-			data << pProto->InventoryType;
-			data << pProto->AllowableClass;
-			data << pProto->AllowableRace;
-			data << pProto->ItemLevel;
-			data << pProto->RequiredLevel;
-			data << pProto->RequiredSkill;
-			data << pProto->RequiredSkillRank;
-			data << pProto->RequiredSpell;
-			data << pProto->RequiredHonorRank;
-			data << pProto->RequiredCityRank;
-			data << pProto->RequiredReputationFaction;
-			data << pProto->RequiredReputationRank;
-			data << int32(pProto->MaxCount);
-			data << int32(pProto->Stackable);
-			data << pProto->ContainerSlots;
-			data << pProto->StatsCount;                         // item stats count
-			for (uint32 i = 0; i < pProto->StatsCount; ++i)
-			{
-				data << pProto->ItemStat[i].ItemStatType;
-				data << pProto->ItemStat[i].ItemStatValue;
-			}
-			data << pProto->ScalingStatDistribution;            // scaling stats distribution
-			data << pProto->ScalingStatValue;                   // some kind of flags used to determine stat values column
-			for (int i = 0; i < MAX_ITEM_PROTO_DAMAGES; ++i)
-			{
-				data << pProto->Damage[i].DamageMin;
-				data << pProto->Damage[i].DamageMax;
-				data << pProto->Damage[i].DamageType;
-			}
+    int ForceItemDownPlayersThroat(Eluna* E, lua_State* L, Player* player)
+    {
+        int item = Eluna::CHECKVAL<int>(L, 2);
+        // Force send item to player (packet, overwrite cache)
+        ItemTemplate const* pProto = sObjectMgr->GetItemTemplate(item);
+        if (pProto)
+        {
+            WorldPacket data(SMSG_ITEM_QUERY_SINGLE_RESPONSE, 600);
+            data << pProto->ItemId;
+            data << pProto->Class;
+            data << pProto->SubClass;
+            data << pProto->SoundOverrideSubclass;
+            data << pProto->Name1;
+            data << uint8(0x00);
+            data << uint8(0x00);
+            data << uint8(0x00);
+            data << pProto->DisplayInfoID;
+            data << pProto->Quality;
+            data << pProto->Flags;
+            data << pProto->Flags2;
+            data << pProto->BuyPrice;
+            data << pProto->SellPrice;
+            data << pProto->InventoryType;
+            data << pProto->AllowableClass;
+            data << pProto->AllowableRace;
+            data << pProto->ItemLevel;
+            data << pProto->RequiredLevel;
+            data << pProto->RequiredSkill;
+            data << pProto->RequiredSkillRank;
+            data << pProto->RequiredSpell;
+            data << pProto->RequiredHonorRank;
+            data << pProto->RequiredCityRank;
+            data << pProto->RequiredReputationFaction;
+            data << pProto->RequiredReputationRank;
+            data << int32(pProto->MaxCount);
+            data << int32(pProto->Stackable);
+            data << pProto->ContainerSlots;
+            data << pProto->StatsCount;                         // item stats count
+            for (uint32 i = 0; i < pProto->StatsCount; ++i)
+            {
+                data << pProto->ItemStat[i].ItemStatType;
+                data << pProto->ItemStat[i].ItemStatValue;
+            }
+            data << pProto->ScalingStatDistribution;            // scaling stats distribution
+            data << pProto->ScalingStatValue;                   // some kind of flags used to determine stat values column
+            for (int i = 0; i < MAX_ITEM_PROTO_DAMAGES; ++i)
+            {
+                data << pProto->Damage[i].DamageMin;
+                data << pProto->Damage[i].DamageMax;
+                data << pProto->Damage[i].DamageType;
+            }
 
-			data << pProto->Armor;
-			data << pProto->HolyRes;
-			data << pProto->FireRes;
-			data << pProto->NatureRes;
-			data << pProto->FrostRes;
-			data << pProto->ShadowRes;
-			data << pProto->ArcaneRes;
+            data << pProto->Armor;
+            data << pProto->HolyRes;
+            data << pProto->FireRes;
+            data << pProto->NatureRes;
+            data << pProto->FrostRes;
+            data << pProto->ShadowRes;
+            data << pProto->ArcaneRes;
 
-			data << pProto->Delay;
-			data << pProto->AmmoType;
-			data << pProto->RangedModRange;
+            data << pProto->Delay;
+            data << pProto->AmmoType;
+            data << pProto->RangedModRange;
 
-			for (int s = 0; s < MAX_ITEM_PROTO_SPELLS; ++s)
-			{
-				SpellInfo const* spell = sSpellMgr->GetSpellInfo(pProto->Spells[s].SpellId);
-				if (spell)
-				{
-					bool db_data = pProto->Spells[s].SpellCooldown >= 0 || pProto->Spells[s].SpellCategoryCooldown >= 0;
+            for (int s = 0; s < MAX_ITEM_PROTO_SPELLS; ++s)
+            {
+                SpellInfo const* spell = sSpellMgr->GetSpellInfo(pProto->Spells[s].SpellId);
+                if (spell)
+                {
+                    bool db_data = pProto->Spells[s].SpellCooldown >= 0 || pProto->Spells[s].SpellCategoryCooldown >= 0;
 
-					data << pProto->Spells[s].SpellId;
-					data << pProto->Spells[s].SpellTrigger;
-					data << uint32(-abs(pProto->Spells[s].SpellCharges));
+                    data << pProto->Spells[s].SpellId;
+                    data << pProto->Spells[s].SpellTrigger;
+                    data << uint32(-abs(pProto->Spells[s].SpellCharges));
 
-					if (db_data)
-					{
-						data << uint32(pProto->Spells[s].SpellCooldown);
-						data << uint32(pProto->Spells[s].SpellCategory);
-						data << uint32(pProto->Spells[s].SpellCategoryCooldown);
-					}
-					else
-					{
-						data << uint32(spell->RecoveryTime);
-						data << uint32(spell->GetCategory());
-						data << uint32(spell->CategoryRecoveryTime);
-					}
-				}
-				else
-				{
-					data << uint32(0);
-					data << uint32(0);
-					data << uint32(0);
-					data << uint32(-1);
-					data << uint32(0);
-					data << uint32(-1);
-				}
-			}
-			data << pProto->Bonding;
-			data << pProto->Description;
-			data << pProto->PageText;
-			data << pProto->LanguageID;
-			data << pProto->PageMaterial;
-			data << pProto->StartQuest;
-			data << pProto->LockID;
-			data << int32(pProto->Material);
-			data << pProto->Sheath;
-			data << pProto->RandomProperty;
-			data << pProto->RandomSuffix;
-			data << pProto->Block;
-			data << pProto->ItemSet;
-			data << pProto->MaxDurability;
-			data << pProto->Area;
-			data << pProto->Map;
-			data << pProto->BagFamily;
-			data << pProto->TotemCategory;
-			for (int s = 0; s < MAX_ITEM_PROTO_SOCKETS; ++s)
-			{
-				data << pProto->Socket[s].Color;
-				data << pProto->Socket[s].Content;
-			}
-			data << pProto->socketBonus;
-			data << pProto->GemProperties;
-			data << pProto->RequiredDisenchantSkill;
-			data << pProto->ArmorDamageModifier;
-			data << pProto->Duration;
-			data << pProto->ItemLimitCategory;
-			data << pProto->HolidayId;
-			player->GetSession()->SendPacket(&data);
-		}
-		return 0;
-	}
+                    if (db_data)
+                    {
+                        data << uint32(pProto->Spells[s].SpellCooldown);
+                        data << uint32(pProto->Spells[s].SpellCategory);
+                        data << uint32(pProto->Spells[s].SpellCategoryCooldown);
+                    }
+                    else
+                    {
+                        data << uint32(spell->RecoveryTime);
+                        data << uint32(spell->GetCategory());
+                        data << uint32(spell->CategoryRecoveryTime);
+                    }
+                }
+                else
+                {
+                    data << uint32(0);
+                    data << uint32(0);
+                    data << uint32(0);
+                    data << uint32(-1);
+                    data << uint32(0);
+                    data << uint32(-1);
+                }
+            }
+            data << pProto->Bonding;
+            data << pProto->Description;
+            data << pProto->PageText;
+            data << pProto->LanguageID;
+            data << pProto->PageMaterial;
+            data << pProto->StartQuest;
+            data << pProto->LockID;
+            data << int32(pProto->Material);
+            data << pProto->Sheath;
+            data << pProto->RandomProperty;
+            data << pProto->RandomSuffix;
+            data << pProto->Block;
+            data << pProto->ItemSet;
+            data << pProto->MaxDurability;
+            data << pProto->Area;
+            data << pProto->Map;
+            data << pProto->BagFamily;
+            data << pProto->TotemCategory;
+            for (int s = 0; s < MAX_ITEM_PROTO_SOCKETS; ++s)
+            {
+                data << pProto->Socket[s].Color;
+                data << pProto->Socket[s].Content;
+            }
+            data << pProto->socketBonus;
+            data << pProto->GemProperties;
+            data << pProto->RequiredDisenchantSkill;
+            data << pProto->ArmorDamageModifier;
+            data << pProto->Duration;
+            data << pProto->ItemLimitCategory;
+            data << pProto->HolidayId;
+            player->GetSession()->SendPacket(&data);
+        }
+        return 0;
+    }
 
-	int QuestKillCredit(Eluna* E, lua_State* L, Player* player)
-	{
-		uint32 id = Eluna::CHECKVAL<uint32>(L, 2);
-		player->KilledMonsterCredit(id);
-		return 0;
-	}
+    int QuestKillCredit(Eluna* E, lua_State* L, Player* player)
+    {
+        uint32 id = Eluna::CHECKVAL<uint32>(L, 2);
+        player->KilledMonsterCredit(id);
+        return 0;
+    }
 };
 #endif

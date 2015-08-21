@@ -43,31 +43,31 @@ void OPvPCapturePointEP_EWT::ChangeState()
 
     switch (m_State)
     {
-        case OBJECTIVESTATE_ALLIANCE:
-            m_TowerState = EP_TS_A;
-            artkit = 2;
-            SummonSupportUnitAtNorthpassTower(ALLIANCE);
-            ((OutdoorPvPEP*)m_PvP)->SetControlledState(EP_EWT, ALLIANCE);
-            m_PvP->SendDefenseMessage(EP_GraveYardZone, TEXT_EASTWALL_TOWER_TAKEN_ALLIANCE);
-            break;
-        case OBJECTIVESTATE_HORDE:
-            m_TowerState = EP_TS_H;
-            artkit = 1;
-            SummonSupportUnitAtNorthpassTower(HORDE);
-            ((OutdoorPvPEP*)m_PvP)->SetControlledState(EP_EWT, HORDE);
-            m_PvP->SendDefenseMessage(EP_GraveYardZone, TEXT_EASTWALL_TOWER_TAKEN_HORDE);
-            break;
-        case OBJECTIVESTATE_NEUTRAL:
-            m_TowerState = EP_TS_N;
-            break;
-        case OBJECTIVESTATE_NEUTRAL_ALLIANCE_CHALLENGE:
-        case OBJECTIVESTATE_HORDE_ALLIANCE_CHALLENGE:
-            m_TowerState = EP_TS_N_A;
-            break;
-        case OBJECTIVESTATE_NEUTRAL_HORDE_CHALLENGE:
-        case OBJECTIVESTATE_ALLIANCE_HORDE_CHALLENGE:
-            m_TowerState = EP_TS_N_H;
-            break;
+    case OBJECTIVESTATE_ALLIANCE:
+        m_TowerState = EP_TS_A;
+        artkit = 2;
+        SummonSupportUnitAtNorthpassTower(ALLIANCE);
+        ((OutdoorPvPEP*)m_PvP)->SetControlledState(EP_EWT, ALLIANCE);
+        m_PvP->SendDefenseMessage(EP_GraveYardZone, TEXT_EASTWALL_TOWER_TAKEN_ALLIANCE);
+        break;
+    case OBJECTIVESTATE_HORDE:
+        m_TowerState = EP_TS_H;
+        artkit = 1;
+        SummonSupportUnitAtNorthpassTower(HORDE);
+        ((OutdoorPvPEP*)m_PvP)->SetControlledState(EP_EWT, HORDE);
+        m_PvP->SendDefenseMessage(EP_GraveYardZone, TEXT_EASTWALL_TOWER_TAKEN_HORDE);
+        break;
+    case OBJECTIVESTATE_NEUTRAL:
+        m_TowerState = EP_TS_N;
+        break;
+    case OBJECTIVESTATE_NEUTRAL_ALLIANCE_CHALLENGE:
+    case OBJECTIVESTATE_HORDE_ALLIANCE_CHALLENGE:
+        m_TowerState = EP_TS_N_A;
+        break;
+    case OBJECTIVESTATE_NEUTRAL_HORDE_CHALLENGE:
+    case OBJECTIVESTATE_ALLIANCE_HORDE_CHALLENGE:
+        m_TowerState = EP_TS_N_H;
+        break;
     }
 
     GameObject* flag = HashMapHolder<GameObject>::Find(m_capturePointGUID);
@@ -143,41 +143,41 @@ void OPvPCapturePointEP_NPT::ChangeState()
 
     switch (m_State)
     {
-        case OBJECTIVESTATE_ALLIANCE:
-            m_TowerState = EP_TS_A;
-            artkit = 2;
-            SummonGO(ALLIANCE);
-            ((OutdoorPvPEP*)m_PvP)->SetControlledState(EP_NPT, ALLIANCE);
-            m_PvP->SendDefenseMessage(EP_GraveYardZone, TEXT_NORTHPASS_TOWER_TAKEN_ALLIANCE);
-            break;
-        case OBJECTIVESTATE_HORDE:
-            m_TowerState = EP_TS_H;
-            artkit = 1;
-            SummonGO(HORDE);
-            ((OutdoorPvPEP*)m_PvP)->SetControlledState(EP_NPT, HORDE);
-            m_PvP->SendDefenseMessage(EP_GraveYardZone, TEXT_NORTHPASS_TOWER_TAKEN_HORDE);
-            break;
-        case OBJECTIVESTATE_NEUTRAL:
-            m_TowerState = EP_TS_N;
-            m_SummonedGOSide = 0;
-            DelObject(EP_NPT_BUFF);
-            break;
-        case OBJECTIVESTATE_NEUTRAL_ALLIANCE_CHALLENGE:
-            m_TowerState = EP_TS_N_A;
-            break;
-        case OBJECTIVESTATE_HORDE_ALLIANCE_CHALLENGE:
-            m_TowerState = EP_TS_N_A;
-            m_SummonedGOSide = 0;
-            DelObject(EP_NPT_BUFF);
-            break;
-        case OBJECTIVESTATE_NEUTRAL_HORDE_CHALLENGE:
-            m_TowerState = EP_TS_N_H;
-            break;
-        case OBJECTIVESTATE_ALLIANCE_HORDE_CHALLENGE:
-            m_TowerState = EP_TS_N_H;
-            m_SummonedGOSide = 0;
-            DelObject(EP_NPT_BUFF);
-            break;
+    case OBJECTIVESTATE_ALLIANCE:
+        m_TowerState = EP_TS_A;
+        artkit = 2;
+        SummonGO(ALLIANCE);
+        ((OutdoorPvPEP*)m_PvP)->SetControlledState(EP_NPT, ALLIANCE);
+        m_PvP->SendDefenseMessage(EP_GraveYardZone, TEXT_NORTHPASS_TOWER_TAKEN_ALLIANCE);
+        break;
+    case OBJECTIVESTATE_HORDE:
+        m_TowerState = EP_TS_H;
+        artkit = 1;
+        SummonGO(HORDE);
+        ((OutdoorPvPEP*)m_PvP)->SetControlledState(EP_NPT, HORDE);
+        m_PvP->SendDefenseMessage(EP_GraveYardZone, TEXT_NORTHPASS_TOWER_TAKEN_HORDE);
+        break;
+    case OBJECTIVESTATE_NEUTRAL:
+        m_TowerState = EP_TS_N;
+        m_SummonedGOSide = 0;
+        DelObject(EP_NPT_BUFF);
+        break;
+    case OBJECTIVESTATE_NEUTRAL_ALLIANCE_CHALLENGE:
+        m_TowerState = EP_TS_N_A;
+        break;
+    case OBJECTIVESTATE_HORDE_ALLIANCE_CHALLENGE:
+        m_TowerState = EP_TS_N_A;
+        m_SummonedGOSide = 0;
+        DelObject(EP_NPT_BUFF);
+        break;
+    case OBJECTIVESTATE_NEUTRAL_HORDE_CHALLENGE:
+        m_TowerState = EP_TS_N_H;
+        break;
+    case OBJECTIVESTATE_ALLIANCE_HORDE_CHALLENGE:
+        m_TowerState = EP_TS_N_H;
+        m_SummonedGOSide = 0;
+        DelObject(EP_NPT_BUFF);
+        break;
     }
 
     GameObject* flag = HashMapHolder<GameObject>::Find(m_capturePointGUID);
@@ -247,31 +247,31 @@ void OPvPCapturePointEP_CGT::ChangeState()
 
     switch (m_State)
     {
-        case OBJECTIVESTATE_ALLIANCE:
-            m_TowerState = EP_TS_A;
-            artkit = 2;
-            LinkGraveYard(ALLIANCE);
-            ((OutdoorPvPEP*)m_PvP)->SetControlledState(EP_CGT, ALLIANCE);
-            m_PvP->SendDefenseMessage(EP_GraveYardZone, TEXT_CROWN_GUARD_TOWER_TAKEN_ALLIANCE);
-            break;
-        case OBJECTIVESTATE_HORDE:
-            m_TowerState = EP_TS_H;
-            artkit = 1;
-            LinkGraveYard(HORDE);
-            ((OutdoorPvPEP*)m_PvP)->SetControlledState(EP_CGT, HORDE);
-            m_PvP->SendDefenseMessage(EP_GraveYardZone, TEXT_CROWN_GUARD_TOWER_TAKEN_HORDE);
-            break;
-        case OBJECTIVESTATE_NEUTRAL:
-            m_TowerState = EP_TS_N;
-            break;
-        case OBJECTIVESTATE_NEUTRAL_ALLIANCE_CHALLENGE:
-        case OBJECTIVESTATE_HORDE_ALLIANCE_CHALLENGE:
-            m_TowerState = EP_TS_N_A;
-            break;
-        case OBJECTIVESTATE_NEUTRAL_HORDE_CHALLENGE:
-        case OBJECTIVESTATE_ALLIANCE_HORDE_CHALLENGE:
-            m_TowerState = EP_TS_N_H;
-            break;
+    case OBJECTIVESTATE_ALLIANCE:
+        m_TowerState = EP_TS_A;
+        artkit = 2;
+        LinkGraveYard(ALLIANCE);
+        ((OutdoorPvPEP*)m_PvP)->SetControlledState(EP_CGT, ALLIANCE);
+        m_PvP->SendDefenseMessage(EP_GraveYardZone, TEXT_CROWN_GUARD_TOWER_TAKEN_ALLIANCE);
+        break;
+    case OBJECTIVESTATE_HORDE:
+        m_TowerState = EP_TS_H;
+        artkit = 1;
+        LinkGraveYard(HORDE);
+        ((OutdoorPvPEP*)m_PvP)->SetControlledState(EP_CGT, HORDE);
+        m_PvP->SendDefenseMessage(EP_GraveYardZone, TEXT_CROWN_GUARD_TOWER_TAKEN_HORDE);
+        break;
+    case OBJECTIVESTATE_NEUTRAL:
+        m_TowerState = EP_TS_N;
+        break;
+    case OBJECTIVESTATE_NEUTRAL_ALLIANCE_CHALLENGE:
+    case OBJECTIVESTATE_HORDE_ALLIANCE_CHALLENGE:
+        m_TowerState = EP_TS_N_A;
+        break;
+    case OBJECTIVESTATE_NEUTRAL_HORDE_CHALLENGE:
+    case OBJECTIVESTATE_ALLIANCE_HORDE_CHALLENGE:
+        m_TowerState = EP_TS_N_H;
+        break;
     }
 
     GameObject* flag = HashMapHolder<GameObject>::Find(m_capturePointGUID);
@@ -331,48 +331,48 @@ OPvPCapturePointEP_PWT::OPvPCapturePointEP_PWT(OutdoorPvP* pvp)
 void OPvPCapturePointEP_PWT::ChangeState()
 {
     // if changing from controlling alliance to horde or vice versa
-    if ( m_OldState == OBJECTIVESTATE_ALLIANCE || m_OldState == OBJECTIVESTATE_HORDE)
+    if (m_OldState == OBJECTIVESTATE_ALLIANCE || m_OldState == OBJECTIVESTATE_HORDE)
         ((OutdoorPvPEP*)m_PvP)->SetControlledState(EP_PWT, 0);
 
     uint32 artkit = 21;
 
     switch (m_State)
     {
-        case OBJECTIVESTATE_ALLIANCE:
-            m_TowerState = EP_TS_A;
-            SummonFlightMaster(ALLIANCE);
-            artkit = 2;
-            ((OutdoorPvPEP*)m_PvP)->SetControlledState(EP_PWT, ALLIANCE);
-            m_PvP->SendDefenseMessage(EP_GraveYardZone, TEXT_PLAGUEWOOD_TOWER_TAKEN_ALLIANCE);
-            break;
-        case OBJECTIVESTATE_HORDE:
-            m_TowerState = EP_TS_H;
-            SummonFlightMaster(HORDE);
-            artkit = 1;
-            ((OutdoorPvPEP*)m_PvP)->SetControlledState(EP_PWT, HORDE);
-            m_PvP->SendDefenseMessage(EP_GraveYardZone, TEXT_PLAGUEWOOD_TOWER_TAKEN_HORDE);
-            break;
-        case OBJECTIVESTATE_NEUTRAL:
-            m_TowerState = EP_TS_N;
-            DelCreature(EP_PWT_FLIGHTMASTER);
-            m_FlightMasterSpawned = 0;
-            break;
-        case OBJECTIVESTATE_NEUTRAL_ALLIANCE_CHALLENGE:
-            m_TowerState = EP_TS_N_A;
-            break;
-        case OBJECTIVESTATE_HORDE_ALLIANCE_CHALLENGE:
-            m_TowerState = EP_TS_N_A;
-            DelCreature(EP_PWT_FLIGHTMASTER);
-            m_FlightMasterSpawned = 0;
-            break;
-        case OBJECTIVESTATE_NEUTRAL_HORDE_CHALLENGE:
-            m_TowerState = EP_TS_N_H;
-            break;
-        case OBJECTIVESTATE_ALLIANCE_HORDE_CHALLENGE:
-            m_TowerState = EP_TS_N_H;
-            DelCreature(EP_PWT_FLIGHTMASTER);
-            m_FlightMasterSpawned = 0;
-            break;
+    case OBJECTIVESTATE_ALLIANCE:
+        m_TowerState = EP_TS_A;
+        SummonFlightMaster(ALLIANCE);
+        artkit = 2;
+        ((OutdoorPvPEP*)m_PvP)->SetControlledState(EP_PWT, ALLIANCE);
+        m_PvP->SendDefenseMessage(EP_GraveYardZone, TEXT_PLAGUEWOOD_TOWER_TAKEN_ALLIANCE);
+        break;
+    case OBJECTIVESTATE_HORDE:
+        m_TowerState = EP_TS_H;
+        SummonFlightMaster(HORDE);
+        artkit = 1;
+        ((OutdoorPvPEP*)m_PvP)->SetControlledState(EP_PWT, HORDE);
+        m_PvP->SendDefenseMessage(EP_GraveYardZone, TEXT_PLAGUEWOOD_TOWER_TAKEN_HORDE);
+        break;
+    case OBJECTIVESTATE_NEUTRAL:
+        m_TowerState = EP_TS_N;
+        DelCreature(EP_PWT_FLIGHTMASTER);
+        m_FlightMasterSpawned = 0;
+        break;
+    case OBJECTIVESTATE_NEUTRAL_ALLIANCE_CHALLENGE:
+        m_TowerState = EP_TS_N_A;
+        break;
+    case OBJECTIVESTATE_HORDE_ALLIANCE_CHALLENGE:
+        m_TowerState = EP_TS_N_A;
+        DelCreature(EP_PWT_FLIGHTMASTER);
+        m_FlightMasterSpawned = 0;
+        break;
+    case OBJECTIVESTATE_NEUTRAL_HORDE_CHALLENGE:
+        m_TowerState = EP_TS_N_H;
+        break;
+    case OBJECTIVESTATE_ALLIANCE_HORDE_CHALLENGE:
+        m_TowerState = EP_TS_N_H;
+        DelCreature(EP_PWT_FLIGHTMASTER);
+        m_FlightMasterSpawned = 0;
+        break;
     }
 
     GameObject* flag = HashMapHolder<GameObject>::Find(m_capturePointGUID);
@@ -426,36 +426,36 @@ void OPvPCapturePointEP_PWT::SummonFlightMaster(uint32 team)
         c->SetUInt32Value(GAMEOBJECT_FACTION, (team == ALLIANCE ? 55 : 68));
         if (c)
         {
-            GossipOption gso;
-            gso.Action = GOSSIP_OPTION_OUTDOORPVP;
-            gso.GossipId = 0;
-            gso.OptionText.assign(sObjectMgr->GetTrinityStringForDBCLocale(LANG_OPVP_EP_FLIGHT_NPT));
-            gso.Id = 50;
-            gso.Icon = 0;
-            gso.NpcFlag = 0;
-            gso.BoxMoney = 0;
-            gso.Coded = false;
-            c->addGossipOption(gso);
+        GossipOption gso;
+        gso.Action = GOSSIP_OPTION_OUTDOORPVP;
+        gso.GossipId = 0;
+        gso.OptionText.assign(sObjectMgr->GetTrinityStringForDBCLocale(LANG_OPVP_EP_FLIGHT_NPT));
+        gso.Id = 50;
+        gso.Icon = 0;
+        gso.NpcFlag = 0;
+        gso.BoxMoney = 0;
+        gso.Coded = false;
+        c->addGossipOption(gso);
 
-            gso.Action = GOSSIP_OPTION_OUTDOORPVP;
-            gso.GossipId = 0;
-            gso.OptionText.assign(sObjectMgr->GetTrinityStringForDBCLocale(LANG_OPVP_EP_FLIGHT_EWT));
-            gso.Id = 50;
-            gso.Icon = 0;
-            gso.NpcFlag = 0;
-            gso.BoxMoney = 0;
-            gso.Coded = false;
-            c->addGossipOption(gso);
+        gso.Action = GOSSIP_OPTION_OUTDOORPVP;
+        gso.GossipId = 0;
+        gso.OptionText.assign(sObjectMgr->GetTrinityStringForDBCLocale(LANG_OPVP_EP_FLIGHT_EWT));
+        gso.Id = 50;
+        gso.Icon = 0;
+        gso.NpcFlag = 0;
+        gso.BoxMoney = 0;
+        gso.Coded = false;
+        c->addGossipOption(gso);
 
-            gso.Action = GOSSIP_OPTION_OUTDOORPVP;
-            gso.GossipId = 0;
-            gso.OptionText.assign(sObjectMgr->GetTrinityStringForDBCLocale(LANG_OPVP_EP_FLIGHT_CGT));
-            gso.Id = 50;
-            gso.Icon = 0;
-            gso.NpcFlag = 0;
-            gso.BoxMoney = 0;
-            gso.Coded = false;
-            c->addGossipOption(gso);
+        gso.Action = GOSSIP_OPTION_OUTDOORPVP;
+        gso.GossipId = 0;
+        gso.OptionText.assign(sObjectMgr->GetTrinityStringForDBCLocale(LANG_OPVP_EP_FLIGHT_CGT));
+        gso.Id = 50;
+        gso.Icon = 0;
+        gso.NpcFlag = 0;
+        gso.BoxMoney = 0;
+        gso.Coded = false;
+        c->addGossipOption(gso);
         }
         */
     }
@@ -509,12 +509,12 @@ void OutdoorPvPEP::HandlePlayerEnterZone(Player* player, uint32 zone)
     if (player->GetTeam() == ALLIANCE)
     {
         if (m_AllianceTowersControlled && m_AllianceTowersControlled < 5)
-            player->CastSpell(player, EP_AllianceBuffs[m_AllianceTowersControlled-1], true);
+            player->CastSpell(player, EP_AllianceBuffs[m_AllianceTowersControlled - 1], true);
     }
     else
     {
         if (m_HordeTowersControlled && m_HordeTowersControlled < 5)
-            player->CastSpell(player, EP_HordeBuffs[m_HordeTowersControlled-1], true);
+            player->CastSpell(player, EP_HordeBuffs[m_HordeTowersControlled - 1], true);
     }
     OutdoorPvP::HandlePlayerEnterZone(player, zone);
 }
@@ -544,7 +544,7 @@ void OutdoorPvPEP::BuffTeams()
             for (int i = 0; i < 4; ++i)
                 player->RemoveAurasDueToSpell(EP_AllianceBuffs[i]);
             if (m_AllianceTowersControlled && m_AllianceTowersControlled < 5)
-                player->CastSpell(player, EP_AllianceBuffs[m_AllianceTowersControlled-1], true);
+                player->CastSpell(player, EP_AllianceBuffs[m_AllianceTowersControlled - 1], true);
         }
     }
     for (GuidSet::iterator itr = m_players[1].begin(); itr != m_players[1].end(); ++itr)
@@ -554,7 +554,7 @@ void OutdoorPvPEP::BuffTeams()
             for (int i = 0; i < 4; ++i)
                 player->RemoveAurasDueToSpell(EP_HordeBuffs[i]);
             if (m_HordeTowersControlled && m_HordeTowersControlled < 5)
-                player->CastSpell(player, EP_HordeBuffs[m_HordeTowersControlled-1], true);
+                player->CastSpell(player, EP_HordeBuffs[m_HordeTowersControlled - 1], true);
         }
     }
 }
@@ -605,13 +605,13 @@ void OutdoorPvPEP::SendRemoveWorldStates(Player* player)
 
 class OutdoorPvP_eastern_plaguelands : public OutdoorPvPScript
 {
-    public:
-        OutdoorPvP_eastern_plaguelands() : OutdoorPvPScript("outdoorpvp_ep") { }
+public:
+    OutdoorPvP_eastern_plaguelands() : OutdoorPvPScript("outdoorpvp_ep") { }
 
-        OutdoorPvP* GetOutdoorPvP() const override
-        {
-            return new OutdoorPvPEP();
-        }
+    OutdoorPvP* GetOutdoorPvP() const override
+    {
+        return new OutdoorPvPEP();
+    }
 };
 
 void AddSC_outdoorpvp_ep()

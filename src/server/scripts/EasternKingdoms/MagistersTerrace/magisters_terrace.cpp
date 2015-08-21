@@ -39,21 +39,21 @@ EndContentData */
 
 enum Spells
 {
-    SPELL_TRANSFORM_TO_KAEL     = 44670,
-    SPELL_ORB_KILL_CREDIT       = 46307
+    SPELL_TRANSFORM_TO_KAEL = 44670,
+    SPELL_ORB_KILL_CREDIT = 46307
 };
 
 enum Creatures
 {
-    NPC_KAEL                    = 24848 //human form entry
+    NPC_KAEL = 24848 //human form entry
 };
 
 enum Misc
 {
-    POINT_ID_LAND               = 1
+    POINT_ID_LAND = 1
 };
 
-const float afKaelLandPoint[] = {225.045f, -276.236f, -5.434f};
+const float afKaelLandPoint[] = { 225.045f, -276.236f, -5.434f };
 
 #define GOSSIP_ITEM_KAEL_1      "Who are you?"
 #define GOSSIP_ITEM_KAEL_2      "What can we do to assist you?"
@@ -73,25 +73,25 @@ public:
         player->PlayerTalkClass->ClearMenus();
         switch (action)
         {
-            case GOSSIP_ACTION_INFO_DEF:
-                player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_KAEL_2, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
-                player->SEND_GOSSIP_MENU(12500, creature->GetGUID());
-                break;
-            case GOSSIP_ACTION_INFO_DEF+1:
-                player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_KAEL_3, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 2);
-                player->SEND_GOSSIP_MENU(12502, creature->GetGUID());
-                break;
-            case GOSSIP_ACTION_INFO_DEF+2:
-                player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_KAEL_4, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 3);
-                player->SEND_GOSSIP_MENU(12606, creature->GetGUID());
-                break;
-            case GOSSIP_ACTION_INFO_DEF+3:
-                player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_KAEL_5, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 4);
-                player->SEND_GOSSIP_MENU(12607, creature->GetGUID());
-                break;
-            case GOSSIP_ACTION_INFO_DEF+4:
-                player->SEND_GOSSIP_MENU(12608, creature->GetGUID());
-                break;
+        case GOSSIP_ACTION_INFO_DEF:
+            player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_KAEL_2, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
+            player->SEND_GOSSIP_MENU(12500, creature->GetGUID());
+            break;
+        case GOSSIP_ACTION_INFO_DEF + 1:
+            player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_KAEL_3, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 2);
+            player->SEND_GOSSIP_MENU(12502, creature->GetGUID());
+            break;
+        case GOSSIP_ACTION_INFO_DEF + 2:
+            player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_KAEL_4, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 3);
+            player->SEND_GOSSIP_MENU(12606, creature->GetGUID());
+            break;
+        case GOSSIP_ACTION_INFO_DEF + 3:
+            player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_KAEL_5, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 4);
+            player->SEND_GOSSIP_MENU(12607, creature->GetGUID());
+            break;
+        case GOSSIP_ACTION_INFO_DEF + 4:
+            player->SEND_GOSSIP_MENU(12608, creature->GetGUID());
+            break;
         }
 
         return true;
@@ -184,7 +184,8 @@ public:
                     me->UpdateEntry(NPC_KAEL);
 
                     m_uiTransformTimer = 0;
-                } else m_uiTransformTimer -= uiDiff;
+                }
+                else m_uiTransformTimer -= uiDiff;
             }
         }
     };

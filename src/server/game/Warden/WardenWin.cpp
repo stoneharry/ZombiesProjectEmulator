@@ -224,14 +224,14 @@ void WardenWin::RequestData()
 
         switch (wd->Type)
         {
-            case MPQ_CHECK:
-            case LUA_STR_CHECK:
-            case DRIVER_CHECK:
-                buff << uint8(wd->Str.size());
-                buff.append(wd->Str.c_str(), wd->Str.size());
-                break;
-            default:
-                break;
+        case MPQ_CHECK:
+        case LUA_STR_CHECK:
+        case DRIVER_CHECK:
+            buff << uint8(wd->Str.size());
+            buff.append(wd->Str.c_str(), wd->Str.size());
+            break;
+        default:
+            break;
         }
     }
 
@@ -251,54 +251,54 @@ void WardenWin::RequestData()
         buff << uint8(type ^ xorByte);
         switch (type)
         {
-            case MEM_CHECK:
-            {
-                buff << uint8(0x00);
-                buff << uint32(wd->Address);
-                buff << uint8(wd->Length);
-                break;
-            }
-            case PAGE_CHECK_A:
-            case PAGE_CHECK_B:
-            {
-                buff.append(wd->Data.AsByteArray(0, false).get(), wd->Data.GetNumBytes());
-                buff << uint32(wd->Address);
-                buff << uint8(wd->Length);
-                break;
-            }
-            case MPQ_CHECK:
-            case LUA_STR_CHECK:
-            {
-                buff << uint8(index++);
-                break;
-            }
-            case DRIVER_CHECK:
-            {
-                buff.append(wd->Data.AsByteArray(0, false).get(), wd->Data.GetNumBytes());
-                buff << uint8(index++);
-                break;
-            }
-            case MODULE_CHECK:
-            {
-                uint32 seed = rand32();
-                buff << uint32(seed);
-                HmacHash hmac(4, (uint8*)&seed);
-                hmac.UpdateData(wd->Str);
-                hmac.Finalize();
-                buff.append(hmac.GetDigest(), hmac.GetLength());
-                break;
-            }
+        case MEM_CHECK:
+        {
+                          buff << uint8(0x00);
+                          buff << uint32(wd->Address);
+                          buff << uint8(wd->Length);
+                          break;
+        }
+        case PAGE_CHECK_A:
+        case PAGE_CHECK_B:
+        {
+                             buff.append(wd->Data.AsByteArray(0, false).get(), wd->Data.GetNumBytes());
+                             buff << uint32(wd->Address);
+                             buff << uint8(wd->Length);
+                             break;
+        }
+        case MPQ_CHECK:
+        case LUA_STR_CHECK:
+        {
+                              buff << uint8(index++);
+                              break;
+        }
+        case DRIVER_CHECK:
+        {
+                             buff.append(wd->Data.AsByteArray(0, false).get(), wd->Data.GetNumBytes());
+                             buff << uint8(index++);
+                             break;
+        }
+        case MODULE_CHECK:
+        {
+                             uint32 seed = rand32();
+                             buff << uint32(seed);
+                             HmacHash hmac(4, (uint8*)&seed);
+                             hmac.UpdateData(wd->Str);
+                             hmac.Finalize();
+                             buff.append(hmac.GetDigest(), hmac.GetLength());
+                             break;
+        }
             /*case PROC_CHECK:
             {
-                buff.append(wd->i.AsByteArray(0, false).get(), wd->i.GetNumBytes());
-                buff << uint8(index++);
-                buff << uint8(index++);
-                buff << uint32(wd->Address);
-                buff << uint8(wd->Length);
-                break;
+            buff.append(wd->i.AsByteArray(0, false).get(), wd->i.GetNumBytes());
+            buff << uint8(index++);
+            buff << uint8(index++);
+            buff << uint32(wd->Address);
+            buff << uint8(wd->Length);
+            break;
             }*/
-            default:
-                break;                                      // Should never happen
+        default:
+            break;                                      // Should never happen
         }
     }
     buff << uint8(xorByte);
@@ -378,111 +378,111 @@ void WardenWin::HandleData(ByteBuffer &buff)
         type = rd->Type;
         switch (type)
         {
-            case MEM_CHECK:
-            {
-                uint8 Mem_Result;
-                buff >> Mem_Result;
+        case MEM_CHECK:
+        {
+                          uint8 Mem_Result;
+                          buff >> Mem_Result;
 
-                if (Mem_Result != 0)
-                {
-                    TC_LOG_DEBUG("warden", "RESULT MEM_CHECK not 0x00, CheckId %u account Id %u", *itr, _session->GetAccountId());
-                    checkFailed = *itr;
-                    continue;
-                }
+                          if (Mem_Result != 0)
+                          {
+                              TC_LOG_DEBUG("warden", "RESULT MEM_CHECK not 0x00, CheckId %u account Id %u", *itr, _session->GetAccountId());
+                              checkFailed = *itr;
+                              continue;
+                          }
 
-                if (memcmp(buff.contents() + buff.rpos(), rs->Result.AsByteArray(0, false).get(), rd->Length) != 0)
-                {
-                    TC_LOG_DEBUG("warden", "RESULT MEM_CHECK fail CheckId %u account Id %u", *itr, _session->GetAccountId());
-                    checkFailed = *itr;
-                    buff.rpos(buff.rpos() + rd->Length);
-                    continue;
-                }
+                          if (memcmp(buff.contents() + buff.rpos(), rs->Result.AsByteArray(0, false).get(), rd->Length) != 0)
+                          {
+                              TC_LOG_DEBUG("warden", "RESULT MEM_CHECK fail CheckId %u account Id %u", *itr, _session->GetAccountId());
+                              checkFailed = *itr;
+                              buff.rpos(buff.rpos() + rd->Length);
+                              continue;
+                          }
 
-                buff.rpos(buff.rpos() + rd->Length);
-                TC_LOG_DEBUG("warden", "RESULT MEM_CHECK passed CheckId %u account Id %u", *itr, _session->GetAccountId());
-                break;
-            }
-            case PAGE_CHECK_A:
-            case PAGE_CHECK_B:
-            case DRIVER_CHECK:
-            case MODULE_CHECK:
-            {
-                const uint8 byte = 0xE9;
-                if (memcmp(buff.contents() + buff.rpos(), &byte, sizeof(uint8)) != 0)
-                {
-                    if (type == PAGE_CHECK_A || type == PAGE_CHECK_B)
-                        TC_LOG_DEBUG("warden", "RESULT PAGE_CHECK fail, CheckId %u account Id %u", *itr, _session->GetAccountId());
-                    if (type == MODULE_CHECK)
-                        TC_LOG_DEBUG("warden", "RESULT MODULE_CHECK fail, CheckId %u account Id %u", *itr, _session->GetAccountId());
-                    if (type == DRIVER_CHECK)
-                        TC_LOG_DEBUG("warden", "RESULT DRIVER_CHECK fail, CheckId %u account Id %u", *itr, _session->GetAccountId());
-                    checkFailed = *itr;
-                    buff.rpos(buff.rpos() + 1);
-                    continue;
-                }
+                          buff.rpos(buff.rpos() + rd->Length);
+                          TC_LOG_DEBUG("warden", "RESULT MEM_CHECK passed CheckId %u account Id %u", *itr, _session->GetAccountId());
+                          break;
+        }
+        case PAGE_CHECK_A:
+        case PAGE_CHECK_B:
+        case DRIVER_CHECK:
+        case MODULE_CHECK:
+        {
+                             const uint8 byte = 0xE9;
+                             if (memcmp(buff.contents() + buff.rpos(), &byte, sizeof(uint8)) != 0)
+                             {
+                                 if (type == PAGE_CHECK_A || type == PAGE_CHECK_B)
+                                     TC_LOG_DEBUG("warden", "RESULT PAGE_CHECK fail, CheckId %u account Id %u", *itr, _session->GetAccountId());
+                                 if (type == MODULE_CHECK)
+                                     TC_LOG_DEBUG("warden", "RESULT MODULE_CHECK fail, CheckId %u account Id %u", *itr, _session->GetAccountId());
+                                 if (type == DRIVER_CHECK)
+                                     TC_LOG_DEBUG("warden", "RESULT DRIVER_CHECK fail, CheckId %u account Id %u", *itr, _session->GetAccountId());
+                                 checkFailed = *itr;
+                                 buff.rpos(buff.rpos() + 1);
+                                 continue;
+                             }
 
-                buff.rpos(buff.rpos() + 1);
-                if (type == PAGE_CHECK_A || type == PAGE_CHECK_B)
-                    TC_LOG_DEBUG("warden", "RESULT PAGE_CHECK passed CheckId %u account Id %u", *itr, _session->GetAccountId());
-                else if (type == MODULE_CHECK)
-                    TC_LOG_DEBUG("warden", "RESULT MODULE_CHECK passed CheckId %u account Id %u", *itr, _session->GetAccountId());
-                else if (type == DRIVER_CHECK)
-                    TC_LOG_DEBUG("warden", "RESULT DRIVER_CHECK passed CheckId %u account Id %u", *itr, _session->GetAccountId());
-                break;
-            }
-            case LUA_STR_CHECK:
-            {
-                uint8 Lua_Result;
-                buff >> Lua_Result;
+                             buff.rpos(buff.rpos() + 1);
+                             if (type == PAGE_CHECK_A || type == PAGE_CHECK_B)
+                                 TC_LOG_DEBUG("warden", "RESULT PAGE_CHECK passed CheckId %u account Id %u", *itr, _session->GetAccountId());
+                             else if (type == MODULE_CHECK)
+                                 TC_LOG_DEBUG("warden", "RESULT MODULE_CHECK passed CheckId %u account Id %u", *itr, _session->GetAccountId());
+                             else if (type == DRIVER_CHECK)
+                                 TC_LOG_DEBUG("warden", "RESULT DRIVER_CHECK passed CheckId %u account Id %u", *itr, _session->GetAccountId());
+                             break;
+        }
+        case LUA_STR_CHECK:
+        {
+                              uint8 Lua_Result;
+                              buff >> Lua_Result;
 
-                if (Lua_Result != 0)
-                {
-                    TC_LOG_DEBUG("warden", "RESULT LUA_STR_CHECK fail, CheckId %u account Id %u", *itr, _session->GetAccountId());
-                    checkFailed = *itr;
-                    continue;
-                }
+                              if (Lua_Result != 0)
+                              {
+                                  TC_LOG_DEBUG("warden", "RESULT LUA_STR_CHECK fail, CheckId %u account Id %u", *itr, _session->GetAccountId());
+                                  checkFailed = *itr;
+                                  continue;
+                              }
 
-                uint8 luaStrLen;
-                buff >> luaStrLen;
+                              uint8 luaStrLen;
+                              buff >> luaStrLen;
 
-                if (luaStrLen != 0)
-                {
-                    char *str = new char[luaStrLen + 1];
-                    memcpy(str, buff.contents() + buff.rpos(), luaStrLen);
-                    str[luaStrLen] = '\0'; // null terminator
-                    TC_LOG_DEBUG("warden", "Lua string: %s", str);
-                    delete[] str;
-                }
-                buff.rpos(buff.rpos() + luaStrLen);         // Skip string
-                TC_LOG_DEBUG("warden", "RESULT LUA_STR_CHECK passed, CheckId %u account Id %u", *itr, _session->GetAccountId());
-                break;
-            }
-            case MPQ_CHECK:
-            {
-                uint8 Mpq_Result;
-                buff >> Mpq_Result;
+                              if (luaStrLen != 0)
+                              {
+                                  char *str = new char[luaStrLen + 1];
+                                  memcpy(str, buff.contents() + buff.rpos(), luaStrLen);
+                                  str[luaStrLen] = '\0'; // null terminator
+                                  TC_LOG_DEBUG("warden", "Lua string: %s", str);
+                                  delete[] str;
+                              }
+                              buff.rpos(buff.rpos() + luaStrLen);         // Skip string
+                              TC_LOG_DEBUG("warden", "RESULT LUA_STR_CHECK passed, CheckId %u account Id %u", *itr, _session->GetAccountId());
+                              break;
+        }
+        case MPQ_CHECK:
+        {
+                          uint8 Mpq_Result;
+                          buff >> Mpq_Result;
 
-                if (Mpq_Result != 0)
-                {
-                    TC_LOG_DEBUG("warden", "RESULT MPQ_CHECK not 0x00 account id %u", _session->GetAccountId());
-                    checkFailed = *itr;
-                    continue;
-                }
+                          if (Mpq_Result != 0)
+                          {
+                              TC_LOG_DEBUG("warden", "RESULT MPQ_CHECK not 0x00 account id %u", _session->GetAccountId());
+                              checkFailed = *itr;
+                              continue;
+                          }
 
-                if (memcmp(buff.contents() + buff.rpos(), rs->Result.AsByteArray(0, false).get(), 20) != 0) // SHA1
-                {
-                    TC_LOG_DEBUG("warden", "RESULT MPQ_CHECK fail, CheckId %u account Id %u", *itr, _session->GetAccountId());
-                    checkFailed = *itr;
-                    buff.rpos(buff.rpos() + 20);            // 20 bytes SHA1
-                    continue;
-                }
+                          if (memcmp(buff.contents() + buff.rpos(), rs->Result.AsByteArray(0, false).get(), 20) != 0) // SHA1
+                          {
+                              TC_LOG_DEBUG("warden", "RESULT MPQ_CHECK fail, CheckId %u account Id %u", *itr, _session->GetAccountId());
+                              checkFailed = *itr;
+                              buff.rpos(buff.rpos() + 20);            // 20 bytes SHA1
+                              continue;
+                          }
 
-                buff.rpos(buff.rpos() + 20);                // 20 bytes SHA1
-                TC_LOG_DEBUG("warden", "RESULT MPQ_CHECK passed, CheckId %u account Id %u", *itr, _session->GetAccountId());
-                break;
-            }
-            default:                                        // Should never happen
-                break;
+                          buff.rpos(buff.rpos() + 20);                // 20 bytes SHA1
+                          TC_LOG_DEBUG("warden", "RESULT MPQ_CHECK passed, CheckId %u account Id %u", *itr, _session->GetAccountId());
+                          break;
+        }
+        default:                                        // Should never happen
+            break;
         }
     }
 

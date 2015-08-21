@@ -551,7 +551,7 @@ void MotionMaster::MoveTaxiFlight(uint32 path, uint32 pathnode)
         else
         {
             TC_LOG_ERROR("misc", "%s attempt taxi to (not existed Path %u node %u)",
-            _owner->GetName().c_str(), path, pathnode);
+                _owner->GetName().c_str(), path, pathnode);
         }
     }
     else
@@ -613,15 +613,15 @@ void MotionMaster::MovePath(uint32 path_id, bool repeatable)
     // clear ALL movement generators (including default)
     /*while (!empty())
     {
-        MovementGenerator *curr = top();
-        curr->Finalize(*_owner);
-        pop();
-        if (!isStatic(curr))
-            delete curr;
+    MovementGenerator *curr = top();
+    curr->Finalize(*_owner);
+    pop();
+    if (!isStatic(curr))
+    delete curr;
     }*/
 
     //_owner->GetTypeId() == TYPEID_PLAYER ?
-        //Mutate(new WaypointMovementGenerator<Player>(path_id, repeatable)):
+    //Mutate(new WaypointMovementGenerator<Player>(path_id, repeatable)):
     Mutate(new WaypointMovementGenerator<Creature>(path_id, repeatable), MOTION_SLOT_IDLE);
 
     TC_LOG_DEBUG("misc", "%s (GUID: %u) start moving over path(Id:%u, repeatable: %s)",
@@ -642,7 +642,7 @@ void MotionMaster::propagateSpeedChange()
     /*Impl::container_type::iterator it = Impl::c.begin();
     for (; it != end(); ++it)
     {
-        (*it)->unitSpeedChanged();
+    (*it)->unitSpeedChanged();
     }*/
     for (int i = 0; i <= _top; ++i)
     {
@@ -653,10 +653,10 @@ void MotionMaster::propagateSpeedChange()
 
 MovementGeneratorType MotionMaster::GetCurrentMovementGeneratorType() const
 {
-   if (empty())
-       return IDLE_MOTION_TYPE;
+    if (empty())
+        return IDLE_MOTION_TYPE;
 
-   return top()->GetMovementGeneratorType();
+    return top()->GetMovementGeneratorType();
 }
 
 MovementGeneratorType MotionMaster::GetMotionSlotType(int slot) const

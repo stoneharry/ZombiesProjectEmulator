@@ -31,31 +31,31 @@ EndScriptData */
 enum Says
 {
     //Mograine says
-    SAY_MO_AGGRO                 = 0,
-    SAY_MO_KILL                  = 1,
-    SAY_MO_RESURRECTED           = 2,
+    SAY_MO_AGGRO = 0,
+    SAY_MO_KILL = 1,
+    SAY_MO_RESURRECTED = 2,
 
     //Whitemane says
-    SAY_WH_INTRO                 = 0,
-    SAY_WH_KILL                  = 1,
-    SAY_WH_RESURRECT             = 2,
+    SAY_WH_INTRO = 0,
+    SAY_WH_KILL = 1,
+    SAY_WH_RESURRECT = 2,
 };
 
 enum Spells
 {
     //Mograine Spells
-    SPELL_CRUSADERSTRIKE         = 14518,
-    SPELL_HAMMEROFJUSTICE        = 5589,
-    SPELL_LAYONHANDS             = 9257,
-    SPELL_RETRIBUTIONAURA        = 8990,
+    SPELL_CRUSADERSTRIKE = 14518,
+    SPELL_HAMMEROFJUSTICE = 5589,
+    SPELL_LAYONHANDS = 9257,
+    SPELL_RETRIBUTIONAURA = 8990,
 
     //Whitemanes Spells
-    SPELL_DEEPSLEEP              = 9256,
-    SPELL_SCARLETRESURRECTION    = 9232,
-    SPELL_DOMINATEMIND           = 14515,
-    SPELL_HOLYSMITE              = 9481,
-    SPELL_HEAL                   = 12039,
-    SPELL_POWERWORDSHIELD        = 22187
+    SPELL_DEEPSLEEP = 9256,
+    SPELL_SCARLETRESURRECTION = 9232,
+    SPELL_DOMINATEMIND = 14515,
+    SPELL_HOLYSMITE = 9481,
+    SPELL_HEAL = 12039,
+    SPELL_POWERWORDSHIELD = 22187
 };
 
 class boss_scarlet_commander_mograine : public CreatureScript

@@ -881,7 +881,7 @@ namespace LuaUnit
      *     RANDOM_MOTION_TYPE              = 1,
      *     WAYPOINT_MOTION_TYPE            = 2,
      *     MAX_DB_MOTION_TYPE              = 3,
-     * 
+     *
      *     CONFUSED_MOTION_TYPE            = 4,
      *     CHASE_MOTION_TYPE               = 5,
      *     HOME_MOTION_TYPE                = 6,
@@ -890,7 +890,7 @@ namespace LuaUnit
      *     FLEEING_MOTION_TYPE             = 9,
      *     DISTRACT_MOTION_TYPE            = 10,
      *     ASSISTANCE_MOTION_TYPE          = 11,
-     *     ASSISTANCE_DISTRACT_MOTION_TYPE = 12,          
+     *     ASSISTANCE_DISTRACT_MOTION_TYPE = 12,
      *     TIMED_FLEEING_MOTION_TYPE       = 13,
      *     FOLLOW_MOTION_TYPE              = 14,
      *     EFFECT_MOTION_TYPE              = 15,
@@ -1241,9 +1241,9 @@ namespace LuaUnit
 
     int SetCanFly(Eluna* E, lua_State* L, Unit* unit)
     {
-		bool apply = Eluna::CHECKVAL<bool>(L, 2, true);
-		unit->SetCanFly(apply);
-		return 0;
+        bool apply = Eluna::CHECKVAL<bool>(L, 2, true);
+        unit->SetCanFly(apply);
+        return 0;
     }
 
     /*int SetVisible(Eluna* E, lua_State* L, Unit* unit)
@@ -1267,8 +1267,8 @@ namespace LuaUnit
     int Mount(Eluna* /*E*/, lua_State* L, Unit* unit)
     {
         uint32 displayId = Eluna::CHECKVAL<uint32>(L, 2);
-		uint32 vehicleId = Eluna::CHECKVAL<uint32>(L, 3, 0);
-		uint32 creatureId = Eluna::CHECKVAL<uint32>(L, 4, 0);
+        uint32 vehicleId = Eluna::CHECKVAL<uint32>(L, 3, 0);
+        uint32 creatureId = Eluna::CHECKVAL<uint32>(L, 4, 0);
 
         unit->Mount(displayId, vehicleId, creatureId);
         return 0;
@@ -1317,24 +1317,24 @@ namespace LuaUnit
         if (lang >= LANGUAGES_COUNT)
             return luaL_argerror(L, 3, "valid Language expected");
 
-		unit->Say(msg, Language(lang), target);
+        unit->Say(msg, Language(lang), target);
         return 0;
     }
 
-	int SendChatMessageDirectlyToPlayer(Eluna* /*E*/, lua_State* L, Unit* unit)
-	{
-		std::string msg = Eluna::CHECKVAL<std::string>(L, 2);
-		uint32 msgType = Eluna::CHECKVAL<uint32>(L, 3);
-		uint32 lang = Eluna::CHECKVAL<uint32>(L, 4);
-		Player* packetTarget = Eluna::CHECKOBJ<Player>(L, 5);
-		Player* target = Eluna::CHECKOBJ<Player>(L, 6);
+    int SendChatMessageDirectlyToPlayer(Eluna* /*E*/, lua_State* L, Unit* unit)
+    {
+        std::string msg = Eluna::CHECKVAL<std::string>(L, 2);
+        uint32 msgType = Eluna::CHECKVAL<uint32>(L, 3);
+        uint32 lang = Eluna::CHECKVAL<uint32>(L, 4);
+        Player* packetTarget = Eluna::CHECKOBJ<Player>(L, 5);
+        Player* target = Eluna::CHECKOBJ<Player>(L, 6);
 
-		if (lang >= LANGUAGES_COUNT)
-			return luaL_argerror(L, 3, "valid Language expected");
+        if (lang >= LANGUAGES_COUNT)
+            return luaL_argerror(L, 3, "valid Language expected");
 
-		unit->SendMessageToPlayer(msg, ChatMsg(msgType), Language(lang), packetTarget, target);
-		return 0;
-	}
+        unit->SendMessageToPlayer(msg, ChatMsg(msgType), Language(lang), packetTarget, target);
+        return 0;
+    }
 
     // static void PrepareMove(Unit* unit)
     // {
@@ -1580,20 +1580,20 @@ namespace LuaUnit
         bool delayed = Eluna::CHECKVAL<bool>(L, 3, true);
         switch (spellType)
         {
-            case 0:
-                spellType = CURRENT_MELEE_SPELL;
-                break;
-            case 1:
-                spellType = CURRENT_GENERIC_SPELL;
-                break;
-            case 2:
-                spellType = CURRENT_CHANNELED_SPELL;
-                break;
-            case 3:
-                spellType = CURRENT_AUTOREPEAT_SPELL;
-                break;
-            default:
-                return luaL_argerror(L, 2, "valid CurrentSpellTypes expected");
+        case 0:
+            spellType = CURRENT_MELEE_SPELL;
+            break;
+        case 1:
+            spellType = CURRENT_GENERIC_SPELL;
+            break;
+        case 2:
+            spellType = CURRENT_CHANNELED_SPELL;
+            break;
+        case 3:
+            spellType = CURRENT_AUTOREPEAT_SPELL;
+            break;
+        default:
+            return luaL_argerror(L, 2, "valid CurrentSpellTypes expected");
         }
 
         unit->InterruptSpell((CurrentSpellTypes)spellType, delayed);
@@ -1675,19 +1675,19 @@ namespace LuaUnit
         return 0;
     }
 
-	int PlayMusic(Eluna* /*E*/, lua_State* L, Unit* unit)
-	{
-		uint32 soundId = Eluna::CHECKVAL<uint32>(L, 2);
-		Player* player = Eluna::CHECKOBJ<Player>(L, 3, false);
+    int PlayMusic(Eluna* /*E*/, lua_State* L, Unit* unit)
+    {
+        uint32 soundId = Eluna::CHECKVAL<uint32>(L, 2);
+        Player* player = Eluna::CHECKOBJ<Player>(L, 3, false);
 
-		WorldPacket data(SMSG_PLAY_MUSIC, 4);
-		data << uint32(soundId);
-		if (player)
-			player->SendDirectMessage(&data);
-		else
-			unit->SendMessageToSet(&data, true);
-		return 0;
-	}
+        WorldPacket data(SMSG_PLAY_MUSIC, 4);
+        data << uint32(soundId);
+        if (player)
+            player->SendDirectMessage(&data);
+        else
+            unit->SendMessageToSet(&data, true);
+        return 0;
+    }
 
     int AddUnitState(Eluna* /*E*/, lua_State* L, Unit* unit)
     {

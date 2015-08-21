@@ -68,10 +68,10 @@ void LoadSkillDiscoveryTable()
     {
         Field* fields = result->Fetch();
 
-        uint32 spellId         = fields[0].GetUInt32();
+        uint32 spellId = fields[0].GetUInt32();
         int32  reqSkillOrSpell = fields[1].GetInt32();
-        uint32 reqSkillValue   = fields[2].GetUInt16();
-        float  chance          = fields[3].GetFloat();
+        uint32 reqSkillValue = fields[2].GetUInt16();
+        float  chance = fields[3].GetFloat();
 
         if (chance <= 0)                                    // chance
         {
@@ -131,8 +131,7 @@ void LoadSkillDiscoveryTable()
         }
 
         ++count;
-    }
-    while (result->NextRow());
+    } while (result->NextRow());
 
     if (!ssNonDiscoverableEntries.str().empty())
         TC_LOG_ERROR("sql.sql", "Some items can't be successfully discovered: have in chance field value < 0.000001 in `skill_discovery_template` DB table . List:\n%s", ssNonDiscoverableEntries.str().c_str());
@@ -168,9 +167,9 @@ uint32 GetExplicitDiscoverySpell(uint32 spellId, Player* player)
 
     float full_chance = 0;
     for (SkillDiscoveryList::const_iterator item_iter = tab->second.begin(); item_iter != tab->second.end(); ++item_iter)
-        if (item_iter->reqSkillValue <= skillvalue)
-            if (!player->HasSpell(item_iter->spellId))
-                full_chance += item_iter->chance;
+    if (item_iter->reqSkillValue <= skillvalue)
+    if (!player->HasSpell(item_iter->spellId))
+        full_chance += item_iter->chance;
 
     float rate = full_chance / 100.0f;
     float roll = (float)rand_chance() * rate;                      // roll now in range 0..full_chance
@@ -199,8 +198,8 @@ bool HasDiscoveredAllSpells(uint32 spellId, Player* player)
         return true;
 
     for (SkillDiscoveryList::const_iterator item_iter = tab->second.begin(); item_iter != tab->second.end(); ++item_iter)
-        if (!player->HasSpell(item_iter->spellId))
-            return false;
+    if (!player->HasSpell(item_iter->spellId))
+        return false;
 
     return true;
 }

@@ -33,38 +33,38 @@ EndScriptData */
 
 enum Yells
 {
-    SAY_BOSS_DIE_AD         = 4,
-    SAY_BOSS_DIE_AS         = 3,
-    SAY_ARCHMAGE            = 0
+    SAY_BOSS_DIE_AD = 4,
+    SAY_BOSS_DIE_AS = 3,
+    SAY_ARCHMAGE = 0
 };
 
 enum Creatures
 {
-    NPC_ASH                 = 3850,
-    NPC_ADA                 = 3849,
-    NPC_ARCHMAGE_ARUGAL     = 4275,
-    NPC_ARUGAL_VOIDWALKER   = 4627
+    NPC_ASH = 3850,
+    NPC_ADA = 3849,
+    NPC_ARCHMAGE_ARUGAL = 4275,
+    NPC_ARUGAL_VOIDWALKER = 4627
 };
 
 enum GameObjects
 {
-    GO_COURTYARD_DOOR       = 18895, //door to open when talking to NPC's
-    GO_SORCERER_DOOR        = 18972, //door to open when Fenrus the Devourer
-    GO_ARUGAL_DOOR          = 18971  //door to open when Wolf Master Nandos
+    GO_COURTYARD_DOOR = 18895, //door to open when talking to NPC's
+    GO_SORCERER_DOOR = 18972, //door to open when Fenrus the Devourer
+    GO_ARUGAL_DOOR = 18971  //door to open when Wolf Master Nandos
 };
 
 enum Spells
 {
-    SPELL_ASHCROMBE_TELEPORT    = 15742
+    SPELL_ASHCROMBE_TELEPORT = 15742
 };
 
 const Position SpawnLocation[] =
 {
-    {-148.199f, 2165.647f, 128.448f, 1.026f},
-    {-153.110f, 2168.620f, 128.448f, 1.026f},
-    {-145.905f, 2180.520f, 128.448f, 4.183f},
-    {-140.794f, 2178.037f, 128.448f, 4.090f},
-    {-138.640f, 2170.159f, 136.577f, 2.737f}
+    { -148.199f, 2165.647f, 128.448f, 1.026f },
+    { -153.110f, 2168.620f, 128.448f, 1.026f },
+    { -145.905f, 2180.520f, 128.448f, 4.183f },
+    { -140.794f, 2178.037f, 128.448f, 4.090f },
+    { -138.640f, 2170.159f, 136.577f, 2.737f }
 };
 class instance_shadowfang_keep : public InstanceMapScript
 {
@@ -105,9 +105,9 @@ public:
         {
             switch (creature->GetEntry())
             {
-                case NPC_ASH: uiAshGUID = creature->GetGUID(); break;
-                case NPC_ADA: uiAdaGUID = creature->GetGUID(); break;
-                case NPC_ARCHMAGE_ARUGAL: uiArchmageArugalGUID = creature->GetGUID(); break;
+            case NPC_ASH: uiAshGUID = creature->GetGUID(); break;
+            case NPC_ADA: uiAdaGUID = creature->GetGUID(); break;
+            case NPC_ARCHMAGE_ARUGAL: uiArchmageArugalGUID = creature->GetGUID(); break;
             }
         }
 
@@ -115,21 +115,21 @@ public:
         {
             switch (go->GetEntry())
             {
-                case GO_COURTYARD_DOOR:
-                    DoorCourtyardGUID = go->GetGUID();
-                    if (m_auiEncounter[0] == DONE)
-                        HandleGameObject(ObjectGuid::Empty, true, go);
-                    break;
-                case GO_SORCERER_DOOR:
-                    DoorSorcererGUID = go->GetGUID();
-                    if (m_auiEncounter[2] == DONE)
-                        HandleGameObject(ObjectGuid::Empty, true, go);
-                    break;
-                case GO_ARUGAL_DOOR:
-                    DoorArugalGUID = go->GetGUID();
-                    if (m_auiEncounter[3] == DONE)
-                        HandleGameObject(ObjectGuid::Empty, true, go);
-                    break;
+            case GO_COURTYARD_DOOR:
+                DoorCourtyardGUID = go->GetGUID();
+                if (m_auiEncounter[0] == DONE)
+                    HandleGameObject(ObjectGuid::Empty, true, go);
+                break;
+            case GO_SORCERER_DOOR:
+                DoorSorcererGUID = go->GetGUID();
+                if (m_auiEncounter[2] == DONE)
+                    HandleGameObject(ObjectGuid::Empty, true, go);
+                break;
+            case GO_ARUGAL_DOOR:
+                DoorArugalGUID = go->GetGUID();
+                if (m_auiEncounter[3] == DONE)
+                    HandleGameObject(ObjectGuid::Empty, true, go);
+                break;
             }
         }
 
@@ -149,34 +149,34 @@ public:
         {
             switch (type)
             {
-                case TYPE_FREE_NPC:
-                    if (data == DONE)
-                        DoUseDoorOrButton(DoorCourtyardGUID);
-                    m_auiEncounter[0] = data;
+            case TYPE_FREE_NPC:
+                if (data == DONE)
+                    DoUseDoorOrButton(DoorCourtyardGUID);
+                m_auiEncounter[0] = data;
+                break;
+            case TYPE_RETHILGORE:
+                if (data == DONE)
+                    DoSpeech();
+                m_auiEncounter[1] = data;
+                break;
+            case TYPE_FENRUS:
+                switch (data)
+                {
+                case DONE:
+                    uiTimer = 1000;
+                    uiPhase = 1;
                     break;
-                case TYPE_RETHILGORE:
-                    if (data == DONE)
-                        DoSpeech();
-                    m_auiEncounter[1] = data;
+                case 7:
+                    DoUseDoorOrButton(DoorSorcererGUID);
                     break;
-                case TYPE_FENRUS:
-                    switch (data)
-                    {
-                        case DONE:
-                            uiTimer = 1000;
-                            uiPhase = 1;
-                            break;
-                        case 7:
-                            DoUseDoorOrButton(DoorSorcererGUID);
-                            break;
-                    }
-                    m_auiEncounter[2] = data;
-                    break;
-                case TYPE_NANDOS:
-                    if (data == DONE)
-                        DoUseDoorOrButton(DoorArugalGUID);
-                    m_auiEncounter[3] = data;
-                    break;
+                }
+                m_auiEncounter[2] = data;
+                break;
+            case TYPE_NANDOS:
+                if (data == DONE)
+                    DoUseDoorOrButton(DoorArugalGUID);
+                m_auiEncounter[3] = data;
+                break;
             }
 
             if (data == DONE)
@@ -197,14 +197,14 @@ public:
         {
             switch (type)
             {
-                case TYPE_FREE_NPC:
-                    return m_auiEncounter[0];
-                case TYPE_RETHILGORE:
-                    return m_auiEncounter[1];
-                case TYPE_FENRUS:
-                    return m_auiEncounter[2];
-                case TYPE_NANDOS:
-                    return m_auiEncounter[3];
+            case TYPE_FREE_NPC:
+                return m_auiEncounter[0];
+            case TYPE_RETHILGORE:
+                return m_auiEncounter[1];
+            case TYPE_FENRUS:
+                return m_auiEncounter[2];
+            case TYPE_NANDOS:
+                return m_auiEncounter[3];
             }
             return 0;
         }
@@ -252,29 +252,30 @@ public:
                 {
                     switch (uiPhase)
                     {
-                        case 1:
-                        {
-                            Creature* summon = pArchmage->SummonCreature(pArchmage->GetEntry(), SpawnLocation[4], TEMPSUMMON_TIMED_DESPAWN, 10000);
-                            summon->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_IMMUNE_TO_PC);
-                            summon->SetReactState(REACT_DEFENSIVE);
-                            summon->CastSpell(summon, SPELL_ASHCROMBE_TELEPORT, true);
-                            summon->AI()->Talk(SAY_ARCHMAGE);
-                            uiTimer = 2000;
-                            uiPhase = 2;
-                            break;
-                        }
-                        case 2:
-                        {
-                            pArchmage->SummonCreature(NPC_ARUGAL_VOIDWALKER, SpawnLocation[0], TEMPSUMMON_CORPSE_TIMED_DESPAWN, 60000);
-                            pArchmage->SummonCreature(NPC_ARUGAL_VOIDWALKER, SpawnLocation[1], TEMPSUMMON_CORPSE_TIMED_DESPAWN, 60000);
-                            pArchmage->SummonCreature(NPC_ARUGAL_VOIDWALKER, SpawnLocation[2], TEMPSUMMON_CORPSE_TIMED_DESPAWN, 60000);
-                            pArchmage->SummonCreature(NPC_ARUGAL_VOIDWALKER, SpawnLocation[3], TEMPSUMMON_CORPSE_TIMED_DESPAWN, 60000);
-                            uiPhase = 0;
-                            break;
-                        }
+                    case 1:
+                    {
+                              Creature* summon = pArchmage->SummonCreature(pArchmage->GetEntry(), SpawnLocation[4], TEMPSUMMON_TIMED_DESPAWN, 10000);
+                              summon->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_IMMUNE_TO_PC);
+                              summon->SetReactState(REACT_DEFENSIVE);
+                              summon->CastSpell(summon, SPELL_ASHCROMBE_TELEPORT, true);
+                              summon->AI()->Talk(SAY_ARCHMAGE);
+                              uiTimer = 2000;
+                              uiPhase = 2;
+                              break;
+                    }
+                    case 2:
+                    {
+                              pArchmage->SummonCreature(NPC_ARUGAL_VOIDWALKER, SpawnLocation[0], TEMPSUMMON_CORPSE_TIMED_DESPAWN, 60000);
+                              pArchmage->SummonCreature(NPC_ARUGAL_VOIDWALKER, SpawnLocation[1], TEMPSUMMON_CORPSE_TIMED_DESPAWN, 60000);
+                              pArchmage->SummonCreature(NPC_ARUGAL_VOIDWALKER, SpawnLocation[2], TEMPSUMMON_CORPSE_TIMED_DESPAWN, 60000);
+                              pArchmage->SummonCreature(NPC_ARUGAL_VOIDWALKER, SpawnLocation[3], TEMPSUMMON_CORPSE_TIMED_DESPAWN, 60000);
+                              uiPhase = 0;
+                              break;
+                    }
 
                     }
-                } else uiTimer -= uiDiff;
+                }
+                else uiTimer -= uiDiff;
             }
         }
     };

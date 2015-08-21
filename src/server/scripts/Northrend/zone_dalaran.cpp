@@ -35,21 +35,21 @@ Script Data End */
 
 enum Spells
 {
-    SPELL_TRESPASSER_A                     = 54028,
-    SPELL_TRESPASSER_H                     = 54029,
+    SPELL_TRESPASSER_A = 54028,
+    SPELL_TRESPASSER_H = 54029,
 
-    SPELL_SUNREAVER_DISGUISE_FEMALE        = 70973,
-    SPELL_SUNREAVER_DISGUISE_MALE          = 70974,
-    SPELL_SILVER_COVENANT_DISGUISE_FEMALE  = 70971,
-    SPELL_SILVER_COVENANT_DISGUISE_MALE    = 70972,
+    SPELL_SUNREAVER_DISGUISE_FEMALE = 70973,
+    SPELL_SUNREAVER_DISGUISE_MALE = 70974,
+    SPELL_SILVER_COVENANT_DISGUISE_FEMALE = 70971,
+    SPELL_SILVER_COVENANT_DISGUISE_MALE = 70972,
 };
 
 enum NPCs // All outdoor guards are within 35.0f of these NPCs
 {
-    NPC_APPLEBOUGH_A                       = 29547,
-    NPC_SWEETBERRY_H                       = 29715,
-    NPC_SILVER_COVENANT_GUARDIAN_MAGE      = 29254,
-    NPC_SUNREAVER_GUARDIAN_MAGE            = 29255,
+    NPC_APPLEBOUGH_A = 29547,
+    NPC_SWEETBERRY_H = 29715,
+    NPC_SILVER_COVENANT_GUARDIAN_MAGE = 29254,
+    NPC_SUNREAVER_GUARDIAN_MAGE = 29255,
 };
 
 class npc_mageguard_dalaran : public CreatureScript
@@ -90,30 +90,30 @@ public:
 
             switch (me->GetEntry())
             {
-                case NPC_SILVER_COVENANT_GUARDIAN_MAGE:
-                    if (player->GetTeam() == HORDE)              // Horde unit found in Alliance area
+            case NPC_SILVER_COVENANT_GUARDIAN_MAGE:
+                if (player->GetTeam() == HORDE)              // Horde unit found in Alliance area
+                {
+                    if (GetClosestCreatureWithEntry(me, NPC_APPLEBOUGH_A, 32.0f))
                     {
-                        if (GetClosestCreatureWithEntry(me, NPC_APPLEBOUGH_A, 32.0f))
-                        {
-                            if (me->isInBackInMap(who, 12.0f))   // In my line of sight, "outdoors", and behind me
-                                DoCast(who, SPELL_TRESPASSER_A); // Teleport the Horde unit out
-                        }
-                        else                                      // In my line of sight, and "indoors"
-                            DoCast(who, SPELL_TRESPASSER_A);     // Teleport the Horde unit out
+                        if (me->isInBackInMap(who, 12.0f))   // In my line of sight, "outdoors", and behind me
+                            DoCast(who, SPELL_TRESPASSER_A); // Teleport the Horde unit out
                     }
-                    break;
-                case NPC_SUNREAVER_GUARDIAN_MAGE:
-                    if (player->GetTeam() == ALLIANCE)           // Alliance unit found in Horde area
+                    else                                      // In my line of sight, and "indoors"
+                        DoCast(who, SPELL_TRESPASSER_A);     // Teleport the Horde unit out
+                }
+                break;
+            case NPC_SUNREAVER_GUARDIAN_MAGE:
+                if (player->GetTeam() == ALLIANCE)           // Alliance unit found in Horde area
+                {
+                    if (GetClosestCreatureWithEntry(me, NPC_SWEETBERRY_H, 32.0f))
                     {
-                        if (GetClosestCreatureWithEntry(me, NPC_SWEETBERRY_H, 32.0f))
-                        {
-                            if (me->isInBackInMap(who, 12.0f))   // In my line of sight, "outdoors", and behind me
-                                DoCast(who, SPELL_TRESPASSER_H); // Teleport the Alliance unit out
-                        }
-                        else                                      // In my line of sight, and "indoors"
-                            DoCast(who, SPELL_TRESPASSER_H);     // Teleport the Alliance unit out
+                        if (me->isInBackInMap(who, 12.0f))   // In my line of sight, "outdoors", and behind me
+                            DoCast(who, SPELL_TRESPASSER_H); // Teleport the Alliance unit out
                     }
-                    break;
+                    else                                      // In my line of sight, and "indoors"
+                        DoCast(who, SPELL_TRESPASSER_H);     // Teleport the Alliance unit out
+                }
+                break;
             }
             me->SetOrientation(me->GetHomePosition().GetOrientation());
             return;
@@ -130,106 +130,106 @@ public:
 
 enum MinigobData
 {
-    ZONE_DALARAN            = 4395,
+    ZONE_DALARAN = 4395,
 
-    SPELL_MANABONKED        = 61834,
-    SPELL_TELEPORT_VISUAL   = 51347,
-    SPELL_IMPROVED_BLINK    = 61995,
+    SPELL_MANABONKED = 61834,
+    SPELL_TELEPORT_VISUAL = 51347,
+    SPELL_IMPROVED_BLINK = 61995,
 
-    EVENT_SELECT_TARGET     = 1,
-    EVENT_BLINK             = 2,
-    EVENT_DESPAWN_VISUAL    = 3,
-    EVENT_DESPAWN           = 4,
+    EVENT_SELECT_TARGET = 1,
+    EVENT_BLINK = 2,
+    EVENT_DESPAWN_VISUAL = 3,
+    EVENT_DESPAWN = 4,
 
-    MAIL_MINIGOB_ENTRY      = 264,
-    MAIL_DELIVER_DELAY_MIN  = 5*MINUTE,
-    MAIL_DELIVER_DELAY_MAX  = 15*MINUTE
+    MAIL_MINIGOB_ENTRY = 264,
+    MAIL_DELIVER_DELAY_MIN = 5 * MINUTE,
+    MAIL_DELIVER_DELAY_MAX = 15 * MINUTE
 };
 
 class npc_minigob_manabonk : public CreatureScript
 {
-    public:
-        npc_minigob_manabonk() : CreatureScript("npc_minigob_manabonk") {}
+public:
+    npc_minigob_manabonk() : CreatureScript("npc_minigob_manabonk") {}
 
-        struct npc_minigob_manabonkAI : public ScriptedAI
+    struct npc_minigob_manabonkAI : public ScriptedAI
+    {
+        npc_minigob_manabonkAI(Creature* creature) : ScriptedAI(creature)
         {
-            npc_minigob_manabonkAI(Creature* creature) : ScriptedAI(creature)
+            me->setActive(true);
+        }
+
+        void Reset() override
+        {
+            me->SetVisible(false);
+            events.ScheduleEvent(EVENT_SELECT_TARGET, IN_MILLISECONDS);
+        }
+
+        Player* SelectTargetInDalaran()
+        {
+            std::list<Player*> PlayerInDalaranList;
+            PlayerInDalaranList.clear();
+
+            Map::PlayerList const &players = me->GetMap()->GetPlayers();
+            for (Map::PlayerList::const_iterator itr = players.begin(); itr != players.end(); ++itr)
+            if (Player* player = itr->GetSource()->ToPlayer())
+            if (player->GetZoneId() == ZONE_DALARAN && !player->IsFlying() && !player->IsMounted() && !player->IsGameMaster())
+                PlayerInDalaranList.push_back(player);
+
+            if (PlayerInDalaranList.empty())
+                return NULL;
+            return Trinity::Containers::SelectRandomContainerElement(PlayerInDalaranList);
+        }
+
+        void SendMailToPlayer(Player* player)
+        {
+            SQLTransaction trans = CharacterDatabase.BeginTransaction();
+            int16 deliverDelay = irand(MAIL_DELIVER_DELAY_MIN, MAIL_DELIVER_DELAY_MAX);
+            MailDraft(MAIL_MINIGOB_ENTRY, true).SendMailTo(trans, MailReceiver(player), MailSender(MAIL_CREATURE, me->GetEntry()), MAIL_CHECK_MASK_NONE, deliverDelay);
+            CharacterDatabase.CommitTransaction(trans);
+        }
+
+        void UpdateAI(uint32 diff) override
+        {
+            events.Update(diff);
+
+            while (uint32 eventId = events.ExecuteEvent())
             {
-                me->setActive(true);
-            }
-
-            void Reset() override
-            {
-                me->SetVisible(false);
-                events.ScheduleEvent(EVENT_SELECT_TARGET, IN_MILLISECONDS);
-            }
-
-            Player* SelectTargetInDalaran()
-            {
-                std::list<Player*> PlayerInDalaranList;
-                PlayerInDalaranList.clear();
-
-                Map::PlayerList const &players = me->GetMap()->GetPlayers();
-                for (Map::PlayerList::const_iterator itr = players.begin(); itr != players.end(); ++itr)
-                    if (Player* player = itr->GetSource()->ToPlayer())
-                        if (player->GetZoneId() == ZONE_DALARAN && !player->IsFlying() && !player->IsMounted() && !player->IsGameMaster())
-                            PlayerInDalaranList.push_back(player);
-
-                if (PlayerInDalaranList.empty())
-                    return NULL;
-                return Trinity::Containers::SelectRandomContainerElement(PlayerInDalaranList);
-            }
-
-            void SendMailToPlayer(Player* player)
-            {
-                SQLTransaction trans = CharacterDatabase.BeginTransaction();
-                int16 deliverDelay = irand(MAIL_DELIVER_DELAY_MIN, MAIL_DELIVER_DELAY_MAX);
-                MailDraft(MAIL_MINIGOB_ENTRY, true).SendMailTo(trans, MailReceiver(player), MailSender(MAIL_CREATURE, me->GetEntry()), MAIL_CHECK_MASK_NONE, deliverDelay);
-                CharacterDatabase.CommitTransaction(trans);
-            }
-
-            void UpdateAI(uint32 diff) override
-            {
-                events.Update(diff);
-
-                while (uint32 eventId = events.ExecuteEvent())
+                switch (eventId)
                 {
-                    switch (eventId)
+                case EVENT_SELECT_TARGET:
+                    me->SetVisible(true);
+                    DoCast(me, SPELL_TELEPORT_VISUAL);
+                    if (Player* player = SelectTargetInDalaran())
                     {
-                        case EVENT_SELECT_TARGET:
-                            me->SetVisible(true);
-                            DoCast(me, SPELL_TELEPORT_VISUAL);
-                            if (Player* player = SelectTargetInDalaran())
-                            {
-                                me->NearTeleportTo(player->GetPositionX(), player->GetPositionY(), player->GetPositionZ(), 0.0f);
-                                DoCast(player, SPELL_MANABONKED);
-                                SendMailToPlayer(player);
-                            }
-                            events.ScheduleEvent(EVENT_BLINK, 3*IN_MILLISECONDS);
-                            break;
-                        case EVENT_BLINK:
-                        {
-                            DoCast(me, SPELL_IMPROVED_BLINK);
-                            Position pos = me->GetRandomNearPosition(frand(15, 40));
-                            me->GetMotionMaster()->MovePoint(0, pos.m_positionX, pos.m_positionY, pos.m_positionZ);
-                            events.ScheduleEvent(EVENT_DESPAWN, 3 * IN_MILLISECONDS);
-                            events.ScheduleEvent(EVENT_DESPAWN_VISUAL, 2.5*IN_MILLISECONDS);
-                            break;
-                        }
-                        case EVENT_DESPAWN_VISUAL:
-                            DoCast(me, SPELL_TELEPORT_VISUAL);
-                            break;
-                        case EVENT_DESPAWN:
-                            me->DespawnOrUnsummon();
-                            break;
-                        default:
-                            break;
+                        me->NearTeleportTo(player->GetPositionX(), player->GetPositionY(), player->GetPositionZ(), 0.0f);
+                        DoCast(player, SPELL_MANABONKED);
+                        SendMailToPlayer(player);
                     }
+                    events.ScheduleEvent(EVENT_BLINK, 3 * IN_MILLISECONDS);
+                    break;
+                case EVENT_BLINK:
+                {
+                                    DoCast(me, SPELL_IMPROVED_BLINK);
+                                    Position pos = me->GetRandomNearPosition(frand(15, 40));
+                                    me->GetMotionMaster()->MovePoint(0, pos.m_positionX, pos.m_positionY, pos.m_positionZ);
+                                    events.ScheduleEvent(EVENT_DESPAWN, 3 * IN_MILLISECONDS);
+                                    events.ScheduleEvent(EVENT_DESPAWN_VISUAL, 2.5*IN_MILLISECONDS);
+                                    break;
+                }
+                case EVENT_DESPAWN_VISUAL:
+                    DoCast(me, SPELL_TELEPORT_VISUAL);
+                    break;
+                case EVENT_DESPAWN:
+                    me->DespawnOrUnsummon();
+                    break;
+                default:
+                    break;
                 }
             }
+        }
 
-        private:
-            EventMap events;
+    private:
+        EventMap events;
     };
 
     CreatureAI* GetAI(Creature* creature) const override

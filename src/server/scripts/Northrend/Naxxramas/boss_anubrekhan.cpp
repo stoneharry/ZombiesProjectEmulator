@@ -21,16 +21,16 @@
 
 enum Says
 {
-    SAY_AGGRO           = 0,
-    SAY_GREET           = 1,
-    SAY_SLAY            = 2
+    SAY_AGGRO = 0,
+    SAY_GREET = 1,
+    SAY_SLAY = 2
 };
 
-Position const GuardSummonPos = {3333.72f, -3476.30f, 287.1f, 6.2801f};
+Position const GuardSummonPos = { 3333.72f, -3476.30f, 287.1f, 6.2801f };
 
 enum Events
 {
-    EVENT_IMPALE                    = 1,
+    EVENT_IMPALE = 1,
     EVENT_LOCUST,
     EVENT_SPAWN_GUARDIAN_NORMAL,
     EVENT_BERSERK
@@ -38,16 +38,16 @@ enum Events
 
 enum Spells
 {
-    SPELL_IMPALE                    = 28783,
-    SPELL_LOCUST_SWARM              = 28785,
+    SPELL_IMPALE = 28783,
+    SPELL_LOCUST_SWARM = 28785,
     SPELL_SUMMON_CORPSE_SCARABS_PLR = 29105,    // This spawns 5 corpse scarabs on top of player
     SPELL_SUMMON_CORPSE_SCARABS_MOB = 28864,   // This spawns 10 corpse scarabs on top of dead guards
-    SPELL_BERSERK                   = 27680
+    SPELL_BERSERK = 27680
 };
 
 enum Misc
 {
-    ACHIEV_TIMED_START_EVENT                      = 9891
+    ACHIEV_TIMED_START_EVENT = 9891
 };
 
 class boss_anubrekhan : public CreatureScript
@@ -100,8 +100,8 @@ public:
         {
             /// Force the player to spawn corpse scarabs via spell, @todo Check percent chance for scarabs, 20% at the moment
             if (!(rand32() % 5))
-                if (victim->GetTypeId() == TYPEID_PLAYER)
-                    victim->CastSpell(victim, SPELL_SUMMON_CORPSE_SCARABS_PLR, true, NULL, NULL, me->GetGUID());
+            if (victim->GetTypeId() == TYPEID_PLAYER)
+                victim->CastSpell(victim, SPELL_SUMMON_CORPSE_SCARABS_PLR, true, NULL, NULL, me->GetGUID());
 
             Talk(SAY_SLAY);
         }
@@ -157,28 +157,28 @@ public:
             {
                 switch (eventId)
                 {
-                    case EVENT_IMPALE:
-                        //Cast Impale on a random target
-                        //Do NOT cast it when we are afflicted by locust swarm
-                        if (!me->HasAura(sSpellMgr->GetSpellIdForDifficulty(SPELL_LOCUST_SWARM, me)))
-                            if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
-                                DoCast(target, SPELL_IMPALE);
-                        events.ScheduleEvent(EVENT_IMPALE, urand(10000, 20000));
-                        break;
-                    case EVENT_LOCUST:
-                        /// @todo Add Text
-                        DoCast(me, SPELL_LOCUST_SWARM);
-                        DoSummon(NPC_CRYPT_GUARD, GuardSummonPos, 0, TEMPSUMMON_CORPSE_DESPAWN);
-                        events.ScheduleEvent(EVENT_LOCUST, 90000);
-                        break;
-                    case EVENT_SPAWN_GUARDIAN_NORMAL:
-                        /// @todo Add Text
-                        DoSummon(NPC_CRYPT_GUARD, GuardSummonPos, 0, TEMPSUMMON_CORPSE_DESPAWN);
-                        break;
-                    case EVENT_BERSERK:
-                        DoCast(me, SPELL_BERSERK, true);
-                        events.ScheduleEvent(EVENT_BERSERK, 600000);
-                        break;
+                case EVENT_IMPALE:
+                    //Cast Impale on a random target
+                    //Do NOT cast it when we are afflicted by locust swarm
+                    if (!me->HasAura(sSpellMgr->GetSpellIdForDifficulty(SPELL_LOCUST_SWARM, me)))
+                    if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
+                        DoCast(target, SPELL_IMPALE);
+                    events.ScheduleEvent(EVENT_IMPALE, urand(10000, 20000));
+                    break;
+                case EVENT_LOCUST:
+                    /// @todo Add Text
+                    DoCast(me, SPELL_LOCUST_SWARM);
+                    DoSummon(NPC_CRYPT_GUARD, GuardSummonPos, 0, TEMPSUMMON_CORPSE_DESPAWN);
+                    events.ScheduleEvent(EVENT_LOCUST, 90000);
+                    break;
+                case EVENT_SPAWN_GUARDIAN_NORMAL:
+                    /// @todo Add Text
+                    DoSummon(NPC_CRYPT_GUARD, GuardSummonPos, 0, TEMPSUMMON_CORPSE_DESPAWN);
+                    break;
+                case EVENT_BERSERK:
+                    DoCast(me, SPELL_BERSERK, true);
+                    events.ScheduleEvent(EVENT_BERSERK, 600000);
+                    break;
                 }
             }
 

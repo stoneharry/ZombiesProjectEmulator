@@ -231,8 +231,8 @@ void Eluna::OnPacketSendAny(Player* player, WorldPacket& packet, bool& result)
             result = false;
 
         if (lua_isuserdata(L, r + 1))
-            if (WorldPacket* data = CHECKOBJ<WorldPacket>(L, r + 1, false))
-                packet = *data;
+        if (WorldPacket* data = CHECKOBJ<WorldPacket>(L, r + 1, false))
+            packet = *data;
 
         lua_pop(L, 2);
     }
@@ -258,8 +258,8 @@ void Eluna::OnPacketSendOne(Player* player, WorldPacket& packet, bool& result)
             result = false;
 
         if (lua_isuserdata(L, r + 1))
-            if (WorldPacket* data = CHECKOBJ<WorldPacket>(L, r + 1, false))
-                packet = *data;
+        if (WorldPacket* data = CHECKOBJ<WorldPacket>(L, r + 1, false))
+            packet = *data;
 
         lua_pop(L, 2);
     }
@@ -296,8 +296,8 @@ void Eluna::OnPacketReceiveAny(Player* player, WorldPacket& packet, bool& result
             result = false;
 
         if (lua_isuserdata(L, r + 1))
-            if (WorldPacket* data = CHECKOBJ<WorldPacket>(L, r + 1, false))
-                packet = *data;
+        if (WorldPacket* data = CHECKOBJ<WorldPacket>(L, r + 1, false))
+            packet = *data;
 
         lua_pop(L, 2);
     }
@@ -323,8 +323,8 @@ void Eluna::OnPacketReceiveOne(Player* player, WorldPacket& packet, bool& result
             result = false;
 
         if (lua_isuserdata(L, r + 1))
-            if (WorldPacket* data = CHECKOBJ<WorldPacket>(L, r + 1, false))
-                packet = *data;
+        if (WorldPacket* data = CHECKOBJ<WorldPacket>(L, r + 1, false))
+            packet = *data;
 
         lua_pop(L, 2);
     }

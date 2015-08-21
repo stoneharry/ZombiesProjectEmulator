@@ -56,13 +56,13 @@ public:
 
     ~GameObjectModel();
 
-    const G3D::Vector3& getPosition() const { return iPos;}
+    const G3D::Vector3& getPosition() const { return iPos; }
 
     /**    Enables\disables collision. */
-    void disable() { phasemask = 0;}
-    void enable(uint32 ph_mask) { phasemask = ph_mask;}
+    void disable() { phasemask = 0; }
+    void enable(uint32 ph_mask) { phasemask = ph_mask; }
 
-    bool isEnabled() const {return phasemask != 0;}
+    bool isEnabled() const { return phasemask != 0; }
 
     bool intersectRay(const G3D::Ray& Ray, float& MaxDist, bool StopAtFirstHit, uint32 ph_mask) const;
 

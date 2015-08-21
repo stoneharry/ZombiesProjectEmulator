@@ -33,23 +33,23 @@ class Transaction
     template <typename T>
     friend class DatabaseWorkerPool;
 
-    public:
-        Transaction() : _cleanedUp(false) { }
-        ~Transaction() { Cleanup(); }
+public:
+    Transaction() : _cleanedUp(false) { }
+    ~Transaction() { Cleanup(); }
 
-        void Append(PreparedStatement* statement);
-        void Append(const char* sql);
-        template<typename... Args>
-        void PAppend(const char* sql, Args const&... args) { Append(Trinity::StringFormat(sql, args...).c_str()); }
+    void Append(PreparedStatement* statement);
+    void Append(const char* sql);
+    template<typename... Args>
+    void PAppend(const char* sql, Args const&... args) { Append(Trinity::StringFormat(sql, args...).c_str()); }
 
-        size_t GetSize() const { return m_queries.size(); }
+    size_t GetSize() const { return m_queries.size(); }
 
-    protected:
-        void Cleanup();
-        std::list<SQLElementData> m_queries;
+protected:
+    void Cleanup();
+    std::list<SQLElementData> m_queries;
 
-    private:
-        bool _cleanedUp;
+private:
+    bool _cleanedUp;
 
 };
 typedef std::shared_ptr<Transaction> SQLTransaction;
@@ -60,15 +60,15 @@ class TransactionTask : public SQLOperation
     template <class T> friend class DatabaseWorkerPool;
     friend class DatabaseWorker;
 
-    public:
-        TransactionTask(SQLTransaction trans) : m_trans(trans) { }
-        ~TransactionTask() { }
+public:
+    TransactionTask(SQLTransaction trans) : m_trans(trans) { }
+    ~TransactionTask() { }
 
-    protected:
-        bool Execute() override;
+protected:
+    bool Execute() override;
 
-        SQLTransaction m_trans;
-        static std::mutex _deadlockLock;
+    SQLTransaction m_trans;
+    static std::mutex _deadlockLock;
 };
 
 #endif

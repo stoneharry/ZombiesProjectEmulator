@@ -65,159 +65,159 @@ extern Patcher patcher;
 
 int main(int argc, char** argv)
 {
-	std::string configFile = _TRINITY_REALM_CONFIG;
-	auto vm = GetConsoleArguments(argc, argv, configFile);
-	// exit if help is enabled
-	if (vm.count("help"))
-		return 0;
+    std::string configFile = _TRINITY_REALM_CONFIG;
+    auto vm = GetConsoleArguments(argc, argv, configFile);
+    // exit if help is enabled
+    if (vm.count("help"))
+        return 0;
 
-	std::string configError;
-	if (!sConfigMgr->LoadInitial(configFile, configError))
-	{
-		printf("Error in config file: %s\n", configError.c_str());
-		return 1;
-	}
+    std::string configError;
+    if (!sConfigMgr->LoadInitial(configFile, configError))
+    {
+        printf("Error in config file: %s\n", configError.c_str());
+        return 1;
+    }
 
-	TC_LOG_INFO("server.authserver", "%s (authserver)", _FULLVERSION);
-	TC_LOG_INFO("server.authserver", "<Ctrl-C> to stop.\n");
-	TC_LOG_INFO("server.authserver", "Using configuration file %s.", configFile.c_str());
-	TC_LOG_INFO("server.authserver", "Using SSL version: %s (library: %s)", OPENSSL_VERSION_TEXT, SSLeay_version(SSLEAY_VERSION));
-	TC_LOG_INFO("server.authserver", "Using Boost version: %i.%i.%i", BOOST_VERSION / 100000, BOOST_VERSION / 100 % 1000, BOOST_VERSION % 100);
+    TC_LOG_INFO("server.authserver", "%s (authserver)", _FULLVERSION);
+    TC_LOG_INFO("server.authserver", "<Ctrl-C> to stop.\n");
+    TC_LOG_INFO("server.authserver", "Using configuration file %s.", configFile.c_str());
+    TC_LOG_INFO("server.authserver", "Using SSL version: %s (library: %s)", OPENSSL_VERSION_TEXT, SSLeay_version(SSLEAY_VERSION));
+    TC_LOG_INFO("server.authserver", "Using Boost version: %i.%i.%i", BOOST_VERSION / 100000, BOOST_VERSION / 100 % 1000, BOOST_VERSION % 100);
 
-	patcher.Initialize();
+    patcher.Initialize();
 
-	// authserver PID file creation
-	std::string pidFile = sConfigMgr->GetStringDefault("PidFile", "");
-	if (!pidFile.empty())
-	{
-		if (uint32 pid = CreatePIDFile(pidFile))
-			TC_LOG_INFO("server.authserver", "Daemon PID: %u\n", pid);
-		else
-		{
-			TC_LOG_ERROR("server.authserver", "Cannot create PID file %s.\n", pidFile.c_str());
-			return 1;
-		}
-	}
+    // authserver PID file creation
+    std::string pidFile = sConfigMgr->GetStringDefault("PidFile", "");
+    if (!pidFile.empty())
+    {
+        if (uint32 pid = CreatePIDFile(pidFile))
+            TC_LOG_INFO("server.authserver", "Daemon PID: %u\n", pid);
+        else
+        {
+            TC_LOG_ERROR("server.authserver", "Cannot create PID file %s.\n", pidFile.c_str());
+            return 1;
+        }
+    }
 
-	// Initialize the database connection
-	if (!StartDB())
-		return 1;
+    // Initialize the database connection
+    if (!StartDB())
+        return 1;
 
-	AuthHelper::InitAcceptedClientBuilds();
+    AuthHelper::InitAcceptedClientBuilds();
 
-	// Get the list of realms for the server
-	sRealmList->Initialize(_ioService, sConfigMgr->GetIntDefault("RealmsStateUpdateDelay", 20));
+    // Get the list of realms for the server
+    sRealmList->Initialize(_ioService, sConfigMgr->GetIntDefault("RealmsStateUpdateDelay", 20));
 
-	if (sRealmList->size() == 0)
-	{
-		TC_LOG_ERROR("server.authserver", "No valid realms specified.");
-		StopDB();
-		return 1;
-	}
+    if (sRealmList->size() == 0)
+    {
+        TC_LOG_ERROR("server.authserver", "No valid realms specified.");
+        StopDB();
+        return 1;
+    }
 
-	// Start the listening port (acceptor) for auth connections
-	int32 port = sConfigMgr->GetIntDefault("RealmServerPort", 3724);
-	if (port < 0 || port > 0xFFFF)
-	{
-		TC_LOG_ERROR("server.authserver", "Specified port out of allowed range (1-65535)");
-		StopDB();
-		return 1;
-	}
+    // Start the listening port (acceptor) for auth connections
+    int32 port = sConfigMgr->GetIntDefault("RealmServerPort", 3724);
+    if (port < 0 || port > 0xFFFF)
+    {
+        TC_LOG_ERROR("server.authserver", "Specified port out of allowed range (1-65535)");
+        StopDB();
+        return 1;
+    }
 
-	std::string bindIp = sConfigMgr->GetStringDefault("BindIP", "0.0.0.0");
+    std::string bindIp = sConfigMgr->GetStringDefault("BindIP", "0.0.0.0");
 
-	sAuthSocketMgr.StartNetwork(_ioService, bindIp, port);
+    sAuthSocketMgr.StartNetwork(_ioService, bindIp, port);
 
-	// Set signal handlers
-	boost::asio::signal_set signals(_ioService, SIGINT, SIGTERM);
+    // Set signal handlers
+    boost::asio::signal_set signals(_ioService, SIGINT, SIGTERM);
 #if PLATFORM == PLATFORM_WINDOWS
-	signals.add(SIGBREAK);
+    signals.add(SIGBREAK);
 #endif
-	signals.async_wait(SignalHandler);
+    signals.async_wait(SignalHandler);
 
-	// Set process priority according to configuration settings
-	SetProcessPriority("server.authserver");
+    // Set process priority according to configuration settings
+    SetProcessPriority("server.authserver");
 
-	// Enabled a timed callback for handling the database keep alive ping
-	_dbPingInterval = sConfigMgr->GetIntDefault("MaxPingTime", 30);
-	_dbPingTimer.expires_from_now(boost::posix_time::minutes(_dbPingInterval));
-	_dbPingTimer.async_wait(KeepDatabaseAliveHandler);
+    // Enabled a timed callback for handling the database keep alive ping
+    _dbPingInterval = sConfigMgr->GetIntDefault("MaxPingTime", 30);
+    _dbPingTimer.expires_from_now(boost::posix_time::minutes(_dbPingInterval));
+    _dbPingTimer.async_wait(KeepDatabaseAliveHandler);
 
-	// Start the io service worker loop
-	_ioService.run();
+    // Start the io service worker loop
+    _ioService.run();
 
-	// Close the Database Pool and library
-	StopDB();
+    // Close the Database Pool and library
+    StopDB();
 
-	TC_LOG_INFO("server.authserver", "Halting process...");
-	return 0;
+    TC_LOG_INFO("server.authserver", "Halting process...");
+    return 0;
 }
 
 /// Initialize connection to the database
 bool StartDB()
 {
-	MySQL::Library_Init();
+    MySQL::Library_Init();
 
-	// Load databases
-	// NOTE: While authserver is singlethreaded you should keep synch_threads == 1.
-	// Increasing it is just silly since only 1 will be used ever.
-	DatabaseLoader loader("server.authserver", DatabaseLoader::DATABASE_NONE);
-	loader
-		.AddDatabase(LoginDatabase, "Login");
+    // Load databases
+    // NOTE: While authserver is singlethreaded you should keep synch_threads == 1.
+    // Increasing it is just silly since only 1 will be used ever.
+    DatabaseLoader loader("server.authserver", DatabaseLoader::DATABASE_NONE);
+    loader
+        .AddDatabase(LoginDatabase, "Login");
 
-	if (!loader.Load())
-		return false;
+    if (!loader.Load())
+        return false;
 
-	TC_LOG_INFO("server.authserver", "Started auth database connection pool.");
-	sLog->SetRealmId(0); // Enables DB appenders when realm is set.
-	return true;
+    TC_LOG_INFO("server.authserver", "Started auth database connection pool.");
+    sLog->SetRealmId(0); // Enables DB appenders when realm is set.
+    return true;
 }
 
 /// Close the connection to the database
 void StopDB()
 {
-	LoginDatabase.Close();
-	MySQL::Library_End();
+    LoginDatabase.Close();
+    MySQL::Library_End();
 }
 
 void SignalHandler(const boost::system::error_code& error, int /*signalNumber*/)
 {
-	if (!error)
-		_ioService.stop();
+    if (!error)
+        _ioService.stop();
 }
 
 void KeepDatabaseAliveHandler(const boost::system::error_code& error)
 {
-	if (!error)
-	{
-		TC_LOG_INFO("server.authserver", "Ping MySQL to keep connection alive");
-		LoginDatabase.KeepAlive();
+    if (!error)
+    {
+        TC_LOG_INFO("server.authserver", "Ping MySQL to keep connection alive");
+        LoginDatabase.KeepAlive();
 
-		_dbPingTimer.expires_from_now(boost::posix_time::minutes(_dbPingInterval));
-		_dbPingTimer.async_wait(KeepDatabaseAliveHandler);
-	}
+        _dbPingTimer.expires_from_now(boost::posix_time::minutes(_dbPingInterval));
+        _dbPingTimer.async_wait(KeepDatabaseAliveHandler);
+    }
 }
 
 variables_map GetConsoleArguments(int argc, char** argv, std::string& configFile)
 {
-	options_description all("Allowed options");
-	all.add_options()
-		("help,h", "print usage message")
-		("config,c", value<std::string>(&configFile)->default_value(_TRINITY_REALM_CONFIG), "use <arg> as configuration file")
-		;
-	variables_map variablesMap;
-	try
-	{
-		store(command_line_parser(argc, argv).options(all).allow_unregistered().run(), variablesMap);
-		notify(variablesMap);
-	}
-	catch (std::exception& e) {
-		std::cerr << e.what() << "\n";
-	}
+    options_description all("Allowed options");
+    all.add_options()
+        ("help,h", "print usage message")
+        ("config,c", value<std::string>(&configFile)->default_value(_TRINITY_REALM_CONFIG), "use <arg> as configuration file")
+        ;
+    variables_map variablesMap;
+    try
+    {
+        store(command_line_parser(argc, argv).options(all).allow_unregistered().run(), variablesMap);
+        notify(variablesMap);
+    }
+    catch (std::exception& e) {
+        std::cerr << e.what() << "\n";
+    }
 
-	if (variablesMap.count("help")) {
-		std::cout << all << "\n";
-	}
+    if (variablesMap.count("help")) {
+        std::cout << all << "\n";
+    }
 
-	return variablesMap;
+    return variablesMap;
 }

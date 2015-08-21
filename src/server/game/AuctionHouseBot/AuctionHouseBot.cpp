@@ -247,12 +247,12 @@ uint32 AuctionBotConfig::GetConfigItemAmountRatio(AuctionHouseType houseType) co
 {
     switch (houseType)
     {
-        case AUCTION_HOUSE_ALLIANCE:
-            return GetConfig(CONFIG_AHBOT_ALLIANCE_ITEM_AMOUNT_RATIO);
-        case AUCTION_HOUSE_HORDE:
-            return GetConfig(CONFIG_AHBOT_HORDE_ITEM_AMOUNT_RATIO);
-        default:
-            return GetConfig(CONFIG_AHBOT_NEUTRAL_ITEM_AMOUNT_RATIO);
+    case AUCTION_HOUSE_ALLIANCE:
+        return GetConfig(CONFIG_AHBOT_ALLIANCE_ITEM_AMOUNT_RATIO);
+    case AUCTION_HOUSE_HORDE:
+        return GetConfig(CONFIG_AHBOT_HORDE_ITEM_AMOUNT_RATIO);
+    default:
+        return GetConfig(CONFIG_AHBOT_NEUTRAL_ITEM_AMOUNT_RATIO);
     }
 }
 
@@ -260,12 +260,12 @@ bool AuctionBotConfig::GetConfigBuyerEnabled(AuctionHouseType houseType) const
 {
     switch (houseType)
     {
-        case AUCTION_HOUSE_ALLIANCE:
-            return GetConfig(CONFIG_AHBOT_BUYER_ALLIANCE_ENABLED);
-        case AUCTION_HOUSE_HORDE:
-            return GetConfig(CONFIG_AHBOT_BUYER_HORDE_ENABLED);
-        default:
-            return GetConfig(CONFIG_AHBOT_BUYER_NEUTRAL_ENABLED);
+    case AUCTION_HOUSE_ALLIANCE:
+        return GetConfig(CONFIG_AHBOT_BUYER_ALLIANCE_ENABLED);
+    case AUCTION_HOUSE_HORDE:
+        return GetConfig(CONFIG_AHBOT_BUYER_HORDE_ENABLED);
+    default:
+        return GetConfig(CONFIG_AHBOT_BUYER_NEUTRAL_ENABLED);
     }
 }
 
@@ -273,24 +273,24 @@ uint32 AuctionBotConfig::GetConfigItemQualityAmount(AuctionQuality quality) cons
 {
     switch (quality)
     {
-        case AUCTION_QUALITY_GRAY:
-            return GetConfig(CONFIG_AHBOT_ITEM_GRAY_AMOUNT);
-        case AUCTION_QUALITY_WHITE:
-            return GetConfig(CONFIG_AHBOT_ITEM_WHITE_AMOUNT);
-        case AUCTION_QUALITY_GREEN:
-            return GetConfig(CONFIG_AHBOT_ITEM_GREEN_AMOUNT);
-        case AUCTION_QUALITY_BLUE:
-            return GetConfig(CONFIG_AHBOT_ITEM_BLUE_AMOUNT);
-        case AUCTION_QUALITY_PURPLE:
-            return GetConfig(CONFIG_AHBOT_ITEM_PURPLE_AMOUNT);
-        case AUCTION_QUALITY_ORANGE:
-            return GetConfig(CONFIG_AHBOT_ITEM_ORANGE_AMOUNT);
-        default:
-            return GetConfig(CONFIG_AHBOT_ITEM_YELLOW_AMOUNT);
+    case AUCTION_QUALITY_GRAY:
+        return GetConfig(CONFIG_AHBOT_ITEM_GRAY_AMOUNT);
+    case AUCTION_QUALITY_WHITE:
+        return GetConfig(CONFIG_AHBOT_ITEM_WHITE_AMOUNT);
+    case AUCTION_QUALITY_GREEN:
+        return GetConfig(CONFIG_AHBOT_ITEM_GREEN_AMOUNT);
+    case AUCTION_QUALITY_BLUE:
+        return GetConfig(CONFIG_AHBOT_ITEM_BLUE_AMOUNT);
+    case AUCTION_QUALITY_PURPLE:
+        return GetConfig(CONFIG_AHBOT_ITEM_PURPLE_AMOUNT);
+    case AUCTION_QUALITY_ORANGE:
+        return GetConfig(CONFIG_AHBOT_ITEM_ORANGE_AMOUNT);
+    default:
+        return GetConfig(CONFIG_AHBOT_ITEM_YELLOW_AMOUNT);
     }
 }
 
-AuctionHouseBot::AuctionHouseBot(): _buyer(nullptr), _seller(nullptr), _operationSelector(0)
+AuctionHouseBot::AuctionHouseBot() : _buyer(nullptr), _seller(nullptr), _operationSelector(0)
 {
 }
 
@@ -397,9 +397,9 @@ void AuctionHouseBot::Rebuild(bool all)
     {
         AuctionHouseObject* auctionHouse = sAuctionMgr->GetAuctionsMap(AuctionHouseType(i));
         for (AuctionHouseObject::AuctionEntryMap::const_iterator itr = auctionHouse->GetAuctionsBegin(); itr != auctionHouse->GetAuctionsEnd(); ++itr)
-            if (!itr->second->owner)                        // ahbot auction
-                if (all || itr->second->bid == 0)           // expire now auction if no bid or forced
-                    itr->second->expire_time = sWorld->GetGameTime();
+        if (!itr->second->owner)                        // ahbot auction
+        if (all || itr->second->bid == 0)           // expire now auction if no bid or forced
+            itr->second->expire_time = sWorld->GetGameTime();
     }
 }
 

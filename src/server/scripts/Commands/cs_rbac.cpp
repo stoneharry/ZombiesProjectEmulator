@@ -31,7 +31,7 @@ EndScriptData */
 
 struct RBACCommandData
 {
-    RBACCommandData(): id(0), realmId(0), rbac(NULL), needDelete(false) { }
+    RBACCommandData() : id(0), realmId(0), rbac(NULL), needDelete(false) { }
     ~RBACCommandData()
     {
         if (needDelete)
@@ -53,24 +53,24 @@ public:
     {
         static ChatCommand rbacAccountCommandTable[] =
         {
-            {        "list", rbac::RBAC_PERM_COMMAND_RBAC_ACC_PERM_LIST,   true, &HandleRBACPermListCommand,    "", NULL },
-            {       "grant", rbac::RBAC_PERM_COMMAND_RBAC_ACC_PERM_GRANT,  true, &HandleRBACPermGrantCommand,   "", NULL },
-            {        "deny", rbac::RBAC_PERM_COMMAND_RBAC_ACC_PERM_DENY,   true, &HandleRBACPermDenyCommand,    "", NULL },
-            {      "revoke", rbac::RBAC_PERM_COMMAND_RBAC_ACC_PERM_REVOKE, true, &HandleRBACPermRevokeCommand,  "", NULL },
-            {          NULL, 0, false, NULL, "", NULL }
+            { "list", rbac::RBAC_PERM_COMMAND_RBAC_ACC_PERM_LIST, true, &HandleRBACPermListCommand, "", NULL },
+            { "grant", rbac::RBAC_PERM_COMMAND_RBAC_ACC_PERM_GRANT, true, &HandleRBACPermGrantCommand, "", NULL },
+            { "deny", rbac::RBAC_PERM_COMMAND_RBAC_ACC_PERM_DENY, true, &HandleRBACPermDenyCommand, "", NULL },
+            { "revoke", rbac::RBAC_PERM_COMMAND_RBAC_ACC_PERM_REVOKE, true, &HandleRBACPermRevokeCommand, "", NULL },
+            { NULL, 0, false, NULL, "", NULL }
         };
 
         static ChatCommand rbacCommandTable[] =
         {
-            {    "account", rbac::RBAC_PERM_COMMAND_RBAC_ACC,  true, NULL, "", rbacAccountCommandTable },
-            {       "list", rbac::RBAC_PERM_COMMAND_RBAC_LIST, true, &HandleRBACListPermissionsCommand, "", NULL },
-            {         NULL, 0, false, NULL, "", NULL }
+            { "account", rbac::RBAC_PERM_COMMAND_RBAC_ACC, true, NULL, "", rbacAccountCommandTable },
+            { "list", rbac::RBAC_PERM_COMMAND_RBAC_LIST, true, &HandleRBACListPermissionsCommand, "", NULL },
+            { NULL, 0, false, NULL, "", NULL }
         };
 
         static ChatCommand commandTable[] =
         {
-            {       "rbac", rbac::RBAC_PERM_COMMAND_RBAC, true, NULL, "", rbacCommandTable },
-            {         NULL, 0, false, NULL, "", NULL }
+            { "rbac", rbac::RBAC_PERM_COMMAND_RBAC, true, NULL, "", rbacCommandTable },
+            { NULL, 0, false, NULL, "", NULL }
         };
 
         return commandTable;
@@ -187,23 +187,23 @@ public:
 
         switch (result)
         {
-            case rbac::RBAC_CANT_ADD_ALREADY_ADDED:
-                handler->PSendSysMessage(LANG_RBAC_PERM_GRANTED_IN_LIST, command->id, permission->GetName().c_str(),
-                    command->realmId, command->rbac->GetId(), command->rbac->GetName().c_str());
-                break;
-            case rbac::RBAC_IN_DENIED_LIST:
-                handler->PSendSysMessage(LANG_RBAC_PERM_GRANTED_IN_DENIED_LIST, command->id, permission->GetName().c_str(),
-                    command->realmId, command->rbac->GetId(), command->rbac->GetName().c_str());
-                break;
-            case rbac::RBAC_OK:
-                handler->PSendSysMessage(LANG_RBAC_PERM_GRANTED, command->id, permission->GetName().c_str(),
-                    command->realmId, command->rbac->GetId(), command->rbac->GetName().c_str());
-                break;
-            case rbac::RBAC_ID_DOES_NOT_EXISTS:
-                handler->PSendSysMessage(LANG_RBAC_WRONG_PARAMETER_ID, command->id);
-                break;
-            default:
-                break;
+        case rbac::RBAC_CANT_ADD_ALREADY_ADDED:
+            handler->PSendSysMessage(LANG_RBAC_PERM_GRANTED_IN_LIST, command->id, permission->GetName().c_str(),
+                command->realmId, command->rbac->GetId(), command->rbac->GetName().c_str());
+            break;
+        case rbac::RBAC_IN_DENIED_LIST:
+            handler->PSendSysMessage(LANG_RBAC_PERM_GRANTED_IN_DENIED_LIST, command->id, permission->GetName().c_str(),
+                command->realmId, command->rbac->GetId(), command->rbac->GetName().c_str());
+            break;
+        case rbac::RBAC_OK:
+            handler->PSendSysMessage(LANG_RBAC_PERM_GRANTED, command->id, permission->GetName().c_str(),
+                command->realmId, command->rbac->GetId(), command->rbac->GetName().c_str());
+            break;
+        case rbac::RBAC_ID_DOES_NOT_EXISTS:
+            handler->PSendSysMessage(LANG_RBAC_WRONG_PARAMETER_ID, command->id);
+            break;
+        default:
+            break;
         }
 
         delete command;
@@ -226,23 +226,23 @@ public:
 
         switch (result)
         {
-            case rbac::RBAC_CANT_ADD_ALREADY_ADDED:
-                handler->PSendSysMessage(LANG_RBAC_PERM_DENIED_IN_LIST, command->id, permission->GetName().c_str(),
-                    command->realmId, command->rbac->GetId(), command->rbac->GetName().c_str());
-                break;
-            case rbac::RBAC_IN_GRANTED_LIST:
-                handler->PSendSysMessage(LANG_RBAC_PERM_DENIED_IN_GRANTED_LIST, command->id, permission->GetName().c_str(),
-                    command->realmId, command->rbac->GetId(), command->rbac->GetName().c_str());
-                break;
-            case rbac::RBAC_OK:
-                handler->PSendSysMessage(LANG_RBAC_PERM_DENIED, command->id, permission->GetName().c_str(),
-                    command->realmId, command->rbac->GetId(), command->rbac->GetName().c_str());
-                break;
-            case rbac::RBAC_ID_DOES_NOT_EXISTS:
-                handler->PSendSysMessage(LANG_RBAC_WRONG_PARAMETER_ID, command->id);
-                break;
-            default:
-                break;
+        case rbac::RBAC_CANT_ADD_ALREADY_ADDED:
+            handler->PSendSysMessage(LANG_RBAC_PERM_DENIED_IN_LIST, command->id, permission->GetName().c_str(),
+                command->realmId, command->rbac->GetId(), command->rbac->GetName().c_str());
+            break;
+        case rbac::RBAC_IN_GRANTED_LIST:
+            handler->PSendSysMessage(LANG_RBAC_PERM_DENIED_IN_GRANTED_LIST, command->id, permission->GetName().c_str(),
+                command->realmId, command->rbac->GetId(), command->rbac->GetName().c_str());
+            break;
+        case rbac::RBAC_OK:
+            handler->PSendSysMessage(LANG_RBAC_PERM_DENIED, command->id, permission->GetName().c_str(),
+                command->realmId, command->rbac->GetId(), command->rbac->GetName().c_str());
+            break;
+        case rbac::RBAC_ID_DOES_NOT_EXISTS:
+            handler->PSendSysMessage(LANG_RBAC_WRONG_PARAMETER_ID, command->id);
+            break;
+        default:
+            break;
         }
 
         delete command;
@@ -265,19 +265,19 @@ public:
 
         switch (result)
         {
-            case rbac::RBAC_CANT_REVOKE_NOT_IN_LIST:
-                handler->PSendSysMessage(LANG_RBAC_PERM_REVOKED_NOT_IN_LIST, command->id, permission->GetName().c_str(),
-                    command->realmId, command->rbac->GetId(), command->rbac->GetName().c_str());
-                break;
-            case rbac::RBAC_OK:
-                handler->PSendSysMessage(LANG_RBAC_PERM_REVOKED, command->id, permission->GetName().c_str(),
-                    command->realmId, command->rbac->GetId(), command->rbac->GetName().c_str());
-                break;
-            case rbac::RBAC_ID_DOES_NOT_EXISTS:
-                handler->PSendSysMessage(LANG_RBAC_WRONG_PARAMETER_ID, command->id);
-                break;
-            default:
-                break;
+        case rbac::RBAC_CANT_REVOKE_NOT_IN_LIST:
+            handler->PSendSysMessage(LANG_RBAC_PERM_REVOKED_NOT_IN_LIST, command->id, permission->GetName().c_str(),
+                command->realmId, command->rbac->GetId(), command->rbac->GetName().c_str());
+            break;
+        case rbac::RBAC_OK:
+            handler->PSendSysMessage(LANG_RBAC_PERM_REVOKED, command->id, permission->GetName().c_str(),
+                command->realmId, command->rbac->GetId(), command->rbac->GetName().c_str());
+            break;
+        case rbac::RBAC_ID_DOES_NOT_EXISTS:
+            handler->PSendSysMessage(LANG_RBAC_WRONG_PARAMETER_ID, command->id);
+            break;
+        default:
+            break;
         }
 
         delete command;
@@ -342,7 +342,7 @@ public:
     {
         uint32 id = 0;
         if (char* param1 = strtok((char*)args, " "))
-          id = atoi(param1);
+            id = atoi(param1);
 
         if (!id)
         {
@@ -369,8 +369,8 @@ public:
             handler->PSendSysMessage("%s", handler->GetTrinityString(LANG_RBAC_LIST_PERMS_LINKED_HEADER));
             rbac::RBACPermissionContainer const& permissions = permission->GetLinkedPermissions();
             for (rbac::RBACPermissionContainer::const_iterator it = permissions.begin(); it != permissions.end(); ++it)
-                if (rbac::RBACPermission const* rbacPermission = sAccountMgr->GetRBACPermission(*it))
-                    handler->PSendSysMessage(LANG_RBAC_LIST_ELEMENT, rbacPermission->GetId(), rbacPermission->GetName().c_str());
+            if (rbac::RBACPermission const* rbacPermission = sAccountMgr->GetRBACPermission(*it))
+                handler->PSendSysMessage(LANG_RBAC_LIST_ELEMENT, rbacPermission->GetId(), rbacPermission->GetName().c_str());
         }
 
         return true;

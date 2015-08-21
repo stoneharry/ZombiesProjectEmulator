@@ -46,15 +46,15 @@ EndContentData */
 
 enum Aquementas
 {
-    AGGRO_YELL_AQUE     = 0,
+    AGGRO_YELL_AQUE = 0,
 
-    SPELL_AQUA_JET      = 13586,
-    SPELL_FROST_SHOCK   = 15089,
+    SPELL_AQUA_JET = 13586,
+    SPELL_FROST_SHOCK = 15089,
 
-    ITEM_BOOK_OF_AQUOR  = 11169,
-    ITEM_SILVERY_CLAWS  = 11172,
+    ITEM_BOOK_OF_AQUOR = 11169,
+    ITEM_SILVERY_CLAWS = 11172,
     ITEM_IRONTREE_HEART = 11173,
-    ITEM_SILVER_TOTEM   = 11522
+    ITEM_SILVER_TOTEM = 11522
 };
 
 class npc_aquementas : public CreatureScript
@@ -127,7 +127,8 @@ public:
                 {
                     me->setFaction(91);
                     isFriendly = false;
-                } else SwitchFactionTimer -= diff;
+                }
+                else SwitchFactionTimer -= diff;
             }
 
             if (!UpdateVictim())
@@ -140,20 +141,23 @@ public:
                     if (me->GetVictim() && me->EnsureVictim()->GetTypeId() == TYPEID_PLAYER)
                         SendItem(me->GetVictim());
                     SendItemTimer = 5000;
-                } else SendItemTimer -= diff;
+                }
+                else SendItemTimer -= diff;
             }
 
             if (FrostShockTimer <= diff)
             {
                 DoCastVictim(SPELL_FROST_SHOCK);
                 FrostShockTimer = 15000;
-            } else FrostShockTimer -= diff;
+            }
+            else FrostShockTimer -= diff;
 
             if (AquaJetTimer <= diff)
             {
                 DoCast(me, SPELL_AQUA_JET);
                 AquaJetTimer = 15000;
-            } else AquaJetTimer -= diff;
+            }
+            else AquaJetTimer -= diff;
 
             DoMeleeAttackIfReady();
         }
@@ -167,23 +171,23 @@ public:
 
 enum CustodianOfTime
 {
-    WHISPER_CUSTODIAN_1     = 0,
-    WHISPER_CUSTODIAN_2     = 1,
-    WHISPER_CUSTODIAN_3     = 2,
-    WHISPER_CUSTODIAN_4     = 3,
-    WHISPER_CUSTODIAN_5     = 4,
-    WHISPER_CUSTODIAN_6     = 5,
-    WHISPER_CUSTODIAN_7     = 6,
-    WHISPER_CUSTODIAN_8     = 7,
-    WHISPER_CUSTODIAN_9     = 8,
-    WHISPER_CUSTODIAN_10    = 9,
-    WHISPER_CUSTODIAN_11    = 10,
-    WHISPER_CUSTODIAN_12    = 11,
-    WHISPER_CUSTODIAN_13    = 12,
-    WHISPER_CUSTODIAN_14    = 13,
+    WHISPER_CUSTODIAN_1 = 0,
+    WHISPER_CUSTODIAN_2 = 1,
+    WHISPER_CUSTODIAN_3 = 2,
+    WHISPER_CUSTODIAN_4 = 3,
+    WHISPER_CUSTODIAN_5 = 4,
+    WHISPER_CUSTODIAN_6 = 5,
+    WHISPER_CUSTODIAN_7 = 6,
+    WHISPER_CUSTODIAN_8 = 7,
+    WHISPER_CUSTODIAN_9 = 8,
+    WHISPER_CUSTODIAN_10 = 9,
+    WHISPER_CUSTODIAN_11 = 10,
+    WHISPER_CUSTODIAN_12 = 11,
+    WHISPER_CUSTODIAN_13 = 12,
+    WHISPER_CUSTODIAN_14 = 13,
 
-    QUEST_CAVERNS_OF_TIME   = 10277,
-    SPELL_QID_10277         = 34883
+    QUEST_CAVERNS_OF_TIME = 10277,
+    SPELL_QID_10277 = 34883
 };
 
 class npc_custodian_of_time : public CreatureScript
@@ -206,63 +210,63 @@ public:
             {
                 switch (waypointId)
                 {
-                    case 0:
-                        Talk(WHISPER_CUSTODIAN_1, player);
-                        break;
-                    case 1:
-                        Talk(WHISPER_CUSTODIAN_2, player);
-                        break;
-                    case 2:
-                        Talk(WHISPER_CUSTODIAN_3, player);
-                        break;
-                    case 3:
-                        Talk(WHISPER_CUSTODIAN_4, player);
-                        break;
-                    case 5:
-                        Talk(WHISPER_CUSTODIAN_5, player);
-                        break;
-                    case 6:
-                        Talk(WHISPER_CUSTODIAN_6, player);
-                        break;
-                    case 7:
-                        Talk(WHISPER_CUSTODIAN_7, player);
-                        break;
-                    case 8:
-                        Talk(WHISPER_CUSTODIAN_8, player);
-                        break;
-                    case 9:
-                        Talk(WHISPER_CUSTODIAN_9, player);
-                        break;
-                    case 10:
-                        Talk(WHISPER_CUSTODIAN_4, player);
-                        break;
-                    case 13:
-                        Talk(WHISPER_CUSTODIAN_10, player);
-                        break;
-                    case 14:
-                        Talk(WHISPER_CUSTODIAN_4, player);
-                        break;
-                    case 16:
-                        Talk(WHISPER_CUSTODIAN_11, player);
-                        break;
-                    case 17:
-                        Talk(WHISPER_CUSTODIAN_12, player);
-                        break;
-                    case 18:
-                        Talk(WHISPER_CUSTODIAN_4, player);
-                        break;
-                    case 22:
-                        Talk(WHISPER_CUSTODIAN_13, player);
-                        break;
-                    case 23:
-                        Talk(WHISPER_CUSTODIAN_4, player);
-                        break;
-                    case 24:
-                        Talk(WHISPER_CUSTODIAN_14, player);
-                        DoCast(player, SPELL_QID_10277);
-                        // below here is temporary workaround, to be removed when spell works properly
-                        player->AreaExploredOrEventHappens(QUEST_CAVERNS_OF_TIME);
-                        break;
+                case 0:
+                    Talk(WHISPER_CUSTODIAN_1, player);
+                    break;
+                case 1:
+                    Talk(WHISPER_CUSTODIAN_2, player);
+                    break;
+                case 2:
+                    Talk(WHISPER_CUSTODIAN_3, player);
+                    break;
+                case 3:
+                    Talk(WHISPER_CUSTODIAN_4, player);
+                    break;
+                case 5:
+                    Talk(WHISPER_CUSTODIAN_5, player);
+                    break;
+                case 6:
+                    Talk(WHISPER_CUSTODIAN_6, player);
+                    break;
+                case 7:
+                    Talk(WHISPER_CUSTODIAN_7, player);
+                    break;
+                case 8:
+                    Talk(WHISPER_CUSTODIAN_8, player);
+                    break;
+                case 9:
+                    Talk(WHISPER_CUSTODIAN_9, player);
+                    break;
+                case 10:
+                    Talk(WHISPER_CUSTODIAN_4, player);
+                    break;
+                case 13:
+                    Talk(WHISPER_CUSTODIAN_10, player);
+                    break;
+                case 14:
+                    Talk(WHISPER_CUSTODIAN_4, player);
+                    break;
+                case 16:
+                    Talk(WHISPER_CUSTODIAN_11, player);
+                    break;
+                case 17:
+                    Talk(WHISPER_CUSTODIAN_12, player);
+                    break;
+                case 18:
+                    Talk(WHISPER_CUSTODIAN_4, player);
+                    break;
+                case 22:
+                    Talk(WHISPER_CUSTODIAN_13, player);
+                    break;
+                case 23:
+                    Talk(WHISPER_CUSTODIAN_4, player);
+                    break;
+                case 24:
+                    Talk(WHISPER_CUSTODIAN_14, player);
+                    DoCast(player, SPELL_QID_10277);
+                    // below here is temporary workaround, to be removed when spell works properly
+                    player->AreaExploredOrEventHappens(QUEST_CAVERNS_OF_TIME);
+                    break;
                 }
             }
         }
@@ -364,30 +368,30 @@ public:
         player->PlayerTalkClass->ClearMenus();
         switch (action)
         {
-            case GOSSIP_ACTION_INFO_DEF:
-                player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_NORGANNON_2, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
-                player->SEND_GOSSIP_MENU(1675, creature->GetGUID());
-                break;
-            case GOSSIP_ACTION_INFO_DEF+1:
-                player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_NORGANNON_3, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+2);
-                player->SEND_GOSSIP_MENU(1676, creature->GetGUID());
-                break;
-            case GOSSIP_ACTION_INFO_DEF+2:
-                player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_NORGANNON_4, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+3);
-                player->SEND_GOSSIP_MENU(1677, creature->GetGUID());
-                break;
-            case GOSSIP_ACTION_INFO_DEF+3:
-                player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_NORGANNON_5, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+4);
-                player->SEND_GOSSIP_MENU(1678, creature->GetGUID());
-                break;
-            case GOSSIP_ACTION_INFO_DEF+4:
-                player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_NORGANNON_6, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+5);
-                player->SEND_GOSSIP_MENU(1679, creature->GetGUID());
-                break;
-            case GOSSIP_ACTION_INFO_DEF+5:
-                player->CLOSE_GOSSIP_MENU();
-                player->AreaExploredOrEventHappens(2954);
-                break;
+        case GOSSIP_ACTION_INFO_DEF:
+            player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_NORGANNON_2, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
+            player->SEND_GOSSIP_MENU(1675, creature->GetGUID());
+            break;
+        case GOSSIP_ACTION_INFO_DEF + 1:
+            player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_NORGANNON_3, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 2);
+            player->SEND_GOSSIP_MENU(1676, creature->GetGUID());
+            break;
+        case GOSSIP_ACTION_INFO_DEF + 2:
+            player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_NORGANNON_4, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 3);
+            player->SEND_GOSSIP_MENU(1677, creature->GetGUID());
+            break;
+        case GOSSIP_ACTION_INFO_DEF + 3:
+            player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_NORGANNON_5, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 4);
+            player->SEND_GOSSIP_MENU(1678, creature->GetGUID());
+            break;
+        case GOSSIP_ACTION_INFO_DEF + 4:
+            player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_NORGANNON_6, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 5);
+            player->SEND_GOSSIP_MENU(1679, creature->GetGUID());
+            break;
+        case GOSSIP_ACTION_INFO_DEF + 5:
+            player->CLOSE_GOSSIP_MENU();
+            player->AreaExploredOrEventHappens(2954);
+            break;
         }
         return true;
     }
@@ -413,16 +417,16 @@ public:
 
 enum Npc00X17
 {
-    SAY_OOX_START           = 0,
-    SAY_OOX_AGGRO           = 1,
-    SAY_OOX_AMBUSH          = 2,
-    SAY_OOX17_AMBUSH_REPLY  = 0,
-    SAY_OOX_END             = 3,
+    SAY_OOX_START = 0,
+    SAY_OOX_AGGRO = 1,
+    SAY_OOX_AMBUSH = 2,
+    SAY_OOX17_AMBUSH_REPLY = 0,
+    SAY_OOX_END = 3,
 
-    Q_OOX17                 = 648,
-    SPAWN_FIRST             = 7803,
-    SPAWN_SECOND_1          = 5617,
-    SPAWN_SECOND_2          = 7805
+    Q_OOX17 = 648,
+    SPAWN_FIRST = 7803,
+    SPAWN_SECOND_1 = 5617,
+    SPAWN_SECOND_2 = 7805
 };
 
 class npc_OOX17 : public CreatureScript
@@ -461,24 +465,24 @@ public:
             {
                 switch (waypointId)
                 {
-                    case 23:
-                        me->SummonCreature(SPAWN_FIRST, -8350.96f, -4445.79f, 10.10f, 6.20f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 25000);
-                        me->SummonCreature(SPAWN_FIRST, -8355.96f, -4447.79f, 10.10f, 6.27f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 25000);
-                        me->SummonCreature(SPAWN_FIRST, -8353.96f, -4442.79f, 10.10f, 6.08f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 25000);
-                        Talk(SAY_OOX_AMBUSH);
-                        break;
-                    case 56:
-                        me->SummonCreature(SPAWN_SECOND_1, -7510.07f, -4795.50f, 9.35f, 6.06f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 25000);
-                        me->SummonCreature(SPAWN_SECOND_2, -7515.07f, -4797.50f, 9.35f, 6.22f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 25000);
-                        me->SummonCreature(SPAWN_SECOND_2, -7518.07f, -4792.50f, 9.35f, 6.22f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 25000);
-                        Talk(SAY_OOX_AMBUSH);
-                        if (Creature* scoff = me->FindNearestCreature(SPAWN_SECOND_2, 30))
-                            scoff->AI()->Talk(SAY_OOX17_AMBUSH_REPLY);
-                        break;
-                    case 86:
-                        Talk(SAY_OOX_END);
-                        player->GroupEventHappens(Q_OOX17, me);
-                        break;
+                case 23:
+                    me->SummonCreature(SPAWN_FIRST, -8350.96f, -4445.79f, 10.10f, 6.20f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 25000);
+                    me->SummonCreature(SPAWN_FIRST, -8355.96f, -4447.79f, 10.10f, 6.27f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 25000);
+                    me->SummonCreature(SPAWN_FIRST, -8353.96f, -4442.79f, 10.10f, 6.08f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 25000);
+                    Talk(SAY_OOX_AMBUSH);
+                    break;
+                case 56:
+                    me->SummonCreature(SPAWN_SECOND_1, -7510.07f, -4795.50f, 9.35f, 6.06f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 25000);
+                    me->SummonCreature(SPAWN_SECOND_2, -7515.07f, -4797.50f, 9.35f, 6.22f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 25000);
+                    me->SummonCreature(SPAWN_SECOND_2, -7518.07f, -4792.50f, 9.35f, 6.22f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 25000);
+                    Talk(SAY_OOX_AMBUSH);
+                    if (Creature* scoff = me->FindNearestCreature(SPAWN_SECOND_2, 30))
+                        scoff->AI()->Talk(SAY_OOX17_AMBUSH_REPLY);
+                    break;
+                case 86:
+                    Talk(SAY_OOX_END);
+                    player->GroupEventHappens(Q_OOX17, me);
+                    break;
                 }
             }
         }
@@ -503,22 +507,22 @@ public:
 
 enum Tooga
 {
-    SAY_TOOG_WORRIED            = 0,
-    SAY_TOOG_POST_1             = 1,
-    SAY_TORT_POST_2             = 0,
-    SAY_TOOG_POST_3             = 2,
-    SAY_TORT_POST_4             = 1,
-    SAY_TOOG_POST_5             = 3,
-    SAY_TORT_POST_6             = 2,
+    SAY_TOOG_WORRIED = 0,
+    SAY_TOOG_POST_1 = 1,
+    SAY_TORT_POST_2 = 0,
+    SAY_TOOG_POST_3 = 2,
+    SAY_TORT_POST_4 = 1,
+    SAY_TOOG_POST_5 = 3,
+    SAY_TORT_POST_6 = 2,
 
-    QUEST_TOOGA                 = 1560,
-    NPC_TORTA                   = 6015,
+    QUEST_TOOGA = 1560,
+    NPC_TORTA = 6015,
 
-    POINT_ID_TO_WATER           = 1,
-    FACTION_TOOG_ESCORTEE       = 113
+    POINT_ID_TO_WATER = 1,
+    FACTION_TOOG_ESCORTEE = 113
 };
 
-Position const ToWaterLoc = {-7032.664551f, -4906.199219f, -1.606446f, 0.0f};
+Position const ToWaterLoc = { -7032.664551f, -4906.199219f, -1.606446f, 0.0f };
 
 class npc_tooga : public CreatureScript
 {
@@ -619,25 +623,25 @@ public:
 
                         switch (PhasePostEvent)
                         {
-                            case 1:
-                                Talk(SAY_TOOG_POST_1);
-                                break;
-                            case 2:
-                                torta->AI()->Talk(SAY_TORT_POST_2);
-                                break;
-                            case 3:
-                                Talk(SAY_TOOG_POST_3);
-                                break;
-                            case 4:
-                                torta->AI()->Talk(SAY_TORT_POST_4);
-                                break;
-                            case 5:
-                                Talk(SAY_TOOG_POST_5);
-                                break;
-                            case 6:
-                                torta->AI()->Talk(SAY_TORT_POST_6);
-                                me->GetMotionMaster()->MovePoint(POINT_ID_TO_WATER, ToWaterLoc);
-                                break;
+                        case 1:
+                            Talk(SAY_TOOG_POST_1);
+                            break;
+                        case 2:
+                            torta->AI()->Talk(SAY_TORT_POST_2);
+                            break;
+                        case 3:
+                            Talk(SAY_TOOG_POST_3);
+                            break;
+                        case 4:
+                            torta->AI()->Talk(SAY_TORT_POST_4);
+                            break;
+                        case 5:
+                            Talk(SAY_TOOG_POST_5);
+                            break;
+                        case 6:
+                            torta->AI()->Talk(SAY_TORT_POST_6);
+                            me->GetMotionMaster()->MovePoint(POINT_ID_TO_WATER, ToWaterLoc);
+                            break;
                         }
 
                         ++PhasePostEvent;

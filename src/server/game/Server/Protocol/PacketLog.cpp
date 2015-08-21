@@ -74,8 +74,8 @@ void PacketLog::Initialize()
     std::string logsDir = sConfigMgr->GetStringDefault("LogsDir", "");
 
     if (!logsDir.empty())
-        if ((logsDir.at(logsDir.length() - 1) != '/') && (logsDir.at(logsDir.length() - 1) != '\\'))
-            logsDir.push_back('/');
+    if ((logsDir.at(logsDir.length() - 1) != '/') && (logsDir.at(logsDir.length() - 1) != '\\'))
+        logsDir.push_back('/');
 
     std::string logname = sConfigMgr->GetStringDefault("PacketLogFile", "");
     if (!logname.empty())

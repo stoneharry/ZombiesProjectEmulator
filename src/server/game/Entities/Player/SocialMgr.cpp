@@ -27,15 +27,15 @@
 #include "Util.h"
 #include "AccountMgr.h"
 
-PlayerSocial::PlayerSocial(): m_playerGUID()
+PlayerSocial::PlayerSocial() : m_playerGUID()
 { }
 
 uint32 PlayerSocial::GetNumberOfSocialsWithFlag(SocialFlag flag)
 {
     uint32 counter = 0;
     for (PlayerSocialMap::const_iterator itr = m_playerSocialMap.begin(); itr != m_playerSocialMap.end(); ++itr)
-        if (itr->second.Flags & flag)
-            ++counter;
+    if (itr->second.Flags & flag)
+        ++counter;
 
     return counter;
 }
@@ -148,7 +148,7 @@ void PlayerSocial::SendSocialList(Player* player)
 
     uint32 size = m_playerSocialMap.size();
 
-    WorldPacket data(SMSG_CONTACT_LIST, (4+4+size*25));     // just can guess size
+    WorldPacket data(SMSG_CONTACT_LIST, (4 + 4 + size * 25));     // just can guess size
     data << uint32(7);                                      // 0x1 = Friendlist update. 0x2 = Ignorelist update. 0x4 = Mutelist update.
     data << uint32(size);                                   // friends count
 
@@ -255,25 +255,25 @@ void SocialMgr::SendFriendStatus(Player* player, FriendsResult result, uint32 fr
     GetFriendInfo(player, friendGuid, fi);
     switch (result)
     {
-        case FRIEND_ADDED_OFFLINE:
-        case FRIEND_ADDED_ONLINE:
-            data << fi.Note;
-            break;
-        default:
-            break;
+    case FRIEND_ADDED_OFFLINE:
+    case FRIEND_ADDED_ONLINE:
+        data << fi.Note;
+        break;
+    default:
+        break;
     }
 
     switch (result)
     {
-        case FRIEND_ADDED_ONLINE:
-        case FRIEND_ONLINE:
-            data << uint8(fi.Status);
-            data << uint32(fi.Area);
-            data << uint32(fi.Level);
-            data << uint32(fi.Class);
-            break;
-        default:
-            break;
+    case FRIEND_ADDED_ONLINE:
+    case FRIEND_ONLINE:
+        data << uint8(fi.Status);
+        data << uint32(fi.Area);
+        data << uint32(fi.Level);
+        data << uint32(fi.Class);
+        break;
+    default:
+        break;
     }
 
     if (broadcast)
@@ -335,8 +335,7 @@ PlayerSocial* SocialMgr::LoadFromDB(PreparedQueryResult result, uint32 guid)
         // client's friends list and ignore list limit
         if (social->m_playerSocialMap.size() >= (SOCIALMGR_FRIEND_LIMIT + SOCIALMGR_IGNORE_LIMIT))
             break;
-    }
-    while (result->NextRow());
+    } while (result->NextRow());
 
     return social;
 }

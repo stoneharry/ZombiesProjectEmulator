@@ -63,9 +63,9 @@ public:
         {
             switch (creature->GetEntry())
             {
-                case NPC_ONYXIA:
-                    onyxiaGUID = creature->GetGUID();
-                    break;
+            case NPC_ONYXIA:
+                onyxiaGUID = creature->GetGUID();
+                break;
             }
         }
 
@@ -79,14 +79,14 @@ public:
 
             switch (go->GetEntry())
             {
-                case GO_WHELP_SPAWNER:
-                    Position goPos = go->GetPosition();
-                    if (Creature* temp = go->SummonCreature(NPC_WHELP, goPos, TEMPSUMMON_CORPSE_DESPAWN))
-                    {
-                        temp->SetInCombatWithZone();
-                        ++manyWhelpsCounter;
-                    }
-                    break;
+            case GO_WHELP_SPAWNER:
+                Position goPos = go->GetPosition();
+                if (Creature* temp = go->SummonCreature(NPC_WHELP, goPos, TEMPSUMMON_CORPSE_DESPAWN))
+                {
+                    temp->SetInCombatWithZone();
+                    ++manyWhelpsCounter;
+                }
+                break;
             }
         }
 
@@ -121,7 +121,7 @@ public:
                         ObjectGuid nearFloorGUID = (*itr)->GetGUID();
                         if (FloorEruptionGUID[1].find(nearFloorGUID) != FloorEruptionGUID[1].end() && (*FloorEruptionGUID[1].find(nearFloorGUID)).second == 0)
                         {
-                            (*FloorEruptionGUID[1].find(nearFloorGUID)).second = (*FloorEruptionGUID[1].find(floorEruptedGUID)).second+1;
+                            (*FloorEruptionGUID[1].find(nearFloorGUID)).second = (*FloorEruptionGUID[1].find(floorEruptedGUID)).second + 1;
                             FloorEruptionGUIDQueue.push(nearFloorGUID);
                         }
                     }
@@ -137,10 +137,10 @@ public:
 
             switch (type)
             {
-                case DATA_ONYXIA:
-                    if (state == IN_PROGRESS)
-                        SetBossState(DATA_SHE_DEEP_BREATH_MORE, IN_PROGRESS);
-                    break;
+            case DATA_ONYXIA:
+                if (state == IN_PROGRESS)
+                    SetBossState(DATA_SHE_DEEP_BREATH_MORE, IN_PROGRESS);
+                break;
             }
             return true;
         }
@@ -149,24 +149,24 @@ public:
         {
             switch (type)
             {
-                case DATA_ONYXIA_PHASE:
-                    if (data == PHASE_BREATH) //Used to mark the liftoff phase
-                    {
-                        achievManyWhelpsHandleIt = false;
-                        manyWhelpsCounter = 0;
-                        onyxiaLiftoffTimer = 10000;
-                    }
-                    break;
-                case DATA_SHE_DEEP_BREATH_MORE:
-                    if (data == IN_PROGRESS)
-                    {
-                        achievSheDeepBreathMore = true;
-                    }
-                    else if (data == FAIL)
-                    {
-                        achievSheDeepBreathMore = false;
-                    }
-                    break;
+            case DATA_ONYXIA_PHASE:
+                if (data == PHASE_BREATH) //Used to mark the liftoff phase
+                {
+                    achievManyWhelpsHandleIt = false;
+                    manyWhelpsCounter = 0;
+                    onyxiaLiftoffTimer = 10000;
+                }
+                break;
+            case DATA_SHE_DEEP_BREATH_MORE:
+                if (data == IN_PROGRESS)
+                {
+                    achievSheDeepBreathMore = true;
+                }
+                else if (data == FAIL)
+                {
+                    achievSheDeepBreathMore = false;
+                }
+                break;
             }
         }
 
@@ -174,11 +174,11 @@ public:
         {
             switch (type)
             {
-                case DATA_FLOOR_ERUPTION_GUID:
-                    FloorEruptionGUID[1] = FloorEruptionGUID[0];
-                    FloorEruptionGUIDQueue.push(data);
-                    eruptTimer = 2500;
-                    break;
+            case DATA_FLOOR_ERUPTION_GUID:
+                FloorEruptionGUID[1] = FloorEruptionGUID[0];
+                FloorEruptionGUIDQueue.push(data);
+                eruptTimer = 2500;
+                break;
             }
         }
 
@@ -186,8 +186,8 @@ public:
         {
             switch (data)
             {
-                case NPC_ONYXIA:
-                    return onyxiaGUID;
+            case NPC_ONYXIA:
+                return onyxiaGUID;
             }
 
             return ObjectGuid::Empty;
@@ -202,7 +202,8 @@ public:
                     onyxiaLiftoffTimer = 0;
                     if (manyWhelpsCounter >= 50)
                         achievManyWhelpsHandleIt = true;
-                } else onyxiaLiftoffTimer -= diff;
+                }
+                else onyxiaLiftoffTimer -= diff;
             }
 
             if (!FloorEruptionGUIDQueue.empty())
@@ -238,12 +239,12 @@ public:
         {
             switch (criteriaId)
             {
-                case ACHIEV_CRITERIA_MANY_WHELPS_10_PLAYER:  // Criteria for achievement 4403: Many Whelps! Handle It! (10 player) Hatch 50 eggs in 10s
-                case ACHIEV_CRITERIA_MANY_WHELPS_25_PLAYER:  // Criteria for achievement 4406: Many Whelps! Handle It! (25 player) Hatch 50 eggs in 10s
-                    return achievManyWhelpsHandleIt;
-                case ACHIEV_CRITERIA_DEEP_BREATH_10_PLAYER:  // Criteria for achievement 4404: She Deep Breaths More (10 player) Everybody evade Deep Breath
-                case ACHIEV_CRITERIA_DEEP_BREATH_25_PLAYER:  // Criteria for achievement 4407: She Deep Breaths More (25 player) Everybody evade Deep Breath
-                    return achievSheDeepBreathMore;
+            case ACHIEV_CRITERIA_MANY_WHELPS_10_PLAYER:  // Criteria for achievement 4403: Many Whelps! Handle It! (10 player) Hatch 50 eggs in 10s
+            case ACHIEV_CRITERIA_MANY_WHELPS_25_PLAYER:  // Criteria for achievement 4406: Many Whelps! Handle It! (25 player) Hatch 50 eggs in 10s
+                return achievManyWhelpsHandleIt;
+            case ACHIEV_CRITERIA_DEEP_BREATH_10_PLAYER:  // Criteria for achievement 4404: She Deep Breaths More (10 player) Everybody evade Deep Breath
+            case ACHIEV_CRITERIA_DEEP_BREATH_25_PLAYER:  // Criteria for achievement 4407: She Deep Breaths More (25 player) Everybody evade Deep Breath
+                return achievSheDeepBreathMore;
             }
             return false;
         }

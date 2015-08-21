@@ -28,114 +28,114 @@
 
 class instance_vault_of_archavon : public InstanceMapScript
 {
-    public:
-        instance_vault_of_archavon() : InstanceMapScript("instance_vault_of_archavon", 624) { }
+public:
+    instance_vault_of_archavon() : InstanceMapScript("instance_vault_of_archavon", 624) { }
 
-        struct instance_vault_of_archavon_InstanceMapScript : public InstanceScript
+    struct instance_vault_of_archavon_InstanceMapScript : public InstanceScript
+    {
+        instance_vault_of_archavon_InstanceMapScript(Map* map) : InstanceScript(map)
         {
-            instance_vault_of_archavon_InstanceMapScript(Map* map) : InstanceScript(map)
-            {
-                SetHeaders(DataHeader);
-                SetBossNumber(EncounterCount);
+            SetHeaders(DataHeader);
+            SetBossNumber(EncounterCount);
 
-                ArchavonDeath   = 0;
-                EmalonDeath     = 0;
-                KoralonDeath    = 0;
+            ArchavonDeath = 0;
+            EmalonDeath = 0;
+            KoralonDeath = 0;
+        }
+
+        void OnCreatureCreate(Creature* creature) override
+        {
+            switch (creature->GetEntry())
+            {
+            case NPC_EMALON:
+                EmalonGUID = creature->GetGUID();
+                break;
+            case NPC_TORAVON:
+                ToravonGUID = creature->GetGUID();
+                break;
+            default:
+                break;
+            }
+        }
+
+        ObjectGuid GetGuidData(uint32 identifier) const override
+        {
+            switch (identifier)
+            {
+            case DATA_EMALON:
+                return EmalonGUID;
+            case DATA_TORAVON:
+                return ToravonGUID;
+            default:
+                break;
             }
 
-            void OnCreatureCreate(Creature* creature) override
+            return ObjectGuid::Empty;
+        }
+
+        bool SetBossState(uint32 type, EncounterState state) override
+        {
+            if (!InstanceScript::SetBossState(type, state))
+                return false;
+
+            if (state != DONE)
+                return true;
+
+            switch (type)
             {
-                switch (creature->GetEntry())
-                {
-                    case NPC_EMALON:
-                        EmalonGUID = creature->GetGUID();
-                        break;
-                    case NPC_TORAVON:
-                        ToravonGUID = creature->GetGUID();
-                        break;
-                    default:
-                        break;
-                }
-            }
-
-            ObjectGuid GetGuidData(uint32 identifier) const override
-            {
-                switch (identifier)
-                {
-                    case DATA_EMALON:
-                        return EmalonGUID;
-                    case DATA_TORAVON:
-                        return ToravonGUID;
-                    default:
-                        break;
-                }
-
-                return ObjectGuid::Empty;
-            }
-
-            bool SetBossState(uint32 type, EncounterState state) override
-            {
-                if (!InstanceScript::SetBossState(type, state))
-                    return false;
-
-                if (state != DONE)
-                   return true;
-
-                switch (type)
-                {
-                    case DATA_ARCHAVON:
-                        ArchavonDeath = time(NULL);
-                        break;
-                    case DATA_EMALON:
-                        EmalonDeath = time(NULL);
-                        break;
-                    case DATA_KORALON:
-                        KoralonDeath = time(NULL);
-                        break;
-                    default:
-                        return true;
-                }
-
-                // on every death of Archavon, Emalon and Koralon check our achievement
-                DoCastSpellOnPlayers(SPELL_EARTH_WIND_FIRE_ACHIEVEMENT_CHECK);
-
+            case DATA_ARCHAVON:
+                ArchavonDeath = time(NULL);
+                break;
+            case DATA_EMALON:
+                EmalonDeath = time(NULL);
+                break;
+            case DATA_KORALON:
+                KoralonDeath = time(NULL);
+                break;
+            default:
                 return true;
             }
 
-            bool CheckAchievementCriteriaMeet(uint32 criteria_id, Player const* /*source*/, Unit const* /*target*/, uint32 /*miscvalue1*/) override
-            {
-                switch (criteria_id)
-                {
-                    case CRITERIA_EARTH_WIND_FIRE_10:
-                    case CRITERIA_EARTH_WIND_FIRE_25:
-                        if (ArchavonDeath && EmalonDeath && KoralonDeath)
-                        {
-                            // instance difficulty check is already done in db (achievement_criteria_data)
-                            // int() for Visual Studio, compile errors with abs(time_t)
-                            return (abs(int(ArchavonDeath-EmalonDeath)) < MINUTE && \
-                                abs(int(EmalonDeath-KoralonDeath)) < MINUTE && \
-                                abs(int(KoralonDeath-ArchavonDeath)) < MINUTE);
-                        }
-                        break;
-                    default:
-                        break;
-                }
+            // on every death of Archavon, Emalon and Koralon check our achievement
+            DoCastSpellOnPlayers(SPELL_EARTH_WIND_FIRE_ACHIEVEMENT_CHECK);
 
-                return false;
+            return true;
+        }
+
+        bool CheckAchievementCriteriaMeet(uint32 criteria_id, Player const* /*source*/, Unit const* /*target*/, uint32 /*miscvalue1*/) override
+        {
+            switch (criteria_id)
+            {
+            case CRITERIA_EARTH_WIND_FIRE_10:
+            case CRITERIA_EARTH_WIND_FIRE_25:
+                if (ArchavonDeath && EmalonDeath && KoralonDeath)
+                {
+                    // instance difficulty check is already done in db (achievement_criteria_data)
+                    // int() for Visual Studio, compile errors with abs(time_t)
+                    return (abs(int(ArchavonDeath - EmalonDeath)) < MINUTE && \
+                        abs(int(EmalonDeath - KoralonDeath)) < MINUTE && \
+                        abs(int(KoralonDeath - ArchavonDeath)) < MINUTE);
+                }
+                break;
+            default:
+                break;
             }
 
-        private:
-            ObjectGuid EmalonGUID;
-            ObjectGuid ToravonGUID;
-            time_t ArchavonDeath;
-            time_t EmalonDeath;
-            time_t KoralonDeath;
-        };
-
-        InstanceScript* GetInstanceScript(InstanceMap* map) const override
-        {
-            return new instance_vault_of_archavon_InstanceMapScript(map);
+            return false;
         }
+
+    private:
+        ObjectGuid EmalonGUID;
+        ObjectGuid ToravonGUID;
+        time_t ArchavonDeath;
+        time_t EmalonDeath;
+        time_t KoralonDeath;
+    };
+
+    InstanceScript* GetInstanceScript(InstanceMap* map) const override
+    {
+        return new instance_vault_of_archavon_InstanceMapScript(map);
+    }
 };
 
 void AddSC_instance_vault_of_archavon()

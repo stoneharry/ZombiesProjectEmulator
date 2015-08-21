@@ -23,8 +23,8 @@
 #include <cstring>
 
 AuthCrypt::AuthCrypt() :
-    _clientDecrypt(SHA_DIGEST_LENGTH), _serverEncrypt(SHA_DIGEST_LENGTH),
-    _initialized(false)
+_clientDecrypt(SHA_DIGEST_LENGTH), _serverEncrypt(SHA_DIGEST_LENGTH),
+_initialized(false)
 { }
 
 void AuthCrypt::Init(BigNumber* K)

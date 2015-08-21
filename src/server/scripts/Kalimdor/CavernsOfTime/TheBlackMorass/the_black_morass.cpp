@@ -38,29 +38,29 @@ EndContentData */
 
 enum MedivhBm
 {
-    SAY_ENTER               = 0,                    //where does this belong?
-    SAY_INTRO               = 1,
-    SAY_WEAK75              = 2,
-    SAY_WEAK50              = 3,
-    SAY_WEAK25              = 4,
-    SAY_DEATH               = 5,
-    SAY_WIN                 = 6,
-    SAY_ORCS_ENTER          = 7,
-    SAY_ORCS_ANSWER         = 8,
+    SAY_ENTER = 0,                    //where does this belong?
+    SAY_INTRO = 1,
+    SAY_WEAK75 = 2,
+    SAY_WEAK50 = 3,
+    SAY_WEAK25 = 4,
+    SAY_DEATH = 5,
+    SAY_WIN = 6,
+    SAY_ORCS_ENTER = 7,
+    SAY_ORCS_ANSWER = 8,
 
-    SPELL_CHANNEL           = 31556,
-    SPELL_PORTAL_RUNE       = 32570,                      //aura(portal on ground effect)
+    SPELL_CHANNEL = 31556,
+    SPELL_PORTAL_RUNE = 32570,                      //aura(portal on ground effect)
 
-    SPELL_BLACK_CRYSTAL     = 32563,                      //aura
-    SPELL_PORTAL_CRYSTAL    = 32564,                      //summon
+    SPELL_BLACK_CRYSTAL = 32563,                      //aura
+    SPELL_PORTAL_CRYSTAL = 32564,                      //summon
 
-    SPELL_BANISH_PURPLE     = 32566,                      //aura
-    SPELL_BANISH_GREEN      = 32567,                      //aura
+    SPELL_BANISH_PURPLE = 32566,                      //aura
+    SPELL_BANISH_GREEN = 32567,                      //aura
 
-    SPELL_CORRUPT           = 31326,
-    SPELL_CORRUPT_AEONUS    = 37853,
+    SPELL_CORRUPT = 31326,
+    SPELL_CORRUPT_AEONUS = 37853,
 
-    C_COUNCIL_ENFORCER      = 17023
+    C_COUNCIL_ENFORCER = 17023
 };
 
 class npc_medivh_bm : public CreatureScript
@@ -186,7 +186,8 @@ public:
                         SpellCorrupt_Timer = 3000;
                     else
                         SpellCorrupt_Timer = 0;
-                } else SpellCorrupt_Timer -= diff;
+                }
+                else SpellCorrupt_Timer -= diff;
             }
 
             if (Check_Timer)
@@ -233,7 +234,8 @@ public:
                         /// @todo start the post-event here
                         instance->SetData(TYPE_MEDIVH, DONE);
                     }
-                } else Check_Timer -= diff;
+                }
+                else Check_Timer -= diff;
             }
 
             //if (!UpdateVictim())
@@ -250,11 +252,11 @@ struct Wave
     uint32 PortalMob[4];                                    //spawns for portal waves (in order)
 };
 
-static Wave PortalWaves[]=
+static Wave PortalWaves[] =
 {
-    { {NPC_INFINITE_ASSASIN, NPC_INFINITE_WHELP, NPC_INFINITE_CRONOMANCER, 0} },
-    { {NPC_INFINITE_EXECUTIONER, NPC_INFINITE_CRONOMANCER, NPC_INFINITE_WHELP, NPC_INFINITE_ASSASIN} },
-    { {NPC_INFINITE_EXECUTIONER, NPC_INFINITE_VANQUISHER, NPC_INFINITE_CRONOMANCER, NPC_INFINITE_ASSASIN} }
+    { { NPC_INFINITE_ASSASIN, NPC_INFINITE_WHELP, NPC_INFINITE_CRONOMANCER, 0 } },
+    { { NPC_INFINITE_EXECUTIONER, NPC_INFINITE_CRONOMANCER, NPC_INFINITE_WHELP, NPC_INFINITE_ASSASIN } },
+    { { NPC_INFINITE_EXECUTIONER, NPC_INFINITE_VANQUISHER, NPC_INFINITE_CRONOMANCER, NPC_INFINITE_ASSASIN } }
 };
 
 class npc_time_rift : public CreatureScript
@@ -321,8 +323,8 @@ public:
             pos.m_positionZ = std::max(me->GetMap()->GetHeight(pos.m_positionX, pos.m_positionY, MAX_HEIGHT), me->GetMap()->GetWaterLevel(pos.m_positionX, pos.m_positionY));
 
             if (Unit* Summon = DoSummon(creature_entry, pos, 30000, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT))
-                if (Unit* temp = ObjectAccessor::GetUnit(*me, instance->GetGuidData(DATA_MEDIVH)))
-                    Summon->AddThreat(temp, 0.0f);
+            if (Unit* temp = ObjectAccessor::GetUnit(*me, instance->GetGuidData(DATA_MEDIVH)))
+                Summon->AddThreat(temp, 0.0f);
         }
 
         void DoSelectSummon()
@@ -341,7 +343,8 @@ public:
             {
                 for (uint8 i = 0; i < 3; ++i)
                     DoSummonAtRift(entry);
-            } else DoSummonAtRift(entry);
+            }
+            else DoSummonAtRift(entry);
         }
 
         void UpdateAI(uint32 diff) override
@@ -350,7 +353,8 @@ public:
             {
                 DoSelectSummon();
                 TimeRiftWave_Timer = 15000;
-            } else TimeRiftWave_Timer -= diff;
+            }
+            else TimeRiftWave_Timer -= diff;
 
             if (me->IsNonMeleeSpellCast(false))
                 return;
@@ -367,8 +371,8 @@ public:
 
 enum Saat
 {
-    SPELL_CHRONO_BEACON     = 34975,
-    ITEM_CHRONO_BEACON      = 24289
+    SPELL_CHRONO_BEACON = 34975,
+    ITEM_CHRONO_BEACON = 24289
 };
 
 #define GOSSIP_ITEM_OBTAIN      "[PH] Obtain Chrono-Beacon"
@@ -381,7 +385,7 @@ public:
     bool OnGossipSelect(Player* player, Creature* creature, uint32 /*sender*/, uint32 action) override
     {
         player->PlayerTalkClass->ClearMenus();
-        if (action == GOSSIP_ACTION_INFO_DEF+1)
+        if (action == GOSSIP_ACTION_INFO_DEF + 1)
         {
             player->CLOSE_GOSSIP_MENU();
             creature->CastSpell(player, SPELL_CHRONO_BEACON, false);
@@ -396,13 +400,13 @@ public:
 
         if (player->GetQuestStatus(QUEST_OPENING_PORTAL) == QUEST_STATUS_INCOMPLETE && !player->HasItemCount(ITEM_CHRONO_BEACON))
         {
-            player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_OBTAIN, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
+            player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_OBTAIN, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
             player->SEND_GOSSIP_MENU(10000, creature->GetGUID());
             return true;
         }
         else if (player->GetQuestRewardStatus(QUEST_OPENING_PORTAL) && !player->HasItemCount(ITEM_CHRONO_BEACON))
         {
-            player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_OBTAIN, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
+            player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_OBTAIN, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
             player->SEND_GOSSIP_MENU(10001, creature->GetGUID());
             return true;
         }

@@ -54,8 +54,8 @@ void Totem::InitStats(uint32 duration)
 {
     // client requires SMSG_TOTEM_CREATED to be sent before adding to world and before removing old totem
     if (GetOwner()->GetTypeId() == TYPEID_PLAYER
-            && m_Properties->Slot >= SUMMON_SLOT_TOTEM
-            && m_Properties->Slot < MAX_TOTEM_SLOT)
+        && m_Properties->Slot >= SUMMON_SLOT_TOTEM
+        && m_Properties->Slot < MAX_TOTEM_SLOT)
     {
         WorldPacket data(SMSG_TOTEM_CREATED, 1 + 8 + 4 + 4);
         data << uint8(m_Properties->Slot - 1);
@@ -72,8 +72,8 @@ void Totem::InitStats(uint32 duration)
 
     // Get spell cast by totem
     if (SpellInfo const* totemSpell = sSpellMgr->GetSpellInfo(GetSpell()))
-        if (totemSpell->CalcCastTime())   // If spell has cast time -> its an active totem
-            m_type = TOTEM_ACTIVE;
+    if (totemSpell->CalcCastTime())   // If spell has cast time -> its an active totem
+        m_type = TOTEM_ACTIVE;
 
     if (GetEntry() == SENTRY_TOTEM_ENTRY)
         SetReactState(REACT_AGGRESSIVE);
@@ -152,13 +152,13 @@ bool Totem::IsImmunedToSpellEffect(SpellInfo const* spellInfo, uint32 index) con
 
     switch (spellInfo->Effects[index].ApplyAuraName)
     {
-        case SPELL_AURA_PERIODIC_DAMAGE:
-        case SPELL_AURA_PERIODIC_LEECH:
-        case SPELL_AURA_MOD_FEAR:
-        case SPELL_AURA_TRANSFORM:
-            return true;
-        default:
-            break;
+    case SPELL_AURA_PERIODIC_DAMAGE:
+    case SPELL_AURA_PERIODIC_LEECH:
+    case SPELL_AURA_MOD_FEAR:
+    case SPELL_AURA_TRANSFORM:
+        return true;
+    default:
+        break;
     }
 
     return Creature::IsImmunedToSpellEffect(spellInfo, index);

@@ -22,23 +22,23 @@
 
 enum Says
 {
-    SAY_INTRO                   = 0,
-    SAY_AGGRO                   = 1,
-    SAY_SLAY                    = 2,
-    SAY_DEATH                   = 3,
-    EMOTE_ARCANE_EXPLOSION      = 4
+    SAY_INTRO = 0,
+    SAY_AGGRO = 1,
+    SAY_SLAY = 2,
+    SAY_DEATH = 3,
+    EMOTE_ARCANE_EXPLOSION = 4
 };
 
 enum Spells
 {
-    SPELL_BLINK                 = 38194,
-    SPELL_BLINK_TELEPORT        = 38203,
-    SPELL_MANA_SHIELD           = 38151,
-    SPELL_ARCANE_BUBBLE         = 9438,
-    SPELL_SLOW                  = 35032,
-    SPELL_POLYMORPH             = 38245,
-    SPELL_ARCANE_VOLLEY         = 35059,
-    SPELL_ARCANE_EXPLOSION      = 38197,
+    SPELL_BLINK = 38194,
+    SPELL_BLINK_TELEPORT = 38203,
+    SPELL_MANA_SHIELD = 38151,
+    SPELL_ARCANE_BUBBLE = 9438,
+    SPELL_SLOW = 35032,
+    SPELL_POLYMORPH = 38245,
+    SPELL_ARCANE_VOLLEY = 35059,
+    SPELL_ARCANE_EXPLOSION = 38197,
 };
 
 enum Events
@@ -96,36 +96,36 @@ public:
         {
             switch (eventId)
             {
-                case EVENT_POLYMORPH:
-                    // Second top aggro in normal, random target in heroic.
-                    if (IsHeroic())
-                        DoCast(SelectTarget(SELECT_TARGET_RANDOM, 0), SPELL_POLYMORPH);
-                    else
-                        DoCast(SelectTarget(SELECT_TARGET_TOPAGGRO, 1), SPELL_POLYMORPH);
-                    events.ScheduleEvent(EVENT_POLYMORPH, urand(15000, 17500));
-                    break;
-                case EVENT_ARCANE_VOLLEY:
-                    DoCast(me, SPELL_ARCANE_VOLLEY);
-                    events.ScheduleEvent(EVENT_ARCANE_VOLLEY, urand(7000, 12000));
-                    break;
-                case EVENT_SLOW:
-                    DoCast(me, SPELL_SLOW);
-                    events.ScheduleEvent(EVENT_SLOW, urand(15000, 40000));
-                    break;
-                case EVENT_BLINK:
-                    if (me->IsNonMeleeSpellCast(false))
-                        me->InterruptNonMeleeSpells(false);
-                    Talk(EMOTE_ARCANE_EXPLOSION);
-                    DoCastAOE(SPELL_BLINK);
-                    events.ScheduleEvent(EVENT_BLINK, urand(35000, 40000));
-                    events.ScheduleEvent(EVENT_ARCANE_EXPLOSION, 1000);
-                    break;
-                case EVENT_ARCANE_EXPLOSION:
-                    DoCast(me, SPELL_ARCANE_EXPLOSION);
-                    DoCast(me, SPELL_ARCANE_BUBBLE, true);
-                    break;
-                default:
-                    break;
+            case EVENT_POLYMORPH:
+                // Second top aggro in normal, random target in heroic.
+                if (IsHeroic())
+                    DoCast(SelectTarget(SELECT_TARGET_RANDOM, 0), SPELL_POLYMORPH);
+                else
+                    DoCast(SelectTarget(SELECT_TARGET_TOPAGGRO, 1), SPELL_POLYMORPH);
+                events.ScheduleEvent(EVENT_POLYMORPH, urand(15000, 17500));
+                break;
+            case EVENT_ARCANE_VOLLEY:
+                DoCast(me, SPELL_ARCANE_VOLLEY);
+                events.ScheduleEvent(EVENT_ARCANE_VOLLEY, urand(7000, 12000));
+                break;
+            case EVENT_SLOW:
+                DoCast(me, SPELL_SLOW);
+                events.ScheduleEvent(EVENT_SLOW, urand(15000, 40000));
+                break;
+            case EVENT_BLINK:
+                if (me->IsNonMeleeSpellCast(false))
+                    me->InterruptNonMeleeSpells(false);
+                Talk(EMOTE_ARCANE_EXPLOSION);
+                DoCastAOE(SPELL_BLINK);
+                events.ScheduleEvent(EVENT_BLINK, urand(35000, 40000));
+                events.ScheduleEvent(EVENT_ARCANE_EXPLOSION, 1000);
+                break;
+            case EVENT_ARCANE_EXPLOSION:
+                DoCast(me, SPELL_ARCANE_EXPLOSION);
+                DoCast(me, SPELL_ARCANE_BUBBLE, true);
+                break;
+            default:
+                break;
             }
         }
 
@@ -150,9 +150,9 @@ public:
                 Talk(SAY_SLAY);
         }
 
-        private:
-            bool ManaShield;
-            bool Intro;
+    private:
+        bool ManaShield;
+        bool Intro;
     };
 
     CreatureAI* GetAI(Creature* creature) const override
@@ -164,44 +164,44 @@ public:
 // 38194 - Blink
 class spell_talon_king_ikiss_blink : public SpellScriptLoader
 {
-    public:
-        spell_talon_king_ikiss_blink() : SpellScriptLoader("spell_talon_king_ikiss_blink") { }
+public:
+    spell_talon_king_ikiss_blink() : SpellScriptLoader("spell_talon_king_ikiss_blink") { }
 
-        class spell_talon_king_ikiss_blink_SpellScript : public SpellScript
+    class spell_talon_king_ikiss_blink_SpellScript : public SpellScript
+    {
+        PrepareSpellScript(spell_talon_king_ikiss_blink_SpellScript);
+
+        bool Validate(SpellInfo const* /*spellInfo*/) override
         {
-            PrepareSpellScript(spell_talon_king_ikiss_blink_SpellScript);
-
-            bool Validate(SpellInfo const* /*spellInfo*/) override
-            {
-                if (!sSpellMgr->GetSpellInfo(SPELL_BLINK_TELEPORT))
-                    return false;
-                return true;
-            }
-
-            void FilterTargets(std::list<WorldObject*>& targets)
-            {
-                WorldObject* target = Trinity::Containers::SelectRandomContainerElement(targets);
-                targets.clear();
-                targets.push_back(target);
-            }
-
-            void HandleDummyHitTarget(SpellEffIndex effIndex)
-            {
-                PreventHitDefaultEffect(effIndex);
-                GetHitUnit()->CastSpell(GetCaster(), SPELL_BLINK_TELEPORT, true);
-            }
-
-            void Register() override
-            {
-                OnObjectAreaTargetSelect += SpellObjectAreaTargetSelectFn(spell_talon_king_ikiss_blink_SpellScript::FilterTargets, EFFECT_0, TARGET_UNIT_SRC_AREA_ENEMY);
-                OnEffectHitTarget += SpellEffectFn(spell_talon_king_ikiss_blink_SpellScript::HandleDummyHitTarget, EFFECT_0, SPELL_EFFECT_DUMMY);
-            }
-        };
-
-        SpellScript* GetSpellScript() const override
-        {
-            return new spell_talon_king_ikiss_blink_SpellScript();
+            if (!sSpellMgr->GetSpellInfo(SPELL_BLINK_TELEPORT))
+                return false;
+            return true;
         }
+
+        void FilterTargets(std::list<WorldObject*>& targets)
+        {
+            WorldObject* target = Trinity::Containers::SelectRandomContainerElement(targets);
+            targets.clear();
+            targets.push_back(target);
+        }
+
+        void HandleDummyHitTarget(SpellEffIndex effIndex)
+        {
+            PreventHitDefaultEffect(effIndex);
+            GetHitUnit()->CastSpell(GetCaster(), SPELL_BLINK_TELEPORT, true);
+        }
+
+        void Register() override
+        {
+            OnObjectAreaTargetSelect += SpellObjectAreaTargetSelectFn(spell_talon_king_ikiss_blink_SpellScript::FilterTargets, EFFECT_0, TARGET_UNIT_SRC_AREA_ENEMY);
+            OnEffectHitTarget += SpellEffectFn(spell_talon_king_ikiss_blink_SpellScript::HandleDummyHitTarget, EFFECT_0, SPELL_EFFECT_DUMMY);
+        }
+    };
+
+    SpellScript* GetSpellScript() const override
+    {
+        return new spell_talon_king_ikiss_blink_SpellScript();
+    }
 };
 
 void AddSC_boss_talon_king_ikiss()

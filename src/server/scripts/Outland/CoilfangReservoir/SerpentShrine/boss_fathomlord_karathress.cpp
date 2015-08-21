@@ -30,58 +30,58 @@ EndScriptData */
 
 enum FathomlordKarathress
 {
-    SAY_AGGRO                       = 0,
-    SAY_GAIN_BLESSING               = 1,
-    SAY_GAIN_ABILITY1               = 2,
-    SAY_GAIN_ABILITY2               = 3,
-    SAY_GAIN_ABILITY3               = 4,
-    SAY_SLAY                        = 5,
-    SAY_DEATH                       = 6,
+    SAY_AGGRO = 0,
+    SAY_GAIN_BLESSING = 1,
+    SAY_GAIN_ABILITY1 = 2,
+    SAY_GAIN_ABILITY2 = 3,
+    SAY_GAIN_ABILITY3 = 4,
+    SAY_SLAY = 5,
+    SAY_DEATH = 6,
 
     //Karathress spells
-    SPELL_CATACLYSMIC_BOLT          = 38441,
-    SPELL_POWER_OF_SHARKKIS         = 38455,
-    SPELL_POWER_OF_TIDALVESS        = 38452,
-    SPELL_POWER_OF_CARIBDIS         = 38451,
-    SPELL_ENRAGE                    = 24318,
-    SPELL_SEAR_NOVA                 = 38445,
-    SPELL_BLESSING_OF_THE_TIDES     = 38449,
+    SPELL_CATACLYSMIC_BOLT = 38441,
+    SPELL_POWER_OF_SHARKKIS = 38455,
+    SPELL_POWER_OF_TIDALVESS = 38452,
+    SPELL_POWER_OF_CARIBDIS = 38451,
+    SPELL_ENRAGE = 24318,
+    SPELL_SEAR_NOVA = 38445,
+    SPELL_BLESSING_OF_THE_TIDES = 38449,
 
     //Sharkkis spells
-    SPELL_LEECHING_THROW            = 29436,
-    SPELL_THE_BEAST_WITHIN          = 38373,
-    SPELL_MULTISHOT                 = 38366,
-    SPELL_SUMMON_FATHOM_LURKER      = 38433,
-    SPELL_SUMMON_FATHOM_SPOREBAT    = 38431,
-    SPELL_PET_ENRAGE                = 19574,
+    SPELL_LEECHING_THROW = 29436,
+    SPELL_THE_BEAST_WITHIN = 38373,
+    SPELL_MULTISHOT = 38366,
+    SPELL_SUMMON_FATHOM_LURKER = 38433,
+    SPELL_SUMMON_FATHOM_SPOREBAT = 38431,
+    SPELL_PET_ENRAGE = 19574,
 
     //Tidalvess spells
-    SPELL_FROST_SHOCK               = 38234,
-    SPELL_SPITFIRE_TOTEM            = 38236,
-    SPELL_POISON_CLEANSING_TOTEM    = 38306,
+    SPELL_FROST_SHOCK = 38234,
+    SPELL_SPITFIRE_TOTEM = 38236,
+    SPELL_POISON_CLEANSING_TOTEM = 38306,
     // Spell obsolete
-    SPELL_EARTHBIND_TOTEM           = 38304,
-    SPELL_EARTHBIND_TOTEM_EFFECT    = 6474,
-    SPELL_WINDFURY_WEAPON           = 38184,
+    SPELL_EARTHBIND_TOTEM = 38304,
+    SPELL_EARTHBIND_TOTEM_EFFECT = 6474,
+    SPELL_WINDFURY_WEAPON = 38184,
 
     //Caribdis Spells
-    SPELL_WATER_BOLT_VOLLEY         = 38335,
-    SPELL_TIDAL_SURGE               = 38358,
-    SPELL_TIDAL_SURGE_FREEZE        = 38357,
-    SPELL_HEAL                      = 38330,
-    SPELL_SUMMON_CYCLONE            = 38337,
-    SPELL_CYCLONE_CYCLONE           = 29538,
+    SPELL_WATER_BOLT_VOLLEY = 38335,
+    SPELL_TIDAL_SURGE = 38358,
+    SPELL_TIDAL_SURGE_FREEZE = 38357,
+    SPELL_HEAL = 38330,
+    SPELL_SUMMON_CYCLONE = 38337,
+    SPELL_CYCLONE_CYCLONE = 29538,
 
     //Yells and Quotes
-    SOUND_GAIN_BLESSING_OF_TIDES    = 11278,
-    SOUND_MISC                      = 11283,
+    SOUND_GAIN_BLESSING_OF_TIDES = 11278,
+    SOUND_MISC = 11283,
 
     //Summoned Unit GUIDs
-    CREATURE_CYCLONE                = 22104,
-    CREATURE_FATHOM_SPOREBAT        = 22120,
-    CREATURE_FATHOM_LURKER          = 22119,
-    CREATURE_SPITFIRE_TOTEM         = 22091,
-    CREATURE_EARTHBIND_TOTEM        = 22486,
+    CREATURE_CYCLONE = 22104,
+    CREATURE_FATHOM_SPOREBAT = 22120,
+    CREATURE_FATHOM_LURKER = 22119,
+    CREATURE_SPITFIRE_TOTEM = 22091,
+    CREATURE_EARTHBIND_TOTEM = 22486,
     CREATURE_POISON_CLEANSING_TOTEM = 22487,
 };
 
@@ -144,16 +144,16 @@ public:
             RAdvisors[2] = instance->GetGuidData(DATA_CARIBDIS);
             // Respawn of the 3 Advisors
             for (uint8 i = 0; i < MAX_ADVISORS; ++i)
-                if (RAdvisors[i])
+            if (RAdvisors[i])
+            {
+                Creature* advisor = ObjectAccessor::GetCreature(*me, RAdvisors[i]);
+                if (advisor && !advisor->IsAlive())
                 {
-                    Creature* advisor = ObjectAccessor::GetCreature(*me, RAdvisors[i]);
-                    if (advisor && !advisor->IsAlive())
-                    {
-                        advisor->Respawn();
-                        advisor->AI()->EnterEvadeMode();
-                        advisor->GetMotionMaster()->MoveTargetedHome();
-                    }
+                    advisor->Respawn();
+                    advisor->AI()->EnterEvadeMode();
+                    advisor->GetMotionMaster()->MoveTargetedHome();
                 }
+            }
 
             instance->SetData(DATA_KARATHRESSEVENT, NOT_STARTED);
         }
@@ -250,21 +250,24 @@ public:
                 if (target)
                     DoCast(target, SPELL_CATACLYSMIC_BOLT);
                 CataclysmicBolt_Timer = 10000;
-            } else CataclysmicBolt_Timer -= diff;
+            }
+            else CataclysmicBolt_Timer -= diff;
 
             //SearNova_Timer
             if (SearNova_Timer <= diff)
             {
                 DoCastVictim(SPELL_SEAR_NOVA);
                 SearNova_Timer = 20000 + rand32() % 40000;
-            } else SearNova_Timer -= diff;
+            }
+            else SearNova_Timer -= diff;
 
             //Enrage_Timer
             if (Enrage_Timer <= diff)
             {
                 DoCast(me, SPELL_ENRAGE);
                 Enrage_Timer = 90000;
-            } else Enrage_Timer -= diff;
+            }
+            else Enrage_Timer -= diff;
 
             //Blessing of Tides Trigger
             if (!HealthAbovePct(75) && !BlessingOfTides)
@@ -272,15 +275,15 @@ public:
                 BlessingOfTides = true;
                 bool continueTriggering = false;
                 for (uint8 i = 0; i < MAX_ADVISORS; ++i)
-                    if (Advisors[i])
+                if (Advisors[i])
+                {
+                    Creature* advisor = ObjectAccessor::GetCreature(*me, Advisors[i]);
+                    if (advisor && advisor->IsAlive())
                     {
-                        Creature* advisor = ObjectAccessor::GetCreature(*me, Advisors[i]);
-                        if (advisor && advisor->IsAlive())
-                        {
-                            continueTriggering = true;
-                            break;
-                        }
+                        continueTriggering = true;
+                        break;
                     }
+                }
                 if (continueTriggering)
                 {
                     DoCast(me, SPELL_BLESSING_OF_THE_TIDES);
@@ -385,14 +388,16 @@ public:
             {
                 DoCastVictim(SPELL_LEECHING_THROW);
                 LeechingThrow_Timer = 20000;
-            } else LeechingThrow_Timer -= diff;
+            }
+            else LeechingThrow_Timer -= diff;
 
             //Multishot_Timer
             if (Multishot_Timer <= diff)
             {
                 DoCastVictim(SPELL_MULTISHOT);
                 Multishot_Timer = 20000;
-            } else Multishot_Timer -= diff;
+            }
+            else Multishot_Timer -= diff;
 
             //TheBeastWithin_Timer
             if (TheBeastWithin_Timer <= diff)
@@ -404,7 +409,8 @@ public:
                     Pet->CastSpell(Pet, SPELL_PET_ENRAGE, true);
 
                 TheBeastWithin_Timer = 30000;
-            } else TheBeastWithin_Timer -= diff;
+            }
+            else TheBeastWithin_Timer -= diff;
 
             //Pet_Timer
             if (Pet_Timer < diff && pet == false)
@@ -431,7 +437,8 @@ public:
                         SummonedPet = Pet->GetGUID();
                     }
                 }
-            } else Pet_Timer -= diff;
+            }
+            else Pet_Timer -= diff;
 
             DoMeleeAttackIfReady();
         }
@@ -523,7 +530,8 @@ public:
             {
                 DoCastVictim(SPELL_FROST_SHOCK);
                 FrostShock_Timer = 25000 + rand32() % 5000;
-            } else FrostShock_Timer -= diff;
+            }
+            else FrostShock_Timer -= diff;
 
             //Spitfire_Timer
             if (Spitfire_Timer <= diff)
@@ -639,7 +647,8 @@ public:
             {
                 DoCastVictim(SPELL_WATER_BOLT_VOLLEY);
                 WaterBoltVolley_Timer = 30000;
-            } else WaterBoltVolley_Timer -= diff;
+            }
+            else WaterBoltVolley_Timer -= diff;
 
             //TidalSurge_Timer
             if (TidalSurge_Timer <= diff)
@@ -649,7 +658,8 @@ public:
                 if (me->GetVictim())
                     me->EnsureVictim()->CastSpell(me->GetVictim(), SPELL_TIDAL_SURGE_FREEZE, true);
                 TidalSurge_Timer = 15000 + rand32() % 5000;
-            } else TidalSurge_Timer -= diff;
+            }
+            else TidalSurge_Timer -= diff;
 
             //Cyclone_Timer
             if (Cyclone_Timer <= diff)

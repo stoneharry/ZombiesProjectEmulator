@@ -23,11 +23,11 @@
 
 enum DataTypes
 {
-    DATA_MAGTHERIDON_EVENT         = 1,
-    DATA_MAGTHERIDON               = 3,
-    DATA_CHANNELER_EVENT           = 2,
-    DATA_COLLAPSE                  = 6,
-    DATA_CHANNELER                 = 9
+    DATA_MAGTHERIDON_EVENT = 1,
+    DATA_MAGTHERIDON = 3,
+    DATA_CHANNELER_EVENT = 2,
+    DATA_COLLAPSE = 6,
+    DATA_CHANNELER = 9
 };
 
 #endif

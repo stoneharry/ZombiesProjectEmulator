@@ -25,47 +25,47 @@ namespace Trinity
 {
     class BroadcastTextBuilder
     {
-        public:
-            BroadcastTextBuilder(Unit const* obj, ChatMsg msgType, uint32 textId, WorldObject const* target = nullptr, uint32 achievementId = 0)
-                : _source(obj), _msgType(msgType), _textId(textId), _target(target), _achievementId(achievementId) { }
+    public:
+        BroadcastTextBuilder(Unit const* obj, ChatMsg msgType, uint32 textId, WorldObject const* target = nullptr, uint32 achievementId = 0)
+            : _source(obj), _msgType(msgType), _textId(textId), _target(target), _achievementId(achievementId) { }
 
-            void operator()(WorldPacket& data, LocaleConstant locale)
-            {
-                BroadcastText const* bct = sObjectMgr->GetBroadcastText(_textId);
-                ChatHandler::BuildChatPacket(data, _msgType, bct ? Language(bct->Language) : LANG_UNIVERSAL, _source, _target, bct ? bct->GetText(locale, _source->getGender()) : "", _achievementId, "", locale);
-            }
+        void operator()(WorldPacket& data, LocaleConstant locale)
+        {
+            BroadcastText const* bct = sObjectMgr->GetBroadcastText(_textId);
+            ChatHandler::BuildChatPacket(data, _msgType, bct ? Language(bct->Language) : LANG_UNIVERSAL, _source, _target, bct ? bct->GetText(locale, _source->getGender()) : "", _achievementId, "", locale);
+        }
 
-            size_t operator()(WorldPacket* data, LocaleConstant locale) const
-            {
-                BroadcastText const* bct = sObjectMgr->GetBroadcastText(_textId);
-                return ChatHandler::BuildChatPacket(*data, _msgType, bct ? Language(bct->Language) : LANG_UNIVERSAL, _source, _target, bct ? bct->GetText(locale, _source->getGender()) : "", _achievementId, "", locale);
-            }
+        size_t operator()(WorldPacket* data, LocaleConstant locale) const
+        {
+            BroadcastText const* bct = sObjectMgr->GetBroadcastText(_textId);
+            return ChatHandler::BuildChatPacket(*data, _msgType, bct ? Language(bct->Language) : LANG_UNIVERSAL, _source, _target, bct ? bct->GetText(locale, _source->getGender()) : "", _achievementId, "", locale);
+        }
 
-        private:
-            Unit const* _source;
-            ChatMsg _msgType;
-            uint32 _textId;
-            WorldObject const* _target;
-            uint32 _achievementId;
+    private:
+        Unit const* _source;
+        ChatMsg _msgType;
+        uint32 _textId;
+        WorldObject const* _target;
+        uint32 _achievementId;
     };
 
     class CustomChatTextBuilder
     {
-        public:
-            CustomChatTextBuilder(WorldObject const* obj, ChatMsg msgType, std::string const& text, Language language = LANG_UNIVERSAL, WorldObject const* target = nullptr)
-                : _source(obj), _msgType(msgType), _text(text), _language(language), _target(target) { }
+    public:
+        CustomChatTextBuilder(WorldObject const* obj, ChatMsg msgType, std::string const& text, Language language = LANG_UNIVERSAL, WorldObject const* target = nullptr)
+            : _source(obj), _msgType(msgType), _text(text), _language(language), _target(target) { }
 
-            void operator()(WorldPacket& data, LocaleConstant locale)
-            {
-                ChatHandler::BuildChatPacket(data, _msgType, _language, _source, _target, _text, 0, "", locale);
-            }
+        void operator()(WorldPacket& data, LocaleConstant locale)
+        {
+            ChatHandler::BuildChatPacket(data, _msgType, _language, _source, _target, _text, 0, "", locale);
+        }
 
-        private:
-            WorldObject const* _source;
-            ChatMsg _msgType;
-            std::string _text;
-            Language _language;
-            WorldObject const* _target;
+    private:
+        WorldObject const* _source;
+        ChatMsg _msgType;
+        std::string _text;
+        Language _language;
+        WorldObject const* _target;
     };
 }
 // namespace Trinity

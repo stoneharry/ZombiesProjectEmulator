@@ -31,42 +31,42 @@ EndScriptData */
 enum LeotherasTheBlind
 {
     // Spells used by Leotheras The Blind
-    SPELL_WHIRLWIND         = 37640,
-    SPELL_CHAOS_BLAST       = 37674,
-    SPELL_BERSERK           = 26662,
+    SPELL_WHIRLWIND = 37640,
+    SPELL_CHAOS_BLAST = 37674,
+    SPELL_BERSERK = 26662,
     SPELL_INSIDIOUS_WHISPER = 37676,
-    SPELL_DUAL_WIELD        = 42459,
+    SPELL_DUAL_WIELD = 42459,
 
     // Spells used in banish phase
-    BANISH_BEAM             = 38909,
-    AURA_BANISH             = 37833,
+    BANISH_BEAM = 38909,
+    AURA_BANISH = 37833,
 
     // Spells used by Greyheart Spellbinders
-    SPELL_EARTHSHOCK        = 39076,
-    SPELL_MINDBLAST         = 37531,
+    SPELL_EARTHSHOCK = 39076,
+    SPELL_MINDBLAST = 37531,
 
     // Spells used by Inner Demons and Creature ID
-    INNER_DEMON_ID          = 21857,
-    AURA_DEMONIC_ALIGNMENT  = 37713,
-    SPELL_SHADOWBOLT        = 39309,
-    SPELL_SOUL_LINK         = 38007,
+    INNER_DEMON_ID = 21857,
+    AURA_DEMONIC_ALIGNMENT = 37713,
+    SPELL_SHADOWBOLT = 39309,
+    SPELL_SOUL_LINK = 38007,
     SPELL_CONSUMING_MADNESS = 37749,
 
     //Misc.
-    MODEL_DEMON             = 20125,
-    MODEL_NIGHTELF          = 20514,
-    DEMON_FORM              = 21875,
-    NPC_SPELLBINDER         = 21806,
-    INNER_DEMON_VICTIM      = 1,
+    MODEL_DEMON = 20125,
+    MODEL_NIGHTELF = 20514,
+    DEMON_FORM = 21875,
+    NPC_SPELLBINDER = 21806,
+    INNER_DEMON_VICTIM = 1,
 
-    SAY_AGGRO               = 0,
-    SAY_SWITCH_TO_DEMON     = 1,
-    SAY_INNER_DEMONS        = 2,
-    SAY_DEMON_SLAY          = 3,
-    SAY_NIGHTELF_SLAY       = 4,
-    SAY_FINAL_FORM          = 5,
-    SAY_FREE                = 6,
-    SAY_DEATH               = 7
+    SAY_AGGRO = 0,
+    SAY_SWITCH_TO_DEMON = 1,
+    SAY_INNER_DEMONS = 2,
+    SAY_DEMON_SLAY = 3,
+    SAY_NIGHTELF_SLAY = 4,
+    SAY_FINAL_FORM = 5,
+    SAY_FREE = 6,
+    SAY_DEATH = 7
 };
 
 class npc_inner_demon : public CreatureScript
@@ -151,7 +151,8 @@ public:
                 {
                     me->AddThreat(owner, 999999);
                     AttackStart(owner);
-                } else if (owner && owner->isDead())
+                }
+                else if (owner && owner->isDead())
                 {
                     me->DealDamage(me, me->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
                     return;
@@ -162,7 +163,8 @@ public:
             {
                 DoCastVictim(SPELL_SOUL_LINK, true);
                 Link_Timer = 1000;
-            } else Link_Timer -= diff;
+            }
+            else Link_Timer -= diff;
 
             if (!me->HasAura(AURA_DEMONIC_ALIGNMENT))
                 DoCast(me, AURA_DEMONIC_ALIGNMENT, true);
@@ -171,9 +173,10 @@ public:
             {
                 DoCastVictim(SPELL_SHADOWBOLT, false);
                 ShadowBolt_Timer = 10000;
-            } else ShadowBolt_Timer -= diff;
+            }
+            else ShadowBolt_Timer -= diff;
 
-           DoMeleeAttackIfReady();
+            DoMeleeAttackIfReady();
         }
     };
 };
@@ -246,10 +249,10 @@ public:
             me->SetCanDualWield(true);
             me->SetSpeed(MOVE_RUN, 2.0f, true);
             me->SetDisplayId(MODEL_NIGHTELF);
-            me->SetUInt32Value(UNIT_VIRTUAL_ITEM_SLOT_ID  , 0);
-            me->SetUInt32Value(UNIT_VIRTUAL_ITEM_SLOT_ID+1, 0);
+            me->SetUInt32Value(UNIT_VIRTUAL_ITEM_SLOT_ID, 0);
+            me->SetUInt32Value(UNIT_VIRTUAL_ITEM_SLOT_ID + 1, 0);
             DoCast(me, SPELL_DUAL_WIELD, true);
-            me->SetCorpseDelay(1000*60*60);
+            me->SetCorpseDelay(1000 * 60 * 60);
             instance->SetData(DATA_LEOTHERASTHEBLINDEVENT, NOT_STARTED);
         }
 
@@ -263,9 +266,9 @@ public:
                 float nx = x;
                 float ny = y;
                 float o = 2.4f;
-                if (i == 0) {nx += 10; ny -= 5; o=2.5f;}
-                if (i == 1) {nx -= 8; ny -= 7; o=0.9f;}
-                if (i == 2) {nx -= 3; ny += 9; o=5.0f;}
+                if (i == 0) { nx += 10; ny -= 5; o = 2.5f; }
+                if (i == 1) { nx -= 8; ny -= 7; o = 0.9f; }
+                if (i == 2) { nx -= 3; ny += 9; o = 5.0f; }
                 Creature* binder = me->SummonCreature(NPC_SPELLBINDER, nx, ny, z, o, TEMPSUMMON_DEAD_DESPAWN, 0);
                 if (binder)
                     SpellBinderGUID[i] = binder->GetGUID();
@@ -345,15 +348,15 @@ public:
                 me->SetDisplayId(MODEL_DEMON);
 
                 // and removing weapons
-                me->SetUInt32Value(UNIT_VIRTUAL_ITEM_SLOT_ID  , 0);
-                me->SetUInt32Value(UNIT_VIRTUAL_ITEM_SLOT_ID+1, 0);
+                me->SetUInt32Value(UNIT_VIRTUAL_ITEM_SLOT_ID, 0);
+                me->SetUInt32Value(UNIT_VIRTUAL_ITEM_SLOT_ID + 1, 0);
             }
         }
 
         //Despawn all Inner Demon summoned
         void DespawnDemon()
         {
-            for (uint8 i=0; i<5; ++i)
+            for (uint8 i = 0; i < 5; ++i)
             {
                 if (InnderDemon[i])
                 {
@@ -413,7 +416,7 @@ public:
         void EnterCombat(Unit* /*who*/) override
         {
             if (me->HasAura(AURA_BANISH))
-            return;
+                return;
 
             me->LoadEquipment();
         }
@@ -427,7 +430,8 @@ public:
                 {
                     CheckBanish();//no need to check every update tick
                     BanishTimer = 1000;
-                } else BanishTimer -= diff;
+                }
+                else BanishTimer -= diff;
                 return;
             }
             if (me->HasAura(SPELL_WHIRLWIND))
@@ -442,7 +446,8 @@ public:
                         me->GetMotionMaster()->MovePoint(0, newTarget->GetPositionX(), newTarget->GetPositionY(), newTarget->GetPositionZ());
                     }
                     Whirlwind_Timer = 2000;
-                } else Whirlwind_Timer -= diff;
+                }
+                else Whirlwind_Timer -= diff;
             }
 
             // reseting after changing forms and after ending whirlwind
@@ -452,7 +457,7 @@ public:
                 if (DemonForm)
                     InnerDemons_Timer = 30000;
                 else
-                    Whirlwind_Timer =  15000;
+                    Whirlwind_Timer = 15000;
 
                 NeedThreatReset = false;
                 DoResetThreat();
@@ -466,7 +471,8 @@ public:
                 me->InterruptNonMeleeSpells(false);
                 DoCast(me, SPELL_BERSERK);
                 EnrageUsed = true;
-            } else Berserk_Timer -= diff;
+            }
+            else Berserk_Timer -= diff;
 
             if (!DemonForm)
             {
@@ -479,7 +485,8 @@ public:
                         // while whirlwinding this variable is used to countdown target's change
                         Whirlwind_Timer = 2000;
                         NeedThreatReset = true;
-                    } else Whirlwind_Timer -= diff;
+                    }
+                    else Whirlwind_Timer -= diff;
                 }
                 //Switch_Timer
 
@@ -491,12 +498,13 @@ public:
                         me->RemoveAurasDueToSpell(SPELL_WHIRLWIND);
                         me->SetDisplayId(MODEL_DEMON);
                         Talk(SAY_SWITCH_TO_DEMON);
-                        me->SetUInt32Value(UNIT_VIRTUAL_ITEM_SLOT_ID  , 0);
-                        me->SetUInt32Value(UNIT_VIRTUAL_ITEM_SLOT_ID+1, 0);
+                        me->SetUInt32Value(UNIT_VIRTUAL_ITEM_SLOT_ID, 0);
+                        me->SetUInt32Value(UNIT_VIRTUAL_ITEM_SLOT_ID + 1, 0);
                         DemonForm = true;
                         NeedThreatReset = true;
                         SwitchToDemon_Timer = 45000;
-                    } else SwitchToDemon_Timer -= diff;
+                    }
+                    else SwitchToDemon_Timer -= diff;
                 }
                 DoMeleeAttackIfReady();
             }
@@ -517,7 +525,8 @@ public:
                         me->CastCustomSpell(me->GetVictim(), SPELL_CHAOS_BLAST, &damage, NULL, NULL, false, NULL, NULL, me->GetGUID());
                     }
                     ChaosBlast_Timer = 3000;
-                } else ChaosBlast_Timer -= diff;
+                }
+                else ChaosBlast_Timer -= diff;
                 //Summon Inner Demon
                 if (InnerDemons_Timer <= diff)
                 {
@@ -526,7 +535,7 @@ public:
                     for (ThreatContainer::StorageType::const_iterator itr = ThreatList.begin(); itr != ThreatList.end(); ++itr)
                     {
                         Unit* tempTarget = ObjectAccessor::GetUnit(*me, (*itr)->getUnitGuid());
-                        if (tempTarget && tempTarget->GetTypeId() == TYPEID_PLAYER && tempTarget->GetGUID() != me->EnsureVictim()->GetGUID() && TargetList.size()<5)
+                        if (tempTarget && tempTarget->GetTypeId() == TYPEID_PLAYER && tempTarget->GetGUID() != me->EnsureVictim()->GetGUID() && TargetList.size() < 5)
                             TargetList.push_back(tempTarget);
                     }
                     //SpellInfo* spell = GET_SPELL(SPELL_INSIDIOUS_WHISPER);
@@ -534,7 +543,7 @@ public:
                     {
                         if ((*itr) && (*itr)->IsAlive())
                         {
-                            Creature* demon = me->SummonCreature(INNER_DEMON_ID, (*itr)->GetPositionX()+10, (*itr)->GetPositionY()+10, (*itr)->GetPositionZ(), 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000);
+                            Creature* demon = me->SummonCreature(INNER_DEMON_ID, (*itr)->GetPositionX() + 10, (*itr)->GetPositionY() + 10, (*itr)->GetPositionZ(), 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000);
                             if (demon)
                             {
                                 demon->AI()->AttackStart((*itr));
@@ -556,7 +565,8 @@ public:
                     Talk(SAY_INNER_DEMONS);
 
                     InnerDemons_Timer = 999999;
-                } else InnerDemons_Timer -= diff;
+                }
+                else InnerDemons_Timer -= diff;
 
                 //Switch_Timer
                 if (SwitchToHuman_Timer <= diff)
@@ -572,7 +582,8 @@ public:
                     NeedThreatReset = true;
 
                     SwitchToHuman_Timer = 60000;
-                } else SwitchToHuman_Timer -= diff;
+                }
+                else SwitchToHuman_Timer -= diff;
             }
 
             if (!IsFinalForm && HealthBelowPct(15))
@@ -666,7 +677,7 @@ public:
                 me->StopMoving();
 
             if (ChaosBlast_Timer <= diff)
-             {
+            {
                 // will cast only when in range od spell
                 if (me->IsWithinDist(me->GetVictim(), 30))
                 {
@@ -675,7 +686,8 @@ public:
                     me->CastCustomSpell(me->GetVictim(), SPELL_CHAOS_BLAST, &damage, NULL, NULL, false, NULL, NULL, me->GetGUID());
                     ChaosBlast_Timer = 3000;
                 }
-             } else ChaosBlast_Timer -= diff;
+            }
+            else ChaosBlast_Timer -= diff;
 
             //Do NOT deal any melee damage to the target.
         }
@@ -784,7 +796,8 @@ public:
                 if (target)DoCast(target, SPELL_MINDBLAST);
 
                 Mindblast_Timer = urand(10000, 15000);
-            } else Mindblast_Timer -= diff;
+            }
+            else Mindblast_Timer -= diff;
 
             if (Earthshock_Timer <= diff)
             {
@@ -796,8 +809,8 @@ public:
                     {
                         bool isCasting = false;
                         for (uint8 i = 0; i < CURRENT_MAX_SPELL; ++i)
-                            if (i_pl->GetCurrentSpell(i))
-                                isCasting = true;
+                        if (i_pl->GetCurrentSpell(i))
+                            isCasting = true;
 
                         if (isCasting)
                         {
@@ -807,7 +820,8 @@ public:
                     }
                 }
                 Earthshock_Timer = urand(8000, 15000);
-            } else Earthshock_Timer -= diff;
+            }
+            else Earthshock_Timer -= diff;
             DoMeleeAttackIfReady();
         }
 

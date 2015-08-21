@@ -27,19 +27,19 @@ class Totem;
 
 class TotemAI : public CreatureAI
 {
-    public:
+public:
 
-        explicit TotemAI(Creature* c);
+    explicit TotemAI(Creature* c);
 
-        void MoveInLineOfSight(Unit* who) override;
-        void AttackStart(Unit* victim) override;
-        void EnterEvadeMode() override;
+    void MoveInLineOfSight(Unit* who) override;
+    void AttackStart(Unit* victim) override;
+    void EnterEvadeMode() override;
 
-        void UpdateAI(uint32 diff) override;
-        static int Permissible(Creature const* creature);
+    void UpdateAI(uint32 diff) override;
+    static int Permissible(Creature const* creature);
 
-    private:
-        ObjectGuid i_victimGuid;
+private:
+    ObjectGuid i_victimGuid;
 };
 #endif
 

@@ -85,7 +85,7 @@ void WorldSession::SendAuctionCommandResult(uint32 auctionId, uint32 Action, uin
 //this function sends notification, if bidder is online
 void WorldSession::SendAuctionBidderNotification(uint32 location, uint32 auctionId, ObjectGuid bidder, uint32 bidSum, uint32 diff, uint32 itemEntry)
 {
-    WorldPacket data(SMSG_AUCTION_BIDDER_NOTIFICATION, (8*4));
+    WorldPacket data(SMSG_AUCTION_BIDDER_NOTIFICATION, (8 * 4));
     data << uint32(location);
     data << uint32(auctionId);
     data << uint64(bidder);
@@ -99,7 +99,7 @@ void WorldSession::SendAuctionBidderNotification(uint32 location, uint32 auction
 //this void causes on client to display: "Your auction sold"
 void WorldSession::SendAuctionOwnerNotification(AuctionEntry* auction)
 {
-    WorldPacket data(SMSG_AUCTION_OWNER_NOTIFICATION, (8*4));
+    WorldPacket data(SMSG_AUCTION_OWNER_NOTIFICATION, (8 * 4));
     data << uint32(auction->Id);
     data << uint32(auction->bid);
     data << uint32(0);                                      //unk
@@ -174,12 +174,12 @@ void WorldSession::HandleAuctionSellItem(WorldPacket& recvData)
 
     switch (etime)
     {
-        case 1*MIN_AUCTION_TIME:
-        case 2*MIN_AUCTION_TIME:
-        case 4*MIN_AUCTION_TIME:
-            break;
-        default:
-            return;
+    case 1 * MIN_AUCTION_TIME:
+    case 2 * MIN_AUCTION_TIME:
+    case 4 * MIN_AUCTION_TIME:
+        break;
+    default:
+        return;
     }
 
     if (GetPlayer()->HasUnitState(UNIT_STATE_DIED))
@@ -616,9 +616,9 @@ void WorldSession::HandleAuctionListBidderItems(WorldPacket& recvData)
 
     AuctionHouseObject* auctionHouse = sAuctionMgr->GetAuctionsMap(creature->getFaction());
 
-    WorldPacket data(SMSG_AUCTION_BIDDER_LIST_RESULT, (4+4+4));
+    WorldPacket data(SMSG_AUCTION_BIDDER_LIST_RESULT, (4 + 4 + 4));
     Player* player = GetPlayer();
-    data << (uint32) 0;                                     //add 0 as count
+    data << (uint32)0;                                     //add 0 as count
     uint32 count = 0;
     uint32 totalcount = 0;
     while (outbiddedCount > 0)                             //add all data, which client requires
@@ -665,16 +665,16 @@ void WorldSession::HandleAuctionListOwnerItems(WorldPacket& recvData)
 
     AuctionHouseObject* auctionHouse = sAuctionMgr->GetAuctionsMap(creature->getFaction());
 
-    WorldPacket data(SMSG_AUCTION_OWNER_LIST_RESULT, (4+4+4));
-    data << (uint32) 0;                                     // amount place holder
+    WorldPacket data(SMSG_AUCTION_OWNER_LIST_RESULT, (4 + 4 + 4));
+    data << (uint32)0;                                     // amount place holder
 
     uint32 count = 0;
     uint32 totalcount = 0;
 
     auctionHouse->BuildListOwnerItems(data, _player, count, totalcount);
     data.put<uint32>(0, count);
-    data << (uint32) totalcount;
-    data << (uint32) 0;
+    data << (uint32)totalcount;
+    data << (uint32)0;
     SendPacket(&data);
 }
 
@@ -723,10 +723,10 @@ void WorldSession::HandleAuctionListItems(WorldPacket& recvData)
     TC_LOG_DEBUG("auctionHouse", "Auctionhouse search (%s) list from: %u, searchedname: %s, levelmin: %u, levelmax: %u, auctionSlotID: %u, auctionMainCategory: %u, auctionSubCategory: %u, quality: %u, usable: %u",
         guid.ToString().c_str(), listfrom, searchedname.c_str(), levelmin, levelmax, auctionSlotID, auctionMainCategory, auctionSubCategory, quality, usable);
 
-    WorldPacket data(SMSG_AUCTION_LIST_RESULT, (4+4+4));
+    WorldPacket data(SMSG_AUCTION_LIST_RESULT, (4 + 4 + 4));
     uint32 count = 0;
     uint32 totalcount = 0;
-    data << (uint32) 0;
+    data << (uint32)0;
 
     // converting string that we try to find to lower case
     std::wstring wsearchedname;
@@ -741,8 +741,8 @@ void WorldSession::HandleAuctionListItems(WorldPacket& recvData)
         count, totalcount);
 
     data.put<uint32>(0, count);
-    data << (uint32) totalcount;
-    data << (uint32) 300;                                   // unk 2.3.0 const?
+    data << (uint32)totalcount;
+    data << (uint32)300;                                   // unk 2.3.0 const?
     SendPacket(&data);
 }
 
@@ -758,11 +758,11 @@ void WorldSession::HandleAuctionListPendingSales(WorldPacket& recvData)
     data << uint32(count);                                  // count
     /*for (uint32 i = 0; i < count; ++i)
     {
-        data << "";                                         // string
-        data << "";                                         // string
-        data << uint32(0);
-        data << uint32(0);
-        data << float(0);
+    data << "";                                         // string
+    data << "";                                         // string
+    data << uint32(0);
+    data << uint32(0);
+    data << float(0);
     }*/
     SendPacket(&data);
 }

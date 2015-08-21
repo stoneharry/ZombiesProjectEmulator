@@ -30,9 +30,9 @@
 #include "Totem.h"
 
 Transport::Transport() : GameObject(),
-    _transportInfo(NULL), _isMoving(true), _pendingStop(false),
-    _triggeredArrivalEvent(false), _triggeredDepartureEvent(false),
-    _passengerTeleportItr(_passengers.begin()), _delayedAddModel(false)
+_transportInfo(NULL), _isMoving(true), _pendingStop(false),
+_triggeredArrivalEvent(false), _triggeredDepartureEvent(false),
+_passengerTeleportItr(_passengers.begin()), _delayedAddModel(false)
 {
     m_updateFlag = UPDATEFLAG_TRANSPORT | UPDATEFLAG_LOWGUID | UPDATEFLAG_STATIONARY_POSITION | UPDATEFLAG_ROTATION;
 }
@@ -179,8 +179,8 @@ void Transport::Update(uint32 diff)
 
         // Departure event
         if (_currentFrame->IsTeleportFrame())
-            if (TeleportTransport(_nextFrame->Node->mapid, _nextFrame->Node->x, _nextFrame->Node->y, _nextFrame->Node->z, _nextFrame->InitialOrientation))
-                return; // Update more in new map thread
+        if (TeleportTransport(_nextFrame->Node->mapid, _nextFrame->Node->x, _nextFrame->Node->y, _nextFrame->Node->z, _nextFrame->InitialOrientation))
+            return; // Update more in new map thread
     }
 
     // Add model to map after we are fully done with moving maps
@@ -211,7 +211,7 @@ void Transport::Update(uint32 diff)
               2. the grid that transport is currently in becomes active
               3. transport moves from active to inactive grid
               4. the grid that transport is currently in unloads
-            */
+              */
             bool gridActive = GetMap()->IsGridLoaded(GetPositionX(), GetPositionY());
 
             if (_staticPassengers.empty() && gridActive) // 2.
@@ -304,7 +304,7 @@ Creature* Transport::CreateNPCPassenger(uint32 guid, CreatureData const* data)
 
     if (!creature->IsPositionValid())
     {
-        TC_LOG_ERROR("entities.transport", "Creature (guidlow %d, entry %d) not created. Suggested coordinates aren't valid (X: %f Y: %f)",creature->GetGUIDLow(),creature->GetEntry(),creature->GetPositionX(),creature->GetPositionY());
+        TC_LOG_ERROR("entities.transport", "Creature (guidlow %d, entry %d) not created. Suggested coordinates aren't valid (X: %f Y: %f)", creature->GetGUIDLow(), creature->GetEntry(), creature->GetPositionX(), creature->GetPositionY());
         delete creature;
         return NULL;
     }
@@ -372,46 +372,46 @@ TempSummon* Transport::SummonPassenger(uint32 entry, Position const& pos, TempSu
     {
         switch (properties->Category)
         {
-            case SUMMON_CATEGORY_PET:
-                mask = UNIT_MASK_GUARDIAN;
-                break;
-            case SUMMON_CATEGORY_PUPPET:
-                mask = UNIT_MASK_PUPPET;
-                break;
-            case SUMMON_CATEGORY_VEHICLE:
-                mask = UNIT_MASK_MINION;
-                break;
-            case SUMMON_CATEGORY_WILD:
-            case SUMMON_CATEGORY_ALLY:
-            case SUMMON_CATEGORY_UNK:
-            {
-                switch (properties->Type)
-                {
-                    case SUMMON_TYPE_MINION:
-                    case SUMMON_TYPE_GUARDIAN:
-                    case SUMMON_TYPE_GUARDIAN2:
-                        mask = UNIT_MASK_GUARDIAN;
-                        break;
-                    case SUMMON_TYPE_TOTEM:
-                    case SUMMON_TYPE_LIGHTWELL:
-                        mask = UNIT_MASK_TOTEM;
-                        break;
-                    case SUMMON_TYPE_VEHICLE:
-                    case SUMMON_TYPE_VEHICLE2:
-                        mask = UNIT_MASK_SUMMON;
-                        break;
-                    case SUMMON_TYPE_MINIPET:
-                        mask = UNIT_MASK_MINION;
-                        break;
-                    default:
-                        if (properties->Flags & 512) // Mirror Image, Summon Gargoyle
-                            mask = UNIT_MASK_GUARDIAN;
-                        break;
-                }
-                break;
-            }
-            default:
-                return NULL;
+        case SUMMON_CATEGORY_PET:
+            mask = UNIT_MASK_GUARDIAN;
+            break;
+        case SUMMON_CATEGORY_PUPPET:
+            mask = UNIT_MASK_PUPPET;
+            break;
+        case SUMMON_CATEGORY_VEHICLE:
+            mask = UNIT_MASK_MINION;
+            break;
+        case SUMMON_CATEGORY_WILD:
+        case SUMMON_CATEGORY_ALLY:
+        case SUMMON_CATEGORY_UNK:
+        {
+                                    switch (properties->Type)
+                                    {
+                                    case SUMMON_TYPE_MINION:
+                                    case SUMMON_TYPE_GUARDIAN:
+                                    case SUMMON_TYPE_GUARDIAN2:
+                                        mask = UNIT_MASK_GUARDIAN;
+                                        break;
+                                    case SUMMON_TYPE_TOTEM:
+                                    case SUMMON_TYPE_LIGHTWELL:
+                                        mask = UNIT_MASK_TOTEM;
+                                        break;
+                                    case SUMMON_TYPE_VEHICLE:
+                                    case SUMMON_TYPE_VEHICLE2:
+                                        mask = UNIT_MASK_SUMMON;
+                                        break;
+                                    case SUMMON_TYPE_MINIPET:
+                                        mask = UNIT_MASK_MINION;
+                                        break;
+                                    default:
+                                        if (properties->Flags & 512) // Mirror Image, Summon Gargoyle
+                                            mask = UNIT_MASK_GUARDIAN;
+                                        break;
+                                    }
+                                    break;
+        }
+        default:
+            return NULL;
         }
     }
 
@@ -422,21 +422,21 @@ TempSummon* Transport::SummonPassenger(uint32 entry, Position const& pos, TempSu
     TempSummon* summon = NULL;
     switch (mask)
     {
-        case UNIT_MASK_SUMMON:
-            summon = new TempSummon(properties, summoner, false);
-            break;
-        case UNIT_MASK_GUARDIAN:
-            summon = new Guardian(properties, summoner, false);
-            break;
-        case UNIT_MASK_PUPPET:
-            summon = new Puppet(properties, summoner);
-            break;
-        case UNIT_MASK_TOTEM:
-            summon = new Totem(properties, summoner);
-            break;
-        case UNIT_MASK_MINION:
-            summon = new Minion(properties, summoner, false);
-            break;
+    case UNIT_MASK_SUMMON:
+        summon = new TempSummon(properties, summoner, false);
+        break;
+    case UNIT_MASK_GUARDIAN:
+        summon = new Guardian(properties, summoner, false);
+        break;
+    case UNIT_MASK_PUPPET:
+        summon = new Puppet(properties, summoner);
+        break;
+    case UNIT_MASK_TOTEM:
+        summon = new Totem(properties, summoner);
+        break;
+    case UNIT_MASK_MINION:
+        summon = new Minion(properties, summoner, false);
+        break;
     }
 
     float x, y, z, o;
@@ -494,7 +494,7 @@ void Transport::UpdatePosition(float x, float y, float z, float o)
       2. the grid that transport is currently in becomes active
       3. transport moves from active to inactive grid
       4. the grid that transport is currently in unloads
-    */
+      */
     if (_staticPassengers.empty() && newActive) // 1.
         LoadStaticPassengers();
     else if (!_staticPassengers.empty() && !newActive && oldCell.DiffGrid(Cell(GetPositionX(), GetPositionY()))) // 3.
@@ -559,8 +559,8 @@ float Transport::CalculateSegmentPos(float now)
     KeyFrame const& frame = *_currentFrame;
     const float speed = float(m_goInfo->moTransport.moveSpeed);
     const float accel = float(m_goInfo->moTransport.accelRate);
-    float timeSinceStop = frame.TimeFrom + (now - (1.0f/IN_MILLISECONDS) * frame.DepartureTime);
-    float timeUntilStop = frame.TimeTo - (now - (1.0f/IN_MILLISECONDS) * frame.DepartureTime);
+    float timeSinceStop = frame.TimeFrom + (now - (1.0f / IN_MILLISECONDS) * frame.DepartureTime);
+    float timeUntilStop = frame.TimeTo - (now - (1.0f / IN_MILLISECONDS) * frame.DepartureTime);
     float segmentPos, dist;
     float accelTime = _transportInfo->accelTime;
     float accelDist = _transportInfo->accelDist;
@@ -606,16 +606,16 @@ bool Transport::TeleportTransport(uint32 newMapid, float x, float y, float z, fl
 
             switch (obj->GetTypeId())
             {
-                case TYPEID_PLAYER:
-                    if (!obj->ToPlayer()->TeleportTo(newMapid, destX, destY, destZ, destO, TELE_TO_NOT_LEAVE_TRANSPORT))
-                        RemovePassenger(obj);
-                    break;
-                case TYPEID_DYNAMICOBJECT:
-                    obj->AddObjectToRemoveList();
-                    break;
-                default:
+            case TYPEID_PLAYER:
+                if (!obj->ToPlayer()->TeleportTo(newMapid, destX, destY, destZ, destO, TELE_TO_NOT_LEAVE_TRANSPORT))
                     RemovePassenger(obj);
-                    break;
+                break;
+            case TYPEID_DYNAMICOBJECT:
+                obj->AddObjectToRemoveList();
+                break;
+            default:
+                RemovePassenger(obj);
+                break;
             }
         }
 
@@ -655,8 +655,8 @@ void Transport::UpdatePassengerPositions(PassengerSet& passengers)
         // if passenger is on vehicle we have to assume the vehicle is also on transport
         // and its the vehicle that will be updating its passengers
         if (Unit* unit = passenger->ToUnit())
-            if (unit->GetVehicle())
-                continue;
+        if (unit->GetVehicle())
+            continue;
 
         // Do not use Unit::UpdatePosition here, we don't want to remove auras
         // as if regular movement occurred
@@ -665,33 +665,33 @@ void Transport::UpdatePassengerPositions(PassengerSet& passengers)
         CalculatePassengerPosition(x, y, z, &o);
         switch (passenger->GetTypeId())
         {
-            case TYPEID_UNIT:
-            {
-                Creature* creature = passenger->ToCreature();
-                GetMap()->CreatureRelocation(creature, x, y, z, o, false);
-                creature->GetTransportHomePosition(x, y, z, o);
-                CalculatePassengerPosition(x, y, z, &o);
-                creature->SetHomePosition(x, y, z, o);
-                break;
-            }
-            case TYPEID_PLAYER:
-                //relocate only passengers in world and skip any player that might be still logging in/teleporting
-                if (passenger->IsInWorld())
-                    GetMap()->PlayerRelocation(passenger->ToPlayer(), x, y, z, o);
-                break;
-            case TYPEID_GAMEOBJECT:
-                GetMap()->GameObjectRelocation(passenger->ToGameObject(), x, y, z, o, false);
-                break;
-            case TYPEID_DYNAMICOBJECT:
-                GetMap()->DynamicObjectRelocation(passenger->ToDynObject(), x, y, z, o);
-                break;
-            default:
-                break;
+        case TYPEID_UNIT:
+        {
+                            Creature* creature = passenger->ToCreature();
+                            GetMap()->CreatureRelocation(creature, x, y, z, o, false);
+                            creature->GetTransportHomePosition(x, y, z, o);
+                            CalculatePassengerPosition(x, y, z, &o);
+                            creature->SetHomePosition(x, y, z, o);
+                            break;
+        }
+        case TYPEID_PLAYER:
+            //relocate only passengers in world and skip any player that might be still logging in/teleporting
+            if (passenger->IsInWorld())
+                GetMap()->PlayerRelocation(passenger->ToPlayer(), x, y, z, o);
+            break;
+        case TYPEID_GAMEOBJECT:
+            GetMap()->GameObjectRelocation(passenger->ToGameObject(), x, y, z, o, false);
+            break;
+        case TYPEID_DYNAMICOBJECT:
+            GetMap()->DynamicObjectRelocation(passenger->ToDynObject(), x, y, z, o);
+            break;
+        default:
+            break;
         }
 
         if (Unit* unit = passenger->ToUnit())
-            if (Vehicle* vehicle = unit->GetVehicleKit())
-                vehicle->RelocatePassengers();
+        if (Vehicle* vehicle = unit->GetVehicleKit())
+            vehicle->RelocatePassengers();
     }
 }
 

@@ -22,16 +22,16 @@
 
 class MySQL
 {
-    public:
-        static void Library_Init()
-        {
-            mysql_library_init(-1, NULL, NULL);
-        }
+public:
+    static void Library_Init()
+    {
+        mysql_library_init(-1, NULL, NULL);
+    }
 
-        static void Library_End()
-        {
-            mysql_library_end();
-        }
+    static void Library_End()
+    {
+        mysql_library_end();
+    }
 };
 
 #endif

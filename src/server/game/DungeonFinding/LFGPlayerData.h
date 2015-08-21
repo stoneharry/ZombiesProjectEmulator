@@ -23,11 +23,11 @@
 namespace lfg
 {
 
-/**
-    Stores all lfg data needed about the player.
-*/
-class LfgPlayerData
-{
+    /**
+        Stores all lfg data needed about the player.
+        */
+    class LfgPlayerData
+    {
     public:
         LfgPlayerData();
         ~LfgPlayerData();
@@ -66,7 +66,7 @@ class LfgPlayerData
         uint8 m_Roles;                                     ///< Roles the player selected when joined LFG
         std::string m_Comment;                             ///< Player comment used when joined LFG
         LfgDungeonSet m_SelectedDungeons;                  ///< Selected Dungeons when joined LFG
-};
+    };
 
 } // namespace lfg
 

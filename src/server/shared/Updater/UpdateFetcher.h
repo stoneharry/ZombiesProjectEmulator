@@ -36,7 +36,7 @@ public:
         std::function<QueryResult(std::string const&)> const& retrieve);
 
     uint32 Update(bool const redundancyChecks, bool const allowRehash,
-                  bool const archivedRedundancy, int32 const cleanDeadReferencesMaxCount) const;
+        bool const archivedRedundancy, int32 const cleanDeadReferencesMaxCount) const;
 
 private:
     enum UpdateMode
@@ -54,7 +54,7 @@ private:
     struct AppliedFileEntry
     {
         AppliedFileEntry(std::string const& name_, std::string const& hash_, State state_, uint64 timestamp_)
-            : name(name_), hash(hash_), state(state_), timestamp(timestamp_) { }
+        : name(name_), hash(hash_), state(state_), timestamp(timestamp_) { }
 
         std::string const name;
 

@@ -28,23 +28,23 @@ class ChatHandler;
 enum GMTicketSystemStatus
 {
     GMTICKET_QUEUE_STATUS_DISABLED = 0,
-    GMTICKET_QUEUE_STATUS_ENABLED  = 1
+    GMTICKET_QUEUE_STATUS_ENABLED = 1
 };
 
 enum GMTicketStatus
 {
-    GMTICKET_STATUS_HASTEXT                      = 0x06,
-    GMTICKET_STATUS_DEFAULT                      = 0x0A
+    GMTICKET_STATUS_HASTEXT = 0x06,
+    GMTICKET_STATUS_DEFAULT = 0x0A
 };
 
 enum GMTicketResponse
 {
-    GMTICKET_RESPONSE_ALREADY_EXIST               = 1,
-    GMTICKET_RESPONSE_CREATE_SUCCESS              = 2,
-    GMTICKET_RESPONSE_CREATE_ERROR                = 3,
-    GMTICKET_RESPONSE_UPDATE_SUCCESS              = 4,
-    GMTICKET_RESPONSE_UPDATE_ERROR                = 5,
-    GMTICKET_RESPONSE_TICKET_DELETED              = 9
+    GMTICKET_RESPONSE_ALREADY_EXIST = 1,
+    GMTICKET_RESPONSE_CREATE_SUCCESS = 2,
+    GMTICKET_RESPONSE_CREATE_ERROR = 3,
+    GMTICKET_RESPONSE_UPDATE_SUCCESS = 4,
+    GMTICKET_RESPONSE_UPDATE_ERROR = 5,
+    GMTICKET_RESPONSE_TICKET_DELETED = 9
 };
 
 // from Blizzard LUA:
@@ -54,17 +54,17 @@ enum GMTicketResponse
 // 3 is a custom value and should never actually be sent
 enum GMTicketEscalationStatus
 {
-    TICKET_UNASSIGNED                             = 0,
-    TICKET_ASSIGNED                               = 1,
-    TICKET_IN_ESCALATION_QUEUE                    = 2,
-    TICKET_ESCALATED_ASSIGNED                     = 3
+    TICKET_UNASSIGNED = 0,
+    TICKET_ASSIGNED = 1,
+    TICKET_IN_ESCALATION_QUEUE = 2,
+    TICKET_ESCALATED_ASSIGNED = 3
 };
 
 // from blizzard lua
 enum GMTicketOpenedByGMStatus
 {
     GMTICKET_OPENEDBYGM_STATUS_NOT_OPENED = 0,      // ticket has never been opened by a gm
-    GMTICKET_OPENEDBYGM_STATUS_OPENED     = 1       // ticket has been opened by a gm
+    GMTICKET_OPENEDBYGM_STATUS_OPENED = 1       // ticket has been opened by a gm
 };
 
 enum LagReportType
@@ -199,8 +199,8 @@ public:
     GmTicket* GetTicketByPlayer(ObjectGuid playerGuid)
     {
         for (GmTicketList::const_iterator itr = _ticketList.begin(); itr != _ticketList.end(); ++itr)
-            if (itr->second && itr->second->IsFromPlayer(playerGuid) && !itr->second->IsClosed())
-                return itr->second;
+        if (itr->second && itr->second->IsFromPlayer(playerGuid) && !itr->second->IsClosed())
+            return itr->second;
 
         return NULL;
     }
@@ -208,8 +208,8 @@ public:
     GmTicket* GetOldestOpenTicket()
     {
         for (GmTicketList::const_iterator itr = _ticketList.begin(); itr != _ticketList.end(); ++itr)
-            if (itr->second && !itr->second->IsClosed() && !itr->second->IsCompleted())
-                return itr->second;
+        if (itr->second && !itr->second->IsClosed() && !itr->second->IsCompleted())
+            return itr->second;
 
         return NULL;
     }

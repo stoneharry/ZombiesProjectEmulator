@@ -28,12 +28,12 @@ EndScriptData */
 
 enum Says
 {
-    SAY_SPAWN                   = 0
+    SAY_SPAWN = 0
 };
 
 enum Spells
 {
-    SPELL_RAVENOUSCLAW          = 17470
+    SPELL_RAVENOUSCLAW = 17470
 };
 
 class boss_timmy_the_cruel : public CreatureScript
@@ -89,7 +89,8 @@ public:
                 DoCastVictim(SPELL_RAVENOUSCLAW);
                 //15 seconds until we should cast this again
                 RavenousClaw_Timer = 15000;
-            } else RavenousClaw_Timer -= diff;
+            }
+            else RavenousClaw_Timer -= diff;
 
             DoMeleeAttackIfReady();
         }

@@ -40,52 +40,52 @@ EndContentData */
 
 enum Sylvanas
 {
-    QUEST_JOURNEY_TO_UNDERCITY      = 9180,
+    QUEST_JOURNEY_TO_UNDERCITY = 9180,
 
-    EMOTE_LAMENT_END                = 0,
-    SAY_LAMENT_END                  = 1,
-    EMOTE_LAMENT                    = 2,
+    EMOTE_LAMENT_END = 0,
+    SAY_LAMENT_END = 1,
+    EMOTE_LAMENT = 2,
 
     // Ambassador Sunsorrow
-    SAY_SUNSORROW_WHISPER           = 0,
+    SAY_SUNSORROW_WHISPER = 0,
 
-    SOUND_CREDIT                    = 10896,
+    SOUND_CREDIT = 10896,
 
-    NPC_HIGHBORNE_LAMENTER          = 21628,
-    NPC_HIGHBORNE_BUNNY             = 21641,
-    NPC_AMBASSADOR_SUNSORROW        = 16287,
+    NPC_HIGHBORNE_LAMENTER = 21628,
+    NPC_HIGHBORNE_BUNNY = 21641,
+    NPC_AMBASSADOR_SUNSORROW = 16287,
 
-    SPELL_HIGHBORNE_AURA            = 37090,
-    SPELL_SYLVANAS_CAST             = 36568,
+    SPELL_HIGHBORNE_AURA = 37090,
+    SPELL_SYLVANAS_CAST = 36568,
     //SPELL_RIBBON_OF_SOULS         = 34432, the real one to use might be 37099
-    SPELL_RIBBON_OF_SOULS           = 37099,
+    SPELL_RIBBON_OF_SOULS = 37099,
 
     // Combat spells
-    SPELL_BLACK_ARROW               = 59712,
-    SPELL_FADE                      = 20672,
-    SPELL_FADE_BLINK                = 29211,
-    SPELL_MULTI_SHOT                = 59713,
-    SPELL_SHOT                      = 59710,
-    SPELL_SUMMON_SKELETON           = 59711,
+    SPELL_BLACK_ARROW = 59712,
+    SPELL_FADE = 20672,
+    SPELL_FADE_BLINK = 29211,
+    SPELL_MULTI_SHOT = 59713,
+    SPELL_SHOT = 59710,
+    SPELL_SUMMON_SKELETON = 59711,
 
     // Events
-    EVENT_FADE                      = 1,
-    EVENT_SUMMON_SKELETON           = 2,
-    EVENT_BLACK_ARROW               = 3,
-    EVENT_SHOOT                     = 4,
-    EVENT_MULTI_SHOT                = 5,
-    EVENT_LAMENT_OF_THE_HIGHBORN    = 6,
-    EVENT_SUNSORROW_WHISPER         = 7,
+    EVENT_FADE = 1,
+    EVENT_SUMMON_SKELETON = 2,
+    EVENT_BLACK_ARROW = 3,
+    EVENT_SHOOT = 4,
+    EVENT_MULTI_SHOT = 5,
+    EVENT_LAMENT_OF_THE_HIGHBORN = 6,
+    EVENT_SUNSORROW_WHISPER = 7,
 
-    GUID_EVENT_INVOKER              = 1,
+    GUID_EVENT_INVOKER = 1,
 };
 
-float HighborneLoc[4][3]=
+float HighborneLoc[4][3] =
 {
-    {1285.41f, 312.47f, 0.51f},
-    {1286.96f, 310.40f, 1.00f},
-    {1289.66f, 309.66f, 1.52f},
-    {1292.51f, 310.50f, 1.99f},
+    { 1285.41f, 312.47f, 0.51f },
+    { 1286.96f, 310.40f, 1.00f },
+    { 1289.66f, 309.66f, 1.52f },
+    { 1292.51f, 310.50f, 1.99f },
 };
 
 #define HIGHBORNE_LOC_Y             -61.00f
@@ -158,7 +158,7 @@ public:
                 if (Creature* target = ObjectAccessor::GetCreature(*summoned, targetGUID))
                 {
                     target->GetMotionMaster()->MoveJump(target->GetPositionX(), target->GetPositionY(), me->GetPositionZ() + 15.0f, 0);
-                    target->SetPosition(target->GetPositionX(), target->GetPositionY(), me->GetPositionZ()+15.0f, 0.0f);
+                    target->SetPosition(target->GetPositionX(), target->GetPositionY(), me->GetPositionZ() + 15.0f, 0.0f);
                     summoned->CastSpell(target, SPELL_RIBBON_OF_SOULS, false);
                 }
 
@@ -181,57 +181,57 @@ public:
             {
                 switch (eventId)
                 {
-                    case EVENT_FADE:
-                        DoCast(me, SPELL_FADE);
-                        // add a blink to simulate a stealthed movement and reappearing elsewhere
-                        DoCast(me, SPELL_FADE_BLINK);
-                        // if the victim is out of melee range she cast multi shot
-                        if (Unit* victim = me->GetVictim())
-                            if (me->GetDistance(victim) > 10.0f)
-                                DoCast(victim, SPELL_MULTI_SHOT);
-                        _events.ScheduleEvent(EVENT_FADE, urand(30000, 35000));
-                        break;
-                    case EVENT_SUMMON_SKELETON:
-                        DoCast(me, SPELL_SUMMON_SKELETON);
-                        _events.ScheduleEvent(EVENT_SUMMON_SKELETON, urand(20000, 30000));
-                        break;
-                    case EVENT_BLACK_ARROW:
-                        if (Unit* victim = me->GetVictim())
-                            DoCast(victim, SPELL_BLACK_ARROW);
-                        _events.ScheduleEvent(EVENT_BLACK_ARROW, urand(15000, 20000));
-                        break;
-                    case EVENT_SHOOT:
-                        if (Unit* victim = me->GetVictim())
-                            DoCast(victim, SPELL_SHOT);
-                        _events.ScheduleEvent(EVENT_SHOOT, urand(8000, 10000));
-                        break;
-                    case EVENT_MULTI_SHOT:
-                        if (Unit* victim = me->GetVictim())
-                            DoCast(victim, SPELL_MULTI_SHOT);
-                        _events.ScheduleEvent(EVENT_MULTI_SHOT, urand(10000, 13000));
-                        break;
-                    case EVENT_LAMENT_OF_THE_HIGHBORN:
-                        if (!me->HasAura(SPELL_SYLVANAS_CAST))
-                        {
-                            Talk(SAY_LAMENT_END);
-                            Talk(EMOTE_LAMENT_END);
-                            LamentEvent = false;
-                            me->HandleEmoteCommand(EMOTE_ONESHOT_KNEEL);
-                            Reset();
-                        }
-                        else
-                        {
-                            DoSummon(NPC_HIGHBORNE_BUNNY, me, 10.0f, 3000, TEMPSUMMON_TIMED_DESPAWN);
-                            _events.ScheduleEvent(EVENT_LAMENT_OF_THE_HIGHBORN, 2000);
-                        }
-                        break;
-                    case EVENT_SUNSORROW_WHISPER:
-                        if (Creature* ambassador = me->FindNearestCreature(NPC_AMBASSADOR_SUNSORROW, 20.0f))
-                            if (Player* player = ObjectAccessor::GetPlayer(*me, playerGUID))
-                                ambassador->AI()->Talk(SAY_SUNSORROW_WHISPER, player);
-                        break;
-                    default:
-                        break;
+                case EVENT_FADE:
+                    DoCast(me, SPELL_FADE);
+                    // add a blink to simulate a stealthed movement and reappearing elsewhere
+                    DoCast(me, SPELL_FADE_BLINK);
+                    // if the victim is out of melee range she cast multi shot
+                    if (Unit* victim = me->GetVictim())
+                    if (me->GetDistance(victim) > 10.0f)
+                        DoCast(victim, SPELL_MULTI_SHOT);
+                    _events.ScheduleEvent(EVENT_FADE, urand(30000, 35000));
+                    break;
+                case EVENT_SUMMON_SKELETON:
+                    DoCast(me, SPELL_SUMMON_SKELETON);
+                    _events.ScheduleEvent(EVENT_SUMMON_SKELETON, urand(20000, 30000));
+                    break;
+                case EVENT_BLACK_ARROW:
+                    if (Unit* victim = me->GetVictim())
+                        DoCast(victim, SPELL_BLACK_ARROW);
+                    _events.ScheduleEvent(EVENT_BLACK_ARROW, urand(15000, 20000));
+                    break;
+                case EVENT_SHOOT:
+                    if (Unit* victim = me->GetVictim())
+                        DoCast(victim, SPELL_SHOT);
+                    _events.ScheduleEvent(EVENT_SHOOT, urand(8000, 10000));
+                    break;
+                case EVENT_MULTI_SHOT:
+                    if (Unit* victim = me->GetVictim())
+                        DoCast(victim, SPELL_MULTI_SHOT);
+                    _events.ScheduleEvent(EVENT_MULTI_SHOT, urand(10000, 13000));
+                    break;
+                case EVENT_LAMENT_OF_THE_HIGHBORN:
+                    if (!me->HasAura(SPELL_SYLVANAS_CAST))
+                    {
+                        Talk(SAY_LAMENT_END);
+                        Talk(EMOTE_LAMENT_END);
+                        LamentEvent = false;
+                        me->HandleEmoteCommand(EMOTE_ONESHOT_KNEEL);
+                        Reset();
+                    }
+                    else
+                    {
+                        DoSummon(NPC_HIGHBORNE_BUNNY, me, 10.0f, 3000, TEMPSUMMON_TIMED_DESPAWN);
+                        _events.ScheduleEvent(EVENT_LAMENT_OF_THE_HIGHBORN, 2000);
+                    }
+                    break;
+                case EVENT_SUNSORROW_WHISPER:
+                    if (Creature* ambassador = me->FindNearestCreature(NPC_AMBASSADOR_SUNSORROW, 20.0f))
+                    if (Player* player = ObjectAccessor::GetPlayer(*me, playerGUID))
+                        ambassador->AI()->Talk(SAY_SUNSORROW_WHISPER, player);
+                    break;
+                default:
+                    break;
                 }
             }
 
@@ -302,7 +302,8 @@ public:
                     me->MonsterMoveWithSpeed(me->GetPositionX(), me->GetPositionY(), HIGHBORNE_LOC_Y_NEW, me->GetDistance(me->GetPositionX(), me->GetPositionY(), HIGHBORNE_LOC_Y_NEW) / (5000 * 0.001f));
                     me->SetPosition(me->GetPositionX(), me->GetPositionY(), HIGHBORNE_LOC_Y_NEW, me->GetOrientation());
                     EventMove = false;
-                } else EventMoveTimer -= diff;
+                }
+                else EventMoveTimer -= diff;
             }
             if (EventCast)
             {
@@ -310,7 +311,8 @@ public:
                 {
                     DoCast(me, SPELL_HIGHBORNE_AURA);
                     EventCast = false;
-                } else EventCastTimer -= diff;
+                }
+                else EventCastTimer -= diff;
             }
         }
     };
@@ -322,7 +324,7 @@ public:
 
 enum ParqualFintallas
 {
-    SPELL_MARK_OF_SHAME         = 6767
+    SPELL_MARK_OF_SHAME = 6767
 };
 
 #define GOSSIP_HPF1             "Gul'dan"
@@ -337,12 +339,12 @@ public:
     bool OnGossipSelect(Player* player, Creature* creature, uint32 /*sender*/, uint32 action) override
     {
         player->PlayerTalkClass->ClearMenus();
-        if (action == GOSSIP_ACTION_INFO_DEF+1)
+        if (action == GOSSIP_ACTION_INFO_DEF + 1)
         {
             player->CLOSE_GOSSIP_MENU();
             creature->CastSpell(player, SPELL_MARK_OF_SHAME, false);
         }
-        if (action == GOSSIP_ACTION_INFO_DEF+2)
+        if (action == GOSSIP_ACTION_INFO_DEF + 2)
         {
             player->CLOSE_GOSSIP_MENU();
             player->AreaExploredOrEventHappens(6628);
@@ -357,9 +359,9 @@ public:
 
         if (player->GetQuestStatus(6628) == QUEST_STATUS_INCOMPLETE && !player->HasAura(SPELL_MARK_OF_SHAME))
         {
-            player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_HPF1, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
-            player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_HPF2, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
-            player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_HPF3, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+2);
+            player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_HPF1, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
+            player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_HPF2, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
+            player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_HPF3, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 2);
             player->SEND_GOSSIP_MENU(5822, creature->GetGUID());
         }
         else

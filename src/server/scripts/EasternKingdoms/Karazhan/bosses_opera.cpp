@@ -35,66 +35,66 @@ EndScriptData */
 /*********************************/
 enum Says
 {
-    SAY_DOROTHEE_DEATH          = 0,
-    SAY_DOROTHEE_SUMMON         = 1,
-    SAY_DOROTHEE_TITO_DEATH     = 2,
-    SAY_DOROTHEE_AGGRO          = 3,
+    SAY_DOROTHEE_DEATH = 0,
+    SAY_DOROTHEE_SUMMON = 1,
+    SAY_DOROTHEE_TITO_DEATH = 2,
+    SAY_DOROTHEE_AGGRO = 3,
 
-    SAY_ROAR_AGGRO              = 0,
-    SAY_ROAR_DEATH              = 1,
-    SAY_ROAR_SLAY               = 2,
+    SAY_ROAR_AGGRO = 0,
+    SAY_ROAR_DEATH = 1,
+    SAY_ROAR_SLAY = 2,
 
-    SAY_STRAWMAN_AGGRO          = 0,
-    SAY_STRAWMAN_DEATH          = 1,
-    SAY_STRAWMAN_SLAY           = 2,
+    SAY_STRAWMAN_AGGRO = 0,
+    SAY_STRAWMAN_DEATH = 1,
+    SAY_STRAWMAN_SLAY = 2,
 
-    SAY_TINHEAD_AGGRO           = 0,
-    SAY_TINHEAD_DEATH           = 1,
-    SAY_TINHEAD_SLAY            = 2,
-    EMOTE_RUST                  = 3,
+    SAY_TINHEAD_AGGRO = 0,
+    SAY_TINHEAD_DEATH = 1,
+    SAY_TINHEAD_SLAY = 2,
+    EMOTE_RUST = 3,
 
-    SAY_CRONE_AGGRO             = 0,
-    SAY_CRONE_DEATH             = 1,
-    SAY_CRONE_SLAY              = 2,
+    SAY_CRONE_AGGRO = 0,
+    SAY_CRONE_DEATH = 1,
+    SAY_CRONE_SLAY = 2,
 };
 
 enum Spells
 {
     // Dorothee
-    SPELL_WATERBOLT         = 31012,
-    SPELL_SCREAM            = 31013,
-    SPELL_SUMMONTITO        = 31014,
+    SPELL_WATERBOLT = 31012,
+    SPELL_SCREAM = 31013,
+    SPELL_SUMMONTITO = 31014,
 
     // Tito
-    SPELL_YIPPING           = 31015,
+    SPELL_YIPPING = 31015,
 
     // Strawman
-    SPELL_BRAIN_BASH        = 31046,
-    SPELL_BRAIN_WIPE        = 31069,
-    SPELL_BURNING_STRAW     = 31075,
+    SPELL_BRAIN_BASH = 31046,
+    SPELL_BRAIN_WIPE = 31069,
+    SPELL_BURNING_STRAW = 31075,
 
     // Tinhead
-    SPELL_CLEAVE            = 31043,
-    SPELL_RUST              = 31086,
+    SPELL_CLEAVE = 31043,
+    SPELL_RUST = 31086,
 
     // Roar
-    SPELL_MANGLE            = 31041,
-    SPELL_SHRED             = 31042,
+    SPELL_MANGLE = 31041,
+    SPELL_SHRED = 31042,
     SPELL_FRIGHTENED_SCREAM = 31013,
 
     // Crone
-    SPELL_CHAIN_LIGHTNING   = 32337,
+    SPELL_CHAIN_LIGHTNING = 32337,
 
     // Cyclone
-    SPELL_KNOCKBACK         = 32334,
-    SPELL_CYCLONE_VISUAL    = 32332,
+    SPELL_KNOCKBACK = 32334,
+    SPELL_CYCLONE_VISUAL = 32332,
 };
 
 enum Creatures
 {
-    CREATURE_TITO           = 17548,
-    CREATURE_CYCLONE        = 18412,
-    CREATURE_CRONE          = 18168,
+    CREATURE_TITO = 17548,
+    CREATURE_CYCLONE = 18412,
+    CREATURE_CRONE = 18168,
 };
 
 void SummonCroneIfReady(InstanceScript* instance, Creature* creature)
@@ -103,7 +103,7 @@ void SummonCroneIfReady(InstanceScript* instance, Creature* creature)
 
     if (instance->GetData(DATA_OPERA_OZ_DEATHCOUNT) == 4)
     {
-        if (Creature* pCrone = creature->SummonCreature(CREATURE_CRONE, -10891.96f, -1755.95f, creature->GetPositionZ(), 4.64f, TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, HOUR*2*IN_MILLISECONDS))
+        if (Creature* pCrone = creature->SummonCreature(CREATURE_CRONE, -10891.96f, -1755.95f, creature->GetPositionZ(), 4.64f, TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, HOUR * 2 * IN_MILLISECONDS))
         {
             if (creature->GetVictim())
                 pCrone->AI()->AttackStart(creature->GetVictim());
@@ -201,7 +201,8 @@ public:
                 {
                     me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
                     AggroTimer = 0;
-                } else AggroTimer -= diff;
+                }
+                else AggroTimer -= diff;
             }
 
             if (!UpdateVictim())
@@ -211,13 +212,15 @@ public:
             {
                 DoCast(SelectTarget(SELECT_TARGET_RANDOM, 0), SPELL_WATERBOLT);
                 WaterBoltTimer = TitoDied ? 1500 : 5000;
-            } else WaterBoltTimer -= diff;
+            }
+            else WaterBoltTimer -= diff;
 
             if (FearTimer <= diff)
             {
                 DoCastVictim(SPELL_SCREAM);
                 FearTimer = 30000;
-            } else FearTimer -= diff;
+            }
+            else FearTimer -= diff;
 
             if (!SummonedTito)
             {
@@ -286,7 +289,8 @@ public:
             {
                 DoCastVictim(SPELL_YIPPING);
                 YipTimer = 10000;
-            } else YipTimer -= diff;
+            }
+            else YipTimer -= diff;
 
             DoMeleeAttackIfReady();
         }
@@ -374,8 +378,8 @@ public:
             {
                 /*
                     if (not direct damage(aoe, dot))
-                        return;
-                */
+                    return;
+                    */
 
                 DoCast(me, SPELL_BURNING_STRAW, true);
             }
@@ -401,7 +405,8 @@ public:
                 {
                     me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
                     AggroTimer = 0;
-                } else AggroTimer -= diff;
+                }
+                else AggroTimer -= diff;
             }
 
             if (!UpdateVictim())
@@ -411,14 +416,16 @@ public:
             {
                 DoCastVictim(SPELL_BRAIN_BASH);
                 BrainBashTimer = 15000;
-            } else BrainBashTimer -= diff;
+            }
+            else BrainBashTimer -= diff;
 
             if (BrainWipeTimer <= diff)
             {
                 if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
                     DoCast(target, SPELL_BRAIN_WIPE);
                 BrainWipeTimer = 20000;
-            } else BrainWipeTimer -= diff;
+            }
+            else BrainWipeTimer -= diff;
 
             DoMeleeAttackIfReady();
         }
@@ -512,7 +519,8 @@ public:
                 {
                     me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
                     AggroTimer = 0;
-                } else AggroTimer -= diff;
+                }
+                else AggroTimer -= diff;
             }
 
             if (!UpdateVictim())
@@ -522,7 +530,8 @@ public:
             {
                 DoCastVictim(SPELL_CLEAVE);
                 CleaveTimer = 5000;
-            } else CleaveTimer -= diff;
+            }
+            else CleaveTimer -= diff;
 
             if (RustCount < 8)
             {
@@ -532,7 +541,8 @@ public:
                     Talk(EMOTE_RUST);
                     DoCast(me, SPELL_RUST);
                     RustTimer = 6000;
-                } else RustTimer -= diff;
+                }
+                else RustTimer -= diff;
             }
 
             DoMeleeAttackIfReady();
@@ -625,7 +635,8 @@ public:
                 {
                     me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
                     AggroTimer = 0;
-                } else AggroTimer -= diff;
+                }
+                else AggroTimer -= diff;
             }
 
             if (!UpdateVictim())
@@ -635,19 +646,22 @@ public:
             {
                 DoCastVictim(SPELL_MANGLE);
                 MangleTimer = urand(5000, 8000);
-            } else MangleTimer -= diff;
+            }
+            else MangleTimer -= diff;
 
             if (ShredTimer <= diff)
             {
                 DoCastVictim(SPELL_SHRED);
                 ShredTimer = urand(10000, 15000);
-            } else ShredTimer -= diff;
+            }
+            else ShredTimer -= diff;
 
             if (ScreamTimer <= diff)
             {
                 DoCastVictim(SPELL_FRIGHTENED_SCREAM);
                 ScreamTimer = urand(20000, 30000);
-            } else ScreamTimer -= diff;
+            }
+            else ScreamTimer -= diff;
 
             DoMeleeAttackIfReady();
         }
@@ -695,7 +709,7 @@ public:
 
         void KilledUnit(Unit* /*victim*/) override
         {
-           Talk(SAY_CRONE_SLAY);
+            Talk(SAY_CRONE_SLAY);
         }
 
         void EnterCombat(Unit* /*who*/) override
@@ -730,13 +744,15 @@ public:
                 if (Creature* Cyclone = DoSpawnCreature(CREATURE_CYCLONE, float(urand(0, 9)), float(urand(0, 9)), 0, 0, TEMPSUMMON_TIMED_DESPAWN, 15000))
                     Cyclone->CastSpell(Cyclone, SPELL_CYCLONE_VISUAL, true);
                 CycloneTimer = 30000;
-            } else CycloneTimer -= diff;
+            }
+            else CycloneTimer -= diff;
 
             if (ChainLightningTimer <= diff)
             {
                 DoCastVictim(SPELL_CHAIN_LIGHTNING);
                 ChainLightningTimer = 15000;
-            } else ChainLightningTimer -= diff;
+            }
+            else ChainLightningTimer -= diff;
 
             DoMeleeAttackIfReady();
         }
@@ -789,7 +805,8 @@ public:
                 Position pos = me->GetRandomNearPosition(10);
                 me->GetMotionMaster()->MovePoint(0, pos);
                 MoveTimer = urand(5000, 8000);
-            } else MoveTimer -= diff;
+            }
+            else MoveTimer -= diff;
         }
     };
 };
@@ -799,16 +816,16 @@ public:
 /************************************/
 enum RedRidingHood
 {
-    SAY_WOLF_AGGRO                  = 0,
-    SAY_WOLF_SLAY                   = 1,
-    SAY_WOLF_HOOD                   = 2,
-    SOUND_WOLF_DEATH                = 9275,
+    SAY_WOLF_AGGRO = 0,
+    SAY_WOLF_SLAY = 1,
+    SAY_WOLF_HOOD = 2,
+    SOUND_WOLF_DEATH = 9275,
 
-    SPELL_LITTLE_RED_RIDING_HOOD    = 30768,
-    SPELL_TERRIFYING_HOWL           = 30752,
-    SPELL_WIDE_SWIPE                = 30761,
+    SPELL_LITTLE_RED_RIDING_HOOD = 30768,
+    SPELL_TERRIFYING_HOWL = 30752,
+    SPELL_WIDE_SWIPE = 30761,
 
-    CREATURE_BIG_BAD_WOLF           = 17521,
+    CREATURE_BIG_BAD_WOLF = 17521,
 };
 
 
@@ -826,7 +843,7 @@ public:
         player->PlayerTalkClass->ClearMenus();
         if (action == GOSSIP_ACTION_INFO_DEF)
         {
-            if (Creature* pBigBadWolf = creature->SummonCreature(CREATURE_BIG_BAD_WOLF, 0.0f, 0.0f, 0.0f, 0.0f, TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, HOUR*2*IN_MILLISECONDS))
+            if (Creature* pBigBadWolf = creature->SummonCreature(CREATURE_BIG_BAD_WOLF, 0.0f, 0.0f, 0.0f, 0.0f, TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, HOUR * 2 * IN_MILLISECONDS))
                 pBigBadWolf->AI()->AttackStart(player);
 
             creature->DespawnOrUnsummon();
@@ -956,7 +973,8 @@ public:
 
                     ChaseTimer = 40000;
                 }
-            } else ChaseTimer -= diff;
+            }
+            else ChaseTimer -= diff;
 
             if (IsChasing)
                 return;
@@ -965,13 +983,15 @@ public:
             {
                 DoCastVictim(SPELL_TERRIFYING_HOWL);
                 FearTimer = urand(25000, 35000);
-            } else FearTimer -= diff;
+            }
+            else FearTimer -= diff;
 
             if (SwipeTimer <= diff)
             {
                 DoCastVictim(SPELL_WIDE_SWIPE);
                 SwipeTimer = urand(25000, 30000);
-            } else SwipeTimer -= diff;
+            }
+            else SwipeTimer -= diff;
         }
     };
 };
@@ -983,44 +1003,44 @@ public:
 enum JulianneRomulo
 {
     /**** Speech *****/
-    SAY_JULIANNE_AGGRO              = 0,
-    SAY_JULIANNE_ENTER              = 1,
-    SAY_JULIANNE_DEATH01            = 2,
-    SAY_JULIANNE_DEATH02            = 3,
-    SAY_JULIANNE_RESURRECT          = 4,
-    SAY_JULIANNE_SLAY               = 5,
+    SAY_JULIANNE_AGGRO = 0,
+    SAY_JULIANNE_ENTER = 1,
+    SAY_JULIANNE_DEATH01 = 2,
+    SAY_JULIANNE_DEATH02 = 3,
+    SAY_JULIANNE_RESURRECT = 4,
+    SAY_JULIANNE_SLAY = 5,
 
-    SAY_ROMULO_AGGRO                = 0,
-    SAY_ROMULO_DEATH                = 1,
-    SAY_ROMULO_ENTER                = 2,
-    SAY_ROMULO_RESURRECT            = 3,
-    SAY_ROMULO_SLAY                 = 4,
+    SAY_ROMULO_AGGRO = 0,
+    SAY_ROMULO_DEATH = 1,
+    SAY_ROMULO_ENTER = 2,
+    SAY_ROMULO_RESURRECT = 3,
+    SAY_ROMULO_SLAY = 4,
 
-    SPELL_BLINDING_PASSION          = 30890,
-    SPELL_DEVOTION                  = 30887,
-    SPELL_ETERNAL_AFFECTION         = 30878,
-    SPELL_POWERFUL_ATTRACTION       = 30889,
-    SPELL_DRINK_POISON              = 30907,
+    SPELL_BLINDING_PASSION = 30890,
+    SPELL_DEVOTION = 30887,
+    SPELL_ETERNAL_AFFECTION = 30878,
+    SPELL_POWERFUL_ATTRACTION = 30889,
+    SPELL_DRINK_POISON = 30907,
 
-    SPELL_BACKWARD_LUNGE            = 30815,
-    SPELL_DARING                    = 30841,
-    SPELL_DEADLY_SWATHE             = 30817,
-    SPELL_POISON_THRUST             = 30822,
+    SPELL_BACKWARD_LUNGE = 30815,
+    SPELL_DARING = 30841,
+    SPELL_DEADLY_SWATHE = 30817,
+    SPELL_POISON_THRUST = 30822,
 
-    SPELL_UNDYING_LOVE              = 30951,
-    SPELL_RES_VISUAL                = 24171,
+    SPELL_UNDYING_LOVE = 30951,
+    SPELL_RES_VISUAL = 24171,
 
-    CREATURE_ROMULO                 = 17533,
-    ROMULO_X                        = -10900,
-    ROMULO_Y                        = -1758,
+    CREATURE_ROMULO = 17533,
+    ROMULO_X = -10900,
+    ROMULO_Y = -1758,
 };
 
 
 enum RAJPhase
 {
-    PHASE_JULIANNE      = 0,
-    PHASE_ROMULO        = 1,
-    PHASE_BOTH          = 2,
+    PHASE_JULIANNE = 0,
+    PHASE_ROMULO = 1,
+    PHASE_BOTH = 2,
 };
 
 void PretendToDie(Creature* creature)
@@ -1045,8 +1065,8 @@ void Resurrect(Creature* target)
         target->GetMotionMaster()->MoveChase(target->GetVictim());
         target->AI()->AttackStart(target->GetVictim());
     }
-        else
-            target->GetMotionMaster()->Initialize();
+    else
+        target->GetMotionMaster()->Initialize();
 }
 
 class boss_julianne : public CreatureScript
@@ -1168,7 +1188,7 @@ public:
 
         void KilledUnit(Unit* /*victim*/) override
         {
-           Talk(SAY_JULIANNE_SLAY);
+            Talk(SAY_JULIANNE_SLAY);
         }
 
         void UpdateAI(uint32 diff) override;
@@ -1348,7 +1368,8 @@ public:
                         JulianneDead = false;
                         ResurrectTimer = 10000;
                     }
-                } else ResurrectTimer -= diff;
+                }
+                else ResurrectTimer -= diff;
             }
 
             if (BackwardLungeTimer <= diff)
@@ -1359,26 +1380,30 @@ public:
                     DoCast(target, SPELL_BACKWARD_LUNGE);
                     BackwardLungeTimer = urand(15000, 30000);
                 }
-            } else BackwardLungeTimer -= diff;
+            }
+            else BackwardLungeTimer -= diff;
 
             if (DaringTimer <= diff)
             {
                 DoCast(me, SPELL_DARING);
                 DaringTimer = urand(20000, 40000);
-            } else DaringTimer -= diff;
+            }
+            else DaringTimer -= diff;
 
             if (DeadlySwatheTimer <= diff)
             {
                 if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
                     DoCast(target, SPELL_DEADLY_SWATHE);
                 DeadlySwatheTimer = urand(15000, 25000);
-            } else DeadlySwatheTimer -= diff;
+            }
+            else DeadlySwatheTimer -= diff;
 
             if (PoisonThrustTimer <= diff)
             {
                 DoCastVictim(SPELL_POISON_THRUST);
                 PoisonThrustTimer = urand(10000, 20000);
-            } else PoisonThrustTimer -= diff;
+            }
+            else PoisonThrustTimer -= diff;
 
             DoMeleeAttackIfReady();
         }
@@ -1393,7 +1418,8 @@ void boss_julianne::boss_julianneAI::UpdateAI(uint32 diff)
         {
             Talk(SAY_JULIANNE_ENTER);
             EntryYellTimer = 0;
-        } else EntryYellTimer -= diff;
+        }
+        else EntryYellTimer -= diff;
     }
 
     if (AggroYellTimer)
@@ -1404,7 +1430,8 @@ void boss_julianne::boss_julianneAI::UpdateAI(uint32 diff)
             me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
             me->setFaction(16);
             AggroYellTimer = 0;
-        } else AggroYellTimer -= diff;
+        }
+        else AggroYellTimer -= diff;
     }
 
     if (DrinkPoisonTimer)
@@ -1416,14 +1443,15 @@ void boss_julianne::boss_julianneAI::UpdateAI(uint32 diff)
             Phase = PHASE_ROMULO;
             SummonRomuloTimer = 10000;
             DrinkPoisonTimer = 0;
-        } else DrinkPoisonTimer -= diff;
+        }
+        else DrinkPoisonTimer -= diff;
     }
 
     if (Phase == PHASE_ROMULO && !SummonedRomulo)
     {
         if (SummonRomuloTimer <= diff)
         {
-            if (Creature* pRomulo = me->SummonCreature(CREATURE_ROMULO, ROMULO_X, ROMULO_Y, me->GetPositionZ(), 0, TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, HOUR*2*IN_MILLISECONDS))
+            if (Creature* pRomulo = me->SummonCreature(CREATURE_ROMULO, ROMULO_X, ROMULO_Y, me->GetPositionZ(), 0, TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, HOUR * 2 * IN_MILLISECONDS))
             {
                 RomuloGUID = pRomulo->GetGUID();
                 ENSURE_AI(boss_romulo::boss_romuloAI, pRomulo->AI())->JulianneGUID = me->GetGUID();
@@ -1433,7 +1461,8 @@ void boss_julianne::boss_julianneAI::UpdateAI(uint32 diff)
                 pRomulo->setFaction(16);
             }
             SummonedRomulo = true;
-        } else SummonRomuloTimer -= diff;
+        }
+        else SummonRomuloTimer -= diff;
     }
 
     if (ResurrectSelfTimer)
@@ -1449,7 +1478,8 @@ void boss_julianne::boss_julianneAI::UpdateAI(uint32 diff)
 
             ResurrectSelfTimer = 0;
             ResurrectTimer = 1000;
-        } else ResurrectSelfTimer -= diff;
+        }
+        else ResurrectSelfTimer -= diff;
     }
 
     if (!UpdateVictim() || IsFakingDeath)
@@ -1468,7 +1498,8 @@ void boss_julianne::boss_julianneAI::UpdateAI(uint32 diff)
                 RomuloDead = false;
                 ResurrectTimer = 10000;
             }
-        } else ResurrectTimer -= diff;
+        }
+        else ResurrectTimer -= diff;
     }
 
     if (BlindingPassionTimer <= diff)
@@ -1476,19 +1507,22 @@ void boss_julianne::boss_julianneAI::UpdateAI(uint32 diff)
         if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
             DoCast(target, SPELL_BLINDING_PASSION);
         BlindingPassionTimer = urand(30000, 45000);
-    } else BlindingPassionTimer -= diff;
+    }
+    else BlindingPassionTimer -= diff;
 
     if (DevotionTimer <= diff)
     {
         DoCast(me, SPELL_DEVOTION);
         DevotionTimer = urand(15000, 45000);
-    } else DevotionTimer -= diff;
+    }
+    else DevotionTimer -= diff;
 
     if (PowerfulAttractionTimer <= diff)
     {
         DoCast(SelectTarget(SELECT_TARGET_RANDOM, 0), SPELL_POWERFUL_ATTRACTION);
         PowerfulAttractionTimer = urand(5000, 30000);
-    } else PowerfulAttractionTimer -= diff;
+    }
+    else PowerfulAttractionTimer -= diff;
 
     if (EternalAffectionTimer <= diff)
     {
@@ -1497,10 +1531,12 @@ void boss_julianne::boss_julianneAI::UpdateAI(uint32 diff)
             Creature* Romulo = (ObjectAccessor::GetCreature((*me), RomuloGUID));
             if (Romulo && Romulo->IsAlive() && !RomuloDead)
                 DoCast(Romulo, SPELL_ETERNAL_AFFECTION);
-        } else DoCast(me, SPELL_ETERNAL_AFFECTION);
+        }
+        else DoCast(me, SPELL_ETERNAL_AFFECTION);
 
         EternalAffectionTimer = urand(45000, 60000);
-    } else EternalAffectionTimer -= diff;
+    }
+    else EternalAffectionTimer -= diff;
 
     DoMeleeAttackIfReady();
 }

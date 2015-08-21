@@ -11,7 +11,7 @@
 
 template<class Node>
 struct NodeCreator{
-    static Node * makeNode(int /*x*/, int /*y*/) { return new Node();}
+    static Node * makeNode(int /*x*/, int /*y*/) { return new Node(); }
 };
 
 template<class T,
@@ -28,8 +28,8 @@ public:
         CELL_NUMBER = 64,
     };
 
-    #define HGRID_MAP_SIZE  (533.33333f * 64.f)     // shouldn't be changed
-    #define CELL_SIZE       float(HGRID_MAP_SIZE/(float)CELL_NUMBER)
+#define HGRID_MAP_SIZE  (533.33333f * 64.f)     // shouldn't be changed
+#define CELL_SIZE       float(HGRID_MAP_SIZE/(float)CELL_NUMBER)
 
     typedef G3D::Table<const T*, Node*> MemberTable;
 
@@ -42,8 +42,8 @@ public:
 
     ~RegularGrid2D(){
         for (int x = 0; x < CELL_NUMBER; ++x)
-            for (int y = 0; y < CELL_NUMBER; ++y)
-                delete nodes[x][y];
+        for (int y = 0; y < CELL_NUMBER; ++y)
+            delete nodes[x][y];
     }
 
     void insert(const T& value)
@@ -65,9 +65,9 @@ public:
     void balance()
     {
         for (int x = 0; x < CELL_NUMBER; ++x)
-            for (int y = 0; y < CELL_NUMBER; ++y)
-                if (Node* n = nodes[x][y])
-                    n->balance();
+        for (int y = 0; y < CELL_NUMBER; ++y)
+        if (Node* n = nodes[x][y])
+            n->balance();
     }
 
     bool contains(const T& value) const { return memberTable.containsKey(&value); }
@@ -76,15 +76,15 @@ public:
     struct Cell
     {
         int x, y;
-        bool operator == (const Cell& c2) const { return x == c2.x && y == c2.y;}
+        bool operator == (const Cell& c2) const { return x == c2.x && y == c2.y; }
 
         static Cell ComputeCell(float fx, float fy)
         {
-            Cell c = { int(fx * (1.f/CELL_SIZE) + (CELL_NUMBER/2)), int(fy * (1.f/CELL_SIZE) + (CELL_NUMBER/2)) };
+            Cell c = { int(fx * (1.f / CELL_SIZE) + (CELL_NUMBER / 2)), int(fy * (1.f / CELL_SIZE) + (CELL_NUMBER / 2)) };
             return c;
         }
 
-        bool isValid() const { return x >= 0 && x < CELL_NUMBER && y >= 0 && y < CELL_NUMBER;}
+        bool isValid() const { return x >= 0 && x < CELL_NUMBER && y >= 0 && y < CELL_NUMBER; }
     };
 
 
@@ -133,26 +133,26 @@ public:
         if (kx_inv >= 0)
         {
             stepX = 1;
-            float x_border = (cell.x+1) * voxel;
+            float x_border = (cell.x + 1) * voxel;
             tMaxX = (x_border - bx) * kx_inv;
         }
         else
         {
             stepX = -1;
-            float x_border = (cell.x-1) * voxel;
+            float x_border = (cell.x - 1) * voxel;
             tMaxX = (x_border - bx) * kx_inv;
         }
 
         if (ky_inv >= 0)
         {
             stepY = 1;
-            float y_border = (cell.y+1) * voxel;
+            float y_border = (cell.y + 1) * voxel;
             tMaxY = (y_border - by) * ky_inv;
         }
         else
         {
             stepY = -1;
-            float y_border = (cell.y-1) * voxel;
+            float y_border = (cell.y - 1) * voxel;
             tMaxY = (y_border - by) * ky_inv;
         }
 

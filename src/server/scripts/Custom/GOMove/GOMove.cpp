@@ -96,19 +96,19 @@ public:
                     uint32 p = target->GetPhaseMask();
                     switch (ID)
                     {
-                        case DELET: DeleteObject(target/*, isHex ? GObjectID : 0*/); SendSelectionInfo(player, GObjectID, isHex, false); break;
-                        case X: SpawnObject(player, player->GetPositionX(), y, z, o, p, true, GObjectID, isHex);      break;
-                        case Y: SpawnObject(player, x, player->GetPositionY(), z, o, p, true, GObjectID, isHex);      break;
-                        case Z: SpawnObject(player, x, y, player->GetPositionZ(), o, p, true, GObjectID, isHex);      break;
-                        case O: SpawnObject(player, x, y, z, player->GetOrientation(), p, true, GObjectID, isHex);    break;
-                        case GOTO: player->TeleportTo(target->GetMapId(), x, y, z, o);                     break;
-                        case RESPAWN: SpawnObject(player, x, y, z, o, p, false, target->GetEntry(), isHex);           break;
-                        case GROUND:
-                        {
-                            float ground = target->GetMap()->GetHeight(target->GetPhaseMask(), x, y, MAX_HEIGHT);
-                            if (ground != INVALID_HEIGHT)
-                                SpawnObject(player, x, y, ground, o, p, true, GObjectID, isHex);
-                        } break;
+                    case DELET: DeleteObject(target/*, isHex ? GObjectID : 0*/); SendSelectionInfo(player, GObjectID, isHex, false); break;
+                    case X: SpawnObject(player, player->GetPositionX(), y, z, o, p, true, GObjectID, isHex);      break;
+                    case Y: SpawnObject(player, x, player->GetPositionY(), z, o, p, true, GObjectID, isHex);      break;
+                    case Z: SpawnObject(player, x, y, player->GetPositionZ(), o, p, true, GObjectID, isHex);      break;
+                    case O: SpawnObject(player, x, y, z, player->GetOrientation(), p, true, GObjectID, isHex);    break;
+                    case GOTO: player->TeleportTo(target->GetMapId(), x, y, z, o);                     break;
+                    case RESPAWN: SpawnObject(player, x, y, z, o, p, false, target->GetEntry(), isHex);           break;
+                    case GROUND:
+                    {
+                                   float ground = target->GetMap()->GetHeight(target->GetPhaseMask(), x, y, MAX_HEIGHT);
+                                   if (ground != INVALID_HEIGHT)
+                                       SpawnObject(player, x, y, ground, o, p, true, GObjectID, isHex);
+                    } break;
                     }
                 }
             }
@@ -116,33 +116,33 @@ public:
             {
                 switch (ID)
                 {
-                    case TEST:
-                        session->SendAreaTriggerMessage("%s", player->GetName().c_str());
-                        break;
-                    case FACE:
-                    {
-                        float const piper2 = float(M_PI) / 2.0f;
-                        float const multi = player->GetOrientation() / piper2;
-                        float const multi_int = floor(multi);
-                        float const new_ori = (multi - multi_int > 0.5f) ? (multi_int + 1)*piper2 : multi_int*piper2;
-                        player->SetFacingTo(new_ori);
-                    } break;
-                    case SAVE:
-                        SaveObject(player, GObjectID, isHex);
-                        break;
-                    case SELECTNEAR:
-                    {
-                        GameObject* object = handler->GetNearbyGameObject();
-                        object = GetClosestGObjectID(player, object);
-                        if (!object)
-                            ChatHandler(player->GetSession()).PSendSysMessage("No objects found");
-                        else
-                        {
-                            bool isHex = (object->GetGUIDHigh() != HIGHGUID_GAMEOBJECT);
-                            SendSelectionInfo(player, isHex ? object->GetGUIDHigh() : object->GetDBTableGUIDLow() ? object->GetDBTableGUIDLow() : object->GetGUIDLow(), isHex, true);
-                            session->SendAreaTriggerMessage("Selected %s", object->GetName().c_str());
-                        }
-                    } break;
+                case TEST:
+                    session->SendAreaTriggerMessage("%s", player->GetName().c_str());
+                    break;
+                case FACE:
+                {
+                             float const piper2 = float(M_PI) / 2.0f;
+                             float const multi = player->GetOrientation() / piper2;
+                             float const multi_int = floor(multi);
+                             float const new_ori = (multi - multi_int > 0.5f) ? (multi_int + 1)*piper2 : multi_int*piper2;
+                             player->SetFacingTo(new_ori);
+                } break;
+                case SAVE:
+                    SaveObject(player, GObjectID, isHex);
+                    break;
+                case SELECTNEAR:
+                {
+                                   GameObject* object = handler->GetNearbyGameObject();
+                                   object = GetClosestGObjectID(player, object);
+                                   if (!object)
+                                       ChatHandler(player->GetSession()).PSendSysMessage("No objects found");
+                                   else
+                                   {
+                                       bool isHex = (object->GetGUIDHigh() != HIGHGUID_GAMEOBJECT);
+                                       SendSelectionInfo(player, isHex ? object->GetGUIDHigh() : object->GetDBTableGUIDLow() ? object->GetDBTableGUIDLow() : object->GetGUIDLow(), isHex, true);
+                                       session->SendAreaTriggerMessage("Selected %s", object->GetName().c_str());
+                                   }
+                } break;
                 }
             }
         }
@@ -160,19 +160,19 @@ public:
                     uint32 p = target->GetPhaseMask();
                     switch (ID)
                     {
-                        case NORTH: SpawnObject(player, x + ((float)ARG / 100), y, z, o, p, true, GObjectID, isHex);                            break;
-                        case EAST: SpawnObject(player, x, y - ((float)ARG / 100), z, o, p, true, GObjectID, isHex);                             break;
-                        case SOUTH: SpawnObject(player, x - ((float)ARG / 100), y, z, o, p, true, GObjectID, isHex);                            break;
-                        case WEST: SpawnObject(player, x, y + ((float)ARG / 100), z, o, p, true, GObjectID, isHex);                             break;
-                        case NORTHEAST: SpawnObject(player, x + ((float)ARG / 100), y - ((float)ARG / 100), z, o, p, true, GObjectID, isHex);   break;
-                        case SOUTHEAST: SpawnObject(player, x - ((float)ARG / 100), y - ((float)ARG / 100), z, o, p, true, GObjectID, isHex);   break;
-                        case SOUTHWEST: SpawnObject(player, x - ((float)ARG / 100), y + ((float)ARG / 100), z, o, p, true, GObjectID, isHex);   break;
-                        case NORTHWEST: SpawnObject(player, x + ((float)ARG / 100), y + ((float)ARG / 100), z, o, p, true, GObjectID, isHex);   break;
-                        case UP: SpawnObject(player, x, y, z + ((float)ARG / 100), o, p, true, GObjectID, isHex);                               break;
-                        case DOWN: SpawnObject(player, x, y, z - ((float)ARG / 100), o, p, true, GObjectID, isHex);                             break;
-                        case RIGHT: SpawnObject(player, x, y, z, o - ((float)ARG / 100), p, true, GObjectID, isHex);                            break;
-                        case LEFT: SpawnObject(player, x, y, z, o + ((float)ARG / 100), p, true, GObjectID, isHex);                             break;
-                        case PHASE: SpawnObject(player, x, y, z, o, ARG, true, GObjectID, isHex);                                               break;
+                    case NORTH: SpawnObject(player, x + ((float)ARG / 100), y, z, o, p, true, GObjectID, isHex);                            break;
+                    case EAST: SpawnObject(player, x, y - ((float)ARG / 100), z, o, p, true, GObjectID, isHex);                             break;
+                    case SOUTH: SpawnObject(player, x - ((float)ARG / 100), y, z, o, p, true, GObjectID, isHex);                            break;
+                    case WEST: SpawnObject(player, x, y + ((float)ARG / 100), z, o, p, true, GObjectID, isHex);                             break;
+                    case NORTHEAST: SpawnObject(player, x + ((float)ARG / 100), y - ((float)ARG / 100), z, o, p, true, GObjectID, isHex);   break;
+                    case SOUTHEAST: SpawnObject(player, x - ((float)ARG / 100), y - ((float)ARG / 100), z, o, p, true, GObjectID, isHex);   break;
+                    case SOUTHWEST: SpawnObject(player, x - ((float)ARG / 100), y + ((float)ARG / 100), z, o, p, true, GObjectID, isHex);   break;
+                    case NORTHWEST: SpawnObject(player, x + ((float)ARG / 100), y + ((float)ARG / 100), z, o, p, true, GObjectID, isHex);   break;
+                    case UP: SpawnObject(player, x, y, z + ((float)ARG / 100), o, p, true, GObjectID, isHex);                               break;
+                    case DOWN: SpawnObject(player, x, y, z - ((float)ARG / 100), o, p, true, GObjectID, isHex);                             break;
+                    case RIGHT: SpawnObject(player, x, y, z, o - ((float)ARG / 100), p, true, GObjectID, isHex);                            break;
+                    case LEFT: SpawnObject(player, x, y, z, o + ((float)ARG / 100), p, true, GObjectID, isHex);                             break;
+                    case PHASE: SpawnObject(player, x, y, z, o, ARG, true, GObjectID, isHex);                                               break;
                     }
                 }
             }
@@ -180,47 +180,47 @@ public:
             {
                 switch (ID)
                 {
-                    case SPAWN:
-                    {
-                        if (SpawnObject(player, player->GetPositionX(), player->GetPositionY(), player->GetPositionZ(), player->GetOrientation(), player->GetPhaseMaskForSpawn(), false, ARG, false))
-                            SpawnQue[player->GetGUID()] = ARG;
-                    } break;
-                    case SPAWNSPELL:
-                    {
-                        SpawnQue[player->GetGUID()] = ARG;
-                    } break;
-                    case SELECTALLNEAR:
-                    {
-                        if (ARG > 5000)
-                            ARG = 5000;
+                case SPAWN:
+                {
+                              if (SpawnObject(player, player->GetPositionX(), player->GetPositionY(), player->GetPositionZ(), player->GetOrientation(), player->GetPhaseMaskForSpawn(), false, ARG, false))
+                                  SpawnQue[player->GetGUID()] = ARG;
+                } break;
+                case SPAWNSPELL:
+                {
+                                   SpawnQue[player->GetGUID()] = ARG;
+                } break;
+                case SELECTALLNEAR:
+                {
+                                      if (ARG > 5000)
+                                          ARG = 5000;
 
-                        QueryResult result = WorldDatabase.PQuery("SELECT guid, (POW(position_x - '%f', 2) + POW(position_y - '%f', 2) + POW(position_z - '%f', 2)) AS order_ FROM gameobject WHERE map = '%u' AND position_x BETWEEN '%f'-'%u' AND '%f'+'%u' AND position_y BETWEEN '%f'-'%u' AND '%f'+'%u' AND position_z BETWEEN '%f'-'%u' AND '%f'+'%u' ORDER BY order_ ASC LIMIT 100",
-                            player->GetPositionX(), player->GetPositionY(), player->GetPositionZ(), player->GetMapId(), player->GetPositionX(), ARG, player->GetPositionX(), ARG, player->GetPositionY(), ARG, player->GetPositionY(), ARG, player->GetPositionZ(), ARG, player->GetPositionZ(), ARG);
+                                      QueryResult result = WorldDatabase.PQuery("SELECT guid, (POW(position_x - '%f', 2) + POW(position_y - '%f', 2) + POW(position_z - '%f', 2)) AS order_ FROM gameobject WHERE map = '%u' AND position_x BETWEEN '%f'-'%u' AND '%f'+'%u' AND position_y BETWEEN '%f'-'%u' AND '%f'+'%u' AND position_z BETWEEN '%f'-'%u' AND '%f'+'%u' ORDER BY order_ ASC LIMIT 100",
+                                          player->GetPositionX(), player->GetPositionY(), player->GetPositionZ(), player->GetMapId(), player->GetPositionX(), ARG, player->GetPositionX(), ARG, player->GetPositionY(), ARG, player->GetPositionY(), ARG, player->GetPositionZ(), ARG, player->GetPositionZ(), ARG);
 
-                        if (result)
-                        {
-                            do
-                            {
-                                Field* fields = result->Fetch();
-                                uint32 guidLow = fields[0].GetUInt32();
+                                      if (result)
+                                      {
+                                          do
+                                          {
+                                              Field* fields = result->Fetch();
+                                              uint32 guidLow = fields[0].GetUInt32();
 
-                                if (GetObjectByGObjectID(player, guidLow, false) != nullptr)
-                                    SendSelectionInfo(player, guidLow, false, true);
-                            } while (result->NextRow());
-                        }
-                        for (std::set<uint32>::const_iterator it = GObjects.begin(); it != GObjects.end();)
-                        {
-                            GameObject* temp = player->GetGameObject(*it);
-                            if (!temp)
-                            {
-                                GObjects.erase(*it++);
-                                continue;
-                            }
-                            if (temp->IsWithinDistInMap(player, ARG))
-                                SendSelectionInfo(player, (*it), true, true);
-                            ++it;
-                        }
-                    } break;
+                                              if (GetObjectByGObjectID(player, guidLow, false) != nullptr)
+                                                  SendSelectionInfo(player, guidLow, false, true);
+                                          } while (result->NextRow());
+                                      }
+                                      for (std::set<uint32>::const_iterator it = GObjects.begin(); it != GObjects.end();)
+                                      {
+                                          GameObject* temp = player->GetGameObject(*it);
+                                          if (!temp)
+                                          {
+                                              GObjects.erase(*it++);
+                                              continue;
+                                          }
+                                          if (temp->IsWithinDistInMap(player, ARG))
+                                              SendSelectionInfo(player, (*it), true, true);
+                                          ++it;
+                                      }
+                } break;
                 }
             }
         }
@@ -310,10 +310,10 @@ public:
 
         std::ostringstream ss;
         if (!add)
-            if (!isHex)
-                ss << "GOMOVE|REMOVE|" << std::dec << (uint32)GObjectID << "||0";
-            else
-                ss << "GOMOVE|REMOVE|" << "0x" << std::hex << GObjectID << "||0";
+        if (!isHex)
+            ss << "GOMOVE|REMOVE|" << std::dec << (uint32)GObjectID << "||0";
+        else
+            ss << "GOMOVE|REMOVE|" << "0x" << std::hex << GObjectID << "||0";
         else
         {
             GameObject* object = GetObjectByGObjectID(player, GObjectID, isHex);

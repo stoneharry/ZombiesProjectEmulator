@@ -21,20 +21,20 @@
 
 enum Noth
 {
-    SAY_AGGRO                       = 0,
-    SAY_SUMMON                      = 1,
-    SAY_SLAY                        = 2,
-    SAY_DEATH                       = 3,
+    SAY_AGGRO = 0,
+    SAY_SUMMON = 1,
+    SAY_SLAY = 2,
+    SAY_DEATH = 3,
 
-    SOUND_DEATH                     = 8848,
+    SOUND_DEATH = 8848,
 
-    SPELL_CURSE_PLAGUEBRINGER       = 29213, // 25-man: 54835
-    SPELL_CRIPPLE                   = 29212, // 25-man: 54814
-    SPELL_TELEPORT                  = 29216,
+    SPELL_CURSE_PLAGUEBRINGER = 29213, // 25-man: 54835
+    SPELL_CRIPPLE = 29212, // 25-man: 54814
+    SPELL_TELEPORT = 29216,
 
-    NPC_WARRIOR                     = 16984,
-    NPC_CHAMPION                    = 16983,
-    NPC_GUARDIAN                    = 16981
+    NPC_WARRIOR = 16984,
+    NPC_CHAMPION = 16983,
+    NPC_GUARDIAN = 16981
 };
 
 #define SPELL_BLINK                 RAND(29208, 29209, 29210, 29211)
@@ -150,63 +150,63 @@ public:
             {
                 switch (eventId)
                 {
-                    case EVENT_CURSE:
-                        DoCastAOE(SPELL_CURSE_PLAGUEBRINGER);
-                        events.ScheduleEvent(EVENT_CURSE, urand(50000, 60000));
-                        return;
-                    case EVENT_WARRIOR:
-                        Talk(SAY_SUMMON);
-                        SummonUndead(NPC_WARRIOR, RAID_MODE(2, 3));
-                        events.ScheduleEvent(EVENT_WARRIOR, 30000);
-                        return;
-                    case EVENT_BLINK:
-                        DoCastAOE(SPELL_CRIPPLE, true);
-                        DoCastAOE(SPELL_BLINK);
-                        DoResetThreat();
-                        events.ScheduleEvent(EVENT_BLINK, 40000);
-                        return;
-                    case EVENT_BALCONY:
-                        me->SetReactState(REACT_PASSIVE);
-                        me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
-                        me->AttackStop();
-                        me->RemoveAllAuras();
-                        me->NearTeleportTo(Teleport.GetPositionX(), Teleport.GetPositionY(), Teleport.GetPositionZ(), Teleport.GetOrientation());
-                        events.Reset();
-                        events.ScheduleEvent(EVENT_WAVE, urand(2000, 5000));
-                        waveCount = 0;
-                        return;
-                    case EVENT_WAVE:
-                        Talk(SAY_SUMMON);
-                        switch (balconyCount)
-                        {
-                            case 0:
-                                SummonUndead(NPC_CHAMPION, RAID_MODE(2, 4));
-                                break;
-                            case 1:
-                                SummonUndead(NPC_CHAMPION, RAID_MODE(1, 2));
-                                SummonUndead(NPC_GUARDIAN, RAID_MODE(1, 2));
-                                break;
-                            case 2:
-                                SummonUndead(NPC_GUARDIAN, RAID_MODE(2, 4));
-                                break;
-                            default:
-                                SummonUndead(NPC_CHAMPION, RAID_MODE(5, 10));
-                                SummonUndead(NPC_GUARDIAN, RAID_MODE(5, 10));
-                                break;
-                        }
-                        ++waveCount;
-                        events.ScheduleEvent(waveCount < 2 ? EVENT_WAVE : EVENT_GROUND, urand(30000, 45000));
-                        return;
-                    case EVENT_GROUND:
+                case EVENT_CURSE:
+                    DoCastAOE(SPELL_CURSE_PLAGUEBRINGER);
+                    events.ScheduleEvent(EVENT_CURSE, urand(50000, 60000));
+                    return;
+                case EVENT_WARRIOR:
+                    Talk(SAY_SUMMON);
+                    SummonUndead(NPC_WARRIOR, RAID_MODE(2, 3));
+                    events.ScheduleEvent(EVENT_WARRIOR, 30000);
+                    return;
+                case EVENT_BLINK:
+                    DoCastAOE(SPELL_CRIPPLE, true);
+                    DoCastAOE(SPELL_BLINK);
+                    DoResetThreat();
+                    events.ScheduleEvent(EVENT_BLINK, 40000);
+                    return;
+                case EVENT_BALCONY:
+                    me->SetReactState(REACT_PASSIVE);
+                    me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
+                    me->AttackStop();
+                    me->RemoveAllAuras();
+                    me->NearTeleportTo(Teleport.GetPositionX(), Teleport.GetPositionY(), Teleport.GetPositionZ(), Teleport.GetOrientation());
+                    events.Reset();
+                    events.ScheduleEvent(EVENT_WAVE, urand(2000, 5000));
+                    waveCount = 0;
+                    return;
+                case EVENT_WAVE:
+                    Talk(SAY_SUMMON);
+                    switch (balconyCount)
                     {
-                        ++balconyCount;
-                        float x, y, z, o;
-                        me->GetHomePosition(x, y, z, o);
-                        me->NearTeleportTo(x, y, z, o);
-                        events.ScheduleEvent(EVENT_BALCONY, 110000);
-                        EnterPhaseGround();
-                        return;
+                    case 0:
+                        SummonUndead(NPC_CHAMPION, RAID_MODE(2, 4));
+                        break;
+                    case 1:
+                        SummonUndead(NPC_CHAMPION, RAID_MODE(1, 2));
+                        SummonUndead(NPC_GUARDIAN, RAID_MODE(1, 2));
+                        break;
+                    case 2:
+                        SummonUndead(NPC_GUARDIAN, RAID_MODE(2, 4));
+                        break;
+                    default:
+                        SummonUndead(NPC_CHAMPION, RAID_MODE(5, 10));
+                        SummonUndead(NPC_GUARDIAN, RAID_MODE(5, 10));
+                        break;
                     }
+                    ++waveCount;
+                    events.ScheduleEvent(waveCount < 2 ? EVENT_WAVE : EVENT_GROUND, urand(30000, 45000));
+                    return;
+                case EVENT_GROUND:
+                {
+                                     ++balconyCount;
+                                     float x, y, z, o;
+                                     me->GetHomePosition(x, y, z, o);
+                                     me->NearTeleportTo(x, y, z, o);
+                                     events.ScheduleEvent(EVENT_BALCONY, 110000);
+                                     EnterPhaseGround();
+                                     return;
+                }
                 }
             }
 
@@ -214,9 +214,9 @@ public:
                 DoMeleeAttackIfReady();
         }
 
-        private:
-            uint32 waveCount;
-            uint32 balconyCount;
+    private:
+        uint32 waveCount;
+        uint32 balconyCount;
     };
 
     CreatureAI* GetAI(Creature* creature) const override

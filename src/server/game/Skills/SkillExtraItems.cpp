@@ -103,11 +103,10 @@ void LoadSkillExtraItemTable()
 
         skillExtraItemEntry.requiredSpecialization = requiredSpecialization;
         skillExtraItemEntry.additionalCreateChance = additionalCreateChance;
-        skillExtraItemEntry.additionalMaxNum       = additionalMaxNum;
+        skillExtraItemEntry.additionalMaxNum = additionalMaxNum;
 
         ++count;
-    }
-    while (result->NextRow());
+    } while (result->NextRow());
 
     TC_LOG_INFO("server.loading", ">> Loaded %u spell specialization definitions in %u ms", count, GetMSTimeDiffToNow(oldMSTime));
 }

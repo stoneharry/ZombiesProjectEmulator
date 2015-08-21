@@ -32,19 +32,19 @@ public:
     {
         static ChatCommand groupCommandTable[] =
         {
-            { "leader",  rbac::RBAC_PERM_COMMAND_GROUP_LEADER,  false, &HandleGroupLeaderCommand,  "", NULL },
+            { "leader", rbac::RBAC_PERM_COMMAND_GROUP_LEADER, false, &HandleGroupLeaderCommand, "", NULL },
             { "disband", rbac::RBAC_PERM_COMMAND_GROUP_DISBAND, false, &HandleGroupDisbandCommand, "", NULL },
-            { "remove",  rbac::RBAC_PERM_COMMAND_GROUP_REMOVE,  false, &HandleGroupRemoveCommand,  "", NULL },
-            { "join",    rbac::RBAC_PERM_COMMAND_GROUP_JOIN,    false, &HandleGroupJoinCommand,    "", NULL },
-            { "list",    rbac::RBAC_PERM_COMMAND_GROUP_LIST,    false, &HandleGroupListCommand,    "", NULL },
-            { "summon",  rbac::RBAC_PERM_COMMAND_GROUP_SUMMON,  false, &HandleGroupSummonCommand,  "", NULL },
-            { NULL,      0,                               false, NULL,                       "", NULL }
+            { "remove", rbac::RBAC_PERM_COMMAND_GROUP_REMOVE, false, &HandleGroupRemoveCommand, "", NULL },
+            { "join", rbac::RBAC_PERM_COMMAND_GROUP_JOIN, false, &HandleGroupJoinCommand, "", NULL },
+            { "list", rbac::RBAC_PERM_COMMAND_GROUP_LIST, false, &HandleGroupListCommand, "", NULL },
+            { "summon", rbac::RBAC_PERM_COMMAND_GROUP_SUMMON, false, &HandleGroupSummonCommand, "", NULL },
+            { NULL, 0, false, NULL, "", NULL }
         };
 
         static ChatCommand commandTable[] =
         {
             { "group", rbac::RBAC_PERM_COMMAND_GROUP, false, NULL, "", groupCommandTable },
-            { NULL,    0,                       false, NULL, "", NULL }
+            { NULL, 0, false, NULL, "", NULL }
         };
         return commandTable;
     }
@@ -361,9 +361,9 @@ public:
             else
             {
                 // ... else, everything is set to offline or neutral values.
-                zoneName    = "<ERROR>";
+                zoneName = "<ERROR>";
                 onlineState = "Offline";
-                phase       = 0;
+                phase = 0;
             }
 
             // Now we can print those informations for every single member of each group!

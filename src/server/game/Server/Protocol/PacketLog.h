@@ -33,25 +33,25 @@ class WorldPacket;
 
 class PacketLog
 {
-    private:
-        PacketLog();
-        ~PacketLog();
-        std::mutex _logPacketLock;
-        std::once_flag _initializeFlag;
+private:
+    PacketLog();
+    ~PacketLog();
+    std::mutex _logPacketLock;
+    std::once_flag _initializeFlag;
 
-    public:
-        static PacketLog* instance()
-        {
-            static PacketLog instance;
-            return &instance;
-        }
+public:
+    static PacketLog* instance()
+    {
+        static PacketLog instance;
+        return &instance;
+    }
 
-        void Initialize();
-        bool CanLogPacket() const { return (_file != NULL); }
-        void LogPacket(WorldPacket const& packet, Direction direction, boost::asio::ip::address const& addr, uint16 port);
+    void Initialize();
+    bool CanLogPacket() const { return (_file != NULL); }
+    void LogPacket(WorldPacket const& packet, Direction direction, boost::asio::ip::address const& addr, uint16 port);
 
-    private:
-        FILE* _file;
+private:
+    FILE* _file;
 };
 
 #define sPacketLog PacketLog::instance()

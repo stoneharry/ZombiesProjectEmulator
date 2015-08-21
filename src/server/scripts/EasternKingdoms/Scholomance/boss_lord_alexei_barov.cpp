@@ -28,20 +28,20 @@ EndScriptData */
 
 enum Spells
 {
-    SPELL_IMMOLATE                  = 20294,
-    SPELL_VEILOFSHADOW              = 17820,
-    SPELL_UNHOLY_AURA               = 17467
+    SPELL_IMMOLATE = 20294,
+    SPELL_VEILOFSHADOW = 17820,
+    SPELL_UNHOLY_AURA = 17467
 };
 
 enum Events
 {
-    EVENT_IMMOLATE                  = 1,
-    EVENT_VEILOFSHADOW              = 2
+    EVENT_IMMOLATE = 1,
+    EVENT_VEILOFSHADOW = 2
 };
 
 class boss_lord_alexei_barov : public CreatureScript
 {
-    public: boss_lord_alexei_barov() : CreatureScript("boss_lord_alexei_barov") { }
+public: boss_lord_alexei_barov() : CreatureScript("boss_lord_alexei_barov") { }
 
         struct boss_lordalexeibarovAI : public BossAI
         {
@@ -76,16 +76,16 @@ class boss_lord_alexei_barov : public CreatureScript
                 {
                     switch (eventId)
                     {
-                        case EVENT_IMMOLATE:
-                            DoCast(SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true), SPELL_IMMOLATE, true);
-                            events.ScheduleEvent(EVENT_IMMOLATE, 12000);
-                            break;
-                        case EVENT_VEILOFSHADOW:
-                            DoCastVictim(SPELL_VEILOFSHADOW, true);
-                            events.ScheduleEvent(EVENT_VEILOFSHADOW, 20000);
-                            break;
-                        default:
-                            break;
+                    case EVENT_IMMOLATE:
+                        DoCast(SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true), SPELL_IMMOLATE, true);
+                        events.ScheduleEvent(EVENT_IMMOLATE, 12000);
+                        break;
+                    case EVENT_VEILOFSHADOW:
+                        DoCastVictim(SPELL_VEILOFSHADOW, true);
+                        events.ScheduleEvent(EVENT_VEILOFSHADOW, 20000);
+                        break;
+                    default:
+                        break;
                     }
                 }
 
