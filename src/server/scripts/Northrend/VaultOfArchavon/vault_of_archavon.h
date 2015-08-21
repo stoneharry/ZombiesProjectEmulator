@@ -24,18 +24,18 @@ uint32 const EncounterCount = 4;
 
 enum Data
 {
-    DATA_ARCHAVON = 0,
-    DATA_EMALON = 1,
-    DATA_KORALON = 2,
-    DATA_TORAVON = 3,
+    DATA_ARCHAVON       = 0,
+    DATA_EMALON         = 1,
+    DATA_KORALON        = 2,
+    DATA_TORAVON        = 3,
 };
 
 enum CreatureIds
 {
-    NPC_ARCHAVON = 31125,
-    NPC_EMALON = 33993,
-    NPC_KORALON = 35013,
-    NPC_TORAVON = 38433
+    NPC_ARCHAVON        = 31125,
+    NPC_EMALON          = 33993,
+    NPC_KORALON         = 35013,
+    NPC_TORAVON         = 38433
 };
 
 enum AchievementCriteriaIds

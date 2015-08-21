@@ -22,19 +22,19 @@
 
 enum Spells
 {
-    SPELL_FROST_ARMOR = 31256,
-    SPELL_DEATH_AND_DECAY = 31258,
-    SPELL_FROST_NOVA = 31250,
-    SPELL_ICEBOLT = 31249
+    SPELL_FROST_ARMOR           = 31256,
+    SPELL_DEATH_AND_DECAY       = 31258,
+    SPELL_FROST_NOVA            = 31250,
+    SPELL_ICEBOLT               = 31249
 };
 
 enum Texts
 {
-    SAY_ONDEATH = 0,
-    SAY_ONSLAY = 1,
-    SAY_DECAY = 2,
-    SAY_NOVA = 3,
-    SAY_ONAGGRO = 4
+    SAY_ONDEATH                 = 0,
+    SAY_ONSLAY                  = 1,
+    SAY_DECAY                   = 2,
+    SAY_NOVA                    = 3,
+    SAY_ONAGGRO                 = 4
 };
 
 class boss_rage_winterchill : public CreatureScript
@@ -118,14 +118,14 @@ public:
                 if (!go)
                 {
                     go = true;
-                    AddWaypoint(0, 4896.08f, -1576.35f, 1333.65f);
-                    AddWaypoint(1, 4898.68f, -1615.02f, 1329.48f);
-                    AddWaypoint(2, 4907.12f, -1667.08f, 1321.00f);
-                    AddWaypoint(3, 4963.18f, -1699.35f, 1340.51f);
-                    AddWaypoint(4, 4989.16f, -1716.67f, 1335.74f);
-                    AddWaypoint(5, 5026.27f, -1736.89f, 1323.02f);
-                    AddWaypoint(6, 5037.77f, -1770.56f, 1324.36f);
-                    AddWaypoint(7, 5067.23f, -1789.95f, 1321.17f);
+                    AddWaypoint(0, 4896.08f,    -1576.35f,    1333.65f);
+                    AddWaypoint(1, 4898.68f,    -1615.02f,    1329.48f);
+                    AddWaypoint(2, 4907.12f,    -1667.08f,    1321.00f);
+                    AddWaypoint(3, 4963.18f,    -1699.35f,    1340.51f);
+                    AddWaypoint(4, 4989.16f,    -1716.67f,    1335.74f);
+                    AddWaypoint(5, 5026.27f,    -1736.89f,    1323.02f);
+                    AddWaypoint(6, 5037.77f,    -1770.56f,    1324.36f);
+                    AddWaypoint(7, 5067.23f,    -1789.95f,    1321.17f);
                     Start(false, true);
                     SetDespawnAtEnd(false);
                 }
@@ -139,28 +139,24 @@ public:
             {
                 DoCast(me, SPELL_FROST_ARMOR);
                 FrostArmorTimer = 40000 + rand32() % 20000;
-            }
-            else FrostArmorTimer -= diff;
+            } else FrostArmorTimer -= diff;
             if (DecayTimer <= diff)
             {
                 DoCastVictim(SPELL_DEATH_AND_DECAY);
                 DecayTimer = 60000 + rand32() % 20000;
                 Talk(SAY_DECAY);
-            }
-            else DecayTimer -= diff;
+            } else DecayTimer -= diff;
             if (NovaTimer <= diff)
             {
                 DoCastVictim(SPELL_FROST_NOVA);
                 NovaTimer = 30000 + rand32() % 15000;
                 Talk(SAY_NOVA);
-            }
-            else NovaTimer -= diff;
+            } else NovaTimer -= diff;
             if (IceboltTimer <= diff)
             {
                 DoCast(SelectTarget(SELECT_TARGET_RANDOM, 0, 40, true), SPELL_ICEBOLT);
                 IceboltTimer = 11000 + rand32() % 20000;
-            }
-            else IceboltTimer -= diff;
+            } else IceboltTimer -= diff;
 
             DoMeleeAttackIfReady();
         }

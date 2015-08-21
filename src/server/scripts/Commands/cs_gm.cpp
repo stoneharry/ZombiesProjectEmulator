@@ -40,18 +40,18 @@ public:
     {
         static ChatCommand gmCommandTable[] =
         {
-            { "chat", rbac::RBAC_PERM_COMMAND_GM_CHAT, false, &HandleGMChatCommand, "", NULL },
-            { "fly", rbac::RBAC_PERM_COMMAND_GM_FLY, false, &HandleGMFlyCommand, "", NULL },
-            { "ingame", rbac::RBAC_PERM_COMMAND_GM_INGAME, true, &HandleGMListIngameCommand, "", NULL },
-            { "list", rbac::RBAC_PERM_COMMAND_GM_LIST, true, &HandleGMListFullCommand, "", NULL },
-            { "visible", rbac::RBAC_PERM_COMMAND_GM_VISIBLE, false, &HandleGMVisibleCommand, "", NULL },
-            { "", rbac::RBAC_PERM_COMMAND_GM, false, &HandleGMCommand, "", NULL },
-            { NULL, 0, false, NULL, "", NULL }
+            { "chat",    rbac::RBAC_PERM_COMMAND_GM_CHAT,    false, &HandleGMChatCommand,       "", NULL },
+            { "fly",     rbac::RBAC_PERM_COMMAND_GM_FLY,     false, &HandleGMFlyCommand,        "", NULL },
+            { "ingame",  rbac::RBAC_PERM_COMMAND_GM_INGAME,   true, &HandleGMListIngameCommand, "", NULL },
+            { "list",    rbac::RBAC_PERM_COMMAND_GM_LIST,     true, &HandleGMListFullCommand,   "", NULL },
+            { "visible", rbac::RBAC_PERM_COMMAND_GM_VISIBLE, false, &HandleGMVisibleCommand,    "", NULL },
+            { "",        rbac::RBAC_PERM_COMMAND_GM,         false, &HandleGMCommand,           "", NULL },
+            { NULL,      0,                            false, NULL,                       "", NULL }
         };
         static ChatCommand commandTable[] =
         {
             { "gm", rbac::RBAC_PERM_COMMAND_GM, false, NULL, "", gmCommandTable },
-            { NULL, 0, false, NULL, "", NULL }
+            { NULL, 0,                    false, NULL, "", NULL }
         };
         return commandTable;
     }
@@ -97,7 +97,7 @@ public:
         if (!*args)
             return false;
 
-        Player* target = handler->getSelectedPlayer();
+        Player* target =  handler->getSelectedPlayer();
         if (!target)
             target = handler->GetSession()->GetPlayer();
 
@@ -130,7 +130,7 @@ public:
             AccountTypes itrSec = itr->second->GetSession()->GetSecurity();
             if ((itr->second->IsGameMaster() ||
                 (itr->second->GetSession()->HasPermission(rbac::RBAC_PERM_COMMANDS_APPEAR_IN_GM_LIST) &&
-                itrSec <= AccountTypes(sWorld->getIntConfig(CONFIG_GM_LEVEL_IN_GM_LIST)))) &&
+                 itrSec <= AccountTypes(sWorld->getIntConfig(CONFIG_GM_LEVEL_IN_GM_LIST)))) &&
                 (!handler->GetSession() || itr->second->IsVisibleGloballyFor(handler->GetSession()->GetPlayer())))
             {
                 if (first)

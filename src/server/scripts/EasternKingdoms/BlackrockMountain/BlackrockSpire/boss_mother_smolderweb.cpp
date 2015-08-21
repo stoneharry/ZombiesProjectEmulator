@@ -22,15 +22,15 @@
 
 enum Spells
 {
-    SPELL_CRYSTALIZE = 16104,
-    SPELL_MOTHERSMILK = 16468,
-    SPELL_SUMMON_SPIRE_SPIDERLING = 16103,
+    SPELL_CRYSTALIZE                = 16104,
+    SPELL_MOTHERSMILK               = 16468,
+    SPELL_SUMMON_SPIRE_SPIDERLING   = 16103,
 };
 
 enum Events
 {
-    EVENT_CRYSTALIZE = 1,
-    EVENT_MOTHERS_MILK = 2,
+    EVENT_CRYSTALIZE                = 1,
+    EVENT_MOTHERS_MILK              = 2,
 };
 
 class boss_mother_smolderweb : public CreatureScript
@@ -55,7 +55,7 @@ public:
         void EnterCombat(Unit* /*who*/) override
         {
             _EnterCombat();
-            events.ScheduleEvent(EVENT_CRYSTALIZE, 20 * IN_MILLISECONDS);
+            events.ScheduleEvent(EVENT_CRYSTALIZE,   20 * IN_MILLISECONDS);
             events.ScheduleEvent(EVENT_MOTHERS_MILK, 10 * IN_MILLISECONDS);
         }
 
@@ -84,14 +84,14 @@ public:
             {
                 switch (eventId)
                 {
-                case EVENT_CRYSTALIZE:
-                    DoCast(me, SPELL_CRYSTALIZE);
-                    events.ScheduleEvent(EVENT_CRYSTALIZE, 15 * IN_MILLISECONDS);
-                    break;
-                case EVENT_MOTHERS_MILK:
-                    DoCast(me, SPELL_MOTHERSMILK);
-                    events.ScheduleEvent(EVENT_MOTHERS_MILK, urand(5 * IN_MILLISECONDS, 12500));
-                    break;
+                    case EVENT_CRYSTALIZE:
+                        DoCast(me, SPELL_CRYSTALIZE);
+                        events.ScheduleEvent(EVENT_CRYSTALIZE, 15 * IN_MILLISECONDS);
+                        break;
+                    case EVENT_MOTHERS_MILK:
+                        DoCast(me, SPELL_MOTHERSMILK);
+                        events.ScheduleEvent(EVENT_MOTHERS_MILK, urand(5 * IN_MILLISECONDS, 12500));
+                        break;
                 }
             }
             DoMeleeAttackIfReady();

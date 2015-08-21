@@ -29,39 +29,39 @@ EndScriptData */
 
 enum Says
 {
-    SAY_SUMMON = 0,
-    SAY_AGGRO = 1,
-    SAY_SLAY = 2,
-    SAY_DEATH = 3
+    SAY_SUMMON                  = 0,
+    SAY_AGGRO                   = 1,
+    SAY_SLAY                    = 2,
+    SAY_DEATH                   = 3
 };
 
 enum Spells
 {
-    SPELL_FROST_SHOCK = 21401, //37865
-    SPELL_FLAME_SHOCK = 34354,
-    SPELL_SHADOW_SHOCK = 30138,
-    SPELL_ARCANE_SHOCK = 37132,
+    SPELL_FROST_SHOCK           = 21401, //37865
+    SPELL_FLAME_SHOCK           = 34354,
+    SPELL_SHADOW_SHOCK          = 30138,
+    SPELL_ARCANE_SHOCK          = 37132,
 
-    SPELL_CHAIN_LIGHTNING = 15659, //15305
+    SPELL_CHAIN_LIGHTNING       = 15659, //15305
 
-    SPELL_SUMMON_SYTH_FIRE = 33537,                   // Spawns 19203
-    SPELL_SUMMON_SYTH_ARCANE = 33538,                   // Spawns 19205
-    SPELL_SUMMON_SYTH_FROST = 33539,                   // Spawns 19204
-    SPELL_SUMMON_SYTH_SHADOW = 33540,                   // Spawns 19206
+    SPELL_SUMMON_SYTH_FIRE      = 33537,                   // Spawns 19203
+    SPELL_SUMMON_SYTH_ARCANE    = 33538,                   // Spawns 19205
+    SPELL_SUMMON_SYTH_FROST     = 33539,                   // Spawns 19204
+    SPELL_SUMMON_SYTH_SHADOW    = 33540,                   // Spawns 19206
 
-    SPELL_FLAME_BUFFET = 33526,
-    SPELL_ARCANE_BUFFET = 33527,
-    SPELL_FROST_BUFFET = 33528,
-    SPELL_SHADOW_BUFFET = 33529
+    SPELL_FLAME_BUFFET          = 33526,
+    SPELL_ARCANE_BUFFET         = 33527,
+    SPELL_FROST_BUFFET          = 33528,
+    SPELL_SHADOW_BUFFET         = 33529
 };
 
 enum Events
 {
-    EVENT_FLAME_SHOCK = 1,
-    EVENT_ARCANE_SHOCK = 2,
-    EVENT_FROST_SHOCK = 3,
-    EVENT_SHADOW_SHOCK = 4,
-    EVENT_CHAIN_LIGHTNING = 5
+    EVENT_FLAME_SHOCK           = 1,
+    EVENT_ARCANE_SHOCK          = 2,
+    EVENT_FROST_SHOCK           = 3,
+    EVENT_SHADOW_SHOCK          = 4,
+    EVENT_CHAIN_LIGHTNING       = 5
 };
 
 class boss_darkweaver_syth : public CreatureScript
@@ -159,40 +159,40 @@ public:
         {
             switch (eventId)
             {
-            case EVENT_FLAME_SHOCK:
-                if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
-                    DoCast(target, SPELL_FLAME_SHOCK);
-                events.ScheduleEvent(EVENT_FLAME_SHOCK, urand(10000, 15000));
-                break;
-            case EVENT_ARCANE_SHOCK:
-                if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
-                    DoCast(target, SPELL_ARCANE_SHOCK);
-                events.ScheduleEvent(EVENT_ARCANE_SHOCK, urand(10000, 15000));
-                break;
-            case EVENT_FROST_SHOCK:
-                if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
-                    DoCast(target, SPELL_FROST_SHOCK);
-                events.ScheduleEvent(EVENT_FROST_SHOCK, urand(10000, 15000));
-                break;
-            case EVENT_SHADOW_SHOCK:
-                if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
-                    DoCast(target, SPELL_SHADOW_SHOCK);
-                events.ScheduleEvent(EVENT_SHADOW_SHOCK, urand(10000, 15000));
-                break;
-            case EVENT_CHAIN_LIGHTNING:
-                if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
-                    DoCast(target, SPELL_CHAIN_LIGHTNING);
-                events.ScheduleEvent(EVENT_CHAIN_LIGHTNING, 25000);
-                break;
-            default:
-                break;
+                case EVENT_FLAME_SHOCK:
+                    if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
+                        DoCast(target, SPELL_FLAME_SHOCK);
+                    events.ScheduleEvent(EVENT_FLAME_SHOCK, urand(10000, 15000));
+                    break;
+                case EVENT_ARCANE_SHOCK:
+                    if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
+                        DoCast(target, SPELL_ARCANE_SHOCK);
+                    events.ScheduleEvent(EVENT_ARCANE_SHOCK, urand(10000, 15000));
+                    break;
+                case EVENT_FROST_SHOCK:
+                    if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
+                        DoCast(target, SPELL_FROST_SHOCK);
+                    events.ScheduleEvent(EVENT_FROST_SHOCK, urand(10000, 15000));
+                    break;
+                case EVENT_SHADOW_SHOCK:
+                    if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
+                        DoCast(target, SPELL_SHADOW_SHOCK);
+                    events.ScheduleEvent(EVENT_SHADOW_SHOCK, urand(10000, 15000));
+                    break;
+                case EVENT_CHAIN_LIGHTNING:
+                    if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
+                        DoCast(target, SPELL_CHAIN_LIGHTNING);
+                    events.ScheduleEvent(EVENT_CHAIN_LIGHTNING, 25000);
+                    break;
+                default:
+                    break;
             }
         }
 
-    private:
-        bool _summon90;
-        bool _summon50;
-        bool _summon10;
+        private:
+            bool _summon90;
+            bool _summon50;
+            bool _summon10;
     };
 
     CreatureAI* GetAI(Creature* creature) const override
@@ -237,8 +237,7 @@ public:
                     DoCast(target, SPELL_FLAME_SHOCK);
 
                 flameshock_timer = 5000;
-            }
-            else flameshock_timer -= diff;
+            } else flameshock_timer -= diff;
 
             if (flamebuffet_timer <= diff)
             {
@@ -246,15 +245,14 @@ public:
                     DoCast(target, SPELL_FLAME_BUFFET);
 
                 flamebuffet_timer = 5000;
-            }
-            else flamebuffet_timer -= diff;
+            } else flamebuffet_timer -= diff;
 
             DoMeleeAttackIfReady();
         }
 
-    private:
-        uint32 flameshock_timer;
-        uint32 flamebuffet_timer;
+        private:
+            uint32 flameshock_timer;
+            uint32 flamebuffet_timer;
     };
 
     CreatureAI* GetAI(Creature* creature) const override
@@ -298,8 +296,7 @@ public:
                     DoCast(target, SPELL_ARCANE_SHOCK);
 
                 arcaneshock_timer = 5000;
-            }
-            else arcaneshock_timer -= diff;
+            } else arcaneshock_timer -= diff;
 
             if (arcanebuffet_timer <= diff)
             {
@@ -307,15 +304,14 @@ public:
                     DoCast(target, SPELL_ARCANE_BUFFET);
 
                 arcanebuffet_timer = 5000;
-            }
-            else arcanebuffet_timer -= diff;
+            } else arcanebuffet_timer -= diff;
 
             DoMeleeAttackIfReady();
         }
 
-    private:
-        uint32 arcaneshock_timer;
-        uint32 arcanebuffet_timer;
+        private:
+            uint32 arcaneshock_timer;
+            uint32 arcanebuffet_timer;
     };
 
     CreatureAI* GetAI(Creature* creature) const override
@@ -359,8 +355,7 @@ public:
                     DoCast(target, SPELL_FROST_SHOCK);
 
                 frostshock_timer = 5000;
-            }
-            else frostshock_timer -= diff;
+            } else frostshock_timer -= diff;
 
             if (frostbuffet_timer <= diff)
             {
@@ -368,15 +363,14 @@ public:
                     DoCast(target, SPELL_FROST_BUFFET);
 
                 frostbuffet_timer = 5000;
-            }
-            else frostbuffet_timer -= diff;
+            } else frostbuffet_timer -= diff;
 
             DoMeleeAttackIfReady();
         }
 
-    private:
-        uint32 frostshock_timer;
-        uint32 frostbuffet_timer;
+        private:
+            uint32 frostshock_timer;
+            uint32 frostbuffet_timer;
     };
 
     CreatureAI* GetAI(Creature* creature) const override
@@ -420,8 +414,7 @@ public:
                     DoCast(target, SPELL_SHADOW_SHOCK);
 
                 shadowshock_timer = 5000;
-            }
-            else shadowshock_timer -= diff;
+            } else shadowshock_timer -= diff;
 
             if (shadowbuffet_timer <= diff)
             {
@@ -429,15 +422,14 @@ public:
                     DoCast(target, SPELL_SHADOW_BUFFET);
 
                 shadowbuffet_timer = 5000;
-            }
-            else shadowbuffet_timer -= diff;
+            } else shadowbuffet_timer -= diff;
 
             DoMeleeAttackIfReady();
         }
 
-    private:
-        uint32 shadowshock_timer;
-        uint32 shadowbuffet_timer;
+        private:
+            uint32 shadowshock_timer;
+            uint32 shadowbuffet_timer;
     };
 
     CreatureAI* GetAI(Creature* creature) const override

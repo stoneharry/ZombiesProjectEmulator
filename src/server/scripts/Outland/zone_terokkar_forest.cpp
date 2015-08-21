@@ -47,13 +47,13 @@ EndContentData */
 
 enum UnkorTheRuthless
 {
-    SAY_SUBMIT = 0,
+    SAY_SUBMIT                      = 0,
 
-    FACTION_HOSTILE = 45,
-    FACTION_FRIENDLY = 35,
-    QUEST_DONTKILLTHEFATONE = 9889,
+    FACTION_HOSTILE                 = 45,
+    FACTION_FRIENDLY                = 35,
+    QUEST_DONTKILLTHEFATONE         = 9889,
 
-    SPELL_PULVERIZE = 2676
+    SPELL_PULVERIZE                 = 2676
 };
 
 class npc_unkor_the_ruthless : public CreatureScript
@@ -149,8 +149,7 @@ public:
                     {
                         EnterEvadeMode();
                         return;
-                    }
-                    else UnkorUnfriendly_Timer -= diff;
+                    } else UnkorUnfriendly_Timer -= diff;
                 }
             }
 
@@ -161,8 +160,7 @@ public:
             {
                 DoCast(me, SPELL_PULVERIZE);
                 Pulverize_Timer = 9000;
-            }
-            else Pulverize_Timer -= diff;
+            } else Pulverize_Timer -= diff;
 
             DoMeleeAttackIfReady();
         }
@@ -193,10 +191,10 @@ public:
         void DamageTaken(Unit* done_by, uint32 &damage) override
         {
             if (done_by && done_by->GetTypeId() == TYPEID_PLAYER)
-            if (me->GetHealth() <= damage)
-            if (rand32() % 100 < 75)
-                //Summon Wood Mites
-                DoCast(me, 39130, true);
+                if (me->GetHealth() <= damage)
+                    if (rand32() % 100 < 75)
+                        //Summon Wood Mites
+                        DoCast(me, 39130, true);
         }
     };
 };
@@ -227,9 +225,9 @@ public:
 
             switch (waypointId)
             {
-            case 8:
-                player->AreaExploredOrEventHappens(10898);
-                break;
+                case 8:
+                    player->AreaExploredOrEventHappens(10898);
+                    break;
             }
         }
 
@@ -243,8 +241,8 @@ public:
 
             Player* player = who->ToPlayer();
             if (player && player->GetQuestStatus(10898) == QUEST_STATUS_INCOMPLETE)
-            if (me->IsWithinDistInMap(who, 10.0f))
-                Start(false, false, who->GetGUID());
+                if (me->IsWithinDistInMap(who, 10.0f))
+                    Start(false, false, who->GetGUID());
         }
 
         void Reset() override { }
@@ -280,10 +278,10 @@ public:
         void DamageTaken(Unit* done_by, uint32 &damage) override
         {
             if (done_by->GetTypeId() == TYPEID_PLAYER)
-            if (me->GetHealth() <= damage)
-            if (rand32() % 100 < 75)
-                //Summon Lots of Wood Mights
-                DoCast(me, 39134, true);
+                if (me->GetHealth() <= damage)
+                    if (rand32() % 100 < 75)
+                        //Summon Lots of Wood Mights
+                        DoCast(me, 39134, true);
         }
     };
 };
@@ -294,7 +292,7 @@ public:
 
 enum NetherwebVictim
 {
-    QUEST_TARGET = 22459
+    QUEST_TARGET            = 22459
     //SPELL_FREE_WEBBED       = 38950
 };
 
@@ -356,14 +354,14 @@ public:
 
 enum Floon
 {
-    SAY_FLOON_ATTACK = 0,
+    SAY_FLOON_ATTACK        = 0,
 
-    SPELL_SILENCE = 6726,
-    SPELL_FROSTBOLT = 9672,
-    SPELL_FROST_NOVA = 11831,
+    SPELL_SILENCE           = 6726,
+    SPELL_FROSTBOLT         = 9672,
+    SPELL_FROST_NOVA        = 11831,
 
-    FACTION_HOSTILE_FL = 1738,
-    QUEST_CRACK_SKULLS = 10009
+    FACTION_HOSTILE_FL      = 1738,
+    QUEST_CRACK_SKULLS      = 10009
 };
 
 class npc_floon : public CreatureScript
@@ -376,10 +374,10 @@ public:
         player->PlayerTalkClass->ClearMenus();
         if (action == GOSSIP_ACTION_INFO_DEF)
         {
-            player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_FLOON2, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
+            player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_FLOON2, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
             player->SEND_GOSSIP_MENU(9443, creature->GetGUID());
         }
-        if (action == GOSSIP_ACTION_INFO_DEF + 1)
+        if (action == GOSSIP_ACTION_INFO_DEF+1)
         {
             player->CLOSE_GOSSIP_MENU();
             creature->setFaction(FACTION_HOSTILE_FL);
@@ -441,22 +439,19 @@ public:
             {
                 DoCastVictim(SPELL_SILENCE);
                 Silence_Timer = 30000;
-            }
-            else Silence_Timer -= diff;
+            } else Silence_Timer -= diff;
 
             if (FrostNova_Timer <= diff)
             {
                 DoCast(me, SPELL_FROST_NOVA);
                 FrostNova_Timer = 20000;
-            }
-            else FrostNova_Timer -= diff;
+            } else FrostNova_Timer -= diff;
 
             if (Frostbolt_Timer <= diff)
             {
                 DoCastVictim(SPELL_FROSTBOLT);
                 Frostbolt_Timer = 5000;
-            }
-            else Frostbolt_Timer -= diff;
+            } else Frostbolt_Timer -= diff;
 
             DoMeleeAttackIfReady();
         }
@@ -468,15 +463,15 @@ public:
 ######*/
 enum IslaStarmaneData
 {
-    SAY_PROGRESS_1 = 0,
-    SAY_PROGRESS_2 = 1,
-    SAY_PROGRESS_3 = 2,
-    SAY_PROGRESS_4 = 3,
+    SAY_PROGRESS_1  = 0,
+    SAY_PROGRESS_2  = 1,
+    SAY_PROGRESS_3  = 2,
+    SAY_PROGRESS_4  = 3,
 
-    QUEST_EFTW_H = 10052,
-    QUEST_EFTW_A = 10051,
-    GO_CAGE = 182794,
-    SPELL_CAT = 32447,
+    QUEST_EFTW_H    = 10052,
+    QUEST_EFTW_A    = 10051,
+    GO_CAGE         = 182794,
+    SPELL_CAT       = 32447,
 };
 
 class npc_isla_starmane : public CreatureScript
@@ -496,34 +491,34 @@ public:
 
             switch (waypointId)
             {
-            case 0:
-                if (GameObject* Cage = me->FindNearestGameObject(GO_CAGE, 10))
-                    Cage->SetGoState(GO_STATE_ACTIVE);
-                break;
-            case 2:
-                Talk(SAY_PROGRESS_1, player);
-                break;
-            case 5:
-                Talk(SAY_PROGRESS_2, player);
-                break;
-            case 6:
-                Talk(SAY_PROGRESS_3, player);
-                break;
-            case 29:
-                Talk(SAY_PROGRESS_4, player);
-                if (player->GetTeam() == ALLIANCE)
-                    player->GroupEventHappens(QUEST_EFTW_A, me);
-                else if (player->GetTeam() == HORDE)
-                    player->GroupEventHappens(QUEST_EFTW_H, me);
-                me->SetInFront(player);
-                break;
-            case 30:
-                me->HandleEmoteCommand(EMOTE_ONESHOT_WAVE);
-                break;
-            case 31:
-                DoCast(me, SPELL_CAT);
-                me->SetWalk(false);
-                break;
+                case 0:
+                    if (GameObject* Cage = me->FindNearestGameObject(GO_CAGE, 10))
+                        Cage->SetGoState(GO_STATE_ACTIVE);
+                    break;
+                case 2:
+                    Talk(SAY_PROGRESS_1, player);
+                    break;
+                case 5:
+                    Talk(SAY_PROGRESS_2, player);
+                    break;
+                case 6:
+                    Talk(SAY_PROGRESS_3, player);
+                    break;
+                case 29:
+                    Talk(SAY_PROGRESS_4, player);
+                    if (player->GetTeam() == ALLIANCE)
+                        player->GroupEventHappens(QUEST_EFTW_A, me);
+                    else if (player->GetTeam() == HORDE)
+                        player->GroupEventHappens(QUEST_EFTW_H, me);
+                    me->SetInFront(player);
+                    break;
+                case 30:
+                    me->HandleEmoteCommand(EMOTE_ONESHOT_WAVE);
+                    break;
+                case 31:
+                    DoCast(me, SPELL_CAT);
+                    me->SetWalk(false);
+                    break;
             }
         }
 
@@ -578,7 +573,7 @@ public:
         player->PlayerTalkClass->ClearMenus();
         switch (sender)
         {
-        case GOSSIP_SENDER_MAIN:    SendActionMenu(player, go, action); break;
+            case GOSSIP_SENDER_MAIN:    SendActionMenu(player, go, action); break;
         }
         return true;
     }
@@ -601,18 +596,18 @@ public:
     {
         switch (action)
         {
-        case GOSSIP_ACTION_INFO_DEF + 1:
-            player->CastSpell(player, 40642, false);
-            break;
-        case GOSSIP_ACTION_INFO_DEF + 2:
-            player->CastSpell(player, 40640, false);
-            break;
-        case GOSSIP_ACTION_INFO_DEF + 3:
-            player->CastSpell(player, 40632, false);
-            break;
-        case GOSSIP_ACTION_INFO_DEF + 4:
-            player->CastSpell(player, 40644, false);
-            break;
+            case GOSSIP_ACTION_INFO_DEF + 1:
+                  player->CastSpell(player, 40642, false);
+                break;
+            case GOSSIP_ACTION_INFO_DEF + 2:
+                  player->CastSpell(player, 40640, false);
+                break;
+            case GOSSIP_ACTION_INFO_DEF + 3:
+                  player->CastSpell(player, 40632, false);
+                break;
+            case GOSSIP_ACTION_INFO_DEF + 4:
+                  player->CastSpell(player, 40644, false);
+                break;
         }
     }
 };
@@ -623,7 +618,7 @@ public:
 
 enum Slim
 {
-    FACTION_CONSORTIUM = 933
+    FACTION_CONSORTIUM  = 933
 };
 
 class npc_slim : public CreatureScript
@@ -661,7 +656,7 @@ public:
 enum Akuno
 {
     QUEST_ESCAPING_THE_TOMB = 10887,
-    NPC_CABAL_SKRIMISHER = 21661
+    NPC_CABAL_SKRIMISHER    = 21661
 };
 
 class npc_akuno : public CreatureScript
@@ -701,14 +696,14 @@ public:
 
             switch (waypointId)
             {
-            case 3:
-                me->SummonCreature(NPC_CABAL_SKRIMISHER, -2795.99f, 5420.33f, -34.53f, 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 25000);
-                me->SummonCreature(NPC_CABAL_SKRIMISHER, -2793.55f, 5412.79f, -34.53f, 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 25000);
-                break;
-            case 11:
-                if (player->GetTypeId() == TYPEID_PLAYER)
-                    player->GroupEventHappens(QUEST_ESCAPING_THE_TOMB, me);
-                break;
+                case 3:
+                    me->SummonCreature(NPC_CABAL_SKRIMISHER, -2795.99f, 5420.33f, -34.53f, 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 25000);
+                    me->SummonCreature(NPC_CABAL_SKRIMISHER, -2793.55f, 5412.79f, -34.53f, 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 25000);
+                    break;
+                case 11:
+                    if (player->GetTypeId() == TYPEID_PLAYER)
+                        player->GroupEventHappens(QUEST_ESCAPING_THE_TOMB, me);
+                    break;
             }
         }
 

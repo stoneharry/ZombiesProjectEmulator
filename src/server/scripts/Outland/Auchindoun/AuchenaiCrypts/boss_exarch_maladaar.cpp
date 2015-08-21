@@ -34,19 +34,19 @@ EndContentData */
 
 enum Spells
 {
-    SPELL_MOONFIRE = 37328,
-    SPELL_FIREBALL = 37329,
-    SPELL_MIND_FLAY = 37330,
-    SPELL_HEMORRHAGE = 37331,
-    SPELL_FROSTSHOCK = 37332,
-    SPELL_CURSE_OF_AGONY = 37334,
-    SPELL_MORTAL_STRIKE = 37335,
-    SPELL_FREEZING_TRAP = 37368,
-    SPELL_HAMMER_OF_JUSTICE = 37369,
+    SPELL_MOONFIRE              = 37328,
+    SPELL_FIREBALL              = 37329,
+    SPELL_MIND_FLAY             = 37330,
+    SPELL_HEMORRHAGE            = 37331,
+    SPELL_FROSTSHOCK            = 37332,
+    SPELL_CURSE_OF_AGONY        = 37334,
+    SPELL_MORTAL_STRIKE         = 37335,
+    SPELL_FREEZING_TRAP         = 37368,
+    SPELL_HAMMER_OF_JUSTICE     = 37369,
 
     // Avatar of Martyred
-    SPELL_AV_MORTAL_STRIKE = 16856,
-    SPELL_AV_SUNDER_ARMOR = 16145
+    SPELL_AV_MORTAL_STRIKE      = 16856,
+    SPELL_AV_SUNDER_ARMOR       = 16145
 };
 
 class npc_stolen_soul : public CreatureScript
@@ -93,45 +93,44 @@ public:
             {
                 switch (myClass)
                 {
-                case CLASS_WARRIOR:
-                    DoCastVictim(SPELL_MORTAL_STRIKE);
-                    Class_Timer = 6000;
-                    break;
-                case CLASS_PALADIN:
-                    DoCastVictim(SPELL_HAMMER_OF_JUSTICE);
-                    Class_Timer = 6000;
-                    break;
-                case CLASS_HUNTER:
-                    DoCastVictim(SPELL_FREEZING_TRAP);
-                    Class_Timer = 20000;
-                    break;
-                case CLASS_ROGUE:
-                    DoCastVictim(SPELL_HEMORRHAGE);
-                    Class_Timer = 10000;
-                    break;
-                case CLASS_PRIEST:
-                    DoCastVictim(SPELL_MIND_FLAY);
-                    Class_Timer = 5000;
-                    break;
-                case CLASS_SHAMAN:
-                    DoCastVictim(SPELL_FROSTSHOCK);
-                    Class_Timer = 8000;
-                    break;
-                case CLASS_MAGE:
-                    DoCastVictim(SPELL_FIREBALL);
-                    Class_Timer = 5000;
-                    break;
-                case CLASS_WARLOCK:
-                    DoCastVictim(SPELL_CURSE_OF_AGONY);
-                    Class_Timer = 20000;
-                    break;
-                case CLASS_DRUID:
-                    DoCastVictim(SPELL_MOONFIRE);
-                    Class_Timer = 10000;
-                    break;
+                    case CLASS_WARRIOR:
+                        DoCastVictim(SPELL_MORTAL_STRIKE);
+                        Class_Timer = 6000;
+                        break;
+                    case CLASS_PALADIN:
+                        DoCastVictim(SPELL_HAMMER_OF_JUSTICE);
+                        Class_Timer = 6000;
+                        break;
+                    case CLASS_HUNTER:
+                        DoCastVictim(SPELL_FREEZING_TRAP);
+                        Class_Timer = 20000;
+                        break;
+                    case CLASS_ROGUE:
+                        DoCastVictim(SPELL_HEMORRHAGE);
+                        Class_Timer = 10000;
+                        break;
+                    case CLASS_PRIEST:
+                        DoCastVictim(SPELL_MIND_FLAY);
+                        Class_Timer = 5000;
+                        break;
+                    case CLASS_SHAMAN:
+                        DoCastVictim(SPELL_FROSTSHOCK);
+                        Class_Timer = 8000;
+                        break;
+                    case CLASS_MAGE:
+                        DoCastVictim(SPELL_FIREBALL);
+                        Class_Timer = 5000;
+                        break;
+                    case CLASS_WARLOCK:
+                        DoCastVictim(SPELL_CURSE_OF_AGONY);
+                        Class_Timer = 20000;
+                        break;
+                    case CLASS_DRUID:
+                        DoCastVictim(SPELL_MOONFIRE);
+                        Class_Timer = 10000;
+                        break;
                 }
-            }
-            else Class_Timer -= diff;
+            } else Class_Timer -= diff;
 
             DoMeleeAttackIfReady();
         }
@@ -141,20 +140,20 @@ public:
 
 enum ExarchMaladaar
 {
-    SAY_INTRO = 0,
-    SAY_SUMMON = 1,
-    SAY_AGGRO = 2,
-    SAY_ROAR = 3,
-    SAY_SLAY = 4,
-    SAY_DEATH = 5,
+    SAY_INTRO                   = 0,
+    SAY_SUMMON                  = 1,
+    SAY_AGGRO                   = 2,
+    SAY_ROAR                    = 3,
+    SAY_SLAY                    = 4,
+    SAY_DEATH                   = 5,
 
-    SPELL_RIBBON_OF_SOULS = 32422,
-    SPELL_SOUL_SCREAM = 32421,
-    SPELL_STOLEN_SOUL = 32346,
-    SPELL_STOLEN_SOUL_VISUAL = 32395,
-    SPELL_SUMMON_AVATAR = 32424,
+    SPELL_RIBBON_OF_SOULS       = 32422,
+    SPELL_SOUL_SCREAM           = 32421,
+    SPELL_STOLEN_SOUL           = 32346,
+    SPELL_STOLEN_SOUL_VISUAL    = 32395,
+    SPELL_SUMMON_AVATAR         = 32424,
 
-    ENTRY_STOLEN_SOUL = 18441
+    ENTRY_STOLEN_SOUL           = 18441
 };
 
 class boss_exarch_maladaar : public CreatureScript
@@ -289,11 +288,9 @@ public:
                         me->SummonCreature(ENTRY_STOLEN_SOUL, 0.0f, 0.0f, 0.0f, 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 10000);
 
                         StolenSoul_Timer = 20000 + rand32() % 10000;
-                    }
-                    else StolenSoul_Timer = 1000;
+                    } else StolenSoul_Timer = 1000;
                 }
-            }
-            else StolenSoul_Timer -= diff;
+            } else StolenSoul_Timer -= diff;
 
             if (Ribbon_of_Souls_timer <= diff)
             {
@@ -301,15 +298,13 @@ public:
                     DoCast(target, SPELL_RIBBON_OF_SOULS);
 
                 Ribbon_of_Souls_timer = 5000 + (rand32() % 20 * 1000);
-            }
-            else Ribbon_of_Souls_timer -= diff;
+            } else Ribbon_of_Souls_timer -= diff;
 
             if (Fear_timer <= diff)
             {
                 DoCast(me, SPELL_SOUL_SCREAM);
                 Fear_timer = 15000 + rand32() % 15000;
-            }
-            else Fear_timer -= diff;
+            } else Fear_timer -= diff;
 
             DoMeleeAttackIfReady();
         }
@@ -359,8 +354,7 @@ public:
             {
                 DoCastVictim(SPELL_AV_MORTAL_STRIKE);
                 Mortal_Strike_timer = urand(10, 30) * 1000;
-            }
-            else Mortal_Strike_timer -= diff;
+            } else Mortal_Strike_timer -= diff;
 
             DoMeleeAttackIfReady();
         }

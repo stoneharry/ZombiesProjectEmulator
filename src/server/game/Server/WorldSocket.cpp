@@ -31,7 +31,7 @@
 using boost::asio::ip::tcp;
 
 WorldSocket::WorldSocket(tcp::socket&& socket)
-: Socket(std::move(socket)), _authSeed(rand32()), _OverSpeedPings(0), _worldSession(nullptr), _authed(false)
+    : Socket(std::move(socket)), _authSeed(rand32()), _OverSpeedPings(0), _worldSession(nullptr), _authed(false)
 {
     _headerBuffer.Resize(sizeof(ClientPktHeader));
 }
@@ -163,43 +163,43 @@ bool WorldSocket::ReadDataHandler()
 
     switch (opcode)
     {
-    case CMSG_PING:
-        LogOpcodeText(opcode, sessionGuard);
-        return HandlePing(packet);
-    case CMSG_AUTH_SESSION:
-        LogOpcodeText(opcode, sessionGuard);
-        if (_authed)
+        case CMSG_PING:
+            LogOpcodeText(opcode, sessionGuard);
+            return HandlePing(packet);
+        case CMSG_AUTH_SESSION:
+            LogOpcodeText(opcode, sessionGuard);
+            if (_authed)
+            {
+                // locking just to safely log offending user is probably overkill but we are disconnecting him anyway
+                if (sessionGuard.try_lock())
+                    TC_LOG_ERROR("network", "WorldSocket::ProcessIncoming: received duplicate CMSG_AUTH_SESSION from %s", _worldSession->GetPlayerInfo().c_str());
+                return false;
+            }
+
+            HandleAuthSession(packet);
+            break;
+        case CMSG_KEEP_ALIVE:
+            LogOpcodeText(opcode, sessionGuard);
+            break;
+        default:
         {
-            // locking just to safely log offending user is probably overkill but we are disconnecting him anyway
-            if (sessionGuard.try_lock())
-                TC_LOG_ERROR("network", "WorldSocket::ProcessIncoming: received duplicate CMSG_AUTH_SESSION from %s", _worldSession->GetPlayerInfo().c_str());
-            return false;
+            sessionGuard.lock();
+            LogOpcodeText(opcode, sessionGuard);
+            if (!_worldSession)
+            {
+                TC_LOG_ERROR("network.opcode", "ProcessIncoming: Client not authed opcode = %u", uint32(opcode));
+                CloseSocket();
+                return false;
+            }
+
+            // Our Idle timer will reset on any non PING opcodes.
+            // Catches people idling on the login screen and any lingering ingame connections.
+            _worldSession->ResetTimeOutTime();
+
+            // Copy the packet to the heap before enqueuing
+            _worldSession->QueuePacket(new WorldPacket(std::move(packet)));
+            break;
         }
-
-        HandleAuthSession(packet);
-        break;
-    case CMSG_KEEP_ALIVE:
-        LogOpcodeText(opcode, sessionGuard);
-        break;
-    default:
-    {
-               sessionGuard.lock();
-               LogOpcodeText(opcode, sessionGuard);
-               if (!_worldSession)
-               {
-                   TC_LOG_ERROR("network.opcode", "ProcessIncoming: Client not authed opcode = %u", uint32(opcode));
-                   CloseSocket();
-                   return false;
-               }
-
-               // Our Idle timer will reset on any non PING opcodes.
-               // Catches people idling on the login screen and any lingering ingame connections.
-               _worldSession->ResetTimeOutTime();
-
-               // Copy the packet to the heap before enqueuing
-               _worldSession->QueuePacket(new WorldPacket(std::move(packet)));
-               break;
-    }
     }
 
     return true;

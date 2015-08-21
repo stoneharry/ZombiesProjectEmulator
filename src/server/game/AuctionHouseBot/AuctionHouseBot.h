@@ -26,22 +26,22 @@ class AuctionBotBuyer;
 // shadow of ItemQualities with skipped ITEM_QUALITY_HEIRLOOM, anything after ITEM_QUALITY_ARTIFACT(6) in fact
 enum AuctionQuality
 {
-    AUCTION_QUALITY_GRAY = ITEM_QUALITY_POOR,
-    AUCTION_QUALITY_WHITE = ITEM_QUALITY_NORMAL,
-    AUCTION_QUALITY_GREEN = ITEM_QUALITY_UNCOMMON,
-    AUCTION_QUALITY_BLUE = ITEM_QUALITY_RARE,
-    AUCTION_QUALITY_PURPLE = ITEM_QUALITY_EPIC,
-    AUCTION_QUALITY_ORANGE = ITEM_QUALITY_LEGENDARY,
-    AUCTION_QUALITY_YELLOW = ITEM_QUALITY_ARTIFACT,
+    AUCTION_QUALITY_GRAY    = ITEM_QUALITY_POOR,
+    AUCTION_QUALITY_WHITE   = ITEM_QUALITY_NORMAL,
+    AUCTION_QUALITY_GREEN   = ITEM_QUALITY_UNCOMMON,
+    AUCTION_QUALITY_BLUE    = ITEM_QUALITY_RARE,
+    AUCTION_QUALITY_PURPLE  = ITEM_QUALITY_EPIC,
+    AUCTION_QUALITY_ORANGE  = ITEM_QUALITY_LEGENDARY,
+    AUCTION_QUALITY_YELLOW  = ITEM_QUALITY_ARTIFACT,
 };
 
 #define MAX_AUCTION_QUALITY 7
 
 enum AuctionHouseType
 {
-    AUCTION_HOUSE_NEUTRAL = 0,
-    AUCTION_HOUSE_ALLIANCE = 1,
-    AUCTION_HOUSE_HORDE = 2
+    AUCTION_HOUSE_NEUTRAL   = 0,
+    AUCTION_HOUSE_ALLIANCE  = 1,
+    AUCTION_HOUSE_HORDE     = 2
 };
 
 #define MAX_AUCTION_HOUSE_TYPE 3
@@ -178,7 +178,7 @@ enum AuctionBotConfigBoolValues
 class AuctionBotConfig
 {
 private:
-    AuctionBotConfig() : _itemsPerCycleBoost(1000), _itemsPerCycleNormal(20) {}
+    AuctionBotConfig(): _itemsPerCycleBoost(1000), _itemsPerCycleNormal(20) {}
     ~AuctionBotConfig() {}
     AuctionBotConfig(const AuctionBotConfig&);
     AuctionBotConfig& operator=(const AuctionBotConfig&);

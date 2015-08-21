@@ -21,19 +21,19 @@
 
 enum Spells
 {
-    SPELL_REND = 13738,
-    SPELL_THRASH = 3391,
+    SPELL_REND                      = 13738,
+    SPELL_THRASH                    = 3391,
 };
 
 enum Says
 {
-    EMOTE_DEATH = 0
+    EMOTE_DEATH                     = 0
 };
 
 enum Events
 {
-    EVENT_REND = 1,
-    EVENT_THRASH = 2,
+    EVENT_REND                      = 1,
+    EVENT_THRASH                    = 2,
 };
 
 const Position SummonLocation = { -167.9561f, -411.7844f, 76.23057f, 1.53589f };
@@ -64,8 +64,8 @@ public:
         void EnterCombat(Unit* /*who*/) override
         {
             _EnterCombat();
-            events.ScheduleEvent(EVENT_REND, urand(17000, 20000));
-            events.ScheduleEvent(EVENT_THRASH, urand(10000, 12000));
+            events.ScheduleEvent(EVENT_REND, urand(17000,20000));
+            events.ScheduleEvent(EVENT_THRASH, urand(10000,12000));
         }
 
         void JustDied(Unit* /*killer*/) override
@@ -90,21 +90,21 @@ public:
             {
                 switch (eventId)
                 {
-                case EVENT_REND:
-                    DoCastVictim(SPELL_REND);
-                    events.ScheduleEvent(EVENT_REND, urand(8000, 10000));
-                    break;
-                case EVENT_THRASH:
-                    DoCast(me, SPELL_THRASH);
-                    break;
-                default:
-                    break;
+                    case EVENT_REND:
+                        DoCastVictim(SPELL_REND);
+                        events.ScheduleEvent(EVENT_REND, urand(8000,10000));
+                        break;
+                    case EVENT_THRASH:
+                        DoCast(me, SPELL_THRASH);
+                        break;
+                    default:
+                        break;
                 }
             }
             DoMeleeAttackIfReady();
         }
-    private:
-        bool Summoned;
+        private:
+            bool Summoned;
     };
 
     CreatureAI* GetAI(Creature* creature) const override

@@ -105,7 +105,7 @@ public:
         // We need to use a copy of SummonList here, otherwise original SummonList would be modified
         StorageType listCopy = storage_;
         Trinity::Containers::RandomResizeList<ObjectGuid, Predicate>(listCopy, predicate, max);
-        for (StorageType::iterator i = listCopy.begin(); i != listCopy.end();)
+        for (StorageType::iterator i = listCopy.begin(); i != listCopy.end(); )
         {
             Creature* summon = ObjectAccessor::GetCreature(*me, *i++);
             if (summon && summon->IsAIEnabled)
@@ -124,18 +124,18 @@ private:
 
 class EntryCheckPredicate
 {
-public:
-    EntryCheckPredicate(uint32 entry) : _entry(entry) { }
-    bool operator()(ObjectGuid guid) { return guid.GetEntry() == _entry; }
+    public:
+        EntryCheckPredicate(uint32 entry) : _entry(entry) { }
+        bool operator()(ObjectGuid guid) { return guid.GetEntry() == _entry; }
 
-private:
-    uint32 _entry;
+    private:
+        uint32 _entry;
 };
 
 class DummyEntryCheckPredicate
 {
-public:
-    bool operator()(ObjectGuid) { return true; }
+    public:
+        bool operator()(ObjectGuid) { return true; }
 };
 
 struct ScriptedAI : public CreatureAI
@@ -281,42 +281,42 @@ struct ScriptedAI : public CreatureAI
     bool Is25ManRaid() const { return _difficulty & RAID_DIFFICULTY_MASK_25MAN; }
 
     template<class T> inline
-        const T& DUNGEON_MODE(const T& normal5, const T& heroic10) const
+    const T& DUNGEON_MODE(const T& normal5, const T& heroic10) const
     {
-            switch (_difficulty)
-            {
+        switch (_difficulty)
+        {
             case DUNGEON_DIFFICULTY_NORMAL:
                 return normal5;
             case DUNGEON_DIFFICULTY_HEROIC:
                 return heroic10;
             default:
                 break;
-            }
-
-            return heroic10;
         }
 
+        return heroic10;
+    }
+
     template<class T> inline
-        const T& RAID_MODE(const T& normal10, const T& normal25) const
+    const T& RAID_MODE(const T& normal10, const T& normal25) const
     {
-            switch (_difficulty)
-            {
+        switch (_difficulty)
+        {
             case RAID_DIFFICULTY_10MAN_NORMAL:
                 return normal10;
             case RAID_DIFFICULTY_25MAN_NORMAL:
                 return normal25;
             default:
                 break;
-            }
-
-            return normal25;
         }
 
+        return normal25;
+    }
+
     template<class T> inline
-        const T& RAID_MODE(const T& normal10, const T& normal25, const T& heroic10, const T& heroic25) const
+    const T& RAID_MODE(const T& normal10, const T& normal25, const T& heroic10, const T& heroic25) const
     {
-            switch (_difficulty)
-            {
+        switch (_difficulty)
+        {
             case RAID_DIFFICULTY_10MAN_NORMAL:
                 return normal10;
             case RAID_DIFFICULTY_25MAN_NORMAL:
@@ -327,97 +327,97 @@ struct ScriptedAI : public CreatureAI
                 return heroic25;
             default:
                 break;
-            }
-
-            return heroic25;
         }
 
-private:
-    Difficulty _difficulty;
-    uint32 _evadeCheckCooldown;
-    bool _isCombatMovementAllowed;
-    bool _isHeroic;
+        return heroic25;
+    }
+
+    private:
+        Difficulty _difficulty;
+        uint32 _evadeCheckCooldown;
+        bool _isCombatMovementAllowed;
+        bool _isHeroic;
 };
 
 class BossAI : public ScriptedAI
 {
-public:
-    BossAI(Creature* creature, uint32 bossId);
-    virtual ~BossAI() { }
+    public:
+        BossAI(Creature* creature, uint32 bossId);
+        virtual ~BossAI() { }
 
-    InstanceScript* const instance;
-    BossBoundaryMap const* GetBoundary() const { return _boundary; }
+        InstanceScript* const instance;
+        BossBoundaryMap const* GetBoundary() const { return _boundary; }
 
-    void JustSummoned(Creature* summon) override;
-    void SummonedCreatureDespawn(Creature* summon) override;
+        void JustSummoned(Creature* summon) override;
+        void SummonedCreatureDespawn(Creature* summon) override;
 
-    virtual void UpdateAI(uint32 diff) override;
+        virtual void UpdateAI(uint32 diff) override;
 
-    // Hook used to execute events scheduled into EventMap without the need
-    // to override UpdateAI
-    // note: You must re-schedule the event within this method if the event
-    // is supposed to run more than once
-    virtual void ExecuteEvent(uint32 /*eventId*/) { }
+        // Hook used to execute events scheduled into EventMap without the need
+        // to override UpdateAI
+        // note: You must re-schedule the event within this method if the event
+        // is supposed to run more than once
+        virtual void ExecuteEvent(uint32 /*eventId*/) { }
 
-    void Reset() override { _Reset(); }
-    void EnterCombat(Unit* /*who*/) override { _EnterCombat(); }
-    void JustDied(Unit* /*killer*/) override { _JustDied(); }
-    void JustReachedHome() override { _JustReachedHome(); }
+        void Reset() override { _Reset(); }
+        void EnterCombat(Unit* /*who*/) override { _EnterCombat(); }
+        void JustDied(Unit* /*killer*/) override { _JustDied(); }
+        void JustReachedHome() override { _JustReachedHome(); }
 
-protected:
-    void _Reset();
-    void _EnterCombat();
-    void _JustDied();
-    void _JustReachedHome() { me->setActive(false); }
+    protected:
+        void _Reset();
+        void _EnterCombat();
+        void _JustDied();
+        void _JustReachedHome() { me->setActive(false); }
 
-    virtual bool CheckInRoom()
-    {
-        if (CheckBoundary(me))
-            return true;
+        virtual bool CheckInRoom()
+        {
+            if (CheckBoundary(me))
+                return true;
 
-        EnterEvadeMode();
-        return false;
-    }
+            EnterEvadeMode();
+            return false;
+        }
 
-    bool CheckBoundary(Unit* who);
-    void TeleportCheaters();
+        bool CheckBoundary(Unit* who);
+        void TeleportCheaters();
 
-    EventMap events;
-    SummonList summons;
+        EventMap events;
+        SummonList summons;
 
-private:
-    BossBoundaryMap const* const _boundary;
-    uint32 const _bossId;
+    private:
+        BossBoundaryMap const* const _boundary;
+        uint32 const _bossId;
 };
 
 class WorldBossAI : public ScriptedAI
 {
-public:
-    WorldBossAI(Creature* creature);
-    virtual ~WorldBossAI() { }
+    public:
+        WorldBossAI(Creature* creature);
+        virtual ~WorldBossAI() { }
 
-    void JustSummoned(Creature* summon) override;
-    void SummonedCreatureDespawn(Creature* summon) override;
+        void JustSummoned(Creature* summon) override;
+        void SummonedCreatureDespawn(Creature* summon) override;
 
-    virtual void UpdateAI(uint32 diff) override;
+        virtual void UpdateAI(uint32 diff) override;
 
-    // Hook used to execute events scheduled into EventMap without the need
-    // to override UpdateAI
-    // note: You must re-schedule the event within this method if the event
-    // is supposed to run more than once
-    virtual void ExecuteEvent(uint32 /*eventId*/) { }
+        // Hook used to execute events scheduled into EventMap without the need
+        // to override UpdateAI
+        // note: You must re-schedule the event within this method if the event
+        // is supposed to run more than once
+        virtual void ExecuteEvent(uint32 /*eventId*/) { }
 
-    void Reset() override { _Reset(); }
-    void EnterCombat(Unit* /*who*/) override { _EnterCombat(); }
-    void JustDied(Unit* /*killer*/) override { _JustDied(); }
+        void Reset() override { _Reset(); }
+        void EnterCombat(Unit* /*who*/) override { _EnterCombat(); }
+        void JustDied(Unit* /*killer*/) override { _JustDied(); }
 
-protected:
-    void _Reset();
-    void _EnterCombat();
-    void _JustDied();
+    protected:
+        void _Reset();
+        void _EnterCombat();
+        void _JustDied();
 
-    EventMap events;
-    SummonList summons;
+        EventMap events;
+        SummonList summons;
 };
 
 // SD2 grid searchers.

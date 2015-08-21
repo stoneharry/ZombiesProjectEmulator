@@ -29,23 +29,23 @@ EndScriptData */
 
 enum Midnight
 {
-    SAY_MIDNIGHT_KILL = 0,
-    SAY_APPEAR = 1,
-    SAY_MOUNT = 2,
+    SAY_MIDNIGHT_KILL           = 0,
+    SAY_APPEAR                  = 1,
+    SAY_MOUNT                   = 2,
 
-    SAY_KILL = 0,
-    SAY_DISARMED = 1,
-    SAY_DEATH = 2,
-    SAY_RANDOM = 3,
+    SAY_KILL                    = 0,
+    SAY_DISARMED                = 1,
+    SAY_DEATH                   = 2,
+    SAY_RANDOM                  = 3,
 
-    SPELL_SHADOWCLEAVE = 29832,
-    SPELL_INTANGIBLE_PRESENCE = 29833,
-    SPELL_BERSERKER_CHARGE = 26561,                   //Only when mounted
+    SPELL_SHADOWCLEAVE          = 29832,
+    SPELL_INTANGIBLE_PRESENCE   = 29833,
+    SPELL_BERSERKER_CHARGE      = 26561,                   //Only when mounted
 
-    MOUNTED_DISPLAYID = 16040,
+    MOUNTED_DISPLAYID           = 16040,
 
     //Attumen (@todo Use the summoning spell instead of Creature id. It works, but is not convenient for us)
-    SUMMON_ATTUMEN = 15550,
+    SUMMON_ATTUMEN              = 15550,
 };
 
 class boss_attumen : public CreatureScript
@@ -70,7 +70,7 @@ public:
             CurseTimer = 30000;
             RandomYellTimer = urand(30000, 60000);              //Occasionally yell
             ChargeTimer = 20000;
-        }
+         }
 
         void Initialize()
         {
@@ -209,8 +209,7 @@ public:
                             }
                             pAttumen->SetObjectScale(1);
                         }
-                    }
-                    else Mount_Timer -= diff;
+                    } else Mount_Timer -= diff;
                 }
             }
 
@@ -226,16 +225,16 @@ public:
             pAttumen->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
             float angle = me->GetAngle(pAttumen);
             float distance = me->GetDistance2d(pAttumen);
-            float newX = me->GetPositionX() + std::cos(angle)*(distance / 2);
-            float newY = me->GetPositionY() + std::sin(angle)*(distance / 2);
+            float newX = me->GetPositionX() + std::cos(angle)*(distance/2);
+            float newY = me->GetPositionY() + std::sin(angle)*(distance/2);
             float newZ = 50;
             //me->Relocate(newX, newY, newZ, angle);
             //me->SendMonsterMove(newX, newY, newZ, 0, true, 1000);
             me->GetMotionMaster()->Clear();
             me->GetMotionMaster()->MovePoint(0, newX, newY, newZ);
             distance += 10;
-            newX = me->GetPositionX() + std::cos(angle)*(distance / 2);
-            newY = me->GetPositionY() + std::sin(angle)*(distance / 2);
+            newX = me->GetPositionX() + std::cos(angle)*(distance/2);
+            newY = me->GetPositionY() + std::sin(angle)*(distance/2);
             pAttumen->GetMotionMaster()->Clear();
             pAttumen->GetMotionMaster()->MovePoint(0, newX, newY, newZ);
             //pAttumen->Relocate(newX, newY, newZ, -angle);
@@ -266,8 +265,7 @@ void boss_attumen::boss_attumenAI::UpdateAI(uint32 diff)
             Midnight.Clear();
             me->SetVisible(false);
             me->Kill(me);
-        }
-        else ResetTimer -= diff;
+        } else ResetTimer -= diff;
     }
 
     //Return since we have no target
@@ -281,22 +279,19 @@ void boss_attumen::boss_attumenAI::UpdateAI(uint32 diff)
     {
         DoCastVictim(SPELL_SHADOWCLEAVE);
         CleaveTimer = urand(10000, 15000);
-    }
-    else CleaveTimer -= diff;
+    } else CleaveTimer -= diff;
 
     if (CurseTimer <= diff)
     {
         DoCastVictim(SPELL_INTANGIBLE_PRESENCE);
         CurseTimer = 30000;
-    }
-    else CurseTimer -= diff;
+    } else CurseTimer -= diff;
 
     if (RandomYellTimer <= diff)
     {
         Talk(SAY_RANDOM);
         RandomYellTimer = urand(30000, 60000);
-    }
-    else RandomYellTimer -= diff;
+    } else RandomYellTimer -= diff;
 
     if (me->GetUInt32Value(UNIT_FIELD_DISPLAYID) == MOUNTED_DISPLAYID)
     {
@@ -317,8 +312,7 @@ void boss_attumen::boss_attumenAI::UpdateAI(uint32 diff)
 
             DoCast(target, SPELL_BERSERKER_CHARGE);
             ChargeTimer = 20000;
-        }
-        else ChargeTimer -= diff;
+        } else ChargeTimer -= diff;
     }
     else
     {

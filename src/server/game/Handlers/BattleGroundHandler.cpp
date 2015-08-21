@@ -37,7 +37,7 @@
 
 void WorldSession::HandleBattlemasterHelloOpcode(WorldPacket& recvData)
 {
-    return;
+	return;
     ObjectGuid guid;
     recvData >> guid;
     TC_LOG_DEBUG("network", "WORLD: Recvd CMSG_BATTLEMASTER_HELLO Message from %s", guid.ToString().c_str());
@@ -56,7 +56,7 @@ void WorldSession::HandleBattlemasterHelloOpcode(WorldPacket& recvData)
 
     if (!_player->GetBGAccessByLevel(bgTypeId))
     {
-        // temp, must be gossip message...
+                                                            // temp, must be gossip message...
         SendNotification(LANG_YOUR_BG_LEVEL_REQ_ERROR);
         return;
     }
@@ -66,17 +66,17 @@ void WorldSession::HandleBattlemasterHelloOpcode(WorldPacket& recvData)
 
 void WorldSession::SendBattleGroundList(ObjectGuid guid, BattlegroundTypeId bgTypeId)
 {
-    return;
-    WorldPacket data;
+	return;
+	WorldPacket data;
     sBattlegroundMgr->BuildBattlegroundListPacket(&data, guid, _player, bgTypeId, 0);
     SendPacket(&data);
 }
 
 void WorldSession::HandleBattlemasterJoinOpcode(WorldPacket& recvData)
 {
-    SendNotification(LANG_BG_DISABLED);
-    return;
-    ObjectGuid guid;
+	SendNotification(LANG_BG_DISABLED);
+	return;
+	ObjectGuid guid;
     uint32 bgTypeId_;
     uint32 instanceId;
     uint8 joinAsGroup;
@@ -190,11 +190,11 @@ void WorldSession::HandleBattlemasterJoinOpcode(WorldPacket& recvData)
         uint32 queueSlot = _player->AddBattlegroundQueueId(bgQueueTypeId);
 
         WorldPacket data;
-        // send status packet (in queue)
+                                                            // send status packet (in queue)
         sBattlegroundMgr->BuildBattlegroundStatusPacket(&data, bg, queueSlot, STATUS_WAIT_QUEUE, avgTime, 0, ginfo->ArenaType, 0);
         SendPacket(&data);
         TC_LOG_DEBUG("bg.battleground", "Battleground: player joined queue for bg queue type %u bg type %u: GUID %u, NAME %s",
-            bgQueueTypeId, bgTypeId, _player->GetGUIDLow(), _player->GetName().c_str());
+                       bgQueueTypeId, bgTypeId, _player->GetGUIDLow(), _player->GetName().c_str());
     }
     else
     {
@@ -251,8 +251,8 @@ void WorldSession::HandleBattlemasterJoinOpcode(WorldPacket& recvData)
 
 void WorldSession::HandleBattlegroundPlayerPositionsOpcode(WorldPacket& /*recvData*/)
 {
-    return;
-    TC_LOG_DEBUG("network", "WORLD: Recvd MSG_BATTLEGROUND_PLAYER_POSITIONS Message");
+	return;
+	TC_LOG_DEBUG("network", "WORLD: Recvd MSG_BATTLEGROUND_PLAYER_POSITIONS Message");
 
     Battleground* bg = _player->GetBattleground();
     if (!bg)                                                 // can't be received if player not in battleground
@@ -281,7 +281,7 @@ void WorldSession::HandleBattlegroundPlayerPositionsOpcode(WorldPacket& /*recvDa
     data << 0;  // CGBattlefieldInfo__m_numPlayerPositions
     /*
     for (CGBattlefieldInfo__m_numPlayerPositions)
-    data << guid << posx << posy;
+        data << guid << posx << posy;
     */
     data << flagCarrierCount;
     if (allianceFlagCarrier)
@@ -303,8 +303,8 @@ void WorldSession::HandleBattlegroundPlayerPositionsOpcode(WorldPacket& /*recvDa
 
 void WorldSession::HandlePVPLogDataOpcode(WorldPacket & /*recvData*/)
 {
-    return;
-    TC_LOG_DEBUG("network", "WORLD: Recvd MSG_PVP_LOG_DATA Message");
+	return;
+	TC_LOG_DEBUG("network", "WORLD: Recvd MSG_PVP_LOG_DATA Message");
 
     Battleground* bg = _player->GetBattleground();
     if (!bg)
@@ -323,8 +323,8 @@ void WorldSession::HandlePVPLogDataOpcode(WorldPacket & /*recvData*/)
 
 void WorldSession::HandleBattlefieldListOpcode(WorldPacket &recvData)
 {
-    return;
-    TC_LOG_DEBUG("network", "WORLD: Recvd CMSG_BATTLEFIELD_LIST Message");
+	return;
+	TC_LOG_DEBUG("network", "WORLD: Recvd CMSG_BATTLEFIELD_LIST Message");
 
     uint32 bgTypeId;
     recvData >> bgTypeId;                                  // id from DBC
@@ -349,8 +349,8 @@ void WorldSession::HandleBattlefieldListOpcode(WorldPacket &recvData)
 
 void WorldSession::HandleBattleFieldPortOpcode(WorldPacket &recvData)
 {
-    return;
-    uint8 type;                                             // arenatype if arena
+	return;
+	uint8 type;                                             // arenatype if arena
     uint8 unk2;                                             // unk, can be 0x0 (may be if was invited?) and 0x1
     uint32 bgTypeId_;                                       // type id from dbc
     uint16 unk;                                             // 0x1F90 constant?
@@ -511,8 +511,8 @@ void WorldSession::HandleBattleFieldPortOpcode(WorldPacket &recvData)
 
 void WorldSession::HandleBattlefieldLeaveOpcode(WorldPacket& recvData)
 {
-    return;
-    TC_LOG_DEBUG("network", "WORLD: Recvd CMSG_LEAVE_BATTLEFIELD Message");
+	return;
+	TC_LOG_DEBUG("network", "WORLD: Recvd CMSG_LEAVE_BATTLEFIELD Message");
 
     recvData.read_skip<uint8>();                           // unk1
     recvData.read_skip<uint8>();                           // unk2
@@ -521,17 +521,17 @@ void WorldSession::HandleBattlefieldLeaveOpcode(WorldPacket& recvData)
 
     // not allow leave battleground in combat
     if (_player->IsInCombat())
-    if (Battleground* bg = _player->GetBattleground())
-    if (bg->GetStatus() != STATUS_WAIT_LEAVE)
-        return;
+        if (Battleground* bg = _player->GetBattleground())
+            if (bg->GetStatus() != STATUS_WAIT_LEAVE)
+                return;
 
     _player->LeaveBattleground();
 }
 
 void WorldSession::HandleBattlefieldStatusOpcode(WorldPacket & /*recvData*/)
 {
-    return;
-    // empty opcode
+	return;
+	// empty opcode
     TC_LOG_DEBUG("network", "WORLD: Battleground status");
 
     WorldPacket data;
@@ -595,9 +595,9 @@ void WorldSession::HandleBattlefieldStatusOpcode(WorldPacket & /*recvData*/)
 
 void WorldSession::HandleBattlemasterJoinArena(WorldPacket& recvData)
 {
-    SendNotification(LANG_BG_DISABLED);
-    return;
-    TC_LOG_DEBUG("network", "WORLD: CMSG_BATTLEMASTER_JOIN_ARENA");
+	SendNotification(LANG_BG_DISABLED);
+	return;
+	TC_LOG_DEBUG("network", "WORLD: CMSG_BATTLEMASTER_JOIN_ARENA");
 
     ObjectGuid guid;                                        // arena Battlemaster guid
     uint8 arenaslot;                                        // 2v2, 3v3 or 5v5
@@ -624,18 +624,18 @@ void WorldSession::HandleBattlemasterJoinArena(WorldPacket& recvData)
 
     switch (arenaslot)
     {
-    case 0:
-        arenatype = ARENA_TYPE_2v2;
-        break;
-    case 1:
-        arenatype = ARENA_TYPE_3v3;
-        break;
-    case 2:
-        arenatype = ARENA_TYPE_5v5;
-        break;
-    default:
-        TC_LOG_ERROR("network", "Unknown arena slot %u at HandleBattlemasterJoinArena()", arenaslot);
-        return;
+        case 0:
+            arenatype = ARENA_TYPE_2v2;
+            break;
+        case 1:
+            arenatype = ARENA_TYPE_3v3;
+            break;
+        case 2:
+            arenatype = ARENA_TYPE_5v5;
+            break;
+        default:
+            TC_LOG_ERROR("network", "Unknown arena slot %u at HandleBattlemasterJoinArena()", arenaslot);
+            return;
     }
 
     //check existance
@@ -765,8 +765,8 @@ void WorldSession::HandleBattlemasterJoinArena(WorldPacket& recvData)
 
 void WorldSession::HandleReportPvPAFK(WorldPacket& recvData)
 {
-    return;
-    ObjectGuid playerGuid;
+	return;
+	ObjectGuid playerGuid;
     recvData >> playerGuid;
     Player* reportedPlayer = ObjectAccessor::FindPlayer(playerGuid);
 

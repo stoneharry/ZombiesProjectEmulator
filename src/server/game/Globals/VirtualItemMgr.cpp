@@ -183,7 +183,7 @@ void VirtualItemMgr::GenerateStats(ItemTemplate* output, VirtualModifier const& 
     ASSERT(quality < MAX_ITEM_QUALITY);
 
     // decide stat amount
-    uint32 statscount = quality - 1;
+    uint32 statscount = quality-1;
     if (statscount < 0)
         statscount = 0;
     ASSERT(statscount <= MAX_ITEM_PROTO_STATS);
@@ -227,7 +227,7 @@ void VirtualItemMgr::GenerateStats(ItemTemplate* output, VirtualModifier const& 
         std::vector<StatGroup> const& statgroups = modifier.premadeStatGroupData.GetArmorSubclassStatGroups((ItemSubclassArmor)output->SubClass);
         if (!statgroups.empty())
             statgroupid = statgroups[urand(0, statgroups.size() - 1)];
-    }
+        }
     if (statgroupid == STAT_GROUP_RANDOM)
         statgroupid = static_cast<StatGroup>(urand(0, STAT_GROUP_COUNT - 1));
     ASSERT(statgroupid < STAT_GROUP_COUNT); // must not be random anymore

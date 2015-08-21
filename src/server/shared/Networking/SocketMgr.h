@@ -69,8 +69,8 @@ public:
     virtual void StopNetwork()
     {
         if (_threadCount != 0)
-        for (int32 i = 0; i < _threadCount; ++i)
-            _threads[i].Stop();
+            for (int32 i = 0; i < _threadCount; ++i)
+                _threads[i].Stop();
 
         Wait();
     }
@@ -78,8 +78,8 @@ public:
     void Wait()
     {
         if (_threadCount != 0)
-        for (int32 i = 0; i < _threadCount; ++i)
-            _threads[i].Wait();
+            for (int32 i = 0; i < _threadCount; ++i)
+                _threads[i].Wait();
     }
 
     virtual void OnSocketOpen(tcp::socket&& sock)
@@ -87,8 +87,8 @@ public:
         size_t min = 0;
 
         for (int32 i = 1; i < _threadCount; ++i)
-        if (_threads[i].GetConnectionCount() < _threads[min].GetConnectionCount())
-            min = i;
+            if (_threads[i].GetConnectionCount() < _threads[min].GetConnectionCount())
+                min = i;
 
         try
         {

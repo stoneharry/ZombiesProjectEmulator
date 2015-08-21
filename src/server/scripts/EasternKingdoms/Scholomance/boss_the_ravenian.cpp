@@ -28,23 +28,23 @@ Category: Scholomance
 
 enum Spells
 {
-    SPELL_TRAMPLE = 15550,
-    SPELL_CLEAVE = 20691,
-    SPELL_SUNDERINCLEAVE = 25174,
-    SPELL_KNOCKAWAY = 10101
+    SPELL_TRAMPLE                   = 15550,
+    SPELL_CLEAVE                    = 20691,
+    SPELL_SUNDERINCLEAVE            = 25174,
+    SPELL_KNOCKAWAY                 = 10101
 };
 
 enum Events
 {
-    EVENT_TRAMPLE = 1,
-    EVENT_CLEAVE = 2,
-    EVENT_SUNDERINCLEAVE = 3,
-    EVENT_KNOCKAWAY = 4
+    EVENT_TRAMPLE                   = 1,
+    EVENT_CLEAVE                    = 2,
+    EVENT_SUNDERINCLEAVE            = 3,
+    EVENT_KNOCKAWAY                 = 4
 };
 
 class boss_the_ravenian : public CreatureScript
 {
-public: boss_the_ravenian() : CreatureScript("boss_the_ravenian") { }
+    public: boss_the_ravenian() : CreatureScript("boss_the_ravenian") { }
 
         struct boss_theravenianAI : public BossAI
         {
@@ -73,24 +73,24 @@ public: boss_the_ravenian() : CreatureScript("boss_the_ravenian") { }
                 {
                     switch (eventId)
                     {
-                    case EVENT_TRAMPLE:
-                        DoCastVictim(SPELL_TRAMPLE, true);
-                        events.ScheduleEvent(EVENT_TRAMPLE, 10000);
-                        break;
-                    case EVENT_CLEAVE:
-                        DoCastVictim(SPELL_CLEAVE, true);
-                        events.ScheduleEvent(EVENT_CLEAVE, 7000);
-                        break;
-                    case EVENT_SUNDERINCLEAVE:
-                        DoCastVictim(SPELL_SUNDERINCLEAVE, true);
-                        events.ScheduleEvent(EVENT_SUNDERINCLEAVE, 20000);
-                        break;
-                    case EVENT_KNOCKAWAY:
-                        DoCastVictim(SPELL_KNOCKAWAY, true);
-                        events.ScheduleEvent(EVENT_KNOCKAWAY, 12000);
-                        break;
-                    default:
-                        break;
+                        case EVENT_TRAMPLE:
+                            DoCastVictim(SPELL_TRAMPLE, true);
+                            events.ScheduleEvent(EVENT_TRAMPLE, 10000);
+                            break;
+                        case EVENT_CLEAVE:
+                            DoCastVictim(SPELL_CLEAVE, true);
+                            events.ScheduleEvent(EVENT_CLEAVE, 7000);
+                            break;
+                        case EVENT_SUNDERINCLEAVE:
+                            DoCastVictim(SPELL_SUNDERINCLEAVE, true);
+                            events.ScheduleEvent(EVENT_SUNDERINCLEAVE, 20000);
+                            break;
+                        case EVENT_KNOCKAWAY:
+                            DoCastVictim(SPELL_KNOCKAWAY, true);
+                            events.ScheduleEvent(EVENT_KNOCKAWAY, 12000);
+                            break;
+                        default:
+                            break;
                     }
                 }
 

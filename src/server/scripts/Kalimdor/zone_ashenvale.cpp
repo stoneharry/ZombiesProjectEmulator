@@ -38,12 +38,12 @@ EndContentData */
 
 enum RuulSnowhoof
 {
-    NPC_THISTLEFUR_URSA = 3921,
-    NPC_THISTLEFUR_TOTEMIC = 3922,
-    NPC_THISTLEFUR_PATHFINDER = 3926,
-    QUEST_FREEDOM_TO_RUUL = 6482,
-    FACTION_QUEST = 113,
-    GO_CAGE = 178147
+    NPC_THISTLEFUR_URSA         = 3921,
+    NPC_THISTLEFUR_TOTEMIC      = 3922,
+    NPC_THISTLEFUR_PATHFINDER   = 3926,
+    QUEST_FREEDOM_TO_RUUL       = 6482,
+    FACTION_QUEST               = 113,
+    GO_CAGE                     = 178147
 };
 
 Position const RuulSnowhoofSummonsCoord[6] =
@@ -95,24 +95,24 @@ public:
 
             switch (waypointId)
             {
-            case 0:
-                me->SetUInt32Value(UNIT_FIELD_BYTES_1, 0);
-                if (GameObject* Cage = me->FindNearestGameObject(GO_CAGE, 20))
-                    Cage->SetGoState(GO_STATE_ACTIVE);
-                break;
-            case 13:
-                me->SummonCreature(NPC_THISTLEFUR_TOTEMIC, RuulSnowhoofSummonsCoord[0], TEMPSUMMON_DEAD_DESPAWN, 60000);
-                me->SummonCreature(NPC_THISTLEFUR_URSA, RuulSnowhoofSummonsCoord[1], TEMPSUMMON_DEAD_DESPAWN, 60000);
-                me->SummonCreature(NPC_THISTLEFUR_PATHFINDER, RuulSnowhoofSummonsCoord[2], TEMPSUMMON_DEAD_DESPAWN, 60000);
-                break;
-            case 19:
-                me->SummonCreature(NPC_THISTLEFUR_TOTEMIC, RuulSnowhoofSummonsCoord[3], TEMPSUMMON_DEAD_DESPAWN, 60000);
-                me->SummonCreature(NPC_THISTLEFUR_URSA, RuulSnowhoofSummonsCoord[4], TEMPSUMMON_DEAD_DESPAWN, 60000);
-                me->SummonCreature(NPC_THISTLEFUR_PATHFINDER, RuulSnowhoofSummonsCoord[5], TEMPSUMMON_DEAD_DESPAWN, 60000);
-                break;
-            case 21:
-                player->GroupEventHappens(QUEST_FREEDOM_TO_RUUL, me);
-                break;
+                case 0:
+                    me->SetUInt32Value(UNIT_FIELD_BYTES_1, 0);
+                    if (GameObject* Cage = me->FindNearestGameObject(GO_CAGE, 20))
+                        Cage->SetGoState(GO_STATE_ACTIVE);
+                    break;
+                case 13:
+                    me->SummonCreature(NPC_THISTLEFUR_TOTEMIC, RuulSnowhoofSummonsCoord[0], TEMPSUMMON_DEAD_DESPAWN, 60000);
+                    me->SummonCreature(NPC_THISTLEFUR_URSA, RuulSnowhoofSummonsCoord[1], TEMPSUMMON_DEAD_DESPAWN, 60000);
+                    me->SummonCreature(NPC_THISTLEFUR_PATHFINDER, RuulSnowhoofSummonsCoord[2], TEMPSUMMON_DEAD_DESPAWN, 60000);
+                    break;
+                case 19:
+                    me->SummonCreature(NPC_THISTLEFUR_TOTEMIC, RuulSnowhoofSummonsCoord[3], TEMPSUMMON_DEAD_DESPAWN, 60000);
+                    me->SummonCreature(NPC_THISTLEFUR_URSA, RuulSnowhoofSummonsCoord[4], TEMPSUMMON_DEAD_DESPAWN, 60000);
+                    me->SummonCreature(NPC_THISTLEFUR_PATHFINDER, RuulSnowhoofSummonsCoord[5], TEMPSUMMON_DEAD_DESPAWN, 60000);
+                    break;
+                case 21:
+                    player->GroupEventHappens(QUEST_FREEDOM_TO_RUUL, me);
+                    break;
             }
         }
 
@@ -130,48 +130,48 @@ public:
 
 enum Muglash
 {
-    SAY_MUG_START1 = 0,
-    SAY_MUG_START2 = 1,
-    SAY_MUG_BRAZIER = 2,
-    SAY_MUG_BRAZIER_WAIT = 3,
-    SAY_MUG_ON_GUARD = 4,
-    SAY_MUG_REST = 5,
-    SAY_MUG_DONE = 6,
-    SAY_MUG_GRATITUDE = 7,
-    SAY_MUG_PATROL = 8,
-    SAY_MUG_RETURN = 9,
+    SAY_MUG_START1          = 0,
+    SAY_MUG_START2          = 1,
+    SAY_MUG_BRAZIER         = 2,
+    SAY_MUG_BRAZIER_WAIT    = 3,
+    SAY_MUG_ON_GUARD        = 4,
+    SAY_MUG_REST            = 5,
+    SAY_MUG_DONE            = 6,
+    SAY_MUG_GRATITUDE       = 7,
+    SAY_MUG_PATROL          = 8,
+    SAY_MUG_RETURN          = 9,
 
-    QUEST_VORSHA = 6641,
+    QUEST_VORSHA            = 6641,
 
-    GO_NAGA_BRAZIER = 178247,
+    GO_NAGA_BRAZIER         = 178247,
 
-    NPC_WRATH_RIDER = 3713,
-    NPC_WRATH_SORCERESS = 3717,
-    NPC_WRATH_RAZORTAIL = 3712,
+    NPC_WRATH_RIDER         = 3713,
+    NPC_WRATH_SORCERESS     = 3717,
+    NPC_WRATH_RAZORTAIL     = 3712,
 
-    NPC_WRATH_PRIESTESS = 3944,
-    NPC_WRATH_MYRMIDON = 3711,
-    NPC_WRATH_SEAWITCH = 3715,
+    NPC_WRATH_PRIESTESS     = 3944,
+    NPC_WRATH_MYRMIDON      = 3711,
+    NPC_WRATH_SEAWITCH      = 3715,
 
-    NPC_VORSHA = 12940,
-    NPC_MUGLASH = 12717
+    NPC_VORSHA              = 12940,
+    NPC_MUGLASH             = 12717
 };
 
 Position const FirstNagaCoord[3] =
 {
-    { 3603.504150f, 1122.631104f, 1.635f, 0.0f },        // rider
-    { 3589.293945f, 1148.664063f, 5.565f, 0.0f },        // sorceress
+    { 3603.504150f, 1122.631104f,  1.635f, 0.0f },        // rider
+    { 3589.293945f, 1148.664063f,  5.565f, 0.0f },        // sorceress
     { 3609.925537f, 1168.759521f, -1.168f, 0.0f }         // razortail
 };
 
 Position const SecondNagaCoord[3] =
 {
     { 3609.925537f, 1168.759521f, -1.168f, 0.0f },        // witch
-    { 3645.652100f, 1139.425415f, 1.322f, 0.0f },        // priest
-    { 3583.602051f, 1128.405762f, 2.347f, 0.0f }         // myrmidon
+    { 3645.652100f, 1139.425415f, 1.322f,  0.0f },        // priest
+    { 3583.602051f, 1128.405762f, 2.347f,  0.0f }         // myrmidon
 };
 
-Position const VorshaCoord = { 3633.056885f, 1172.924072f, -5.388f, 0.0f };
+Position const VorshaCoord = {3633.056885f, 1172.924072f, -5.388f, 0.0f};
 
 class npc_muglash : public CreatureScript
 {
@@ -200,19 +200,19 @@ public:
         void EnterCombat(Unit* /*who*/) override
         {
             if (Player* player = GetPlayerForEscort())
-            if (HasEscortState(STATE_ESCORT_PAUSED))
-            {
-                if (urand(0, 1))
-                    Talk(SAY_MUG_ON_GUARD, player);
-                return;
-            }
+                if (HasEscortState(STATE_ESCORT_PAUSED))
+                {
+                    if (urand(0, 1))
+                        Talk(SAY_MUG_ON_GUARD, player);
+                    return;
+                }
         }
 
         void JustDied(Unit* /*killer*/) override
         {
             if (HasEscortState(STATE_ESCORT_ESCORTING))
-            if (Player* player = GetPlayerForEscort())
-                player->FailQuest(QUEST_VORSHA);
+                if (Player* player = GetPlayerForEscort())
+                    player->FailQuest(QUEST_VORSHA);
         }
 
         void JustSummoned(Creature* summoned) override
@@ -230,83 +230,83 @@ public:
             }
         }
 
-        void WaypointReached(uint32 waypointId) override
-        {
-            if (Player* player = GetPlayerForEscort())
+            void WaypointReached(uint32 waypointId) override
             {
-                switch (waypointId)
+                if (Player* player = GetPlayerForEscort())
                 {
-                case 0:
-                    Talk(SAY_MUG_START2, player);
-                    break;
-                case 24:
-                    Talk(SAY_MUG_BRAZIER, player);
-
-                    if (GameObject* go = GetClosestGameObjectWithEntry(me, GO_NAGA_BRAZIER, INTERACTION_DISTANCE * 2))
+                    switch (waypointId)
                     {
-                        go->RemoveFlag(GAMEOBJECT_FLAGS, GO_FLAG_NOT_SELECTABLE);
-                        SetEscortPaused(true);
+                        case 0:
+                            Talk(SAY_MUG_START2, player);
+                            break;
+                        case 24:
+                            Talk(SAY_MUG_BRAZIER, player);
+
+                            if (GameObject* go = GetClosestGameObjectWithEntry(me, GO_NAGA_BRAZIER, INTERACTION_DISTANCE*2))
+                            {
+                                go->RemoveFlag(GAMEOBJECT_FLAGS, GO_FLAG_NOT_SELECTABLE);
+                                SetEscortPaused(true);
+                            }
+                            break;
+                        case 25:
+                            Talk(SAY_MUG_GRATITUDE);
+                            player->GroupEventHappens(QUEST_VORSHA, me);
+                            break;
+                        case 26:
+                            Talk(SAY_MUG_PATROL);
+                            break;
+                        case 27:
+                            Talk(SAY_MUG_RETURN);
+                            break;
                     }
-                    break;
-                case 25:
-                    Talk(SAY_MUG_GRATITUDE);
-                    player->GroupEventHappens(QUEST_VORSHA, me);
-                    break;
-                case 26:
-                    Talk(SAY_MUG_PATROL);
-                    break;
-                case 27:
-                    Talk(SAY_MUG_RETURN);
-                    break;
                 }
             }
-        }
 
-        void DoWaveSummon()
-        {
-            switch (waveId)
+            void DoWaveSummon()
             {
-            case 1:
-                me->SummonCreature(NPC_WRATH_RIDER, FirstNagaCoord[0], TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 60000);
-                me->SummonCreature(NPC_WRATH_SORCERESS, FirstNagaCoord[1], TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 60000);
-                me->SummonCreature(NPC_WRATH_RAZORTAIL, FirstNagaCoord[2], TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 60000);
-                break;
-            case 2:
-                me->SummonCreature(NPC_WRATH_PRIESTESS, SecondNagaCoord[0], TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 60000);
-                me->SummonCreature(NPC_WRATH_MYRMIDON, SecondNagaCoord[1], TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 60000);
-                me->SummonCreature(NPC_WRATH_SEAWITCH, SecondNagaCoord[2], TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 60000);
-                break;
-            case 3:
-                me->SummonCreature(NPC_VORSHA, VorshaCoord, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 60000);
-                break;
-            case 4:
-                SetEscortPaused(false);
-                Talk(SAY_MUG_DONE);
-                break;
-            }
-        }
-
-        void UpdateAI(uint32 diff) override
-        {
-            npc_escortAI::UpdateAI(diff);
-
-            if (!me->GetVictim())
-            {
-                if (HasEscortState(STATE_ESCORT_PAUSED) && _isBrazierExtinguished)
+                switch (waveId)
                 {
-                    if (eventTimer < diff)
-                    {
-                        ++waveId;
-                        DoWaveSummon();
-                        eventTimer = 10000;
-                    }
-                    else
-                        eventTimer -= diff;
+                    case 1:
+                        me->SummonCreature(NPC_WRATH_RIDER,     FirstNagaCoord[0], TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 60000);
+                        me->SummonCreature(NPC_WRATH_SORCERESS, FirstNagaCoord[1], TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 60000);
+                        me->SummonCreature(NPC_WRATH_RAZORTAIL, FirstNagaCoord[2], TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 60000);
+                        break;
+                    case 2:
+                        me->SummonCreature(NPC_WRATH_PRIESTESS, SecondNagaCoord[0], TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 60000);
+                        me->SummonCreature(NPC_WRATH_MYRMIDON,  SecondNagaCoord[1], TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 60000);
+                        me->SummonCreature(NPC_WRATH_SEAWITCH,  SecondNagaCoord[2], TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 60000);
+                        break;
+                    case 3:
+                        me->SummonCreature(NPC_VORSHA, VorshaCoord, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 60000);
+                        break;
+                    case 4:
+                        SetEscortPaused(false);
+                        Talk(SAY_MUG_DONE);
+                        break;
                 }
-                return;
             }
-            DoMeleeAttackIfReady();
-        }
+
+            void UpdateAI(uint32 diff) override
+            {
+                npc_escortAI::UpdateAI(diff);
+
+                if (!me->GetVictim())
+                {
+                    if (HasEscortState(STATE_ESCORT_PAUSED) && _isBrazierExtinguished)
+                    {
+                        if (eventTimer < diff)
+                        {
+                            ++waveId;
+                            DoWaveSummon();
+                            eventTimer = 10000;
+                        }
+                        else
+                            eventTimer -= diff;
+                    }
+                    return;
+                }
+                DoMeleeAttackIfReady();
+            }
 
     private:
         uint32 eventTimer;
@@ -324,24 +324,24 @@ public:
 
 class go_naga_brazier : public GameObjectScript
 {
-public:
-    go_naga_brazier() : GameObjectScript("go_naga_brazier") { }
+    public:
+        go_naga_brazier() : GameObjectScript("go_naga_brazier") { }
 
-    bool OnGossipHello(Player* /*player*/, GameObject* go) override
-    {
-        if (Creature* creature = GetClosestCreatureWithEntry(go, NPC_MUGLASH, INTERACTION_DISTANCE * 2))
+        bool OnGossipHello(Player* /*player*/, GameObject* go) override
         {
-            if (npc_muglash::npc_muglashAI* pEscortAI = CAST_AI(npc_muglash::npc_muglashAI, creature->AI()))
+            if (Creature* creature = GetClosestCreatureWithEntry(go, NPC_MUGLASH, INTERACTION_DISTANCE*2))
             {
-                creature->AI()->Talk(SAY_MUG_BRAZIER_WAIT);
+                if (npc_muglash::npc_muglashAI* pEscortAI = CAST_AI(npc_muglash::npc_muglashAI, creature->AI()))
+                {
+                    creature->AI()->Talk(SAY_MUG_BRAZIER_WAIT);
 
-                pEscortAI->_isBrazierExtinguished = true;
-                return false;
+                    pEscortAI->_isBrazierExtinguished = true;
+                    return false;
+                }
             }
-        }
 
-        return true;
-    }
+            return true;
+        }
 };
 
 void AddSC_ashenvale()

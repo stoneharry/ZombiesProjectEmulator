@@ -25,18 +25,18 @@
 
 class AddonHandler
 {
-public:
-    static AddonHandler* instance()
-    {
-        static AddonHandler instance;
-        return &instance;
-    }
+    public:
+        static AddonHandler* instance()
+        {
+            static AddonHandler instance;
+            return &instance;
+        }
 
-    bool BuildAddonPacket(WorldPacket* Source, WorldPacket* Target);
+        bool BuildAddonPacket(WorldPacket* Source, WorldPacket* Target);
 
-private:
-    AddonHandler() { }
-    ~AddonHandler() { }
+    private:
+        AddonHandler() { }
+        ~AddonHandler() { }
 };
 #define sAddOnHandler AddonHandler::instance()
 #endif

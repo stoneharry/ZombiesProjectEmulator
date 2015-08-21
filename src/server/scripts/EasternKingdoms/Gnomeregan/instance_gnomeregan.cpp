@@ -73,7 +73,7 @@ public:
         {
             switch (creature->GetEntry())
             {
-            case NPC_BLASTMASTER_EMI_SHORTFUSE: uiBastmasterEmiShortfuseGUID = creature->GetGUID(); break;
+                case NPC_BLASTMASTER_EMI_SHORTFUSE: uiBastmasterEmiShortfuseGUID = creature->GetGUID(); break;
             }
         }
 
@@ -81,16 +81,16 @@ public:
         {
             switch (go->GetEntry())
             {
-            case GO_CAVE_IN_LEFT:
-                uiCaveInLeftGUID = go->GetGUID();
-                if (m_auiEncounter[0] == DONE || m_auiEncounter[0] == NOT_STARTED)
-                    HandleGameObject(ObjectGuid::Empty, false, go);
-                break;
-            case GO_CAVE_IN_RIGHT:
-                uiCaveInRightGUID = go->GetGUID();
-                if (m_auiEncounter[0] == DONE || m_auiEncounter[0] == NOT_STARTED)
-                    HandleGameObject(ObjectGuid::Empty, false, go);
-                break;
+                case GO_CAVE_IN_LEFT:
+                    uiCaveInLeftGUID = go->GetGUID();
+                    if (m_auiEncounter[0] == DONE || m_auiEncounter[0] == NOT_STARTED)
+                        HandleGameObject(ObjectGuid::Empty, false, go);
+                    break;
+                case GO_CAVE_IN_RIGHT:
+                    uiCaveInRightGUID = go->GetGUID();
+                    if (m_auiEncounter[0] == DONE || m_auiEncounter[0] == NOT_STARTED)
+                        HandleGameObject(ObjectGuid::Empty, false, go);
+                    break;
             }
         }
 
@@ -98,11 +98,11 @@ public:
         {
             switch (uiType)
             {
-            case TYPE_EVENT:
-                m_auiEncounter[0] = uiData;
-                if (uiData == DONE)
-                    SaveToDB();
-                break;
+                case TYPE_EVENT:
+                    m_auiEncounter[0] = uiData;
+                    if (uiData == DONE)
+                        SaveToDB();
+                    break;
             }
         }
 
@@ -110,7 +110,7 @@ public:
         {
             switch (uiType)
             {
-            case TYPE_EVENT:    return m_auiEncounter[0];
+                case TYPE_EVENT:    return m_auiEncounter[0];
             }
             return 0;
         }
@@ -119,9 +119,9 @@ public:
         {
             switch (uiType)
             {
-            case DATA_GO_CAVE_IN_LEFT:              return uiCaveInLeftGUID;
-            case DATA_GO_CAVE_IN_RIGHT:             return uiCaveInRightGUID;
-            case DATA_NPC_BASTMASTER_EMI_SHORTFUSE: return uiBastmasterEmiShortfuseGUID;
+                case DATA_GO_CAVE_IN_LEFT:              return uiCaveInLeftGUID;
+                case DATA_GO_CAVE_IN_RIGHT:             return uiCaveInRightGUID;
+                case DATA_NPC_BASTMASTER_EMI_SHORTFUSE: return uiBastmasterEmiShortfuseGUID;
             }
 
             return ObjectGuid::Empty;

@@ -31,52 +31,52 @@ EndScriptData */
 
 enum Yells
 {
-    SAY_SATH_AGGRO = 0,
-    SAY_SATH_SLAY = 1,
-    SAY_SATH_DEATH = 2,
-    SAY_SATH_SPELL1 = 3,
-    SAY_SATH_SPELL2 = 4,
+    SAY_SATH_AGGRO                              = 0,
+    SAY_SATH_SLAY                               = 1,
+    SAY_SATH_DEATH                              = 2,
+    SAY_SATH_SPELL1                             = 3,
+    SAY_SATH_SPELL2                             = 4,
 
-    SAY_EVIL_AGGRO = 0,
-    SAY_EVIL_SLAY = 1,
-    SAY_GOOD_PLRWIN = 2,
-    SAY_EVIL_ENRAGE = 3,
+    SAY_EVIL_AGGRO                              = 0,
+    SAY_EVIL_SLAY                               = 1,
+    SAY_GOOD_PLRWIN                             = 2,
+    SAY_EVIL_ENRAGE                             = 3,
 
-    SAY_GOOD_AGGRO = 0,
-    SAY_GOOD_NEAR_DEATH = 1,
-    SAY_GOOD_NEAR_DEATH2 = 2
+    SAY_GOOD_AGGRO                              = 0,
+    SAY_GOOD_NEAR_DEATH                         = 1,
+    SAY_GOOD_NEAR_DEATH2                        = 2
 };
 
 enum Spells
 {
-    AURA_SUNWELL_RADIANCE = 45769,
-    AURA_SPECTRAL_EXHAUSTION = 44867,
-    AURA_SPECTRAL_REALM = 46021,
-    AURA_SPECTRAL_INVISIBILITY = 44801,
-    AURA_DEMONIC_VISUAL = 44800,
+    AURA_SUNWELL_RADIANCE                       = 45769,
+    AURA_SPECTRAL_EXHAUSTION                    = 44867,
+    AURA_SPECTRAL_REALM                         = 46021,
+    AURA_SPECTRAL_INVISIBILITY                  = 44801,
+    AURA_DEMONIC_VISUAL                         = 44800,
 
-    SPELL_SPECTRAL_BLAST = 44869,
-    SPELL_TELEPORT_SPECTRAL = 46019,
-    SPELL_ARCANE_BUFFET = 45018,
-    SPELL_FROST_BREATH = 44799,
-    SPELL_TAIL_LASH = 45122,
+    SPELL_SPECTRAL_BLAST                        = 44869,
+    SPELL_TELEPORT_SPECTRAL                     = 46019,
+    SPELL_ARCANE_BUFFET                         = 45018,
+    SPELL_FROST_BREATH                          = 44799,
+    SPELL_TAIL_LASH                             = 45122,
 
-    SPELL_BANISH = 44836,
-    SPELL_TRANSFORM_KALEC = 44670,
-    SPELL_ENRAGE = 44807,
+    SPELL_BANISH                                = 44836,
+    SPELL_TRANSFORM_KALEC                       = 44670,
+    SPELL_ENRAGE                                = 44807,
 
-    SPELL_CORRUPTION_STRIKE = 45029,
-    SPELL_AGONY_CURSE = 45032,
-    SPELL_SHADOW_BOLT = 45031,
+    SPELL_CORRUPTION_STRIKE                     = 45029,
+    SPELL_AGONY_CURSE                           = 45032,
+    SPELL_SHADOW_BOLT                           = 45031,
 
-    SPELL_HEROIC_STRIKE = 45026,
-    SPELL_REVITALIZE = 45027
+    SPELL_HEROIC_STRIKE                         = 45026,
+    SPELL_REVITALIZE                            = 45027
 };
 
 enum SWPActions
 {
-    DO_ENRAGE = 1,
-    DO_BANISH = 2
+    DO_ENRAGE                                   =  1,
+    DO_BANISH                                   =  2
 };
 
 #define GO_FAILED   "You are unable to use this currently."
@@ -181,14 +181,14 @@ public:
         {
             switch (param)
             {
-            case DO_ENRAGE:
-                isEnraged = true;
-                me->CastSpell(me, SPELL_ENRAGE, true);
-                break;
-            case DO_BANISH:
-                isBanished = true;
-                me->CastSpell(me, SPELL_BANISH, true);
-                break;
+                case DO_ENRAGE:
+                    isEnraged = true;
+                    me->CastSpell(me, SPELL_ENRAGE, true);
+                    break;
+                case DO_BANISH:
+                    isBanished = true;
+                    me->CastSpell(me, SPELL_BANISH, true);
+                    break;
             }
         }
 
@@ -212,8 +212,7 @@ public:
                     else
                         BadEnding();
                     ++TalkSequence;
-                }
-                else TalkTimer -= diff;
+                } else TalkTimer -= diff;
             }
             else
             {
@@ -221,14 +220,13 @@ public:
                 {
                     if (ResetTimer <= diff)
                     {
-                        me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE | UNIT_FLAG_NOT_SELECTABLE);
+                        me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE|UNIT_FLAG_NOT_SELECTABLE);
                         me->SetDisableGravity(false);
                         me->SetVisible(true);
                         me->SetStandState(UNIT_STAND_STATE_SLEEP);
                         ResetTimer = 10000;
                         bJustReset = false;
-                    }
-                    else ResetTimer -= diff;
+                    } else ResetTimer -= diff;
                     return;
                 }
 
@@ -268,49 +266,44 @@ public:
                         }
                     }
                     CheckTimer = 1000;
-                }
-                else CheckTimer -= diff;
+                } else CheckTimer -= diff;
 
                 if (ArcaneBuffetTimer <= diff)
                 {
                     DoCastAOE(SPELL_ARCANE_BUFFET);
                     ArcaneBuffetTimer = 8000;
-                }
-                else ArcaneBuffetTimer -= diff;
+                } else ArcaneBuffetTimer -= diff;
 
                 if (FrostBreathTimer <= diff)
                 {
                     DoCastAOE(SPELL_FROST_BREATH);
                     FrostBreathTimer = 15000;
-                }
-                else FrostBreathTimer -= diff;
+                } else FrostBreathTimer -= diff;
 
                 if (TailLashTimer <= diff)
                 {
                     DoCastAOE(SPELL_TAIL_LASH);
                     TailLashTimer = 15000;
-                }
-                else TailLashTimer -= diff;
+                } else TailLashTimer -= diff;
 
                 if (WildMagicTimer <= diff)
                 {
                     DoCastAOE(WildMagic[rand32() % 6]);
                     WildMagicTimer = 20000;
-                }
-                else WildMagicTimer -= diff;
+                } else WildMagicTimer -= diff;
 
                 if (SpectralBlastTimer <= diff)
                 {
                     ThreatContainer::StorageType const& m_threatlist = me->getThreatManager().getThreatList();
                     std::list<Unit*> targetList;
-                    for (ThreatContainer::StorageType::const_iterator itr = m_threatlist.begin(); itr != m_threatlist.end(); ++itr)
+                    for (ThreatContainer::StorageType::const_iterator itr = m_threatlist.begin(); itr!= m_threatlist.end(); ++itr)
                     {
                         Unit* target = (*itr)->getTarget();
                         if (target
-                            && target->GetTypeId() == TYPEID_PLAYER
-                            && (!target->GetVictim() || target->GetGUID() != me->EnsureVictim()->GetGUID())
-                            && target->GetPositionZ() > me->GetPositionZ() - 5
-                            && !target->HasAura(AURA_SPECTRAL_EXHAUSTION))
+                                && target->GetTypeId() == TYPEID_PLAYER
+                                && (!target->GetVictim() || target->GetGUID() != me->EnsureVictim()->GetGUID())
+                                && target->GetPositionZ() > me->GetPositionZ() - 5
+                                && !target->HasAura(AURA_SPECTRAL_EXHAUSTION))
                         {
                             targetList.push_back(target);
                         }
@@ -327,10 +320,8 @@ public:
                     {
                         (*i)->CastSpell((*i), SPELL_SPECTRAL_BLAST, true);
                         SpectralBlastTimer = 20000 + rand32() % 5000;
-                    }
-                    else SpectralBlastTimer = 1000;
-                }
-                else SpectralBlastTimer -= diff;
+                    } else SpectralBlastTimer = 1000;
+                } else SpectralBlastTimer -= diff;
 
                 DoMeleeAttackIfReady();
             }
@@ -400,21 +391,21 @@ public:
         {
             switch (TalkSequence)
             {
-            case 1:
-                me->setFaction(35);
-                TalkTimer = 1000;
-                break;
-            case 2:
-                Talk(SAY_GOOD_PLRWIN);
-                TalkTimer = 10000;
-                break;
-            case 3:
-                me->SetDisableGravity(true);
-                me->GetMotionMaster()->MovePoint(0, FLY_X, FLY_Y, FLY_Z);
-                TalkTimer = 600000;
-                break;
-            default:
-                break;
+                case 1:
+                    me->setFaction(35);
+                    TalkTimer = 1000;
+                    break;
+                case 2:
+                    Talk(SAY_GOOD_PLRWIN);
+                    TalkTimer = 10000;
+                    break;
+                case 3:
+                    me->SetDisableGravity(true);
+                    me->GetMotionMaster()->MovePoint(0, FLY_X, FLY_Y, FLY_Z);
+                    TalkTimer = 600000;
+                    break;
+                default:
+                    break;
             }
         }
 
@@ -422,20 +413,20 @@ public:
         {
             switch (TalkSequence)
             {
-            case 1:
-                Talk(SAY_EVIL_ENRAGE);
-                TalkTimer = 3000;
-                break;
-            case 2:
-                me->SetDisableGravity(true);
-                me->GetMotionMaster()->MovePoint(0, FLY_X, FLY_Y, FLY_Z);
-                TalkTimer = 15000;
-                break;
-            case 3:
-                EnterEvadeMode();
-                break;
-            default:
-                break;
+                case 1:
+                    Talk(SAY_EVIL_ENRAGE);
+                    TalkTimer = 3000;
+                    break;
+                case 2:
+                    me->SetDisableGravity(true);
+                    me->GetMotionMaster()->MovePoint(0, FLY_X, FLY_Y, FLY_Z);
+                    TalkTimer = 15000;
+                    break;
+                case 3:
+                    EnterEvadeMode();
+                    break;
+                default:
+                    break;
             }
         }
     };
@@ -512,26 +503,26 @@ public:
             {
                 switch (YellSequence)
                 {
-                case 0:
-                    Talk(SAY_GOOD_AGGRO);
-                    ++YellSequence;
-                    break;
-                case 1:
-                    if (HealthBelowPct(50))
-                    {
-                        Talk(SAY_GOOD_NEAR_DEATH);
+                    case 0:
+                        Talk(SAY_GOOD_AGGRO);
                         ++YellSequence;
-                    }
-                    break;
-                case 2:
-                    if (HealthBelowPct(10))
-                    {
-                        Talk(SAY_GOOD_NEAR_DEATH2);
-                        ++YellSequence;
-                    }
-                    break;
-                default:
-                    break;
+                        break;
+                    case 1:
+                        if (HealthBelowPct(50))
+                        {
+                            Talk(SAY_GOOD_NEAR_DEATH);
+                            ++YellSequence;
+                        }
+                        break;
+                    case 2:
+                        if (HealthBelowPct(10))
+                        {
+                            Talk(SAY_GOOD_NEAR_DEATH2);
+                            ++YellSequence;
+                        }
+                        break;
+                    default:
+                        break;
                 }
                 YellTimer = 5000;
             }
@@ -540,15 +531,13 @@ public:
             {
                 DoCast(me, SPELL_REVITALIZE);
                 RevitalizeTimer = 5000;
-            }
-            else RevitalizeTimer -= diff;
+            } else RevitalizeTimer -= diff;
 
             if (HeroicStrikeTimer <= diff)
             {
                 DoCastVictim(SPELL_HEROIC_STRIKE);
                 HeroicStrikeTimer = 2000;
-            }
-            else HeroicStrikeTimer -= diff;
+            } else HeroicStrikeTimer -= diff;
 
             DoMeleeAttackIfReady();
         }
@@ -721,14 +710,14 @@ public:
         {
             switch (param)
             {
-            case DO_ENRAGE:
-                isEnraged = true;
-                me->CastSpell(me, SPELL_ENRAGE, true);
-                break;
-            case DO_BANISH:
-                isBanished = true;
-                me->CastSpell(me, SPELL_BANISH, true);
-                break;
+                case DO_ENRAGE:
+                    isEnraged = true;
+                    me->CastSpell(me, SPELL_ENRAGE, true);
+                    break;
+                case DO_BANISH:
+                    isBanished = true;
+                    me->CastSpell(me, SPELL_BANISH, true);
+                    break;
             }
         }
 
@@ -783,8 +772,7 @@ public:
                     }
                 }
                 CheckTimer = 1000;
-            }
-            else CheckTimer -= diff;
+            } else CheckTimer -= diff;
 
             if (ResetThreat <= diff)
             {
@@ -792,12 +780,11 @@ public:
                 for (ThreatContainer::StorageType::const_iterator itr = threatlist.begin(); itr != threatlist.end(); ++itr)
                 {
                     if (Unit* unit = ObjectAccessor::GetUnit(*me, (*itr)->getUnitGuid()))
-                    if (unit->GetPositionZ() > me->GetPositionZ() + 5)
-                        me->getThreatManager().modifyThreatPercent(unit, -100);
+                        if (unit->GetPositionZ() > me->GetPositionZ() + 5)
+                            me->getThreatManager().modifyThreatPercent(unit, -100);
                 }
                 ResetThreat = 1000;
-            }
-            else ResetThreat -= diff;
+            } else ResetThreat -= diff;
 
             if (ShadowBoltTimer <= diff)
             {
@@ -805,8 +792,7 @@ public:
                     Talk(SAY_SATH_SPELL1);
                 DoCast(me, SPELL_SHADOW_BOLT);
                 ShadowBoltTimer = 7000 + (rand32() % 3000);
-            }
-            else ShadowBoltTimer -= diff;
+            } else ShadowBoltTimer -= diff;
 
             if (AgonyCurseTimer <= diff)
             {
@@ -815,16 +801,14 @@ public:
                     target = me->GetVictim();
                 DoCast(target, SPELL_AGONY_CURSE);
                 AgonyCurseTimer = 20000;
-            }
-            else AgonyCurseTimer -= diff;
+            } else AgonyCurseTimer -= diff;
 
             if (CorruptionStrikeTimer <= diff)
             {
                 if (!(rand32() % 5))Talk(SAY_SATH_SPELL2);
                 DoCastVictim(SPELL_CORRUPTION_STRIKE);
                 CorruptionStrikeTimer = 13000;
-            }
-            else CorruptionStrikeTimer -= diff;
+            } else CorruptionStrikeTimer -= diff;
 
             DoMeleeAttackIfReady();
         }

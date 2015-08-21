@@ -29,37 +29,37 @@ EndScriptData */
 
 enum Says
 {
-    SAY_BARON_RUN_START = 0,
-    SAY_BARON_RUN_BOSS_KILL = 1,
-    SAY_BARON_RUN_FAIL = 2,
-    SAY_EVENT_RAMSTEIN = 3,
-    SAY_EVENT_BARON = 4
+    SAY_BARON_RUN_START         = 0,
+    SAY_BARON_RUN_BOSS_KILL     = 1,
+    SAY_BARON_RUN_FAIL          = 2,
+    SAY_EVENT_RAMSTEIN          = 3,
+    SAY_EVENT_BARON             = 4
 };
 
 enum Spells
 {
-    SPELL_SHADOWBOLT = 17393,
-    SPELL_CLEAVE = 15284,
-    SPELL_MORTALSTRIKE = 15708,
+    SPELL_SHADOWBOLT            = 17393,
+    SPELL_CLEAVE                = 15284,
+    SPELL_MORTALSTRIKE          = 15708,
 
-    SPELL_UNHOLY_AURA = 15284,
-    SPELL_RAISEDEAD = 15708,  //triggers death pact (17471)
+    SPELL_UNHOLY_AURA           = 15284,
+    SPELL_RAISEDEAD             = 15708,  //triggers death pact (17471)
 
-    SPELL_RAISE_DEAD1 = 17475,
-    SPELL_RAISE_DEAD2 = 17476,
-    SPELL_RAISE_DEAD3 = 17477,
-    SPELL_RAISE_DEAD4 = 17478,
-    SPELL_RAISE_DEAD5 = 17479,
-    SPELL_RAISE_DEAD6 = 17480,
+    SPELL_RAISE_DEAD1           = 17475,
+    SPELL_RAISE_DEAD2           = 17476,
+    SPELL_RAISE_DEAD3           = 17477,
+    SPELL_RAISE_DEAD4           = 17478,
+    SPELL_RAISE_DEAD5           = 17479,
+    SPELL_RAISE_DEAD6           = 17480,
 };
 
 // Define Add positions
-Position const ADD_POS_1 = { 4017.403809f, -3339.703369f, 115.057655f, 5.487860f };
-Position const ADD_POS_2 = { 4013.189209f, -3351.808350f, 115.052254f, 0.134280f };
-Position const ADD_POS_3 = { 4017.738037f, -3363.478016f, 115.057274f, 0.723313f };
-Position const ADD_POS_4 = { 4048.877197f, -3363.223633f, 115.054253f, 3.627735f };
-Position const ADD_POS_5 = { 4051.777588f, -3350.893311f, 115.055351f, 3.066176f };
-Position const ADD_POS_6 = { 4048.375977f, -3339.966309f, 115.055222f, 2.457497f };
+Position const ADD_POS_1 = {4017.403809f, -3339.703369f, 115.057655f, 5.487860f};
+Position const ADD_POS_2 = {4013.189209f, -3351.808350f, 115.052254f, 0.134280f};
+Position const ADD_POS_3 = {4017.738037f, -3363.478016f, 115.057274f, 0.723313f};
+Position const ADD_POS_4 = {4048.877197f, -3363.223633f, 115.054253f, 3.627735f};
+Position const ADD_POS_5 = {4051.777588f, -3350.893311f, 115.055351f, 3.066176f};
+Position const ADD_POS_6 = {4048.375977f, -3339.966309f, 115.055222f, 2.457497f};
 
 class boss_baron_rivendare : public CreatureScript
 {
@@ -133,8 +133,7 @@ public:
                     DoCastVictim(SPELL_SHADOWBOLT);
 
                 ShadowBolt_Timer = 10000;
-            }
-            else ShadowBolt_Timer -= diff;
+            } else ShadowBolt_Timer -= diff;
 
             //Cleave
             if (Cleave_Timer <= diff)
@@ -142,16 +141,14 @@ public:
                 DoCastVictim(SPELL_CLEAVE);
                 //13 seconds until we should cast this again
                 Cleave_Timer = 7000 + (rand32() % 10000);
-            }
-            else Cleave_Timer -= diff;
+            } else Cleave_Timer -= diff;
 
             //MortalStrike
             if (MortalStrike_Timer <= diff)
             {
                 DoCastVictim(SPELL_MORTALSTRIKE);
                 MortalStrike_Timer = 10000 + (rand32() % 15000);
-            }
-            else MortalStrike_Timer -= diff;
+            } else MortalStrike_Timer -= diff;
 
             //RaiseDead
             //            if (RaiseDead_Timer <= diff)
@@ -172,8 +169,7 @@ public:
 
                 //34 seconds until we should cast this again
                 SummonSkeletons_Timer = 40000;
-            }
-            else SummonSkeletons_Timer -= diff;
+            } else SummonSkeletons_Timer -= diff;
 
             DoMeleeAttackIfReady();
         }

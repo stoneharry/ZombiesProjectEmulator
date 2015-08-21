@@ -60,74 +60,74 @@ EndScriptData */
 
 enum Phases
 {
-    PHASE_NOT_STARTED = 0,
+    PHASE_NOT_STARTED                           = 0,
 
     // Main Phase 1 - EYE
-    PHASE_EYE_GREEN_BEAM = 1,
-    PHASE_EYE_RED_BEAM = 2,
+    PHASE_EYE_GREEN_BEAM                        = 1,
+    PHASE_EYE_RED_BEAM                          = 2,
 
     // Main Phase 2 - CTHUN
-    PHASE_CTHUN_TRANSITION = 3,
-    PHASE_CTHUN_STOMACH = 4,
-    PHASE_CTHUN_WEAK = 5,
+    PHASE_CTHUN_TRANSITION                      = 3,
+    PHASE_CTHUN_STOMACH                         = 4,
+    PHASE_CTHUN_WEAK                            = 5,
 
-    PHASE_CTHUN_DONE = 6,
+    PHASE_CTHUN_DONE                            = 6,
 };
 
 enum Spells
 {
     // ***** Main Phase 1 ********
     //Eye Spells
-    SPELL_FREEZE_ANIM = 16245,
-    SPELL_GREEN_BEAM = 26134,
-    SPELL_DARK_GLARE = 26029,
-    SPELL_RED_COLORATION = 22518,        //Probably not the right spell but looks similar
+    SPELL_FREEZE_ANIM                           = 16245,
+    SPELL_GREEN_BEAM                            = 26134,
+    SPELL_DARK_GLARE                            = 26029,
+    SPELL_RED_COLORATION                        = 22518,        //Probably not the right spell but looks similar
 
     //Eye Tentacles Spells
-    SPELL_MIND_FLAY = 26143,
+    SPELL_MIND_FLAY                             = 26143,
 
     //Claw Tentacles Spells
-    SPELL_GROUND_RUPTURE = 26139,
-    SPELL_HAMSTRING = 26141,
+    SPELL_GROUND_RUPTURE                        = 26139,
+    SPELL_HAMSTRING                             = 26141,
 
     // ***** Main Phase 2 ******
     //Body spells
     //SPELL_CARAPACE_CTHUN                        = 26156   //Was removed from client dbcs
-    SPELL_TRANSFORM = 26232,
-    SPELL_PURPLE_COLORATION = 22581,     //Probably not the right spell but looks similar
+    SPELL_TRANSFORM                             = 26232,
+    SPELL_PURPLE_COLORATION                     = 22581,     //Probably not the right spell but looks similar
 
     //Eye Tentacles Spells
     //SAME AS PHASE1
 
     //Giant Claw Tentacles
-    SPELL_MASSIVE_GROUND_RUPTURE = 26100,
+    SPELL_MASSIVE_GROUND_RUPTURE                = 26100,
 
     //Also casts Hamstring
-    SPELL_THRASH = 3391,
+    SPELL_THRASH                                = 3391,
 
     //Giant Eye Tentacles
     //CHAIN CASTS "SPELL_GREEN_BEAM"
 
     //Stomach Spells
-    SPELL_MOUTH_TENTACLE = 26332,
-    SPELL_EXIT_STOMACH_KNOCKBACK = 25383,
-    SPELL_DIGESTIVE_ACID = 26476,
+    SPELL_MOUTH_TENTACLE                        = 26332,
+    SPELL_EXIT_STOMACH_KNOCKBACK                = 25383,
+    SPELL_DIGESTIVE_ACID                        = 26476,
 };
 
 enum Actions
 {
-    ACTION_FLESH_TENTACLE_KILLED = 1,
+    ACTION_FLESH_TENTACLE_KILLED                = 1,
 };
 
 enum Yells
 {
     //Text emote
-    EMOTE_WEAKENED = 0,
+    EMOTE_WEAKENED                              = 0,
 
     // ****** Out of Combat ******
     // Random Wispers - No txt only sound
     // The random sound is chosen by the client.
-    RANDOM_SOUND_WHISPER = 8663,
+    RANDOM_SOUND_WHISPER                        = 8663,
 };
 
 //Stomach Teleport positions
@@ -139,12 +139,12 @@ enum Yells
 //Flesh tentacle positions
 const Position FleshTentaclePos[2] =
 {
-    { -8571.0f, 1990.0f, -98.0f, 1.22f },
-    { -8525.0f, 1994.0f, -98.0f, 2.12f },
+    { -8571.0f, 1990.0f, -98.0f, 1.22f},
+    { -8525.0f, 1994.0f, -98.0f, 2.12f},
 };
 
 //Kick out position
-const Position KickPos = { -8545.0f, 1984.0f, -96.0f, 0.0f };
+const Position KickPos = { -8545.0f, 1984.0f, -96.0f, 0.0f};
 
 class boss_eye_of_cthun : public CreatureScript
 {
@@ -213,7 +213,7 @@ public:
             instance->SetData(DATA_CTHUN_PHASE, PHASE_NOT_STARTED);
 
             //to avoid having a following void zone
-            Creature* pPortal = me->FindNearestCreature(NPC_CTHUN_PORTAL, 10);
+            Creature* pPortal= me->FindNearestCreature(NPC_CTHUN_PORTAL, 10);
             if (pPortal)
                 pPortal->SetReactState(REACT_PASSIVE);
         }
@@ -227,9 +227,9 @@ public:
         void SpawnEyeTentacle(float x, float y)
         {
             if (Creature* Spawned = DoSpawnCreature(NPC_EYE_TENTACLE, x, y, 0, 0, TEMPSUMMON_CORPSE_DESPAWN, 500))
-            if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
-            if (Spawned->AI())
-                Spawned->AI()->AttackStart(target);
+                if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
+                    if (Spawned->AI())
+                        Spawned->AI()->AttackStart(target);
         }
 
         void UpdateAI(uint32 diff) override
@@ -256,153 +256,147 @@ public:
                     SpawnEyeTentacle(-10, 10);              // south east
 
                     EyeTentacleTimer = 45000;
-                }
-                else EyeTentacleTimer -= diff;
+                } else EyeTentacleTimer -= diff;
             }
 
             switch (currentPhase)
             {
-            case PHASE_EYE_GREEN_BEAM:
-                //BeamTimer
-                if (BeamTimer <= diff)
-                {
-                    //SPELL_GREEN_BEAM
-                    if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
+                case PHASE_EYE_GREEN_BEAM:
+                    //BeamTimer
+                    if (BeamTimer <= diff)
                     {
+                        //SPELL_GREEN_BEAM
+                        if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
+                        {
+                            me->InterruptNonMeleeSpells(false);
+                            DoCast(target, SPELL_GREEN_BEAM);
+
+                            //Correctly update our target
+                            me->SetTarget(target->GetGUID());
+                        }
+
+                        //Beam every 3 seconds
+                        BeamTimer = 3000;
+                    } else BeamTimer -= diff;
+
+                    //ClawTentacleTimer
+                    if (ClawTentacleTimer <= diff)
+                    {
+                        if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
+                        {
+                            Creature* Spawned = NULL;
+
+                            //Spawn claw tentacle on the random target
+                            Spawned = me->SummonCreature(NPC_CLAW_TENTACLE, *target, TEMPSUMMON_CORPSE_DESPAWN, 500);
+
+                            if (Spawned && Spawned->AI())
+                                Spawned->AI()->AttackStart(target);
+                        }
+
+                        //One claw tentacle every 12.5 seconds
+                        ClawTentacleTimer = 12500;
+                    } else ClawTentacleTimer -= diff;
+
+                    //PhaseTimer
+                    if (PhaseTimer <= diff)
+                    {
+                        //Switch to Dark Beam
+                        instance->SetData(DATA_CTHUN_PHASE, PHASE_EYE_RED_BEAM);
+
                         me->InterruptNonMeleeSpells(false);
-                        DoCast(target, SPELL_GREEN_BEAM);
+                        me->SetReactState(REACT_PASSIVE);
 
-                        //Correctly update our target
-                        me->SetTarget(target->GetGUID());
-                    }
+                        //Remove any target
+                        me->SetTarget(ObjectGuid::Empty);
 
-                    //Beam every 3 seconds
-                    BeamTimer = 3000;
-                }
-                else BeamTimer -= diff;
+                        //Select random target for dark beam to start on
+                        if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
+                        {
+                            //Face our target
+                            DarkGlareAngle = me->GetAngle(target);
+                            DarkGlareTickTimer = 1000;
+                            DarkGlareTick = 0;
+                            ClockWise = RAND(true, false);
+                        }
 
-                //ClawTentacleTimer
-                if (ClawTentacleTimer <= diff)
-                {
-                    if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
-                    {
-                        Creature* Spawned = NULL;
+                        //Add red coloration to C'thun
+                        DoCast(me, SPELL_RED_COLORATION, true);
 
-                        //Spawn claw tentacle on the random target
-                        Spawned = me->SummonCreature(NPC_CLAW_TENTACLE, *target, TEMPSUMMON_CORPSE_DESPAWN, 500);
-
-                        if (Spawned && Spawned->AI())
-                            Spawned->AI()->AttackStart(target);
-                    }
-
-                    //One claw tentacle every 12.5 seconds
-                    ClawTentacleTimer = 12500;
-                }
-                else ClawTentacleTimer -= diff;
-
-                //PhaseTimer
-                if (PhaseTimer <= diff)
-                {
-                    //Switch to Dark Beam
-                    instance->SetData(DATA_CTHUN_PHASE, PHASE_EYE_RED_BEAM);
-
-                    me->InterruptNonMeleeSpells(false);
-                    me->SetReactState(REACT_PASSIVE);
-
-                    //Remove any target
-                    me->SetTarget(ObjectGuid::Empty);
-
-                    //Select random target for dark beam to start on
-                    if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
-                    {
-                        //Face our target
-                        DarkGlareAngle = me->GetAngle(target);
-                        DarkGlareTickTimer = 1000;
-                        DarkGlareTick = 0;
-                        ClockWise = RAND(true, false);
-                    }
-
-                    //Add red coloration to C'thun
-                    DoCast(me, SPELL_RED_COLORATION, true);
-
-                    //Freeze animation
-                    DoCast(me, SPELL_FREEZE_ANIM);
-                    me->SetOrientation(DarkGlareAngle);
-                    me->StopMoving();
-
-                    //Darkbeam for 35 seconds
-                    PhaseTimer = 35000;
-                }
-                else PhaseTimer -= diff;
-
-                break;
-
-            case PHASE_EYE_RED_BEAM:
-                if (DarkGlareTick < 35)
-                {
-                    if (DarkGlareTickTimer <= diff)
-                    {
-                        //Set angle and cast
-                        if (ClockWise)
-                            me->SetOrientation(DarkGlareAngle + DarkGlareTick * float(M_PI) / 35);
-                        else
-                            me->SetOrientation(DarkGlareAngle - DarkGlareTick * float(M_PI) / 35);
-
+                        //Freeze animation
+                        DoCast(me, SPELL_FREEZE_ANIM);
+                        me->SetOrientation(DarkGlareAngle);
                         me->StopMoving();
 
-                        //Actual dark glare cast, maybe something missing here?
-                        DoCast(me, SPELL_DARK_GLARE, false);
+                        //Darkbeam for 35 seconds
+                        PhaseTimer = 35000;
+                    } else PhaseTimer -= diff;
 
-                        //Increase tick
-                        ++DarkGlareTick;
+                    break;
 
-                        //1 second per tick
-                        DarkGlareTickTimer = 1000;
+                case PHASE_EYE_RED_BEAM:
+                    if (DarkGlareTick < 35)
+                    {
+                        if (DarkGlareTickTimer <= diff)
+                        {
+                            //Set angle and cast
+                            if (ClockWise)
+                                me->SetOrientation(DarkGlareAngle + DarkGlareTick * float(M_PI) / 35);
+                            else
+                                me->SetOrientation(DarkGlareAngle - DarkGlareTick * float(M_PI) / 35);
+
+                            me->StopMoving();
+
+                            //Actual dark glare cast, maybe something missing here?
+                            DoCast(me, SPELL_DARK_GLARE, false);
+
+                            //Increase tick
+                            ++DarkGlareTick;
+
+                            //1 second per tick
+                            DarkGlareTickTimer = 1000;
+                        } else DarkGlareTickTimer -= diff;
                     }
-                    else DarkGlareTickTimer -= diff;
-                }
 
-                //PhaseTimer
-                if (PhaseTimer <= diff)
-                {
-                    //Switch to Eye Beam
-                    instance->SetData(DATA_CTHUN_PHASE, PHASE_EYE_GREEN_BEAM);
+                    //PhaseTimer
+                    if (PhaseTimer <= diff)
+                    {
+                        //Switch to Eye Beam
+                        instance->SetData(DATA_CTHUN_PHASE, PHASE_EYE_GREEN_BEAM);
 
-                    BeamTimer = 3000;
-                    ClawTentacleTimer = 12500;              //4 per Eye beam phase (unsure if they spawn during Dark beam)
+                        BeamTimer = 3000;
+                        ClawTentacleTimer = 12500;              //4 per Eye beam phase (unsure if they spawn during Dark beam)
 
-                    me->InterruptNonMeleeSpells(false);
+                        me->InterruptNonMeleeSpells(false);
 
-                    //Remove Red coloration from c'thun
-                    me->RemoveAurasDueToSpell(SPELL_RED_COLORATION);
-                    me->RemoveAurasDueToSpell(SPELL_FREEZE_ANIM);
+                        //Remove Red coloration from c'thun
+                        me->RemoveAurasDueToSpell(SPELL_RED_COLORATION);
+                        me->RemoveAurasDueToSpell(SPELL_FREEZE_ANIM);
 
-                    //set it back to aggressive
-                    me->SetReactState(REACT_AGGRESSIVE);
+                        //set it back to aggressive
+                        me->SetReactState(REACT_AGGRESSIVE);
 
-                    //Eye Beam for 50 seconds
-                    PhaseTimer = 50000;
-                }
-                else PhaseTimer -= diff;
+                        //Eye Beam for 50 seconds
+                        PhaseTimer = 50000;
+                    } else PhaseTimer -= diff;
 
-                break;
+                    break;
 
                 //Transition phase
-            case PHASE_CTHUN_TRANSITION:
-                //Remove any target
-                me->SetTarget(ObjectGuid::Empty);
-                me->SetHealth(0);
-                me->SetVisible(false);
-                break;
+                case PHASE_CTHUN_TRANSITION:
+                    //Remove any target
+                    me->SetTarget(ObjectGuid::Empty);
+                    me->SetHealth(0);
+                    me->SetVisible(false);
+                    break;
 
                 //Dead phase
-            case PHASE_CTHUN_DONE:
-                Creature* pPortal = me->FindNearestCreature(NPC_CTHUN_PORTAL, 10);
-                if (pPortal)
-                    pPortal->DespawnOrUnsummon();
+                case PHASE_CTHUN_DONE:
+                    Creature* pPortal= me->FindNearestCreature(NPC_CTHUN_PORTAL, 10);
+                    if (pPortal)
+                        pPortal->DespawnOrUnsummon();
 
-                me->DespawnOrUnsummon();
-                break;
+                    me->DespawnOrUnsummon();
+                    break;
             }
         }
 
@@ -410,42 +404,42 @@ public:
         {
             switch (instance->GetData(DATA_CTHUN_PHASE))
             {
-            case PHASE_EYE_GREEN_BEAM:
-            case PHASE_EYE_RED_BEAM:
-                //Only if it will kill
-                if (damage < me->GetHealth())
+                case PHASE_EYE_GREEN_BEAM:
+                case PHASE_EYE_RED_BEAM:
+                    //Only if it will kill
+                    if (damage < me->GetHealth())
+                        return;
+
+                    //Fake death in phase 0 or 1 (green beam or dark glare phase)
+                    me->InterruptNonMeleeSpells(false);
+
+                    //Remove Red coloration from c'thun
+                    me->RemoveAurasDueToSpell(SPELL_RED_COLORATION);
+
+                    //Reset to normal emote state and prevent select and attack
+                    me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE | UNIT_FLAG_NON_ATTACKABLE);
+
+                    //Remove Target field
+                    me->SetTarget(ObjectGuid::Empty);
+
+                    //Death animation/respawning;
+                    instance->SetData(DATA_CTHUN_PHASE, PHASE_CTHUN_TRANSITION);
+
+                    me->SetHealth(0);
+                    damage = 0;
+
+                    me->InterruptNonMeleeSpells(true);
+                    me->RemoveAllAuras();
+                    break;
+
+                case PHASE_CTHUN_DONE:
+                    //Allow death here
                     return;
 
-                //Fake death in phase 0 or 1 (green beam or dark glare phase)
-                me->InterruptNonMeleeSpells(false);
-
-                //Remove Red coloration from c'thun
-                me->RemoveAurasDueToSpell(SPELL_RED_COLORATION);
-
-                //Reset to normal emote state and prevent select and attack
-                me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE | UNIT_FLAG_NON_ATTACKABLE);
-
-                //Remove Target field
-                me->SetTarget(ObjectGuid::Empty);
-
-                //Death animation/respawning;
-                instance->SetData(DATA_CTHUN_PHASE, PHASE_CTHUN_TRANSITION);
-
-                me->SetHealth(0);
-                damage = 0;
-
-                me->InterruptNonMeleeSpells(true);
-                me->RemoveAllAuras();
-                break;
-
-            case PHASE_CTHUN_DONE:
-                //Allow death here
-                return;
-
-            default:
-                //Prevent death in these phases
-                damage = 0;
-                return;
+                default:
+                    //Prevent death in these phases
+                    damage = 0;
+                    return;
             }
         }
     };
@@ -545,8 +539,8 @@ public:
             Creature* Spawned;
             Spawned = DoSpawnCreature(NPC_EYE_TENTACLE, x, y, 0, 0, TEMPSUMMON_CORPSE_DESPAWN, 500);
             if (Spawned && Spawned->AI())
-            if (Unit* target = SelectRandomNotStomach())
-                Spawned->AI()->AttackStart(target);
+                if (Unit* target = SelectRandomNotStomach())
+                    Spawned->AI()->AttackStart(target);
         }
 
         Unit* SelectRandomNotStomach()
@@ -611,8 +605,7 @@ public:
 
                     //One random wisper every 90 - 300 seconds
                     WisperTimer = urand(90000, 300000);
-                }
-                else WisperTimer -= diff;
+                } else WisperTimer -= diff;
 
                 return;
             }
@@ -637,117 +630,78 @@ public:
                     SpawnEyeTentacle(-10, 10);              // south east
 
                     EyeTentacleTimer = 30000; // every 30sec in phase 2
-                }
-                else EyeTentacleTimer -= diff;
+                } else EyeTentacleTimer -= diff;
             }
 
             switch (currentPhase)
             {
                 //Transition phase
-            case PHASE_CTHUN_TRANSITION:
-                //PhaseTimer
-                if (PhaseTimer <= diff)
-                {
-                    //Switch
-                    instance->SetData(DATA_CTHUN_PHASE, PHASE_CTHUN_STOMACH);
-
-                    //Switch to c'thun model
-                    me->InterruptNonMeleeSpells(false);
-                    DoCast(me, SPELL_TRANSFORM, false);
-                    me->SetFullHealth();
-
-                    me->SetVisible(true);
-                    me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE | UNIT_FLAG_NON_ATTACKABLE);
-
-                    //Emerging phase
-                    //AttackStart(ObjectAccessor::GetUnit(*me, HoldpPlayer));
-                    DoZoneInCombat();
-
-                    //Place all units in threat list on outside of stomach
-                    Stomach_Map.clear();
-
-                    for (std::list<HostileReference*>::const_iterator i = me->getThreatManager().getThreatList().begin(); i != me->getThreatManager().getThreatList().end(); ++i)
-                        Stomach_Map[(*i)->getUnitGuid()] = false;   //Outside stomach
-
-                    //Spawn 2 flesh tentacles
-                    FleshTentaclesKilled = 0;
-
-                    //Spawn flesh tentacle
-                    for (uint8 i = 0; i < 2; i++)
+                case PHASE_CTHUN_TRANSITION:
+                    //PhaseTimer
+                    if (PhaseTimer <= diff)
                     {
-                        Creature* spawned = me->SummonCreature(NPC_FLESH_TENTACLE, FleshTentaclePos[i], TEMPSUMMON_CORPSE_DESPAWN);
-                        if (!spawned)
-                            ++FleshTentaclesKilled;
-                    }
+                        //Switch
+                        instance->SetData(DATA_CTHUN_PHASE, PHASE_CTHUN_STOMACH);
 
-                    PhaseTimer = 0;
-                }
-                else PhaseTimer -= diff;
+                        //Switch to c'thun model
+                        me->InterruptNonMeleeSpells(false);
+                        DoCast(me, SPELL_TRANSFORM, false);
+                        me->SetFullHealth();
 
-                break;
+                        me->SetVisible(true);
+                        me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE | UNIT_FLAG_NON_ATTACKABLE);
+
+                        //Emerging phase
+                        //AttackStart(ObjectAccessor::GetUnit(*me, HoldpPlayer));
+                        DoZoneInCombat();
+
+                        //Place all units in threat list on outside of stomach
+                        Stomach_Map.clear();
+
+                        for (std::list<HostileReference*>::const_iterator i = me->getThreatManager().getThreatList().begin(); i != me->getThreatManager().getThreatList().end(); ++i)
+                            Stomach_Map[(*i)->getUnitGuid()] = false;   //Outside stomach
+
+                        //Spawn 2 flesh tentacles
+                        FleshTentaclesKilled = 0;
+
+                        //Spawn flesh tentacle
+                        for (uint8 i = 0; i < 2; i++)
+                        {
+                            Creature* spawned = me->SummonCreature(NPC_FLESH_TENTACLE, FleshTentaclePos[i], TEMPSUMMON_CORPSE_DESPAWN);
+                            if (!spawned)
+                                ++FleshTentaclesKilled;
+                        }
+
+                        PhaseTimer = 0;
+                    } else PhaseTimer -= diff;
+
+                    break;
 
                 //Body Phase
-            case PHASE_CTHUN_STOMACH:
-                //Remove Target field
-                me->SetTarget(ObjectGuid::Empty);
+                case PHASE_CTHUN_STOMACH:
+                    //Remove Target field
+                    me->SetTarget(ObjectGuid::Empty);
 
-                //Weaken
-                if (FleshTentaclesKilled > 1)
-                {
-                    instance->SetData(DATA_CTHUN_PHASE, PHASE_CTHUN_WEAK);
-
-                    Talk(EMOTE_WEAKENED);
-                    PhaseTimer = 45000;
-
-                    DoCast(me, SPELL_PURPLE_COLORATION, true);
-
-                    std::unordered_map<ObjectGuid, bool>::iterator i = Stomach_Map.begin();
-
-                    //Kick all players out of stomach
-                    while (i != Stomach_Map.end())
+                    //Weaken
+                    if (FleshTentaclesKilled > 1)
                     {
-                        //Check for valid player
-                        Unit* unit = ObjectAccessor::GetUnit(*me, i->first);
+                        instance->SetData(DATA_CTHUN_PHASE, PHASE_CTHUN_WEAK);
 
-                        //Only move units in stomach
-                        if (unit && i->second == true)
+                        Talk(EMOTE_WEAKENED);
+                        PhaseTimer = 45000;
+
+                        DoCast(me, SPELL_PURPLE_COLORATION, true);
+
+                        std::unordered_map<ObjectGuid, bool>::iterator i = Stomach_Map.begin();
+
+                        //Kick all players out of stomach
+                        while (i != Stomach_Map.end())
                         {
-                            //Teleport each player out
-                            DoTeleportPlayer(unit, me->GetPositionX(), me->GetPositionY(), me->GetPositionZ() + 10, float(rand32() % 6));
+                            //Check for valid player
+                            Unit* unit = ObjectAccessor::GetUnit(*me, i->first);
 
-                            //Cast knockback on them
-                            DoCast(unit, SPELL_EXIT_STOMACH_KNOCKBACK, true);
-
-                            //Remove the acid debuff
-                            unit->RemoveAurasDueToSpell(SPELL_DIGESTIVE_ACID);
-
-                            i->second = false;
-                        }
-                        ++i;
-                    }
-
-                    return;
-                }
-
-                //Stomach acid
-                if (StomachAcidTimer <= diff)
-                {
-                    //Apply aura to all players in stomach
-                    std::unordered_map<ObjectGuid, bool>::iterator i = Stomach_Map.begin();
-
-                    while (i != Stomach_Map.end())
-                    {
-                        //Check for valid player
-                        Unit* unit = ObjectAccessor::GetUnit(*me, i->first);
-
-                        //Only apply to units in stomach
-                        if (unit && i->second == true)
-                        {
-                            //Cast digestive acid on them
-                            DoCast(unit, SPELL_DIGESTIVE_ACID, true);
-
-                            //Check if player should be kicked from stomach
-                            if (unit->IsWithinDist3d(&KickPos, 15.0f))
+                            //Only move units in stomach
+                            if (unit && i->second == true)
                             {
                                 //Teleport each player out
                                 DoTeleportPlayer(unit, me->GetPositionX(), me->GetPositionY(), me->GetPositionZ() + 10, float(rand32() % 6));
@@ -760,110 +714,141 @@ public:
 
                                 i->second = false;
                             }
+                            ++i;
                         }
-                        ++i;
+
+                        return;
                     }
 
-                    StomachAcidTimer = 4000;
-                }
-                else StomachAcidTimer -= diff;
-
-                //Stomach Enter Timer
-                if (StomachEnterTimer <= diff)
-                {
-                    if (Unit* target = SelectRandomNotStomach())
+                    //Stomach acid
+                    if (StomachAcidTimer <= diff)
                     {
-                        //Set target in stomach
-                        Stomach_Map[target->GetGUID()] = true;
-                        target->InterruptNonMeleeSpells(false);
-                        target->CastSpell(target, SPELL_MOUTH_TENTACLE, true, NULL, NULL, me->GetGUID());
-                        StomachEnterTarget = target->GetGUID();
-                        StomachEnterVisTimer = 3800;
-                    }
+                        //Apply aura to all players in stomach
+                        std::unordered_map<ObjectGuid, bool>::iterator i = Stomach_Map.begin();
 
-                    StomachEnterTimer = 13800;
-                }
-                else StomachEnterTimer -= diff;
-
-                if (StomachEnterVisTimer && StomachEnterTarget)
-                {
-                    if (StomachEnterVisTimer <= diff)
-                    {
-                        //Check for valid player
-                        Unit* unit = ObjectAccessor::GetUnit(*me, StomachEnterTarget);
-
-                        if (unit)
+                        while (i != Stomach_Map.end())
                         {
-                            DoTeleportPlayer(unit, STOMACH_X, STOMACH_Y, STOMACH_Z, STOMACH_O);
+                            //Check for valid player
+                            Unit* unit = ObjectAccessor::GetUnit(*me, i->first);
+
+                            //Only apply to units in stomach
+                            if (unit && i->second == true)
+                            {
+                                //Cast digestive acid on them
+                                DoCast(unit, SPELL_DIGESTIVE_ACID, true);
+
+                                //Check if player should be kicked from stomach
+                                if (unit->IsWithinDist3d(&KickPos, 15.0f))
+                                {
+                                    //Teleport each player out
+                                    DoTeleportPlayer(unit, me->GetPositionX(), me->GetPositionY(), me->GetPositionZ() + 10, float(rand32() % 6));
+
+                                    //Cast knockback on them
+                                    DoCast(unit, SPELL_EXIT_STOMACH_KNOCKBACK, true);
+
+                                    //Remove the acid debuff
+                                    unit->RemoveAurasDueToSpell(SPELL_DIGESTIVE_ACID);
+
+                                    i->second = false;
+                                }
+                            }
+                            ++i;
                         }
 
-                        StomachEnterTarget.Clear();
-                        StomachEnterVisTimer = 0;
-                    }
-                    else StomachEnterVisTimer -= diff;
-                }
+                        StomachAcidTimer = 4000;
+                    } else StomachAcidTimer -= diff;
 
-                //GientClawTentacleTimer
-                if (GiantClawTentacleTimer <= diff)
-                {
-                    if (Unit* target = SelectRandomNotStomach())
+                    //Stomach Enter Timer
+                    if (StomachEnterTimer <= diff)
                     {
-                        //Spawn claw tentacle on the random target
-                        if (Creature* spawned = me->SummonCreature(NPC_GIANT_CLAW_TENTACLE, *target, TEMPSUMMON_CORPSE_DESPAWN, 500))
-                        if (spawned->AI())
-                            spawned->AI()->AttackStart(target);
-                    }
+                        if (Unit* target = SelectRandomNotStomach())
+                        {
+                            //Set target in stomach
+                            Stomach_Map[target->GetGUID()] = true;
+                            target->InterruptNonMeleeSpells(false);
+                            target->CastSpell(target, SPELL_MOUTH_TENTACLE, true, NULL, NULL, me->GetGUID());
+                            StomachEnterTarget = target->GetGUID();
+                            StomachEnterVisTimer = 3800;
+                        }
 
-                    //One giant claw tentacle every minute
-                    GiantClawTentacleTimer = 60000;
-                }
-                else GiantClawTentacleTimer -= diff;
+                        StomachEnterTimer = 13800;
+                    } else StomachEnterTimer -= diff;
 
-                //GiantEyeTentacleTimer
-                if (GiantEyeTentacleTimer <= diff)
-                {
-                    if (Unit* target = SelectRandomNotStomach())
+                    if (StomachEnterVisTimer && StomachEnterTarget)
                     {
-                        //Spawn claw tentacle on the random target
-                        if (Creature* spawned = me->SummonCreature(NPC_GIANT_EYE_TENTACLE, *target, TEMPSUMMON_CORPSE_DESPAWN, 500))
-                        if (spawned->AI())
-                            spawned->AI()->AttackStart(target);
+                        if (StomachEnterVisTimer <= diff)
+                        {
+                            //Check for valid player
+                            Unit* unit = ObjectAccessor::GetUnit(*me, StomachEnterTarget);
+
+                            if (unit)
+                            {
+                                DoTeleportPlayer(unit, STOMACH_X, STOMACH_Y, STOMACH_Z, STOMACH_O);
+                            }
+
+                            StomachEnterTarget.Clear();
+                            StomachEnterVisTimer = 0;
+                        } else StomachEnterVisTimer -= diff;
                     }
 
-                    //One giant eye tentacle every minute
-                    GiantEyeTentacleTimer = 60000;
-                }
-                else GiantEyeTentacleTimer -= diff;
+                    //GientClawTentacleTimer
+                    if (GiantClawTentacleTimer <= diff)
+                    {
+                        if (Unit* target = SelectRandomNotStomach())
+                        {
+                            //Spawn claw tentacle on the random target
+                            if (Creature* spawned = me->SummonCreature(NPC_GIANT_CLAW_TENTACLE, *target, TEMPSUMMON_CORPSE_DESPAWN, 500))
+                                if (spawned->AI())
+                                    spawned->AI()->AttackStart(target);
+                        }
 
-                break;
+                        //One giant claw tentacle every minute
+                        GiantClawTentacleTimer = 60000;
+                    } else GiantClawTentacleTimer -= diff;
+
+                    //GiantEyeTentacleTimer
+                    if (GiantEyeTentacleTimer <= diff)
+                    {
+                        if (Unit* target = SelectRandomNotStomach())
+                        {
+                            //Spawn claw tentacle on the random target
+                            if (Creature* spawned = me->SummonCreature(NPC_GIANT_EYE_TENTACLE, *target, TEMPSUMMON_CORPSE_DESPAWN, 500))
+                                if (spawned->AI())
+                                    spawned->AI()->AttackStart(target);
+                        }
+
+                        //One giant eye tentacle every minute
+                        GiantEyeTentacleTimer = 60000;
+                    } else GiantEyeTentacleTimer -= diff;
+
+                    break;
 
                 //Weakened state
-            case PHASE_CTHUN_WEAK:
-                //PhaseTimer
-                if (PhaseTimer <= diff)
-                {
-                    //Switch
-                    instance->SetData(DATA_CTHUN_PHASE, PHASE_CTHUN_STOMACH);
-
-                    //Remove purple coloration
-                    me->RemoveAurasDueToSpell(SPELL_PURPLE_COLORATION);
-
-                    //Spawn 2 flesh tentacles
-                    FleshTentaclesKilled = 0;
-
-                    //Spawn flesh tentacle
-                    for (uint8 i = 0; i < 2; i++)
+                case PHASE_CTHUN_WEAK:
+                    //PhaseTimer
+                    if (PhaseTimer <= diff)
                     {
-                        Creature* spawned = me->SummonCreature(NPC_FLESH_TENTACLE, FleshTentaclePos[i], TEMPSUMMON_CORPSE_DESPAWN);
-                        if (!spawned)
-                            ++FleshTentaclesKilled;
-                    }
+                        //Switch
+                        instance->SetData(DATA_CTHUN_PHASE, PHASE_CTHUN_STOMACH);
 
-                    PhaseTimer = 0;
-                }
-                else PhaseTimer -= diff;
+                        //Remove purple coloration
+                        me->RemoveAurasDueToSpell(SPELL_PURPLE_COLORATION);
 
-                break;
+                        //Spawn 2 flesh tentacles
+                        FleshTentaclesKilled = 0;
+
+                        //Spawn flesh tentacle
+                        for (uint8 i = 0; i < 2; i++)
+                        {
+                            Creature* spawned = me->SummonCreature(NPC_FLESH_TENTACLE, FleshTentaclePos[i], TEMPSUMMON_CORPSE_DESPAWN);
+                            if (!spawned)
+                                ++FleshTentaclesKilled;
+                        }
+
+                        PhaseTimer = 0;
+                    } else PhaseTimer -= diff;
+
+                    break;
             }
         }
 
@@ -876,25 +861,25 @@ public:
         {
             switch (instance->GetData(DATA_CTHUN_PHASE))
             {
-            case PHASE_CTHUN_STOMACH:
-                //Not weakened so reduce damage by 99%
-                damage /= 100;
-                if (damage == 0)
-                    damage = 1;
+                case PHASE_CTHUN_STOMACH:
+                    //Not weakened so reduce damage by 99%
+                    damage /= 100;
+                    if (damage == 0)
+                        damage = 1;
 
-                //Prevent death in non-weakened state
-                if (damage >= me->GetHealth())
+                    //Prevent death in non-weakened state
+                    if (damage >= me->GetHealth())
+                        damage = 0;
+
+                    return;
+
+                case PHASE_CTHUN_WEAK:
+                    //Weakened - takes normal damage
+                    return;
+
+                default:
                     damage = 0;
-
-                return;
-
-            case PHASE_CTHUN_WEAK:
-                //Weakened - takes normal damage
-                return;
-
-            default:
-                damage = 0;
-                break;
+                    break;
             }
         }
 
@@ -902,9 +887,9 @@ public:
         {
             switch (param)
             {
-            case ACTION_FLESH_TENTACLE_KILLED:
-                ++FleshTentaclesKilled;
-                break;
+                case ACTION_FLESH_TENTACLE_KILLED:
+                    ++FleshTentaclesKilled;
+                    break;
             }
         }
     };
@@ -972,8 +957,7 @@ public:
             {
                 me->Kill(me);
                 return;
-            }
-            else KillSelfTimer -= diff;
+            } else KillSelfTimer -= diff;
 
             //MindflayTimer
             if (MindflayTimer <= diff)
@@ -984,8 +968,7 @@ public:
 
                 //Mindflay every 10 seconds
                 MindflayTimer = 10000;
-            }
-            else MindflayTimer -= diff;
+            } else MindflayTimer -= diff;
         }
     };
 
@@ -1082,8 +1065,7 @@ public:
                     }
 
                     me->SetVisible(true);
-                }
-                else EvadeTimer -= diff;
+                } else EvadeTimer -= diff;
             }
 
             //GroundRuptureTimer
@@ -1091,16 +1073,14 @@ public:
             {
                 DoCastVictim(SPELL_GROUND_RUPTURE);
                 GroundRuptureTimer = 30000;
-            }
-            else GroundRuptureTimer -= diff;
+            } else GroundRuptureTimer -= diff;
 
             //HamstringTimer
             if (HamstringTimer <= diff)
             {
                 DoCastVictim(SPELL_HAMSTRING);
                 HamstringTimer = 5000;
-            }
-            else HamstringTimer -= diff;
+            } else HamstringTimer -= diff;
 
             DoMeleeAttackIfReady();
         }
@@ -1202,8 +1182,7 @@ public:
                         AttackStart(target);
                     }
                     me->SetVisible(true);
-                }
-                else EvadeTimer -= diff;
+                } else EvadeTimer -= diff;
             }
 
             //GroundRuptureTimer
@@ -1211,24 +1190,21 @@ public:
             {
                 DoCastVictim(SPELL_GROUND_RUPTURE);
                 GroundRuptureTimer = 30000;
-            }
-            else GroundRuptureTimer -= diff;
+            } else GroundRuptureTimer -= diff;
 
             //ThrashTimer
             if (ThrashTimer <= diff)
             {
                 DoCastVictim(SPELL_THRASH);
                 ThrashTimer = 10000;
-            }
-            else ThrashTimer -= diff;
+            } else ThrashTimer -= diff;
 
             //HamstringTimer
             if (HamstringTimer <= diff)
             {
                 DoCastVictim(SPELL_HAMSTRING);
                 HamstringTimer = 10000;
-            }
-            else HamstringTimer -= diff;
+            } else HamstringTimer -= diff;
 
             DoMeleeAttackIfReady();
         }
@@ -1296,8 +1272,7 @@ public:
 
                 //Beam every 2 seconds
                 BeamTimer = 2100;
-            }
-            else BeamTimer -= diff;
+            } else BeamTimer -= diff;
         }
     };
 
@@ -1323,9 +1298,9 @@ public:
         void JustDied(Unit* /*killer*/) override
         {
             if (TempSummon* summon = me->ToTempSummon())
-            if (Unit* summoner = summon->GetSummoner())
-            if (summoner->IsAIEnabled)
-                summoner->GetAI()->DoAction(ACTION_FLESH_TENTACLE_KILLED);
+                if (Unit* summoner = summon->GetSummoner())
+                    if (summoner->IsAIEnabled)
+                        summoner->GetAI()->DoAction(ACTION_FLESH_TENTACLE_KILLED);
         }
     };
 

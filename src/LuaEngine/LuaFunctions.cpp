@@ -194,8 +194,8 @@ ElunaRegister<WorldObject> WorldObjectMethods[] =
 #if (!defined(TBC) && !defined(CLASSIC))
     { "GetPhaseMask", &LuaWorldObject::GetPhaseMask },                    // :GetPhaseMask()
 #endif
-    { "GetCanSeePhaseOne", &LuaWorldObject::GetCanSeePhaseOne },
-    { "SetCanSeePhaseOne", &LuaWorldObject::SetCanSeePhaseOne },
+	{ "GetCanSeePhaseOne", &LuaWorldObject::GetCanSeePhaseOne },
+	{ "SetCanSeePhaseOne", &LuaWorldObject::SetCanSeePhaseOne },
     { "GetInstanceId", &LuaWorldObject::GetInstanceId },                  // :GetInstanceId()
     { "GetAreaId", &LuaWorldObject::GetAreaId },                          // :GetAreaId()
     { "GetZoneId", &LuaWorldObject::GetZoneId },                          // :GetZoneId()
@@ -220,11 +220,11 @@ ElunaRegister<WorldObject> WorldObjectMethods[] =
     { "GetRelativePoint", &LuaWorldObject::GetRelativePoint },            // :GetRelativePoint(dist, rad) - Returns the x, y and z of a point dist away from worldobject.
     { "GetAngle", &LuaWorldObject::GetAngle },                            // :GetAngle(WorldObject or x, y) - Returns angle between world object and target or x and y coords.
 
-    // Setters
+	// Setters
 #if (!defined(TBC) && !defined(CLASSIC))
-    { "SetPhaseMask", &LuaWorldObject::SetPhaseMask },                    // :SetPhaseMask(newPhaseMask) - Sets the world objects phase mask to that specified
+	{ "SetPhaseMask", &LuaWorldObject::SetPhaseMask },                    // :SetPhaseMask(newPhaseMask) - Sets the world objects phase mask to that specified
 #endif
-    { "SetActive", &LuaWorldObject::SetActive },
+	{ "SetActive", &LuaWorldObject::SetActive },
 
     // Boolean
     { "IsWithinLoS", &LuaWorldObject::IsWithinLoS },
@@ -233,7 +233,7 @@ ElunaRegister<WorldObject> WorldObjectMethods[] =
     { "SummonGameObject", &LuaWorldObject::SummonGameObject },            // :SummonGameObject(entry, x, y, z, o[, respawnDelay]) - Spawns an object to location. Returns the object or nil
     { "SpawnCreature", &LuaWorldObject::SpawnCreature },                  // :SpawnCreature(entry, x, y, z, o[, spawnType, despawnDelay]) - Spawns a creature to location that despawns after given time (0 for infinite). Returns the creature or nil
     { "SendPacket", &LuaWorldObject::SendPacket },                        // :SendPacket(packet) - Sends a specified packet to everyone around
-    { "SpawnCreatureRandom", &LuaWorldObject::SpawnCreatureRandom }, // same as summoncreature but random position summoning.
+	{ "SpawnCreatureRandom", &LuaWorldObject::SpawnCreatureRandom}, // same as summoncreature but random position summoning.
     { "RegisterEvent", &LuaWorldObject::RegisterEvent },
     { "RemoveEventById", &LuaWorldObject::RemoveEventById },
     { "RemoveEvents", &LuaWorldObject::RemoveEvents },
@@ -293,113 +293,113 @@ ElunaRegister<Unit> UnitMethods[] =
 #endif
 
     // Setters
-    { "SetFaction", &LuaUnit::SetFaction },                   // :SetFaction(factionId) - Sets the unit's faction
-    { "SetLevel", &LuaUnit::SetLevel },                       // :SetLevel(amount)
-    { "SetHealth", &LuaUnit::SetHealth },                     // :SetHealth(amount)
-    { "SetMaxHealth", &LuaUnit::SetMaxHealth },               // :SetMaxHealth(amount)
-    { "SetPower", &LuaUnit::SetPower },                       // :SetPower([type,] amount)
-    { "SetMaxPower", &LuaUnit::SetMaxPower },                 // :SetMaxPower([type,] amount)
-    { "SetPowerType", &LuaUnit::SetPowerType },               // :SetPowerType(type)
-    { "SetDisplayId", &LuaUnit::SetDisplayId },               // :SetDisplayId(id)
-    { "SetNativeDisplayId", &LuaUnit::SetNativeDisplayId },   // :SetNativeDisplayId(id)
-    { "SetFacing", &LuaUnit::SetFacing },                     // :SetFacing(o) - Sets the Unit facing / orientation to arg
-    { "SetFacingToObject", &LuaUnit::SetFacingToObject },     // :SetFacingToObject(worldObject) - Sets the Unit facing / orientation towards the WorldObject
+	{ "SetFaction", &LuaUnit::SetFaction },                   // :SetFaction(factionId) - Sets the unit's faction
+	{ "SetLevel", &LuaUnit::SetLevel },                       // :SetLevel(amount)
+	{ "SetHealth", &LuaUnit::SetHealth },                     // :SetHealth(amount)
+	{ "SetMaxHealth", &LuaUnit::SetMaxHealth },               // :SetMaxHealth(amount)
+	{ "SetPower", &LuaUnit::SetPower },                       // :SetPower([type,] amount)
+	{ "SetMaxPower", &LuaUnit::SetMaxPower },                 // :SetMaxPower([type,] amount)
+	{ "SetPowerType", &LuaUnit::SetPowerType },               // :SetPowerType(type)
+	{ "SetDisplayId", &LuaUnit::SetDisplayId },               // :SetDisplayId(id)
+	{ "SetNativeDisplayId", &LuaUnit::SetNativeDisplayId },   // :SetNativeDisplayId(id)
+	{ "SetFacing", &LuaUnit::SetFacing },                     // :SetFacing(o) - Sets the Unit facing / orientation to arg
+	{ "SetFacingToObject", &LuaUnit::SetFacingToObject },     // :SetFacingToObject(worldObject) - Sets the Unit facing / orientation towards the WorldObject
 #if (!defined(TBC) && !defined(CLASSIC))
-    { "SetPhaseMask", &LuaUnit::SetPhaseMask },               // :SetPhaseMask(Phase[, update]) - Sets the phase of the unit
+	{ "SetPhaseMask", &LuaUnit::SetPhaseMask },               // :SetPhaseMask(Phase[, update]) - Sets the phase of the unit
 #endif
-    { "SetSpeed", &LuaUnit::SetSpeed },                       // :SetSpeed(type, speed[, forced]) - Sets speed for the movement type (0 = walk, 1 = run ..)
-    // {"SetStunned", &LuaUnit::SetStunned},                // :SetStunned([enable]) - Stuns or removes stun
-    { "SetRooted", &LuaUnit::SetRooted },                       // :SetRooted([enable]) - Roots or removes root
-    { "SetConfused", &LuaUnit::SetConfused },                   // :SetConfused([enable]) - Sets confused or removes confusion
-    { "SetFeared", &LuaUnit::SetFeared },                       // :SetFeared([enable]) - Fears or removes fear
-    { "SetPvP", &LuaUnit::SetPvP },                           // :SetPvP([apply]) - Sets the units PvP on or off
+	{ "SetSpeed", &LuaUnit::SetSpeed },                       // :SetSpeed(type, speed[, forced]) - Sets speed for the movement type (0 = walk, 1 = run ..)
+	// {"SetStunned", &LuaUnit::SetStunned},                // :SetStunned([enable]) - Stuns or removes stun
+	{ "SetRooted", &LuaUnit::SetRooted },                       // :SetRooted([enable]) - Roots or removes root
+	{ "SetConfused", &LuaUnit::SetConfused },                   // :SetConfused([enable]) - Sets confused or removes confusion
+	{ "SetFeared", &LuaUnit::SetFeared },                       // :SetFeared([enable]) - Fears or removes fear
+	{ "SetPvP", &LuaUnit::SetPvP },                           // :SetPvP([apply]) - Sets the units PvP on or off
 #if (!defined(TBC) && !defined(CLASSIC))
-    { "SetFFA", &LuaUnit::SetFFA },                           // :SetFFA([apply]) - Sets the units FFA tag on or off
-    { "SetSanctuary", &LuaUnit::SetSanctuary },               // :SetSanctuary([apply]) - Enables or disables units sanctuary flag
+	{ "SetFFA", &LuaUnit::SetFFA },                           // :SetFFA([apply]) - Sets the units FFA tag on or off
+	{ "SetSanctuary", &LuaUnit::SetSanctuary },               // :SetSanctuary([apply]) - Enables or disables units sanctuary flag
 #endif
-    { "SetCanFly", &LuaUnit::SetCanFly },                  // :SetCanFly(apply)
-    // {"SetVisible", &LuaUnit::SetVisible},                // :SetVisible(x)
-    { "SetOwnerGUID", &LuaUnit::SetOwnerGUID },               // :SetOwnerGUID(guid) - Sets the guid of the owner
-    { "SetName", &LuaUnit::SetName },                         // :SetName(name) - Sets the unit's name
-    { "SetSheath", &LuaUnit::SetSheath },                     // :SetSheath(SheathState) - Sets unit's sheathstate
-    { "SetCreatorGUID", &LuaUnit::SetCreatorGUID },           // :SetOwnerGUID(uint64 ownerGUID) - Sets the owner's guid of a summoned creature, etc
-    { "SetMinionGUID", &LuaUnit::SetPetGUID },                // Decapreted. Same as SetPetGUID
-    { "SetCharmerGUID", &LuaUnit::SetCharmerGUID },           // :SetCharmerGUID(uint64 ownerGUID) - Sets the UNIT_FIELD_CHARMEDBY charmer GUID
-    { "SetPetGUID", &LuaUnit::SetPetGUID },                   // :SetPetGUID(uint64 guid) - Sets the pet's guid
+	{ "SetCanFly", &LuaUnit::SetCanFly },                  // :SetCanFly(apply)
+	// {"SetVisible", &LuaUnit::SetVisible},                // :SetVisible(x)
+	{ "SetOwnerGUID", &LuaUnit::SetOwnerGUID },               // :SetOwnerGUID(guid) - Sets the guid of the owner
+	{ "SetName", &LuaUnit::SetName },                         // :SetName(name) - Sets the unit's name
+	{ "SetSheath", &LuaUnit::SetSheath },                     // :SetSheath(SheathState) - Sets unit's sheathstate
+	{ "SetCreatorGUID", &LuaUnit::SetCreatorGUID },           // :SetOwnerGUID(uint64 ownerGUID) - Sets the owner's guid of a summoned creature, etc
+	{ "SetMinionGUID", &LuaUnit::SetPetGUID },                // Decapreted. Same as SetPetGUID
+	{ "SetCharmerGUID", &LuaUnit::SetCharmerGUID },           // :SetCharmerGUID(uint64 ownerGUID) - Sets the UNIT_FIELD_CHARMEDBY charmer GUID
+	{ "SetPetGUID", &LuaUnit::SetPetGUID },                   // :SetPetGUID(uint64 guid) - Sets the pet's guid
 #if (!defined(TBC) && !defined(CLASSIC))
-    { "SetCritterGUID", &LuaUnit::SetCritterGUID },           // :SetCritterGUID(uint64 guid) - Sets the critter's guid
+	{ "SetCritterGUID", &LuaUnit::SetCritterGUID },           // :SetCritterGUID(uint64 guid) - Sets the critter's guid
 #endif
-    { "SetWaterWalk", &LuaUnit::SetWaterWalk },               // :SetWaterWalk([enable]) - Sets WaterWalk on or off
-    { "SetStandState", &LuaUnit::SetStandState },             // :SetStandState(state) - Sets the stand state (Stand, Kneel, sleep, etc) of the unit
+	{ "SetWaterWalk", &LuaUnit::SetWaterWalk },               // :SetWaterWalk([enable]) - Sets WaterWalk on or off
+	{ "SetStandState", &LuaUnit::SetStandState },             // :SetStandState(state) - Sets the stand state (Stand, Kneel, sleep, etc) of the unit
 
-    // Boolean
-    { "IsAlive", &LuaUnit::IsAlive },                                 // :IsAlive()
-    { "IsDead", &LuaUnit::IsDead },                                   // :IsDead() - Returns true if the unit is dead, false if they are alive
-    { "IsDying", &LuaUnit::IsDying },                                 // :IsDying() - Returns true if the unit death state is JUST_DIED.
-    { "IsPvPFlagged", &LuaUnit::IsPvPFlagged },                       // :IsPvPFlagged()
-    { "IsInCombat", &LuaUnit::IsInCombat },                           // :IsInCombat()
-    { "IsBanker", &LuaUnit::IsBanker },                               // :IsBanker() - Returns true if the unit is a banker, false if not
-    { "IsBattleMaster", &LuaUnit::IsBattleMaster },                   // :IsBattleMaster() - Returns true if the unit is a battle master, false if not
-    { "IsCharmed", &LuaUnit::IsCharmed },                             // :IsCharmed() - Returns true if the unit is charmed, false if not
-    { "IsArmorer", &LuaUnit::IsArmorer },                             // :IsArmorer() - Returns true if the unit is an Armorer, false if not
-    { "IsAttackingPlayer", &LuaUnit::IsAttackingPlayer },             // :IsAttackingPlayer() - Returns true if the unit is attacking a player, false if not
-    { "IsInWater", &LuaUnit::IsInWater },                             // :IsInWater() - Returns true if the unit is in water
-    { "IsUnderWater", &LuaUnit::IsUnderWater },                       // :IsUnderWater() - Returns true if the unit is under water
-    { "IsAuctioneer", &LuaUnit::IsAuctioneer },                       // :IsAuctioneer()
-    { "IsGuildMaster", &LuaUnit::IsGuildMaster },                     // :IsGuildMaster()
-    { "IsInnkeeper", &LuaUnit::IsInnkeeper },                         // :IsInnkeeper()
-    { "IsTrainer", &LuaUnit::IsTrainer },                             // :IsTrainer()
-    { "IsGossip", &LuaUnit::IsGossip },                               // :IsGossip()
-    { "IsTaxi", &LuaUnit::IsTaxi },                                   // :IsTaxi()
-    { "IsSpiritHealer", &LuaUnit::IsSpiritHealer },                   // :IsSpiritHealer()
-    { "IsSpiritGuide", &LuaUnit::IsSpiritGuide },                     // :IsSpiritGuide()
-    { "IsTabardDesigner", &LuaUnit::IsTabardDesigner },               // :IsTabardDesigner()
-    { "IsServiceProvider", &LuaUnit::IsServiceProvider },             // :IsServiceProvider()
-    { "IsSpiritService", &LuaUnit::IsSpiritService },                 // :IsSpiritService()
-    { "HealthBelowPct", &LuaUnit::HealthBelowPct },                   // :HealthBelowPct(int32 pct)
-    { "HealthAbovePct", &LuaUnit::HealthAbovePct },                   // :HealthAbovePct(int32 pct)
-    { "IsMounted", &LuaUnit::IsMounted },                             // :IsMounted()
-    { "AttackStop", &LuaUnit::AttackStop },                           // :AttackStop()
-    { "Attack", &LuaUnit::Attack },                                   // :Attack(who[, meleeAttack])
-    // {"IsVisible", &LuaUnit::IsVisible},                          // :IsVisible()
-    // {"IsMoving", &LuaUnit::IsMoving},                            // :IsMoving()
-    // {"IsFlying", &LuaUnit::IsFlying},                            // :IsFlying()
-    { "IsStopped", &LuaUnit::IsStopped },                             // :IsStopped()
-    { "HasUnitState", &LuaUnit::HasUnitState },                       // :HasUnitState(state) - state from UnitState enum
-    { "IsQuestGiver", &LuaUnit::IsQuestGiver },                       // :IsQuestGiver() - Returns true if the unit is a quest giver, false if not
-    { "IsWithinDistInMap", &LuaUnit::IsWithinDistInMap },             // :IsWithinDistInMap(worldObject, radius) - Returns if the unit is within distance in map of the worldObject
-    { "IsInAccessiblePlaceFor", &LuaUnit::IsInAccessiblePlaceFor },   // :IsInAccessiblePlaceFor(creature) - Returns if the unit is in an accessible place for the specified creature
-    { "IsVendor", &LuaUnit::IsVendor },                               // :IsVendor() - Returns if the unit is a vendor or not
-    { "IsRooted", &LuaUnit::IsRooted },                               // :IsRooted()
-    { "IsFullHealth", &LuaUnit::IsFullHealth },                       // :IsFullHealth() - Returns if the unit is full health
-    { "HasAura", &LuaUnit::HasAura },                                 // :HasAura(spellId) - Returns true if the unit has the aura from the spell
-    { "IsStandState", &LuaUnit::IsStandState },                       // :IsStandState() - Returns true if the unit is standing
+	// Boolean
+	{ "IsAlive", &LuaUnit::IsAlive },                                 // :IsAlive()
+	{ "IsDead", &LuaUnit::IsDead },                                   // :IsDead() - Returns true if the unit is dead, false if they are alive
+	{ "IsDying", &LuaUnit::IsDying },                                 // :IsDying() - Returns true if the unit death state is JUST_DIED.
+	{ "IsPvPFlagged", &LuaUnit::IsPvPFlagged },                       // :IsPvPFlagged()
+	{ "IsInCombat", &LuaUnit::IsInCombat },                           // :IsInCombat()
+	{ "IsBanker", &LuaUnit::IsBanker },                               // :IsBanker() - Returns true if the unit is a banker, false if not
+	{ "IsBattleMaster", &LuaUnit::IsBattleMaster },                   // :IsBattleMaster() - Returns true if the unit is a battle master, false if not
+	{ "IsCharmed", &LuaUnit::IsCharmed },                             // :IsCharmed() - Returns true if the unit is charmed, false if not
+	{ "IsArmorer", &LuaUnit::IsArmorer },                             // :IsArmorer() - Returns true if the unit is an Armorer, false if not
+	{ "IsAttackingPlayer", &LuaUnit::IsAttackingPlayer },             // :IsAttackingPlayer() - Returns true if the unit is attacking a player, false if not
+	{ "IsInWater", &LuaUnit::IsInWater },                             // :IsInWater() - Returns true if the unit is in water
+	{ "IsUnderWater", &LuaUnit::IsUnderWater },                       // :IsUnderWater() - Returns true if the unit is under water
+	{ "IsAuctioneer", &LuaUnit::IsAuctioneer },                       // :IsAuctioneer()
+	{ "IsGuildMaster", &LuaUnit::IsGuildMaster },                     // :IsGuildMaster()
+	{ "IsInnkeeper", &LuaUnit::IsInnkeeper },                         // :IsInnkeeper()
+	{ "IsTrainer", &LuaUnit::IsTrainer },                             // :IsTrainer()
+	{ "IsGossip", &LuaUnit::IsGossip },                               // :IsGossip()
+	{ "IsTaxi", &LuaUnit::IsTaxi },                                   // :IsTaxi()
+	{ "IsSpiritHealer", &LuaUnit::IsSpiritHealer },                   // :IsSpiritHealer()
+	{ "IsSpiritGuide", &LuaUnit::IsSpiritGuide },                     // :IsSpiritGuide()
+	{ "IsTabardDesigner", &LuaUnit::IsTabardDesigner },               // :IsTabardDesigner()
+	{ "IsServiceProvider", &LuaUnit::IsServiceProvider },             // :IsServiceProvider()
+	{ "IsSpiritService", &LuaUnit::IsSpiritService },                 // :IsSpiritService()
+	{ "HealthBelowPct", &LuaUnit::HealthBelowPct },                   // :HealthBelowPct(int32 pct)
+	{ "HealthAbovePct", &LuaUnit::HealthAbovePct },                   // :HealthAbovePct(int32 pct)
+	{ "IsMounted", &LuaUnit::IsMounted },                             // :IsMounted()
+	{ "AttackStop", &LuaUnit::AttackStop },                           // :AttackStop()
+	{ "Attack", &LuaUnit::Attack },                                   // :Attack(who[, meleeAttack])
+	// {"IsVisible", &LuaUnit::IsVisible},                          // :IsVisible()
+	// {"IsMoving", &LuaUnit::IsMoving},                            // :IsMoving()
+	// {"IsFlying", &LuaUnit::IsFlying},                            // :IsFlying()
+	{ "IsStopped", &LuaUnit::IsStopped },                             // :IsStopped()
+	{ "HasUnitState", &LuaUnit::HasUnitState },                       // :HasUnitState(state) - state from UnitState enum
+	{ "IsQuestGiver", &LuaUnit::IsQuestGiver },                       // :IsQuestGiver() - Returns true if the unit is a quest giver, false if not
+	{ "IsWithinDistInMap", &LuaUnit::IsWithinDistInMap },             // :IsWithinDistInMap(worldObject, radius) - Returns if the unit is within distance in map of the worldObject
+	{ "IsInAccessiblePlaceFor", &LuaUnit::IsInAccessiblePlaceFor },   // :IsInAccessiblePlaceFor(creature) - Returns if the unit is in an accessible place for the specified creature
+	{ "IsVendor", &LuaUnit::IsVendor },                               // :IsVendor() - Returns if the unit is a vendor or not
+	{ "IsRooted", &LuaUnit::IsRooted },                               // :IsRooted()
+	{ "IsFullHealth", &LuaUnit::IsFullHealth },                       // :IsFullHealth() - Returns if the unit is full health
+	{ "HasAura", &LuaUnit::HasAura },                                 // :HasAura(spellId) - Returns true if the unit has the aura from the spell
+	{ "IsStandState", &LuaUnit::IsStandState },                       // :IsStandState() - Returns true if the unit is standing
 #ifndef CLASSIC
-    { "IsOnVehicle", &LuaUnit::IsOnVehicle },                         // :IsOnVehicle() - Checks if the unit is on a vehicle
+	{ "IsOnVehicle", &LuaUnit::IsOnVehicle },                         // :IsOnVehicle() - Checks if the unit is on a vehicle
 #endif
 
-    // Other
-    { "AddAura", &LuaUnit::AddAura },                                 // :AddAura(spellId, target) - Adds an aura to the specified target
-    { "RemoveAura", &LuaUnit::RemoveAura },                           // :RemoveAura(spellId[, casterGUID]) - Removes an aura from the unit by the spellId, casterGUID(Original caster) is optional
-    { "RemoveAllAuras", &LuaUnit::RemoveAllAuras },                   // :RemoveAllAuras() - Removes all the unit's auras
-    { "ClearInCombat", &LuaUnit::ClearInCombat },                     // :ClearInCombat() - Clears the unit's combat list (unit will be out of combat), resets the timer to 0, etc
-    { "DeMorph", &LuaUnit::DeMorph },                                 // :DeMorph() - Sets display back to native
-    { "SendUnitWhisper", &LuaUnit::SendUnitWhisper },                 // :SendUnitWhisper(msg, lang, receiver[, bossWhisper]) - Sends a whisper to the receiver
-    { "SendUnitEmote", &LuaUnit::SendUnitEmote },                     // :SendUnitEmote(msg[, receiver, bossEmote]) - Sends a text emote
-    { "SendUnitSay", &LuaUnit::SendUnitSay },                         // :SendUnitSay(msg, language) - Sends a "Say" message with the specified language (all languages: 0)
-    { "SendUnitYell", &LuaUnit::SendUnitYell },                       // :SendUnitYell(msg, language) - Sends a "Yell" message with the specified language (all languages: 0)
-    { "CastSpell", &LuaUnit::CastSpell },                             // :CastSpell(target, spellID[, triggered]) - Casts spell on target (player/npc/creature), if triggered is true then instant cast
-    { "CastCustomSpell", &LuaUnit::CastCustomSpell },                 // :CastCustomSpell([Unit] target, uint32 spell, bool triggered = false, int32 bp0 = nil, int32 bp1 = nil, int32 bp2 = nil, [Item] castItem = nil, uint64 originalCaster = 0) - Casts spell on target (player/npc/creature), if triggered is true then instant cast. pb0, 1 and 2 are modifiers for the base points of the spell.
-    { "CastSpellAoF", &LuaUnit::CastSpellAoF },                       // :CastSpellAoF(x, y, z, spellID[, triggered]) - Casts the spell on coordinates, if triggered is false has mana cost and cast time
-    { "PlayDirectSound", &LuaUnit::PlayDirectSound },                 // :PlayDirectSound(soundId[, player]) - Unit plays soundID to player, or everyone around if no player
-    { "PlayDistanceSound", &LuaUnit::PlayDistanceSound },             // :PlayDistanceSound(soundId[, player]) - Unit plays soundID to player, or everyone around if no player. The sound fades the further you are
-    { "PlayMusic", &LuaUnit::PlayMusic },
+	// Other
+	{ "AddAura", &LuaUnit::AddAura },                                 // :AddAura(spellId, target) - Adds an aura to the specified target
+	{ "RemoveAura", &LuaUnit::RemoveAura },                           // :RemoveAura(spellId[, casterGUID]) - Removes an aura from the unit by the spellId, casterGUID(Original caster) is optional
+	{ "RemoveAllAuras", &LuaUnit::RemoveAllAuras },                   // :RemoveAllAuras() - Removes all the unit's auras
+	{ "ClearInCombat", &LuaUnit::ClearInCombat },                     // :ClearInCombat() - Clears the unit's combat list (unit will be out of combat), resets the timer to 0, etc
+	{ "DeMorph", &LuaUnit::DeMorph },                                 // :DeMorph() - Sets display back to native
+	{ "SendUnitWhisper", &LuaUnit::SendUnitWhisper },                 // :SendUnitWhisper(msg, lang, receiver[, bossWhisper]) - Sends a whisper to the receiver
+	{ "SendUnitEmote", &LuaUnit::SendUnitEmote },                     // :SendUnitEmote(msg[, receiver, bossEmote]) - Sends a text emote
+	{ "SendUnitSay", &LuaUnit::SendUnitSay },                         // :SendUnitSay(msg, language) - Sends a "Say" message with the specified language (all languages: 0)
+	{ "SendUnitYell", &LuaUnit::SendUnitYell },                       // :SendUnitYell(msg, language) - Sends a "Yell" message with the specified language (all languages: 0)
+	{ "CastSpell", &LuaUnit::CastSpell },                             // :CastSpell(target, spellID[, triggered]) - Casts spell on target (player/npc/creature), if triggered is true then instant cast
+	{ "CastCustomSpell", &LuaUnit::CastCustomSpell },                 // :CastCustomSpell([Unit] target, uint32 spell, bool triggered = false, int32 bp0 = nil, int32 bp1 = nil, int32 bp2 = nil, [Item] castItem = nil, uint64 originalCaster = 0) - Casts spell on target (player/npc/creature), if triggered is true then instant cast. pb0, 1 and 2 are modifiers for the base points of the spell.
+	{ "CastSpellAoF", &LuaUnit::CastSpellAoF },                       // :CastSpellAoF(x, y, z, spellID[, triggered]) - Casts the spell on coordinates, if triggered is false has mana cost and cast time
+	{ "PlayDirectSound", &LuaUnit::PlayDirectSound },                 // :PlayDirectSound(soundId[, player]) - Unit plays soundID to player, or everyone around if no player
+	{ "PlayDistanceSound", &LuaUnit::PlayDistanceSound },             // :PlayDistanceSound(soundId[, player]) - Unit plays soundID to player, or everyone around if no player. The sound fades the further you are
+	{ "PlayMusic", &LuaUnit::PlayMusic },
     { "Kill", &LuaUnit::Kill },                                       // :Kill(target, durabilityLoss) - Unit kills the target. Durabilityloss is true by default
     { "StopSpellCast", &LuaUnit::StopSpellCast },                     // :StopSpellCast([spellId]) - Stops the unit from casting a spell. If a spellId is defined, it will stop that unit from casting that spell
     { "InterruptSpell", &LuaUnit::InterruptSpell },                   // :InterruptSpell(spellType[, delayed]) - Interrupts the unit's spell by the spellType. If delayed is true it will skip if the spell is delayed.
     { "SendChatMessageToPlayer", &LuaUnit::SendChatMessageToPlayer }, // :SendChatMessageToPlayer(type, lang, msg, target) - Unit sends a chat message to the given target player
-    { "SendChatMessageDirectlyToPlayer", &LuaUnit::SendChatMessageDirectlyToPlayer }, // :SendChatMessageToPlayer(msg, msgtype, lang, packetatarget, target) - Unit sends a chat message directly to a player.
-    { "Emote", &LuaUnit::Emote },                                     // :Emote(emote)
+	{ "SendChatMessageDirectlyToPlayer", &LuaUnit::SendChatMessageDirectlyToPlayer }, // :SendChatMessageToPlayer(msg, msgtype, lang, packetatarget, target) - Unit sends a chat message directly to a player.
+	{ "Emote", &LuaUnit::Emote },                                     // :Emote(emote)
     { "CountPctFromCurHealth", &LuaUnit::CountPctFromCurHealth },     // :CountPctFromCurHealth(int32 pct)
     { "CountPctFromMaxHealth", &LuaUnit::CountPctFromMaxHealth },     // :CountPctFromMaxHealth()
     { "Dismount", &LuaUnit::Dismount },                               // :Dismount() - Dismounts the unit.
@@ -747,8 +747,8 @@ ElunaRegister<Player> PlayerMethods[] =
     { "Mute", &LuaPlayer::Mute },                                                         // :Mute(time[, reason]) - Mutes the player for given time in seconds.
     { "SummonPlayer", &LuaPlayer::SummonPlayer },                                         // :SummonPlayer(player, map, x, y, z, zoneId[, delay]) - Sends a popup to the player asking if he wants to be summoned if yes, teleported to coords. ZoneID defines the location name shown in the popup Delay is the time until the popup closes automatically.
     { "SaveToDB", &LuaPlayer::SaveToDB },                                                 // :SaveToDB() - Saves to database
-    { "ForceItemDownPlayersThroat", &LuaPlayer::ForceItemDownPlayersThroat },
-    { "QuestKillCredit", &LuaPlayer::QuestKillCredit },
+	{ "ForceItemDownPlayersThroat", &LuaPlayer::ForceItemDownPlayersThroat },
+	{ "QuestKillCredit", &LuaPlayer::QuestKillCredit },
 #ifdef CLASSIC
     { "UpdateHonor", &LuaPlayer::UpdateHonor },                                             // :UpdateHonor() - Updates Player Honor
     { "ResetHonor", &LuaPlayer::ResetHonor },                                               // :ResetHonor() - Resets Player Honor
@@ -858,8 +858,8 @@ ElunaRegister<Creature> CreatureMethods[] =
     { "SelectVictim", &LuaCreature::SelectVictim },
     { "MoveWaypoint", &LuaCreature::MoveWaypoint },
     { "UpdateEntry", &LuaCreature::UpdateEntry },
-    { "DeleteFromDB", &LuaCreature::DeleteFromDB },
-    { "SetReactState", &LuaCreature::SetReactState },
+	{ "DeleteFromDB", &LuaCreature::DeleteFromDB },
+	{ "SetReactState", &LuaCreature::SetReactState },
 
     { NULL, NULL },
 };

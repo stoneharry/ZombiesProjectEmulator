@@ -38,7 +38,7 @@ void SummonList::DoZoneInCombat(uint32 entry)
         Creature* summon = ObjectAccessor::GetCreature(*me, *i);
         ++i;
         if (summon && summon->IsAIEnabled
-            && (!entry || summon->GetEntry() == entry))
+                && (!entry || summon->GetEntry() == entry))
         {
             summon->AI()->DoZoneInCombat();
         }
@@ -97,10 +97,10 @@ bool SummonList::HasEntry(uint32 entry) const
 }
 
 ScriptedAI::ScriptedAI(Creature* creature) : CreatureAI(creature),
-me(creature),
-IsFleeing(false),
-_evadeCheckCooldown(2500),
-_isCombatMovementAllowed(true)
+    me(creature),
+    IsFleeing(false),
+    _evadeCheckCooldown(2500),
+    _isCombatMovementAllowed(true)
 {
     _isHeroic = me->GetMap()->IsHeroic();
     _difficulty = Difficulty(me->GetMap()->GetSpawnMode());
@@ -209,11 +209,11 @@ SpellInfo const* ScriptedAI::SelectSpell(Unit* target, uint32 school, uint32 mec
 
         // Targets and Effects checked first as most used restrictions
         //Check the spell targets if specified
-        if (targets && !(SpellSummary[me->m_spells[i]].Targets & (1 << (targets - 1))))
+        if (targets && !(SpellSummary[me->m_spells[i]].Targets & (1 << (targets-1))))
             continue;
 
         //Check the type of spell if we are looking for a specific spell type
-        if (effects && !(SpellSummary[me->m_spells[i]].Effects & (1 << (effects - 1))))
+        if (effects && !(SpellSummary[me->m_spells[i]].Effects & (1 << (effects-1))))
             continue;
 
         //Check for school if specified
@@ -310,7 +310,7 @@ void ScriptedAI::DoTeleportPlayer(Unit* unit, float x, float y, float z, float o
         player->TeleportTo(unit->GetMapId(), x, y, z, o, TELE_TO_NOT_LEAVE_COMBAT);
     else
         TC_LOG_ERROR("scripts", "Creature %s Tried to teleport non-player unit (%s) to x: %f y:%f z: %f o: %f. Aborted.",
-        me->GetGUID().ToString().c_str(), unit->GetGUID().ToString().c_str(), x, y, z, o);
+            me->GetGUID().ToString().c_str(), unit->GetGUID().ToString().c_str(), x, y, z, o);
 }
 
 void ScriptedAI::DoTeleportAll(float x, float y, float z, float o)
@@ -321,9 +321,9 @@ void ScriptedAI::DoTeleportAll(float x, float y, float z, float o)
 
     Map::PlayerList const& PlayerList = map->GetPlayers();
     for (Map::PlayerList::const_iterator itr = PlayerList.begin(); itr != PlayerList.end(); ++itr)
-    if (Player* player = itr->GetSource())
-    if (player->IsAlive())
-        player->TeleportTo(me->GetMapId(), x, y, z, o, TELE_TO_NOT_LEAVE_COMBAT);
+        if (Player* player = itr->GetSource())
+            if (player->IsAlive())
+                player->TeleportTo(me->GetMapId(), x, y, z, o, TELE_TO_NOT_LEAVE_COMBAT);
 }
 
 Unit* ScriptedAI::DoSelectLowestHpFriendly(float range, uint32 minHPDiff)
@@ -398,10 +398,10 @@ void ScriptedAI::SetCombatMovement(bool allowMovement)
 
 enum NPCs
 {
-    NPC_BROODLORD = 12017,
+    NPC_BROODLORD   = 12017,
     NPC_VOID_REAVER = 19516,
-    NPC_JAN_ALAI = 23578,
-    NPC_SARTHARION = 28860
+    NPC_JAN_ALAI    = 23578,
+    NPC_SARTHARION  = 28860
 };
 
 // Hacklike storage used for misc creatures that are expected to evade of outside of a certain area.
@@ -425,27 +425,27 @@ bool ScriptedAI::EnterEvadeIfOutOfCombatArea(uint32 const diff)
 
     switch (me->GetEntry())
     {
-    case NPC_BROODLORD:                                         // broodlord (not move down stairs)
-        if (z > 448.60f)
-            return false;
-        break;
-    case NPC_VOID_REAVER:                                         // void reaver (calculate from center of room)
-        if (me->GetDistance2d(432.59f, 371.93f) < 105.0f)
-            return false;
-        break;
-    case NPC_JAN_ALAI:                                         // jan'alai (calculate by Z)
-        if (z > 12.0f)
-            return false;
-        break;
-    case NPC_SARTHARION:                                         // sartharion (calculate box)
-        if (x > 3218.86f && x < 3275.69f && y < 572.40f && y > 484.68f)
-            return false;
-        break;
-    default: // For most of creatures that certain area is their home area.
-        TC_LOG_INFO("misc", "TSCR: EnterEvadeIfOutOfCombatArea used for creature entry %u, but does not have any definition. Using the default one.", me->GetEntry());
-        uint32 homeAreaId = me->GetMap()->GetAreaId(me->GetHomePosition().GetPositionX(), me->GetHomePosition().GetPositionY(), me->GetHomePosition().GetPositionZ());
-        if (me->GetAreaId() == homeAreaId)
-            return false;
+        case NPC_BROODLORD:                                         // broodlord (not move down stairs)
+            if (z > 448.60f)
+                return false;
+            break;
+        case NPC_VOID_REAVER:                                         // void reaver (calculate from center of room)
+            if (me->GetDistance2d(432.59f, 371.93f) < 105.0f)
+                return false;
+            break;
+        case NPC_JAN_ALAI:                                         // jan'alai (calculate by Z)
+            if (z > 12.0f)
+                return false;
+            break;
+        case NPC_SARTHARION:                                         // sartharion (calculate box)
+            if (x > 3218.86f && x < 3275.69f && y < 572.40f && y > 484.68f)
+                return false;
+            break;
+        default: // For most of creatures that certain area is their home area.
+            TC_LOG_INFO("misc", "TSCR: EnterEvadeIfOutOfCombatArea used for creature entry %u, but does not have any definition. Using the default one.", me->GetEntry());
+            uint32 homeAreaId = me->GetMap()->GetAreaId(me->GetHomePosition().GetPositionX(), me->GetHomePosition().GetPositionY(), me->GetHomePosition().GetPositionZ());
+            if (me->GetAreaId() == homeAreaId)
+                return false;
     }
 
     EnterEvadeMode();
@@ -454,10 +454,10 @@ bool ScriptedAI::EnterEvadeIfOutOfCombatArea(uint32 const diff)
 
 // BossAI - for instanced bosses
 BossAI::BossAI(Creature* creature, uint32 bossId) : ScriptedAI(creature),
-instance(creature->GetInstanceScript()),
-summons(creature),
-_boundary(instance ? instance->GetBossBoundary(bossId) : NULL),
-_bossId(bossId) { }
+    instance(creature->GetInstanceScript()),
+    summons(creature),
+    _boundary(instance ? instance->GetBossBoundary(bossId) : NULL),
+    _bossId(bossId) { }
 
 void BossAI::_Reset()
 {
@@ -502,9 +502,9 @@ void BossAI::TeleportCheaters()
 
     ThreatContainer::StorageType threatList = me->getThreatManager().getThreatList();
     for (ThreatContainer::StorageType::const_iterator itr = threatList.begin(); itr != threatList.end(); ++itr)
-    if (Unit* target = (*itr)->getTarget())
-    if (target->GetTypeId() == TYPEID_PLAYER && !CheckBoundary(target))
-        target->NearTeleportTo(x, y, z, 0);
+        if (Unit* target = (*itr)->getTarget())
+            if (target->GetTypeId() == TYPEID_PLAYER && !CheckBoundary(target))
+                target->NearTeleportTo(x, y, z, 0);
 }
 
 bool BossAI::CheckBoundary(Unit* who)
@@ -516,40 +516,40 @@ bool BossAI::CheckBoundary(Unit* who)
     {
         switch (itr->first)
         {
-        case BOUNDARY_N:
-            if (who->GetPositionX() > itr->second)
-                return false;
-            break;
-        case BOUNDARY_S:
-            if (who->GetPositionX() < itr->second)
-                return false;
-            break;
-        case BOUNDARY_E:
-            if (who->GetPositionY() < itr->second)
-                return false;
-            break;
-        case BOUNDARY_W:
-            if (who->GetPositionY() > itr->second)
-                return false;
-            break;
-        case BOUNDARY_NW:
-            if (who->GetPositionX() + who->GetPositionY() > itr->second)
-                return false;
-            break;
-        case BOUNDARY_SE:
-            if (who->GetPositionX() + who->GetPositionY() < itr->second)
-                return false;
-            break;
-        case BOUNDARY_NE:
-            if (who->GetPositionX() - who->GetPositionY() > itr->second)
-                return false;
-            break;
-        case BOUNDARY_SW:
-            if (who->GetPositionX() - who->GetPositionY() < itr->second)
-                return false;
-            break;
-        default:
-            break;
+            case BOUNDARY_N:
+                if (who->GetPositionX() > itr->second)
+                    return false;
+                break;
+            case BOUNDARY_S:
+                if (who->GetPositionX() < itr->second)
+                    return false;
+                break;
+            case BOUNDARY_E:
+                if (who->GetPositionY() < itr->second)
+                    return false;
+                break;
+            case BOUNDARY_W:
+                if (who->GetPositionY() > itr->second)
+                    return false;
+                break;
+            case BOUNDARY_NW:
+                if (who->GetPositionX() + who->GetPositionY() > itr->second)
+                    return false;
+                break;
+            case BOUNDARY_SE:
+                if (who->GetPositionX() + who->GetPositionY() < itr->second)
+                    return false;
+                break;
+            case BOUNDARY_NE:
+                if (who->GetPositionX() - who->GetPositionY() > itr->second)
+                    return false;
+                break;
+            case BOUNDARY_SW:
+                if (who->GetPositionX() - who->GetPositionY() < itr->second)
+                    return false;
+                break;
+            default:
+                break;
         }
     }
 
@@ -587,8 +587,8 @@ void BossAI::UpdateAI(uint32 diff)
 // WorldBossAI - for non-instanced bosses
 
 WorldBossAI::WorldBossAI(Creature* creature) :
-ScriptedAI(creature),
-summons(creature) { }
+    ScriptedAI(creature),
+    summons(creature) { }
 
 void WorldBossAI::_Reset()
 {

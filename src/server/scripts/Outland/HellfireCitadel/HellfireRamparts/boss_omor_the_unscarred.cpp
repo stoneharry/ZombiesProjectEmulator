@@ -30,208 +30,208 @@ EndScriptData */
 
 enum Says
 {
-    SAY_AGGRO = 0,
-    SAY_SUMMON = 1,
-    SAY_CURSE = 2,
-    SAY_KILL_1 = 3,
-    SAY_DIE = 4,
-    SAY_WIPE = 5
+    SAY_AGGRO                    = 0,
+    SAY_SUMMON                   = 1,
+    SAY_CURSE                    = 2,
+    SAY_KILL_1                   = 3,
+    SAY_DIE                      = 4,
+    SAY_WIPE                     = 5
 };
 
 enum Spells
 {
-    SPELL_ORBITAL_STRIKE = 30637,
-    SPELL_SHADOW_WHIP = 30638,
-    SPELL_TREACHEROUS_AURA = 30695,
-    H_SPELL_BANE_OF_TREACHERY = 37566,
-    SPELL_DEMONIC_SHIELD = 31901,
-    SPELL_SHADOW_BOLT = 30686,
-    H_SPELL_SHADOW_BOLT = 39297,
-    SPELL_SUMMON_FIENDISH_HOUND = 30707
+    SPELL_ORBITAL_STRIKE         = 30637,
+    SPELL_SHADOW_WHIP            = 30638,
+    SPELL_TREACHEROUS_AURA       = 30695,
+    H_SPELL_BANE_OF_TREACHERY    = 37566,
+    SPELL_DEMONIC_SHIELD         = 31901,
+    SPELL_SHADOW_BOLT            = 30686,
+    H_SPELL_SHADOW_BOLT          = 39297,
+    SPELL_SUMMON_FIENDISH_HOUND  = 30707
 };
 
 class boss_omor_the_unscarred : public CreatureScript
 {
-public:
+    public:
 
-    boss_omor_the_unscarred() : CreatureScript("boss_omor_the_unscarred") { }
+        boss_omor_the_unscarred() : CreatureScript("boss_omor_the_unscarred") { }
 
-    struct boss_omor_the_unscarredAI : public BossAI
-    {
-        boss_omor_the_unscarredAI(Creature* creature) : BossAI(creature, DATA_OMOR_THE_UNSCARRED)
+        struct boss_omor_the_unscarredAI : public BossAI
         {
-            Initialize();
-            SetCombatMovement(false);
-        }
-
-        void Initialize()
-        {
-            OrbitalStrike_Timer = 25000;
-            ShadowWhip_Timer = 2000;
-            Aura_Timer = 10000;
-            DemonicShield_Timer = 1000;
-            Shadowbolt_Timer = 2000;
-            Summon_Timer = 10000;
-            SummonedCount = 0;
-            PlayerGUID.Clear();
-            CanPullBack = false;
-        }
-
-        void Reset() override
-        {
-            Talk(SAY_WIPE);
-
-            Initialize();
-
-            _Reset();
-        }
-
-        void EnterCombat(Unit* /*who*/) override
-        {
-            _EnterCombat();
-            Talk(SAY_AGGRO);
-        }
-
-        void KilledUnit(Unit* /*victim*/) override
-        {
-            if (rand32() % 2)
-                return;
-
-            Talk(SAY_KILL_1);
-        }
-
-        void JustSummoned(Creature* summoned) override
-        {
-            Talk(SAY_SUMMON);
-
-            if (Unit* random = SelectTarget(SELECT_TARGET_RANDOM, 0))
-                summoned->AI()->AttackStart(random);
-
-            ++SummonedCount;
-        }
-
-        void JustDied(Unit* /*killer*/) override
-        {
-            Talk(SAY_DIE);
-            _JustDied();
-        }
-
-        void UpdateAI(uint32 diff) override
-        {
-            if (!UpdateVictim())
-                return;
-
-            //only two may be wrong, perhaps increase timer and spawn periodically instead.
-            if (SummonedCount < 2)
+            boss_omor_the_unscarredAI(Creature* creature) : BossAI(creature, DATA_OMOR_THE_UNSCARRED)
             {
-                if (Summon_Timer <= diff)
-                {
-                    me->InterruptNonMeleeSpells(false);
-                    DoCast(me, SPELL_SUMMON_FIENDISH_HOUND);
-                    Summon_Timer = 15000 + rand32() % 15000;
-                }
-                else
-                    Summon_Timer -= diff;
+                Initialize();
+                SetCombatMovement(false);
             }
 
-            if (CanPullBack)
+            void Initialize()
             {
-                if (ShadowWhip_Timer <= diff)
+                OrbitalStrike_Timer = 25000;
+                ShadowWhip_Timer = 2000;
+                Aura_Timer = 10000;
+                DemonicShield_Timer = 1000;
+                Shadowbolt_Timer = 2000;
+                Summon_Timer = 10000;
+                SummonedCount = 0;
+                PlayerGUID.Clear();
+                CanPullBack = false;
+            }
+
+            void Reset() override
+            {
+                Talk(SAY_WIPE);
+
+                Initialize();
+
+                _Reset();
+            }
+
+            void EnterCombat(Unit* /*who*/) override
+            {
+                _EnterCombat();
+                Talk(SAY_AGGRO);
+            }
+
+            void KilledUnit(Unit* /*victim*/) override
+            {
+                if (rand32() % 2)
+                    return;
+
+                Talk(SAY_KILL_1);
+            }
+
+            void JustSummoned(Creature* summoned) override
+            {
+                Talk(SAY_SUMMON);
+
+                if (Unit* random = SelectTarget(SELECT_TARGET_RANDOM, 0))
+                    summoned->AI()->AttackStart(random);
+
+                ++SummonedCount;
+            }
+
+            void JustDied(Unit* /*killer*/) override
+            {
+                Talk(SAY_DIE);
+                _JustDied();
+            }
+
+            void UpdateAI(uint32 diff) override
+            {
+                if (!UpdateVictim())
+                    return;
+
+                //only two may be wrong, perhaps increase timer and spawn periodically instead.
+                if (SummonedCount < 2)
                 {
-                    if (Player* temp = ObjectAccessor::GetPlayer(*me, PlayerGUID))
+                    if (Summon_Timer <= diff)
                     {
-                        //if unit dosen't have this flag, then no pulling back (script will attempt cast, even if orbital strike was resisted)
-                        if (temp->HasUnitMovementFlag(MOVEMENTFLAG_FALLING_FAR))
+                        me->InterruptNonMeleeSpells(false);
+                        DoCast(me, SPELL_SUMMON_FIENDISH_HOUND);
+                        Summon_Timer = 15000 + rand32() % 15000;
+                    }
+                    else
+                        Summon_Timer -= diff;
+                }
+
+                if (CanPullBack)
+                {
+                    if (ShadowWhip_Timer <= diff)
+                    {
+                        if (Player* temp = ObjectAccessor::GetPlayer(*me, PlayerGUID))
                         {
-                            me->InterruptNonMeleeSpells(false);
-                            DoCast(temp, SPELL_SHADOW_WHIP);
+                            //if unit dosen't have this flag, then no pulling back (script will attempt cast, even if orbital strike was resisted)
+                            if (temp->HasUnitMovementFlag(MOVEMENTFLAG_FALLING_FAR))
+                            {
+                                me->InterruptNonMeleeSpells(false);
+                                DoCast(temp, SPELL_SHADOW_WHIP);
+                            }
+                        }
+                        PlayerGUID.Clear();
+                        ShadowWhip_Timer = 2000;
+                        CanPullBack = false;
+                    }
+                    else
+                        ShadowWhip_Timer -= diff;
+                }
+                else
+                    if (OrbitalStrike_Timer <= diff)
+                    {
+                        Unit* temp = NULL;
+                        if (me->IsWithinMeleeRange(me->GetVictim()))
+                            temp = me->GetVictim();
+                        else temp = SelectTarget(SELECT_TARGET_RANDOM, 0);
+
+                        if (temp && temp->GetTypeId() == TYPEID_PLAYER)
+                        {
+                            DoCast(temp, SPELL_ORBITAL_STRIKE);
+                            OrbitalStrike_Timer = 14000 + rand32() % 2000;
+                            PlayerGUID = temp->GetGUID();
+
+                            if (PlayerGUID)
+                                CanPullBack = true;
                         }
                     }
-                    PlayerGUID.Clear();
-                    ShadowWhip_Timer = 2000;
-                    CanPullBack = false;
+                    else
+                        OrbitalStrike_Timer -= diff;
+
+                if (HealthBelowPct(20))
+                {
+                    if (DemonicShield_Timer <= diff)
+                    {
+                        DoCast(me, SPELL_DEMONIC_SHIELD);
+                        DemonicShield_Timer = 15000;
+                    }
+                    else
+                        DemonicShield_Timer -= diff;
+                }
+
+                if (Aura_Timer <= diff)
+                {
+                    Talk(SAY_CURSE);
+
+                    if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
+                    {
+                        DoCast(target, SPELL_TREACHEROUS_AURA);
+                        Aura_Timer = 8000 + rand32() % 8000;
+                    }
                 }
                 else
-                    ShadowWhip_Timer -= diff;
-            }
-            else
-            if (OrbitalStrike_Timer <= diff)
-            {
-                Unit* temp = NULL;
-                if (me->IsWithinMeleeRange(me->GetVictim()))
-                    temp = me->GetVictim();
-                else temp = SelectTarget(SELECT_TARGET_RANDOM, 0);
+                    Aura_Timer -= diff;
 
-                if (temp && temp->GetTypeId() == TYPEID_PLAYER)
+                if (Shadowbolt_Timer <= diff)
                 {
-                    DoCast(temp, SPELL_ORBITAL_STRIKE);
-                    OrbitalStrike_Timer = 14000 + rand32() % 2000;
-                    PlayerGUID = temp->GetGUID();
+                    if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
+                    {
+                        if (target)
+                            target = me->GetVictim();
 
-                    if (PlayerGUID)
-                        CanPullBack = true;
-                }
-            }
-            else
-                OrbitalStrike_Timer -= diff;
-
-            if (HealthBelowPct(20))
-            {
-                if (DemonicShield_Timer <= diff)
-                {
-                    DoCast(me, SPELL_DEMONIC_SHIELD);
-                    DemonicShield_Timer = 15000;
+                        DoCast(target, SPELL_SHADOW_BOLT);
+                        Shadowbolt_Timer = 4000 + rand32() % 2500;
+                    }
                 }
                 else
-                    DemonicShield_Timer -= diff;
+                    Shadowbolt_Timer -= diff;
+
+                DoMeleeAttackIfReady();
             }
 
-            if (Aura_Timer <= diff)
-            {
-                Talk(SAY_CURSE);
+            private:
+                uint32 OrbitalStrike_Timer;
+                uint32 ShadowWhip_Timer;
+                uint32 Aura_Timer;
+                uint32 DemonicShield_Timer;
+                uint32 Shadowbolt_Timer;
+                uint32 Summon_Timer;
+                uint32 SummonedCount;
+                ObjectGuid PlayerGUID;
+                bool CanPullBack;
+        };
 
-                if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
-                {
-                    DoCast(target, SPELL_TREACHEROUS_AURA);
-                    Aura_Timer = 8000 + rand32() % 8000;
-                }
-            }
-            else
-                Aura_Timer -= diff;
-
-            if (Shadowbolt_Timer <= diff)
-            {
-                if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
-                {
-                    if (target)
-                        target = me->GetVictim();
-
-                    DoCast(target, SPELL_SHADOW_BOLT);
-                    Shadowbolt_Timer = 4000 + rand32() % 2500;
-                }
-            }
-            else
-                Shadowbolt_Timer -= diff;
-
-            DoMeleeAttackIfReady();
+        CreatureAI* GetAI(Creature* creature) const override
+        {
+            return GetInstanceAI<boss_omor_the_unscarredAI>(creature);
         }
-
-    private:
-        uint32 OrbitalStrike_Timer;
-        uint32 ShadowWhip_Timer;
-        uint32 Aura_Timer;
-        uint32 DemonicShield_Timer;
-        uint32 Shadowbolt_Timer;
-        uint32 Summon_Timer;
-        uint32 SummonedCount;
-        ObjectGuid PlayerGUID;
-        bool CanPullBack;
-    };
-
-    CreatureAI* GetAI(Creature* creature) const override
-    {
-        return GetInstanceAI<boss_omor_the_unscarredAI>(creature);
-    }
 };
 
 void AddSC_boss_omor_the_unscarred()

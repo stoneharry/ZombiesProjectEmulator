@@ -30,32 +30,32 @@ Script Data End */
 
 enum Spells
 {
-    SPELL_ARCING_SMASH = 48260,
-    SPELL_IMPALE = 48261,
-    H_SPELL_IMPALE = 59268,
-    SPELL_WITHERING_ROAR = 48256,
-    H_SPELL_WITHERING_ROAR = 59267,
-    SPELL_FREEZE = 16245
+    SPELL_ARCING_SMASH                          = 48260,
+    SPELL_IMPALE                                = 48261,
+    H_SPELL_IMPALE                              = 59268,
+    SPELL_WITHERING_ROAR                        = 48256,
+    H_SPELL_WITHERING_ROAR                      = 59267,
+    SPELL_FREEZE                                = 16245
 };
 
 //Orb spells
 enum OrbSpells
 {
-    SPELL_ORB_VISUAL = 48044,
-    SPELL_ORB_CHANNEL = 48048
+    SPELL_ORB_VISUAL                            = 48044,
+    SPELL_ORB_CHANNEL                           = 48048
 };
 
 //not in db
 enum Yells
 {
-    SAY_AGGRO = 0,
-    SAY_SLAY = 1
-    //SAY_DEATH                                = 2 Missing in database
+    SAY_AGGRO                                = 0,
+    SAY_SLAY                                 = 1
+  //SAY_DEATH                                = 2 Missing in database
 };
 
 enum Creatures
 {
-    NPC_STASIS_CONTROLLER = 26688
+    NPC_STASIS_CONTROLLER                       = 26688
 };
 
 Position const moveLocs[] =
@@ -129,9 +129,9 @@ public:
             me->GetMotionMaster()->MoveTargetedHome();
 
             for (uint8 i = DATA_FRENZIED_WORGEN; i <= DATA_FEROCIOUS_RHINO; ++i)
-            if (Creature* temp = ObjectAccessor::GetCreature(*me, instance->GetGuidData(i)))
-            if (!temp->IsAlive())
-                temp->Respawn();
+                if (Creature* temp = ObjectAccessor::GetCreature(*me, instance->GetGuidData(i)))
+                    if (!temp->IsAlive())
+                        temp->Respawn();
 
             if (GameObject* go = ObjectAccessor::GetGameObject(*me, instance->GetGuidData(DATA_GORTOK_PALEHOOF_SPHERE)))
             {
@@ -174,23 +174,20 @@ public:
             {
                 DoCast(me, SPELL_ARCING_SMASH);
                 uiArcingSmashTimer = urand(13000, 17000);
-            }
-            else uiArcingSmashTimer -= diff;
+            } else uiArcingSmashTimer -= diff;
 
             if (uiImpaleTimer <= diff)
             {
-                if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
-                    DoCast(target, SPELL_IMPALE);
-                uiImpaleTimer = urand(8000, 12000);
-            }
-            else uiImpaleTimer -= diff;
+              if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
+                  DoCast(target, SPELL_IMPALE);
+              uiImpaleTimer = urand(8000, 12000);
+            } else uiImpaleTimer -= diff;
 
             if (uiWhiteringRoarTimer <= diff)
             {
                 DoCast(me, SPELL_WITHERING_ROAR);
                 uiWhiteringRoarTimer = urand(8000, 12000);
-            }
-            else uiWhiteringRoarTimer -= diff;
+            } else uiWhiteringRoarTimer -= diff;
 
             DoMeleeAttackIfReady();
         }
@@ -228,15 +225,15 @@ public:
 
             // send orb to summon spot
             if (Creature* orb = ObjectAccessor::GetCreature(*me, instance->GetGuidData(DATA_GORTOK_ORB)))
-            if (orb->IsAlive())
-                orb->GetMotionMaster()->MovePoint(move, moveLocs[move]);
+                if (orb->IsAlive())
+                    orb->GetMotionMaster()->MovePoint(move, moveLocs[move]);
 
             currentPhase = move;
         }
 
         void JustReachedHome() override
         {
-            me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE | UNIT_FLAG_NOT_SELECTABLE | UNIT_FLAG_NOT_ATTACKABLE_1 | UNIT_FLAG_IMMUNE_TO_PC);
+            me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE|UNIT_FLAG_NOT_SELECTABLE|UNIT_FLAG_NOT_ATTACKABLE_1|UNIT_FLAG_IMMUNE_TO_PC);
             me->SetStandState(UNIT_STAND_STATE_STAND);
             DoCast(me, SPELL_FREEZE);
         }
@@ -251,10 +248,10 @@ public:
 //ravenous furbolg's spells
 enum RavenousSpells
 {
-    SPELL_CHAIN_LIGHTING = 48140,
-    H_SPELL_CHAIN_LIGHTING = 59273,
-    SPELL_CRAZED = 48139,
-    SPELL_TERRIFYING_ROAR = 48144
+    SPELL_CHAIN_LIGHTING                        = 48140,
+    H_SPELL_CHAIN_LIGHTING                      = 59273,
+    SPELL_CRAZED                                = 48139,
+    SPELL_TERRIFYING_ROAR                       = 48144
 };
 
 class npc_ravenous_furbolg : public CreatureScript
@@ -312,22 +309,19 @@ public:
             {
                 DoCastVictim(SPELL_CHAIN_LIGHTING);
                 uiChainLightingTimer = 5000 + rand32() % 5000;
-            }
-            else uiChainLightingTimer -= diff;
+            } else uiChainLightingTimer -=  diff;
 
             if (uiCrazedTimer <= diff)
             {
                 DoCast(me, SPELL_CRAZED);
                 uiCrazedTimer = 8000 + rand32() % 4000;
-            }
-            else uiCrazedTimer -= diff;
+            } else uiCrazedTimer -=  diff;
 
             if (uiTerrifyingRoarTimer <= diff)
             {
                 DoCast(me, SPELL_TERRIFYING_ROAR);
                 uiTerrifyingRoarTimer = 10000 + rand32() % 10000;
-            }
-            else uiTerrifyingRoarTimer -= diff;
+            } else uiTerrifyingRoarTimer -=  diff;
 
             DoMeleeAttackIfReady();
         }
@@ -368,10 +362,10 @@ public:
 //frenzied worgen's spells
 enum FrenziedSpells
 {
-    SPELL_MORTAL_WOUND = 48137,
-    H_SPELL_MORTAL_WOUND = 59265,
-    SPELL_ENRAGE_1 = 48138,
-    SPELL_ENRAGE_2 = 48142
+    SPELL_MORTAL_WOUND                          = 48137,
+    H_SPELL_MORTAL_WOUND                        = 59265,
+    SPELL_ENRAGE_1                              = 48138,
+    SPELL_ENRAGE_2                              = 48142
 };
 
 class npc_frenzied_worgen : public CreatureScript
@@ -429,22 +423,19 @@ public:
             {
                 DoCastVictim(SPELL_MORTAL_WOUND);
                 uiMortalWoundTimer = 3000 + rand32() % 4000;
-            }
-            else uiMortalWoundTimer -= diff;
+            } else uiMortalWoundTimer -= diff;
 
             if (uiEnrage1Timer <= diff)
             {
                 DoCast(me, SPELL_ENRAGE_1);
                 uiEnrage1Timer = 15000;
-            }
-            else uiEnrage1Timer -= diff;
+            } else uiEnrage1Timer -= diff;
 
             if (uiEnrage2Timer <= diff)
             {
                 DoCast(me, SPELL_ENRAGE_2);
                 uiEnrage2Timer = 10000;
-            }
-            else uiEnrage2Timer -= diff;
+            } else uiEnrage2Timer -= diff;
 
             DoMeleeAttackIfReady();
         }
@@ -486,11 +477,11 @@ public:
 //ferocious rhino's spells
 enum FerociousSpells
 {
-    SPELL_GORE = 48130,
-    H_SPELL_GORE = 59264,
-    SPELL_GRIEVOUS_WOUND = 48105,
-    H_SPELL_GRIEVOUS_WOUND = 59263,
-    SPELL_STOMP = 48131
+    SPELL_GORE                                  = 48130,
+    H_SPELL_GORE                                = 59264,
+    SPELL_GRIEVOUS_WOUND                        = 48105,
+    H_SPELL_GRIEVOUS_WOUND                      = 59263,
+    SPELL_STOMP                                 = 48131
 };
 
 class npc_ferocious_rhino : public CreatureScript
@@ -548,23 +539,20 @@ public:
             {
                 DoCastVictim(SPELL_STOMP);
                 uiStompTimer = 8000 + rand32() % 4000;
-            }
-            else uiStompTimer -= diff;
+            } else uiStompTimer -= diff;
 
             if (uiGoreTimer <= diff)
             {
                 DoCastVictim(SPELL_GORE);
                 uiGoreTimer = 13000 + rand32() % 4000;
-            }
-            else uiGoreTimer -= diff;
+            } else uiGoreTimer -= diff;
 
             if (uiGrievousWoundTimer <= diff)
             {
                 if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
                     DoCast(target, SPELL_GRIEVOUS_WOUND);
                 uiGrievousWoundTimer = 18000 + rand32() % 4000;
-            }
-            else uiGrievousWoundTimer -= diff;
+            } else uiGrievousWoundTimer -= diff;
 
             DoMeleeAttackIfReady();
         }
@@ -605,16 +593,16 @@ public:
 //massive jormungar's spells
 enum MassiveSpells
 {
-    SPELL_ACID_SPIT = 48132,
-    SPELL_ACID_SPLATTER = 48136,
-    H_SPELL_ACID_SPLATTER = 59272,
-    SPELL_POISON_BREATH = 48133,
-    H_SPELL_POISON_BREATH = 59271
+    SPELL_ACID_SPIT                             = 48132,
+    SPELL_ACID_SPLATTER                         = 48136,
+    H_SPELL_ACID_SPLATTER                       = 59272,
+    SPELL_POISON_BREATH                         = 48133,
+    H_SPELL_POISON_BREATH                       = 59271
 };
 
 enum MassiveAdds
 {
-    CREATURE_JORMUNGAR_WORM = 27228
+  CREATURE_JORMUNGAR_WORM                     = 27228
 };
 
 class npc_massive_jormungar : public CreatureScript
@@ -673,23 +661,20 @@ public:
                 if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
                     DoCast(target, SPELL_ACID_SPIT);
                 uiAcidSpitTimer = 2000 + rand32() % 2000;
-            }
-            else uiAcidSpitTimer -= diff;
+            } else uiAcidSpitTimer -= diff;
 
             if (uiAcidSplatterTimer <= diff)
             {
                 DoCast(me, SPELL_POISON_BREATH);
                 uiAcidSplatterTimer = 10000 + rand32() % 4000;
-            }
-            else uiAcidSplatterTimer -= diff;
+            } else uiAcidSplatterTimer -= diff;
 
             if (uiPoisonBreathTimer <= diff)
             {
                 if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
                     DoCast(target, SPELL_POISON_BREATH);
                 uiPoisonBreathTimer = 8000 + rand32() % 4000;
-            }
-            else uiPoisonBreathTimer -= diff;
+            } else uiPoisonBreathTimer -= diff;
 
             DoMeleeAttackIfReady();
         }
@@ -774,23 +759,23 @@ public:
                 uint8 nextBossId = 0;
                 switch (currentPhase)
                 {
-                case PHASE_FRENZIED_WORGEN:
-                    nextBossId = DATA_FRENZIED_WORGEN;
-                    break;
-                case PHASE_RAVENOUS_FURLBORG:
-                    nextBossId = DATA_RAVENOUS_FURBOLG;
-                    break;
-                case PHASE_MASSIVE_JORMUNGAR:
-                    nextBossId = DATA_MASSIVE_JORMUNGAR;
-                    break;
-                case PHASE_FEROCIOUS_RHINO:
-                    nextBossId = DATA_FEROCIOUS_RHINO;
-                    break;
-                case PHASE_GORTOK_PALEHOOF:
-                    nextBossId = DATA_GORTOK_PALEHOOF;
-                    break;
-                default:
-                    return;
+                    case PHASE_FRENZIED_WORGEN:
+                        nextBossId = DATA_FRENZIED_WORGEN;
+                        break;
+                    case PHASE_RAVENOUS_FURLBORG:
+                        nextBossId = DATA_RAVENOUS_FURBOLG;
+                        break;
+                    case PHASE_MASSIVE_JORMUNGAR:
+                        nextBossId = DATA_MASSIVE_JORMUNGAR;
+                        break;
+                    case PHASE_FEROCIOUS_RHINO:
+                        nextBossId = DATA_FEROCIOUS_RHINO;
+                        break;
+                    case PHASE_GORTOK_PALEHOOF:
+                        nextBossId = DATA_GORTOK_PALEHOOF;
+                        break;
+                    default:
+                        return;
                 }
 
                 if (Creature* nextBoss = ObjectAccessor::GetCreature(*me, instance->GetGuidData(nextBossId)))
@@ -818,23 +803,23 @@ public:
             uint8 nextBossId = 0;
             switch (id)
             {
-            case PHASE_FRENZIED_WORGEN:
-                nextBossId = DATA_FRENZIED_WORGEN;
-                break;
-            case PHASE_RAVENOUS_FURLBORG:
-                nextBossId = DATA_RAVENOUS_FURBOLG;
-                break;
-            case PHASE_MASSIVE_JORMUNGAR:
-                nextBossId = DATA_MASSIVE_JORMUNGAR;
-                break;
-            case PHASE_FEROCIOUS_RHINO:
-                nextBossId = DATA_FEROCIOUS_RHINO;
-                break;
-            case PHASE_GORTOK_PALEHOOF:
-                nextBossId = DATA_GORTOK_PALEHOOF;
-                break;
-            default:
-                return;
+                case PHASE_FRENZIED_WORGEN:
+                    nextBossId = DATA_FRENZIED_WORGEN;
+                    break;
+                case PHASE_RAVENOUS_FURLBORG:
+                    nextBossId = DATA_RAVENOUS_FURBOLG;
+                    break;
+                case PHASE_MASSIVE_JORMUNGAR:
+                    nextBossId = DATA_MASSIVE_JORMUNGAR;
+                    break;
+                case PHASE_FEROCIOUS_RHINO:
+                    nextBossId = DATA_FEROCIOUS_RHINO;
+                    break;
+                case PHASE_GORTOK_PALEHOOF:
+                    nextBossId = DATA_GORTOK_PALEHOOF;
+                    break;
+                default:
+                    return;
             }
 
             if (Creature* nextBoss = ObjectAccessor::GetCreature(*me, instance->GetGuidData(nextBossId)))
@@ -849,25 +834,25 @@ public:
 
 class go_palehoof_sphere : public GameObjectScript
 {
-public:
-    go_palehoof_sphere() : GameObjectScript("go_palehoof_sphere") { }
+    public:
+        go_palehoof_sphere() : GameObjectScript("go_palehoof_sphere") { }
 
-    bool OnGossipHello(Player* /*player*/, GameObject* go) override
-    {
-        InstanceScript* instance = go->GetInstanceScript();
-        if (!instance)
-            return false;
-
-        Creature* palehoof = ObjectAccessor::GetCreature(*go, instance->GetGuidData(DATA_GORTOK_PALEHOOF));
-        if (palehoof && palehoof->IsAlive())
+        bool OnGossipHello(Player* /*player*/, GameObject* go) override
         {
-            go->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_NOT_SELECTABLE);
-            go->SetGoState(GO_STATE_ACTIVE);
+            InstanceScript* instance = go->GetInstanceScript();
+            if (!instance)
+                return false;
 
-            palehoof->AI()->DoAction(ACTION_NEXT_PHASE);
+            Creature* palehoof = ObjectAccessor::GetCreature(*go, instance->GetGuidData(DATA_GORTOK_PALEHOOF));
+            if (palehoof && palehoof->IsAlive())
+            {
+                go->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_NOT_SELECTABLE);
+                go->SetGoState(GO_STATE_ACTIVE);
+
+                palehoof->AI()->DoAction(ACTION_NEXT_PHASE);
+            }
+            return true;
         }
-        return true;
-    }
 
 };
 

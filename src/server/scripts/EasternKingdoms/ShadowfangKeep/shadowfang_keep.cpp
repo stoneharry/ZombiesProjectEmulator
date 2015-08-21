@@ -1,20 +1,20 @@
-/*
-* Copyright (C) 2008-2015 TrinityCore <http://www.trinitycore.org/>
-* Copyright (C) 2006-2009 ScriptDev2 <https://scriptdev2.svn.sourceforge.net/>
-*
-* This program is free software; you can redistribute it and/or modify it
-* under the terms of the GNU General Public License as published by the
-* Free Software Foundation; either version 2 of the License, or (at your
-* option) any later version.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT
-* ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-* FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
-* more details.
-*
-* You should have received a copy of the GNU General Public License along
-* with this program. If not, see <http://www.gnu.org/licenses/>.
-*/
+ /*
+ * Copyright (C) 2008-2015 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2006-2009 ScriptDev2 <https://scriptdev2.svn.sourceforge.net/>
+ *
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the
+ * Free Software Foundation; either version 2 of the License, or (at your
+ * option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
 
 /* ScriptData
 SDName: Shadowfang_Keep
@@ -42,25 +42,25 @@ EndContentData */
 
 enum Yells
 {
-    SAY_FREE_AS = 0,
-    SAY_OPEN_DOOR_AS = 1,
-    SAY_POST_DOOR_AS = 2,
-    SAY_FREE_AD = 0,
-    SAY_OPEN_DOOR_AD = 1,
-    SAY_POST1_DOOR_AD = 2,
-    SAY_POST2_DOOR_AD = 3
+    SAY_FREE_AS             = 0,
+    SAY_OPEN_DOOR_AS        = 1,
+    SAY_POST_DOOR_AS        = 2,
+    SAY_FREE_AD             = 0,
+    SAY_OPEN_DOOR_AD        = 1,
+    SAY_POST1_DOOR_AD       = 2,
+    SAY_POST2_DOOR_AD       = 3
 };
 
 enum Spells
 {
-    SPELL_UNLOCK = 6421,
+    SPELL_UNLOCK            = 6421,
 
-    SPELL_DARK_OFFERING = 7154
+    SPELL_DARK_OFFERING     = 7154
 };
 
 enum Creatures
 {
-    NPC_ASH = 3850
+    NPC_ASH                 = 3850
 };
 
 #define GOSSIP_ITEM_DOOR        "Thanks, I'll follow you to the door."
@@ -78,7 +78,7 @@ public:
     bool OnGossipSelect(Player* player, Creature* creature, uint32 /*sender*/, uint32 action) override
     {
         player->PlayerTalkClass->ClearMenus();
-        if (action == GOSSIP_ACTION_INFO_DEF + 1)
+        if (action == GOSSIP_ACTION_INFO_DEF+1)
         {
             player->CLOSE_GOSSIP_MENU();
 
@@ -113,34 +113,34 @@ public:
         {
             switch (waypointId)
             {
-            case 0:
-                if (me->GetEntry() == NPC_ASH)
-                    Talk(SAY_FREE_AS);
-                else
-                    Talk(SAY_FREE_AD);
-                break;
-            case 10:
-                if (me->GetEntry() == NPC_ASH)
-                    Talk(SAY_OPEN_DOOR_AS);
-                else
-                    Talk(SAY_OPEN_DOOR_AD);
-                break;
-            case 11:
-                if (me->GetEntry() == NPC_ASH)
-                    DoCast(me, SPELL_UNLOCK);
-                break;
-            case 12:
-                if (me->GetEntry() == NPC_ASH)
-                    Talk(SAY_POST_DOOR_AS);
-                else
-                    Talk(SAY_POST1_DOOR_AD);
+                case 0:
+                    if (me->GetEntry() == NPC_ASH)
+                        Talk(SAY_FREE_AS);
+                    else
+                        Talk(SAY_FREE_AD);
+                    break;
+                case 10:
+                    if (me->GetEntry() == NPC_ASH)
+                        Talk(SAY_OPEN_DOOR_AS);
+                    else
+                        Talk(SAY_OPEN_DOOR_AD);
+                    break;
+                case 11:
+                    if (me->GetEntry() == NPC_ASH)
+                        DoCast(me, SPELL_UNLOCK);
+                    break;
+                case 12:
+                    if (me->GetEntry() == NPC_ASH)
+                        Talk(SAY_POST_DOOR_AS);
+                    else
+                        Talk(SAY_POST1_DOOR_AD);
 
-                instance->SetData(TYPE_FREE_NPC, DONE);
-                break;
-            case 13:
-                if (me->GetEntry() != NPC_ASH)
-                    Talk(SAY_POST2_DOOR_AD);
-                break;
+                    instance->SetData(TYPE_FREE_NPC, DONE);
+                    break;
+                case 13:
+                    if (me->GetEntry() != NPC_ASH)
+                        Talk(SAY_POST2_DOOR_AD);
+                    break;
             }
         }
 
@@ -194,8 +194,7 @@ public:
                 else
                     DoCast(me, SPELL_DARK_OFFERING);
                 uiDarkOffering = urand(4400, 12500);
-            }
-            else uiDarkOffering -= uiDiff;
+            } else uiDarkOffering -= uiDiff;
 
             DoMeleeAttackIfReady();
         }
@@ -210,41 +209,41 @@ public:
 
 class spell_shadowfang_keep_haunting_spirits : public SpellScriptLoader
 {
-public:
-    spell_shadowfang_keep_haunting_spirits() : SpellScriptLoader("spell_shadowfang_keep_haunting_spirits") { }
+    public:
+        spell_shadowfang_keep_haunting_spirits() : SpellScriptLoader("spell_shadowfang_keep_haunting_spirits") { }
 
-    class spell_shadowfang_keep_haunting_spirits_AuraScript : public AuraScript
-    {
-        PrepareAuraScript(spell_shadowfang_keep_haunting_spirits_AuraScript);
-
-        void CalcPeriodic(AuraEffect const* /*aurEff*/, bool& isPeriodic, int32& amplitude)
+        class spell_shadowfang_keep_haunting_spirits_AuraScript : public AuraScript
         {
-            isPeriodic = true;
-            amplitude = (irand(0, 60) + 30) * IN_MILLISECONDS;
-        }
+            PrepareAuraScript(spell_shadowfang_keep_haunting_spirits_AuraScript);
 
-        void HandleDummyTick(AuraEffect const* aurEff)
+            void CalcPeriodic(AuraEffect const* /*aurEff*/, bool& isPeriodic, int32& amplitude)
+            {
+                isPeriodic = true;
+                amplitude = (irand(0, 60) + 30) * IN_MILLISECONDS;
+            }
+
+            void HandleDummyTick(AuraEffect const* aurEff)
+            {
+                GetTarget()->CastSpell((Unit*)NULL, aurEff->GetAmount(), true);
+            }
+
+            void HandleUpdatePeriodic(AuraEffect* aurEff)
+            {
+                aurEff->CalculatePeriodic(GetCaster());
+            }
+
+            void Register() override
+            {
+                DoEffectCalcPeriodic += AuraEffectCalcPeriodicFn(spell_shadowfang_keep_haunting_spirits_AuraScript::CalcPeriodic, EFFECT_0, SPELL_AURA_DUMMY);
+                OnEffectPeriodic += AuraEffectPeriodicFn(spell_shadowfang_keep_haunting_spirits_AuraScript::HandleDummyTick, EFFECT_0, SPELL_AURA_DUMMY);
+                OnEffectUpdatePeriodic += AuraEffectUpdatePeriodicFn(spell_shadowfang_keep_haunting_spirits_AuraScript::HandleUpdatePeriodic, EFFECT_0, SPELL_AURA_DUMMY);
+            }
+        };
+
+        AuraScript* GetAuraScript() const override
         {
-            GetTarget()->CastSpell((Unit*)NULL, aurEff->GetAmount(), true);
+            return new spell_shadowfang_keep_haunting_spirits_AuraScript();
         }
-
-        void HandleUpdatePeriodic(AuraEffect* aurEff)
-        {
-            aurEff->CalculatePeriodic(GetCaster());
-        }
-
-        void Register() override
-        {
-            DoEffectCalcPeriodic += AuraEffectCalcPeriodicFn(spell_shadowfang_keep_haunting_spirits_AuraScript::CalcPeriodic, EFFECT_0, SPELL_AURA_DUMMY);
-            OnEffectPeriodic += AuraEffectPeriodicFn(spell_shadowfang_keep_haunting_spirits_AuraScript::HandleDummyTick, EFFECT_0, SPELL_AURA_DUMMY);
-            OnEffectUpdatePeriodic += AuraEffectUpdatePeriodicFn(spell_shadowfang_keep_haunting_spirits_AuraScript::HandleUpdatePeriodic, EFFECT_0, SPELL_AURA_DUMMY);
-        }
-    };
-
-    AuraScript* GetAuraScript() const override
-    {
-        return new spell_shadowfang_keep_haunting_spirits_AuraScript();
-    }
 };
 
 void AddSC_shadowfang_keep()

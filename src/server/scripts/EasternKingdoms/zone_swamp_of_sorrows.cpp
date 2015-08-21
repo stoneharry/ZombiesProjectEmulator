@@ -27,14 +27,14 @@
 
 enum Galen
 {
-    QUEST_GALENS_ESCAPE = 1393,
-    GO_GALENS_CAGE = 37118,
-    SAY_PERIODIC = 0,
-    SAY_QUEST_ACCEPTED = 1,
-    SAY_ATTACKED = 2,
-    SAY_QUEST_COMPLETE = 3,
-    EMOTE_WHISPER = 4,
-    EMOTE_DISAPPEAR = 5
+    QUEST_GALENS_ESCAPE     = 1393,
+    GO_GALENS_CAGE          = 37118,
+    SAY_PERIODIC            = 0,
+    SAY_QUEST_ACCEPTED      = 1,
+    SAY_ATTACKED            = 2,
+    SAY_QUEST_COMPLETE      = 3,
+    EMOTE_WHISPER           = 4,
+    EMOTE_DISAPPEAR         = 5
 };
 
 class npc_galen_goodward : public CreatureScript
@@ -75,19 +75,19 @@ public:
             switch (uiPointId)
             {
             case 0:
-            {
-                      GameObject* cage = NULL;
-                      if (galensCageGUID)
-                          cage = me->GetMap()->GetGameObject(galensCageGUID);
-                      else
-                          cage = GetClosestGameObjectWithEntry(me, GO_GALENS_CAGE, INTERACTION_DISTANCE);
-                      if (cage)
-                      {
-                          cage->UseDoorOrButton();
-                          galensCageGUID = cage->GetGUID();
-                      }
-                      break;
-            }
+                {
+                    GameObject* cage = NULL;
+                    if (galensCageGUID)
+                        cage = me->GetMap()->GetGameObject(galensCageGUID);
+                    else
+                        cage = GetClosestGameObjectWithEntry(me, GO_GALENS_CAGE, INTERACTION_DISTANCE);
+                    if (cage)
+                    {
+                        cage->UseDoorOrButton();
+                        galensCageGUID = cage->GetGUID();
+                    }
+                    break;
+                }
             case 21:
                 Talk(EMOTE_DISAPPEAR);
                 break;
@@ -98,20 +98,20 @@ public:
         {
             switch (waypointId)
             {
-            case 0:
-                if (GameObject* cage = me->GetMap()->GetGameObject(galensCageGUID))
-                    cage->ResetDoorOrButton();
-                break;
-            case 20:
-                if (Player* player = GetPlayerForEscort())
-                {
-                    me->SetFacingToObject(player);
-                    Talk(SAY_QUEST_COMPLETE, player);
-                    Talk(EMOTE_WHISPER, player);
-                    player->GroupEventHappens(QUEST_GALENS_ESCAPE, me);
-                }
-                SetRun(true);
-                break;
+                case 0:
+                    if (GameObject* cage = me->GetMap()->GetGameObject(galensCageGUID))
+                        cage->ResetDoorOrButton();
+                    break;
+                case 20:
+                    if (Player* player = GetPlayerForEscort())
+                    {
+                        me->SetFacingToObject(player);
+                        Talk(SAY_QUEST_COMPLETE, player);
+                        Talk(EMOTE_WHISPER, player);
+                        player->GroupEventHappens(QUEST_GALENS_ESCAPE, me);
+                    }
+                    SetRun(true);
+                    break;
             }
         }
 

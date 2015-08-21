@@ -28,29 +28,29 @@
 
 class DefenseMessageBuilder
 {
-public:
-    DefenseMessageBuilder(uint32 zoneId, uint32 id)
-        : _zoneId(zoneId), _id(id) { }
+    public:
+        DefenseMessageBuilder(uint32 zoneId, uint32 id)
+            : _zoneId(zoneId), _id(id) { }
 
-    void operator()(WorldPacket& data, LocaleConstant locale) const
-    {
-        std::string text = sOutdoorPvPMgr->GetDefenseMessage(_zoneId, _id, locale);
+        void operator()(WorldPacket& data, LocaleConstant locale) const
+        {
+            std::string text = sOutdoorPvPMgr->GetDefenseMessage(_zoneId, _id, locale);
 
-        data.Initialize(SMSG_DEFENSE_MESSAGE, 4 + 4 + text.length());
-        data.append<uint32>(_zoneId);
-        data.append<uint32>(text.length());
-        data << text;
-    }
+            data.Initialize(SMSG_DEFENSE_MESSAGE, 4 + 4 + text.length());
+            data.append<uint32>(_zoneId);
+            data.append<uint32>(text.length());
+            data << text;
+        }
 
-private:
-    uint32 _zoneId; ///< ZoneId
-    uint32 _id;     ///< BroadcastTextId
+    private:
+        uint32 _zoneId; ///< ZoneId
+        uint32 _id;     ///< BroadcastTextId
 };
 
-OPvPCapturePoint::OPvPCapturePoint(OutdoorPvP* pvp) :
-m_capturePointGUID(), m_capturePoint(NULL), m_maxValue(0.0f), m_minValue(0.0f), m_maxSpeed(0),
-m_value(0), m_team(TEAM_NEUTRAL), m_OldState(OBJECTIVESTATE_NEUTRAL),
-m_State(OBJECTIVESTATE_NEUTRAL), m_neutralValuePct(0), m_PvP(pvp)
+OPvPCapturePoint::OPvPCapturePoint(OutdoorPvP* pvp):
+    m_capturePointGUID(), m_capturePoint(NULL), m_maxValue(0.0f), m_minValue(0.0f), m_maxSpeed(0),
+    m_value(0), m_team(TEAM_NEUTRAL), m_OldState(OBJECTIVESTATE_NEUTRAL),
+    m_State(OBJECTIVESTATE_NEUTRAL), m_neutralValuePct(0), m_PvP(pvp)
 { }
 
 bool OPvPCapturePoint::HandlePlayerEnter(Player* player)
@@ -303,8 +303,8 @@ bool OPvPCapturePoint::Update(uint32 diff)
             ++itr;
 
             if (Player* player = ObjectAccessor::FindPlayer(playerGuid))
-            if (!m_capturePoint->IsWithinDistInMap(player, radius) || !player->IsOutdoorPvPActive())
-                HandlePlayerLeave(player);
+                if (!m_capturePoint->IsWithinDistInMap(player, radius) || !player->IsOutdoorPvPActive())
+                    HandlePlayerLeave(player);
         }
     }
 
@@ -413,10 +413,10 @@ bool OPvPCapturePoint::Update(uint32 diff)
 void OutdoorPvP::SendUpdateWorldState(uint32 field, uint32 value)
 {
     if (m_sendUpdate)
-    for (int i = 0; i < 2; ++i)
-    for (GuidSet::iterator itr = m_players[i].begin(); itr != m_players[i].end(); ++itr)
-    if (Player* const player = ObjectAccessor::FindPlayer(*itr))
-        player->SendUpdateWorldState(field, value);
+        for (int i = 0; i < 2; ++i)
+            for (GuidSet::iterator itr = m_players[i].begin(); itr != m_players[i].end(); ++itr)
+                if (Player* const player = ObjectAccessor::FindPlayer(*itr))
+                    player->SendUpdateWorldState(field, value);
 }
 
 void OPvPCapturePoint::SendUpdateWorldState(uint32 field, uint32 value)
@@ -425,8 +425,8 @@ void OPvPCapturePoint::SendUpdateWorldState(uint32 field, uint32 value)
     {
         // send to all players present in the area
         for (GuidSet::iterator itr = m_activePlayers[team].begin(); itr != m_activePlayers[team].end(); ++itr)
-        if (Player* const player = ObjectAccessor::FindPlayer(*itr))
-            player->SendUpdateWorldState(field, value);
+            if (Player* const player = ObjectAccessor::FindPlayer(*itr))
+                player->SendUpdateWorldState(field, value);
     }
 }
 
@@ -447,8 +447,8 @@ void OPvPCapturePoint::SendObjectiveComplete(uint32 id, ObjectGuid guid)
 
     // send to all players present in the area
     for (GuidSet::iterator itr = m_activePlayers[team].begin(); itr != m_activePlayers[team].end(); ++itr)
-    if (Player* const player = ObjectAccessor::FindPlayer(*itr))
-        player->KilledMonsterCredit(id, guid);
+        if (Player* const player = ObjectAccessor::FindPlayer(*itr))
+            player->KilledMonsterCredit(id, guid);
 }
 
 void OutdoorPvP::HandleKill(Player* killer, Unit* killed)
@@ -483,8 +483,8 @@ void OutdoorPvP::HandleKill(Player* killer, Unit* killed)
 bool OutdoorPvP::IsInsideObjective(Player* player) const
 {
     for (OPvPCapturePointMap::const_iterator itr = m_capturePoints.begin(); itr != m_capturePoints.end(); ++itr)
-    if (itr->second->IsInsideObjective(player))
-        return true;
+        if (itr->second->IsInsideObjective(player))
+            return true;
 
     return false;
 }
@@ -498,8 +498,8 @@ bool OPvPCapturePoint::IsInsideObjective(Player* player) const
 bool OutdoorPvP::HandleCustomSpell(Player* player, uint32 spellId, GameObject* go)
 {
     for (OPvPCapturePointMap::iterator itr = m_capturePoints.begin(); itr != m_capturePoints.end(); ++itr)
-    if (itr->second->HandleCustomSpell(player, spellId, go))
-        return true;
+        if (itr->second->HandleCustomSpell(player, spellId, go))
+            return true;
 
     return false;
 }
@@ -514,8 +514,8 @@ bool OPvPCapturePoint::HandleCustomSpell(Player* player, uint32 /*spellId*/, Gam
 bool OutdoorPvP::HandleOpenGo(Player* player, ObjectGuid guid)
 {
     for (OPvPCapturePointMap::iterator itr = m_capturePoints.begin(); itr != m_capturePoints.end(); ++itr)
-    if (itr->second->HandleOpenGo(player, guid) >= 0)
-        return true;
+        if (itr->second->HandleOpenGo(player, guid) >= 0)
+            return true;
 
     return false;
 }
@@ -523,8 +523,8 @@ bool OutdoorPvP::HandleOpenGo(Player* player, ObjectGuid guid)
 bool OutdoorPvP::HandleGossipOption(Player* player, ObjectGuid guid, uint32 id)
 {
     for (OPvPCapturePointMap::iterator itr = m_capturePoints.begin(); itr != m_capturePoints.end(); ++itr)
-    if (itr->second->HandleGossipOption(player, guid, id))
-        return true;
+        if (itr->second->HandleGossipOption(player, guid, id))
+            return true;
 
     return false;
 }
@@ -532,8 +532,8 @@ bool OutdoorPvP::HandleGossipOption(Player* player, ObjectGuid guid, uint32 id)
 bool OutdoorPvP::CanTalkTo(Player* player, Creature* c, GossipMenuItems const& gso)
 {
     for (OPvPCapturePointMap::iterator itr = m_capturePoints.begin(); itr != m_capturePoints.end(); ++itr)
-    if (itr->second->CanTalkTo(player, c, gso))
-        return true;
+        if (itr->second->CanTalkTo(player, c, gso))
+            return true;
 
     return false;
 }
@@ -541,8 +541,8 @@ bool OutdoorPvP::CanTalkTo(Player* player, Creature* c, GossipMenuItems const& g
 bool OutdoorPvP::HandleDropFlag(Player* player, uint32 id)
 {
     for (OPvPCapturePointMap::iterator itr = m_capturePoints.begin(); itr != m_capturePoints.end(); ++itr)
-    if (itr->second->HandleDropFlag(player, id))
-        return true;
+        if (itr->second->HandleDropFlag(player, id))
+            return true;
 
     return false;
 }
@@ -581,9 +581,9 @@ void OutdoorPvP::BroadcastPacket(WorldPacket &data) const
 {
     // This is faster than sWorld->SendZoneMessage
     for (uint32 team = 0; team < 2; ++team)
-    for (GuidSet::const_iterator itr = m_players[team].begin(); itr != m_players[team].end(); ++itr)
-    if (Player* const player = ObjectAccessor::FindPlayer(*itr))
-        player->GetSession()->SendPacket(&data);
+        for (GuidSet::const_iterator itr = m_players[team].begin(); itr != m_players[team].end(); ++itr)
+            if (Player* const player = ObjectAccessor::FindPlayer(*itr))
+                player->GetSession()->SendPacket(&data);
 }
 
 void OutdoorPvP::RegisterZone(uint32 zoneId)
@@ -602,14 +602,14 @@ void OutdoorPvP::TeamCastSpell(TeamId team, int32 spellId)
     if (spellId > 0)
     {
         for (GuidSet::iterator itr = m_players[team].begin(); itr != m_players[team].end(); ++itr)
-        if (Player* const player = ObjectAccessor::FindPlayer(*itr))
-            player->CastSpell(player, (uint32)spellId, true);
+            if (Player* const player = ObjectAccessor::FindPlayer(*itr))
+                player->CastSpell(player, (uint32)spellId, true);
     }
     else
     {
         for (GuidSet::iterator itr = m_players[team].begin(); itr != m_players[team].end(); ++itr)
-        if (Player* const player = ObjectAccessor::FindPlayer(*itr))
-            player->RemoveAura((uint32)-spellId); // by stack?
+            if (Player* const player = ObjectAccessor::FindPlayer(*itr))
+                player->RemoveAura((uint32)-spellId); // by stack?
     }
 }
 
@@ -648,8 +648,8 @@ template<class Worker>
 void OutdoorPvP::BroadcastWorker(Worker& _worker, uint32 zoneId)
 {
     for (uint32 i = 0; i < BG_TEAMS_COUNT; ++i)
-    for (GuidSet::iterator itr = m_players[i].begin(); itr != m_players[i].end(); ++itr)
-    if (Player* player = ObjectAccessor::FindPlayer(*itr))
-    if (player->GetZoneId() == zoneId)
-        _worker(player);
+        for (GuidSet::iterator itr = m_players[i].begin(); itr != m_players[i].end(); ++itr)
+            if (Player* player = ObjectAccessor::FindPlayer(*itr))
+                if (player->GetZoneId() == zoneId)
+                    _worker(player);
 }

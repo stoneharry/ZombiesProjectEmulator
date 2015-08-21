@@ -75,7 +75,8 @@ void OutdoorPvPMgr::InitOutdoorPvP()
         m_OutdoorPvPDatas[realTypeId] = data;
 
         ++count;
-    } while (result->NextRow());
+    }
+    while (result->NextRow());
 
     OutdoorPvP* pvp;
     for (uint8 i = 1; i < MAX_OUTDOORPVP_TYPES; ++i)

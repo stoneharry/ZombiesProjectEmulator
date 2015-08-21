@@ -22,38 +22,38 @@
 
 enum Spells
 {
-    SPELL_ARCANE_BARRAGE_VOLLEY = 54202,
-    SPELL_ARCANE_BARRAGE_VOLLEY_H = 59483,
-    SPELL_ARCANE_BUFFET = 54226,
-    SPELL_ARCANE_BUFFET_H = 59485,
-    SPELL_SUMMON_ETHEREAL_SPHERE_1 = 54102,
-    SPELL_SUMMON_ETHEREAL_SPHERE_2 = 54137,
-    SPELL_SUMMON_ETHEREAL_SPHERE_3 = 54138
+    SPELL_ARCANE_BARRAGE_VOLLEY                 = 54202,
+    SPELL_ARCANE_BARRAGE_VOLLEY_H               = 59483,
+    SPELL_ARCANE_BUFFET                         = 54226,
+    SPELL_ARCANE_BUFFET_H                       = 59485,
+    SPELL_SUMMON_ETHEREAL_SPHERE_1              = 54102,
+    SPELL_SUMMON_ETHEREAL_SPHERE_2              = 54137,
+    SPELL_SUMMON_ETHEREAL_SPHERE_3              = 54138
 };
 
 enum NPCs
 {
-    NPC_ETHEREAL_SPHERE = 29271,
+    NPC_ETHEREAL_SPHERE                         = 29271,
     //NPC_ETHEREAL_SPHERE2                      = 32582, // heroic only?
 };
 
 enum CreatureSpells
 {
-    SPELL_ARCANE_POWER = 54160,
-    H_SPELL_ARCANE_POWER = 59474,
-    SPELL_SUMMON_PLAYERS = 54164,
-    SPELL_POWER_BALL_VISUAL = 54141
+    SPELL_ARCANE_POWER                          = 54160,
+    H_SPELL_ARCANE_POWER                        = 59474,
+    SPELL_SUMMON_PLAYERS                        = 54164,
+    SPELL_POWER_BALL_VISUAL                     = 54141
 };
 
 enum Yells
 {
-    SAY_AGGRO = 0,
-    SAY_SLAY = 1,
-    SAY_DEATH = 2,
-    SAY_SPAWN = 3,
-    SAY_CHARGED = 4,
-    SAY_REPEAT_SUMMON = 5,
-    SAY_SUMMON_ENERGY = 6
+    SAY_AGGRO                                   = 0,
+    SAY_SLAY                                    = 1,
+    SAY_DEATH                                   = 2,
+    SAY_SPAWN                                   = 3,
+    SAY_CHARGED                                 = 4,
+    SAY_REPEAT_SUMMON                           = 5,
+    SAY_SUMMON_ENERGY                           = 6
 };
 
 class boss_xevozz : public CreatureScript
@@ -71,7 +71,7 @@ public:
         boss_xevozzAI(Creature* creature) : ScriptedAI(creature)
         {
             Initialize();
-            instance = creature->GetInstanceScript();
+            instance  = creature->GetInstanceScript();
         }
 
         void Initialize()
@@ -141,11 +141,11 @@ public:
         {
             Talk(SAY_AGGRO);
             if (GameObject* pDoor = instance->instance->GetGameObject(instance->GetGuidData(DATA_XEVOZZ_CELL)))
-            if (pDoor->GetGoState() == GO_STATE_READY)
-            {
-                EnterEvadeMode();
-                return;
-            }
+                if (pDoor->GetGoState() == GO_STATE_READY)
+                {
+                    EnterEvadeMode();
+                    return;
+                }
             if (instance->GetData(DATA_WAVE_COUNT) == 6)
                 instance->SetData(DATA_1ST_BOSS_EVENT, IN_PROGRESS);
             else if (instance->GetData(DATA_WAVE_COUNT) == 12)
@@ -236,7 +236,7 @@ public:
         npc_ethereal_sphereAI(Creature* creature) : ScriptedAI(creature)
         {
             Initialize();
-            instance = creature->GetInstanceScript();
+            instance   = creature->GetInstanceScript();
         }
 
         void Initialize()
@@ -288,9 +288,9 @@ public:
                     Map::PlayerList const &PlayerList = map->GetPlayers();
 
                     if (!PlayerList.isEmpty())
-                    for (Map::PlayerList::const_iterator i = PlayerList.begin(); i != PlayerList.end(); ++i)
-                    if (i->GetSource()->IsAlive())
-                        DoTeleportPlayer(i->GetSource(), me->GetPositionX(), me->GetPositionY(), me->GetPositionZ(), i->GetSource()->GetOrientation());
+                        for (Map::PlayerList::const_iterator i = PlayerList.begin(); i != PlayerList.end(); ++i)
+                            if (i->GetSource()->IsAlive())
+                                DoTeleportPlayer(i->GetSource(), me->GetPositionX(), me->GetPositionY(), me->GetPositionZ(), i->GetSource()->GetOrientation());
                 }
 
                 uiSummonPlayers_Timer = urand(33000, 35000);

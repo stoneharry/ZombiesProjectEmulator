@@ -22,12 +22,12 @@
 
 enum DefenseMessages
 {
-    TEXT_BONE_WASTES_TAKEN_ALLIANCE = 16120, // (NYI) '|cffffff00The Alliance has taken control of The Bone Wastes!|r'
-    TEXT_BONE_WASTES_TAKEN_HORDE = 16119, // (NYI) '|cffffff00The Horde has taken control of The Bone Wastes!|r'
-    TEXT_SPIRIT_TOWER_TAKEN_ALLIANCE = 18285, // '|cffffff00The Alliance has taken control of a Spirit Tower!|r'
-    TEXT_SPIRIT_TOWER_TAKEN_HORDE = 18286, // '|cffffff00The Horde has taken control of a Spirit Tower!|r'
-    TEXT_SPIRIT_TOWER_LOSE_ALLIANCE = 18288, // '|cffffff00The Alliance has lost control of a Spirit Tower!|r'
-    TEXT_SPIRIT_TOWER_LOSE_HORDE = 18287  // '|cffffff00The Horde has lost control of a Spirit Tower!|r'
+    TEXT_BONE_WASTES_TAKEN_ALLIANCE     = 16120, // (NYI) '|cffffff00The Alliance has taken control of The Bone Wastes!|r'
+    TEXT_BONE_WASTES_TAKEN_HORDE        = 16119, // (NYI) '|cffffff00The Horde has taken control of The Bone Wastes!|r'
+    TEXT_SPIRIT_TOWER_TAKEN_ALLIANCE    = 18285, // '|cffffff00The Alliance has taken control of a Spirit Tower!|r'
+    TEXT_SPIRIT_TOWER_TAKEN_HORDE       = 18286, // '|cffffff00The Horde has taken control of a Spirit Tower!|r'
+    TEXT_SPIRIT_TOWER_LOSE_ALLIANCE     = 18288, // '|cffffff00The Alliance has lost control of a Spirit Tower!|r'
+    TEXT_SPIRIT_TOWER_LOSE_HORDE        = 18287  // '|cffffff00The Horde has lost control of a Spirit Tower!|r'
 };
 
 const uint8 OutdoorPvPTFBuffZonesNum = 5;
@@ -65,11 +65,11 @@ enum OutdoorPvPTF_TowerType
 
 const go_type TFCapturePoints[TF_TOWER_NUM] =
 {
-    { 183104, 530, -3081.65f, 5335.03f, 17.1853f, -2.14675f, 0.0f, 0.0f, 0.878817f, -0.477159f },
-    { 183411, 530, -2939.9f, 4788.73f, 18.987f, 2.77507f, 0.0f, 0.0f, 0.983255f, 0.182236f },
-    { 183412, 530, -3174.94f, 4440.97f, 16.2281f, 1.86750f, 0.0f, 0.0f, 0.803857f, 0.594823f },
-    { 183413, 530, -3603.31f, 4529.15f, 20.9077f, 0.994838f, 0.0f, 0.0f, 0.477159f, 0.878817f },
-    { 183414, 530, -3812.37f, 4899.3f, 17.7249f, 0.087266f, 0.0f, 0.0f, 0.043619f, 0.999048f }
+    {183104, 530, -3081.65f, 5335.03f, 17.1853f, -2.14675f, 0.0f, 0.0f, 0.878817f, -0.477159f},
+    {183411, 530, -2939.9f, 4788.73f, 18.987f, 2.77507f, 0.0f, 0.0f, 0.983255f, 0.182236f},
+    {183412, 530, -3174.94f, 4440.97f, 16.2281f, 1.86750f, 0.0f, 0.0f, 0.803857f, 0.594823f},
+    {183413, 530, -3603.31f, 4529.15f, 20.9077f, 0.994838f, 0.0f, 0.0f, 0.477159f, 0.878817f},
+    {183414, 530, -3812.37f, 4899.3f, 17.7249f, 0.087266f, 0.0f, 0.0f, 0.043619f, 0.999048f}
 };
 
 struct tf_tower_world_state
@@ -81,11 +81,11 @@ struct tf_tower_world_state
 
 const tf_tower_world_state TFTowerWorldStates[TF_TOWER_NUM] =
 {
-    { 0xa79, 0xa7a, 0xa7b },
-    { 0xa7e, 0xa7d, 0xa7c },
-    { 0xa82, 0xa81, 0xa80 },
-    { 0xa88, 0xa87, 0xa86 },
-    { 0xa85, 0xa84, 0xa83 }
+    {0xa79, 0xa7a, 0xa7b},
+    {0xa7e, 0xa7d, 0xa7c},
+    {0xa82, 0xa81, 0xa80},
+    {0xa88, 0xa87, 0xa86},
+    {0xa85, 0xa84, 0xa83}
 };
 
 const uint32 TFTowerPlayerEnterEvents[TF_TOWER_NUM] =
@@ -129,56 +129,56 @@ enum TFTowerStates
 
 class OPvPCapturePointTF : public OPvPCapturePoint
 {
-public:
-    OPvPCapturePointTF(OutdoorPvP* pvp, OutdoorPvPTF_TowerType type);
+    public:
+        OPvPCapturePointTF(OutdoorPvP* pvp, OutdoorPvPTF_TowerType type);
 
-    bool Update(uint32 diff);
+        bool Update(uint32 diff);
 
-    void ChangeState();
+        void ChangeState();
 
-    void FillInitialWorldStates(WorldPacket & data);
+        void FillInitialWorldStates(WorldPacket & data);
 
-    void UpdateTowerState();
+        void UpdateTowerState();
 
-protected:
-    OutdoorPvPTF_TowerType m_TowerType;
+    protected:
+        OutdoorPvPTF_TowerType m_TowerType;
 
-    uint32 m_TowerState;
+        uint32 m_TowerState;
 };
 
 class OutdoorPvPTF : public OutdoorPvP
 {
-public:
-    OutdoorPvPTF();
+    public:
+        OutdoorPvPTF();
 
-    bool SetupOutdoorPvP();
+        bool SetupOutdoorPvP();
 
-    void HandlePlayerEnterZone(Player* player, uint32 zone);
-    void HandlePlayerLeaveZone(Player* player, uint32 zone);
+        void HandlePlayerEnterZone(Player* player, uint32 zone);
+        void HandlePlayerLeaveZone(Player* player, uint32 zone);
 
-    bool Update(uint32 diff);
+        bool Update(uint32 diff);
 
-    void FillInitialWorldStates(WorldPacket &data);
+        void FillInitialWorldStates(WorldPacket &data);
 
-    void SendRemoveWorldStates(Player* player);
+        void SendRemoveWorldStates(Player* player);
 
-    uint32 GetAllianceTowersControlled() const;
-    void SetAllianceTowersControlled(uint32 count);
+        uint32 GetAllianceTowersControlled() const;
+        void SetAllianceTowersControlled(uint32 count);
 
-    uint32 GetHordeTowersControlled() const;
-    void SetHordeTowersControlled(uint32 count);
+        uint32 GetHordeTowersControlled() const;
+        void SetHordeTowersControlled(uint32 count);
 
-    bool IsLocked() const;
+        bool IsLocked() const;
 
-private:
-    bool m_IsLocked;
-    uint32 m_LockTimer;
-    uint32 m_LockTimerUpdate;
+    private:
+        bool m_IsLocked;
+        uint32 m_LockTimer;
+        uint32 m_LockTimerUpdate;
 
-    uint32 m_AllianceTowersControlled;
-    uint32 m_HordeTowersControlled;
+        uint32 m_AllianceTowersControlled;
+        uint32 m_HordeTowersControlled;
 
-    uint32 hours_left, second_digit, first_digit;
+        uint32 hours_left, second_digit, first_digit;
 };
 
 #endif

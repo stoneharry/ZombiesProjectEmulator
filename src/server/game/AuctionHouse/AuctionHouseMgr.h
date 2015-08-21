@@ -32,33 +32,33 @@ class WorldPacket;
 
 enum AuctionError
 {
-    ERR_AUCTION_OK = 0,
-    ERR_AUCTION_INVENTORY = 1,
-    ERR_AUCTION_DATABASE_ERROR = 2,
-    ERR_AUCTION_NOT_ENOUGHT_MONEY = 3,
-    ERR_AUCTION_ITEM_NOT_FOUND = 4,
-    ERR_AUCTION_HIGHER_BID = 5,
-    ERR_AUCTION_BID_INCREMENT = 7,
-    ERR_AUCTION_BID_OWN = 10,
-    ERR_AUCTION_RESTRICTED_ACCOUNT = 13
+    ERR_AUCTION_OK                  = 0,
+    ERR_AUCTION_INVENTORY           = 1,
+    ERR_AUCTION_DATABASE_ERROR      = 2,
+    ERR_AUCTION_NOT_ENOUGHT_MONEY   = 3,
+    ERR_AUCTION_ITEM_NOT_FOUND      = 4,
+    ERR_AUCTION_HIGHER_BID          = 5,
+    ERR_AUCTION_BID_INCREMENT       = 7,
+    ERR_AUCTION_BID_OWN             = 10,
+    ERR_AUCTION_RESTRICTED_ACCOUNT  = 13
 };
 
 enum AuctionAction
 {
-    AUCTION_SELL_ITEM = 0,
-    AUCTION_CANCEL = 1,
-    AUCTION_PLACE_BID = 2
+    AUCTION_SELL_ITEM   = 0,
+    AUCTION_CANCEL      = 1,
+    AUCTION_PLACE_BID   = 2
 };
 
 enum MailAuctionAnswers
 {
-    AUCTION_OUTBIDDED = 0,
-    AUCTION_WON = 1,
-    AUCTION_SUCCESSFUL = 2,
-    AUCTION_EXPIRED = 3,
+    AUCTION_OUTBIDDED           = 0,
+    AUCTION_WON                 = 1,
+    AUCTION_SUCCESSFUL          = 2,
+    AUCTION_EXPIRED             = 3,
     AUCTION_CANCELLED_TO_BIDDER = 4,
-    AUCTION_CANCELED = 5,
-    AUCTION_SALE_PENDING = 6
+    AUCTION_CANCELED            = 5,
+    AUCTION_SALE_PENDING        = 6
 };
 
 struct AuctionEntry
@@ -95,7 +95,7 @@ struct AuctionEntry
 //this class is used as auctionhouse instance
 class AuctionHouseObject
 {
-public:
+  public:
     ~AuctionHouseObject()
     {
         for (AuctionEntryMap::iterator itr = AuctionsMap.begin(); itr != AuctionsMap.end(); ++itr)
@@ -106,8 +106,8 @@ public:
 
     uint32 Getcount() const { return AuctionsMap.size(); }
 
-    AuctionEntryMap::iterator GetAuctionsBegin() { return AuctionsMap.begin(); }
-    AuctionEntryMap::iterator GetAuctionsEnd() { return AuctionsMap.end(); }
+    AuctionEntryMap::iterator GetAuctionsBegin() {return AuctionsMap.begin();}
+    AuctionEntryMap::iterator GetAuctionsEnd() {return AuctionsMap.end();}
 
     AuctionEntry* GetAuction(uint32 id) const
     {
@@ -128,66 +128,66 @@ public:
         uint32 inventoryType, uint32 itemClass, uint32 itemSubClass, uint32 quality,
         uint32& count, uint32& totalcount);
 
-private:
+  private:
     AuctionEntryMap AuctionsMap;
 };
 
 class AuctionHouseMgr
 {
-private:
-    AuctionHouseMgr();
-    ~AuctionHouseMgr();
+    private:
+        AuctionHouseMgr();
+        ~AuctionHouseMgr();
 
-public:
-    static AuctionHouseMgr* instance()
-    {
-        static AuctionHouseMgr instance;
-        return &instance;
-    }
+    public:
+        static AuctionHouseMgr* instance()
+        {
+            static AuctionHouseMgr instance;
+            return &instance;
+        }
 
-    typedef std::unordered_map<uint32, Item*> ItemMap;
+        typedef std::unordered_map<uint32, Item*> ItemMap;
 
-    AuctionHouseObject* GetAuctionsMap(uint32 factionTemplateId);
-    AuctionHouseObject* GetBidsMap(uint32 factionTemplateId);
+        AuctionHouseObject* GetAuctionsMap(uint32 factionTemplateId);
+        AuctionHouseObject* GetBidsMap(uint32 factionTemplateId);
 
-    Item* GetAItem(uint32 id)
-    {
-        ItemMap::const_iterator itr = mAitems.find(id);
-        if (itr != mAitems.end())
-            return itr->second;
+        Item* GetAItem(uint32 id)
+        {
+            ItemMap::const_iterator itr = mAitems.find(id);
+            if (itr != mAitems.end())
+                return itr->second;
 
-        return NULL;
-    }
+            return NULL;
+        }
 
-    //auction messages
-    void SendAuctionWonMail(AuctionEntry* auction, SQLTransaction& trans);
-    void SendAuctionSalePendingMail(AuctionEntry* auction, SQLTransaction& trans);
-    void SendAuctionSuccessfulMail(AuctionEntry* auction, SQLTransaction& trans);
-    void SendAuctionExpiredMail(AuctionEntry* auction, SQLTransaction& trans);
-    void SendAuctionOutbiddedMail(AuctionEntry* auction, uint32 newPrice, Player* newBidder, SQLTransaction& trans);
-    void SendAuctionCancelledToBidderMail(AuctionEntry* auction, SQLTransaction& trans);
+        //auction messages
+        void SendAuctionWonMail(AuctionEntry* auction, SQLTransaction& trans);
+        void SendAuctionSalePendingMail(AuctionEntry* auction, SQLTransaction& trans);
+        void SendAuctionSuccessfulMail(AuctionEntry* auction, SQLTransaction& trans);
+        void SendAuctionExpiredMail(AuctionEntry* auction, SQLTransaction& trans);
+        void SendAuctionOutbiddedMail(AuctionEntry* auction, uint32 newPrice, Player* newBidder, SQLTransaction& trans);
+        void SendAuctionCancelledToBidderMail(AuctionEntry* auction, SQLTransaction& trans);
 
-    static uint32 GetAuctionDeposit(AuctionHouseEntry const* entry, uint32 time, Item* pItem, uint32 count);
-    static AuctionHouseEntry const* GetAuctionHouseEntry(uint32 factionTemplateId);
+        static uint32 GetAuctionDeposit(AuctionHouseEntry const* entry, uint32 time, Item* pItem, uint32 count);
+        static AuctionHouseEntry const* GetAuctionHouseEntry(uint32 factionTemplateId);
 
-public:
+    public:
 
-    //load first auction items, because of check if item exists, when loading
-    void LoadAuctionItems();
-    void LoadAuctions();
+        //load first auction items, because of check if item exists, when loading
+        void LoadAuctionItems();
+        void LoadAuctions();
 
-    void AddAItem(Item* it);
-    bool RemoveAItem(uint32 id, bool deleteItem = false);
+        void AddAItem(Item* it);
+        bool RemoveAItem(uint32 id, bool deleteItem = false);
 
-    void Update();
+        void Update();
 
-private:
+    private:
 
-    AuctionHouseObject mHordeAuctions;
-    AuctionHouseObject mAllianceAuctions;
-    AuctionHouseObject mNeutralAuctions;
+        AuctionHouseObject mHordeAuctions;
+        AuctionHouseObject mAllianceAuctions;
+        AuctionHouseObject mNeutralAuctions;
 
-    ItemMap mAitems;
+        ItemMap mAitems;
 };
 
 #define sAuctionMgr AuctionHouseMgr::instance()

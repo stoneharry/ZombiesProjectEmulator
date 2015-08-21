@@ -32,23 +32,23 @@ class ChannelMgr
 {
     typedef std::map<std::wstring, Channel*> ChannelMap;
 
-protected:
-    ChannelMgr() : team(0) { }
-    ~ChannelMgr();
+    protected:
+        ChannelMgr() : team(0) { }
+        ~ChannelMgr();
 
-public:
-    static ChannelMgr* forTeam(uint32 team);
-    void setTeam(uint32 newTeam) { team = newTeam; }
+    public:
+        static ChannelMgr* forTeam(uint32 team);
+        void setTeam(uint32 newTeam) { team = newTeam; }
 
-    Channel* GetJoinChannel(std::string const& name, uint32 channel_id);
-    Channel* GetChannel(std::string const& name, Player* p, bool pkt = true);
-    void LeftChannel(std::string const& name);
+        Channel* GetJoinChannel(std::string const& name, uint32 channel_id);
+        Channel* GetChannel(std::string const& name, Player* p, bool pkt = true);
+        void LeftChannel(std::string const& name);
 
-private:
-    ChannelMap channels;
-    uint32 team;
+    private:
+        ChannelMap channels;
+        uint32 team;
 
-    void MakeNotOnPacket(WorldPacket* data, std::string const& name);
+        void MakeNotOnPacket(WorldPacket* data, std::string const& name);
 };
 
 #endif

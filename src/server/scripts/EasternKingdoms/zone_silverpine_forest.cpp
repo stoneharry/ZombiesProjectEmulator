@@ -1,20 +1,20 @@
-/*
-* Copyright (C) 2008-2015 TrinityCore <http://www.trinitycore.org/>
-* Copyright (C) 2006-2009 ScriptDev2 <https://scriptdev2.svn.sourceforge.net/>
-*
-* This program is free software; you can redistribute it and/or modify it
-* under the terms of the GNU General Public License as published by the
-* Free Software Foundation; either version 2 of the License, or (at your
-* option) any later version.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT
-* ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-* FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
-* more details.
-*
-* You should have received a copy of the GNU General Public License along
-* with this program. If not, see <http://www.gnu.org/licenses/>.
-*/
+ /*
+ * Copyright (C) 2008-2015 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2006-2009 ScriptDev2 <https://scriptdev2.svn.sourceforge.net/>
+ *
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the
+ * Free Software Foundation; either version 2 of the License, or (at your
+ * option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
 
 /* ScriptData
 SDName: Silverpine_Forest
@@ -39,23 +39,23 @@ EndContentData */
 
 enum Erland
 {
-    SAY_QUESTACCEPT = 0,
-    SAY_START = 1,
-    SAY_AGGRO = 2,
-    SAY_PROGRESS = 3,
-    SAY_LAST = 4,
+    SAY_QUESTACCEPT     = 0,
+    SAY_START           = 1,
+    SAY_AGGRO           = 2,
+    SAY_PROGRESS        = 3,
+    SAY_LAST            = 4,
 
-    SAY_RANE = 0,
-    SAY_RANE_ANSWER = 5,
-    SAY_MOVE_QUINN = 6,
+    SAY_RANE            = 0,
+    SAY_RANE_ANSWER     = 5,
+    SAY_MOVE_QUINN      = 6,
 
-    SAY_QUINN = 7,
-    SAY_QUINN_ANSWER = 0,
-    SAY_BYE = 8,
+    SAY_QUINN           = 7,
+    SAY_QUINN_ANSWER    = 0,
+    SAY_BYE             = 8,
 
-    QUEST_ESCORTING = 435,
-    NPC_RANE = 1950,
-    NPC_QUINN = 1951
+    QUEST_ESCORTING     = 435,
+    NPC_RANE            = 1950,
+    NPC_QUINN           = 1951
 };
 
 class npc_deathstalker_erland : public CreatureScript
@@ -75,36 +75,36 @@ public:
 
             switch (waypointId)
             {
-            case 1:
-                Talk(SAY_START, player);
-                break;
-            case 10:
-                Talk(SAY_PROGRESS);
-                break;
-            case 13:
-                Talk(SAY_LAST, player);
-                player->GroupEventHappens(QUEST_ESCORTING, me);
-                break;
-            case 15:
-                if (Creature* rane = me->FindNearestCreature(NPC_RANE, 20.0f))
-                    rane->AI()->Talk(SAY_RANE);
-                break;
-            case 16:
-                Talk(SAY_RANE_ANSWER);
-                break;
-            case 17:
-                Talk(SAY_MOVE_QUINN);
-                break;
-            case 24:
-                Talk(SAY_QUINN);
-                break;
-            case 25:
-                if (Creature* quinn = me->FindNearestCreature(NPC_QUINN, 20.0f))
-                    quinn->AI()->Talk(SAY_QUINN_ANSWER);
-                break;
-            case 26:
-                Talk(SAY_BYE);
-                break;
+                case 1:
+                    Talk(SAY_START, player);
+                    break;
+                case 10:
+                    Talk(SAY_PROGRESS);
+                    break;
+                case 13:
+                    Talk(SAY_LAST, player);
+                    player->GroupEventHappens(QUEST_ESCORTING, me);
+                    break;
+                case 15:
+                    if (Creature* rane = me->FindNearestCreature(NPC_RANE, 20.0f))
+                        rane->AI()->Talk(SAY_RANE);
+                    break;
+                case 16:
+                    Talk(SAY_RANE_ANSWER);
+                    break;
+                case 17:
+                    Talk(SAY_MOVE_QUINN);
+                    break;
+                case 24:
+                    Talk(SAY_QUINN);
+                    break;
+                case 25:
+                    if (Creature* quinn = me->FindNearestCreature(NPC_QUINN, 20.0f))
+                        quinn->AI()->Talk(SAY_QUINN_ANSWER);
+                    break;
+                case 26:
+                    Talk(SAY_BYE);
+                    break;
             }
         }
 
@@ -154,9 +154,9 @@ static float PyrewoodSpawnPoints[3][4] =
     {-397.44f, 1511.09f, 18.67f, 0},
     */
     //door
-    { -396.17f, 1505.86f, 19.77f, 0 },
-    { -396.91f, 1505.77f, 19.77f, 0 },
-    { -397.94f, 1504.74f, 19.77f, 0 },
+    {-396.17f, 1505.86f, 19.77f, 0},
+    {-396.91f, 1505.77f, 19.77f, 0},
+    {-397.94f, 1504.74f, 19.77f, 0},
 };
 
 #define WAIT_SECS 6000
@@ -239,9 +239,9 @@ public:
             {
                 Unit* target = NULL;
                 if (PlayerGUID)
-                if (Player* player = ObjectAccessor::GetPlayer(*me, PlayerGUID))
-                if (player->IsAlive() && RAND(0, 1))
-                    target = player;
+                    if (Player* player = ObjectAccessor::GetPlayer(*me, PlayerGUID))
+                        if (player->IsAlive() && RAND(0, 1))
+                            target = player;
 
                 if (!target)
                     target = me;
@@ -255,9 +255,9 @@ public:
         void JustDied(Unit* /*killer*/) override
         {
             if (PlayerGUID)
-            if (Player* player = ObjectAccessor::GetPlayer(*me, PlayerGUID))
-            if (player->GetQuestStatus(QUEST_PYREWOOD_AMBUSH) == QUEST_STATUS_INCOMPLETE)
-                player->FailQuest(QUEST_PYREWOOD_AMBUSH);
+                if (Player* player = ObjectAccessor::GetPlayer(*me, PlayerGUID))
+                    if (player->GetQuestStatus(QUEST_PYREWOOD_AMBUSH) == QUEST_STATUS_INCOMPLETE)
+                        player->FailQuest(QUEST_PYREWOOD_AMBUSH);
         }
 
         void UpdateAI(uint32 diff) override
@@ -278,45 +278,45 @@ public:
 
             switch (Phase)
             {
-            case 0:
-                if (WaitTimer == WAIT_SECS)
-                    me->Say(NPCSAY_INIT, LANG_UNIVERSAL); //no blizzlike
+                case 0:
+                    if (WaitTimer == WAIT_SECS)
+                        me->Say(NPCSAY_INIT, LANG_UNIVERSAL); //no blizzlike
 
-                if (WaitTimer <= diff)
-                {
-                    WaitTimer -= diff;
-                    return;
-                }
-                break;
-            case 1:
-                SummonCreatureWithRandomTarget(2060, 1);
-                break;
-            case 2:
-                SummonCreatureWithRandomTarget(2061, 2);
-                SummonCreatureWithRandomTarget(2062, 0);
-                break;
-            case 3:
-                SummonCreatureWithRandomTarget(2063, 1);
-                SummonCreatureWithRandomTarget(2064, 2);
-                SummonCreatureWithRandomTarget(2065, 0);
-                break;
-            case 4:
-                SummonCreatureWithRandomTarget(2066, 1);
-                SummonCreatureWithRandomTarget(2067, 0);
-                SummonCreatureWithRandomTarget(2068, 2);
-                break;
-            case 5: //end
-                if (PlayerGUID)
-                {
-                    if (Player* player = ObjectAccessor::GetPlayer(*me, PlayerGUID))
+                    if (WaitTimer <= diff)
                     {
-                        me->Say(NPCSAY_END, LANG_UNIVERSAL); //not blizzlike
-                        player->GroupEventHappens(QUEST_PYREWOOD_AMBUSH, me);
+                        WaitTimer -= diff;
+                        return;
                     }
-                }
-                QuestInProgress = false;
-                Reset();
-                break;
+                    break;
+                case 1:
+                    SummonCreatureWithRandomTarget(2060, 1);
+                    break;
+                case 2:
+                    SummonCreatureWithRandomTarget(2061, 2);
+                    SummonCreatureWithRandomTarget(2062, 0);
+                    break;
+                case 3:
+                    SummonCreatureWithRandomTarget(2063, 1);
+                    SummonCreatureWithRandomTarget(2064, 2);
+                    SummonCreatureWithRandomTarget(2065, 0);
+                    break;
+                case 4:
+                    SummonCreatureWithRandomTarget(2066, 1);
+                    SummonCreatureWithRandomTarget(2067, 0);
+                    SummonCreatureWithRandomTarget(2068, 2);
+                    break;
+                case 5: //end
+                    if (PlayerGUID)
+                    {
+                        if (Player* player = ObjectAccessor::GetPlayer(*me, PlayerGUID))
+                        {
+                            me->Say(NPCSAY_END, LANG_UNIVERSAL); //not blizzlike
+                            player->GroupEventHappens(QUEST_PYREWOOD_AMBUSH, me);
+                        }
+                    }
+                    QuestInProgress = false;
+                    Reset();
+                    break;
             }
             ++Phase; //prepare next phase
         }

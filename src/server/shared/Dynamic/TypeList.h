@@ -23,7 +23,7 @@
   @struct TypeList
   TypeList is the most simple but yet the most powerfull class of all.  It holds
   at compile time the different type of objects in a linked list.
-  */
+ */
 
 class TypeNull;
 

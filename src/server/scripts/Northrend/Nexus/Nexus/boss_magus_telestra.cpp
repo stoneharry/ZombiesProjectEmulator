@@ -23,45 +23,45 @@
 
 enum Spells
 {
-    SPELL_ICE_NOVA = 47772,
-    H_SPELL_ICE_NOVA = 56935,
-    SPELL_FIREBOMB = 47773,
-    H_SPELL_FIREBOMB = 56934,
-    SPELL_GRAVITY_WELL = 47756,
-    SPELL_TELESTRA_BACK = 47714,
+    SPELL_ICE_NOVA                                = 47772,
+    H_SPELL_ICE_NOVA                              = 56935,
+    SPELL_FIREBOMB                                = 47773,
+    H_SPELL_FIREBOMB                              = 56934,
+    SPELL_GRAVITY_WELL                            = 47756,
+    SPELL_TELESTRA_BACK                           = 47714,
 
-    SPELL_FIRE_MAGUS_VISUAL = 47705,
-    SPELL_FROST_MAGUS_VISUAL = 47706,
-    SPELL_ARCANE_MAGUS_VISUAL = 47704,
+    SPELL_FIRE_MAGUS_VISUAL                       = 47705,
+    SPELL_FROST_MAGUS_VISUAL                      = 47706,
+    SPELL_ARCANE_MAGUS_VISUAL                     = 47704,
 
-    SPELL_WEAR_CHRISTMAS_HAT = 61400
+    SPELL_WEAR_CHRISTMAS_HAT                      = 61400
 };
 
 enum Creatures
 {
-    NPC_FIRE_MAGUS = 26928,
-    NPC_FROST_MAGUS = 26930,
-    NPC_ARCANE_MAGUS = 26929
+    NPC_FIRE_MAGUS                                = 26928,
+    NPC_FROST_MAGUS                               = 26930,
+    NPC_ARCANE_MAGUS                              = 26929
 };
 
 enum Yells
 {
-    SAY_AGGRO = 0,
-    SAY_KILL = 1,
-    SAY_DEATH = 2,
-    SAY_MERGE = 3,
-    SAY_SPLIT = 4
+    SAY_AGGRO                                     = 0,
+    SAY_KILL                                      = 1,
+    SAY_DEATH                                     = 2,
+    SAY_MERGE                                     = 3,
+    SAY_SPLIT                                     = 4
 };
 
 enum Misc
 {
-    ACTION_MAGUS_DEAD = 1,
-    DATA_SPLIT_PERSONALITY = 2,
+    ACTION_MAGUS_DEAD                             = 1,
+    DATA_SPLIT_PERSONALITY                        = 2,
 
-    GAME_EVENT_WINTER_VEIL = 2,
+    GAME_EVENT_WINTER_VEIL                        = 2,
 };
 
-const Position  CenterOfRoom = { 504.80f, 89.07f, -16.12f, 6.27f };
+const Position  CenterOfRoom = {504.80f, 89.07f, -16.12f, 6.27f};
 
 class boss_magus_telestra : public CreatureScript
 {
@@ -183,25 +183,25 @@ public:
 
         ObjectGuid SplitPersonality(uint32 entry)
         {
-            if (Creature* Summoned = me->SummonCreature(entry, me->GetPositionX(), me->GetPositionY(), me->GetPositionZ(), me->GetOrientation(), TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 1 * IN_MILLISECONDS))
+            if (Creature* Summoned = me->SummonCreature(entry, me->GetPositionX(), me->GetPositionY(), me->GetPositionZ(), me->GetOrientation(), TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 1*IN_MILLISECONDS))
             {
                 switch (entry)
                 {
-                case NPC_FIRE_MAGUS:
-                {
-                                       Summoned->CastSpell(Summoned, SPELL_FIRE_MAGUS_VISUAL, false);
-                                       break;
-                }
-                case NPC_FROST_MAGUS:
-                {
-                                        Summoned->CastSpell(Summoned, SPELL_FROST_MAGUS_VISUAL, false);
-                                        break;
-                }
-                case NPC_ARCANE_MAGUS:
-                {
-                                         Summoned->CastSpell(Summoned, SPELL_ARCANE_MAGUS_VISUAL, false);
-                                         break;
-                }
+                    case NPC_FIRE_MAGUS:
+                    {
+                        Summoned->CastSpell(Summoned, SPELL_FIRE_MAGUS_VISUAL, false);
+                        break;
+                    }
+                    case NPC_FROST_MAGUS:
+                    {
+                        Summoned->CastSpell(Summoned, SPELL_FROST_MAGUS_VISUAL, false);
+                        break;
+                    }
+                    case NPC_ARCANE_MAGUS:
+                    {
+                        Summoned->CastSpell(Summoned, SPELL_ARCANE_MAGUS_VISUAL, false);
+                        break;
+                    }
                 }
                 if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
                     Summoned->AI()->AttackStart(target);
@@ -246,12 +246,11 @@ public:
                 {
                     me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
                     bIsWaitingToAppear = false;
-                }
-                else uiIsWaitingToAppearTimer -= diff;
+                } else uiIsWaitingToAppearTimer -= diff;
                 return;
             }
 
-            if ((Phase == 1) || (Phase == 3))
+            if ((Phase == 1) ||(Phase == 3))
             {
                 if (bFireMagusDead && bFrostMagusDead && bArcaneMagusDead)
                 {
@@ -269,7 +268,7 @@ public:
                     uiFrostMagusGUID.Clear();
                     uiArcaneMagusGUID.Clear();
                     bIsWaitingToAppear = true;
-                    uiIsWaitingToAppearTimer = 4 * IN_MILLISECONDS;
+                    uiIsWaitingToAppearTimer = 4*IN_MILLISECONDS;
                     Talk(SAY_MERGE);
                 }
                 else
@@ -328,31 +327,28 @@ public:
                     DoCast(target, SPELL_ICE_NOVA, false);
                     uiCooldown = 1500;
                 }
-                uiIceNovaTimer = 15 * IN_MILLISECONDS;
-            }
-            else uiIceNovaTimer -= diff;
+                uiIceNovaTimer = 15*IN_MILLISECONDS;
+            } else uiIceNovaTimer -= diff;
 
             if (uiGravityWellTimer <= diff)
             {
                 if (Unit* target = me->GetVictim())
                 {
                     DoCast(target, SPELL_GRAVITY_WELL);
-                    uiCooldown = 6 * IN_MILLISECONDS;
+                    uiCooldown = 6*IN_MILLISECONDS;
                 }
-                uiGravityWellTimer = 15 * IN_MILLISECONDS;
-            }
-            else uiGravityWellTimer -= diff;
+                uiGravityWellTimer = 15*IN_MILLISECONDS;
+            } else uiGravityWellTimer -= diff;
 
             if (uiFireBombTimer <= diff)
             {
                 if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
                 {
                     DoCast(target, SPELL_FIREBOMB, false);
-                    uiCooldown = 2 * IN_MILLISECONDS;
+                    uiCooldown = 2*IN_MILLISECONDS;
                 }
-                uiFireBombTimer = 2 * IN_MILLISECONDS;
-            }
-            else uiFireBombTimer -= diff;
+                uiFireBombTimer = 2*IN_MILLISECONDS;
+            } else uiFireBombTimer -=diff;
 
             DoMeleeAttackIfReady();
         }
@@ -362,22 +358,22 @@ public:
 
 class achievement_split_personality : public AchievementCriteriaScript
 {
-public:
-    achievement_split_personality() : AchievementCriteriaScript("achievement_split_personality")
-    {
-    }
+    public:
+        achievement_split_personality() : AchievementCriteriaScript("achievement_split_personality")
+        {
+        }
 
-    bool OnCheck(Player* /*player*/, Unit* target) override
-    {
-        if (!target)
+        bool OnCheck(Player* /*player*/, Unit* target) override
+        {
+            if (!target)
+                return false;
+
+            if (Creature* Telestra = target->ToCreature())
+                if (Telestra->AI()->GetData(DATA_SPLIT_PERSONALITY) == 2)
+                    return true;
+
             return false;
-
-        if (Creature* Telestra = target->ToCreature())
-        if (Telestra->AI()->GetData(DATA_SPLIT_PERSONALITY) == 2)
-            return true;
-
-        return false;
-    }
+        }
 };
 
 void AddSC_boss_magus_telestra()

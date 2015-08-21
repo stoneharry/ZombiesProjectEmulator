@@ -36,12 +36,12 @@ UsableSeatNum(0), _me(unit), _vehicleInfo(vehInfo), _creatureEntry(creatureEntry
     for (uint32 i = 0; i < MAX_VEHICLE_SEATS; ++i)
     {
         if (uint32 seatId = _vehicleInfo->m_seatID[i])
-        if (VehicleSeatEntry const* veSeat = sVehicleSeatStore.LookupEntry(seatId))
-        {
-            Seats.insert(std::make_pair(i, VehicleSeat(veSeat)));
-            if (veSeat->CanEnterOrExit())
-                ++UsableSeatNum;
-        }
+            if (VehicleSeatEntry const* veSeat = sVehicleSeatStore.LookupEntry(seatId))
+            {
+                Seats.insert(std::make_pair(i, VehicleSeat(veSeat)));
+                if (veSeat->CanEnterOrExit())
+                    ++UsableSeatNum;
+            }
     }
 
     // Set or remove correct flags based on available seats. Will overwrite db data (if wrong).
@@ -95,8 +95,8 @@ void Vehicle::InstallAllAccessories(bool evading)
         return;
 
     for (VehicleAccessoryList::const_iterator itr = accessories->begin(); itr != accessories->end(); ++itr)
-    if (!evading || itr->IsMinion)  // only install minions on evade mode
-        InstallAccessory(itr->AccessoryEntry, itr->SeatId, itr->IsMinion, itr->SummonedType, itr->SummonTime);
+        if (!evading || itr->IsMinion)  // only install minions on evade mode
+            InstallAccessory(itr->AccessoryEntry, itr->SeatId, itr->IsMinion, itr->SummonedType, itr->SummonTime);
 }
 
 /**
@@ -196,17 +196,17 @@ void Vehicle::ApplyAllImmunities()
     switch (GetVehicleInfo()->m_ID)
     {
         // code below prevents a bug with movable cannons
-    case 160: // Strand of the Ancients
-    case 244: // Wintergrasp
-    case 510: // Isle of Conquest
-    case 452: // Isle of Conquest
-    case 543: // Isle of Conquest
-        _me->SetControlled(true, UNIT_STATE_ROOT);
-        // why we need to apply this? we can simple add immunities to slow mechanic in DB
-        _me->ApplySpellImmune(0, IMMUNITY_STATE, SPELL_AURA_MOD_DECREASE_SPEED, true);
-        break;
-    default:
-        break;
+        case 160: // Strand of the Ancients
+        case 244: // Wintergrasp
+        case 510: // Isle of Conquest
+        case 452: // Isle of Conquest
+        case 543: // Isle of Conquest
+            _me->SetControlled(true, UNIT_STATE_ROOT);
+            // why we need to apply this? we can simple add immunities to slow mechanic in DB
+            _me->ApplySpellImmune(0, IMMUNITY_STATE, SPELL_AURA_MOD_DECREASE_SPEED, true);
+            break;
+        default:
+            break;
     }
 }
 
@@ -418,8 +418,8 @@ bool Vehicle::AddPassenger(Unit* unit, int8 seatId)
     if (seatId < 0) // no specific seat requirement
     {
         for (seat = Seats.begin(); seat != Seats.end(); ++seat)
-        if (seat->second.IsEmpty() && (seat->second.SeatInfo->CanEnterOrExit() || seat->second.SeatInfo->IsUsableByOverride()))
-            break;
+            if (seat->second.IsEmpty() && (seat->second.SeatInfo->CanEnterOrExit() || seat->second.SeatInfo->IsUsableByOverride()))
+                break;
 
         if (seat == Seats.end()) // no available seat
         {
@@ -555,8 +555,8 @@ void Vehicle::RelocatePassengers()
 bool Vehicle::IsVehicleInUse() const
 {
     for (SeatMap::const_iterator itr = Seats.begin(); itr != Seats.end(); ++itr)
-    if (!itr->second.IsEmpty())
-        return true;
+        if (!itr->second.IsEmpty())
+            return true;
 
     return false;
 }
@@ -602,8 +602,8 @@ void Vehicle::InitMovementInfoForBase()
 VehicleSeatEntry const* Vehicle::GetSeatForPassenger(Unit const* passenger) const
 {
     for (SeatMap::const_iterator itr = Seats.begin(); itr != Seats.end(); ++itr)
-    if (itr->second.Passenger.Guid == passenger->GetGUID())
-        return itr->second.SeatInfo;
+        if (itr->second.Passenger.Guid == passenger->GetGUID())
+            return itr->second.SeatInfo;
 
     return NULL;
 }
@@ -625,8 +625,8 @@ SeatMap::iterator Vehicle::GetSeatIteratorForPassenger(Unit* passenger)
 {
     SeatMap::iterator itr;
     for (itr = Seats.begin(); itr != Seats.end(); ++itr)
-    if (itr->second.Passenger.Guid == passenger->GetGUID())
-        return itr;
+        if (itr->second.Passenger.Guid == passenger->GetGUID())
+            return itr;
 
     return Seats.end();
 }
@@ -647,8 +647,8 @@ uint8 Vehicle::GetAvailableSeatCount() const
     uint8 ret = 0;
     SeatMap::const_iterator itr;
     for (itr = Seats.begin(); itr != Seats.end(); ++itr)
-    if (itr->second.IsEmpty() && (itr->second.SeatInfo->CanEnterOrExit() || itr->second.SeatInfo->IsUsableByOverride()))
-        ++ret;
+        if (itr->second.IsEmpty() && (itr->second.SeatInfo->CanEnterOrExit() || itr->second.SeatInfo->IsUsableByOverride()))
+            ++ret;
 
     return ret;
 }
@@ -858,7 +858,7 @@ void VehicleJoinEvent::Abort(uint64)
     }
     else
         TC_LOG_DEBUG("entities.vehicle", "Passenger GuidLow: %u, Entry: %u, board on uninstalled vehicle SeatId: %d cancelled",
-        Passenger->GetGUIDLow(), Passenger->GetEntry(), (int32)Seat->first);
+            Passenger->GetGUIDLow(), Passenger->GetEntry(), (int32)Seat->first);
 
     if (Passenger->IsInWorld() && Passenger->HasUnitTypeMask(UNIT_MASK_ACCESSORY))
         Passenger->ToCreature()->DespawnOrUnsummon();

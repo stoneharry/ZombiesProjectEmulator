@@ -21,24 +21,24 @@
 
 #define DataHeader "SH"
 
-uint32 const EncounterCount = 3;
+uint32 const EncounterCount          = 3;
 
 enum DataTypes
 {
-    DATA_NETHEKURSE = 1,
-    DATA_OMROGG = 2,
-    DATA_KARGATH = 3
+    DATA_NETHEKURSE                  = 1,
+    DATA_OMROGG                      = 2,
+    DATA_KARGATH                     = 3
 };
 
 enum CreatureIds
 {
-    NPC_GRAND_WARLOCK_NETHEKURSE = 16807
+    NPC_GRAND_WARLOCK_NETHEKURSE     = 16807
 };
 
 enum GameobjectIds
 {
-    GO_GRAND_WARLOCK_CHAMBER_DOOR_1 = 182539,
-    GO_GRAND_WARLOCK_CHAMBER_DOOR_2 = 182540
+    GO_GRAND_WARLOCK_CHAMBER_DOOR_1  = 182539,
+    GO_GRAND_WARLOCK_CHAMBER_DOOR_2  = 182540
 };
 
 #endif

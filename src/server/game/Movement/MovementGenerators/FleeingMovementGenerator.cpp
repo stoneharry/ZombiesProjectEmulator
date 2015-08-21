@@ -46,10 +46,10 @@ void FleeingMovementGenerator<T>::_setTargetLocation(T* owner)
     // Add LOS check for target point
     Position mypos = owner->GetPosition();
     bool isInLOS = VMAP::VMapFactory::createOrGetVMapManager()->isInLineOfSight(owner->GetMapId(),
-        mypos.m_positionX,
-        mypos.m_positionY,
-        mypos.m_positionZ + 2.0f,
-        x, y, z + 2.0f);
+                                                                                mypos.m_positionX,
+                                                                                mypos.m_positionY,
+                                                                                mypos.m_positionZ + 2.0f,
+                                                                                x, y, z + 2.0f);
     if (!isInLOS)
     {
         i_nextCheckTime.Reset(200);
@@ -94,17 +94,17 @@ void FleeingMovementGenerator<T>::_getPoint(T* owner, float &x, float &y, float 
     if (dist_from_caster < MIN_QUIET_DISTANCE)
     {
         dist = frand(0.4f, 1.3f)*(MIN_QUIET_DISTANCE - dist_from_caster);
-        angle = angle_to_caster + frand(-static_cast<float>(M_PI) / 8, static_cast<float>(M_PI) / 8);
+        angle = angle_to_caster + frand(-static_cast<float>(M_PI)/8, static_cast<float>(M_PI)/8);
     }
     else if (dist_from_caster > MAX_QUIET_DISTANCE)
     {
         dist = frand(0.4f, 1.0f)*(MAX_QUIET_DISTANCE - MIN_QUIET_DISTANCE);
-        angle = -angle_to_caster + frand(-static_cast<float>(M_PI) / 4, static_cast<float>(M_PI) / 4);
+        angle = -angle_to_caster + frand(-static_cast<float>(M_PI)/4, static_cast<float>(M_PI)/4);
     }
     else    // we are inside quiet range
     {
         dist = frand(0.6f, 1.2f)*(MAX_QUIET_DISTANCE - MIN_QUIET_DISTANCE);
-        angle = frand(0, 2 * static_cast<float>(M_PI));
+        angle = frand(0, 2*static_cast<float>(M_PI));
     }
 
     Position pos = owner->GetFirstCollisionPosition(dist, angle);
@@ -136,7 +136,7 @@ template<>
 void FleeingMovementGenerator<Creature>::DoFinalize(Creature* owner)
 {
     owner->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_FLEEING);
-    owner->ClearUnitState(UNIT_STATE_FLEEING | UNIT_STATE_FLEEING_MOVE);
+    owner->ClearUnitState(UNIT_STATE_FLEEING|UNIT_STATE_FLEEING_MOVE);
     if (owner->GetVictim())
         owner->SetTarget(owner->EnsureVictim()->GetGUID());
 }
@@ -180,7 +180,7 @@ template bool FleeingMovementGenerator<Creature>::DoUpdate(Creature*, uint32);
 void TimedFleeingMovementGenerator::Finalize(Unit* owner)
 {
     owner->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_FLEEING);
-    owner->ClearUnitState(UNIT_STATE_FLEEING | UNIT_STATE_FLEEING_MOVE);
+    owner->ClearUnitState(UNIT_STATE_FLEEING|UNIT_STATE_FLEEING_MOVE);
     if (Unit* victim = owner->GetVictim())
     {
         if (owner->IsAlive())

@@ -21,64 +21,64 @@
 
 enum Yells
 {
-    SAY_AGGRO = 0,
+    SAY_AGGRO                       = 0,
 };
 
 enum Spells
 {
-    SPELL_SUMMONSCARLETHOUND = 17164,
-    SPELL_BLOODLUST = 6742
+    SPELL_SUMMONSCARLETHOUND        = 17164,
+    SPELL_BLOODLUST                 = 6742
 };
 
 enum Events
 {
-    EVENT_BLOODLUST = 1
+    EVENT_BLOODLUST                 = 1
 };
 
 class boss_houndmaster_loksey : public CreatureScript
 {
-public:
-    boss_houndmaster_loksey() : CreatureScript("boss_houndmaster_loksey") { }
+    public:
+        boss_houndmaster_loksey() : CreatureScript("boss_houndmaster_loksey") { }
 
-    struct boss_houndmaster_lokseyAI : public BossAI
-    {
-        boss_houndmaster_lokseyAI(Creature* creature) : BossAI(creature, DATA_HOUNDMASTER_LOKSEY) { }
-
-        void Reset() override
+        struct boss_houndmaster_lokseyAI : public BossAI
         {
-            _Reset();
-        }
+            boss_houndmaster_lokseyAI(Creature* creature) : BossAI(creature, DATA_HOUNDMASTER_LOKSEY) { }
 
-        void EnterCombat(Unit* /*who*/) override
-        {
-            Talk(SAY_AGGRO);
-            _EnterCombat();
-            events.ScheduleEvent(EVENT_BLOODLUST, 20000);
-        }
-
-        void JustDied(Unit* /*killer*/) override
-        {
-            _JustDied();
-        }
-
-        void ExecuteEvent(uint32 eventId) override
-        {
-            switch (eventId)
+            void Reset() override
             {
-            case EVENT_BLOODLUST:
-                DoCast(me, SPELL_BLOODLUST);
-                events.ScheduleEvent(EVENT_BLOODLUST, 20000);
-                break;
-            default:
-                break;
+                _Reset();
             }
-        }
-    };
 
-    CreatureAI* GetAI(Creature* creature) const override
-    {
-        return GetScarletMonasteryAI<boss_houndmaster_lokseyAI>(creature);
-    }
+            void EnterCombat(Unit* /*who*/) override
+            {
+                Talk(SAY_AGGRO);
+                _EnterCombat();
+                events.ScheduleEvent(EVENT_BLOODLUST, 20000);
+            }
+
+            void JustDied(Unit* /*killer*/) override
+            {
+                _JustDied();
+            }
+
+            void ExecuteEvent(uint32 eventId) override
+            {
+                switch (eventId)
+                {
+                    case EVENT_BLOODLUST:
+                        DoCast(me, SPELL_BLOODLUST);
+                        events.ScheduleEvent(EVENT_BLOODLUST, 20000);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        };
+
+        CreatureAI* GetAI(Creature* creature) const override
+        {
+            return GetScarletMonasteryAI<boss_houndmaster_lokseyAI>(creature);
+        }
 };
 
 void AddSC_boss_houndmaster_loksey()

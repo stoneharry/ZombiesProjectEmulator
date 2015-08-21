@@ -35,17 +35,17 @@ Blackwing Lair Encounter:
 
 Position const SummonPosition[8] =
 {
-    { -7661.207520f, -1043.268188f, 407.199554f, 6.280452f },
-    { -7644.145020f, -1065.628052f, 407.204956f, 0.501492f },
-    { -7624.260742f, -1095.196899f, 407.205017f, 0.544694f },
-    { -7608.501953f, -1116.077271f, 407.199921f, 0.816443f },
-    { -7531.841797f, -1063.765381f, 407.199615f, 2.874187f },
-    { -7547.319336f, -1040.971924f, 407.205078f, 3.789175f },
-    { -7568.547852f, -1013.112488f, 407.204926f, 3.773467f },
-    { -7584.175781f, -989.6691289f, 407.199585f, 4.527447f },
+    {-7661.207520f, -1043.268188f, 407.199554f, 6.280452f},
+    {-7644.145020f, -1065.628052f, 407.204956f, 0.501492f},
+    {-7624.260742f, -1095.196899f, 407.205017f, 0.544694f},
+    {-7608.501953f, -1116.077271f, 407.199921f, 0.816443f},
+    {-7531.841797f, -1063.765381f, 407.199615f, 2.874187f},
+    {-7547.319336f, -1040.971924f, 407.205078f, 3.789175f},
+    {-7568.547852f, -1013.112488f, 407.204926f, 3.773467f},
+    {-7584.175781f, -989.6691289f, 407.199585f, 4.527447f},
 };
 
-uint32 const Entry[5] = { 12422, 12458, 12416, 12420, 12459 };
+uint32 const Entry[5] = {12422, 12458, 12416, 12420, 12459};
 
 class instance_blackwing_lair : public InstanceMapScript
 {
@@ -67,40 +67,40 @@ public:
         {
             switch (creature->GetEntry())
             {
-            case NPC_RAZORGORE:
-                RazorgoreTheUntamedGUID = creature->GetGUID();
-                break;
-            case NPC_BLACKWING_DRAGON:
-            case NPC_BLACKWING_TASKMASTER:
-            case NPC_BLACKWING_LEGIONAIRE:
-            case NPC_BLACKWING_WARLOCK:
-                if (Creature* razor = instance->GetCreature(RazorgoreTheUntamedGUID))
-                    razor->AI()->JustSummoned(creature);
-                break;
-            case NPC_VAELASTRAZ:
-                VaelastraszTheCorruptGUID = creature->GetGUID();
-                break;
-            case NPC_BROODLORD:
-                BroodlordLashlayerGUID = creature->GetGUID();
-                break;
-            case NPC_FIRENAW:
-                FiremawGUID = creature->GetGUID();
-                break;
-            case NPC_EBONROC:
-                EbonrocGUID = creature->GetGUID();
-                break;
-            case NPC_FLAMEGOR:
-                FlamegorGUID = creature->GetGUID();
-                break;
-            case NPC_CHROMAGGUS:
-                ChromaggusGUID = creature->GetGUID();
-                break;
-            case NPC_VICTOR_NEFARIUS:
-                LordVictorNefariusGUID = creature->GetGUID();
-                break;
-            case NPC_NEFARIAN:
-                NefarianGUID = creature->GetGUID();
-                break;
+                case NPC_RAZORGORE:
+                    RazorgoreTheUntamedGUID = creature->GetGUID();
+                    break;
+                case NPC_BLACKWING_DRAGON:
+                case NPC_BLACKWING_TASKMASTER:
+                case NPC_BLACKWING_LEGIONAIRE:
+                case NPC_BLACKWING_WARLOCK:
+                    if (Creature* razor = instance->GetCreature(RazorgoreTheUntamedGUID))
+                        razor->AI()->JustSummoned(creature);
+                    break;
+                case NPC_VAELASTRAZ:
+                    VaelastraszTheCorruptGUID = creature->GetGUID();
+                    break;
+                case NPC_BROODLORD:
+                    BroodlordLashlayerGUID = creature->GetGUID();
+                    break;
+                case NPC_FIRENAW:
+                    FiremawGUID = creature->GetGUID();
+                    break;
+                case NPC_EBONROC:
+                    EbonrocGUID = creature->GetGUID();
+                    break;
+                case NPC_FLAMEGOR:
+                    FlamegorGUID = creature->GetGUID();
+                    break;
+                case NPC_CHROMAGGUS:
+                    ChromaggusGUID = creature->GetGUID();
+                    break;
+                case NPC_VICTOR_NEFARIUS:
+                    LordVictorNefariusGUID = creature->GetGUID();
+                    break;
+                case NPC_NEFARIAN:
+                    NefarianGUID = creature->GetGUID();
+                    break;
             }
         }
 
@@ -108,32 +108,32 @@ public:
         {
             switch (go->GetEntry())
             {
-            case 177807: // Egg
-                if (GetBossState(BOSS_FIREMAW) == DONE)
-                    go->SetPhaseMask(2, true);
-                else
-                    EggList.push_back(go->GetGUID());
-                break;
-            case 175946: // Door
-                RazorgoreDoorGUID = go->GetGUID();
-                HandleGameObject(ObjectGuid::Empty, GetBossState(BOSS_RAZORGORE) == DONE, go);
-                break;
-            case 175185: // Door
-                VaelastraszDoorGUID = go->GetGUID();
-                HandleGameObject(ObjectGuid::Empty, GetBossState(BOSS_VAELASTRAZ) == DONE, go);
-                break;
-            case 180424: // Door
-                BroodlordDoorGUID = go->GetGUID();
-                HandleGameObject(ObjectGuid::Empty, GetBossState(BOSS_BROODLORD) == DONE, go);
-                break;
-            case 185483: // Door
-                ChrommagusDoorGUID = go->GetGUID();
-                HandleGameObject(ObjectGuid::Empty, GetBossState(BOSS_FIREMAW) == DONE && GetBossState(BOSS_EBONROC) == DONE && GetBossState(BOSS_FLAMEGOR) == DONE, go);
-                break;
-            case 181125: // Door
-                NefarianDoorGUID = go->GetGUID();
-                HandleGameObject(ObjectGuid::Empty, GetBossState(BOSS_CHROMAGGUS) == DONE, go);
-                break;
+                case 177807: // Egg
+                    if (GetBossState(BOSS_FIREMAW) == DONE)
+                        go->SetPhaseMask(2, true);
+                    else
+                        EggList.push_back(go->GetGUID());
+                    break;
+                case 175946: // Door
+                    RazorgoreDoorGUID = go->GetGUID();
+                    HandleGameObject(ObjectGuid::Empty, GetBossState(BOSS_RAZORGORE) == DONE, go);
+                    break;
+                case 175185: // Door
+                    VaelastraszDoorGUID = go->GetGUID();
+                    HandleGameObject(ObjectGuid::Empty, GetBossState(BOSS_VAELASTRAZ) == DONE, go);
+                    break;
+                case 180424: // Door
+                    BroodlordDoorGUID = go->GetGUID();
+                    HandleGameObject(ObjectGuid::Empty, GetBossState(BOSS_BROODLORD) == DONE, go);
+                    break;
+                case 185483: // Door
+                    ChrommagusDoorGUID = go->GetGUID();
+                    HandleGameObject(ObjectGuid::Empty, GetBossState(BOSS_FIREMAW) == DONE && GetBossState(BOSS_EBONROC) == DONE && GetBossState(BOSS_FLAMEGOR) == DONE, go);
+                    break;
+                case 181125: // Door
+                    NefarianDoorGUID = go->GetGUID();
+                    HandleGameObject(ObjectGuid::Empty, GetBossState(BOSS_CHROMAGGUS) == DONE, go);
+                    break;
             }
         }
 
@@ -150,45 +150,45 @@ public:
 
             switch (type)
             {
-            case BOSS_RAZORGORE:
-                HandleGameObject(RazorgoreDoorGUID, state == DONE);
-                if (state == DONE)
-                {
-                    for (GuidList::const_iterator itr = EggList.begin(); itr != EggList.end(); ++itr)
-                    if (GameObject* egg = instance->GetGameObject((*itr)))
-                        egg->SetPhaseMask(2, true);
-                }
-                SetData(DATA_EGG_EVENT, NOT_STARTED);
-                break;
-            case BOSS_VAELASTRAZ:
-                HandleGameObject(VaelastraszDoorGUID, state == DONE);
-                break;
-            case BOSS_BROODLORD:
-                HandleGameObject(BroodlordDoorGUID, state == DONE);
-                break;
-            case BOSS_FIREMAW:
-            case BOSS_EBONROC:
-            case BOSS_FLAMEGOR:
-                HandleGameObject(ChrommagusDoorGUID, GetBossState(BOSS_FIREMAW) == DONE && GetBossState(BOSS_EBONROC) == DONE && GetBossState(BOSS_FLAMEGOR) == DONE);
-                break;
-            case BOSS_CHROMAGGUS:
-                HandleGameObject(NefarianDoorGUID, state == DONE);
-                break;
-            case BOSS_NEFARIAN:
-                switch (state)
-                {
-                case NOT_STARTED:
-                    if (Creature* nefarian = instance->GetCreature(NefarianGUID))
-                        nefarian->DespawnOrUnsummon();
+                case BOSS_RAZORGORE:
+                    HandleGameObject(RazorgoreDoorGUID, state == DONE);
+                    if (state == DONE)
+                    {
+                        for (GuidList::const_iterator itr = EggList.begin(); itr != EggList.end(); ++itr)
+                            if (GameObject* egg = instance->GetGameObject((*itr)))
+                                egg->SetPhaseMask(2, true);
+                    }
+                    SetData(DATA_EGG_EVENT, NOT_STARTED);
                     break;
-                case FAIL:
-                    _events.ScheduleEvent(EVENT_RESPAWN_NEFARIUS, 15 * IN_MILLISECONDS*MINUTE);
-                    SetBossState(BOSS_NEFARIAN, NOT_STARTED);
+                case BOSS_VAELASTRAZ:
+                    HandleGameObject(VaelastraszDoorGUID, state == DONE);
                     break;
-                default:
+                case BOSS_BROODLORD:
+                    HandleGameObject(BroodlordDoorGUID, state == DONE);
                     break;
-                }
-                break;
+                case BOSS_FIREMAW:
+                case BOSS_EBONROC:
+                case BOSS_FLAMEGOR:
+                    HandleGameObject(ChrommagusDoorGUID, GetBossState(BOSS_FIREMAW) == DONE && GetBossState(BOSS_EBONROC) == DONE && GetBossState(BOSS_FLAMEGOR) == DONE);
+                    break;
+                case BOSS_CHROMAGGUS:
+                    HandleGameObject(NefarianDoorGUID, state == DONE);
+                    break;
+                case BOSS_NEFARIAN:
+                    switch (state)
+                    {
+                        case NOT_STARTED:
+                            if (Creature* nefarian = instance->GetCreature(NefarianGUID))
+                                nefarian->DespawnOrUnsummon();
+                            break;
+                        case FAIL:
+                            _events.ScheduleEvent(EVENT_RESPAWN_NEFARIUS, 15*IN_MILLISECONDS*MINUTE);
+                            SetBossState(BOSS_NEFARIAN, NOT_STARTED);
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
             }
             return true;
         }
@@ -197,15 +197,15 @@ public:
         {
             switch (id)
             {
-            case DATA_RAZORGORE_THE_UNTAMED:  return RazorgoreTheUntamedGUID;
-            case DATA_VAELASTRAZ_THE_CORRUPT: return VaelastraszTheCorruptGUID;
-            case DATA_BROODLORD_LASHLAYER:    return BroodlordLashlayerGUID;
-            case DATA_FIRENAW:                return FiremawGUID;
-            case DATA_EBONROC:                return EbonrocGUID;
-            case DATA_FLAMEGOR:               return FlamegorGUID;
-            case DATA_CHROMAGGUS:             return ChromaggusGUID;
-            case DATA_LORD_VICTOR_NEFARIUS:   return LordVictorNefariusGUID;
-            case DATA_NEFARIAN:               return NefarianGUID;
+                case DATA_RAZORGORE_THE_UNTAMED:  return RazorgoreTheUntamedGUID;
+                case DATA_VAELASTRAZ_THE_CORRUPT: return VaelastraszTheCorruptGUID;
+                case DATA_BROODLORD_LASHLAYER:    return BroodlordLashlayerGUID;
+                case DATA_FIRENAW:                return FiremawGUID;
+                case DATA_EBONROC:                return EbonrocGUID;
+                case DATA_FLAMEGOR:               return FlamegorGUID;
+                case DATA_CHROMAGGUS:             return ChromaggusGUID;
+                case DATA_LORD_VICTOR_NEFARIUS:   return LordVictorNefariusGUID;
+                case DATA_NEFARIAN:               return NefarianGUID;
             }
 
             return ObjectGuid::Empty;
@@ -217,31 +217,31 @@ public:
             {
                 switch (data)
                 {
-                case IN_PROGRESS:
-                    _events.ScheduleEvent(EVENT_RAZOR_SPAWN, 45 * IN_MILLISECONDS);
-                    EggEvent = data;
-                    EggCount = 0;
-                    break;
-                case NOT_STARTED:
-                    _events.CancelEvent(EVENT_RAZOR_SPAWN);
-                    EggEvent = data;
-                    EggCount = 0;
-                    break;
-                case SPECIAL:
-                    if (++EggCount == 15)
-                    {
-                        if (Creature* razor = instance->GetCreature(RazorgoreTheUntamedGUID))
-                        {
-                            SetData(DATA_EGG_EVENT, DONE);
-                            razor->RemoveAurasDueToSpell(42013); // MindControl
-                            DoRemoveAurasDueToSpellOnPlayers(42013);
-                        }
-                        _events.ScheduleEvent(EVENT_RAZOR_PHASE_TWO, IN_MILLISECONDS);
+                    case IN_PROGRESS:
+                        _events.ScheduleEvent(EVENT_RAZOR_SPAWN, 45*IN_MILLISECONDS);
+                        EggEvent = data;
+                        EggCount = 0;
+                        break;
+                    case NOT_STARTED:
                         _events.CancelEvent(EVENT_RAZOR_SPAWN);
-                    }
-                    if (EggEvent == NOT_STARTED)
-                        SetData(DATA_EGG_EVENT, IN_PROGRESS);
-                    break;
+                        EggEvent = data;
+                        EggCount = 0;
+                        break;
+                    case SPECIAL:
+                        if (++EggCount == 15)
+                        {
+                            if (Creature* razor = instance->GetCreature(RazorgoreTheUntamedGUID))
+                            {
+                                SetData(DATA_EGG_EVENT, DONE);
+                                razor->RemoveAurasDueToSpell(42013); // MindControl
+                                DoRemoveAurasDueToSpellOnPlayers(42013);
+                            }
+                            _events.ScheduleEvent(EVENT_RAZOR_PHASE_TWO, IN_MILLISECONDS);
+                            _events.CancelEvent(EVENT_RAZOR_SPAWN);
+                        }
+                        if (EggEvent == NOT_STARTED)
+                            SetData(DATA_EGG_EVENT, IN_PROGRESS);
+                        break;
                 }
             }
         }
@@ -264,26 +264,26 @@ public:
             {
                 switch (eventId)
                 {
-                case EVENT_RAZOR_SPAWN:
-                    for (uint8 i = urand(2, 5); i > 0; --i)
-                    if (Creature* summon = instance->SummonCreature(Entry[urand(0, 4)], SummonPosition[urand(0, 7)]))
-                        summon->SetInCombatWithZone();
-                    _events.ScheduleEvent(EVENT_RAZOR_SPAWN, urand(12, 17)*IN_MILLISECONDS);
-                    break;
-                case EVENT_RAZOR_PHASE_TWO:
-                    _events.CancelEvent(EVENT_RAZOR_SPAWN);
-                    if (Creature* razor = instance->GetCreature(RazorgoreTheUntamedGUID))
-                        razor->AI()->DoAction(ACTION_PHASE_TWO);
-                    break;
-                case EVENT_RESPAWN_NEFARIUS:
-                    if (Creature* nefarius = instance->GetCreature(LordVictorNefariusGUID))
-                    {
-                        nefarius->SetPhaseMask(1, true);
-                        nefarius->setActive(true);
-                        nefarius->Respawn();
-                        nefarius->GetMotionMaster()->MoveTargetedHome();
-                    }
-                    break;
+                    case EVENT_RAZOR_SPAWN:
+                        for (uint8 i = urand(2, 5); i > 0 ; --i)
+                            if (Creature* summon =  instance->SummonCreature(Entry[urand(0, 4)], SummonPosition[urand(0, 7)]))
+                                summon->SetInCombatWithZone();
+                        _events.ScheduleEvent(EVENT_RAZOR_SPAWN, urand(12, 17)*IN_MILLISECONDS);
+                        break;
+                    case EVENT_RAZOR_PHASE_TWO:
+                        _events.CancelEvent(EVENT_RAZOR_SPAWN);
+                        if (Creature* razor = instance->GetCreature(RazorgoreTheUntamedGUID))
+                            razor->AI()->DoAction(ACTION_PHASE_TWO);
+                        break;
+                    case EVENT_RESPAWN_NEFARIUS:
+                        if (Creature* nefarius = instance->GetCreature(LordVictorNefariusGUID))
+                        {
+                            nefarius->SetPhaseMask(1, true);
+                            nefarius->setActive(true);
+                            nefarius->Respawn();
+                            nefarius->GetMotionMaster()->MoveTargetedHome();
+                        }
+                        break;
                 }
             }
         }

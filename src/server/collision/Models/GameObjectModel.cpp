@@ -35,7 +35,7 @@ using G3D::AABox;
 struct GameobjectModelData
 {
     GameobjectModelData(const std::string& name_, const AABox& box) :
-    bound(box), name(name_) { }
+        bound(box), name(name_) { }
 
     AABox bound;
     std::string name;
@@ -63,8 +63,8 @@ void LoadGameObjectModelList()
     {
         Vector3 v1, v2;
         if (fread(&displayId, sizeof(uint32), 1, model_list_file) != 1)
-        if (feof(model_list_file))  // EOF flag is only set after failed reading attempt
-            break;
+            if (feof(model_list_file))  // EOF flag is only set after failed reading attempt
+                break;
 
         if (fread(&name_length, sizeof(uint32), 1, model_list_file) != 1
             || name_length >= sizeof(buff)
@@ -83,9 +83,9 @@ void LoadGameObjectModelList()
         }
 
         model_list.insert
-            (
-            ModelList::value_type(displayId, GameobjectModelData(std::string(buff, name_length), AABox(v1, v2)))
-            );
+        (
+            ModelList::value_type( displayId, GameobjectModelData(std::string(buff, name_length), AABox(v1, v2)) )
+        );
     }
 
     fclose(model_list_file);

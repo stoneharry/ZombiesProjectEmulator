@@ -29,13 +29,13 @@ Script Data End */
 enum CorporalKeeshan
 {
     QUEST_MISSING_IN_ACTION = 219,
-    SAY_CORPORAL_1 = 0,
-    SAY_CORPORAL_2 = 1,
-    SAY_CORPORAL_3 = 2,
-    SAY_CORPORAL_4 = 3,
-    SAY_CORPORAL_5 = 4,
-    SPELL_MOCKING_BLOW = 21008,
-    SPELL_SHIELD_BASH = 11972
+    SAY_CORPORAL_1          = 0,
+    SAY_CORPORAL_2          = 1,
+    SAY_CORPORAL_3          = 2,
+    SAY_CORPORAL_4          = 3,
+    SAY_CORPORAL_5          = 4,
+    SPELL_MOCKING_BLOW      = 21008,
+    SPELL_SHIELD_BASH       = 11972
 };
 
 class npc_corporal_keeshan : public CreatureScript
@@ -83,19 +83,19 @@ public:
 
             switch (waypointId)
             {
-            case 39:
-                SetEscortPaused(true);
-                timer = 2000;
-                phase = 1;
-                break;
-            case 65:
-                me->SetWalk(false);
-                break;
-            case 115:
-                player->GroupEventHappens(QUEST_MISSING_IN_ACTION, me);
-                timer = 2000;
-                phase = 4;
-                break;
+                case 39:
+                    SetEscortPaused(true);
+                    timer = 2000;
+                    phase = 1;
+                    break;
+                case 65:
+                    me->SetWalk(false);
+                    break;
+                case 115:
+                    player->GroupEventHappens(QUEST_MISSING_IN_ACTION, me);
+                    timer = 2000;
+                    phase = 4;
+                    break;
             }
         }
 
@@ -112,36 +112,35 @@ public:
                 {
                     switch (phase)
                     {
-                    case 1:
-                        me->SetStandState(UNIT_STAND_STATE_SIT);
-                        timer = 1000;
-                        phase = 2;
-                        break;
-                    case 2:
-                        Talk(SAY_CORPORAL_2);
-                        timer = 15000;
-                        phase = 3;
-                        break;
-                    case 3:
-                        Talk(SAY_CORPORAL_3);
-                        me->SetStandState(UNIT_STAND_STATE_STAND);
-                        SetEscortPaused(false);
-                        timer = 0;
-                        phase = 0;
-                        break;
-                    case 4:
-                        Talk(SAY_CORPORAL_4);
-                        timer = 2500;
-                        phase = 5;
-                        break;
-                    case 5:
-                        Talk(SAY_CORPORAL_5);
-                        timer = 0;
-                        phase = 0;
-                        break;
+                        case 1:
+                            me->SetStandState(UNIT_STAND_STATE_SIT);
+                            timer = 1000;
+                            phase = 2;
+                            break;
+                        case 2:
+                            Talk(SAY_CORPORAL_2);
+                            timer = 15000;
+                            phase = 3;
+                            break;
+                        case 3:
+                            Talk(SAY_CORPORAL_3);
+                            me->SetStandState(UNIT_STAND_STATE_STAND);
+                            SetEscortPaused(false);
+                            timer = 0;
+                            phase = 0;
+                            break;
+                        case 4:
+                            Talk(SAY_CORPORAL_4);
+                            timer = 2500;
+                            phase = 5;
+                            break;
+                        case 5:
+                            Talk(SAY_CORPORAL_5);
+                            timer = 0;
+                            phase = 0;
+                            break;
                     }
-                }
-                else timer -= diff;
+                } else timer -= diff;
             }
 
             if (!UpdateVictim())
@@ -151,15 +150,13 @@ public:
             {
                 DoCastVictim(SPELL_MOCKING_BLOW);
                 mockingBlowTimer = 5000;
-            }
-            else mockingBlowTimer -= diff;
+            } else mockingBlowTimer -= diff;
 
             if (shieldBashTimer <= diff)
             {
                 DoCastVictim(SPELL_MOCKING_BLOW);
                 shieldBashTimer = 8000;
-            }
-            else shieldBashTimer -= diff;
+            } else shieldBashTimer -= diff;
 
             DoMeleeAttackIfReady();
         }

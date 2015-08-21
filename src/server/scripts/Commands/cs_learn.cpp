@@ -40,36 +40,36 @@ public:
     {
         static ChatCommand learnAllMyCommandTable[] =
         {
-            { "class", rbac::RBAC_PERM_COMMAND_LEARN_ALL_MY_CLASS, false, &HandleLearnAllMyClassCommand, "", NULL },
+            { "class",      rbac::RBAC_PERM_COMMAND_LEARN_ALL_MY_CLASS,      false, &HandleLearnAllMyClassCommand,      "", NULL },
             { "pettalents", rbac::RBAC_PERM_COMMAND_LEARN_ALL_MY_PETTALENTS, false, &HandleLearnAllMyPetTalentsCommand, "", NULL },
-            { "spells", rbac::RBAC_PERM_COMMAND_LEARN_ALL_MY_SPELLS, false, &HandleLearnAllMySpellsCommand, "", NULL },
-            { "talents", rbac::RBAC_PERM_COMMAND_LEARN_ALL_MY_TALENTS, false, &HandleLearnAllMyTalentsCommand, "", NULL },
-            { NULL, 0, false, NULL, "", NULL }
+            { "spells",     rbac::RBAC_PERM_COMMAND_LEARN_ALL_MY_SPELLS,     false, &HandleLearnAllMySpellsCommand,     "", NULL },
+            { "talents",    rbac::RBAC_PERM_COMMAND_LEARN_ALL_MY_TALENTS,    false, &HandleLearnAllMyTalentsCommand,    "", NULL },
+            { NULL,         0,                                         false, NULL,                               "", NULL }
         };
 
         static ChatCommand learnAllCommandTable[] =
         {
-            { "my", rbac::RBAC_PERM_COMMAND_LEARN_ALL_MY, false, NULL, "", learnAllMyCommandTable },
-            { "gm", rbac::RBAC_PERM_COMMAND_LEARN_ALL_GM, false, &HandleLearnAllGMCommand, "", NULL },
-            { "crafts", rbac::RBAC_PERM_COMMAND_LEARN_ALL_CRAFTS, false, &HandleLearnAllCraftsCommand, "", NULL },
+            { "my",      rbac::RBAC_PERM_COMMAND_LEARN_ALL_MY,      false, NULL,                          "", learnAllMyCommandTable },
+            { "gm",      rbac::RBAC_PERM_COMMAND_LEARN_ALL_GM,      false, &HandleLearnAllGMCommand,      "", NULL },
+            { "crafts",  rbac::RBAC_PERM_COMMAND_LEARN_ALL_CRAFTS,  false, &HandleLearnAllCraftsCommand,  "", NULL },
             { "default", rbac::RBAC_PERM_COMMAND_LEARN_ALL_DEFAULT, false, &HandleLearnAllDefaultCommand, "", NULL },
-            { "lang", rbac::RBAC_PERM_COMMAND_LEARN_ALL_LANG, false, &HandleLearnAllLangCommand, "", NULL },
+            { "lang",    rbac::RBAC_PERM_COMMAND_LEARN_ALL_LANG,    false, &HandleLearnAllLangCommand,    "", NULL },
             { "recipes", rbac::RBAC_PERM_COMMAND_LEARN_ALL_RECIPES, false, &HandleLearnAllRecipesCommand, "", NULL },
-            { NULL, 0, false, NULL, "", NULL }
+            { NULL,      0,                                   false, NULL,                          "", NULL }
         };
 
         static ChatCommand learnCommandTable[] =
         {
-            { "all", rbac::RBAC_PERM_COMMAND_LEARN_ALL, false, NULL, "", learnAllCommandTable },
-            { "", rbac::RBAC_PERM_COMMAND_LEARN, false, &HandleLearnCommand, "", NULL },
-            { NULL, 0, false, NULL, "", NULL }
+            { "all", rbac::RBAC_PERM_COMMAND_LEARN_ALL, false, NULL,                "", learnAllCommandTable },
+            { "",    rbac::RBAC_PERM_COMMAND_LEARN,     false, &HandleLearnCommand, "", NULL },
+            { NULL,  0,                           false, NULL,                "", NULL }
         };
 
         static ChatCommand commandTable[] =
         {
-            { "learn", rbac::RBAC_PERM_COMMAND_LEARN, false, NULL, "", learnCommandTable },
+            { "learn",   rbac::RBAC_PERM_COMMAND_LEARN,   false, NULL,                  "", learnCommandTable },
             { "unlearn", rbac::RBAC_PERM_COMMAND_UNLEARN, false, &HandleUnLearnCommand, "", NULL },
-            { NULL, 0, false, NULL, "", NULL }
+            { NULL,      0,                         false, NULL,                  "", NULL }
         };
         return commandTable;
     }
@@ -290,7 +290,7 @@ public:
             // search highest talent rank
             uint32 spellId = 0;
 
-            for (int8 rank = MAX_TALENT_RANK - 1; rank >= 0; --rank)
+            for (int8 rank = MAX_TALENT_RANK-1; rank >= 0; --rank)
             {
                 if (talentInfo->RankID[rank] != 0)
                 {

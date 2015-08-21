@@ -22,97 +22,97 @@
 
 class instance_forge_of_souls : public InstanceMapScript
 {
-public:
-    instance_forge_of_souls() : InstanceMapScript(FoSScriptName, 632) { }
+    public:
+        instance_forge_of_souls() : InstanceMapScript(FoSScriptName, 632) { }
 
-    struct instance_forge_of_souls_InstanceScript : public InstanceScript
-    {
-        instance_forge_of_souls_InstanceScript(Map* map) : InstanceScript(map)
+        struct instance_forge_of_souls_InstanceScript : public InstanceScript
         {
-            SetHeaders(DataHeader);
-            SetBossNumber(EncounterCount);
-
-            teamInInstance = 0;
-        }
-
-        void OnPlayerEnter(Player* player) override
-        {
-            if (!teamInInstance)
-                teamInInstance = player->GetTeam();
-        }
-
-        void OnCreatureCreate(Creature* creature) override
-        {
-            if (!teamInInstance)
+            instance_forge_of_souls_InstanceScript(Map* map) : InstanceScript(map)
             {
-                Map::PlayerList const& players = instance->GetPlayers();
-                if (!players.isEmpty())
-                if (Player* player = players.begin()->GetSource())
+                SetHeaders(DataHeader);
+                SetBossNumber(EncounterCount);
+
+                teamInInstance = 0;
+            }
+
+            void OnPlayerEnter(Player* player) override
+            {
+                if (!teamInInstance)
                     teamInInstance = player->GetTeam();
             }
 
-            switch (creature->GetEntry())
+            void OnCreatureCreate(Creature* creature) override
             {
-            case NPC_BRONJAHM:
-                bronjahm = creature->GetGUID();
-                break;
-            case NPC_DEVOURER:
-                devourerOfSouls = creature->GetGUID();
-                break;
-            case NPC_SYLVANAS_PART1:
-                if (teamInInstance == ALLIANCE)
-                    creature->UpdateEntry(NPC_JAINA_PART1);
-                break;
-            case NPC_LORALEN:
-                if (teamInInstance == ALLIANCE)
-                    creature->UpdateEntry(NPC_ELANDRA);
-                break;
-            case NPC_KALIRA:
-                if (teamInInstance == ALLIANCE)
-                    creature->UpdateEntry(NPC_KORELN);
-                break;
-            }
-        }
+                if (!teamInInstance)
+                {
+                    Map::PlayerList const& players = instance->GetPlayers();
+                    if (!players.isEmpty())
+                        if (Player* player = players.begin()->GetSource())
+                            teamInInstance = player->GetTeam();
+                }
 
-        uint32 GetData(uint32 type) const override
+                switch (creature->GetEntry())
+                {
+                    case NPC_BRONJAHM:
+                        bronjahm = creature->GetGUID();
+                        break;
+                    case NPC_DEVOURER:
+                        devourerOfSouls = creature->GetGUID();
+                        break;
+                    case NPC_SYLVANAS_PART1:
+                        if (teamInInstance == ALLIANCE)
+                            creature->UpdateEntry(NPC_JAINA_PART1);
+                        break;
+                    case NPC_LORALEN:
+                        if (teamInInstance == ALLIANCE)
+                            creature->UpdateEntry(NPC_ELANDRA);
+                        break;
+                    case NPC_KALIRA:
+                        if (teamInInstance == ALLIANCE)
+                            creature->UpdateEntry(NPC_KORELN);
+                        break;
+                }
+            }
+
+            uint32 GetData(uint32 type) const override
+            {
+                switch (type)
+                {
+                    case DATA_TEAM_IN_INSTANCE:
+                        return teamInInstance;
+                    default:
+                        break;
+                }
+
+                return 0;
+            }
+
+            ObjectGuid GetGuidData(uint32 type) const override
+            {
+                switch (type)
+                {
+                    case DATA_BRONJAHM:
+                        return bronjahm;
+                    case DATA_DEVOURER_OF_SOULS:
+                        return devourerOfSouls;
+                    default:
+                        break;
+                }
+
+                return ObjectGuid::Empty;
+            }
+
+        private:
+            ObjectGuid bronjahm;
+            ObjectGuid devourerOfSouls;
+
+            uint32 teamInInstance;
+        };
+
+        InstanceScript* GetInstanceScript(InstanceMap* map) const override
         {
-            switch (type)
-            {
-            case DATA_TEAM_IN_INSTANCE:
-                return teamInInstance;
-            default:
-                break;
-            }
-
-            return 0;
+            return new instance_forge_of_souls_InstanceScript(map);
         }
-
-        ObjectGuid GetGuidData(uint32 type) const override
-        {
-            switch (type)
-            {
-            case DATA_BRONJAHM:
-                return bronjahm;
-            case DATA_DEVOURER_OF_SOULS:
-                return devourerOfSouls;
-            default:
-                break;
-            }
-
-            return ObjectGuid::Empty;
-        }
-
-    private:
-        ObjectGuid bronjahm;
-        ObjectGuid devourerOfSouls;
-
-        uint32 teamInInstance;
-    };
-
-    InstanceScript* GetInstanceScript(InstanceMap* map) const override
-    {
-        return new instance_forge_of_souls_InstanceScript(map);
-    }
 };
 
 void AddSC_instance_forge_of_souls()

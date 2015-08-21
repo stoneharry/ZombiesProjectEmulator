@@ -29,10 +29,10 @@ EndScriptData */
 
 enum Spells
 {
-    SPELL_ENCASINGWEBS = 4962,
-    SPELL_PIERCEARMOR = 6016,
-    SPELL_CRYPT_SCARABS = 31602,
-    SPELL_RAISEUNDEADSCARAB = 17235
+    SPELL_ENCASINGWEBS          = 4962,
+    SPELL_PIERCEARMOR           = 6016,
+    SPELL_CRYPT_SCARABS         = 31602,
+    SPELL_RAISEUNDEADSCARAB     = 17235
 };
 
 class boss_nerubenkan : public CreatureScript
@@ -85,8 +85,8 @@ public:
         void RaiseUndeadScarab(Unit* victim)
         {
             if (Creature* pUndeadScarab = DoSpawnCreature(10876, float(irand(-9, 9)), float(irand(-9, 9)), 0, 0, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 180000))
-            if (pUndeadScarab->AI())
-                pUndeadScarab->AI()->AttackStart(victim);
+                if (pUndeadScarab->AI())
+                    pUndeadScarab->AI()->AttackStart(victim);
         }
 
         void UpdateAI(uint32 diff) override
@@ -99,8 +99,7 @@ public:
             {
                 DoCastVictim(SPELL_ENCASINGWEBS);
                 EncasingWebs_Timer = 30000;
-            }
-            else EncasingWebs_Timer -= diff;
+            } else EncasingWebs_Timer -= diff;
 
             //PierceArmor
             if (PierceArmor_Timer <= diff)
@@ -108,24 +107,21 @@ public:
                 if (urand(0, 3) < 2)
                     DoCastVictim(SPELL_PIERCEARMOR);
                 PierceArmor_Timer = 35000;
-            }
-            else PierceArmor_Timer -= diff;
+            } else PierceArmor_Timer -= diff;
 
             //CryptScarabs_Timer
             if (CryptScarabs_Timer <= diff)
             {
                 DoCastVictim(SPELL_CRYPT_SCARABS);
                 CryptScarabs_Timer = 20000;
-            }
-            else CryptScarabs_Timer -= diff;
+            } else CryptScarabs_Timer -= diff;
 
             //RaiseUndeadScarab
             if (RaiseUndeadScarab_Timer <= diff)
             {
                 RaiseUndeadScarab(me->GetVictim());
                 RaiseUndeadScarab_Timer = 16000;
-            }
-            else RaiseUndeadScarab_Timer -= diff;
+            } else RaiseUndeadScarab_Timer -= diff;
 
             DoMeleeAttackIfReady();
         }

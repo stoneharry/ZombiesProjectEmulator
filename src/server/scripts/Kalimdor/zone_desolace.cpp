@@ -39,20 +39,20 @@ EndContentData */
 
 enum DyingKodo
 {
-    SAY_SMEED_HOME = 0,
+    SAY_SMEED_HOME                  = 0,
 
-    QUEST_KODO = 5561,
+    QUEST_KODO                      = 5561,
 
-    NPC_SMEED = 11596,
-    NPC_AGED_KODO = 4700,
-    NPC_DYING_KODO = 4701,
-    NPC_ANCIENT_KODO = 4702,
-    NPC_TAMED_KODO = 11627,
+    NPC_SMEED                       = 11596,
+    NPC_AGED_KODO                   = 4700,
+    NPC_DYING_KODO                  = 4701,
+    NPC_ANCIENT_KODO                = 4702,
+    NPC_TAMED_KODO                  = 11627,
 
-    SPELL_KODO_KOMBO_ITEM = 18153,
-    SPELL_KODO_KOMBO_PLAYER_BUFF = 18172,
-    SPELL_KODO_KOMBO_DESPAWN_BUFF = 18377,
-    SPELL_KODO_KOMBO_GOSSIP = 18362
+    SPELL_KODO_KOMBO_ITEM           = 18153,
+    SPELL_KODO_KOMBO_PLAYER_BUFF    = 18172,
+    SPELL_KODO_KOMBO_DESPAWN_BUFF   = 18377,
+    SPELL_KODO_KOMBO_GOSSIP         = 18362
 
 };
 
@@ -133,22 +133,22 @@ public:
 
 enum Iruxos
 {
-    QUEST_HAND_IRUXOS = 5381,
-    NPC_DEMON_SPIRIT = 11876
+    QUEST_HAND_IRUXOS   = 5381,
+    NPC_DEMON_SPIRIT    = 11876
 };
 
 class go_iruxos : public GameObjectScript
 {
-public:
-    go_iruxos() : GameObjectScript("go_iruxos") { }
+    public:
+        go_iruxos() : GameObjectScript("go_iruxos") { }
 
-    bool OnGossipHello(Player* player, GameObject* go) override
-    {
-        if (player->GetQuestStatus(QUEST_HAND_IRUXOS) == QUEST_STATUS_INCOMPLETE && !go->FindNearestCreature(NPC_DEMON_SPIRIT, 25.0f, true))
-            player->SummonCreature(NPC_DEMON_SPIRIT, go->GetPositionX(), go->GetPositionY(), go->GetPositionZ(), 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 10000);
+        bool OnGossipHello(Player* player, GameObject* go) override
+        {
+            if (player->GetQuestStatus(QUEST_HAND_IRUXOS) == QUEST_STATUS_INCOMPLETE && !go->FindNearestCreature(NPC_DEMON_SPIRIT, 25.0f, true))
+                player->SummonCreature(NPC_DEMON_SPIRIT, go->GetPositionX(), go->GetPositionY(), go->GetPositionZ(), 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 10000);
 
-        return true;
-    }
+            return true;
+        }
 };
 
 /*######
@@ -157,7 +157,7 @@ public:
 
 enum Dalinda
 {
-    QUEST_RETURN_TO_VAHLARRIEL = 1440
+    QUEST_RETURN_TO_VAHLARRIEL      = 1440
 };
 
 class npc_dalinda : public CreatureScript
@@ -186,13 +186,13 @@ public:
 
             switch (waypointId)
             {
-            case 1:
-                me->SetStandState(UNIT_STAND_STATE_STAND);
-                break;
-            case 15:
-                if (player)
-                    player->GroupEventHappens(QUEST_RETURN_TO_VAHLARRIEL, me);
-                break;
+                case 1:
+                    me->SetStandState(UNIT_STAND_STATE_STAND);
+                    break;
+                case 15:
+                    if (player)
+                        player->GroupEventHappens(QUEST_RETURN_TO_VAHLARRIEL, me);
+                    break;
             }
         }
 
@@ -210,7 +210,7 @@ public:
     bool OnQuestAccept(Player* player, Creature* creature, Quest const* quest) override
     {
         if (quest->GetQuestId() == QUEST_RETURN_TO_VAHLARRIEL)
-        {
+       {
             if (npc_escortAI* escortAI = CAST_AI(npc_dalinda::npc_dalindaAI, creature->AI()))
             {
                 escortAI->Start(true, false, player->GetGUID());
@@ -232,25 +232,25 @@ public:
 
 enum DemonPortal
 {
-    NPC_DEMON_GUARDIAN = 11937,
-    QUEST_PORTAL_OF_THE_LEGION = 5581
+    NPC_DEMON_GUARDIAN          = 11937,
+    QUEST_PORTAL_OF_THE_LEGION  = 5581
 };
 
 class go_demon_portal : public GameObjectScript
 {
-public:
-    go_demon_portal() : GameObjectScript("go_demon_portal") { }
+    public:
+        go_demon_portal() : GameObjectScript("go_demon_portal") { }
 
-    bool OnGossipHello(Player* player, GameObject* go) override
-    {
-        if (player->GetQuestStatus(QUEST_PORTAL_OF_THE_LEGION) == QUEST_STATUS_INCOMPLETE && !go->FindNearestCreature(NPC_DEMON_GUARDIAN, 5.0f, true))
+        bool OnGossipHello(Player* player, GameObject* go) override
         {
-            if (Creature* guardian = player->SummonCreature(NPC_DEMON_GUARDIAN, go->GetPositionX(), go->GetPositionY(), go->GetPositionZ(), 0.0f, TEMPSUMMON_DEAD_DESPAWN, 0))
-                guardian->AI()->AttackStart(player);
-        }
+            if (player->GetQuestStatus(QUEST_PORTAL_OF_THE_LEGION) == QUEST_STATUS_INCOMPLETE && !go->FindNearestCreature(NPC_DEMON_GUARDIAN, 5.0f, true))
+            {
+                if (Creature* guardian = player->SummonCreature(NPC_DEMON_GUARDIAN, go->GetPositionX(), go->GetPositionY(), go->GetPositionZ(), 0.0f, TEMPSUMMON_DEAD_DESPAWN, 0))
+                    guardian->AI()->AttackStart(player);
+            }
 
-        return true;
-    }
+            return true;
+        }
 };
 
 void AddSC_desolace()

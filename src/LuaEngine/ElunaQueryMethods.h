@@ -311,17 +311,17 @@ namespace LuaQuery
                 // MYSQL_TYPE_LONGLONG Interpreted as string for lua
                 switch (row[i].GetType())
                 {
-                case MYSQL_TYPE_TINY:
-                case MYSQL_TYPE_SHORT:
-                case MYSQL_TYPE_INT24:
-                case MYSQL_TYPE_LONG:
-                case MYSQL_TYPE_FLOAT:
-                case MYSQL_TYPE_DOUBLE:
-                    Eluna::Push(L, strtod(str, NULL));
-                    break;
-                default:
-                    Eluna::Push(L, str);
-                    break;
+                    case MYSQL_TYPE_TINY:
+                    case MYSQL_TYPE_SHORT:
+                    case MYSQL_TYPE_INT24:
+                    case MYSQL_TYPE_LONG:
+                    case MYSQL_TYPE_FLOAT:
+                    case MYSQL_TYPE_DOUBLE:
+                        Eluna::Push(L, strtod(str, NULL));
+                        break;
+                    default:
+                        Eluna::Push(L, str);
+                        break;
                 }
             }
 

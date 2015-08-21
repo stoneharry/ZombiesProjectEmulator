@@ -149,7 +149,8 @@ void GroupMgr::LoadGroups()
                 NextGroupDbStoreId++;
 
             ++count;
-        } while (result->NextRow());
+        }
+        while (result->NextRow());
 
         TC_LOG_INFO("server.loading", ">> Loaded %u group definitions in %u ms", count, GetMSTimeDiffToNow(oldMSTime));
     }
@@ -185,7 +186,8 @@ void GroupMgr::LoadGroups()
                 TC_LOG_ERROR("misc", "GroupMgr::LoadGroups: Consistency failed, can't find group (storage id: %u)", fields[0].GetUInt32());
 
             ++count;
-        } while (result->NextRow());
+        }
+        while (result->NextRow());
 
         TC_LOG_INFO("server.loading", ">> Loaded %u group members in %u ms", count, GetMSTimeDiffToNow(oldMSTime));
     }
@@ -227,7 +229,8 @@ void GroupMgr::LoadGroups()
             InstanceSave* save = sInstanceSaveMgr->AddInstanceSave(mapEntry->MapID, fields[2].GetUInt32(), Difficulty(diff), time_t(fields[5].GetUInt32()), fields[6].GetUInt64() != 0, true);
             group->BindToInstance(save, fields[3].GetBool(), true);
             ++count;
-        } while (result->NextRow());
+        }
+        while (result->NextRow());
 
         TC_LOG_INFO("server.loading", ">> Loaded %u group-instance saves in %u ms", count, GetMSTimeDiffToNow(oldMSTime));
     }

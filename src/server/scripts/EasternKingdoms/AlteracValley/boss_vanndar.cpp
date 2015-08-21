@@ -20,19 +20,19 @@
 
 enum Yells
 {
-    YELL_AGGRO = 0,
-    YELL_EVADE = 1,
-    //YELL_RESPAWN1                                 = -1810010, // Missing in database
-    //YELL_RESPAWN2                                 = -1810011, // Missing in database
-    YELL_RANDOM = 2,
-    YELL_SPELL = 3,
+    YELL_AGGRO                                    = 0,
+    YELL_EVADE                                    = 1,
+  //YELL_RESPAWN1                                 = -1810010, // Missing in database
+  //YELL_RESPAWN2                                 = -1810011, // Missing in database
+    YELL_RANDOM                                   = 2,
+    YELL_SPELL                                    = 3,
 };
 
 enum Spells
 {
-    SPELL_AVATAR = 19135,
-    SPELL_THUNDERCLAP = 15588,
-    SPELL_STORMBOLT = 20685 // not sure
+    SPELL_AVATAR                                  = 19135,
+    SPELL_THUNDERCLAP                             = 15588,
+    SPELL_STORMBOLT                               = 20685 // not sure
 };
 
 class boss_vanndar : public CreatureScript
@@ -80,30 +80,26 @@ public:
             if (AvatarTimer <= diff)
             {
                 DoCastVictim(SPELL_AVATAR);
-                AvatarTimer = urand(15 * IN_MILLISECONDS, 20 * IN_MILLISECONDS);
-            }
-            else AvatarTimer -= diff;
+                AvatarTimer =  urand(15 * IN_MILLISECONDS, 20 * IN_MILLISECONDS);
+            } else AvatarTimer -= diff;
 
             if (ThunderclapTimer <= diff)
             {
                 DoCastVictim(SPELL_THUNDERCLAP);
                 ThunderclapTimer = urand(5 * IN_MILLISECONDS, 15 * IN_MILLISECONDS);
-            }
-            else ThunderclapTimer -= diff;
+            } else ThunderclapTimer -= diff;
 
             if (StormboltTimer <= diff)
             {
                 DoCastVictim(SPELL_STORMBOLT);
                 StormboltTimer = urand(10 * IN_MILLISECONDS, 25 * IN_MILLISECONDS);
-            }
-            else StormboltTimer -= diff;
+            } else StormboltTimer -= diff;
 
             if (YellTimer <= diff)
             {
                 Talk(YELL_RANDOM);
                 YellTimer = urand(20 * IN_MILLISECONDS, 30 * IN_MILLISECONDS); //20 to 30 seconds
-            }
-            else YellTimer -= diff;
+            } else YellTimer -= diff;
 
             // check if creature is not outside of building
             if (ResetTimer <= diff)
@@ -114,8 +110,7 @@ public:
                     Talk(YELL_EVADE);
                 }
                 ResetTimer = 5 * IN_MILLISECONDS;
-            }
-            else ResetTimer -= diff;
+            } else ResetTimer -= diff;
 
             DoMeleeAttackIfReady();
         }

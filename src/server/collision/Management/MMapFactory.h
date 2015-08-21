@@ -40,10 +40,10 @@ namespace MMAP
     // access point to MMapManager singleton
     class MMapFactory
     {
-    public:
-        static MMapManager* createOrGetMMapManager();
-        static void clear();
-        static bool IsPathfindingEnabled(uint32 mapId);
+        public:
+            static MMapManager* createOrGetMMapManager();
+            static void clear();
+            static bool IsPathfindingEnabled(uint32 mapId);
     };
 }
 

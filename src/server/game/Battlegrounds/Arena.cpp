@@ -26,14 +26,14 @@
 
 Arena::Arena()
 {
-    StartDelayTimes[BG_STARTING_EVENT_FIRST] = BG_START_DELAY_1M;
+    StartDelayTimes[BG_STARTING_EVENT_FIRST]  = BG_START_DELAY_1M;
     StartDelayTimes[BG_STARTING_EVENT_SECOND] = BG_START_DELAY_30S;
-    StartDelayTimes[BG_STARTING_EVENT_THIRD] = BG_START_DELAY_15S;
+    StartDelayTimes[BG_STARTING_EVENT_THIRD]  = BG_START_DELAY_15S;
     StartDelayTimes[BG_STARTING_EVENT_FOURTH] = BG_START_DELAY_NONE;
 
-    StartMessageIds[BG_STARTING_EVENT_FIRST] = LANG_ARENA_ONE_MINUTE;
+    StartMessageIds[BG_STARTING_EVENT_FIRST]  = LANG_ARENA_ONE_MINUTE;
     StartMessageIds[BG_STARTING_EVENT_SECOND] = LANG_ARENA_THIRTY_SECONDS;
-    StartMessageIds[BG_STARTING_EVENT_THIRD] = LANG_ARENA_FIFTEEN_SECONDS;
+    StartMessageIds[BG_STARTING_EVENT_THIRD]  = LANG_ARENA_FIFTEEN_SECONDS;
     StartMessageIds[BG_STARTING_EVENT_FOURTH] = LANG_ARENA_HAS_BEGUN;
 }
 
@@ -133,13 +133,13 @@ void Arena::EndBattleground(uint32 winner)
     // arena rating calculation
     if (isRated())
     {
-        uint32 loserTeamRating = 0;
-        uint32 loserMatchmakerRating = 0;
-        int32  loserChange = 0;
-        int32  loserMatchmakerChange = 0;
-        uint32 winnerTeamRating = 0;
+        uint32 loserTeamRating        = 0;
+        uint32 loserMatchmakerRating  = 0;
+        int32  loserChange            = 0;
+        int32  loserMatchmakerChange  = 0;
+        uint32 winnerTeamRating       = 0;
         uint32 winnerMatchmakerRating = 0;
-        int32  winnerChange = 0;
+        int32  winnerChange           = 0;
         int32  winnerMatchmakerChange = 0;
 
         ArenaTeam* winnerArenaTeam = sArenaTeamMgr->GetArenaTeamById(GetArenaTeamIdForTeam(winner));
@@ -176,13 +176,13 @@ void Arena::EndBattleground(uint32 winner)
                     GetArenaType(), GetArenaTeamIdByIndex(TEAM_ALLIANCE), GetArenaTeamIdByIndex(TEAM_HORDE), winnerArenaTeam->GetId(), winnerChange, loserChange);
 
                 if (sWorld->getBoolConfig(CONFIG_ARENA_LOG_EXTENDED_INFO))
-                for (auto const& score : PlayerScores)
-                if (Player* player = ObjectAccessor::FindConnectedPlayer(ObjectGuid(HIGHGUID_PLAYER, score.first)))
-                {
-                    TC_LOG_DEBUG("bg.arena", "Statistics match Type: %u for %s (GUID: %u, Team: %d, IP: %s): %s",
-                        GetArenaType(), player->GetName().c_str(), score.first, player->GetArenaTeamId(GetArenaType() == 5 ? 2 : GetArenaType() == 3),
-                        player->GetSession()->GetRemoteAddress().c_str(), score.second->ToString().c_str());
-                }
+                    for (auto const& score : PlayerScores)
+                        if (Player* player = ObjectAccessor::FindConnectedPlayer(ObjectGuid(HIGHGUID_PLAYER, score.first)))
+                        {
+                            TC_LOG_DEBUG("bg.arena", "Statistics match Type: %u for %s (GUID: %u, Team: %d, IP: %s): %s",
+                                GetArenaType(), player->GetName().c_str(), score.first, player->GetArenaTeamId(GetArenaType() == 5 ? 2 : GetArenaType() == 3),
+                                player->GetSession()->GetRemoteAddress().c_str(), score.second->ToString().c_str());
+                        }
             }
             // Deduct 16 points from each teams arena-rating if there are no winners after 45+2 minutes
             else

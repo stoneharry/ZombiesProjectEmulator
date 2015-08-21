@@ -43,93 +43,93 @@ EndContentData */
 
 enum CommanderEligorDawnbringer
 {
-    MODEL_IMAGE_OF_KELTHUZAD = 24787, // Image of Kel'Thuzad
-    MODEL_IMAGE_OF_SAPPHIRON = 24788, // Image of Sapphiron
-    MODEL_IMAGE_OF_RAZUVIOUS = 24799, // Image of Razuvious
-    MODEL_IMAGE_OF_GOTHIK = 24804, // Image of Gothik
-    MODEL_IMAGE_OF_THANE = 24802, // Image of Thane Korth'azz
-    MODEL_IMAGE_OF_BLAUMEUX = 24794, // Image of Lady Blaumeux
-    MODEL_IMAGE_OF_ZELIEK = 24800, // Image of Sir Zeliek
-    MODEL_IMAGE_OF_PATCHWERK = 24798, // Image of Patchwerk
-    MODEL_IMAGE_OF_GROBBULUS = 24792, // Image of Grobbulus
-    MODEL_IMAGE_OF_THADDIUS = 24801, // Image of Thaddius
-    MODEL_IMAGE_OF_GLUTH = 24803, // Image of Gluth
-    MODEL_IMAGE_OF_ANUBREKHAN = 24789, // Image of Anub'rekhan
-    MODEL_IMAGE_OF_FAERLINA = 24790, // Image of Faerlina
-    MODEL_IMAGE_OF_MAEXXNA = 24796, // Image of Maexxna
-    MODEL_IMAGE_OF_NOTH = 24797, // Image of Noth
-    MODEL_IMAGE_OF_HEIGAN = 24793, // Image of Heigan
-    MODEL_IMAGE_OF_LOATHEB = 24795, // Image of Loatheb
+    MODEL_IMAGE_OF_KELTHUZAD           = 24787, // Image of Kel'Thuzad
+    MODEL_IMAGE_OF_SAPPHIRON           = 24788, // Image of Sapphiron
+    MODEL_IMAGE_OF_RAZUVIOUS           = 24799, // Image of Razuvious
+    MODEL_IMAGE_OF_GOTHIK              = 24804, // Image of Gothik
+    MODEL_IMAGE_OF_THANE               = 24802, // Image of Thane Korth'azz
+    MODEL_IMAGE_OF_BLAUMEUX            = 24794, // Image of Lady Blaumeux
+    MODEL_IMAGE_OF_ZELIEK              = 24800, // Image of Sir Zeliek
+    MODEL_IMAGE_OF_PATCHWERK           = 24798, // Image of Patchwerk
+    MODEL_IMAGE_OF_GROBBULUS           = 24792, // Image of Grobbulus
+    MODEL_IMAGE_OF_THADDIUS            = 24801, // Image of Thaddius
+    MODEL_IMAGE_OF_GLUTH               = 24803, // Image of Gluth
+    MODEL_IMAGE_OF_ANUBREKHAN          = 24789, // Image of Anub'rekhan
+    MODEL_IMAGE_OF_FAERLINA            = 24790, // Image of Faerlina
+    MODEL_IMAGE_OF_MAEXXNA             = 24796, // Image of Maexxna
+    MODEL_IMAGE_OF_NOTH                = 24797, // Image of Noth
+    MODEL_IMAGE_OF_HEIGAN              = 24793, // Image of Heigan
+    MODEL_IMAGE_OF_LOATHEB             = 24795, // Image of Loatheb
 
-    NPC_IMAGE_OF_KELTHUZAD = 27766, // Image of Kel'Thuzad
-    NPC_IMAGE_OF_SAPPHIRON = 27767, // Image of Sapphiron
-    NPC_IMAGE_OF_RAZUVIOUS = 27768, // Image of Razuvious
-    NPC_IMAGE_OF_GOTHIK = 27769, // Image of Gothik
-    NPC_IMAGE_OF_THANE = 27770, // Image of Thane Korth'azz
-    NPC_IMAGE_OF_BLAUMEUX = 27771, // Image of Lady Blaumeux
-    NPC_IMAGE_OF_ZELIEK = 27772, // Image of Sir Zeliek
-    NPC_IMAGE_OF_PATCHWERK = 27773, // Image of Patchwerk
-    NPC_IMAGE_OF_GROBBULUS = 27774, // Image of Grobbulus
-    NPC_IMAGE_OF_THADDIUS = 27775, // Image of Thaddius
-    NPC_IMAGE_OF_GLUTH = 27782, // Image of Gluth
-    NPC_IMAGE_OF_ANUBREKHAN = 27776, // Image of Anub'rekhan
-    NPC_IMAGE_OF_FAERLINA = 27777, // Image of Faerlina
-    NPC_IMAGE_OF_MAEXXNA = 27778, // Image of Maexxna
-    NPC_IMAGE_OF_NOTH = 27779, // Image of Noth
-    NPC_IMAGE_OF_HEIGAN = 27780, // Image of Heigan
-    NPC_IMAGE_OF_LOATHEB = 27781, // Image of Loatheb
+    NPC_IMAGE_OF_KELTHUZAD             = 27766, // Image of Kel'Thuzad
+    NPC_IMAGE_OF_SAPPHIRON             = 27767, // Image of Sapphiron
+    NPC_IMAGE_OF_RAZUVIOUS             = 27768, // Image of Razuvious
+    NPC_IMAGE_OF_GOTHIK                = 27769, // Image of Gothik
+    NPC_IMAGE_OF_THANE                 = 27770, // Image of Thane Korth'azz
+    NPC_IMAGE_OF_BLAUMEUX              = 27771, // Image of Lady Blaumeux
+    NPC_IMAGE_OF_ZELIEK                = 27772, // Image of Sir Zeliek
+    NPC_IMAGE_OF_PATCHWERK             = 27773, // Image of Patchwerk
+    NPC_IMAGE_OF_GROBBULUS             = 27774, // Image of Grobbulus
+    NPC_IMAGE_OF_THADDIUS              = 27775, // Image of Thaddius
+    NPC_IMAGE_OF_GLUTH                 = 27782, // Image of Gluth
+    NPC_IMAGE_OF_ANUBREKHAN            = 27776, // Image of Anub'rekhan
+    NPC_IMAGE_OF_FAERLINA              = 27777, // Image of Faerlina
+    NPC_IMAGE_OF_MAEXXNA               = 27778, // Image of Maexxna
+    NPC_IMAGE_OF_NOTH                  = 27779, // Image of Noth
+    NPC_IMAGE_OF_HEIGAN                = 27780, // Image of Heigan
+    NPC_IMAGE_OF_LOATHEB               = 27781, // Image of Loatheb
 
-    NPC_INFANTRYMAN = 27160, // Add in case I randomize the spawning
-    NPC_SENTINAL = 27162,
-    NPC_BATTLE_MAGE = 27164,
+    NPC_INFANTRYMAN                    = 27160, // Add in case I randomize the spawning
+    NPC_SENTINAL                       = 27162,
+    NPC_BATTLE_MAGE                    = 27164,
 
     // Five platforms to choose from
-    SAY_PINNACLE = 0,
-    SAY_DEATH_KNIGHT_WING = 1,
-    SAY_ABOMINATION_WING = 2,
-    SAY_SPIDER_WING = 3,
-    SAY_PLAGUE_WING = 4,
+    SAY_PINNACLE                       = 0,
+    SAY_DEATH_KNIGHT_WING              = 1,
+    SAY_ABOMINATION_WING               = 2,
+    SAY_SPIDER_WING                    = 3,
+    SAY_PLAGUE_WING                    = 4,
     // Used in all talks
-    SAY_TALK_COMPLETE = 5,
+    SAY_TALK_COMPLETE                  = 5,
     // Pinnacle of Naxxramas
-    SAY_SAPPHIRON = 6,
-    SAY_KELTHUZAD_1 = 7,
-    SAY_KELTHUZAD_2 = 8,
-    SAY_KELTHUZAD_3 = 9,
+    SAY_SAPPHIRON                      = 6,
+    SAY_KELTHUZAD_1                    = 7,
+    SAY_KELTHUZAD_2                    = 8,
+    SAY_KELTHUZAD_3                    = 9,
     // Death knight wing of Naxxramas
-    SAY_RAZUVIOUS = 10,
-    SAY_GOTHIK = 11,
-    SAY_DEATH_KNIGHTS_1 = 12,
-    SAY_DEATH_KNIGHTS_2 = 13,
-    SAY_DEATH_KNIGHTS_3 = 14,
-    SAY_DEATH_KNIGHTS_4 = 15,
+    SAY_RAZUVIOUS                      = 10,
+    SAY_GOTHIK                         = 11,
+    SAY_DEATH_KNIGHTS_1                = 12,
+    SAY_DEATH_KNIGHTS_2                = 13,
+    SAY_DEATH_KNIGHTS_3                = 14,
+    SAY_DEATH_KNIGHTS_4                = 15,
     // Blighted abomination wing of Naxxramas
-    SAY_PATCHWERK = 16,
-    SAY_GROBBULUS = 17,
-    SAY_GLUTH = 18,
-    SAY_THADDIUS = 19,
+    SAY_PATCHWERK                      = 16,
+    SAY_GROBBULUS                      = 17,
+    SAY_GLUTH                          = 18,
+    SAY_THADDIUS                       = 19,
     // Accursed spider wing of Naxxramas
-    SAY_ANUBREKHAN = 20,
-    SAY_FAERLINA = 21,
-    SAY_MAEXXNA = 22,
+    SAY_ANUBREKHAN                     = 20,
+    SAY_FAERLINA                       = 21,
+    SAY_MAEXXNA                        = 22,
     // Dread plague wing of Naxxramas
-    SAY_NOTH = 23,
-    SAY_HEIGAN_1 = 24,
-    SAY_HEIGAN_2 = 25,
-    SAY_LOATHEB = 26,
+    SAY_NOTH                           = 23,
+    SAY_HEIGAN_1                       = 24,
+    SAY_HEIGAN_2                       = 25,
+    SAY_LOATHEB                        = 26,
 
-    SPELL_HEROIC_IMAGE_CHANNEL = 49519,
+    SPELL_HEROIC_IMAGE_CHANNEL         = 49519,
 
-    EVENT_START_RANDOM = 1,
-    EVENT_MOVE_TO_POINT = 2,
-    EVENT_TALK_COMPLETE = 3,
-    EVENT_GET_TARGETS = 4,
-    EVENT_KELTHUZAD_2 = 5,
-    EVENT_KELTHUZAD_3 = 6,
-    EVENT_DEATH_KNIGHTS_2 = 7,
-    EVENT_DEATH_KNIGHTS_3 = 8,
-    EVENT_DEATH_KNIGHTS_4 = 9,
-    EVENT_HEIGAN_2 = 10
+    EVENT_START_RANDOM                 = 1,
+    EVENT_MOVE_TO_POINT                = 2,
+    EVENT_TALK_COMPLETE                = 3,
+    EVENT_GET_TARGETS                  = 4,
+    EVENT_KELTHUZAD_2                  = 5,
+    EVENT_KELTHUZAD_3                  = 6,
+    EVENT_DEATH_KNIGHTS_2              = 7,
+    EVENT_DEATH_KNIGHTS_3              = 8,
+    EVENT_DEATH_KNIGHTS_4              = 9,
+    EVENT_HEIGAN_2                     = 10
 };
 
 uint32 const AudienceMobs[3] = { NPC_INFANTRYMAN, NPC_SENTINAL, NPC_BATTLE_MAGE };
@@ -140,13 +140,13 @@ Position const PosTalkLocations[6] =
     { 3807.508f, -691.0882f, 221.9688f, 2.094395f }, // Death knight wing of Naxxramas
     { 3797.228f, -690.3555f, 222.5019f, 1.134464f }, // Blighted abomination wing of Naxxramas
     { 3804.038f, -672.3098f, 222.5019f, 4.578917f }, // Accursed spider wing of Naxxramas
-    { 3815.097f, -680.2596f, 221.9777f, 2.86234f }, // Dread plague wing of Naxxramas
-    { 3798.05f, -680.611f, 222.9825f, 6.038839f }, // Home
+    { 3815.097f, -680.2596f, 221.9777f, 2.86234f  }, // Dread plague wing of Naxxramas
+    { 3798.05f,  -680.611f,  222.9825f, 6.038839f }, // Home
 };
 
 class npc_commander_eligor_dawnbringer : public CreatureScript
 {
-public: npc_commander_eligor_dawnbringer() : CreatureScript("npc_commander_eligor_dawnbringer") {}
+    public: npc_commander_eligor_dawnbringer() : CreatureScript("npc_commander_eligor_dawnbringer") {}
 
         struct npc_commander_eligor_dawnbringerAI : public ScriptedAI
         {
@@ -180,57 +180,57 @@ public: npc_commander_eligor_dawnbringer() : CreatureScript("npc_commander_eligo
                         switch (talkWing)
                         {
                         case 0: // Pinnacle of Naxxramas
-                        {
-                                    switch (urand(0, 1))
-                                    {
+                            {
+                                switch (urand (0, 1))
+                                {
                                     case 0: ChangeImage(NPC_IMAGE_OF_KELTHUZAD, MODEL_IMAGE_OF_KELTHUZAD, SAY_KELTHUZAD_1);
-                                        _events.ScheduleEvent(EVENT_KELTHUZAD_2, 8000); break;
+                                            _events.ScheduleEvent(EVENT_KELTHUZAD_2, 8000); break;
                                     case 1: ChangeImage(NPC_IMAGE_OF_SAPPHIRON, MODEL_IMAGE_OF_SAPPHIRON, SAY_SAPPHIRON); break;
-                                    }
-                        }
+                                }
+                            }
                             break;
                         case 1: // Death knight wing of Naxxramas
-                        {
-                                    switch (urand(0, 2))
-                                    {
+                            {
+                                switch (urand (0, 2))
+                                {
                                     case 0: ChangeImage(NPC_IMAGE_OF_RAZUVIOUS, MODEL_IMAGE_OF_RAZUVIOUS, SAY_RAZUVIOUS); break;
                                     case 1: ChangeImage(NPC_IMAGE_OF_GOTHIK, MODEL_IMAGE_OF_GOTHIK, SAY_GOTHIK); break;
                                     case 2: ChangeImage(NPC_IMAGE_OF_THANE, MODEL_IMAGE_OF_THANE, SAY_DEATH_KNIGHTS_1);
-                                        _events.ScheduleEvent(EVENT_DEATH_KNIGHTS_2, 10000); break;
-                                    }
-                        }
+                                            _events.ScheduleEvent(EVENT_DEATH_KNIGHTS_2, 10000); break;
+                                }
+                            }
                             break;
                         case 2: // Blighted abomination wing of Naxxramas
-                        {
-                                    switch (urand(0, 3))
-                                    {
+                            {
+                                switch (urand (0, 3))
+                                {
                                     case 0: ChangeImage(NPC_IMAGE_OF_PATCHWERK, MODEL_IMAGE_OF_PATCHWERK, SAY_PATCHWERK); break;
                                     case 1: ChangeImage(NPC_IMAGE_OF_GROBBULUS, MODEL_IMAGE_OF_GROBBULUS, SAY_GROBBULUS); break;
                                     case 2: ChangeImage(NPC_IMAGE_OF_THADDIUS, MODEL_IMAGE_OF_THADDIUS, SAY_THADDIUS); break;
                                     case 3: ChangeImage(NPC_IMAGE_OF_GLUTH, MODEL_IMAGE_OF_GLUTH, SAY_GLUTH); break;
-                                    }
-                        }
+                                }
+                            }
                             break;
                         case 3: // Accursed spider wing of Naxxramas
-                        {
-                                    switch (urand(0, 2))
-                                    {
+                            {
+                                switch (urand (0, 2))
+                                {
                                     case 0: ChangeImage(NPC_IMAGE_OF_ANUBREKHAN, MODEL_IMAGE_OF_ANUBREKHAN, SAY_ANUBREKHAN); break;
                                     case 1: ChangeImage(NPC_IMAGE_OF_FAERLINA, MODEL_IMAGE_OF_FAERLINA, SAY_FAERLINA); break;
                                     case 2: ChangeImage(NPC_IMAGE_OF_MAEXXNA, MODEL_IMAGE_OF_MAEXXNA, SAY_MAEXXNA); break;
-                                    }
-                        }
+                                }
+                            }
                             break;
                         case 4: // Dread plague wing of Naxxramas
-                        {
-                                    switch (urand(0, 2))
-                                    {
+                            {
+                                switch (urand (0, 2))
+                                {
                                     case 0: ChangeImage(NPC_IMAGE_OF_NOTH, MODEL_IMAGE_OF_NOTH, SAY_NOTH); break;
                                     case 1: ChangeImage(NPC_IMAGE_OF_HEIGAN, MODEL_IMAGE_OF_HEIGAN, SAY_HEIGAN_1);
-                                        _events.ScheduleEvent(EVENT_HEIGAN_2, 8000); break;
+                                            _events.ScheduleEvent(EVENT_HEIGAN_2, 8000); break;
                                     case 2: ChangeImage(NPC_IMAGE_OF_LOATHEB, MODEL_IMAGE_OF_LOATHEB, SAY_LOATHEB); break;
-                                    }
-                        }
+                                }
+                            }
                             break;
                         case 5: // Home
                             _events.ScheduleEvent(EVENT_START_RANDOM, 30000);
@@ -292,72 +292,72 @@ public: npc_commander_eligor_dawnbringer() : CreatureScript("npc_commander_eligo
 
             void UpdateAI(uint32 diff) override
             {
-                _events.Update(diff);
+               _events.Update(diff);
 
                 while (uint32 eventId = _events.ExecuteEvent())
                 {
                     switch (eventId)
                     {
-                    case EVENT_START_RANDOM:
-                        talkWing = urand(0, 4);
-                        Talk(talkWing);
-                        _events.ScheduleEvent(EVENT_MOVE_TO_POINT, 8000);
-                        break;
-                    case EVENT_MOVE_TO_POINT:
-                        me->SetWalk(true);
-                        me->GetMotionMaster()->Clear();
-                        me->GetMotionMaster()->MovePoint(1, PosTalkLocations[talkWing].m_positionX, PosTalkLocations[talkWing].m_positionY, PosTalkLocations[talkWing].m_positionZ);
-                        break;
-                    case EVENT_TALK_COMPLETE:
-                        talkWing = 5;
-                        Talk(talkWing);
-                        _events.ScheduleEvent(EVENT_MOVE_TO_POINT, 5000);
-                        break;
-                    case EVENT_GET_TARGETS:
-                        StoreTargets();
-                        break;
-                    case EVENT_KELTHUZAD_2:
-                        Talk(SAY_KELTHUZAD_2);
-                        _events.ScheduleEvent(EVENT_KELTHUZAD_3, 8000);
-                        break;
-                    case EVENT_KELTHUZAD_3:
-                        Talk(SAY_KELTHUZAD_3);
-                        break;
-                    case EVENT_DEATH_KNIGHTS_2:
-                        Talk(SAY_DEATH_KNIGHTS_2);
-                        if (Creature* creature = ObjectAccessor::GetCreature(*me, imageList[talkWing]))
-                        {
-                            creature->SetEntry(NPC_IMAGE_OF_BLAUMEUX);
-                            creature->SetDisplayId(MODEL_IMAGE_OF_BLAUMEUX);
-                        }
-                        _events.ScheduleEvent(EVENT_DEATH_KNIGHTS_3, 10000);
-                        break;
-                    case EVENT_DEATH_KNIGHTS_3:
-                        Talk(SAY_DEATH_KNIGHTS_3);
-                        if (Creature* creature = ObjectAccessor::GetCreature(*me, imageList[talkWing]))
-                        {
-                            creature->SetEntry(NPC_IMAGE_OF_ZELIEK);
-                            creature->SetDisplayId(MODEL_IMAGE_OF_ZELIEK);
-                        }
-                        _events.ScheduleEvent(EVENT_DEATH_KNIGHTS_4, 10000);
-                        break;
-                    case EVENT_DEATH_KNIGHTS_4:
-                        Talk(SAY_DEATH_KNIGHTS_4);
-                        break;
-                    case EVENT_HEIGAN_2:
-                        Talk(SAY_HEIGAN_2);
-                        break;
-                    default:
-                        break;
+                        case EVENT_START_RANDOM:
+                            talkWing = urand (0, 4);
+                            Talk(talkWing);
+                            _events.ScheduleEvent(EVENT_MOVE_TO_POINT, 8000);
+                            break;
+                        case EVENT_MOVE_TO_POINT:
+                            me->SetWalk(true);
+                            me->GetMotionMaster()->Clear();
+                            me->GetMotionMaster()->MovePoint(1, PosTalkLocations[talkWing].m_positionX, PosTalkLocations[talkWing].m_positionY, PosTalkLocations[talkWing].m_positionZ);
+                            break;
+                        case EVENT_TALK_COMPLETE:
+                            talkWing = 5;
+                            Talk(talkWing);
+                            _events.ScheduleEvent(EVENT_MOVE_TO_POINT, 5000);
+                            break;
+                        case EVENT_GET_TARGETS:
+                            StoreTargets();
+                            break;
+                        case EVENT_KELTHUZAD_2:
+                            Talk(SAY_KELTHUZAD_2);
+                            _events.ScheduleEvent(EVENT_KELTHUZAD_3, 8000);
+                            break;
+                        case EVENT_KELTHUZAD_3:
+                            Talk(SAY_KELTHUZAD_3);
+                            break;
+                        case EVENT_DEATH_KNIGHTS_2:
+                            Talk(SAY_DEATH_KNIGHTS_2);
+                            if (Creature* creature = ObjectAccessor::GetCreature(*me, imageList[talkWing]))
+                            {
+                                creature->SetEntry(NPC_IMAGE_OF_BLAUMEUX);
+                                creature->SetDisplayId(MODEL_IMAGE_OF_BLAUMEUX);
+                            }
+                            _events.ScheduleEvent(EVENT_DEATH_KNIGHTS_3, 10000);
+                            break;
+                        case EVENT_DEATH_KNIGHTS_3:
+                            Talk(SAY_DEATH_KNIGHTS_3);
+                            if (Creature* creature = ObjectAccessor::GetCreature(*me, imageList[talkWing]))
+                            {
+                                creature->SetEntry(NPC_IMAGE_OF_ZELIEK);
+                                creature->SetDisplayId(MODEL_IMAGE_OF_ZELIEK);
+                            }
+                            _events.ScheduleEvent(EVENT_DEATH_KNIGHTS_4, 10000);
+                            break;
+                        case EVENT_DEATH_KNIGHTS_4:
+                            Talk(SAY_DEATH_KNIGHTS_4);
+                            break;
+                        case EVENT_HEIGAN_2:
+                            Talk(SAY_HEIGAN_2);
+                            break;
+                        default:
+                            break;
                     }
                 }
                 DoMeleeAttackIfReady();
             }
-        private:
-            EventMap _events;
-            ObjectGuid audienceList[10];
-            ObjectGuid imageList[5];
-            uint8    talkWing;
+            private:
+                EventMap _events;
+                ObjectGuid audienceList[10];
+                ObjectGuid imageList[5];
+                uint8    talkWing;
         };
 
         CreatureAI* GetAI(Creature* creature) const
@@ -372,16 +372,16 @@ public: npc_commander_eligor_dawnbringer() : CreatureScript("npc_commander_eligo
 
 enum StrengthenAncientsMisc
 {
-    SAY_WALKER_FRIENDLY = 0,
-    SAY_WALKER_ENEMY = 1,
-    SAY_LOTHALOR = 0,
+    SAY_WALKER_FRIENDLY         = 0,
+    SAY_WALKER_ENEMY            = 1,
+    SAY_LOTHALOR                = 0,
 
-    SPELL_CREATE_ITEM_BARK = 47550,
-    SPELL_CONFUSED = 47044,
+    SPELL_CREATE_ITEM_BARK      = 47550,
+    SPELL_CONFUSED              = 47044,
 
-    NPC_LOTHALOR = 26321,
+    NPC_LOTHALOR                = 26321,
 
-    FACTION_WALKER_ENEMY = 14,
+    FACTION_WALKER_ENEMY        = 14,
 };
 
 class spell_q12096_q12092_dummy : public SpellScriptLoader // Strengthen the Ancients: On Interact Dummy to Woodlands Walker
@@ -470,132 +470,132 @@ public:
 enum WyrmDefenderEnum
 {
     // Quest data
-    QUEST_DEFENDING_WYRMREST_TEMPLE = 12372,
-    GOSSIP_TEXTID_DEF1 = 12899,
+    QUEST_DEFENDING_WYRMREST_TEMPLE          = 12372,
+    GOSSIP_TEXTID_DEF1                       = 12899,
 
     // Gossip data
-    GOSSIP_TEXTID_DEF2 = 12900,
+    GOSSIP_TEXTID_DEF2                       = 12900,
 
     // Spells data
-    SPELL_CHARACTER_SCRIPT = 49213,
-    SPELL_DEFENDER_ON_LOW_HEALTH_EMOTE = 52421, // ID - 52421 Wyrmrest Defender: On Low Health Boss Emote to Controller - Random /self/
-    SPELL_RENEW = 49263, // cast to heal drakes
-    SPELL_WYRMREST_DEFENDER_MOUNT = 49256,
+    SPELL_CHARACTER_SCRIPT                   = 49213,
+    SPELL_DEFENDER_ON_LOW_HEALTH_EMOTE       = 52421, // ID - 52421 Wyrmrest Defender: On Low Health Boss Emote to Controller - Random /self/
+    SPELL_RENEW                              = 49263, // cast to heal drakes
+    SPELL_WYRMREST_DEFENDER_MOUNT            = 49256,
 
     // Texts data
-    WHISPER_MOUNTED = 0,
-    BOSS_EMOTE_ON_LOW_HEALTH = 2
+    WHISPER_MOUNTED                        = 0,
+    BOSS_EMOTE_ON_LOW_HEALTH               = 2
 };
 
 #define GOSSIP_ITEM_1      "We need to get into the fight. Are you ready?"
 
 class npc_wyrmrest_defender : public CreatureScript
 {
-public:
-    npc_wyrmrest_defender() : CreatureScript("npc_wyrmrest_defender") { }
+    public:
+        npc_wyrmrest_defender() : CreatureScript("npc_wyrmrest_defender") { }
 
-    bool OnGossipHello(Player* player, Creature* creature) override
-    {
-        if (player->GetQuestStatus(QUEST_DEFENDING_WYRMREST_TEMPLE) == QUEST_STATUS_INCOMPLETE)
+        bool OnGossipHello(Player* player, Creature* creature) override
         {
-            player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_1, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
-            player->SEND_GOSSIP_MENU(GOSSIP_TEXTID_DEF1, creature->GetGUID());
-        }
-        else
-            player->SEND_GOSSIP_MENU(player->GetGossipTextId(creature), creature->GetGUID());
-
-        return true;
-    }
-
-    bool OnGossipSelect(Player* player, Creature* creature, uint32 /*sender*/, uint32 action) override
-    {
-        player->PlayerTalkClass->ClearMenus();
-        if (action == GOSSIP_ACTION_INFO_DEF + 1)
-        {
-            player->SEND_GOSSIP_MENU(GOSSIP_TEXTID_DEF2, creature->GetGUID());
-            // Makes player cast trigger spell for 49207 on self
-            player->CastSpell(player, SPELL_CHARACTER_SCRIPT, true);
-            // The gossip should not auto close
-        }
-
-        return true;
-    }
-
-    struct npc_wyrmrest_defenderAI : public VehicleAI
-    {
-        npc_wyrmrest_defenderAI(Creature* creature) : VehicleAI(creature)
-        {
-            Initialize();
-        }
-
-        void Initialize()
-        {
-            hpWarningReady = true;
-            renewRecoveryCanCheck = false;
-
-            RenewRecoveryChecker = 0;
-        }
-
-        bool hpWarningReady;
-        bool renewRecoveryCanCheck;
-
-        uint32 RenewRecoveryChecker;
-
-        void Reset() override
-        {
-            Initialize();
-        }
-
-        void UpdateAI(uint32 diff) override
-        {
-            // Check system for Health Warning should happen first time whenever get under 30%,
-            // after it should be able to happen only after recovery of last renew is fully done (20 sec),
-            // next one used won't interfere
-            if (hpWarningReady && me->GetHealthPct() <= 30.0f)
+            if (player->GetQuestStatus(QUEST_DEFENDING_WYRMREST_TEMPLE) == QUEST_STATUS_INCOMPLETE)
             {
-                me->CastSpell(me, SPELL_DEFENDER_ON_LOW_HEALTH_EMOTE);
-                hpWarningReady = false;
+                player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_1, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
+                player->SEND_GOSSIP_MENU(GOSSIP_TEXTID_DEF1, creature->GetGUID());
+            }
+            else
+                player->SEND_GOSSIP_MENU(player->GetGossipTextId(creature), creature->GetGUID());
+
+            return true;
+        }
+
+        bool OnGossipSelect(Player* player, Creature* creature, uint32 /*sender*/, uint32 action) override
+        {
+            player->PlayerTalkClass->ClearMenus();
+            if (action == GOSSIP_ACTION_INFO_DEF+1)
+            {
+                player->SEND_GOSSIP_MENU(GOSSIP_TEXTID_DEF2, creature->GetGUID());
+                // Makes player cast trigger spell for 49207 on self
+                player->CastSpell(player, SPELL_CHARACTER_SCRIPT, true);
+                // The gossip should not auto close
             }
 
-            if (renewRecoveryCanCheck)
+            return true;
+        }
+
+        struct npc_wyrmrest_defenderAI : public VehicleAI
+        {
+            npc_wyrmrest_defenderAI(Creature* creature) : VehicleAI(creature)
             {
-                if (RenewRecoveryChecker <= diff)
+                Initialize();
+            }
+
+            void Initialize()
+            {
+                hpWarningReady = true;
+                renewRecoveryCanCheck = false;
+
+                RenewRecoveryChecker = 0;
+            }
+
+            bool hpWarningReady;
+            bool renewRecoveryCanCheck;
+
+            uint32 RenewRecoveryChecker;
+
+            void Reset() override
+            {
+                Initialize();
+            }
+
+            void UpdateAI(uint32 diff) override
+            {
+                // Check system for Health Warning should happen first time whenever get under 30%,
+                // after it should be able to happen only after recovery of last renew is fully done (20 sec),
+                // next one used won't interfere
+                if (hpWarningReady && me->GetHealthPct() <= 30.0f)
                 {
-                    renewRecoveryCanCheck = false;
-                    hpWarningReady = true;
+                    me->CastSpell(me, SPELL_DEFENDER_ON_LOW_HEALTH_EMOTE);
+                    hpWarningReady = false;
                 }
-                else RenewRecoveryChecker -= diff;
-            }
-        }
 
-        void SpellHit(Unit* /*caster*/, SpellInfo const* spell) override
-        {
-            switch (spell->Id)
-            {
-            case SPELL_WYRMREST_DEFENDER_MOUNT:
-                Talk(WHISPER_MOUNTED, me->GetCharmerOrOwner());
-                me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_IMMUNE_TO_PC | UNIT_FLAG_IMMUNE_TO_NPC);
-                me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_PVP_ATTACKABLE);
-                break;
-                // Both below are for checking low hp warning
-            case SPELL_DEFENDER_ON_LOW_HEALTH_EMOTE:
-                Talk(BOSS_EMOTE_ON_LOW_HEALTH, me->GetCharmerOrOwner());
-                break;
-            case SPELL_RENEW:
-                if (!hpWarningReady && RenewRecoveryChecker <= 100)
+                if (renewRecoveryCanCheck)
                 {
-                    RenewRecoveryChecker = 20000;
+                    if (RenewRecoveryChecker <= diff)
+                    {
+                        renewRecoveryCanCheck = false;
+                        hpWarningReady = true;
+                    }
+                    else RenewRecoveryChecker -= diff;
                 }
-                renewRecoveryCanCheck = true;
-                break;
             }
-        }
-    };
 
-    CreatureAI* GetAI(Creature* creature) const override
-    {
-        return new npc_wyrmrest_defenderAI(creature);
-    }
+            void SpellHit(Unit* /*caster*/, SpellInfo const* spell) override
+            {
+                switch (spell->Id)
+                {
+                    case SPELL_WYRMREST_DEFENDER_MOUNT:
+                        Talk(WHISPER_MOUNTED, me->GetCharmerOrOwner());
+                        me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_IMMUNE_TO_PC | UNIT_FLAG_IMMUNE_TO_NPC);
+                        me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_PVP_ATTACKABLE);
+                        break;
+                    // Both below are for checking low hp warning
+                    case SPELL_DEFENDER_ON_LOW_HEALTH_EMOTE:
+                        Talk(BOSS_EMOTE_ON_LOW_HEALTH, me->GetCharmerOrOwner());
+                        break;
+                    case SPELL_RENEW:
+                        if (!hpWarningReady && RenewRecoveryChecker <= 100)
+                        {
+                            RenewRecoveryChecker = 20000;
+                        }
+                        renewRecoveryCanCheck = true;
+                        break;
+                }
+            }
+        };
+
+        CreatureAI* GetAI(Creature* creature) const override
+        {
+            return new npc_wyrmrest_defenderAI(creature);
+        }
 };
 
 /*#####
@@ -604,18 +604,18 @@ public:
 
 enum TorturerLeCraft
 {
-    SPELL_HEMORRHAGE = 30478,
-    SPELL_KIDNEY_SHOT = 30621,
+    SPELL_HEMORRHAGE                   = 30478,
+    SPELL_KIDNEY_SHOT                  = 30621,
     SPELL_HIGH_EXECUTORS_BRANDING_IRON = 48603,
-    NPC_TORTURER_LECRAFT = 27394,
-    EVENT_HEMORRHAGE = 1,
-    EVENT_KIDNEY_SHOT = 2,
-    SAY_AGGRO = 0
+    NPC_TORTURER_LECRAFT               = 27394,
+    EVENT_HEMORRHAGE                   = 1,
+    EVENT_KIDNEY_SHOT                  = 2,
+    SAY_AGGRO                          = 0
 };
 
 class npc_torturer_lecraft : public CreatureScript
 {
-public: npc_torturer_lecraft() : CreatureScript("npc_torturer_lecraft") {}
+    public: npc_torturer_lecraft() : CreatureScript("npc_torturer_lecraft") {}
 
         struct npc_torturer_lecraftAI : public ScriptedAI
         {
@@ -636,7 +636,7 @@ public: npc_torturer_lecraft() : CreatureScript("npc_torturer_lecraft") {}
                 _events.ScheduleEvent(EVENT_KIDNEY_SHOT, urand(12000, 15000));
 
                 if (Player* player = who->ToPlayer())
-                    Talk(SAY_AGGRO, player);
+                    Talk (SAY_AGGRO, player);
             }
 
             void SpellHit(Unit* caster, const SpellInfo* spell) override
@@ -666,33 +666,33 @@ public: npc_torturer_lecraft() : CreatureScript("npc_torturer_lecraft") {}
 
             void UpdateAI(uint32 diff) override
             {
-                if (!UpdateVictim())
-                    return;
+               if (!UpdateVictim())
+                   return;
 
-                _events.Update(diff);
+               _events.Update(diff);
 
                 while (uint32 eventId = _events.ExecuteEvent())
                 {
                     switch (eventId)
                     {
-                    case EVENT_HEMORRHAGE:
-                        DoCastVictim(SPELL_HEMORRHAGE);
-                        _events.ScheduleEvent(EVENT_HEMORRHAGE, urand(12000, 168000));
-                        break;
-                    case EVENT_KIDNEY_SHOT:
-                        DoCastVictim(SPELL_KIDNEY_SHOT);
-                        _events.ScheduleEvent(EVENT_KIDNEY_SHOT, urand(20000, 26000));
-                        break;
-                    default:
-                        break;
+                        case EVENT_HEMORRHAGE:
+                            DoCastVictim(SPELL_HEMORRHAGE);
+                            _events.ScheduleEvent(EVENT_HEMORRHAGE, urand(12000, 168000));
+                            break;
+                        case EVENT_KIDNEY_SHOT:
+                            DoCastVictim(SPELL_KIDNEY_SHOT);
+                            _events.ScheduleEvent(EVENT_KIDNEY_SHOT, urand(20000, 26000));
+                            break;
+                        default:
+                            break;
                     }
                 }
                 DoMeleeAttackIfReady();
             }
-        private:
-            EventMap _events;
-            uint8    _textCounter;
-            ObjectGuid _playerGUID;
+            private:
+                EventMap _events;
+                uint8    _textCounter;
+                ObjectGuid _playerGUID;
         };
 
         CreatureAI* GetAI(Creature* creature) const

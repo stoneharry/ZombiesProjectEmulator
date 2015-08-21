@@ -79,7 +79,7 @@ struct OutdoorPvPData;
     CollisionScript
     ArenaTeamScript
 
-    */
+*/
 
 /*
     Standard procedure when adding new script type classes:
@@ -88,31 +88,31 @@ struct OutdoorPvPData;
 
     class MyScriptType : public ScriptObject
     {
-    uint32 _someId;
+        uint32 _someId;
 
-    private:
+        private:
 
-    void RegisterSelf();
+            void RegisterSelf();
 
-    protected:
+        protected:
 
-    MyScriptType(const char* name, uint32 someId)
-    : ScriptObject(name), _someId(someId)
-    {
-    ScriptRegistry<MyScriptType>::AddScript(this);
-    }
+            MyScriptType(const char* name, uint32 someId)
+                : ScriptObject(name), _someId(someId)
+            {
+                ScriptRegistry<MyScriptType>::AddScript(this);
+            }
 
-    public:
+        public:
 
-    // If a virtual function in your script type class is not necessarily
-    // required to be overridden, just declare it virtual with an empty
-    // body. If, on the other hand, it's logical only to override it (i.e.
-    // if it's the only method in the class), make it pure virtual, by adding
-    // = 0 to it.
-    virtual void OnSomeEvent(uint32 someArg1, std::string& someArg2) { }
+            // If a virtual function in your script type class is not necessarily
+            // required to be overridden, just declare it virtual with an empty
+            // body. If, on the other hand, it's logical only to override it (i.e.
+            // if it's the only method in the class), make it pure virtual, by adding
+            // = 0 to it.
+            virtual void OnSomeEvent(uint32 someArg1, std::string& someArg2) { }
 
-    // This is a pure virtual function:
-    virtual void OnAnotherEvent(uint32 someArg) = 0;
+            // This is a pure virtual function:
+            virtual void OnAnotherEvent(uint32 someArg) = 0;
     }
 
     Next, you need to add a specialization for ScriptRegistry. Put this in the bottom of
@@ -135,221 +135,221 @@ struct OutdoorPvPData;
 
     void ScriptMgr::OnSomeEvent(uint32 someArg1, std::string& someArg2)
     {
-    FOREACH_SCRIPT(MyScriptType)->OnSomeEvent(someArg1, someArg2);
+        FOREACH_SCRIPT(MyScriptType)->OnSomeEvent(someArg1, someArg2);
     }
 
     void ScriptMgr::OnAnotherEvent(uint32 someArg)
     {
-    FOREACH_SCRIPT(MyScriptType)->OnAnotherEvent(someArg1, someArg2);
+        FOREACH_SCRIPT(MyScriptType)->OnAnotherEvent(someArg1, someArg2);
     }
 
     Now you simply call these two functions from anywhere in the core to trigger the
     event on all registered scripts of that type.
-    */
+*/
 
 class ScriptObject
 {
     friend class ScriptMgr;
 
-public:
+    public:
 
-    // Do not override this in scripts; it should be overridden by the various script type classes. It indicates
-    // whether or not this script type must be assigned in the database.
-    virtual bool IsDatabaseBound() const { return false; }
+        // Do not override this in scripts; it should be overridden by the various script type classes. It indicates
+        // whether or not this script type must be assigned in the database.
+        virtual bool IsDatabaseBound() const { return false; }
 
-    const std::string& GetName() const { return _name; }
+        const std::string& GetName() const { return _name; }
 
-protected:
+    protected:
 
-    ScriptObject(const char* name)
-        : _name(name)
-    {
-    }
+        ScriptObject(const char* name)
+            : _name(name)
+        {
+        }
 
-    virtual ~ScriptObject()
-    {
-    }
+        virtual ~ScriptObject()
+        {
+        }
 
-private:
+    private:
 
-    const std::string _name;
+        const std::string _name;
 };
 
 template<class TObject> class UpdatableScript
 {
-protected:
+    protected:
 
-    UpdatableScript()
-    {
-    }
+        UpdatableScript()
+        {
+        }
 
-    virtual ~UpdatableScript() { }
+        virtual ~UpdatableScript() { }
 
-public:
+    public:
 
-    virtual void OnUpdate(TObject* /*obj*/, uint32 /*diff*/) { }
+        virtual void OnUpdate(TObject* /*obj*/, uint32 /*diff*/) { }
 };
 
 class SpellScriptLoader : public ScriptObject
 {
-protected:
+    protected:
 
-    SpellScriptLoader(const char* name);
+        SpellScriptLoader(const char* name);
 
-public:
+    public:
 
-    bool IsDatabaseBound() const final override { return true; }
+        bool IsDatabaseBound() const final override { return true; }
 
-    // Should return a fully valid SpellScript pointer.
-    virtual SpellScript* GetSpellScript() const { return NULL; }
+        // Should return a fully valid SpellScript pointer.
+        virtual SpellScript* GetSpellScript() const { return NULL; }
 
-    // Should return a fully valid AuraScript pointer.
-    virtual AuraScript* GetAuraScript() const { return NULL; }
+        // Should return a fully valid AuraScript pointer.
+        virtual AuraScript* GetAuraScript() const { return NULL; }
 };
 
 class ServerScript : public ScriptObject
 {
-protected:
+    protected:
 
-    ServerScript(const char* name);
+        ServerScript(const char* name);
 
-public:
+    public:
 
-    // Called when reactive socket I/O is started (WorldTcpSessionMgr).
-    virtual void OnNetworkStart() { }
+        // Called when reactive socket I/O is started (WorldTcpSessionMgr).
+        virtual void OnNetworkStart() { }
 
-    // Called when reactive I/O is stopped.
-    virtual void OnNetworkStop() { }
+        // Called when reactive I/O is stopped.
+        virtual void OnNetworkStop() { }
 
-    // Called when a remote socket establishes a connection to the server. Do not store the socket object.
-    virtual void OnSocketOpen(std::shared_ptr<WorldSocket> /*socket*/) { }
+        // Called when a remote socket establishes a connection to the server. Do not store the socket object.
+        virtual void OnSocketOpen(std::shared_ptr<WorldSocket> /*socket*/) { }
 
-    // Called when a socket is closed. Do not store the socket object, and do not rely on the connection
-    // being open; it is not.
-    virtual void OnSocketClose(std::shared_ptr<WorldSocket> /*socket*/) { }
+        // Called when a socket is closed. Do not store the socket object, and do not rely on the connection
+        // being open; it is not.
+        virtual void OnSocketClose(std::shared_ptr<WorldSocket> /*socket*/) { }
 
-    // Called when a packet is sent to a client. The packet object is a copy of the original packet, so reading
-    // and modifying it is safe.
-    virtual void OnPacketSend(WorldSession* /*session*/, WorldPacket& /*packet*/) { }
+        // Called when a packet is sent to a client. The packet object is a copy of the original packet, so reading
+        // and modifying it is safe.
+        virtual void OnPacketSend(WorldSession* /*session*/, WorldPacket& /*packet*/) { }
 
-    // Called when a (valid) packet is received by a client. The packet object is a copy of the original packet, so
-    // reading and modifying it is safe. Make sure to check WorldSession pointer before usage, it might be null in case of auth packets
-    virtual void OnPacketReceive(WorldSession* /*session*/, WorldPacket& /*packet*/) { }
+        // Called when a (valid) packet is received by a client. The packet object is a copy of the original packet, so
+        // reading and modifying it is safe. Make sure to check WorldSession pointer before usage, it might be null in case of auth packets
+        virtual void OnPacketReceive(WorldSession* /*session*/, WorldPacket& /*packet*/) { }
 
-    // Called when an invalid (unknown opcode) packet is received by a client. The packet is a reference to the orignal
-    // packet; not a copy. This allows you to actually handle unknown packets (for whatever purpose).
-    virtual void OnUnknownPacketReceive(WorldSession* /*session*/, WorldPacket& /*packet*/) { }
+        // Called when an invalid (unknown opcode) packet is received by a client. The packet is a reference to the orignal
+        // packet; not a copy. This allows you to actually handle unknown packets (for whatever purpose).
+        virtual void OnUnknownPacketReceive(WorldSession* /*session*/, WorldPacket& /*packet*/) { }
 };
 
 class WorldScript : public ScriptObject
 {
-protected:
+    protected:
 
-    WorldScript(const char* name);
+        WorldScript(const char* name);
 
-public:
+    public:
 
-    // Called when the open/closed state of the world changes.
-    virtual void OnOpenStateChange(bool /*open*/) { }
+        // Called when the open/closed state of the world changes.
+        virtual void OnOpenStateChange(bool /*open*/) { }
 
-    // Called after the world configuration is (re)loaded.
-    virtual void OnConfigLoad(bool /*reload*/) { }
+        // Called after the world configuration is (re)loaded.
+        virtual void OnConfigLoad(bool /*reload*/) { }
 
-    // Called before the message of the day is changed.
-    virtual void OnMotdChange(std::string& /*newMotd*/) { }
+        // Called before the message of the day is changed.
+        virtual void OnMotdChange(std::string& /*newMotd*/) { }
 
-    // Called when a world shutdown is initiated.
-    virtual void OnShutdownInitiate(ShutdownExitCode /*code*/, ShutdownMask /*mask*/) { }
+        // Called when a world shutdown is initiated.
+        virtual void OnShutdownInitiate(ShutdownExitCode /*code*/, ShutdownMask /*mask*/) { }
 
-    // Called when a world shutdown is cancelled.
-    virtual void OnShutdownCancel() { }
+        // Called when a world shutdown is cancelled.
+        virtual void OnShutdownCancel() { }
 
-    // Called on every world tick (don't execute too heavy code here).
-    virtual void OnUpdate(uint32 /*diff*/) { }
+        // Called on every world tick (don't execute too heavy code here).
+        virtual void OnUpdate(uint32 /*diff*/) { }
 
-    // Called when the world is started.
-    virtual void OnStartup() { }
+        // Called when the world is started.
+        virtual void OnStartup() { }
 
-    // Called when the world is actually shut down.
-    virtual void OnShutdown() { }
+        // Called when the world is actually shut down.
+        virtual void OnShutdown() { }
 };
 
 class FormulaScript : public ScriptObject
 {
-protected:
+    protected:
 
-    FormulaScript(const char* name);
+        FormulaScript(const char* name);
 
-public:
+    public:
 
-    // Called after calculating honor.
-    virtual void OnHonorCalculation(float& /*honor*/, uint8 /*level*/, float /*multiplier*/) { }
+        // Called after calculating honor.
+        virtual void OnHonorCalculation(float& /*honor*/, uint8 /*level*/, float /*multiplier*/) { }
 
-    // Called after gray level calculation.
-    virtual void OnGrayLevelCalculation(uint8& /*grayLevel*/, uint8 /*playerLevel*/) { }
+        // Called after gray level calculation.
+        virtual void OnGrayLevelCalculation(uint8& /*grayLevel*/, uint8 /*playerLevel*/) { }
 
-    // Called after calculating experience color.
-    virtual void OnColorCodeCalculation(XPColorChar& /*color*/, uint8 /*playerLevel*/, uint8 /*mobLevel*/) { }
+        // Called after calculating experience color.
+        virtual void OnColorCodeCalculation(XPColorChar& /*color*/, uint8 /*playerLevel*/, uint8 /*mobLevel*/) { }
 
-    // Called after calculating zero difference.
-    virtual void OnZeroDifferenceCalculation(uint8& /*diff*/, uint8 /*playerLevel*/) { }
+        // Called after calculating zero difference.
+        virtual void OnZeroDifferenceCalculation(uint8& /*diff*/, uint8 /*playerLevel*/) { }
 
-    // Called after calculating base experience gain.
-    virtual void OnBaseGainCalculation(uint32& /*gain*/, uint8 /*playerLevel*/, uint8 /*mobLevel*/, ContentLevels /*content*/) { }
+        // Called after calculating base experience gain.
+        virtual void OnBaseGainCalculation(uint32& /*gain*/, uint8 /*playerLevel*/, uint8 /*mobLevel*/, ContentLevels /*content*/) { }
 
-    // Called after calculating experience gain.
-    virtual void OnGainCalculation(uint32& /*gain*/, Player* /*player*/, Unit* /*unit*/) { }
+        // Called after calculating experience gain.
+        virtual void OnGainCalculation(uint32& /*gain*/, Player* /*player*/, Unit* /*unit*/) { }
 
-    // Called when calculating the experience rate for group experience.
-    virtual void OnGroupRateCalculation(float& /*rate*/, uint32 /*count*/, bool /*isRaid*/) { }
+        // Called when calculating the experience rate for group experience.
+        virtual void OnGroupRateCalculation(float& /*rate*/, uint32 /*count*/, bool /*isRaid*/) { }
 };
 
 template<class TMap> class MapScript : public UpdatableScript<TMap>
 {
     MapEntry const* _mapEntry;
 
-protected:
+    protected:
 
-    MapScript(uint32 mapId)
-        : _mapEntry(sMapStore.LookupEntry(mapId))
-    {
-        if (!_mapEntry)
-            TC_LOG_ERROR("scripts", "Invalid MapScript for %u; no such map ID.", mapId);
-    }
+        MapScript(uint32 mapId)
+            : _mapEntry(sMapStore.LookupEntry(mapId))
+        {
+            if (!_mapEntry)
+                TC_LOG_ERROR("scripts", "Invalid MapScript for %u; no such map ID.", mapId);
+        }
 
-public:
+    public:
 
-    // Gets the MapEntry structure associated with this script. Can return NULL.
-    MapEntry const* GetEntry() { return _mapEntry; }
+        // Gets the MapEntry structure associated with this script. Can return NULL.
+        MapEntry const* GetEntry() { return _mapEntry; }
 
-    // Called when the map is created.
-    virtual void OnCreate(TMap* /*map*/) { }
+        // Called when the map is created.
+        virtual void OnCreate(TMap* /*map*/) { }
 
-    // Called just before the map is destroyed.
-    virtual void OnDestroy(TMap* /*map*/) { }
+        // Called just before the map is destroyed.
+        virtual void OnDestroy(TMap* /*map*/) { }
 
-    // Called when a grid map is loaded.
-    virtual void OnLoadGridMap(TMap* /*map*/, GridMap* /*gmap*/, uint32 /*gx*/, uint32 /*gy*/) { }
+        // Called when a grid map is loaded.
+        virtual void OnLoadGridMap(TMap* /*map*/, GridMap* /*gmap*/, uint32 /*gx*/, uint32 /*gy*/) { }
 
-    // Called when a grid map is unloaded.
-    virtual void OnUnloadGridMap(TMap* /*map*/, GridMap* /*gmap*/, uint32 /*gx*/, uint32 /*gy*/)  { }
+        // Called when a grid map is unloaded.
+        virtual void OnUnloadGridMap(TMap* /*map*/, GridMap* /*gmap*/, uint32 /*gx*/, uint32 /*gy*/)  { }
 
-    // Called when a player enters the map.
-    virtual void OnPlayerEnter(TMap* /*map*/, Player* /*player*/) { }
+        // Called when a player enters the map.
+        virtual void OnPlayerEnter(TMap* /*map*/, Player* /*player*/) { }
 
-    // Called when a player leaves the map.
-    virtual void OnPlayerLeave(TMap* /*map*/, Player* /*player*/) { }
+        // Called when a player leaves the map.
+        virtual void OnPlayerLeave(TMap* /*map*/, Player* /*player*/) { }
 };
 
-    class WorldMapScript : public ScriptObject, public MapScript<Map>
-    {
+class WorldMapScript : public ScriptObject, public MapScript<Map>
+{
     protected:
 
         WorldMapScript(const char* name, uint32 mapId);
-    };
+};
 
-    class InstanceMapScript : public ScriptObject, public MapScript<InstanceMap>
-    {
+class InstanceMapScript : public ScriptObject, public MapScript<InstanceMap>
+{
     protected:
 
         InstanceMapScript(const char* name, uint32 mapId);
@@ -360,17 +360,17 @@ public:
 
         // Gets an InstanceScript object for this instance.
         virtual InstanceScript* GetInstanceScript(InstanceMap* /*map*/) const { return NULL; }
-    };
+};
 
-    class BattlegroundMapScript : public ScriptObject, public MapScript<BattlegroundMap>
-    {
+class BattlegroundMapScript : public ScriptObject, public MapScript<BattlegroundMap>
+{
     protected:
 
         BattlegroundMapScript(const char* name, uint32 mapId);
-    };
+};
 
-    class ItemScript : public ScriptObject
-    {
+class ItemScript : public ScriptObject
+{
     protected:
 
         ItemScript(const char* name);
@@ -393,10 +393,10 @@ public:
 
         // Called when the item is destroyed.
         virtual bool OnRemove(Player* /*player*/, Item* /*item*/) { return false; }
-    };
+};
 
-    class UnitScript : public ScriptObject
-    {
+class UnitScript : public ScriptObject
+{
     protected:
 
         UnitScript(const char* name, bool addToScripts = true);
@@ -416,10 +416,10 @@ public:
 
         // Called when Spell Damage is being Dealt
         virtual void ModifySpellDamageTaken(Unit* /*target*/, Unit* /*attacker*/, int32& /*damage*/) { }
-    };
+};
 
-    class CreatureScript : public UnitScript, public UpdatableScript<Creature>
-    {
+class CreatureScript : public UnitScript, public UpdatableScript<Creature>
+{
     protected:
 
         CreatureScript(const char* name);
@@ -454,10 +454,10 @@ public:
 
         // Called when a CreatureAI object is needed for the creature.
         virtual CreatureAI* GetAI(Creature* /*creature*/) const { return NULL; }
-    };
+};
 
-    class GameObjectScript : public ScriptObject, public UpdatableScript<GameObject>
-    {
+class GameObjectScript : public ScriptObject, public UpdatableScript<GameObject>
+{
     protected:
 
         GameObjectScript(const char* name);
@@ -501,10 +501,10 @@ public:
 
         // Called when a GameObjectAI object is needed for the gameobject.
         virtual GameObjectAI* GetAI(GameObject* /*go*/) const { return NULL; }
-    };
+};
 
-    class AreaTriggerScript : public ScriptObject
-    {
+class AreaTriggerScript : public ScriptObject
+{
     protected:
 
         AreaTriggerScript(const char* name);
@@ -515,10 +515,10 @@ public:
 
         // Called when the area trigger is activated by a player.
         virtual bool OnTrigger(Player* /*player*/, AreaTriggerEntry const* /*trigger*/) { return false; }
-    };
+};
 
-    class BattlegroundScript : public ScriptObject
-    {
+class BattlegroundScript : public ScriptObject
+{
     protected:
 
         BattlegroundScript(const char* name);
@@ -529,10 +529,10 @@ public:
 
         // Should return a fully valid Battleground object for the type ID.
         virtual Battleground* GetBattleground() const = 0;
-    };
+};
 
-    class OutdoorPvPScript : public ScriptObject
-    {
+class OutdoorPvPScript : public ScriptObject
+{
     protected:
 
         OutdoorPvPScript(const char* name);
@@ -543,10 +543,10 @@ public:
 
         // Should return a fully valid OutdoorPvP object for the type ID.
         virtual OutdoorPvP* GetOutdoorPvP() const = 0;
-    };
+};
 
-    class CommandScript : public ScriptObject
-    {
+class CommandScript : public ScriptObject
+{
     protected:
 
         CommandScript(const char* name);
@@ -555,10 +555,10 @@ public:
 
         // Should return a pointer to a valid command table (ChatCommand array) to be used by ChatHandler.
         virtual ChatCommand* GetCommands() const = 0;
-    };
+};
 
-    class WeatherScript : public ScriptObject, public UpdatableScript<Weather>
-    {
+class WeatherScript : public ScriptObject, public UpdatableScript<Weather>
+{
     protected:
 
         WeatherScript(const char* name);
@@ -569,10 +569,10 @@ public:
 
         // Called when the weather changes in the zone this script is associated with.
         virtual void OnChange(Weather* /*weather*/, WeatherState /*state*/, float /*grade*/) { }
-    };
+};
 
-    class AuctionHouseScript : public ScriptObject
-    {
+class AuctionHouseScript : public ScriptObject
+{
     protected:
 
         AuctionHouseScript(const char* name);
@@ -590,10 +590,10 @@ public:
 
         // Called when an auction expires.
         virtual void OnAuctionExpire(AuctionHouseObject* /*ah*/, AuctionEntry* /*entry*/) { }
-    };
+};
 
-    class ConditionScript : public ScriptObject
-    {
+class ConditionScript : public ScriptObject
+{
     protected:
 
         ConditionScript(const char* name);
@@ -604,10 +604,10 @@ public:
 
         // Called when a single condition is checked for a player.
         virtual bool OnConditionCheck(Condition* /*condition*/, ConditionSourceInfo& /*sourceInfo*/) { return true; }
-    };
+};
 
-    class VehicleScript : public ScriptObject
-    {
+class VehicleScript : public ScriptObject
+{
     protected:
 
         VehicleScript(const char* name);
@@ -631,17 +631,17 @@ public:
 
         // Called after a passenger is removed from a vehicle.
         virtual void OnRemovePassenger(Vehicle* /*veh*/, Unit* /*passenger*/) { }
-    };
+};
 
-    class DynamicObjectScript : public ScriptObject, public UpdatableScript<DynamicObject>
-    {
+class DynamicObjectScript : public ScriptObject, public UpdatableScript<DynamicObject>
+{
     protected:
 
         DynamicObjectScript(const char* name);
-    };
+};
 
-    class TransportScript : public ScriptObject, public UpdatableScript<Transport>
-    {
+class TransportScript : public ScriptObject, public UpdatableScript<Transport>
+{
     protected:
 
         TransportScript(const char* name);
@@ -661,10 +661,10 @@ public:
 
         // Called when a transport moves.
         virtual void OnRelocate(Transport* /*transport*/, uint32 /*waypointId*/, uint32 /*mapId*/, float /*x*/, float /*y*/, float /*z*/) { }
-    };
+};
 
-    class AchievementCriteriaScript : public ScriptObject
-    {
+class AchievementCriteriaScript : public ScriptObject
+{
     protected:
 
         AchievementCriteriaScript(const char* name);
@@ -675,10 +675,10 @@ public:
 
         // Called when an additional criteria is checked.
         virtual bool OnCheck(Player* source, Unit* target) = 0;
-    };
+};
 
-    class PlayerScript : public UnitScript
-    {
+class PlayerScript : public UnitScript
+{
     protected:
 
         PlayerScript(const char* name);
@@ -772,10 +772,10 @@ public:
 
         // Called after a player's quest status has been changed
         virtual void OnQuestStatusChange(Player* /*player*/, uint32 /*questId*/, QuestStatus /*status*/) { }
-    };
+};
 
-    class AccountScript : public ScriptObject
-    {
+class AccountScript : public ScriptObject
+{
     protected:
 
         AccountScript(const char* name);
@@ -799,10 +799,10 @@ public:
 
         // Called when Password failed to change for Account
         virtual void OnFailedPasswordChange(uint32 /*accountId*/) {}
-    };
+};
 
-    class GuildScript : public ScriptObject
-    {
+class GuildScript : public ScriptObject
+{
     protected:
 
         GuildScript(const char* name);
@@ -842,10 +842,10 @@ public:
         virtual void OnEvent(Guild* /*guild*/, uint8 /*eventType*/, uint32 /*playerGuid1*/, uint32 /*playerGuid2*/, uint8 /*newRank*/) { }
 
         virtual void OnBankEvent(Guild* /*guild*/, uint8 /*eventType*/, uint8 /*tabId*/, uint32 /*playerGuid*/, uint32 /*itemOrMoney*/, uint16 /*itemStackCount*/, uint8 /*destTabId*/) { }
-    };
+};
 
-    class GroupScript : public ScriptObject
-    {
+class GroupScript : public ScriptObject
+{
     protected:
 
         GroupScript(const char* name);
@@ -868,24 +868,24 @@ public:
 
         // Called when a group is disbanded.
         virtual void OnDisband(Group* /*group*/) { }
-    };
+};
 
-    // Placed here due to ScriptRegistry::AddScript dependency.
+// Placed here due to ScriptRegistry::AddScript dependency.
 #define sScriptMgr ScriptMgr::instance()
 
-    // namespace
-    // {
+// namespace
+// {
     typedef std::vector<ScriptObject*> UnusedScriptContainer;
     typedef std::list<std::string> UnusedScriptNamesContainer;
 
     extern UnusedScriptContainer UnusedScripts;
     extern UnusedScriptNamesContainer UnusedScriptNames;
-    // }
+// }
 
-    // Manages registration, loading, and execution of scripts.
-    class ScriptMgr
-    {
-        friend class ScriptObject;
+// Manages registration, loading, and execution of scripts.
+class ScriptMgr
+{
+    friend class ScriptObject;
 
     private:
         ScriptMgr();
@@ -1143,6 +1143,6 @@ public:
 
         //atomic op counter for active scripts amount
         std::atomic<uint32> _scheduledScripts;
-    };
+};
 
 #endif

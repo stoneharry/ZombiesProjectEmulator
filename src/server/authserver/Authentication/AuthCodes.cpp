@@ -24,45 +24,45 @@ typedef std::map<int, RealmBuildInfo*> RealmBuildContainer;
 
 namespace AuthHelper
 {
-    RealmBuildContainer AcceptedClientBuilds;
+	RealmBuildContainer AcceptedClientBuilds;
 
-    void InitAcceptedClientBuilds()
-    {
-        AcceptedClientBuilds.clear();
+	void InitAcceptedClientBuilds()
+	{
+		AcceptedClientBuilds.clear();
 
-        PreparedStatement* stmt = LoginDatabase.GetPreparedStatement(LOGIN_SEL_VERSIONS);
-        PreparedQueryResult result = LoginDatabase.Query(stmt);
+		PreparedStatement* stmt = LoginDatabase.GetPreparedStatement(LOGIN_SEL_VERSIONS);
+		PreparedQueryResult result = LoginDatabase.Query(stmt);
 
-        if (!result)
-            TC_LOG_ERROR("server.authserver", "Table `versions` is empty. No one will be able to log in.");
+		if (!result)
+			TC_LOG_ERROR("server.authserver", "Table `versions` is empty. No one will be able to log in.");
 
-        do {
-            Field* fields = result->Fetch();
-            RealmBuildInfo* newBuild = new RealmBuildInfo;
-            newBuild->Build = fields[0].GetUInt32();
-            newBuild->MajorVersion = fields[1].GetUInt32();
-            newBuild->MinorVersion = fields[2].GetUInt32();
-            newBuild->BugfixVersion = fields[3].GetUInt32();
-            newBuild->HotfixVersion = fields[4].GetUInt32();
-            AcceptedClientBuilds[newBuild->Build] = newBuild;
-        } while (result->NextRow());
-    }
+		do {
+			Field* fields = result->Fetch();
+			RealmBuildInfo* newBuild = new RealmBuildInfo;
+			newBuild->Build = fields[0].GetUInt32();
+			newBuild->MajorVersion = fields[1].GetUInt32();
+			newBuild->MinorVersion = fields[2].GetUInt32();
+			newBuild->BugfixVersion = fields[3].GetUInt32();
+			newBuild->HotfixVersion = fields[4].GetUInt32();
+			AcceptedClientBuilds[newBuild->Build] = newBuild;
+		} while (result->NextRow());
+	}
 
-    bool IsAcceptedClientBuild(int build)
-    {
-        for (RealmBuildContainer::iterator itr = AcceptedClientBuilds.begin(); itr != AcceptedClientBuilds.end(); itr++)
-        if (itr->second->Build == build)
-            return true;
+	bool IsAcceptedClientBuild(int build)
+	{
+		for (RealmBuildContainer::iterator itr = AcceptedClientBuilds.begin(); itr != AcceptedClientBuilds.end(); itr++)
+		if (itr->second->Build == build)
+			return true;
 
-        return false;
-    }
+		return false;
+	}
 
-    RealmBuildInfo const* GetBuildInfo(int build)
-    {
-        for (RealmBuildContainer::iterator itr = AcceptedClientBuilds.begin(); itr != AcceptedClientBuilds.end(); itr++)
-        if (itr->second->Build == build)
-            return itr->second;
+	RealmBuildInfo const* GetBuildInfo(int build)
+	{
+		for (RealmBuildContainer::iterator itr = AcceptedClientBuilds.begin(); itr != AcceptedClientBuilds.end(); itr++)
+		if (itr->second->Build == build)
+			return itr->second;
 
-        return NULL;
-    }
+		return NULL;
+	}
 }

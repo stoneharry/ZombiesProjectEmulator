@@ -30,7 +30,7 @@ bool DBCFileLoader::Load(const char* filename, const char* fmt)
     uint32 header;
     if (data)
     {
-        delete[] data;
+        delete [] data;
         data = NULL;
     }
 
@@ -131,34 +131,34 @@ uint32 DBCFileLoader::GetFormatRecordSize(const char* format, int32* index_pos)
     {
         switch (format[x])
         {
-        case FT_FLOAT:
-            recordsize += sizeof(float);
-            break;
-        case FT_INT:
-            recordsize += sizeof(uint32);
-            break;
-        case FT_STRING:
-            recordsize += sizeof(char*);
-            break;
-        case FT_SORT:
-            i = x;
-            break;
-        case FT_IND:
-            i = x;
-            recordsize += sizeof(uint32);
-            break;
-        case FT_BYTE:
-            recordsize += sizeof(uint8);
-            break;
-        case FT_NA:
-        case FT_NA_BYTE:
-            break;
-        case FT_LOGIC:
-            ASSERT(false && "Attempted to load DBC files that do not have field types that match what is in the core. Check DBCfmt.h or your DBC files.");
-            break;
-        default:
-            ASSERT(false && "Unknown field format character in DBCfmt.h");
-            break;
+            case FT_FLOAT:
+                recordsize += sizeof(float);
+                break;
+            case FT_INT:
+                recordsize += sizeof(uint32);
+                break;
+            case FT_STRING:
+                recordsize += sizeof(char*);
+                break;
+            case FT_SORT:
+                i = x;
+                break;
+            case FT_IND:
+                i = x;
+                recordsize += sizeof(uint32);
+                break;
+            case FT_BYTE:
+                recordsize += sizeof(uint8);
+                break;
+            case FT_NA:
+            case FT_NA_BYTE:
+                break;
+            case FT_LOGIC:
+                ASSERT(false && "Attempted to load DBC files that do not have field types that match what is in the core. Check DBCfmt.h or your DBC files.");
+                break;
+            default:
+                ASSERT(false && "Unknown field format character in DBCfmt.h");
+                break;
         }
     }
 
@@ -226,37 +226,37 @@ char* DBCFileLoader::AutoProduceData(const char* format, uint32& records, char**
         else
             indexTable[y] = &dataTable[offset];
 
-        for (uint32 x = 0; x < fieldCount; ++x)
+        for (uint32 x=0; x < fieldCount; ++x)
         {
             switch (format[x])
             {
-            case FT_FLOAT:
-                *((float*)(&dataTable[offset])) = getRecord(y).getFloat(x);
-                offset += sizeof(float);
-                break;
-            case FT_IND:
-            case FT_INT:
-                *((uint32*)(&dataTable[offset])) = getRecord(y).getUInt(x);
-                offset += sizeof(uint32);
-                break;
-            case FT_BYTE:
-                *((uint8*)(&dataTable[offset])) = getRecord(y).getUInt8(x);
-                offset += sizeof(uint8);
-                break;
-            case FT_STRING:
-                *((char**)(&dataTable[offset])) = NULL;   // will replace non-empty or "" strings in AutoProduceStrings
-                offset += sizeof(char*);
-                break;
-            case FT_LOGIC:
-                ASSERT(false && "Attempted to load DBC files that do not have field types that match what is in the core. Check DBCfmt.h or your DBC files.");
-                break;
-            case FT_NA:
-            case FT_NA_BYTE:
-            case FT_SORT:
-                break;
-            default:
-                ASSERT(false && "Unknown field format character in DBCfmt.h");
-                break;
+                case FT_FLOAT:
+                    *((float*)(&dataTable[offset])) = getRecord(y).getFloat(x);
+                    offset += sizeof(float);
+                    break;
+                case FT_IND:
+                case FT_INT:
+                    *((uint32*)(&dataTable[offset])) = getRecord(y).getUInt(x);
+                    offset += sizeof(uint32);
+                    break;
+                case FT_BYTE:
+                    *((uint8*)(&dataTable[offset])) = getRecord(y).getUInt8(x);
+                    offset += sizeof(uint8);
+                    break;
+                case FT_STRING:
+                    *((char**)(&dataTable[offset])) = NULL;   // will replace non-empty or "" strings in AutoProduceStrings
+                    offset += sizeof(char*);
+                    break;
+                case FT_LOGIC:
+                    ASSERT(false && "Attempted to load DBC files that do not have field types that match what is in the core. Check DBCfmt.h or your DBC files.");
+                    break;
+                case FT_NA:
+                case FT_NA_BYTE:
+                case FT_SORT:
+                    break;
+                default:
+                    ASSERT(false && "Unknown field format character in DBCfmt.h");
+                    break;
             }
         }
     }
@@ -282,38 +282,38 @@ char* DBCFileLoader::AutoProduceStrings(const char* format, char* dataTable)
         {
             switch (format[x])
             {
-            case FT_FLOAT:
-                offset += sizeof(float);
-                break;
-            case FT_IND:
-            case FT_INT:
-                offset += sizeof(uint32);
-                break;
-            case FT_BYTE:
-                offset += sizeof(uint8);
-                break;
-            case FT_STRING:
-            {
-                              // fill only not filled entries
-                              char** slot = (char**)(&dataTable[offset]);
-                              if (!*slot || !**slot)
-                              {
-                                  const char * st = getRecord(y).getString(x);
-                                  *slot = stringPool + (st - (const char*)stringTable);
-                              }
-                              offset += sizeof(char*);
-                              break;
-            }
-            case FT_LOGIC:
-                ASSERT(false && "Attempted to load DBC files that does not have field types that match what is in the core. Check DBCfmt.h or your DBC files.");
-                break;
-            case FT_NA:
-            case FT_NA_BYTE:
-            case FT_SORT:
-                break;
-            default:
-                ASSERT(false && "Unknown field format character in DBCfmt.h");
-                break;
+                case FT_FLOAT:
+                    offset += sizeof(float);
+                    break;
+                case FT_IND:
+                case FT_INT:
+                    offset += sizeof(uint32);
+                    break;
+                case FT_BYTE:
+                    offset += sizeof(uint8);
+                    break;
+                case FT_STRING:
+                {
+                    // fill only not filled entries
+                    char** slot = (char**)(&dataTable[offset]);
+                    if (!*slot || !**slot)
+                    {
+                        const char * st = getRecord(y).getString(x);
+                        *slot=stringPool+(st-(const char*)stringTable);
+                    }
+                    offset += sizeof(char*);
+                    break;
+                 }
+                 case FT_LOGIC:
+                     ASSERT(false && "Attempted to load DBC files that does not have field types that match what is in the core. Check DBCfmt.h or your DBC files.");
+                     break;
+                 case FT_NA:
+                 case FT_NA_BYTE:
+                 case FT_SORT:
+                     break;
+                 default:
+                     ASSERT(false && "Unknown field format character in DBCfmt.h");
+                     break;
             }
         }
     }

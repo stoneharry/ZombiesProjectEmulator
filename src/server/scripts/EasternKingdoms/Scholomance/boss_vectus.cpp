@@ -20,15 +20,15 @@
 
 enum Emotes
 {
-    EMOTE_FRENZY = 0
+    EMOTE_FRENZY                 = 0
 };
 
 enum Spells
 {
-    SPELL_FLAMESTRIKE = 18399,
-    SPELL_BLAST_WAVE = 16046,
-    SPELL_FIRE_SHIELD = 19626,
-    SPELL_FRENZY = 8269  // 28371
+    SPELL_FLAMESTRIKE            = 18399,
+    SPELL_BLAST_WAVE             = 16046,
+    SPELL_FIRE_SHIELD            = 19626,
+    SPELL_FRENZY                 = 8269  // 28371
 };
 
 enum Events
@@ -82,29 +82,29 @@ public:
             {
                 switch (eventId)
                 {
-                case EVENT_FIRE_SHIELD:
-                    DoCast(me, SPELL_FIRE_SHIELD);
-                    events.ScheduleEvent(EVENT_FIRE_SHIELD, 90000);
-                    break;
-                case EVENT_BLAST_WAVE:
-                    DoCast(me, SPELL_BLAST_WAVE);
-                    events.ScheduleEvent(EVENT_BLAST_WAVE, 12000);
-                    break;
-                case EVENT_FRENZY:
-                    DoCast(me, SPELL_FRENZY);
-                    Talk(EMOTE_FRENZY);
-                    events.ScheduleEvent(EVENT_FRENZY, 24000);
-                    break;
-                default:
-                    break;
+                    case EVENT_FIRE_SHIELD:
+                        DoCast(me, SPELL_FIRE_SHIELD);
+                        events.ScheduleEvent(EVENT_FIRE_SHIELD, 90000);
+                        break;
+                    case EVENT_BLAST_WAVE:
+                        DoCast(me, SPELL_BLAST_WAVE);
+                        events.ScheduleEvent(EVENT_BLAST_WAVE, 12000);
+                        break;
+                    case EVENT_FRENZY:
+                        DoCast(me, SPELL_FRENZY);
+                        Talk(EMOTE_FRENZY);
+                        events.ScheduleEvent(EVENT_FRENZY, 24000);
+                        break;
+                    default:
+                        break;
                 }
             }
 
             DoMeleeAttackIfReady();
         }
 
-    private:
-        EventMap events;
+        private:
+            EventMap events;
     };
 
     CreatureAI* GetAI(Creature* creature) const override

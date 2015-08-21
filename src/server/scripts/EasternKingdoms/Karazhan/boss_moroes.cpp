@@ -29,59 +29,59 @@ EndScriptData */
 
 enum Yells
 {
-    SAY_AGGRO = 0,
-    SAY_SPECIAL = 1,
-    SAY_KILL = 2,
-    SAY_DEATH = 3
+    SAY_AGGRO           = 0,
+    SAY_SPECIAL         = 1,
+    SAY_KILL            = 2,
+    SAY_DEATH           = 3
 };
 
 enum Spells
 {
-    SPELL_VANISH = 29448,
-    SPELL_GARROTE = 37066,
-    SPELL_BLIND = 34694,
-    SPELL_GOUGE = 29425,
-    SPELL_FRENZY = 37023,
+    SPELL_VANISH                = 29448,
+    SPELL_GARROTE               = 37066,
+    SPELL_BLIND                 = 34694,
+    SPELL_GOUGE                 = 29425,
+    SPELL_FRENZY                = 37023,
 
     // Adds
-    SPELL_MANABURN = 29405,
-    SPELL_MINDFLY = 29570,
-    SPELL_SWPAIN = 34441,
-    SPELL_SHADOWFORM = 29406,
+    SPELL_MANABURN              = 29405,
+    SPELL_MINDFLY               = 29570,
+    SPELL_SWPAIN                = 34441,
+    SPELL_SHADOWFORM            = 29406,
 
-    SPELL_HAMMEROFJUSTICE = 13005,
-    SPELL_JUDGEMENTOFCOMMAND = 29386,
-    SPELL_SEALOFCOMMAND = 29385,
+    SPELL_HAMMEROFJUSTICE       = 13005,
+    SPELL_JUDGEMENTOFCOMMAND    = 29386,
+    SPELL_SEALOFCOMMAND         = 29385,
 
-    SPELL_DISPELMAGIC = 15090,
-    SPELL_GREATERHEAL = 29564,
-    SPELL_HOLYFIRE = 29563,
-    SPELL_PWSHIELD = 29408,
+    SPELL_DISPELMAGIC           = 15090,
+    SPELL_GREATERHEAL           = 29564,
+    SPELL_HOLYFIRE              = 29563,
+    SPELL_PWSHIELD              = 29408,
 
-    SPELL_CLEANSE = 29380,
-    SPELL_GREATERBLESSOFMIGHT = 29381,
-    SPELL_HOLYLIGHT = 29562,
-    SPELL_DIVINESHIELD = 41367,
+    SPELL_CLEANSE               = 29380,
+    SPELL_GREATERBLESSOFMIGHT   = 29381,
+    SPELL_HOLYLIGHT             = 29562,
+    SPELL_DIVINESHIELD          = 41367,
 
-    SPELL_HAMSTRING = 9080,
-    SPELL_MORTALSTRIKE = 29572,
-    SPELL_WHIRLWIND = 29573,
+    SPELL_HAMSTRING             = 9080,
+    SPELL_MORTALSTRIKE          = 29572,
+    SPELL_WHIRLWIND             = 29573,
 
-    SPELL_DISARM = 8379,
-    SPELL_HEROICSTRIKE = 29567,
-    SPELL_SHIELDBASH = 11972,
-    SPELL_SHIELDWALL = 29390
+    SPELL_DISARM                = 8379,
+    SPELL_HEROICSTRIKE          = 29567,
+    SPELL_SHIELDBASH            = 11972,
+    SPELL_SHIELDWALL            = 29390
 };
 
 Position const Locations[4] =
 {
-    { -10991.0f, -1884.33f, 81.73f, 0.614315f },
-    { -10989.4f, -1885.88f, 81.73f, 0.904913f },
-    { -10978.1f, -1887.07f, 81.73f, 2.035550f },
-    { -10975.9f, -1885.81f, 81.73f, 2.253890f },
+    {-10991.0f, -1884.33f, 81.73f, 0.614315f},
+    {-10989.4f, -1885.88f, 81.73f, 0.904913f},
+    {-10978.1f, -1887.07f, 81.73f, 2.035550f},
+    {-10975.9f, -1885.81f, 81.73f, 2.253890f},
 };
 
-const uint32 Adds[6] =
+const uint32 Adds[6]=
 {
     17007,
     19872,
@@ -217,8 +217,8 @@ public:
         bool isAddlistEmpty()
         {
             for (uint8 i = 0; i < 4; ++i)
-            if (AddId[i] == 0)
-                return true;
+                if (AddId[i] == 0)
+                    return true;
 
             return false;
         }
@@ -246,8 +246,7 @@ public:
                     {
                         temp->AI()->AttackStart(me->GetVictim());
                         DoZoneInCombat(temp);
-                    }
-                    else
+                    } else
                         EnterEvadeMode();
                 }
             }
@@ -278,13 +277,12 @@ public:
                     {
                         Creature* temp = ObjectAccessor::GetCreature((*me), AddGUID[i]);
                         if (temp && temp->IsAlive())
-                        if (!temp->GetVictim())
-                            temp->AI()->AttackStart(me->GetVictim());
+                            if (!temp->GetVictim())
+                                temp->AI()->AttackStart(me->GetVictim());
                     }
                 }
                 CheckAdds_Timer = 5000;
-            }
-            else CheckAdds_Timer -= diff;
+            } else CheckAdds_Timer -= diff;
 
             if (!Enrage)
             {
@@ -295,29 +293,26 @@ public:
                     InVanish = true;
                     Vanish_Timer = 30000;
                     Wait_Timer = 5000;
-                }
-                else Vanish_Timer -= diff;
+                } else Vanish_Timer -= diff;
 
                 if (Gouge_Timer <= diff)
                 {
                     DoCastVictim(SPELL_GOUGE);
                     Gouge_Timer = 40000;
-                }
-                else Gouge_Timer -= diff;
+                } else Gouge_Timer -= diff;
 
                 if (Blind_Timer <= diff)
                 {
                     std::list<Unit*> targets;
-                    SelectTargetList(targets, 5, SELECT_TARGET_RANDOM, me->GetMeleeReach() * 5, true);
+                    SelectTargetList(targets, 5, SELECT_TARGET_RANDOM, me->GetMeleeReach()*5, true);
                     for (std::list<Unit*>::const_iterator i = targets.begin(); i != targets.end(); ++i)
-                    if (!me->IsWithinMeleeRange(*i))
-                    {
-                        DoCast(*i, SPELL_BLIND);
-                        break;
-                    }
+                        if (!me->IsWithinMeleeRange(*i))
+                        {
+                            DoCast(*i, SPELL_BLIND);
+                            break;
+                        }
                     Blind_Timer = 40000;
-                }
-                else Blind_Timer -= diff;
+                } else Blind_Timer -= diff;
             }
 
             if (InVanish)
@@ -330,8 +325,7 @@ public:
                         target->CastSpell(target, SPELL_GARROTE, true);
 
                     InVanish = false;
-                }
-                else Wait_Timer -= diff;
+                } else Wait_Timer -= diff;
             }
 
             if (!InVanish)
@@ -359,9 +353,9 @@ struct boss_moroes_guestAI : public ScriptedAI
     void AcquireGUID()
     {
         if (Creature* Moroes = ObjectAccessor::GetCreature(*me, instance->GetGuidData(DATA_MOROES)))
-        for (uint8 i = 0; i < 4; ++i)
-        if (ObjectGuid GUID = ENSURE_AI(boss_moroes::boss_moroesAI, Moroes->AI())->AddGUID[i])
-            GuestGUID[i] = GUID;
+            for (uint8 i = 0; i < 4; ++i)
+                if (ObjectGuid GUID = ENSURE_AI(boss_moroes::boss_moroesAI, Moroes->AI())->AddGUID[i])
+                    GuestGUID[i] = GUID;
     }
 
     Unit* SelectGuestTarget()
@@ -435,17 +429,15 @@ public:
             {
                 DoCastVictim(SPELL_MINDFLY);
                 MindFlay_Timer = 12000;                         // 3 sec channeled
-            }
-            else MindFlay_Timer -= diff;
+            } else MindFlay_Timer -= diff;
 
             if (ManaBurn_Timer <= diff)
             {
                 if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
-                if (target->getPowerType() == POWER_MANA)
-                    DoCast(target, SPELL_MANABURN);
+                    if (target->getPowerType() == POWER_MANA)
+                        DoCast(target, SPELL_MANABURN);
                 ManaBurn_Timer = 5000;                          // 3 sec cast
-            }
-            else ManaBurn_Timer -= diff;
+            } else ManaBurn_Timer -= diff;
 
             if (ShadowWordPain_Timer <= diff)
             {
@@ -454,8 +446,7 @@ public:
                     DoCast(target, SPELL_SWPAIN);
                     ShadowWordPain_Timer = 7000;
                 }
-            }
-            else ShadowWordPain_Timer -= diff;
+            } else ShadowWordPain_Timer -= diff;
         }
     };
 };
@@ -508,22 +499,19 @@ public:
                 DoCast(me, SPELL_SEALOFCOMMAND);
                 SealOfCommand_Timer = 32000;
                 JudgementOfCommand_Timer = 29000;
-            }
-            else SealOfCommand_Timer -= diff;
+            } else SealOfCommand_Timer -= diff;
 
             if (JudgementOfCommand_Timer <= diff)
             {
                 DoCastVictim(SPELL_JUDGEMENTOFCOMMAND);
                 JudgementOfCommand_Timer = SealOfCommand_Timer + 29000;
-            }
-            else JudgementOfCommand_Timer -= diff;
+            } else JudgementOfCommand_Timer -= diff;
 
             if (HammerOfJustice_Timer <= diff)
             {
                 DoCastVictim(SPELL_HAMMEROFJUSTICE);
                 HammerOfJustice_Timer = 12000;
-            }
-            else HammerOfJustice_Timer -= diff;
+            } else HammerOfJustice_Timer -= diff;
         }
     };
 };
@@ -579,8 +567,7 @@ public:
             {
                 DoCast(me, SPELL_PWSHIELD);
                 PowerWordShield_Timer = 15000;
-            }
-            else PowerWordShield_Timer -= diff;
+            } else PowerWordShield_Timer -= diff;
 
             if (GreaterHeal_Timer <= diff)
             {
@@ -588,15 +575,13 @@ public:
 
                 DoCast(target, SPELL_GREATERHEAL);
                 GreaterHeal_Timer = 17000;
-            }
-            else GreaterHeal_Timer -= diff;
+            } else GreaterHeal_Timer -= diff;
 
             if (HolyFire_Timer <= diff)
             {
                 DoCastVictim(SPELL_HOLYFIRE);
                 HolyFire_Timer = 22000;
-            }
-            else HolyFire_Timer -= diff;
+            } else HolyFire_Timer -= diff;
 
             if (DispelMagic_Timer <= diff)
             {
@@ -604,8 +589,7 @@ public:
                     DoCast(target, SPELL_DISPELMAGIC);
 
                 DispelMagic_Timer = 25000;
-            }
-            else DispelMagic_Timer -= diff;
+            } else DispelMagic_Timer -= diff;
         }
     };
 };
@@ -661,8 +645,7 @@ public:
             {
                 DoCast(me, SPELL_DIVINESHIELD);
                 DivineShield_Timer = 31000;
-            }
-            else DivineShield_Timer -= diff;
+            } else DivineShield_Timer -= diff;
 
             if (HolyLight_Timer <= diff)
             {
@@ -670,8 +653,7 @@ public:
 
                 DoCast(target, SPELL_HOLYLIGHT);
                 HolyLight_Timer = 10000;
-            }
-            else HolyLight_Timer -= diff;
+            } else HolyLight_Timer -= diff;
 
             if (GreaterBless_Timer <= diff)
             {
@@ -680,8 +662,7 @@ public:
                 DoCast(target, SPELL_GREATERBLESSOFMIGHT);
 
                 GreaterBless_Timer = 50000;
-            }
-            else GreaterBless_Timer -= diff;
+            } else GreaterBless_Timer -= diff;
 
             if (Cleanse_Timer <= diff)
             {
@@ -690,8 +671,7 @@ public:
                 DoCast(target, SPELL_CLEANSE);
 
                 Cleanse_Timer = 10000;
-            }
-            else Cleanse_Timer -= diff;
+            } else Cleanse_Timer -= diff;
         }
     };
 };
@@ -743,22 +723,19 @@ public:
             {
                 DoCastVictim(SPELL_HAMSTRING);
                 Hamstring_Timer = 12000;
-            }
-            else Hamstring_Timer -= diff;
+            } else Hamstring_Timer -= diff;
 
             if (MortalStrike_Timer <= diff)
             {
                 DoCastVictim(SPELL_MORTALSTRIKE);
                 MortalStrike_Timer = 18000;
-            }
-            else MortalStrike_Timer -= diff;
+            } else MortalStrike_Timer -= diff;
 
             if (WhirlWind_Timer <= diff)
             {
                 DoCast(me, SPELL_WHIRLWIND);
                 WhirlWind_Timer = 21000;
-            }
-            else WhirlWind_Timer -= diff;
+            } else WhirlWind_Timer -= diff;
         }
     };
 };
@@ -812,29 +789,25 @@ public:
             {
                 DoCastVictim(SPELL_DISARM);
                 Disarm_Timer = 12000;
-            }
-            else Disarm_Timer -= diff;
+            } else Disarm_Timer -= diff;
 
             if (HeroicStrike_Timer <= diff)
             {
                 DoCastVictim(SPELL_HEROICSTRIKE);
                 HeroicStrike_Timer = 10000;
-            }
-            else HeroicStrike_Timer -= diff;
+            } else HeroicStrike_Timer -= diff;
 
             if (ShieldBash_Timer <= diff)
             {
                 DoCastVictim(SPELL_SHIELDBASH);
                 ShieldBash_Timer = 13000;
-            }
-            else ShieldBash_Timer -= diff;
+            } else ShieldBash_Timer -= diff;
 
             if (ShieldWall_Timer <= diff)
             {
                 DoCast(me, SPELL_SHIELDWALL);
                 ShieldWall_Timer = 21000;
-            }
-            else ShieldWall_Timer -= diff;
+            } else ShieldWall_Timer -= diff;
         }
     };
 };

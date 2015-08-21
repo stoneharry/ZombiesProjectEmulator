@@ -29,25 +29,25 @@ Category: Caverns of Time, The Dark Portal
 
 enum Enums
 {
-    SAY_ENTER = 0,
-    SAY_AGGRO = 1,
-    SAY_BANISH = 2,
-    SAY_SLAY = 3,
-    SAY_DEATH = 4,
-    EMOTE_FRENZY = 5,
+    SAY_ENTER           = 0,
+    SAY_AGGRO           = 1,
+    SAY_BANISH          = 2,
+    SAY_SLAY            = 3,
+    SAY_DEATH           = 4,
+    EMOTE_FRENZY        = 5,
 
-    SPELL_CLEAVE = 40504,
-    SPELL_TIME_STOP = 31422,
-    SPELL_ENRAGE = 37605,
-    SPELL_SAND_BREATH = 31473,
+    SPELL_CLEAVE        = 40504,
+    SPELL_TIME_STOP     = 31422,
+    SPELL_ENRAGE        = 37605,
+    SPELL_SAND_BREATH   = 31473,
     H_SPELL_SAND_BREATH = 39049
 };
 
 enum Events
 {
-    EVENT_SANDBREATH = 1,
-    EVENT_TIMESTOP = 2,
-    EVENT_FRENZY = 3
+    EVENT_SANDBREATH    = 1,
+    EVENT_TIMESTOP      = 2,
+    EVENT_FRENZY        = 3
 };
 
 class boss_aeonus : public CreatureScript
@@ -106,33 +106,33 @@ public:
             if (!UpdateVictim())
                 return;
 
-            events.Update(diff);
+                events.Update(diff);
 
-            if (me->HasUnitState(UNIT_STATE_CASTING))
-                return;
+                if (me->HasUnitState(UNIT_STATE_CASTING))
+                    return;
 
-            while (uint32 eventId = events.ExecuteEvent())
-            {
-                switch (eventId)
+                while (uint32 eventId = events.ExecuteEvent())
                 {
-                case EVENT_SANDBREATH:
-                    DoCastVictim(SPELL_SAND_BREATH);
-                    events.ScheduleEvent(EVENT_SANDBREATH, urand(15000, 25000));
-                    break;
-                case EVENT_TIMESTOP:
-                    DoCastVictim(SPELL_TIME_STOP);
-                    events.ScheduleEvent(EVENT_TIMESTOP, urand(20000, 35000));
-                    break;
-                case EVENT_FRENZY:
-                    Talk(EMOTE_FRENZY);
-                    DoCast(me, SPELL_ENRAGE);
-                    events.ScheduleEvent(EVENT_FRENZY, urand(20000, 35000));
-                    break;
-                default:
-                    break;
+                    switch (eventId)
+                    {
+                        case EVENT_SANDBREATH:
+                            DoCastVictim(SPELL_SAND_BREATH);
+                            events.ScheduleEvent(EVENT_SANDBREATH, urand(15000, 25000));
+                            break;
+                        case EVENT_TIMESTOP:
+                            DoCastVictim(SPELL_TIME_STOP);
+                            events.ScheduleEvent(EVENT_TIMESTOP, urand(20000, 35000));
+                            break;
+                        case EVENT_FRENZY:
+                             Talk(EMOTE_FRENZY);
+                             DoCast(me, SPELL_ENRAGE);
+                            events.ScheduleEvent(EVENT_FRENZY, urand(20000, 35000));
+                            break;
+                        default:
+                            break;
+                    }
                 }
-            }
-            DoMeleeAttackIfReady();
+                DoMeleeAttackIfReady();
         }
     };
 

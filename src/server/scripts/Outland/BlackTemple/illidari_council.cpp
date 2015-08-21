@@ -32,62 +32,62 @@ EndScriptData */
 enum IllidariCouncil
 {
     //Speech'n'Sounds
-    SAY_GATH_SPECIAL1 = 2,
-    SAY_GATH_SPECIAL2 = 3,
-    SAY_GATH_SLAY = 4,
-    SAY_GATH_COMNT = 5,
-    SAY_GATH_DEATH = 6,
+    SAY_GATH_SPECIAL1           = 2,
+    SAY_GATH_SPECIAL2           = 3,
+    SAY_GATH_SLAY               = 4,
+    SAY_GATH_COMNT              = 5,
+    SAY_GATH_DEATH              = 6,
 
-    SAY_MALA_SPECIAL1 = 2,
-    SAY_MALA_SPECIAL2 = 3,
-    SAY_MALA_SLAY = 4,
-    SAY_MALA_COMNT = 5,
-    SAY_MALA_DEATH = 6,
+    SAY_MALA_SPECIAL1           = 2,
+    SAY_MALA_SPECIAL2           = 3,
+    SAY_MALA_SLAY               = 4,
+    SAY_MALA_COMNT              = 5,
+    SAY_MALA_DEATH              = 6,
 
-    SAY_ZERE_SPECIAL1 = 2,
-    SAY_ZERE_SPECIAL2 = 3,
-    SAY_ZERE_SLAY = 4,
-    SAY_ZERE_COMNT = 5,
-    SAY_ZERE_DEATH = 6,
+    SAY_ZERE_SPECIAL1           = 2,
+    SAY_ZERE_SPECIAL2           = 3,
+    SAY_ZERE_SLAY               = 4,
+    SAY_ZERE_COMNT              = 5,
+    SAY_ZERE_DEATH              = 6,
 
-    SAY_VERA_SPECIAL1 = 2,
-    SAY_VERA_SPECIAL2 = 3,
-    SAY_VERA_SLAY = 4,
-    SAY_VERA_COMNT = 5,
-    SAY_VERA_DEATH = 6,
+    SAY_VERA_SPECIAL1           = 2,
+    SAY_VERA_SPECIAL2           = 3,
+    SAY_VERA_SLAY               = 4,
+    SAY_VERA_COMNT              = 5,
+    SAY_VERA_DEATH              = 6,
 
-    AKAMAID = 23089,
+    AKAMAID                     = 23089,
 
     // High Nethermancer Zerevor's spells
-    SPELL_FLAMESTRIKE = 41481,
-    SPELL_BLIZZARD = 41482,
-    SPELL_ARCANE_BOLT = 41483,
-    SPELL_ARCANE_EXPLOSION = 41524,
-    SPELL_DAMPEN_MAGIC = 41478,
+    SPELL_FLAMESTRIKE           = 41481,
+    SPELL_BLIZZARD              = 41482,
+    SPELL_ARCANE_BOLT           = 41483,
+    SPELL_ARCANE_EXPLOSION      = 41524,
+    SPELL_DAMPEN_MAGIC          = 41478,
 
     // Lady Malande's spells
-    SPELL_EMPOWERED_SMITE = 41471,
-    SPELL_CIRCLE_OF_HEALING = 41455,
-    SPELL_REFLECTIVE_SHIELD = 41475,
-    SPELL_REFLECTIVE_SHIELD_T = 33619,
-    SPELL_DIVINE_WRATH = 41472,
-    SPELL_HEAL_VISUAL = 24171,
+    SPELL_EMPOWERED_SMITE       = 41471,
+    SPELL_CIRCLE_OF_HEALING     = 41455,
+    SPELL_REFLECTIVE_SHIELD     = 41475,
+    SPELL_REFLECTIVE_SHIELD_T   = 33619,
+    SPELL_DIVINE_WRATH          = 41472,
+    SPELL_HEAL_VISUAL           = 24171,
 
     // Gathios the Shatterer's spells
-    SPELL_BLESS_PROTECTION = 41450,
-    SPELL_BLESS_SPELLWARD = 41451,
-    SPELL_CONSECRATION = 41541,
-    SPELL_HAMMER_OF_JUSTICE = 41468,
-    SPELL_SEAL_OF_COMMAND = 41469,
-    SPELL_SEAL_OF_BLOOD = 41459,
-    SPELL_CHROMATIC_AURA = 41453,
-    SPELL_DEVOTION_AURA = 41452,
+    SPELL_BLESS_PROTECTION      = 41450,
+    SPELL_BLESS_SPELLWARD       = 41451,
+    SPELL_CONSECRATION          = 41541,
+    SPELL_HAMMER_OF_JUSTICE     = 41468,
+    SPELL_SEAL_OF_COMMAND       = 41469,
+    SPELL_SEAL_OF_BLOOD         = 41459,
+    SPELL_CHROMATIC_AURA        = 41453,
+    SPELL_DEVOTION_AURA         = 41452,
 
     // Veras Darkshadow's spells
-    SPELL_DEADLY_POISON = 41485,
-    SPELL_ENVENOM = 41487,
-    SPELL_VANISH = 41479,
-    SPELL_BERSERK = 45078
+    SPELL_DEADLY_POISON         = 41485,
+    SPELL_ENVENOM               = 41487,
+    SPELL_VANISH                = 41479,
+    SPELL_BERSERK               = 45078
 };
 
 #define ERROR_INST_DATA           "SD2 ERROR: Instance Data for Black Temple not set properly; Illidari Council event will not function properly."
@@ -98,21 +98,21 @@ struct CouncilYells
     uint32 timer;
 };
 
-static CouncilYells CouncilAggro[] =
+static CouncilYells CouncilAggro[]=
 {
-    { 0, 5000 },                                       // Gathios
-    { 0, 5500 },                                       // Veras
-    { 0, 5000 },                                       // Malande
-    { 0, 0 },                                          // Zerevor
+    {0, 5000},                                       // Gathios
+    {0, 5500},                                       // Veras
+    {0, 5000},                                       // Malande
+    {0, 0},                                          // Zerevor
 };
 
 // Need to get proper timers for this later
-static CouncilYells CouncilEnrage[] =
+static CouncilYells CouncilEnrage[]=
 {
-    { 1, 2000 },                                       // Gathios
-    { 1, 6000 },                                       // Veras
-    { 1, 5000 },                                       // Malande
-    { 1, 0 },                                          // Zerevor
+    {1, 2000},                                       // Gathios
+    {1, 6000},                                       // Veras
+    {1, 5000},                                       // Malande
+    {1, 0},                                          // Zerevor
 };
 
 class npc_blood_elf_council_voice_trigger : public CreatureScript
@@ -165,8 +165,7 @@ public:
                 Council[1] = instance->GetGuidData(DATA_VERAS_DARKSHADOW);
                 Council[2] = instance->GetGuidData(DATA_LADY_MALANDE);
                 Council[3] = instance->GetGuidData(DATA_HIGH_NETHERMANCER_ZEREVOR);
-            }
-            else TC_LOG_ERROR("scripts", ERROR_INST_DATA);
+            } else TC_LOG_ERROR("scripts", ERROR_INST_DATA);
         }
 
         void EnterCombat(Unit* /*who*/) override { }
@@ -186,32 +185,30 @@ public:
             if (AggroYellTimer)
             {
                 if (AggroYellTimer <= diff)
+            {
+                if (Creature* pMember = ObjectAccessor::GetCreature(*me, Council[YellCounter]))
                 {
-                    if (Creature* pMember = ObjectAccessor::GetCreature(*me, Council[YellCounter]))
-                    {
-                        pMember->AI()->Talk(CouncilAggro[YellCounter].entry);
-                        AggroYellTimer = CouncilAggro[YellCounter].timer;
-                    }
-                    ++YellCounter;
-                    if (YellCounter > 3)
-                        YellCounter = 0;                            // Reuse for Enrage Yells
+                    pMember->AI()->Talk(CouncilAggro[YellCounter].entry);
+                    AggroYellTimer = CouncilAggro[YellCounter].timer;
                 }
-                else AggroYellTimer -= diff;
+                ++YellCounter;
+                if (YellCounter > 3)
+                    YellCounter = 0;                            // Reuse for Enrage Yells
+            } else AggroYellTimer -= diff;
             }
 
             if (EnrageTimer)
             {
                 if (EnrageTimer <= diff)
+            {
+                if (Creature* pMember = ObjectAccessor::GetCreature(*me, Council[YellCounter]))
                 {
-                    if (Creature* pMember = ObjectAccessor::GetCreature(*me, Council[YellCounter]))
-                    {
-                        pMember->CastSpell(pMember, SPELL_BERSERK, true);
-                        pMember->AI()->Talk(CouncilEnrage[YellCounter].entry);
-                        EnrageTimer = CouncilEnrage[YellCounter].timer;
-                    }
-                    ++YellCounter;
+                    pMember->CastSpell(pMember, SPELL_BERSERK, true);
+                    pMember->AI()->Talk(CouncilEnrage[YellCounter].entry);
+                    EnrageTimer = CouncilEnrage[YellCounter].timer;
                 }
-                else EnrageTimer -= diff;
+                ++YellCounter;
+            } else EnrageTimer -= diff;
             }
         }
     };
@@ -310,8 +307,8 @@ public:
                     if (Council[i])
                     {
                         if (Creature* member = ObjectAccessor::GetCreature(*me, Council[i]))
-                        if (member->IsAlive())
-                            member->AI()->AttackStart(target);
+                            if (member->IsAlive())
+                                member->AI()->AttackStart(target);
                     }
                 }
 
@@ -345,8 +342,7 @@ public:
                         pMember->DealDamage(pMember, pMember->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
                     ++DeathCount;
                     EndEventTimer = 1500;
-                }
-                else EndEventTimer -= diff;
+                } else EndEventTimer -= diff;
             }
 
             if (CheckTimer)
@@ -377,8 +373,7 @@ public:
                         Reset();
 
                     CheckTimer = 2000;
-                }
-                else CheckTimer -= diff;
+                } else CheckTimer -= diff;
             }
 
         }
@@ -418,11 +413,11 @@ struct boss_illidari_councilAI : public ScriptedAI
         for (uint8 i = 0; i < 4; ++i)
         {
             if (Unit* unit = ObjectAccessor::GetUnit(*me, Council[i]))
-            if (unit != me && unit->GetVictim())
-            {
-                AttackStart(unit->GetVictim());
-                return;
-            }
+                if (unit != me && unit->GetVictim())
+                {
+                    AttackStart(unit->GetVictim());
+                    return;
+                }
         }
         ScriptedAI::EnterEvadeMode();
     }
@@ -436,11 +431,11 @@ struct boss_illidari_councilAI : public ScriptedAI
         for (uint8 i = 0; i < 4; ++i)
         {
             if (Creature* unit = ObjectAccessor::GetCreature(*me, Council[i]))
-            if (unit != me && damage < unit->GetHealth())
-            {
-                unit->ModifyHealth(-int32(damage));
-                unit->LowerPlayerDamageReq(damage);
-            }
+                if (unit != me && damage < unit->GetHealth())
+                {
+                    unit->ModifyHealth(-int32(damage));
+                    unit->LowerPlayerDamageReq(damage);
+                }
         }
     }
 
@@ -520,8 +515,8 @@ public:
             uint32 spellid = 0;
             switch (urand(0, 1))
             {
-            case 0: spellid = SPELL_DEVOTION_AURA;   break;
-            case 1: spellid = SPELL_CHROMATIC_AURA;  break;
+                case 0: spellid = SPELL_DEVOTION_AURA;   break;
+                case 1: spellid = SPELL_CHROMATIC_AURA;  break;
             }
             for (uint8 i = 0; i < 4; ++i)
             {
@@ -542,25 +537,23 @@ public:
                 {
                     switch (urand(0, 1))
                     {
-                    case 0:
-                        DoCast(unit, SPELL_BLESS_SPELLWARD);
-                        break;
+                        case 0:
+                            DoCast(unit, SPELL_BLESS_SPELLWARD);
+                            break;
 
-                    case 1:
-                        DoCast(unit, SPELL_BLESS_PROTECTION);
-                        break;
+                        case 1:
+                            DoCast(unit, SPELL_BLESS_PROTECTION);
+                            break;
                     }
                 }
                 BlessingTimer = 60000;
-            }
-            else BlessingTimer -= diff;
+            } else BlessingTimer -= diff;
 
             if (ConsecrationTimer <= diff)
             {
                 DoCast(me, SPELL_CONSECRATION);
                 ConsecrationTimer = 40000;
-            }
-            else ConsecrationTimer -= diff;
+            } else ConsecrationTimer -= diff;
 
             if (HammerOfJusticeTimer <= diff)
             {
@@ -573,26 +566,23 @@ public:
                         HammerOfJusticeTimer = 20000;
                     }
                 }
-            }
-            else HammerOfJusticeTimer -= diff;
+            } else HammerOfJusticeTimer -= diff;
 
             if (SealTimer <= diff)
             {
                 switch (urand(0, 1))
                 {
-                case 0: DoCast(me, SPELL_SEAL_OF_COMMAND);  break;
-                case 1: DoCast(me, SPELL_SEAL_OF_BLOOD);    break;
+                    case 0: DoCast(me, SPELL_SEAL_OF_COMMAND);  break;
+                    case 1: DoCast(me, SPELL_SEAL_OF_BLOOD);    break;
                 }
                 SealTimer = 40000;
-            }
-            else SealTimer -= diff;
+            } else SealTimer -= diff;
 
             if (AuraTimer <= diff)
             {
                 CastAuraOnCouncil();
                 AuraTimer = 90000;
-            }
-            else AuraTimer -= diff;
+            } else AuraTimer -= diff;
 
             DoMeleeAttackIfReady();
         }
@@ -670,24 +660,21 @@ public:
                 Cooldown = 1000;
                 DampenMagicTimer = 67200;                      // almost 1, 12 minutes
                 ArcaneBoltTimer += 1000;                        // Give the Mage some time to spellsteal Dampen.
-            }
-            else DampenMagicTimer -= diff;
+            } else DampenMagicTimer -= diff;
 
             if (ArcaneExplosionTimer <= diff)
             {
                 DoCastVictim(SPELL_ARCANE_EXPLOSION);
                 Cooldown = 1000;
                 ArcaneExplosionTimer = 14000;
-            }
-            else ArcaneExplosionTimer -= diff;
+            } else ArcaneExplosionTimer -= diff;
 
             if (ArcaneBoltTimer <= diff)
             {
                 DoCastVictim(SPELL_ARCANE_BOLT);
                 ArcaneBoltTimer = 3000;
                 Cooldown = 2000;
-            }
-            else ArcaneBoltTimer -= diff;
+            } else ArcaneBoltTimer -= diff;
 
             if (BlizzardTimer <= diff)
             {
@@ -698,8 +685,7 @@ public:
                     FlamestrikeTimer += 10000;
                     Cooldown = 1000;
                 }
-            }
-            else BlizzardTimer -= diff;
+            } else BlizzardTimer -= diff;
 
             if (FlamestrikeTimer <= diff)
             {
@@ -710,8 +696,7 @@ public:
                     BlizzardTimer += 10000;
                     Cooldown = 2000;
                 }
-            }
-            else FlamestrikeTimer -= diff;
+            } else FlamestrikeTimer -= diff;
         }
     };
 
@@ -774,15 +759,13 @@ public:
                     DoCast(target, SPELL_EMPOWERED_SMITE);
                     EmpoweredSmiteTimer = 38000;
                 }
-            }
-            else EmpoweredSmiteTimer -= diff;
+            } else EmpoweredSmiteTimer -= diff;
 
             if (CircleOfHealingTimer <= diff)
             {
                 DoCast(me, SPELL_CIRCLE_OF_HEALING);
                 CircleOfHealingTimer = 60000;
-            }
-            else CircleOfHealingTimer -= diff;
+            } else CircleOfHealingTimer -= diff;
 
             if (DivineWrathTimer <= diff)
             {
@@ -791,15 +774,13 @@ public:
                     DoCast(target, SPELL_DIVINE_WRATH);
                     DivineWrathTimer = urand(40, 81) * 1000;
                 }
-            }
-            else DivineWrathTimer -= diff;
+            } else DivineWrathTimer -= diff;
 
             if (ReflectiveShieldTimer <= diff)
             {
                 DoCast(me, SPELL_REFLECTIVE_SHIELD);
                 ReflectiveShieldTimer = 65000;
-            }
-            else ReflectiveShieldTimer -= diff;
+            } else ReflectiveShieldTimer -= diff;
 
             DoMeleeAttackIfReady();
         }
@@ -867,32 +848,29 @@ public:
                 {
                     DoCastVictim(SPELL_DEADLY_POISON);
                     DeadlyPoisonTimer = urand(15, 46) * 1000;
-                }
-                else DeadlyPoisonTimer -= diff;
+                } else DeadlyPoisonTimer -= diff;
 
                 if (AppearEnvenomTimer <= diff)                   // Cast Envenom. This is cast 4 seconds after Vanish is over
                 {
                     DoCastVictim(SPELL_ENVENOM);
                     AppearEnvenomTimer = 90000;
-                }
-                else AppearEnvenomTimer -= diff;
+                } else AppearEnvenomTimer -= diff;
 
                 if (VanishTimer <= diff)                          // Disappear and stop attacking, but follow a random unit
                 {
                     if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
                     {
                         VanishTimer = 30000;
-                        AppearEnvenomTimer = 28000;
+                        AppearEnvenomTimer= 28000;
                         HasVanished = true;
                         me->SetVisible(false);
                         me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
                         DoResetThreat();
-                        // Chase a unit. Check before DoMeleeAttackIfReady prevents from attacking
+                                                                // Chase a unit. Check before DoMeleeAttackIfReady prevents from attacking
                         me->AddThreat(target, 500000.0f);
                         me->GetMotionMaster()->MoveChase(target);
                     }
-                }
-                else VanishTimer -= diff;
+                } else VanishTimer -= diff;
 
                 DoMeleeAttackIfReady();
             }
@@ -909,8 +887,7 @@ public:
                     VanishTimer = 90000;
                     AppearEnvenomTimer = 4000;
                     HasVanished = false;
-                }
-                else VanishTimer -= diff;
+                } else VanishTimer -= diff;
 
                 if (AppearEnvenomTimer <= diff)                   // Appear 2 seconds before becoming attackable (Shifting out of vanish)
                 {
@@ -918,8 +895,7 @@ public:
                     me->GetMotionMaster()->MoveChase(me->GetVictim());
                     me->SetVisible(true);
                     AppearEnvenomTimer = 6000;
-                }
-                else AppearEnvenomTimer -= diff;
+                } else AppearEnvenomTimer -= diff;
             }
         }
     };
@@ -951,7 +927,7 @@ public:
 
         void Register() override
         {
-            AfterEffectAbsorb += AuraEffectAbsorbFn(spell_boss_lady_malande_shield_AuraScript::Trigger, EFFECT_0);
+             AfterEffectAbsorb += AuraEffectAbsorbFn(spell_boss_lady_malande_shield_AuraScript::Trigger, EFFECT_0);
         }
     };
 

@@ -30,48 +30,48 @@ SDComment: all sounds, black hole effect triggers to often (46228)
 // Muru & Entropius's spells
 enum Spells
 {
-    SPELL_ENRAGE = 26662,
+    SPELL_ENRAGE                 = 26662,
 
     // Muru's spells
-    SPELL_NEGATIVE_ENERGY = 46009, //(this trigger 46008)
-    SPELL_DARKNESS = 45999,
-    SPELL_OPEN_ALL_PORTALS = 46177,
-    SPELL_OPEN_PORTAL = 45977,
-    SPELL_OPEN_PORTAL_2 = 45976,
-    SPELL_SUMMON_BERSERKER = 46037,
-    SPELL_SUMNON_FURY_MAGE = 46038,
-    SPELL_SUMMON_VOID_SENTINEL = 45988,
-    SPELL_SUMMON_ENTROPIUS = 46217,
+    SPELL_NEGATIVE_ENERGY        = 46009, //(this trigger 46008)
+    SPELL_DARKNESS               = 45999,
+    SPELL_OPEN_ALL_PORTALS       = 46177,
+    SPELL_OPEN_PORTAL            = 45977,
+    SPELL_OPEN_PORTAL_2          = 45976,
+    SPELL_SUMMON_BERSERKER       = 46037,
+    SPELL_SUMNON_FURY_MAGE       = 46038,
+    SPELL_SUMMON_VOID_SENTINEL   = 45988,
+    SPELL_SUMMON_ENTROPIUS       = 46217,
 
     // Entropius's spells
-    SPELL_DARKNESS_E = 46269,
-    SPELL_BLACKHOLE = 46282,
-    SPELL_NEGATIVE_ENERGY_E = 46284,
-    SPELL_ENTROPIUS_SPAWN = 46223,
+    SPELL_DARKNESS_E             = 46269,
+    SPELL_BLACKHOLE              = 46282,
+    SPELL_NEGATIVE_ENERGY_E      = 46284,
+    SPELL_ENTROPIUS_SPAWN        = 46223,
 
     // Shadowsword Berserker's spells
-    SPELL_FLURRY = 46160,
-    SPELL_DUAL_WIELD = 29651,
+    SPELL_FLURRY                 = 46160,
+    SPELL_DUAL_WIELD             = 29651,
 
     // Shadowsword Fury Mage's spells
-    SPELL_FEL_FIREBALL = 46101,
-    SPELL_SPELL_FURY = 46102,
+    SPELL_FEL_FIREBALL           = 46101,
+    SPELL_SPELL_FURY             = 46102,
 
     // Void Sentinel's spells
-    SPELL_SHADOW_PULSE = 46087,
-    SPELL_VOID_BLAST = 46161,
+    SPELL_SHADOW_PULSE           = 46087,
+    SPELL_VOID_BLAST             = 46161,
 
     // Void Spawn's spells
-    SPELL_SHADOW_BOLT_VOLLEY = 46082,
+    SPELL_SHADOW_BOLT_VOLLEY     = 46082,
 
     //Dark Fiend Spells
-    SPELL_DARKFIEND_AOE = 45944,
-    SPELL_DARKFIEND_VISUAL = 45936,
-    SPELL_DARKFIEND_SKIN = 45934,
+    SPELL_DARKFIEND_AOE          = 45944,
+    SPELL_DARKFIEND_VISUAL       = 45936,
+    SPELL_DARKFIEND_SKIN         = 45934,
 
     //Black Hole Spells
-    SPELL_BLACKHOLE_SPAWN = 46242,
-    SPELL_BLACKHOLE_GROW = 46228
+    SPELL_BLACKHOLE_SPAWN        = 46242,
+    SPELL_BLACKHOLE_GROW         = 46228
 };
 
 enum Events
@@ -125,15 +125,15 @@ public:
         {
             switch (summoned->GetEntry())
             {
-            case NPC_DARK_FIENDS:
-                summoned->CastSpell(summoned, SPELL_DARKFIEND_VISUAL);
-                break;
-            case NPC_DARKNESS:
-                summoned->AddUnitState(UNIT_STATE_STUNNED);
-                float x, y, z, o;
-                summoned->GetHomePosition(x, y, z, o);
-                me->SummonCreature(NPC_DARK_FIENDS, x, y, z, o, TEMPSUMMON_CORPSE_DESPAWN, 0);
-                break;
+                case NPC_DARK_FIENDS:
+                    summoned->CastSpell(summoned, SPELL_DARKFIEND_VISUAL);
+                    break;
+                case NPC_DARKNESS:
+                    summoned->AddUnitState(UNIT_STATE_STUNNED);
+                    float x, y, z, o;
+                    summoned->GetHomePosition(x, y, z, o);
+                    me->SummonCreature(NPC_DARK_FIENDS, x, y, z, o, TEMPSUMMON_CORPSE_DESPAWN, 0);
+                    break;
             }
             summoned->AI()->AttackStart(SelectTarget(SELECT_TARGET_RANDOM, 0, 50, true));
             summons.Summon(summoned);
@@ -222,15 +222,15 @@ public:
         {
             switch (summoned->GetEntry())
             {
-            case NPC_ENTROPIUS:
-                me->SetVisible(false);
-                EntropiusGUID = summoned->GetGUID();
-                if (HasEnraged) // If we hit phase transition while enraged, enrage Entropius as well.
-                    summoned->CastSpell(summoned, SPELL_ENRAGE);
-                break;
-            case NPC_DARK_FIENDS:
-                summoned->CastSpell(summoned, SPELL_DARKFIEND_VISUAL);
-                break;
+                case NPC_ENTROPIUS:
+                    me->SetVisible(false);
+                    EntropiusGUID = summoned->GetGUID();
+                    if (HasEnraged) // If we hit phase transition while enraged, enrage Entropius as well.
+                        summoned->CastSpell(summoned, SPELL_ENRAGE);
+                    break;
+                case NPC_DARK_FIENDS:
+                    summoned->CastSpell(summoned, SPELL_DARKFIEND_VISUAL);
+                    break;
             }
             summoned->AI()->AttackStart(SelectTarget(SELECT_TARGET_RANDOM, 0, 50, true));
             summons.Summon(summoned);
@@ -240,35 +240,35 @@ public:
         {
             switch (eventId)
             {
-            case EVENT_DARKNESS:
-                if (!DarkFiend)
-                {
-                    DarkFiend = true;
-                    DoCastAOE(SPELL_DARKNESS);
-                }
-                else
-                    me->SummonCreatureGroup(CREATURE_GROUP_DARKFIENDS);
-                events.ScheduleEvent(EVENT_DARKNESS, DarkFiend ? 3000 : 42000, 0, PHASE_ONE);
-                break;
-            case EVENT_SUMMON_HUMANOIDS:
-                me->SummonCreatureGroup(CREATURE_GROUP_HUMANOIDS);
-                events.ScheduleEvent(EVENT_SUMMON_HUMANOIDS, 60000, 0, PHASE_ONE);
-                break;
-            case EVENT_SUMMON_SENTINEL:
-                DoCastAOE(SPELL_OPEN_PORTAL_2);
-                events.ScheduleEvent(EVENT_SUMMON_SENTINEL, 30000, 0, PHASE_ONE);
-                break;
-            case EVENT_PHASE_TRANSITION:
-                DoCast(me, SPELL_SUMMON_ENTROPIUS);
-                break;
-            case EVENT_ENRAGE:
-                if (Creature* entropius = ObjectAccessor::GetCreature(*me, EntropiusGUID))
-                    entropius->CastSpell(entropius, SPELL_ENRAGE);
-                DoCast(me, SPELL_ENRAGE);
-                HasEnraged = true;
-                break;
-            default:
-                break;
+                case EVENT_DARKNESS:
+                    if (!DarkFiend)
+                    {
+                        DarkFiend = true;
+                        DoCastAOE(SPELL_DARKNESS);
+                    }
+                    else
+                        me->SummonCreatureGroup(CREATURE_GROUP_DARKFIENDS);
+                    events.ScheduleEvent(EVENT_DARKNESS, DarkFiend ? 3000 : 42000, 0, PHASE_ONE);
+                    break;
+                case EVENT_SUMMON_HUMANOIDS:
+                    me->SummonCreatureGroup(CREATURE_GROUP_HUMANOIDS);
+                    events.ScheduleEvent(EVENT_SUMMON_HUMANOIDS, 60000, 0, PHASE_ONE);
+                    break;
+                case EVENT_SUMMON_SENTINEL:
+                    DoCastAOE(SPELL_OPEN_PORTAL_2);
+                    events.ScheduleEvent(EVENT_SUMMON_SENTINEL, 30000, 0, PHASE_ONE);
+                    break;
+                case EVENT_PHASE_TRANSITION:
+                    DoCast(me, SPELL_SUMMON_ENTROPIUS);
+                    break;
+                case EVENT_ENRAGE:
+                    if (Creature* entropius = ObjectAccessor::GetCreature(*me, EntropiusGUID))
+                        entropius->CastSpell(entropius, SPELL_ENRAGE);
+                    DoCast(me, SPELL_ENRAGE);
+                    HasEnraged = true;
+                    break;
+                default:
+                    break;
             }
         }
 
@@ -345,13 +345,13 @@ public:
             InAction = true;
             switch (Spell->Id)
             {
-            case SPELL_OPEN_ALL_PORTALS:
-                DoCastAOE(SPELL_OPEN_PORTAL);
-                break;
-            case SPELL_OPEN_PORTAL_2:
-                DoCastAOE(SPELL_OPEN_PORTAL);
-                SummonSentinel = true;
-                break;
+                case SPELL_OPEN_ALL_PORTALS:
+                    DoCastAOE(SPELL_OPEN_PORTAL);
+                    break;
+                case SPELL_OPEN_PORTAL_2:
+                    DoCastAOE(SPELL_OPEN_PORTAL);
+                    SummonSentinel = true;
+                    break;
             }
         }
 
@@ -369,8 +369,7 @@ public:
                 DoCastAOE(SPELL_SUMMON_VOID_SENTINEL, false);
                 SummonTimer = 5000;
                 SummonSentinel = false;
-            }
-            else SummonTimer -= diff;
+            } else SummonTimer -= diff;
         }
     };
 };
@@ -411,8 +410,8 @@ public:
         void SpellHit(Unit* /*caster*/, const SpellInfo* Spell) override
         {
             for (uint8 i = 0; i < 3; ++i)
-            if (Spell->Effects[i].Effect == 38)
-                me->DisappearAndDie();
+                if (Spell->Effects[i].Effect == 38)
+                    me->DisappearAndDie();
         }
 
         void UpdateAI(uint32 diff) override
@@ -439,8 +438,7 @@ public:
                     }
                     WaitTimer = 500;
                 }
-            }
-            else WaitTimer -= diff;
+            } else WaitTimer -= diff;
         }
     };
 };
@@ -483,8 +481,8 @@ public:
         void JustDied(Unit* killer) override
         {
             for (uint8 i = 0; i < 8; ++i)
-            if (Creature* temp = me->SummonCreature(NPC_VOID_SPAWN, me->GetPositionX(), me->GetPositionY(), me->GetPositionZ(), float(rand32() % 6), TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 180000))
-                temp->AI()->AttackStart(killer);
+                if (Creature* temp = me->SummonCreature(NPC_VOID_SPAWN, me->GetPositionX(), me->GetPositionY(), me->GetPositionZ(), float(rand32() % 6), TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 180000))
+                    temp->AI()->AttackStart(killer);
         }
 
         void UpdateAI(uint32 diff) override
@@ -496,15 +494,13 @@ public:
             {
                 DoCastAOE(SPELL_SHADOW_PULSE, true);
                 PulseTimer = 3000;
-            }
-            else PulseTimer -= diff;
+            } else PulseTimer -= diff;
 
             if (VoidBlastTimer <= diff)
             {
                 DoCastVictim(SPELL_VOID_BLAST, false);
                 VoidBlastTimer = 45000;
-            }
-            else VoidBlastTimer -= diff;
+            } else VoidBlastTimer -= diff;
 
             DoMeleeAttackIfReady();
         }
@@ -559,37 +555,35 @@ public:
                 Unit* Victim = ObjectAccessor::GetUnit(*me, instance->GetGuidData(DATA_PLAYER_GUID));
                 switch (NeedForAHack)
                 {
-                case 0:
-                    me->ClearUnitState(UNIT_STATE_STUNNED);
-                    DoCastAOE(SPELL_BLACKHOLE_GROW, false);
-                    if (Victim)
-                        AttackStart(Victim);
-                    SpellTimer = 700;
-                    NeedForAHack = 2;
-                    break;
-                case 1:
-                    me->AddAura(SPELL_BLACKHOLE_GROW, me);
-                    NeedForAHack = 2;
-                    SpellTimer = 600;
-                    break;
-                case 2:
-                    SpellTimer = 400;
-                    NeedForAHack = 3;
-                    me->RemoveAura(SPELL_BLACKHOLE_GROW);
-                    break;
-                case 3:
-                    SpellTimer = urand(400, 900);
-                    NeedForAHack = 1;
-                    if (Unit* Temp = me->GetVictim())
-                    {
-                        if (Temp->GetPositionZ() > 73 && Victim)
+                    case 0:
+                        me->ClearUnitState(UNIT_STATE_STUNNED);
+                        DoCastAOE(SPELL_BLACKHOLE_GROW, false);
+                        if (Victim)
                             AttackStart(Victim);
-                    }
-                    else
-                        return;
+                        SpellTimer = 700;
+                        NeedForAHack = 2;
+                        break;
+                    case 1:
+                        me->AddAura(SPELL_BLACKHOLE_GROW, me);
+                        NeedForAHack = 2;
+                        SpellTimer = 600;
+                        break;
+                    case 2:
+                        SpellTimer = 400;
+                        NeedForAHack = 3;
+                        me->RemoveAura(SPELL_BLACKHOLE_GROW);
+                        break;
+                    case 3:
+                        SpellTimer = urand(400, 900);
+                        NeedForAHack = 1;
+                        if (Unit* Temp = me->GetVictim())
+                        {
+                            if (Temp->GetPositionZ() > 73 && Victim)
+                                AttackStart(Victim);
+                        } else
+                            return;
                 }
-            }
-            else SpellTimer -= diff;
+            } else SpellTimer -= diff;
 
             if (DespawnTimer <= diff)
                 me->DisappearAndDie();

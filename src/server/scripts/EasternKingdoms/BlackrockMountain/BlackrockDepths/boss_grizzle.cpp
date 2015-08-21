@@ -20,88 +20,88 @@
 
 enum Grizzle
 {
-    SPELL_GROUNDTREMOR = 6524,
-    SPELL_FRENZY = 28371,
-    EMOTE_FRENZY_KILL = 0
+    SPELL_GROUNDTREMOR      = 6524,
+    SPELL_FRENZY            = 28371,
+    EMOTE_FRENZY_KILL       = 0
 };
 
 enum Events
 {
-    EVENT_GROUNDTREMOR = 1,
-    EVENT_FRENZY = 2
+    EVENT_GROUNDTREMOR      = 1,
+    EVENT_FRENZY            = 2
 };
 
 enum Phases
 {
-    PHASE_ONE = 1,
-    PHASE_TWO = 2
+    PHASE_ONE               = 1,
+    PHASE_TWO               = 2
 };
 
 class boss_grizzle : public CreatureScript
 {
-public:
-    boss_grizzle() : CreatureScript("boss_grizzle") { }
+    public:
+        boss_grizzle() : CreatureScript("boss_grizzle") { }
 
-    struct boss_grizzleAI : public ScriptedAI
-    {
-        boss_grizzleAI(Creature* creature) : ScriptedAI(creature) { }
-
-        void Reset() override
+        struct boss_grizzleAI : public ScriptedAI
         {
-            _events.Reset();
-        }
+            boss_grizzleAI(Creature* creature) : ScriptedAI(creature) { }
 
-        void EnterCombat(Unit* /*who*/) override
-        {
-            _events.SetPhase(PHASE_ONE);
-            _events.ScheduleEvent(EVENT_GROUNDTREMOR, 12000);
-        }
-
-        void DamageTaken(Unit* /*attacker*/, uint32& damage) override
-        {
-            if (me->HealthBelowPctDamaged(50, damage) && _events.IsInPhase(PHASE_ONE))
+            void Reset() override
             {
-                _events.SetPhase(PHASE_TWO);
-                _events.ScheduleEvent(EVENT_FRENZY, 0, 0, PHASE_TWO);
+                _events.Reset();
             }
-        }
 
-        void UpdateAI(uint32 diff) override
-        {
-            if (!UpdateVictim())
-                return;
-
-            _events.Update(diff);
-
-            while (uint32 eventId = _events.ExecuteEvent())
+            void EnterCombat(Unit* /*who*/) override
             {
-                switch (eventId)
+                _events.SetPhase(PHASE_ONE);
+                _events.ScheduleEvent(EVENT_GROUNDTREMOR, 12000);
+            }
+
+            void DamageTaken(Unit* /*attacker*/, uint32& damage) override
+            {
+                if (me->HealthBelowPctDamaged(50, damage) && _events.IsInPhase(PHASE_ONE))
                 {
-                case EVENT_GROUNDTREMOR:
-                    DoCastVictim(SPELL_GROUNDTREMOR);
-                    _events.ScheduleEvent(EVENT_GROUNDTREMOR, 8000);
-                    break;
-                case EVENT_FRENZY:
-                    DoCast(me, SPELL_FRENZY);
-                    Talk(EMOTE_FRENZY_KILL);
-                    _events.ScheduleEvent(EVENT_FRENZY, 15000, 0, PHASE_TWO);
-                    break;
-                default:
-                    break;
+                    _events.SetPhase(PHASE_TWO);
+                    _events.ScheduleEvent(EVENT_FRENZY, 0, 0, PHASE_TWO);
                 }
             }
 
-            DoMeleeAttackIfReady();
+            void UpdateAI(uint32 diff) override
+            {
+                if (!UpdateVictim())
+                    return;
+
+                _events.Update(diff);
+
+                while (uint32 eventId = _events.ExecuteEvent())
+                {
+                    switch (eventId)
+                    {
+                        case EVENT_GROUNDTREMOR:
+                            DoCastVictim(SPELL_GROUNDTREMOR);
+                            _events.ScheduleEvent(EVENT_GROUNDTREMOR, 8000);
+                            break;
+                        case EVENT_FRENZY:
+                           DoCast(me, SPELL_FRENZY);
+                           Talk(EMOTE_FRENZY_KILL);
+                            _events.ScheduleEvent(EVENT_FRENZY, 15000, 0, PHASE_TWO);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+
+                DoMeleeAttackIfReady();
+            }
+
+        private:
+            EventMap _events;
+        };
+
+        CreatureAI* GetAI(Creature* creature) const override
+        {
+            return new boss_grizzleAI(creature);
         }
-
-    private:
-        EventMap _events;
-    };
-
-    CreatureAI* GetAI(Creature* creature) const override
-    {
-        return new boss_grizzleAI(creature);
-    }
 };
 
 void AddSC_boss_grizzle()

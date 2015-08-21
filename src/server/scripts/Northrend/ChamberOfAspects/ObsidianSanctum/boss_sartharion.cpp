@@ -26,97 +26,97 @@
 enum Enums
 {
     //Sartharion Yell
-    SAY_SARTHARION_AGGRO = 0,
-    SAY_SARTHARION_BERSERK = 1,
-    SAY_SARTHARION_BREATH = 2,
-    SAY_SARTHARION_CALL_SHADRON = 3,
-    SAY_SARTHARION_CALL_TENEBRON = 4,
-    SAY_SARTHARION_CALL_VESPERON = 5,
-    SAY_SARTHARION_DEATH = 6,
-    SAY_SARTHARION_SPECIAL = 7,
-    SAY_SARTHARION_SLAY = 8,
-    WHISPER_LAVA_CHURN = 9,
+    SAY_SARTHARION_AGGRO                        = 0,
+    SAY_SARTHARION_BERSERK                      = 1,
+    SAY_SARTHARION_BREATH                       = 2,
+    SAY_SARTHARION_CALL_SHADRON                 = 3,
+    SAY_SARTHARION_CALL_TENEBRON                = 4,
+    SAY_SARTHARION_CALL_VESPERON                = 5,
+    SAY_SARTHARION_DEATH                        = 6,
+    SAY_SARTHARION_SPECIAL                      = 7,
+    SAY_SARTHARION_SLAY                         = 8,
+    WHISPER_LAVA_CHURN                          = 9,
 
     //Sartharion Spells
-    SPELL_BERSERK = 61632,    // Increases the caster's attack speed by 150% and all damage it deals by 500% for 5 min.
-    SPELL_CLEAVE = 56909,    // Inflicts 35% weapon damage to an enemy and its nearest allies, affecting up to 10 targets.
-    SPELL_FLAME_BREATH = 56908,    // Inflicts 8750 to 11250 Fire damage to enemies in a cone in front of the caster.
-    SPELL_TAIL_LASH = 56910,    // A sweeping tail strike hits all enemies behind the caster, inflicting 3063 to 3937 damage and stunning them for 2 sec.
-    SPELL_WILL_OF_SARTHARION = 61254,    // Sartharion's presence bolsters the resolve of the Twilight Drakes, increasing their total health by 25%. This effect also increases Sartharion's health by 25%.
-    SPELL_LAVA_STRIKE = 57571,    // (Real spell cast should be 57578) 57571 then trigger visual missile, then summon Lava Blaze on impact(spell 57572)
-    SPELL_TWILIGHT_REVENGE = 60639,
-    NPC_FIRE_CYCLONE = 30648,
+    SPELL_BERSERK                               = 61632,    // Increases the caster's attack speed by 150% and all damage it deals by 500% for 5 min.
+    SPELL_CLEAVE                                = 56909,    // Inflicts 35% weapon damage to an enemy and its nearest allies, affecting up to 10 targets.
+    SPELL_FLAME_BREATH                          = 56908,    // Inflicts 8750 to 11250 Fire damage to enemies in a cone in front of the caster.
+    SPELL_TAIL_LASH                             = 56910,    // A sweeping tail strike hits all enemies behind the caster, inflicting 3063 to 3937 damage and stunning them for 2 sec.
+    SPELL_WILL_OF_SARTHARION                    = 61254,    // Sartharion's presence bolsters the resolve of the Twilight Drakes, increasing their total health by 25%. This effect also increases Sartharion's health by 25%.
+    SPELL_LAVA_STRIKE                           = 57571,    // (Real spell cast should be 57578) 57571 then trigger visual missile, then summon Lava Blaze on impact(spell 57572)
+    SPELL_TWILIGHT_REVENGE                      = 60639,
+    NPC_FIRE_CYCLONE                            = 30648,
 
-    SPELL_PYROBUFFET = 56916,    // currently used for hard enrage after 15 minutes
-    SPELL_PYROBUFFET_RANGE = 58907,    // possibly used when player get too far away from dummy creatures (2x Creature entry 30494)
+    SPELL_PYROBUFFET                            = 56916,    // currently used for hard enrage after 15 minutes
+    SPELL_PYROBUFFET_RANGE                      = 58907,    // possibly used when player get too far away from dummy creatures (2x Creature entry 30494)
 
     //Vesperon
     //In portal is a disciple, when disciple killed remove Power_of_vesperon, portal open multiple times
-    NPC_ACOLYTE_OF_VESPERON = 31219,    // Acolyte of Vesperon
-    SPELL_POWER_OF_VESPERON = 61251,    // Vesperon's presence decreases the maximum health of all enemies by 25%.
+    NPC_ACOLYTE_OF_VESPERON                     = 31219,    // Acolyte of Vesperon
+    SPELL_POWER_OF_VESPERON                     = 61251,    // Vesperon's presence decreases the maximum health of all enemies by 25%.
 
     //Shadron
     //In portal is a disciple, when disciple killed remove Power_of_vesperon, portal open multiple times
-    NPC_ACOLYTE_OF_SHADRON = 31218,    // Acolyte of Shadron
-    SPELL_POWER_OF_SHADRON = 58105,    // Shadron's presence increases Fire damage taken by all enemies by 100%.
+    NPC_ACOLYTE_OF_SHADRON                      = 31218,    // Acolyte of Shadron
+    SPELL_POWER_OF_SHADRON                      = 58105,    // Shadron's presence increases Fire damage taken by all enemies by 100%.
 
     //Tenebron
     //in the portal spawns 6 eggs, if not killed in time (approx. 20s)  they will hatch,  whelps can cast 60708
-    SPELL_POWER_OF_TENEBRON = 61248,    // Tenebron's presence increases Shadow damage taken by all enemies by 100%.
+    SPELL_POWER_OF_TENEBRON                     = 61248,    // Tenebron's presence increases Shadow damage taken by all enemies by 100%.
 
-    NPC_FLAME_TSUNAMI = 30616,    // for the flame waves
+    NPC_FLAME_TSUNAMI                           = 30616,    // for the flame waves
 
     //using these custom points for dragons start and end
-    POINT_ID_INIT = 100,
-    POINT_ID_LAND = 200
+    POINT_ID_INIT                               = 100,
+    POINT_ID_LAND                               = 200
 };
 
 enum Misc
 {
-    DATA_CAN_LOOT = 0
+    DATA_CAN_LOOT           = 0
 };
 
-Position const FlameRight1Spawn = { 3200.00f, 573.211f, 57.1551f, 0.0f };
+Position const FlameRight1Spawn     = { 3200.00f, 573.211f, 57.1551f, 0.0f };
 Position const FlameRight1Direction = { 3289.28f, 573.211f, 57.1551f, 0.0f };
-Position const FlameRight2Spawn = { 3200.00f, 532.211f, 57.1551f, 0.0f };
+Position const FlameRight2Spawn     = { 3200.00f, 532.211f, 57.1551f, 0.0f };
 Position const FlameRight2Direction = { 3289.28f, 532.211f, 57.1551f, 0.0f };
-Position const FlameRight3Spawn = { 3200.00f, 491.211f, 57.1551f, 0.0f };
+Position const FlameRight3Spawn     = { 3200.00f, 491.211f, 57.1551f, 0.0f };
 Position const FlameRight3Direction = { 3289.28f, 491.211f, 57.1551f, 0.0f };
-Position const FlameLeft1Spawn = { 3289.28f, 511.711f, 57.1551f, 0.0f };
-Position const FlameLeft1Direction = { 3200.00f, 511.711f, 57.1551f, 0.0f };
-Position const FlameLeft2Spawn = { 3289.28f, 552.711f, 57.1551f, 0.0f };
-Position const FlameLeft2Direction = { 3200.00f, 552.711f, 57.1551f, 0.0f };
+Position const FlameLeft1Spawn      = { 3289.28f, 511.711f, 57.1551f, 0.0f };
+Position const FlameLeft1Direction  = { 3200.00f, 511.711f, 57.1551f, 0.0f };
+Position const FlameLeft2Spawn      = { 3289.28f, 552.711f, 57.1551f, 0.0f };
+Position const FlameLeft2Direction  = { 3200.00f, 552.711f, 57.1551f, 0.0f };
 
 //each dragons special points. First where fly to before connect to connon, second where land point is.
 Position const TenebronPositions[] =
 {
     { 3212.854f, 575.597f, 109.856f, 0.0f }, // init
-    { 3246.425f, 565.367f, 61.249f, 0.0f }  // end
+    { 3246.425f, 565.367f, 61.249f,  0.0f }  // end
 };
 
 Position const ShadronPositions[] =
 {
     { 3293.238f, 472.223f, 106.968f, 0.0f },
-    { 3271.669f, 526.907f, 61.931f, 0.0f }
+    { 3271.669f, 526.907f, 61.931f,  0.0f }
 };
 
 Position const VesperonPositions[] =
 {
     { 3193.310f, 472.861f, 102.697f, 0.0f },
-    { 3227.268f, 533.238f, 59.995f, 0.0f }
+    { 3227.268f, 533.238f, 59.995f,  0.0f }
 };
 
 enum SartharionEvents
 {
-    EVENT_HARD_ENRAGE = 1,
-    EVENT_FLAME_TSUNAMI = 2,
-    EVENT_FLAME_BREATH = 3,
-    EVENT_TAIL_SWEEP = 4,
-    EVENT_CLEAVE_ATTACK = 5,
-    EVENT_LAVA_STRIKE = 6,
-    EVENT_CALL_TENEBRON = 7,
-    EVENT_CALL_SHADRON = 8,
-    EVENT_CALL_VESPERON = 9
+    EVENT_HARD_ENRAGE      = 1,
+    EVENT_FLAME_TSUNAMI    = 2,
+    EVENT_FLAME_BREATH     = 3,
+    EVENT_TAIL_SWEEP       = 4,
+    EVENT_CLEAVE_ATTACK    = 5,
+    EVENT_LAVA_STRIKE      = 6,
+    EVENT_CALL_TENEBRON    = 7,
+    EVENT_CALL_SHADRON     = 8,
+    EVENT_CALL_VESPERON    = 9
 };
 
 /*######
@@ -185,16 +185,16 @@ public:
             _JustDied();
 
             if (Creature* tenebron = ObjectAccessor::GetCreature(*me, instance->GetGuidData(DATA_TENEBRON)))
-            if (tenebron->IsAlive())
-                tenebron->DisappearAndDie();
+                if (tenebron->IsAlive())
+                    tenebron->DisappearAndDie();
 
             if (Creature* shadron = ObjectAccessor::GetCreature(*me, instance->GetGuidData(DATA_SHADRON)))
-            if (shadron->IsAlive())
-                shadron->DisappearAndDie();
+                if (shadron->IsAlive())
+                    shadron->DisappearAndDie();
 
             if (Creature* vesperon = ObjectAccessor::GetCreature(*me, instance->GetGuidData(DATA_VESPERON)))
-            if (vesperon->IsAlive())
-                vesperon->DisappearAndDie();
+                if (vesperon->IsAlive())
+                    vesperon->DisappearAndDie();
         }
 
         void KilledUnit(Unit* who) override
@@ -359,21 +359,21 @@ public:
 
                     switch (temp->GetEntry())
                     {
-                    case NPC_TENEBRON:
-                        textId = SAY_SARTHARION_CALL_TENEBRON;
-                        temp->AddAura(SPELL_POWER_OF_TENEBRON, temp);
-                        temp->GetMotionMaster()->MovePoint(POINT_ID_LAND, TenebronPositions[1]);
-                        break;
-                    case NPC_SHADRON:
-                        textId = SAY_SARTHARION_CALL_SHADRON;
-                        temp->AddAura(SPELL_POWER_OF_SHADRON, temp);
-                        temp->GetMotionMaster()->MovePoint(POINT_ID_LAND, ShadronPositions[1]);
-                        break;
-                    case NPC_VESPERON:
-                        textId = SAY_SARTHARION_CALL_VESPERON;
-                        temp->AddAura(SPELL_POWER_OF_VESPERON, temp);
-                        temp->GetMotionMaster()->MovePoint(POINT_ID_LAND, VesperonPositions[1]);
-                        break;
+                        case NPC_TENEBRON:
+                            textId = SAY_SARTHARION_CALL_TENEBRON;
+                            temp->AddAura(SPELL_POWER_OF_TENEBRON, temp);
+                            temp->GetMotionMaster()->MovePoint(POINT_ID_LAND, TenebronPositions[1]);
+                            break;
+                        case NPC_SHADRON:
+                            textId = SAY_SARTHARION_CALL_SHADRON;
+                            temp->AddAura(SPELL_POWER_OF_SHADRON, temp);
+                            temp->GetMotionMaster()->MovePoint(POINT_ID_LAND, ShadronPositions[1]);
+                            break;
+                        case NPC_VESPERON:
+                            textId = SAY_SARTHARION_CALL_VESPERON;
+                            temp->AddAura(SPELL_POWER_OF_VESPERON, temp);
+                            temp->GetMotionMaster()->MovePoint(POINT_ID_LAND, VesperonPositions[1]);
+                            break;
                     }
 
                     Talk(textId);
@@ -415,71 +415,71 @@ public:
             {
                 switch (eventId)
                 {
-                case EVENT_HARD_ENRAGE:
-                    if (!_isHardEnraged)
-                    {
-                        DoCast(me, SPELL_PYROBUFFET, true);
-                        _isHardEnraged = true;
-                    }
-                    break;
-                case EVENT_FLAME_TSUNAMI:
-                    Talk(WHISPER_LAVA_CHURN);
-                    switch (urand(0, 1))
-                    {
-                    case 0:
-                    {
-                              if (Creature* right1 = me->SummonCreature(NPC_FLAME_TSUNAMI, FlameRight1Spawn, TEMPSUMMON_TIMED_DESPAWN, 12000))
-                                  right1->GetMotionMaster()->MovePoint(0, FlameRight1Direction);
-                              if (Creature* right2 = me->SummonCreature(NPC_FLAME_TSUNAMI, FlameRight2Spawn, TEMPSUMMON_TIMED_DESPAWN, 12000))
-                                  right2->GetMotionMaster()->MovePoint(0, FlameRight2Direction);
-                              if (Creature* right3 = me->SummonCreature(NPC_FLAME_TSUNAMI, FlameRight3Spawn, TEMPSUMMON_TIMED_DESPAWN, 12000))
-                                  right3->GetMotionMaster()->MovePoint(0, FlameRight3Direction);
-                              break;
-                    }
-                    case 1:
-                    {
-                              if (Creature* left1 = me->SummonCreature(NPC_FLAME_TSUNAMI, FlameLeft1Spawn, TEMPSUMMON_TIMED_DESPAWN, 12000))
-                                  left1->GetMotionMaster()->MovePoint(0, FlameLeft1Direction);
-                              if (Creature* left2 = me->SummonCreature(NPC_FLAME_TSUNAMI, FlameLeft2Spawn, TEMPSUMMON_TIMED_DESPAWN, 12000))
-                                  left2->GetMotionMaster()->MovePoint(0, FlameLeft2Direction);
-                              break;
-                    }
-                    }
-                    events.ScheduleEvent(EVENT_FLAME_TSUNAMI, 30000);
-                    break;
-                case EVENT_FLAME_BREATH:
-                    Talk(SAY_SARTHARION_BREATH);
-                    DoCastVictim(SPELL_FLAME_BREATH);
-                    events.ScheduleEvent(EVENT_FLAME_BREATH, urand(25000, 35000));
-                    break;
-                case EVENT_TAIL_SWEEP:
-                    DoCastVictim(SPELL_TAIL_LASH);
-                    events.ScheduleEvent(EVENT_TAIL_SWEEP, urand(15000, 20000));
-                    break;
-                case EVENT_CLEAVE_ATTACK:
-                    DoCastVictim(SPELL_CLEAVE);
-                    events.ScheduleEvent(EVENT_CLEAVE_ATTACK, urand(7000, 10000));
-                    break;
-                case EVENT_LAVA_STRIKE:
-                    if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
-                    {
-                        CastLavaStrikeOnTarget(target);
-                        if (urand(0, 5) == 0)
-                            Talk(SAY_SARTHARION_SPECIAL);
-                    }
-                    events.ScheduleEvent(EVENT_LAVA_STRIKE, (_isSoftEnraged ? urand(1400, 2000) : urand(5000, 20000)));
-                    break;
-                case EVENT_CALL_TENEBRON:
-                    CallDragon(DATA_TENEBRON);
-                    break;
-                case EVENT_CALL_SHADRON:
-                    CallDragon(DATA_SHADRON);
-                    break;
-                case EVENT_CALL_VESPERON:
-                    CallDragon(DATA_VESPERON);
-                    break;
-                default:
-                    break;
+                    case EVENT_HARD_ENRAGE:
+                        if (!_isHardEnraged)
+                        {
+                            DoCast(me, SPELL_PYROBUFFET, true);
+                            _isHardEnraged = true;
+                        }
+                        break;
+                    case EVENT_FLAME_TSUNAMI:
+                        Talk(WHISPER_LAVA_CHURN);
+                        switch (urand(0, 1))
+                        {
+                            case 0:
+                            {
+                                if (Creature* right1 = me->SummonCreature(NPC_FLAME_TSUNAMI, FlameRight1Spawn, TEMPSUMMON_TIMED_DESPAWN, 12000))
+                                    right1->GetMotionMaster()->MovePoint(0, FlameRight1Direction);
+                                if (Creature* right2 = me->SummonCreature(NPC_FLAME_TSUNAMI, FlameRight2Spawn, TEMPSUMMON_TIMED_DESPAWN, 12000))
+                                    right2->GetMotionMaster()->MovePoint(0, FlameRight2Direction);
+                                if (Creature* right3 = me->SummonCreature(NPC_FLAME_TSUNAMI, FlameRight3Spawn, TEMPSUMMON_TIMED_DESPAWN, 12000))
+                                    right3->GetMotionMaster()->MovePoint(0, FlameRight3Direction);
+                                break;
+                            }
+                            case 1:
+                            {
+                                if (Creature* left1 = me->SummonCreature(NPC_FLAME_TSUNAMI, FlameLeft1Spawn, TEMPSUMMON_TIMED_DESPAWN, 12000))
+                                    left1->GetMotionMaster()->MovePoint(0, FlameLeft1Direction);
+                                if (Creature* left2 = me->SummonCreature(NPC_FLAME_TSUNAMI, FlameLeft2Spawn, TEMPSUMMON_TIMED_DESPAWN, 12000))
+                                    left2->GetMotionMaster()->MovePoint(0, FlameLeft2Direction);
+                                break;
+                            }
+                        }
+                        events.ScheduleEvent(EVENT_FLAME_TSUNAMI, 30000);
+                        break;
+                    case EVENT_FLAME_BREATH:
+                        Talk(SAY_SARTHARION_BREATH);
+                        DoCastVictim(SPELL_FLAME_BREATH);
+                        events.ScheduleEvent(EVENT_FLAME_BREATH, urand(25000, 35000));
+                        break;
+                    case EVENT_TAIL_SWEEP:
+                        DoCastVictim(SPELL_TAIL_LASH);
+                        events.ScheduleEvent(EVENT_TAIL_SWEEP, urand(15000, 20000));
+                        break;
+                    case EVENT_CLEAVE_ATTACK:
+                        DoCastVictim(SPELL_CLEAVE);
+                        events.ScheduleEvent(EVENT_CLEAVE_ATTACK, urand(7000, 10000));
+                        break;
+                    case EVENT_LAVA_STRIKE:
+                        if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
+                        {
+                            CastLavaStrikeOnTarget(target);
+                            if (urand(0, 5) == 0)
+                                Talk(SAY_SARTHARION_SPECIAL);
+                        }
+                        events.ScheduleEvent(EVENT_LAVA_STRIKE, (_isSoftEnraged ? urand(1400, 2000) : urand(5000, 20000)));
+                        break;
+                    case EVENT_CALL_TENEBRON:
+                        CallDragon(DATA_TENEBRON);
+                        break;
+                    case EVENT_CALL_SHADRON:
+                        CallDragon(DATA_SHADRON);
+                        break;
+                    case EVENT_CALL_VESPERON:
+                        CallDragon(DATA_VESPERON);
+                        break;
+                    default:
+                        break;
                 }
             }
 

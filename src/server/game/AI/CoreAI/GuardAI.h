@@ -25,14 +25,14 @@ class Creature;
 
 class GuardAI : public ScriptedAI
 {
-public:
-    explicit GuardAI(Creature* creature);
+    public:
+        explicit GuardAI(Creature* creature);
 
-    static int Permissible(Creature const* creature);
-    bool CanSeeAlways(WorldObject const* obj) override;
+        static int Permissible(Creature const* creature);
+        bool CanSeeAlways(WorldObject const* obj) override;
 
-    void EnterEvadeMode() override;
-    void JustDied(Unit* killer) override;
+        void EnterEvadeMode() override;
+        void JustDied(Unit* killer) override;
 };
 #endif
 

@@ -26,65 +26,65 @@
 
 enum Mojo
 {
-    SAY_MOJO = 0,
+    SAY_MOJO                = 0,
 
-    SPELL_FEELING_FROGGY = 43906,
-    SPELL_SEDUCTION_VISUAL = 43919
+    SPELL_FEELING_FROGGY    = 43906,
+    SPELL_SEDUCTION_VISUAL  = 43919
 };
 
 class npc_pet_gen_mojo : public CreatureScript
 {
-public:
-    npc_pet_gen_mojo() : CreatureScript("npc_pet_gen_mojo") { }
+    public:
+        npc_pet_gen_mojo() : CreatureScript("npc_pet_gen_mojo") { }
 
-    struct npc_pet_gen_mojoAI : public ScriptedAI
-    {
-        npc_pet_gen_mojoAI(Creature* creature) : ScriptedAI(creature)
+        struct npc_pet_gen_mojoAI : public ScriptedAI
         {
-        }
-
-        void Reset() override
-        {
-            _victimGUID.Clear();
-
-            if (Unit* owner = me->GetOwner())
-                me->GetMotionMaster()->MoveFollow(owner, 0.0f, 0.0f);
-        }
-
-        void EnterCombat(Unit* /*who*/) override { }
-        void UpdateAI(uint32 /*diff*/) override { }
-
-        void ReceiveEmote(Player* player, uint32 emote) override
-        {
-            me->HandleEmoteCommand(emote);
-            Unit* owner = me->GetOwner();
-            if (emote != TEXT_EMOTE_KISS || !owner || owner->GetTypeId() != TYPEID_PLAYER ||
-                owner->ToPlayer()->GetTeam() != player->GetTeam())
+            npc_pet_gen_mojoAI(Creature* creature) : ScriptedAI(creature)
             {
-                return;
             }
 
-            Talk(SAY_MOJO, player);
+            void Reset() override
+            {
+                _victimGUID.Clear();
 
-            if (_victimGUID)
-            if (Player* victim = ObjectAccessor::GetPlayer(*me, _victimGUID))
-                victim->RemoveAura(SPELL_FEELING_FROGGY);
+                if (Unit* owner = me->GetOwner())
+                    me->GetMotionMaster()->MoveFollow(owner, 0.0f, 0.0f);
+            }
 
-            _victimGUID = player->GetGUID();
+            void EnterCombat(Unit* /*who*/) override { }
+            void UpdateAI(uint32 /*diff*/) override { }
 
-            DoCast(player, SPELL_FEELING_FROGGY, true);
-            DoCast(me, SPELL_SEDUCTION_VISUAL, true);
-            me->GetMotionMaster()->MoveFollow(player, 0.0f, 0.0f);
+            void ReceiveEmote(Player* player, uint32 emote) override
+            {
+                me->HandleEmoteCommand(emote);
+                Unit* owner = me->GetOwner();
+                if (emote != TEXT_EMOTE_KISS || !owner || owner->GetTypeId() != TYPEID_PLAYER ||
+                    owner->ToPlayer()->GetTeam() != player->GetTeam())
+                {
+                    return;
+                }
+
+                Talk(SAY_MOJO, player);
+
+                if (_victimGUID)
+                    if (Player* victim = ObjectAccessor::GetPlayer(*me, _victimGUID))
+                        victim->RemoveAura(SPELL_FEELING_FROGGY);
+
+                _victimGUID = player->GetGUID();
+
+                DoCast(player, SPELL_FEELING_FROGGY, true);
+                DoCast(me, SPELL_SEDUCTION_VISUAL, true);
+                me->GetMotionMaster()->MoveFollow(player, 0.0f, 0.0f);
+            }
+
+        private:
+            ObjectGuid _victimGUID;
+        };
+
+        CreatureAI* GetAI(Creature* creature) const override
+        {
+            return new npc_pet_gen_mojoAI(creature);
         }
-
-    private:
-        ObjectGuid _victimGUID;
-    };
-
-    CreatureAI* GetAI(Creature* creature) const override
-    {
-        return new npc_pet_gen_mojoAI(creature);
-    }
 };
 
 void AddSC_generic_pet_scripts()

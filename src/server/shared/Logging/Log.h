@@ -37,75 +37,75 @@ class Log
 {
     typedef std::unordered_map<std::string, Logger> LoggerMap;
 
-private:
-    Log();
-    ~Log();
+    private:
+        Log();
+        ~Log();
 
-public:
+    public:
 
-    static Log* instance(boost::asio::io_service* ioService = nullptr)
-    {
-        static Log instance;
-
-        if (ioService != nullptr)
+        static Log* instance(boost::asio::io_service* ioService = nullptr)
         {
-            instance._ioService = ioService;
-            instance._strand = new boost::asio::strand(*ioService);
+            static Log instance;
+
+            if (ioService != nullptr)
+            {
+                instance._ioService = ioService;
+                instance._strand = new boost::asio::strand(*ioService);
+            }
+
+            return &instance;
         }
 
-        return &instance;
-    }
+        void LoadFromConfig();
+        void Close();
+        bool ShouldLog(std::string const& type, LogLevel level) const;
+        bool SetLogLevel(std::string const& name, char const* level, bool isLogger = true);
 
-    void LoadFromConfig();
-    void Close();
-    bool ShouldLog(std::string const& type, LogLevel level) const;
-    bool SetLogLevel(std::string const& name, char const* level, bool isLogger = true);
+        template<typename... Args>
+        inline void outMessage(std::string const& filter, LogLevel const level, const char* fmt, Args const&... args)
+        {
+            write(std::unique_ptr<LogMessage>(new LogMessage(level, filter, Trinity::StringFormat(fmt, args...))));
+        }
 
-    template<typename... Args>
-    inline void outMessage(std::string const& filter, LogLevel const level, const char* fmt, Args const&... args)
-    {
-        write(std::unique_ptr<LogMessage>(new LogMessage(level, filter, Trinity::StringFormat(fmt, args...))));
-    }
+        template<typename... Args>
+        void outCommand(uint32 account, const char* fmt, Args const&... args)
+        {
+            if (!ShouldLog("commands.gm", LOG_LEVEL_INFO))
+                return;
 
-    template<typename... Args>
-    void outCommand(uint32 account, const char* fmt, Args const&... args)
-    {
-        if (!ShouldLog("commands.gm", LOG_LEVEL_INFO))
-            return;
+            std::unique_ptr<LogMessage> msg(new LogMessage(LOG_LEVEL_INFO, "commands.gm", std::move(Trinity::StringFormat(fmt, args...))));
 
-        std::unique_ptr<LogMessage> msg(new LogMessage(LOG_LEVEL_INFO, "commands.gm", std::move(Trinity::StringFormat(fmt, args...))));
+            msg->param1 = std::to_string(account);
 
-        msg->param1 = std::to_string(account);
+            write(std::move(msg));
+        }
 
-        write(std::move(msg));
-    }
+        void outCharDump(char const* str, uint32 account_id, uint64 guid, char const* name);
 
-    void outCharDump(char const* str, uint32 account_id, uint64 guid, char const* name);
+        void SetRealmId(uint32 id);
 
-    void SetRealmId(uint32 id);
+    private:
+        static std::string GetTimestampStr();
+        void write(std::unique_ptr<LogMessage>&& msg) const;
 
-private:
-    static std::string GetTimestampStr();
-    void write(std::unique_ptr<LogMessage>&& msg) const;
+        Logger const* GetLoggerByType(std::string const& type) const;
+        Appender* GetAppenderByName(std::string const& name);
+        uint8 NextAppenderId();
+        void CreateAppenderFromConfig(std::string const& name);
+        void CreateLoggerFromConfig(std::string const& name);
+        void ReadAppendersFromConfig();
+        void ReadLoggersFromConfig();
 
-    Logger const* GetLoggerByType(std::string const& type) const;
-    Appender* GetAppenderByName(std::string const& name);
-    uint8 NextAppenderId();
-    void CreateAppenderFromConfig(std::string const& name);
-    void CreateLoggerFromConfig(std::string const& name);
-    void ReadAppendersFromConfig();
-    void ReadLoggersFromConfig();
+        AppenderMap appenders;
+        LoggerMap loggers;
+        uint8 AppenderId;
+        LogLevel lowestLogLevel;
 
-    AppenderMap appenders;
-    LoggerMap loggers;
-    uint8 AppenderId;
-    LogLevel lowestLogLevel;
+        std::string m_logsDir;
+        std::string m_logsTimestamp;
 
-    std::string m_logsDir;
-    std::string m_logsTimestamp;
-
-    boost::asio::io_service* _ioService;
-    boost::asio::strand* _strand;
+        boost::asio::io_service* _ioService;
+        boost::asio::strand* _strand;
 };
 
 inline Logger const* Log::GetLoggerByType(std::string const& type) const
@@ -120,7 +120,7 @@ inline Logger const* Log::GetLoggerByType(std::string const& type) const
     std::string parentLogger = LOGGER_ROOT;
     size_t found = type.find_last_of(".");
     if (found != std::string::npos)
-        parentLogger = type.substr(0, found);
+        parentLogger = type.substr(0,found);
 
     return GetLoggerByType(parentLogger);
 }
@@ -146,43 +146,41 @@ inline bool Log::ShouldLog(std::string const& type, LogLevel level) const
 #define sLog Log::instance()
 
 #define LOG_EXCEPTION_FREE(filterType__, level__, ...) \
-{ \
-    try \
-{ \
-    sLog->outMessage(filterType__, level__, __VA_ARGS__); \
-} \
-    catch (std::exception& e) \
-{ \
-    sLog->outMessage("server", LOG_LEVEL_ERROR, "Wrong format occurred (%s) at %s:%u.", \
-    e.what(), __FILE__, __LINE__); \
-} \
-}
+    { \
+        try \
+        { \
+            sLog->outMessage(filterType__, level__, __VA_ARGS__); \
+        } \
+        catch (std::exception& e) \
+        { \
+            sLog->outMessage("server", LOG_LEVEL_ERROR, "Wrong format occurred (%s) at %s:%u.", \
+                e.what(), __FILE__, __LINE__); \
+        } \
+    }
 
 #if PLATFORM != PLATFORM_WINDOWS
 void check_args(const char* format, ...) ATTR_PRINTF(1, 2);
 
 // This will catch format errors on build time
 #define TC_LOG_MESSAGE_BODY(filterType__, level__, ...)                 \
-do {
-\
-if (sLog->ShouldLog(filterType__, level__))                 \
-{                                                           \
-if (false)                                              \
-    check_args(__VA_ARGS__);                            \
-    \
-    LOG_EXCEPTION_FREE(filterType__, level__, __VA_ARGS__); \
-}                                                           \
-} while (0)
+        do {                                                            \
+            if (sLog->ShouldLog(filterType__, level__))                 \
+            {                                                           \
+                if (false)                                              \
+                    check_args(__VA_ARGS__);                            \
+                                                                        \
+                LOG_EXCEPTION_FREE(filterType__, level__, __VA_ARGS__); \
+            }                                                           \
+        } while (0)
 #else
 #define TC_LOG_MESSAGE_BODY(filterType__, level__, ...)                 \
-    __pragma(warning(push))                                         \
-    __pragma(warning(disable:4127))                                 \
-do {
-\
-if (sLog->ShouldLog(filterType__, level__))                 \
-    LOG_EXCEPTION_FREE(filterType__, level__, __VA_ARGS__); \
-} while (0)                                                     \
-    __pragma(warning(pop))
+        __pragma(warning(push))                                         \
+        __pragma(warning(disable:4127))                                 \
+        do {                                                            \
+            if (sLog->ShouldLog(filterType__, level__))                 \
+                LOG_EXCEPTION_FREE(filterType__, level__, __VA_ARGS__); \
+        } while (0)                                                     \
+        __pragma(warning(pop))
 #endif
 
 #define TC_LOG_TRACE(filterType__, ...) \

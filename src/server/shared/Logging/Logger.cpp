@@ -17,7 +17,7 @@
 
 #include "Logger.h"
 
-Logger::Logger() : name(""), level(LOG_LEVEL_DISABLED) { }
+Logger::Logger(): name(""), level(LOG_LEVEL_DISABLED) { }
 
 void Logger::Create(std::string const& _name, LogLevel _level)
 {
@@ -59,6 +59,6 @@ void Logger::write(LogMessage* message) const
     }
 
     for (AppenderMap::const_iterator it = appenders.begin(); it != appenders.end(); ++it)
-    if (it->second)
-        it->second->write(message);
+        if (it->second)
+            it->second->write(message);
 }

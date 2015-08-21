@@ -53,13 +53,13 @@ void BattlefieldMgr::InitBattlefield()
     // respawn, init variables
     if (!tb->SetupBattlefield())
     {
-    TC_LOG_DEBUG("bg.battlefield", "Battlefield: Tol Barad init failed.");
-    delete tb;
+        TC_LOG_DEBUG("bg.battlefield", "Battlefield: Tol Barad init failed.");
+        delete tb;
     }
     else
     {
-    _battlefieldSet.push_back(tb);
-    TC_LOG_DEBUG("bg.battlefield", "Battlefield: Tol Barad successfully initiated.");
+        _battlefieldSet.push_back(tb);
+        TC_LOG_DEBUG("bg.battlefield", "Battlefield: Tol Barad successfully initiated.");
     }
     */
 }
@@ -137,8 +137,8 @@ void BattlefieldMgr::Update(uint32 diff)
     if (_updateTimer > BATTLEFIELD_OBJECTIVE_UPDATE_INTERVAL)
     {
         for (BattlefieldSet::iterator itr = _battlefieldSet.begin(); itr != _battlefieldSet.end(); ++itr)
-        if ((*itr)->IsEnabled())
-            (*itr)->Update(_updateTimer);
+            if ((*itr)->IsEnabled())
+                (*itr)->Update(_updateTimer);
         _updateTimer = 0;
     }
 }

@@ -226,7 +226,7 @@ void PetAI::UpdateAI(uint32 diff)
         {
             uint32 index = urand(0, targetSpellStore.size() - 1);
 
-            Spell* spell = targetSpellStore[index].second;
+            Spell* spell  = targetSpellStore[index].second;
             Unit*  target = targetSpellStore[index].first;
 
             targetSpellStore.erase(targetSpellStore.begin() + index);
@@ -387,8 +387,8 @@ Unit* PetAI::SelectNextTarget(bool allowAutoSelect) const
 
     // Check pet attackers first so we don't drag a bunch of targets to the owner
     if (Unit* myAttacker = me->getAttackerForHelper())
-    if (!myAttacker->HasBreakableByDamageCrowdControlAura())
-        return myAttacker;
+        if (!myAttacker->HasBreakableByDamageCrowdControlAura())
+            return myAttacker;
 
     // Not sure why we wouldn't have an owner but just in case...
     if (!me->GetCharmerOrOwner())
@@ -396,13 +396,13 @@ Unit* PetAI::SelectNextTarget(bool allowAutoSelect) const
 
     // Check owner attackers
     if (Unit* ownerAttacker = me->GetCharmerOrOwner()->getAttackerForHelper())
-    if (!ownerAttacker->HasBreakableByDamageCrowdControlAura())
-        return ownerAttacker;
+        if (!ownerAttacker->HasBreakableByDamageCrowdControlAura())
+            return ownerAttacker;
 
     // Check owner victim
     // 3.0.2 - Pets now start attacking their owners victim in defensive mode as soon as the hunter does
     if (Unit* ownerVictim = me->GetCharmerOrOwner()->GetVictim())
-        return ownerVictim;
+            return ownerVictim;
 
     // Neither pet or owner had a target and aggressive pets can pick any target
     // To prevent aggressive pets from chain selecting targets and running off, we
@@ -410,8 +410,8 @@ Unit* PetAI::SelectNextTarget(bool allowAutoSelect) const
     if (me->HasReactState(REACT_AGGRESSIVE) && allowAutoSelect)
     {
         if (!me->GetCharmInfo()->IsReturning() || me->GetCharmInfo()->IsFollowing() || me->GetCharmInfo()->IsAtStay())
-        if (Unit* nearTarget = me->SelectNearestHostileUnitInAggroRange(true))
-            return nearTarget;
+            if (Unit* nearTarget = me->SelectNearestHostileUnitInAggroRange(true))
+                return nearTarget;
     }
 
     // Default - no valid targets
@@ -487,32 +487,32 @@ void PetAI::MovementInform(uint32 moveType, uint32 data)
     // Receives notification when pet reaches stay or follow owner
     switch (moveType)
     {
-    case POINT_MOTION_TYPE:
-    {
-                              // Pet is returning to where stay was clicked. data should be
-                              // pet's GUIDLow since we set that as the waypoint ID
-                              if (data == me->GetGUIDLow() && me->GetCharmInfo()->IsReturning())
-                              {
-                                  ClearCharmInfoFlags();
-                                  me->GetCharmInfo()->SetIsAtStay(true);
-                                  me->GetMotionMaster()->Clear();
-                                  me->GetMotionMaster()->MoveIdle();
-                              }
-                              break;
-    }
-    case FOLLOW_MOTION_TYPE:
-    {
-                               // If data is owner's GUIDLow then we've reached follow point,
-                               // otherwise we're probably chasing a creature
-                               if (me->GetCharmerOrOwner() && me->GetCharmInfo() && data == me->GetCharmerOrOwner()->GetGUIDLow() && me->GetCharmInfo()->IsReturning())
-                               {
-                                   ClearCharmInfoFlags();
-                                   me->GetCharmInfo()->SetIsFollowing(true);
-                               }
-                               break;
-    }
-    default:
-        break;
+        case POINT_MOTION_TYPE:
+        {
+            // Pet is returning to where stay was clicked. data should be
+            // pet's GUIDLow since we set that as the waypoint ID
+            if (data == me->GetGUIDLow() && me->GetCharmInfo()->IsReturning())
+            {
+                ClearCharmInfoFlags();
+                me->GetCharmInfo()->SetIsAtStay(true);
+                me->GetMotionMaster()->Clear();
+                me->GetMotionMaster()->MoveIdle();
+            }
+            break;
+        }
+        case FOLLOW_MOTION_TYPE:
+        {
+            // If data is owner's GUIDLow then we've reached follow point,
+            // otherwise we're probably chasing a creature
+            if (me->GetCharmerOrOwner() && me->GetCharmInfo() && data == me->GetCharmerOrOwner()->GetGUIDLow() && me->GetCharmInfo()->IsReturning())
+            {
+                ClearCharmInfoFlags();
+                me->GetCharmInfo()->SetIsFollowing(true);
+            }
+            break;
+        }
+        default:
+            break;
     }
 }
 
@@ -576,24 +576,24 @@ void PetAI::ReceiveEmote(Player* player, uint32 emote)
 {
     if (me->GetOwnerGUID() && me->GetOwnerGUID() == player->GetGUID())
         switch (emote)
-    {
-        case TEXT_EMOTE_COWER:
-            if (me->IsPet() && me->ToPet()->IsPetGhoul())
-                me->HandleEmoteCommand(/*EMOTE_ONESHOT_ROAR*/EMOTE_ONESHOT_OMNICAST_GHOUL);
-            break;
-        case TEXT_EMOTE_ANGRY:
-            if (me->IsPet() && me->ToPet()->IsPetGhoul())
-                me->HandleEmoteCommand(/*EMOTE_ONESHOT_COWER*/EMOTE_STATE_STUN);
-            break;
-        case TEXT_EMOTE_GLARE:
-            if (me->IsPet() && me->ToPet()->IsPetGhoul())
-                me->HandleEmoteCommand(EMOTE_STATE_STUN);
-            break;
-        case TEXT_EMOTE_SOOTHE:
-            if (me->IsPet() && me->ToPet()->IsPetGhoul())
-                me->HandleEmoteCommand(EMOTE_ONESHOT_OMNICAST_GHOUL);
-            break;
-    }
+        {
+            case TEXT_EMOTE_COWER:
+                if (me->IsPet() && me->ToPet()->IsPetGhoul())
+                    me->HandleEmoteCommand(/*EMOTE_ONESHOT_ROAR*/EMOTE_ONESHOT_OMNICAST_GHOUL);
+                break;
+            case TEXT_EMOTE_ANGRY:
+                if (me->IsPet() && me->ToPet()->IsPetGhoul())
+                    me->HandleEmoteCommand(/*EMOTE_ONESHOT_COWER*/EMOTE_STATE_STUN);
+                break;
+            case TEXT_EMOTE_GLARE:
+                if (me->IsPet() && me->ToPet()->IsPetGhoul())
+                    me->HandleEmoteCommand(EMOTE_STATE_STUN);
+                break;
+            case TEXT_EMOTE_SOOTHE:
+                if (me->IsPet() && me->ToPet()->IsPetGhoul())
+                    me->HandleEmoteCommand(EMOTE_ONESHOT_OMNICAST_GHOUL);
+                break;
+        }
 }
 
 void PetAI::ClearCharmInfoFlags()

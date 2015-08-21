@@ -18,16 +18,16 @@
 #ifndef SLAVE_PENS_H
 #define SLAVE_PENS_H
 
-uint32 const EncounterCount = 3;
+uint32 const EncounterCount               = 3;
 
 #define SPScriptName "instance_the_slave_pens"
 #define DataHeader "SP"
 
 enum DataTypes
 {
-    DATA_MENNU_THE_BETRAYER = 1,
-    DATA_ROKMAR_THE_CRACKLER = 2,
-    DATA_QUAGMIRRAN = 3
+    DATA_MENNU_THE_BETRAYER               = 1,
+    DATA_ROKMAR_THE_CRACKLER              = 2,
+    DATA_QUAGMIRRAN                       = 3
 };
 
 #endif // SLAVE_PENS_H

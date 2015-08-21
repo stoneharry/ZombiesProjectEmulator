@@ -23,242 +23,243 @@
 namespace rbac
 {
 
-    std::string GetDebugPermissionString(RBACPermissionContainer const& perms)
+std::string GetDebugPermissionString(RBACPermissionContainer const& perms)
+{
+    std::string str = "";
+    if (!perms.empty())
     {
-        std::string str = "";
-        if (!perms.empty())
-        {
-            std::ostringstream o;
-            RBACPermissionContainer::const_iterator itr = perms.begin();
-            o << (*itr);
-            for (++itr; itr != perms.end(); ++itr)
-                o << ", " << uint32(*itr);
-            str = o.str();
-        }
-
-        return str;
+        std::ostringstream o;
+        RBACPermissionContainer::const_iterator itr = perms.begin();
+        o << (*itr);
+        for (++itr; itr != perms.end(); ++itr)
+            o << ", " << uint32(*itr);
+        str = o.str();
     }
 
-    RBACCommandResult RBACData::GrantPermission(uint32 permissionId, int32 realmId /* = 0*/)
+    return str;
+}
+
+RBACCommandResult RBACData::GrantPermission(uint32 permissionId, int32 realmId /* = 0*/)
+{
+    // Check if permission Id exists
+    RBACPermission const* perm = sAccountMgr->GetRBACPermission(permissionId);
+    if (!perm)
     {
-        // Check if permission Id exists
-        RBACPermission const* perm = sAccountMgr->GetRBACPermission(permissionId);
-        if (!perm)
-        {
-            TC_LOG_TRACE("rbac", "RBACData::GrantPermission [Id: %u Name: %s] (Permission %u, RealmId %d). Permission does not exists",
-                GetId(), GetName().c_str(), permissionId, realmId);
-            return RBAC_ID_DOES_NOT_EXISTS;
-        }
-
-        // Check if already added in denied list
-        if (HasDeniedPermission(permissionId))
-        {
-            TC_LOG_TRACE("rbac", "RBACData::GrantPermission [Id: %u Name: %s] (Permission %u, RealmId %d). Permission in deny list",
-                GetId(), GetName().c_str(), permissionId, realmId);
-            return RBAC_IN_DENIED_LIST;
-        }
-
-        // Already added?
-        if (HasGrantedPermission(permissionId))
-        {
-            TC_LOG_TRACE("rbac", "RBACData::GrantPermission [Id: %u Name: %s] (Permission %u, RealmId %d). Permission already granted",
-                GetId(), GetName().c_str(), permissionId, realmId);
-            return RBAC_CANT_ADD_ALREADY_ADDED;
-        }
-
-        AddGrantedPermission(permissionId);
-
-        // Do not save to db when loading data from DB (realmId = 0)
-        if (realmId)
-        {
-            TC_LOG_TRACE("rbac", "RBACData::GrantPermission [Id: %u Name: %s] (Permission %u, RealmId %d). Ok and DB updated",
-                GetId(), GetName().c_str(), permissionId, realmId);
-            SavePermission(permissionId, true, realmId);
-            CalculateNewPermissions();
-        }
-        else
-            TC_LOG_TRACE("rbac", "RBACData::GrantPermission [Id: %u Name: %s] (Permission %u, RealmId %d). Ok",
-            GetId(), GetName().c_str(), permissionId, realmId);
-
-        return RBAC_OK;
+        TC_LOG_TRACE("rbac", "RBACData::GrantPermission [Id: %u Name: %s] (Permission %u, RealmId %d). Permission does not exists",
+                       GetId(), GetName().c_str(), permissionId, realmId);
+        return RBAC_ID_DOES_NOT_EXISTS;
     }
 
-    RBACCommandResult RBACData::DenyPermission(uint32 permissionId, int32 realmId /* = 0*/)
+    // Check if already added in denied list
+    if (HasDeniedPermission(permissionId))
     {
-        // Check if permission Id exists
-        RBACPermission const* perm = sAccountMgr->GetRBACPermission(permissionId);
-        if (!perm)
-        {
-            TC_LOG_TRACE("rbac", "RBACData::DenyPermission [Id: %u Name: %s] (Permission %u, RealmId %d). Permission does not exists",
-                GetId(), GetName().c_str(), permissionId, realmId);
-            return RBAC_ID_DOES_NOT_EXISTS;
-        }
-
-        // Check if already added in granted list
-        if (HasGrantedPermission(permissionId))
-        {
-            TC_LOG_TRACE("rbac", "RBACData::DenyPermission [Id: %u Name: %s] (Permission %u, RealmId %d). Permission in grant list",
-                GetId(), GetName().c_str(), permissionId, realmId);
-            return RBAC_IN_GRANTED_LIST;
-        }
-
-        // Already added?
-        if (HasDeniedPermission(permissionId))
-        {
-            TC_LOG_TRACE("rbac", "RBACData::DenyPermission [Id: %u Name: %s] (Permission %u, RealmId %d). Permission already denied",
-                GetId(), GetName().c_str(), permissionId, realmId);
-            return RBAC_CANT_ADD_ALREADY_ADDED;
-        }
-
-        AddDeniedPermission(permissionId);
-
-        // Do not save to db when loading data from DB (realmId = 0)
-        if (realmId)
-        {
-            TC_LOG_TRACE("rbac", "RBACData::DenyPermission [Id: %u Name: %s] (Permission %u, RealmId %d). Ok and DB updated",
-                GetId(), GetName().c_str(), permissionId, realmId);
-            SavePermission(permissionId, false, realmId);
-            CalculateNewPermissions();
-        }
-        else
-            TC_LOG_TRACE("rbac", "RBACData::DenyPermission [Id: %u Name: %s] (Permission %u, RealmId %d). Ok",
-            GetId(), GetName().c_str(), permissionId, realmId);
-
-        return RBAC_OK;
+        TC_LOG_TRACE("rbac", "RBACData::GrantPermission [Id: %u Name: %s] (Permission %u, RealmId %d). Permission in deny list",
+                       GetId(), GetName().c_str(), permissionId, realmId);
+        return RBAC_IN_DENIED_LIST;
     }
 
-    void RBACData::SavePermission(uint32 permission, bool granted, int32 realmId)
+    // Already added?
+    if (HasGrantedPermission(permissionId))
     {
-        PreparedStatement* stmt = LoginDatabase.GetPreparedStatement(LOGIN_INS_RBAC_ACCOUNT_PERMISSION);
-        stmt->setUInt32(0, GetId());
-        stmt->setUInt32(1, permission);
-        stmt->setBool(2, granted);
-        stmt->setInt32(3, realmId);
-        LoginDatabase.Execute(stmt);
+        TC_LOG_TRACE("rbac", "RBACData::GrantPermission [Id: %u Name: %s] (Permission %u, RealmId %d). Permission already granted",
+                       GetId(), GetName().c_str(), permissionId, realmId);
+        return RBAC_CANT_ADD_ALREADY_ADDED;
     }
 
-    RBACCommandResult RBACData::RevokePermission(uint32 permissionId, int32 realmId /* = 0*/)
+    AddGrantedPermission(permissionId);
+
+    // Do not save to db when loading data from DB (realmId = 0)
+    if (realmId)
     {
-        // Check if it's present in any list
-        if (!HasGrantedPermission(permissionId) && !HasDeniedPermission(permissionId))
-        {
-            TC_LOG_TRACE("rbac", "RBACData::RevokePermission [Id: %u Name: %s] (Permission %u, RealmId %d). Not granted or revoked",
-                GetId(), GetName().c_str(), permissionId, realmId);
-            return RBAC_CANT_REVOKE_NOT_IN_LIST;
-        }
-
-        RemoveGrantedPermission(permissionId);
-        RemoveDeniedPermission(permissionId);
-
-        // Do not save to db when loading data from DB (realmId = 0)
-        if (realmId)
-        {
-            TC_LOG_TRACE("rbac", "RBACData::RevokePermission [Id: %u Name: %s] (Permission %u, RealmId %d). Ok and DB updated",
-                GetId(), GetName().c_str(), permissionId, realmId);
-            PreparedStatement* stmt = LoginDatabase.GetPreparedStatement(LOGIN_DEL_RBAC_ACCOUNT_PERMISSION);
-            stmt->setUInt32(0, GetId());
-            stmt->setUInt32(1, permissionId);
-            stmt->setInt32(2, realmId);
-            LoginDatabase.Execute(stmt);
-
-            CalculateNewPermissions();
-        }
-        else
-            TC_LOG_TRACE("rbac", "RBACData::RevokePermission [Id: %u Name: %s] (Permission %u, RealmId %d). Ok",
-            GetId(), GetName().c_str(), permissionId, realmId);
-
-        return RBAC_OK;
-    }
-
-    void RBACData::LoadFromDB()
-    {
-        ClearData();
-
-        TC_LOG_DEBUG("rbac", "RBACData::LoadFromDB [Id: %u Name: %s]: Loading permissions", GetId(), GetName().c_str());
-        // Load account permissions (granted and denied) that affect current realm
-        PreparedStatement* stmt = LoginDatabase.GetPreparedStatement(LOGIN_SEL_RBAC_ACCOUNT_PERMISSIONS);
-        stmt->setUInt32(0, GetId());
-        stmt->setInt32(1, GetRealmId());
-
-        PreparedQueryResult result = LoginDatabase.Query(stmt);
-        if (result)
-        {
-            do
-            {
-                Field* fields = result->Fetch();
-                if (fields[1].GetBool())
-                    GrantPermission(fields[0].GetUInt32());
-                else
-                    DenyPermission(fields[0].GetUInt32());
-            } while (result->NextRow());
-        }
-
-        // Add default permissions
-        RBACPermissionContainer const& permissions = sAccountMgr->GetRBACDefaultPermissions(_secLevel);
-        for (RBACPermissionContainer::const_iterator itr = permissions.begin(); itr != permissions.end(); ++itr)
-            GrantPermission(*itr);
-
-        // Force calculation of permissions
+        TC_LOG_TRACE("rbac", "RBACData::GrantPermission [Id: %u Name: %s] (Permission %u, RealmId %d). Ok and DB updated",
+                       GetId(), GetName().c_str(), permissionId, realmId);
+        SavePermission(permissionId, true, realmId);
         CalculateNewPermissions();
     }
+    else
+        TC_LOG_TRACE("rbac", "RBACData::GrantPermission [Id: %u Name: %s] (Permission %u, RealmId %d). Ok",
+                       GetId(), GetName().c_str(), permissionId, realmId);
 
-    void RBACData::CalculateNewPermissions()
+    return RBAC_OK;
+}
+
+RBACCommandResult RBACData::DenyPermission(uint32 permissionId, int32 realmId /* = 0*/)
+{
+    // Check if permission Id exists
+    RBACPermission const* perm = sAccountMgr->GetRBACPermission(permissionId);
+    if (!perm)
     {
-        TC_LOG_TRACE("rbac", "RBACData::CalculateNewPermissions [Id: %u Name: %s]", GetId(), GetName().c_str());
-
-        // Get the list of granted permissions
-        _globalPerms = GetGrantedPermissions();
-        ExpandPermissions(_globalPerms);
-        RBACPermissionContainer revoked = GetDeniedPermissions();
-        ExpandPermissions(revoked);
-        RemovePermissions(_globalPerms, revoked);
+        TC_LOG_TRACE("rbac", "RBACData::DenyPermission [Id: %u Name: %s] (Permission %u, RealmId %d). Permission does not exists",
+                       GetId(), GetName().c_str(), permissionId, realmId);
+        return RBAC_ID_DOES_NOT_EXISTS;
     }
 
-    void RBACData::AddPermissions(RBACPermissionContainer const& permsFrom, RBACPermissionContainer& permsTo)
+    // Check if already added in granted list
+    if (HasGrantedPermission(permissionId))
     {
-        for (RBACPermissionContainer::const_iterator itr = permsFrom.begin(); itr != permsFrom.end(); ++itr)
-            permsTo.insert(*itr);
+        TC_LOG_TRACE("rbac", "RBACData::DenyPermission [Id: %u Name: %s] (Permission %u, RealmId %d). Permission in grant list",
+                       GetId(), GetName().c_str(), permissionId, realmId);
+        return RBAC_IN_GRANTED_LIST;
     }
 
-    void RBACData::RemovePermissions(RBACPermissionContainer const& permsFrom, RBACPermissionContainer& permsTo)
+    // Already added?
+    if (HasDeniedPermission(permissionId))
     {
-        for (RBACPermissionContainer::const_iterator itr = permsFrom.begin(); itr != permsFrom.end(); ++itr)
-            permsTo.erase(*itr);
+        TC_LOG_TRACE("rbac", "RBACData::DenyPermission [Id: %u Name: %s] (Permission %u, RealmId %d). Permission already denied",
+                       GetId(), GetName().c_str(), permissionId, realmId);
+        return RBAC_CANT_ADD_ALREADY_ADDED;
     }
 
-    void RBACData::ExpandPermissions(RBACPermissionContainer& permissions)
-    {
-        RBACPermissionContainer toCheck = permissions;
-        permissions.clear();
+    AddDeniedPermission(permissionId);
 
-        while (!toCheck.empty())
+    // Do not save to db when loading data from DB (realmId = 0)
+    if (realmId)
+    {
+        TC_LOG_TRACE("rbac", "RBACData::DenyPermission [Id: %u Name: %s] (Permission %u, RealmId %d). Ok and DB updated",
+                       GetId(), GetName().c_str(), permissionId, realmId);
+        SavePermission(permissionId, false, realmId);
+        CalculateNewPermissions();
+    }
+    else
+        TC_LOG_TRACE("rbac", "RBACData::DenyPermission [Id: %u Name: %s] (Permission %u, RealmId %d). Ok",
+                       GetId(), GetName().c_str(), permissionId, realmId);
+
+    return RBAC_OK;
+}
+
+void RBACData::SavePermission(uint32 permission, bool granted, int32 realmId)
+{
+    PreparedStatement* stmt = LoginDatabase.GetPreparedStatement(LOGIN_INS_RBAC_ACCOUNT_PERMISSION);
+    stmt->setUInt32(0, GetId());
+    stmt->setUInt32(1, permission);
+    stmt->setBool(2, granted);
+    stmt->setInt32(3, realmId);
+    LoginDatabase.Execute(stmt);
+}
+
+RBACCommandResult RBACData::RevokePermission(uint32 permissionId, int32 realmId /* = 0*/)
+{
+    // Check if it's present in any list
+    if (!HasGrantedPermission(permissionId) && !HasDeniedPermission(permissionId))
+    {
+        TC_LOG_TRACE("rbac", "RBACData::RevokePermission [Id: %u Name: %s] (Permission %u, RealmId %d). Not granted or revoked",
+                       GetId(), GetName().c_str(), permissionId, realmId);
+        return RBAC_CANT_REVOKE_NOT_IN_LIST;
+    }
+
+    RemoveGrantedPermission(permissionId);
+    RemoveDeniedPermission(permissionId);
+
+    // Do not save to db when loading data from DB (realmId = 0)
+    if (realmId)
+    {
+        TC_LOG_TRACE("rbac", "RBACData::RevokePermission [Id: %u Name: %s] (Permission %u, RealmId %d). Ok and DB updated",
+                       GetId(), GetName().c_str(), permissionId, realmId);
+        PreparedStatement* stmt = LoginDatabase.GetPreparedStatement(LOGIN_DEL_RBAC_ACCOUNT_PERMISSION);
+        stmt->setUInt32(0, GetId());
+        stmt->setUInt32(1, permissionId);
+        stmt->setInt32(2, realmId);
+        LoginDatabase.Execute(stmt);
+
+        CalculateNewPermissions();
+    }
+    else
+        TC_LOG_TRACE("rbac", "RBACData::RevokePermission [Id: %u Name: %s] (Permission %u, RealmId %d). Ok",
+                       GetId(), GetName().c_str(), permissionId, realmId);
+
+    return RBAC_OK;
+}
+
+void RBACData::LoadFromDB()
+{
+    ClearData();
+
+    TC_LOG_DEBUG("rbac", "RBACData::LoadFromDB [Id: %u Name: %s]: Loading permissions", GetId(), GetName().c_str());
+    // Load account permissions (granted and denied) that affect current realm
+    PreparedStatement* stmt = LoginDatabase.GetPreparedStatement(LOGIN_SEL_RBAC_ACCOUNT_PERMISSIONS);
+    stmt->setUInt32(0, GetId());
+    stmt->setInt32(1, GetRealmId());
+
+    PreparedQueryResult result = LoginDatabase.Query(stmt);
+    if (result)
+    {
+        do
         {
-            // remove the permission from original list
-            uint32 permissionId = *toCheck.begin();
-            toCheck.erase(toCheck.begin());
+            Field* fields = result->Fetch();
+            if (fields[1].GetBool())
+                GrantPermission(fields[0].GetUInt32());
+            else
+                DenyPermission(fields[0].GetUInt32());
+        }
+        while (result->NextRow());
+    }
 
-            RBACPermission const* permission = sAccountMgr->GetRBACPermission(permissionId);
-            if (!permission)
-                continue;
+    // Add default permissions
+    RBACPermissionContainer const& permissions = sAccountMgr->GetRBACDefaultPermissions(_secLevel);
+    for (RBACPermissionContainer::const_iterator itr = permissions.begin(); itr != permissions.end(); ++itr)
+        GrantPermission(*itr);
 
-            // insert into the final list (expanded list)
-            permissions.insert(permissionId);
+    // Force calculation of permissions
+    CalculateNewPermissions();
+}
 
-            // add all linked permissions (that are not already expanded) to the list of permissions to be checked
-            RBACPermissionContainer const& linkedPerms = permission->GetLinkedPermissions();
-            for (RBACPermissionContainer::const_iterator itr = linkedPerms.begin(); itr != linkedPerms.end(); ++itr)
+void RBACData::CalculateNewPermissions()
+{
+    TC_LOG_TRACE("rbac", "RBACData::CalculateNewPermissions [Id: %u Name: %s]", GetId(), GetName().c_str());
+
+    // Get the list of granted permissions
+    _globalPerms = GetGrantedPermissions();
+    ExpandPermissions(_globalPerms);
+    RBACPermissionContainer revoked = GetDeniedPermissions();
+    ExpandPermissions(revoked);
+    RemovePermissions(_globalPerms, revoked);
+}
+
+void RBACData::AddPermissions(RBACPermissionContainer const& permsFrom, RBACPermissionContainer& permsTo)
+{
+    for (RBACPermissionContainer::const_iterator itr = permsFrom.begin(); itr != permsFrom.end(); ++itr)
+        permsTo.insert(*itr);
+}
+
+void RBACData::RemovePermissions(RBACPermissionContainer const& permsFrom, RBACPermissionContainer& permsTo)
+{
+    for (RBACPermissionContainer::const_iterator itr = permsFrom.begin(); itr != permsFrom.end(); ++itr)
+        permsTo.erase(*itr);
+}
+
+void RBACData::ExpandPermissions(RBACPermissionContainer& permissions)
+{
+    RBACPermissionContainer toCheck = permissions;
+    permissions.clear();
+
+    while (!toCheck.empty())
+    {
+        // remove the permission from original list
+        uint32 permissionId = *toCheck.begin();
+        toCheck.erase(toCheck.begin());
+
+        RBACPermission const* permission = sAccountMgr->GetRBACPermission(permissionId);
+        if (!permission)
+            continue;
+
+        // insert into the final list (expanded list)
+        permissions.insert(permissionId);
+
+        // add all linked permissions (that are not already expanded) to the list of permissions to be checked
+        RBACPermissionContainer const& linkedPerms = permission->GetLinkedPermissions();
+        for (RBACPermissionContainer::const_iterator itr = linkedPerms.begin(); itr != linkedPerms.end(); ++itr)
             if (permissions.find(*itr) == permissions.end())
                 toCheck.insert(*itr);
-        }
-
-        TC_LOG_DEBUG("rbac", "RBACData::ExpandPermissions: Expanded: %s", GetDebugPermissionString(permissions).c_str());
     }
 
-    void RBACData::ClearData()
-    {
-        _grantedPerms.clear();
-        _deniedPerms.clear();
-        _globalPerms.clear();
-    }
+    TC_LOG_DEBUG("rbac", "RBACData::ExpandPermissions: Expanded: %s", GetDebugPermissionString(permissions).c_str());
+}
+
+void RBACData::ClearData()
+{
+    _grantedPerms.clear();
+    _deniedPerms.clear();
+    _globalPerms.clear();
+}
 
 }

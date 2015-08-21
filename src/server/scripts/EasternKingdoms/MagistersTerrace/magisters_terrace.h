@@ -40,21 +40,21 @@ enum DataTypes
 
 enum CreatureIds
 {
-    NPC_SELIN = 24723,
-    NPC_DELRISSA = 24560,
-    NPC_FEL_CRYSTAL = 24722
+    NPC_SELIN               = 24723,
+    NPC_DELRISSA            = 24560,
+    NPC_FEL_CRYSTAL         = 24722
 };
 
 enum GameObjectIds
 {
-    GO_VEXALLUS_DOOR = 187896,
-    GO_SELIN_DOOR = 187979,
+    GO_VEXALLUS_DOOR        = 187896,
+    GO_SELIN_DOOR           = 187979,
     GO_SELIN_ENCOUNTER_DOOR = 188065,
-    GO_DELRISSA_DOOR = 187770,
-    GO_KAEL_DOOR = 188064,
-    GO_KAEL_STATUE_1 = 188165,
-    GO_KAEL_STATUE_2 = 188166,
-    GO_ESCAPE_ORB = 188173
+    GO_DELRISSA_DOOR        = 187770,
+    GO_KAEL_DOOR            = 188064,
+    GO_KAEL_STATUE_1        = 188165,
+    GO_KAEL_STATUE_2        = 188166,
+    GO_ESCAPE_ORB           = 188173
 };
 
 #endif

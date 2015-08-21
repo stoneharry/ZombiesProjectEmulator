@@ -30,38 +30,38 @@ EndScriptData */
 
 enum TerestianIllhoof
 {
-    SAY_SLAY = 1,
-    SAY_DEATH = 2,
-    SAY_AGGRO = 3,
-    SAY_SACRIFICE = 4,
-    SAY_SUMMON = 5
+    SAY_SLAY                    = 1,
+    SAY_DEATH                   = 2,
+    SAY_AGGRO                   = 3,
+    SAY_SACRIFICE               = 4,
+    SAY_SUMMON                  = 5
 };
 
 enum Spells
 {
-    SPELL_SUMMON_DEMONCHAINS = 30120,               // Summons demonic chains that maintain the ritual of sacrifice.
-    SPELL_DEMON_CHAINS = 30206,                   // Instant - Visual Effect
-    SPELL_ENRAGE = 23537,                   // Increases the caster's attack speed by 50% and the Physical damage it deals by 219 to 281 for 10 min.
-    SPELL_SHADOW_BOLT = 30055,                   // Hurls a bolt of dark magic at an enemy, inflicting Shadow damage.
-    SPELL_SACRIFICE = 30115,                   // Teleports and adds the debuff
-    SPELL_BERSERK = 32965,                   // Increases attack speed by 75%. Periodically casts Shadow Bolt Volley.
-    SPELL_SUMMON_FIENDISIMP = 30184,                   // Summons a Fiendish Imp.
-    SPELL_SUMMON_IMP = 30066,                   // Summons Kil'rek
+    SPELL_SUMMON_DEMONCHAINS    = 30120,               // Summons demonic chains that maintain the ritual of sacrifice.
+    SPELL_DEMON_CHAINS          = 30206,                   // Instant - Visual Effect
+    SPELL_ENRAGE                = 23537,                   // Increases the caster's attack speed by 50% and the Physical damage it deals by 219 to 281 for 10 min.
+    SPELL_SHADOW_BOLT           = 30055,                   // Hurls a bolt of dark magic at an enemy, inflicting Shadow damage.
+    SPELL_SACRIFICE             = 30115,                   // Teleports and adds the debuff
+    SPELL_BERSERK               = 32965,                   // Increases attack speed by 75%. Periodically casts Shadow Bolt Volley.
+    SPELL_SUMMON_FIENDISIMP     = 30184,                   // Summons a Fiendish Imp.
+    SPELL_SUMMON_IMP            = 30066,                   // Summons Kil'rek
 
-    SPELL_FIENDISH_PORTAL = 30171,                   // Opens portal and summons Fiendish Portal, 2 sec cast
-    SPELL_FIENDISH_PORTAL_1 = 30179,                   // Opens portal and summons Fiendish Portal, instant cast
+    SPELL_FIENDISH_PORTAL       = 30171,                   // Opens portal and summons Fiendish Portal, 2 sec cast
+    SPELL_FIENDISH_PORTAL_1     = 30179,                   // Opens portal and summons Fiendish Portal, instant cast
 
-    SPELL_FIREBOLT = 30050,                   // Blasts a target for 150 Fire damage.
-    SPELL_BROKEN_PACT = 30065,                   // All damage taken increased by 25%.
-    SPELL_AMPLIFY_FLAMES = 30053,                   // Increases the Fire damage taken by an enemy by 500 for 25 sec.
+    SPELL_FIREBOLT              = 30050,                   // Blasts a target for 150 Fire damage.
+    SPELL_BROKEN_PACT           = 30065,                   // All damage taken increased by 25%.
+    SPELL_AMPLIFY_FLAMES        = 30053,                   // Increases the Fire damage taken by an enemy by 500 for 25 sec.
 };
 
 enum Creatures
 {
-    NPC_DEMONCHAINS = 17248,
-    NPC_FIENDISHIMP = 17267,
-    NPC_PORTAL = 17265,
-    NPC_KILREK = 17229
+    NPC_DEMONCHAINS             = 17248,
+    NPC_FIENDISHIMP             = 17267,
+    NPC_PORTAL                  = 17265,
+    NPC_KILREK                  = 17229
 };
 
 
@@ -118,8 +118,7 @@ public:
                 DoCastVictim(SPELL_AMPLIFY_FLAMES);
 
                 AmplifyTimer = urand(10000, 20000);
-            }
-            else AmplifyTimer -= diff;
+            } else AmplifyTimer -= diff;
 
             DoMeleeAttackIfReady();
         }
@@ -249,8 +248,7 @@ public:
             {
                 DoCastVictim(SPELL_FIREBOLT);
                 FireboltTimer = 2200;
-            }
-            else FireboltTimer -= diff;
+            } else FireboltTimer -= diff;
 
             DoMeleeAttackIfReady();
         }
@@ -397,15 +395,13 @@ public:
                         SacrificeTimer = 30000;
                     }
                 }
-            }
-            else SacrificeTimer -= diff;
+            } else SacrificeTimer -= diff;
 
             if (ShadowboltTimer <= diff)
             {
                 DoCast(SelectTarget(SELECT_TARGET_TOPAGGRO, 0), SPELL_SHADOW_BOLT);
                 ShadowboltTimer = 10000;
-            }
-            else ShadowboltTimer -= diff;
+            } else ShadowboltTimer -= diff;
 
             if (SummonTimer <= diff)
             {
@@ -421,8 +417,7 @@ public:
                         pPortal->CastSpell(me->GetVictim(), SPELL_SUMMON_FIENDISIMP, false);
                     SummonTimer = 5000;
                 }
-            }
-            else SummonTimer -= diff;
+            } else SummonTimer -= diff;
 
             if (!Berserk)
             {
@@ -430,8 +425,7 @@ public:
                 {
                     DoCast(me, SPELL_BERSERK);
                     Berserk = true;
-                }
-                else BerserkTimer -= diff;
+                } else BerserkTimer -= diff;
             }
 
             DoMeleeAttackIfReady();

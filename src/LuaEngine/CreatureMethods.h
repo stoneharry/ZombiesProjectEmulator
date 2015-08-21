@@ -705,37 +705,37 @@ namespace LuaCreature
 
         switch (targetType)
         {
-        case SELECT_TARGET_NEAREST:
-        case SELECT_TARGET_TOPAGGRO:
-        {
-                                       std::list<Unit*>::const_iterator itr = targetList.begin();
-                                       if (position)
-                                           std::advance(itr, position);
-                                       Eluna::Push(L, *itr);
-        }
+            case SELECT_TARGET_NEAREST:
+            case SELECT_TARGET_TOPAGGRO:
+            {
+                std::list<Unit*>::const_iterator itr = targetList.begin();
+                if (position)
+                    std::advance(itr, position);
+                Eluna::Push(L, *itr);
+            }
             break;
-        case SELECT_TARGET_FARTHEST:
-        case SELECT_TARGET_BOTTOMAGGRO:
-        {
-                                          std::list<Unit*>::reverse_iterator ritr = targetList.rbegin();
-                                          if (position)
-                                              std::advance(ritr, position);
-                                          Eluna::Push(L, *ritr);
-        }
+            case SELECT_TARGET_FARTHEST:
+            case SELECT_TARGET_BOTTOMAGGRO:
+            {
+                std::list<Unit*>::reverse_iterator ritr = targetList.rbegin();
+                if (position)
+                    std::advance(ritr, position);
+                Eluna::Push(L, *ritr);
+            }
             break;
-        case SELECT_TARGET_RANDOM:
-        {
-                                     std::list<Unit*>::const_iterator itr = targetList.begin();
-                                     if (position)
-                                         std::advance(itr, urand(0, position));
-                                     else
-                                         std::advance(itr, urand(0, targetList.size() - 1));
-                                     Eluna::Push(L, *itr);
-        }
+            case SELECT_TARGET_RANDOM:
+            {
+                std::list<Unit*>::const_iterator itr = targetList.begin();
+                if (position)
+                    std::advance(itr, urand(0, position));
+                else
+                    std::advance(itr, urand(0, targetList.size() - 1));
+                Eluna::Push(L, *itr);
+            }
             break;
-        default:
-            luaL_argerror(L, 2, "SelectAggroTarget expected");
-            break;
+            default:
+                luaL_argerror(L, 2, "SelectAggroTarget expected");
+                break;
         }
 
         return 1;
@@ -1222,20 +1222,20 @@ namespace LuaCreature
         return 0;
     }
 
-    int DeleteFromDB(Eluna* /*E*/, lua_State* /*L*/, Creature* creature)
-    {
-        creature->CombatStop();
-        creature->DeleteFromDB();
-        creature->AddObjectToRemoveList();
-        return 0;
-    }
+	int DeleteFromDB(Eluna* /*E*/, lua_State* /*L*/, Creature* creature)
+	{
+		creature->CombatStop();
+		creature->DeleteFromDB();
+		creature->AddObjectToRemoveList();
+		return 0;
+	}
 
-    int SetReactState(Eluna* /*E*/, lua_State* L, Creature* creature)
-    {
-        uint32 state = Eluna::CHECKVAL<uint32>(L, 2);
-        creature->SetReactState(ReactStates(state));
-        return 0;
-    }
+	int SetReactState(Eluna* /*E*/, lua_State* L, Creature* creature)
+	{
+		uint32 state = Eluna::CHECKVAL<uint32>(L, 2);
+		creature->SetReactState(ReactStates(state));
+		return 0;
+	}
 #endif
 };
 #endif

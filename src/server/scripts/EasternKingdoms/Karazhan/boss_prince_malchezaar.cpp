@@ -38,24 +38,24 @@ struct InfernalPoint
 
 static InfernalPoint InfernalPoints[] =
 {
-    { -10922.8f, -1985.2f },
-    { -10916.2f, -1996.2f },
-    { -10932.2f, -2008.1f },
-    { -10948.8f, -2022.1f },
-    { -10958.7f, -1997.7f },
-    { -10971.5f, -1997.5f },
-    { -10990.8f, -1995.1f },
-    { -10989.8f, -1976.5f },
-    { -10971.6f, -1973.0f },
-    { -10955.5f, -1974.0f },
-    { -10939.6f, -1969.8f },
-    { -10958.0f, -1952.2f },
-    { -10941.7f, -1954.8f },
-    { -10943.1f, -1988.5f },
-    { -10948.8f, -2005.1f },
-    { -10984.0f, -2019.3f },
-    { -10932.8f, -1979.6f },
-    { -10935.7f, -1996.0f }
+    {-10922.8f, -1985.2f},
+    {-10916.2f, -1996.2f},
+    {-10932.2f, -2008.1f},
+    {-10948.8f, -2022.1f},
+    {-10958.7f, -1997.7f},
+    {-10971.5f, -1997.5f},
+    {-10990.8f, -1995.1f},
+    {-10989.8f, -1976.5f},
+    {-10971.6f, -1973.0f},
+    {-10955.5f, -1974.0f},
+    {-10939.6f, -1969.8f},
+    {-10958.0f, -1952.2f},
+    {-10941.7f, -1954.8f},
+    {-10943.1f, -1988.5f},
+    {-10948.8f, -2005.1f},
+    {-10984.0f, -2019.3f},
+    {-10932.8f, -1979.6f},
+    {-10935.7f, -1996.0f}
 };
 
 //Enfeeble is supposed to reduce hp to 1 and then heal player back to full when it ends
@@ -63,37 +63,37 @@ static InfernalPoint InfernalPoints[] =
 //This spell effect will only reduce healing
 enum PrinceMalchezaar
 {
-    SAY_AGGRO = 0,
-    SAY_AXE_TOSS1 = 1,
-    SAY_AXE_TOSS2 = 2,
-    //  SAY_SPECIAL1                = 3, Not used, needs to be implemented, but I don't know where it should be used.
-    //  SAY_SPECIAL2                = 4, Not used, needs to be implemented, but I don't know where it should be used.
-    //  SAY_SPECIAL3                = 5, Not used, needs to be implemented, but I don't know where it should be used.
-    SAY_SLAY = 6,
-    SAY_SUMMON = 7,
-    SAY_DEATH = 8,
+    SAY_AGGRO                   = 0,
+    SAY_AXE_TOSS1               = 1,
+    SAY_AXE_TOSS2               = 2,
+//  SAY_SPECIAL1                = 3, Not used, needs to be implemented, but I don't know where it should be used.
+//  SAY_SPECIAL2                = 4, Not used, needs to be implemented, but I don't know where it should be used.
+//  SAY_SPECIAL3                = 5, Not used, needs to be implemented, but I don't know where it should be used.
+    SAY_SLAY                    = 6,
+    SAY_SUMMON                  = 7,
+    SAY_DEATH                   = 8,
 
-    TOTAL_INFERNAL_POINTS = 18,
+    TOTAL_INFERNAL_POINTS       = 18,
 
-    SPELL_ENFEEBLE = 30843,                       //Enfeeble during phase 1 and 2
-    SPELL_ENFEEBLE_EFFECT = 41624,
+    SPELL_ENFEEBLE              = 30843,                       //Enfeeble during phase 1 and 2
+    SPELL_ENFEEBLE_EFFECT       = 41624,
 
-    SPELL_SHADOWNOVA = 30852,                       //Shadownova used during all phases
-    SPELL_SW_PAIN = 30854,                       //Shadow word pain during phase 1 and 3 (different targeting rules though)
-    SPELL_THRASH_PASSIVE = 12787,                       //Extra attack chance during phase 2
-    SPELL_SUNDER_ARMOR = 30901,                       //Sunder armor during phase 2
-    SPELL_THRASH_AURA = 12787,                       //Passive proc chance for thrash
-    SPELL_EQUIP_AXES = 30857,                       //Visual for axe equiping
-    SPELL_AMPLIFY_DAMAGE = 39095,                       //Amplifiy during phase 3
-    SPELL_CLEAVE = 30131,                       //Same as Nightbane.
-    SPELL_HELLFIRE = 30859,                       //Infenals' hellfire aura
-    NETHERSPITE_INFERNAL = 17646,                       //The netherspite infernal creature
-    MALCHEZARS_AXE = 17650,                       //Malchezar's axes (creatures), summoned during phase 3
+    SPELL_SHADOWNOVA            = 30852,                       //Shadownova used during all phases
+    SPELL_SW_PAIN               = 30854,                       //Shadow word pain during phase 1 and 3 (different targeting rules though)
+    SPELL_THRASH_PASSIVE        = 12787,                       //Extra attack chance during phase 2
+    SPELL_SUNDER_ARMOR          = 30901,                       //Sunder armor during phase 2
+    SPELL_THRASH_AURA           = 12787,                       //Passive proc chance for thrash
+    SPELL_EQUIP_AXES            = 30857,                       //Visual for axe equiping
+    SPELL_AMPLIFY_DAMAGE        = 39095,                       //Amplifiy during phase 3
+    SPELL_CLEAVE                = 30131,                       //Same as Nightbane.
+    SPELL_HELLFIRE              = 30859,                       //Infenals' hellfire aura
+    NETHERSPITE_INFERNAL        = 17646,                       //The netherspite infernal creature
+    MALCHEZARS_AXE              = 17650,                       //Malchezar's axes (creatures), summoned during phase 3
 
-    INFERNAL_MODEL_INVISIBLE = 11686,                       //Infernal Effects
-    SPELL_INFERNAL_RELAY = 30834,
+    INFERNAL_MODEL_INVISIBLE    = 11686,                       //Infernal Effects
+    SPELL_INFERNAL_RELAY        = 30834,
 
-    EQUIP_ID_AXE = 33542                        //Axes info
+    EQUIP_ID_AXE                = 33542                        //Axes info
 };
 
 //---------Infernal code first
@@ -110,7 +110,7 @@ public:
     struct netherspite_infernalAI : public ScriptedAI
     {
         netherspite_infernalAI(Creature* creature) : ScriptedAI(creature),
-        HellfireTimer(0), CleanupTimer(0), point(NULL) { }
+            HellfireTimer(0), CleanupTimer(0), point(NULL) { }
 
         uint32 HellfireTimer;
         uint32 CleanupTimer;
@@ -140,16 +140,15 @@ public:
                 {
                     Cleanup();
                     CleanupTimer = 0;
-                }
-                else CleanupTimer -= diff;
+                } else CleanupTimer -= diff;
             }
         }
 
         void KilledUnit(Unit* who) override
         {
             if (Unit* unit = ObjectAccessor::GetUnit(*me, malchezaar))
-            if (Creature* creature = unit->ToCreature())
-                creature->AI()->KilledUnit(who);
+                if (Creature* creature = unit->ToCreature())
+                    creature->AI()->KilledUnit(who);
         }
 
         void SpellHit(Unit* /*who*/, const SpellInfo* spell) override
@@ -280,12 +279,12 @@ public:
         {
             //Infernal Cleanup
             for (GuidVector::const_iterator itr = infernals.begin(); itr != infernals.end(); ++itr)
-            if (Unit* pInfernal = ObjectAccessor::GetUnit(*me, *itr))
-            if (pInfernal->IsAlive())
-            {
-                pInfernal->SetVisible(false);
-                pInfernal->setDeathState(JUST_DIED);
-            }
+                if (Unit* pInfernal = ObjectAccessor::GetUnit(*me, *itr))
+                    if (pInfernal->IsAlive())
+                    {
+                        pInfernal->SetVisible(false);
+                        pInfernal->setDeathState(JUST_DIED);
+                    }
 
             infernals.clear();
         }
@@ -323,9 +322,9 @@ public:
             ThreatContainer::StorageType::const_iterator itr = t_list.begin();
             std::advance(itr, 1);
             for (; itr != t_list.end(); ++itr) //store the threat list in a different container
-            if (Unit* target = ObjectAccessor::GetUnit(*me, (*itr)->getUnitGuid()))
-            if (target->IsAlive() && target->GetTypeId() == TYPEID_PLAYER)
-                targets.push_back(target);
+                if (Unit* target = ObjectAccessor::GetUnit(*me, (*itr)->getUnitGuid()))
+                    if (target->IsAlive() && target->GetTypeId() == TYPEID_PLAYER)
+                        targets.push_back(target);
 
             //cut down to size if we have more than 5 targets
             while (targets.size() > 5)
@@ -333,14 +332,14 @@ public:
 
             uint32 i = 0;
             for (std::vector<Unit*>::const_iterator iter = targets.begin(); iter != targets.end(); ++iter, ++i)
-            if (Unit* target = *iter)
-            {
-                enfeeble_targets[i] = target->GetGUID();
-                enfeeble_health[i] = target->GetHealth();
+                if (Unit* target = *iter)
+                {
+                    enfeeble_targets[i] = target->GetGUID();
+                    enfeeble_health[i] = target->GetHealth();
 
-                target->CastSpell(target, SPELL_ENFEEBLE, true, 0, 0, me->GetGUID());
-                target->SetHealth(1);
-            }
+                    target->CastSpell(target, SPELL_ENFEEBLE, true, 0, 0, me->GetGUID());
+                    target->SetHealth(1);
+                }
         }
 
         void EnfeebleResetHealth()
@@ -393,8 +392,7 @@ public:
             {
                 EnfeebleResetHealth();
                 EnfeebleResetTimer = 0;
-            }
-            else EnfeebleResetTimer -= diff;
+            } else EnfeebleResetTimer -= diff;
 
             if (me->HasUnitState(UNIT_STATE_STUNNED))      // While shifting to phase 2 malchezaar stuns himself
                 return;
@@ -422,7 +420,7 @@ public:
                     //models
                     SetEquipmentSlots(false, EQUIP_ID_AXE, EQUIP_ID_AXE, EQUIP_NO_CHANGE);
 
-                    me->SetAttackTime(OFF_ATTACK, (me->GetAttackTime(BASE_ATTACK) * 150) / 100);
+                    me->SetAttackTime(OFF_ATTACK, (me->GetAttackTime(BASE_ATTACK)*150)/100);
                     me->SetCanDualWield(true);
                 }
             }
@@ -454,7 +452,7 @@ public:
                             {
                                 axe->AI()->AttackStart(target);
                                 //axe->getThreatManager().tauntApply(target); //Taunt Apply and fade out does not work properly
-                                // So we'll use a hack to add a lot of threat to our target
+                                                                // So we'll use a hack to add a lot of threat to our target
                                 axe->AddThreat(target, 10000000.0f);
                             }
                         }
@@ -470,15 +468,13 @@ public:
                 {
                     DoCastVictim(SPELL_SUNDER_ARMOR);
                     SunderArmorTimer = urand(10000, 18000);
-                }
-                else SunderArmorTimer -= diff;
+                } else SunderArmorTimer -= diff;
 
                 if (Cleave_Timer <= diff)
                 {
                     DoCastVictim(SPELL_CLEAVE);
                     Cleave_Timer = urand(6000, 12000);
-                }
-                else Cleave_Timer -= diff;
+                } else Cleave_Timer -= diff;
             }
             else
             {
@@ -501,16 +497,14 @@ public:
                             }
                         }
                     }
-                }
-                else AxesTargetSwitchTimer -= diff;
+                } else AxesTargetSwitchTimer -= diff;
 
                 if (AmplifyDamageTimer <= diff)
                 {
                     if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
                         DoCast(target, SPELL_AMPLIFY_DAMAGE);
                     AmplifyDamageTimer = urand(20000, 30000);
-                }
-                else AmplifyDamageTimer -= diff;
+                } else AmplifyDamageTimer -= diff;
             }
 
             //Time for global and double timers
@@ -518,15 +512,13 @@ public:
             {
                 SummonInfernal(diff);
                 InfernalTimer = phase == 3 ? 14500 : 44500;    // 15 secs in phase 3, 45 otherwise
-            }
-            else InfernalTimer -= diff;
+            } else InfernalTimer -= diff;
 
             if (ShadowNovaTimer <= diff)
             {
                 DoCastVictim(SPELL_SHADOWNOVA);
                 ShadowNovaTimer = phase == 3 ? 31000 : uint32(-1);
-            }
-            else ShadowNovaTimer -= diff;
+            } else ShadowNovaTimer -= diff;
 
             if (phase != 2)
             {
@@ -542,8 +534,7 @@ public:
                         DoCast(target, SPELL_SW_PAIN);
 
                     SWPainTimer = 20000;
-                }
-                else SWPainTimer -= diff;
+                } else SWPainTimer -= diff;
             }
 
             if (phase != 3)
@@ -554,8 +545,7 @@ public:
                     EnfeebleTimer = 30000;
                     ShadowNovaTimer = 5000;
                     EnfeebleResetTimer = 9000;
-                }
-                else EnfeebleTimer -= diff;
+                } else EnfeebleTimer -= diff;
             }
 
             if (phase == 2)
@@ -585,7 +575,7 @@ public:
 
         void Cleanup(Creature* infernal, InfernalPoint *point)
         {
-            for (GuidVector::iterator itr = infernals.begin(); itr != infernals.end(); ++itr)
+            for (GuidVector::iterator itr = infernals.begin(); itr!= infernals.end(); ++itr)
             {
                 if (*itr == infernal->GetGUID())
                 {

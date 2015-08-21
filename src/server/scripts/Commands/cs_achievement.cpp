@@ -42,7 +42,7 @@ public:
         };
         static ChatCommand commandTable[] =
         {
-            { "achievement", rbac::RBAC_PERM_COMMAND_ACHIEVEMENT, false, NULL, "", achievementCommandTable },
+            { "achievement", rbac::RBAC_PERM_COMMAND_ACHIEVEMENT,  false, NULL, "", achievementCommandTable },
             { NULL, 0, false, NULL, "", NULL }
         };
         return commandTable;

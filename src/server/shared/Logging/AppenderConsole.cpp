@@ -22,10 +22,10 @@
 #include "Util.h"
 
 #if PLATFORM == PLATFORM_WINDOWS
-#include <Windows.h>
+  #include <Windows.h>
 #endif
 
-AppenderConsole::AppenderConsole(uint8 id, std::string const& name, LogLevel level, AppenderFlags flags) :
+AppenderConsole::AppenderConsole(uint8 id, std::string const& name, LogLevel level, AppenderFlags flags):
 Appender(id, name, APPENDER_CONSOLE, level, flags), _colored(false)
 {
     for (uint8 i = 0; i < MaxLogLevels; ++i)
@@ -71,21 +71,21 @@ void AppenderConsole::SetColor(bool stdout_stream, ColorTypes color)
         FOREGROUND_GREEN,                                   // GREEN
         FOREGROUND_RED | FOREGROUND_GREEN,                  // BROWN
         FOREGROUND_BLUE,                                    // BLUE
-        FOREGROUND_RED | FOREGROUND_BLUE, // MAGENTA
+        FOREGROUND_RED |                    FOREGROUND_BLUE, // MAGENTA
         FOREGROUND_GREEN | FOREGROUND_BLUE,                 // CYAN
         FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE, // WHITE
-        // YELLOW
-        FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_INTENSITY,
-        // RED_BOLD
-        FOREGROUND_RED | FOREGROUND_INTENSITY,
-        // GREEN_BOLD
-        FOREGROUND_GREEN | FOREGROUND_INTENSITY,
+                                                            // YELLOW
+        FOREGROUND_RED | FOREGROUND_GREEN |                   FOREGROUND_INTENSITY,
+                                                            // RED_BOLD
+        FOREGROUND_RED |                                      FOREGROUND_INTENSITY,
+                                                            // GREEN_BOLD
+        FOREGROUND_GREEN |                   FOREGROUND_INTENSITY,
         FOREGROUND_BLUE | FOREGROUND_INTENSITY,             // BLUE_BOLD
-        // MAGENTA_BOLD
-        FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_INTENSITY,
-        // CYAN_BOLD
+                                                            // MAGENTA_BOLD
+        FOREGROUND_RED |                    FOREGROUND_BLUE | FOREGROUND_INTENSITY,
+                                                            // CYAN_BOLD
         FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY,
-        // WHITE_BOLD
+                                                            // WHITE_BOLD
         FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY
     };
 
@@ -94,15 +94,15 @@ void AppenderConsole::SetColor(bool stdout_stream, ColorTypes color)
 #else
     enum ANSITextAttr
     {
-        TA_NORMAL = 0,
-        TA_BOLD = 1,
-        TA_BLINK = 5,
-        TA_REVERSE = 7
+        TA_NORMAL                                = 0,
+        TA_BOLD                                  = 1,
+        TA_BLINK                                 = 5,
+        TA_REVERSE                               = 7
     };
 
     enum ANSIFgTextAttr
     {
-        FG_BLACK = 30,
+        FG_BLACK                                 = 30,
         FG_RED,
         FG_GREEN,
         FG_BROWN,
@@ -115,7 +115,7 @@ void AppenderConsole::SetColor(bool stdout_stream, ColorTypes color)
 
     enum ANSIBgTextAttr
     {
-        BG_BLACK = 40,
+        BG_BLACK                                 = 40,
         BG_RED,
         BG_GREEN,
         BG_BROWN,
@@ -144,18 +144,18 @@ void AppenderConsole::SetColor(bool stdout_stream, ColorTypes color)
         FG_WHITE                                           // LWHITE
     };
 
-    fprintf((stdout_stream ? stdout : stderr), "\x1b[%d%sm", UnixColorFG[color], (color >= YELLOW && color < MaxColors ? ";1" : ""));
-#endif
+    fprintf((stdout_stream? stdout : stderr), "\x1b[%d%sm", UnixColorFG[color], (color >= YELLOW && color < MaxColors ? ";1" : ""));
+    #endif
 }
 
 void AppenderConsole::ResetColor(bool stdout_stream)
 {
-#if PLATFORM == PLATFORM_WINDOWS
+    #if PLATFORM == PLATFORM_WINDOWS
     HANDLE hConsole = GetStdHandle(stdout_stream ? STD_OUTPUT_HANDLE : STD_ERROR_HANDLE);
     SetConsoleTextAttribute(hConsole, FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
-#else
+    #else
     fprintf((stdout_stream ? stdout : stderr), "\x1b[0m");
-#endif
+    #endif
 }
 
 void AppenderConsole::_write(LogMessage const* message)
@@ -167,25 +167,25 @@ void AppenderConsole::_write(LogMessage const* message)
         uint8 index;
         switch (message->level)
         {
-        case LOG_LEVEL_TRACE:
-            index = 5;
-            break;
-        case LOG_LEVEL_DEBUG:
-            index = 4;
-            break;
-        case LOG_LEVEL_INFO:
-            index = 3;
-            break;
-        case LOG_LEVEL_WARN:
-            index = 2;
-            break;
-        case LOG_LEVEL_FATAL:
-            index = 0;
-            break;
-        case LOG_LEVEL_ERROR: // No break on purpose
-        default:
-            index = 1;
-            break;
+            case LOG_LEVEL_TRACE:
+               index = 5;
+               break;
+            case LOG_LEVEL_DEBUG:
+               index = 4;
+               break;
+            case LOG_LEVEL_INFO:
+               index = 3;
+               break;
+            case LOG_LEVEL_WARN:
+               index = 2;
+               break;
+            case LOG_LEVEL_FATAL:
+               index = 0;
+               break;
+            case LOG_LEVEL_ERROR: // No break on purpose
+            default:
+               index = 1;
+               break;
         }
 
         SetColor(stdout_stream, _colors[index]);

@@ -147,6 +147,7 @@ void RealmList::UpdateRealms(bool init)
                 TC_LOG_ERROR("server.authserver", "Realmlist::UpdateRealms has thrown an exception: %s", ex.what());
                 ASSERT(false);
             }
-        } while (result->NextRow());
+        }
+        while (result->NextRow());
     }
 }

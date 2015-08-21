@@ -28,9 +28,9 @@ EndScriptData */
 
 enum Spells
 {
-    SPELL_KNOCKAWAY = 18670,
-    SPELL_TRAMPLE = 5568,
-    SPELL_LANDSLIDE = 21808
+    SPELL_KNOCKAWAY         = 18670,
+    SPELL_TRAMPLE           = 5568,
+    SPELL_LANDSLIDE         = 21808
 };
 
 class boss_landslide : public CreatureScript

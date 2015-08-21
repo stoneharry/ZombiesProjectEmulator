@@ -27,7 +27,7 @@
 
 void WorldSession::HandleLearnTalentOpcode(WorldPacket& recvData)
 {
-    return;
+	return;
     uint32 talent_id, requested_rank;
     recvData >> talent_id >> requested_rank;
 
@@ -37,7 +37,7 @@ void WorldSession::HandleLearnTalentOpcode(WorldPacket& recvData)
 
 void WorldSession::HandleLearnPreviewTalents(WorldPacket& recvPacket)
 {
-    return;
+	return;
     TC_LOG_DEBUG("network", "CMSG_LEARN_PREVIEW_TALENTS");
 
     uint32 talentsCount;
@@ -62,7 +62,7 @@ void WorldSession::HandleLearnPreviewTalents(WorldPacket& recvPacket)
 
 void WorldSession::HandleTalentWipeConfirmOpcode(WorldPacket& recvData)
 {
-    return;
+	return;
     TC_LOG_DEBUG("network", "MSG_TALENT_WIPE_CONFIRM");
     ObjectGuid guid;
     recvData >> guid;
@@ -83,7 +83,7 @@ void WorldSession::HandleTalentWipeConfirmOpcode(WorldPacket& recvData)
 
     if (!(_player->ResetTalents()))
     {
-        WorldPacket data(MSG_TALENT_WIPE_CONFIRM, 8 + 4);    //you have not any talent
+        WorldPacket data(MSG_TALENT_WIPE_CONFIRM, 8+4);    //you have not any talent
         data << uint64(0);
         data << uint32(0);
         SendPacket(&data);

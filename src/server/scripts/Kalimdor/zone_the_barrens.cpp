@@ -47,7 +47,7 @@ EndContentData */
 
 enum BeatenCorpse
 {
-    QUEST_LOST_IN_BATTLE = 4921
+    QUEST_LOST_IN_BATTLE    = 4921
 };
 
 class npc_beaten_corpse : public CreatureScript
@@ -58,7 +58,7 @@ public:
     bool OnGossipSelect(Player* player, Creature* creature, uint32 /*sender*/, uint32 action) override
     {
         player->PlayerTalkClass->ClearMenus();
-        if (action == GOSSIP_ACTION_INFO_DEF + 1)
+        if (action == GOSSIP_ACTION_INFO_DEF +1)
         {
             player->SEND_GOSSIP_MENU(3558, creature->GetGUID());
             player->TalkedToCreature(creature->GetEntry(), creature->GetGUID());
@@ -69,7 +69,7 @@ public:
     bool OnGossipHello(Player* player, Creature* creature) override
     {
         if (player->GetQuestStatus(QUEST_LOST_IN_BATTLE) == QUEST_STATUS_INCOMPLETE || player->GetQuestStatus(QUEST_LOST_IN_BATTLE) == QUEST_STATUS_COMPLETE)
-            player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_CORPSE, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
+            player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_CORPSE, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
 
         player->SEND_GOSSIP_MENU(3557, creature->GetGUID());
         return true;
@@ -83,18 +83,18 @@ public:
 
 enum Gilthares
 {
-    SAY_GIL_START = 0,
-    SAY_GIL_AT_LAST = 1,
-    SAY_GIL_PROCEED = 2,
-    SAY_GIL_FREEBOOTERS = 3,
-    SAY_GIL_AGGRO = 4,
-    SAY_GIL_ALMOST = 5,
-    SAY_GIL_SWEET = 6,
-    SAY_GIL_FREED = 7,
+    SAY_GIL_START               = 0,
+    SAY_GIL_AT_LAST             = 1,
+    SAY_GIL_PROCEED             = 2,
+    SAY_GIL_FREEBOOTERS         = 3,
+    SAY_GIL_AGGRO               = 4,
+    SAY_GIL_ALMOST              = 5,
+    SAY_GIL_SWEET               = 6,
+    SAY_GIL_FREED               = 7,
 
-    QUEST_FREE_FROM_HOLD = 898,
-    AREA_MERCHANT_COAST = 391,
-    FACTION_ESCORTEE = 232                       //guessed, possible not needed for this quest
+    QUEST_FREE_FROM_HOLD        = 898,
+    AREA_MERCHANT_COAST         = 391,
+    FACTION_ESCORTEE            = 232                       //guessed, possible not needed for this quest
 };
 
 class npc_gilthares : public CreatureScript
@@ -136,25 +136,25 @@ public:
 
             switch (waypointId)
             {
-            case 16:
-                Talk(SAY_GIL_AT_LAST, player);
-                break;
-            case 17:
-                Talk(SAY_GIL_PROCEED, player);
-                break;
-            case 18:
-                Talk(SAY_GIL_FREEBOOTERS, player);
-                break;
-            case 37:
-                Talk(SAY_GIL_ALMOST, player);
-                break;
-            case 47:
-                Talk(SAY_GIL_SWEET, player);
-                break;
-            case 53:
-                Talk(SAY_GIL_FREED, player);
-                player->GroupEventHappens(QUEST_FREE_FROM_HOLD, me);
-                break;
+                case 16:
+                    Talk(SAY_GIL_AT_LAST, player);
+                    break;
+                case 17:
+                    Talk(SAY_GIL_PROCEED, player);
+                    break;
+                case 18:
+                    Talk(SAY_GIL_FREEBOOTERS, player);
+                    break;
+                case 37:
+                    Talk(SAY_GIL_ALMOST, player);
+                    break;
+                case 47:
+                    Talk(SAY_GIL_SWEET, player);
+                    break;
+                case 53:
+                    Talk(SAY_GIL_FREED, player);
+                    player->GroupEventHappens(QUEST_FREE_FROM_HOLD, me);
+                    break;
             }
         }
 
@@ -181,9 +181,9 @@ public:
 
 enum TaskmasterFizzule
 {
-    FACTION_FRIENDLY_F = 35,
-    SPELL_FLARE = 10113,
-    SPELL_FOLLY = 10137,
+    FACTION_FRIENDLY_F  = 35,
+    SPELL_FLARE         = 10113,
+    SPELL_FOLLY         = 10137,
 };
 
 class npc_taskmaster_fizzule : public CreatureScript
@@ -256,8 +256,7 @@ public:
                 {
                     EnterEvadeMode();
                     return;
-                }
-                else ResetTimer -= diff;
+                } else ResetTimer -= diff;
             }
 
             if (!UpdateVictim())
@@ -289,24 +288,24 @@ public:
 
 enum TwiggyFlathead
 {
-    NPC_BIG_WILL = 6238,
-    NPC_AFFRAY_CHALLENGER = 6240,
+    NPC_BIG_WILL                = 6238,
+    NPC_AFFRAY_CHALLENGER       = 6240,
 
-    SAY_BIG_WILL_READY = 0,
-    SAY_TWIGGY_FLATHEAD_BEGIN = 0,
-    SAY_TWIGGY_FLATHEAD_FRAY = 1,
-    SAY_TWIGGY_FLATHEAD_DOWN = 2,
-    SAY_TWIGGY_FLATHEAD_OVER = 3
+    SAY_BIG_WILL_READY          = 0,
+    SAY_TWIGGY_FLATHEAD_BEGIN   = 0,
+    SAY_TWIGGY_FLATHEAD_FRAY    = 1,
+    SAY_TWIGGY_FLATHEAD_DOWN    = 2,
+    SAY_TWIGGY_FLATHEAD_OVER    = 3
 };
 
 Position const AffrayChallengerLoc[6] =
 {
-    { -1683.0f, -4326.0f, 2.79f, 0.0f },
-    { -1682.0f, -4329.0f, 2.79f, 0.0f },
-    { -1683.0f, -4330.0f, 2.79f, 0.0f },
-    { -1680.0f, -4334.0f, 2.79f, 1.49f },
-    { -1674.0f, -4326.0f, 2.79f, 3.49f },
-    { -1677.0f, -4334.0f, 2.79f, 1.66f }
+    {-1683.0f, -4326.0f, 2.79f, 0.0f},
+    {-1682.0f, -4329.0f, 2.79f, 0.0f},
+    {-1683.0f, -4330.0f, 2.79f, 0.0f},
+    {-1680.0f, -4334.0f, 2.79f, 1.49f},
+    {-1674.0f, -4326.0f, 2.79f, 3.49f},
+    {-1677.0f, -4334.0f, 2.79f, 1.66f}
 };
 
 class npc_twiggy_flathead : public CreatureScript
@@ -366,12 +365,12 @@ public:
                 return;
 
             if (who->GetTypeId() == TYPEID_PLAYER && me->IsWithinDistInMap(who, 10.0f))
-            if (Player* player = who->ToPlayer())
-            if (player->GetQuestStatus(1719) == QUEST_STATUS_INCOMPLETE)
-            {
-                PlayerGUID = who->GetGUID();
-                EventInProgress = true;
-            }
+                if (Player* player = who->ToPlayer())
+                    if (player->GetQuestStatus(1719) == QUEST_STATUS_INCOMPLETE)
+                    {
+                        PlayerGUID = who->GetGUID();
+                        EventInProgress = true;
+                    }
         }
 
         void UpdateAI(uint32 diff) override
@@ -453,8 +452,7 @@ public:
                             }
                         }
                         ChallengerChecker = 1000;
-                    }
-                    else ChallengerChecker -= diff;
+                    } else ChallengerChecker -= diff;
 
                     if (WaveTimer <= diff)
                     {
@@ -503,8 +501,7 @@ public:
                                 creature->AI()->AttackStart(warrior);
                             }
                         }
-                    }
-                    else WaveTimer -= diff;
+                    } else WaveTimer -= diff;
                 }
             }
         }
@@ -518,19 +515,19 @@ public:
 
 enum Wizzlecrank
 {
-    SAY_MERCENARY = 0,
-    SAY_START = 0,
-    SAY_STARTUP1 = 1,
-    SAY_STARTUP2 = 2,
-    SAY_PROGRESS_1 = 3,
-    SAY_PROGRESS_2 = 4,
-    SAY_PROGRESS_3 = 5,
-    SAY_END = 6,
+    SAY_MERCENARY       = 0,
+    SAY_START           = 0,
+    SAY_STARTUP1        = 1,
+    SAY_STARTUP2        = 2,
+    SAY_PROGRESS_1      = 3,
+    SAY_PROGRESS_2      = 4,
+    SAY_PROGRESS_3      = 5,
+    SAY_END             = 6,
 
-    QUEST_ESCAPE = 863,
-    FACTION_RATCHET = 637,
-    NPC_PILOT_WIZZ = 3451,
-    NPC_MERCENARY = 3282,
+    QUEST_ESCAPE        = 863,
+    FACTION_RATCHET     = 637,
+    NPC_PILOT_WIZZ      = 3451,
+    NPC_MERCENARY       = 3282,
 };
 
 class npc_wizzlecrank_shredder : public CreatureScript
@@ -556,7 +553,7 @@ public:
             if (!HasEscortState(STATE_ESCORT_ESCORTING))
             {
                 if (me->getStandState() == UNIT_STAND_STATE_DEAD)
-                    me->SetStandState(UNIT_STAND_STATE_STAND);
+                     me->SetStandState(UNIT_STAND_STATE_STAND);
 
                 IsPostEvent = false;
                 PostEventTimer = 1000;
@@ -568,22 +565,22 @@ public:
         {
             switch (waypointId)
             {
-            case 0:
-                Talk(SAY_STARTUP1);
-                break;
-            case 9:
-                SetRun(false);
-                break;
-            case 17:
-                if (Creature* temp = me->SummonCreature(NPC_MERCENARY, 1128.489f, -3037.611f, 92.701f, 1.472f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 120000))
-                {
-                    temp->AI()->Talk(SAY_MERCENARY);
-                    me->SummonCreature(NPC_MERCENARY, 1160.172f, -2980.168f, 97.313f, 3.690f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 120000);
-                }
-                break;
-            case 24:
-                IsPostEvent = true;
-                break;
+                case 0:
+                    Talk(SAY_STARTUP1);
+                    break;
+                case 9:
+                    SetRun(false);
+                    break;
+                case 17:
+                    if (Creature* temp = me->SummonCreature(NPC_MERCENARY, 1128.489f, -3037.611f, 92.701f, 1.472f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 120000))
+                    {
+                        temp->AI()->Talk(SAY_MERCENARY);
+                        me->SummonCreature(NPC_MERCENARY, 1160.172f, -2980.168f, 97.313f, 3.690f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 120000);
+                    }
+                    break;
+                case 24:
+                    IsPostEvent = true;
+                    break;
             }
         }
 
@@ -596,13 +593,13 @@ public:
 
             switch (PointId)
             {
-            case 9:
-                Talk(SAY_STARTUP2, player);
-                break;
-            case 18:
-                Talk(SAY_PROGRESS_1, player);
-                SetRun();
-                break;
+                case 9:
+                    Talk(SAY_STARTUP2, player);
+                    break;
+                case 18:
+                    Talk(SAY_PROGRESS_1, player);
+                    SetRun();
+                    break;
             }
         }
 
@@ -625,22 +622,22 @@ public:
                     {
                         switch (PostEventCount)
                         {
-                        case 0:
-                            Talk(SAY_PROGRESS_2);
-                            break;
-                        case 1:
-                            Talk(SAY_PROGRESS_3);
-                            break;
-                        case 2:
-                            Talk(SAY_END);
-                            break;
-                        case 3:
-                            if (Player* player = GetPlayerForEscort())
-                            {
-                                player->GroupEventHappens(QUEST_ESCAPE, me);
-                                me->SummonCreature(NPC_PILOT_WIZZ, 0.0f, 0.0f, 0.0f, 0.0f, TEMPSUMMON_TIMED_DESPAWN, 180000);
-                            }
-                            break;
+                            case 0:
+                                Talk(SAY_PROGRESS_2);
+                                break;
+                            case 1:
+                                Talk(SAY_PROGRESS_3);
+                                break;
+                            case 2:
+                                Talk(SAY_END);
+                                break;
+                            case 3:
+                                if (Player* player = GetPlayerForEscort())
+                                {
+                                    player->GroupEventHappens(QUEST_ESCAPE, me);
+                                    me->SummonCreature(NPC_PILOT_WIZZ, 0.0f, 0.0f, 0.0f, 0.0f, TEMPSUMMON_TIMED_DESPAWN, 180000);
+                                }
+                                break;
                         }
 
                         ++PostEventCount;

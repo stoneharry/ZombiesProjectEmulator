@@ -55,23 +55,23 @@ class MySQLConnection;
 
 class SQLOperation
 {
-public:
-    SQLOperation() : m_conn(NULL) { }
-    virtual ~SQLOperation() { }
+    public:
+        SQLOperation(): m_conn(NULL) { }
+        virtual ~SQLOperation() { }
 
-    virtual int call()
-    {
-        Execute();
-        return 0;
-    }
-    virtual bool Execute() = 0;
-    virtual void SetConnection(MySQLConnection* con) { m_conn = con; }
+        virtual int call()
+        {
+            Execute();
+            return 0;
+        }
+        virtual bool Execute() = 0;
+        virtual void SetConnection(MySQLConnection* con) { m_conn = con; }
 
-    MySQLConnection* m_conn;
+        MySQLConnection* m_conn;
 
-private:
-    SQLOperation(SQLOperation const& right) = delete;
-    SQLOperation& operator=(SQLOperation const& right) = delete;
+    private:
+        SQLOperation(SQLOperation const& right) = delete;
+        SQLOperation& operator=(SQLOperation const& right) = delete;
 };
 
 #endif

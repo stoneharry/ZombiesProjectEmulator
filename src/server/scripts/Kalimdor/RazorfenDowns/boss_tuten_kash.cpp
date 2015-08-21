@@ -21,15 +21,15 @@
 
 enum Spells
 {
-    SPELL_THRASH = 8876,
-    SPELL_WEB_SPRAY = 12252,
-    SPELL_VIRULENT_POISON = 12254,
+    SPELL_THRASH             = 8876,
+    SPELL_WEB_SPRAY          = 12252,
+    SPELL_VIRULENT_POISON    = 12254,
     SPELL_CURSE_OF_TUTENKASH = 12255
 };
 
 enum Events
 {
-    EVENT_WEB_SPRAY = 1,
+    EVENT_WEB_SPRAY          = 1,
     EVENT_CURSE_OF_TUTENKASH = 2
 };
 
@@ -77,18 +77,18 @@ public:
             {
                 switch (eventId)
                 {
-                case EVENT_WEB_SPRAY:
-                    if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, false))
-                    {
-                        if (!target->HasAura(SPELL_WEB_SPRAY))
-                            DoCast(target, SPELL_WEB_SPRAY);
-                    }
-                    events.ScheduleEvent(EVENT_WEB_SPRAY, urand(6000, 8000));
-                    break;
-                case EVENT_CURSE_OF_TUTENKASH:
-                    DoCast(me, SPELL_CURSE_OF_TUTENKASH);
-                    events.ScheduleEvent(EVENT_CURSE_OF_TUTENKASH, urand(15000, 25000));
-                    break;
+                    case EVENT_WEB_SPRAY:
+                        if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, false))
+                        {
+                            if (!target->HasAura(SPELL_WEB_SPRAY))
+                                DoCast(target, SPELL_WEB_SPRAY);
+                        }
+                        events.ScheduleEvent(EVENT_WEB_SPRAY, urand(6000, 8000));
+                        break;
+                    case EVENT_CURSE_OF_TUTENKASH:
+                        DoCast(me, SPELL_CURSE_OF_TUTENKASH);
+                        events.ScheduleEvent(EVENT_CURSE_OF_TUTENKASH, urand(15000, 25000));
+                        break;
                 }
             }
             DoMeleeAttackIfReady();

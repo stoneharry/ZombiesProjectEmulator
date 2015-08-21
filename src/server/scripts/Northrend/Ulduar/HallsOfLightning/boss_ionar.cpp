@@ -27,35 +27,35 @@
 
 enum Spells
 {
-    SPELL_BALL_LIGHTNING = 52780,
-    SPELL_STATIC_OVERLOAD = 52658,
+    SPELL_BALL_LIGHTNING                          = 52780,
+    SPELL_STATIC_OVERLOAD                         = 52658,
 
-    SPELL_DISPERSE = 52770,
-    SPELL_SUMMON_SPARK = 52746,
-    SPELL_SPARK_DESPAWN = 52776,
+    SPELL_DISPERSE                                = 52770,
+    SPELL_SUMMON_SPARK                            = 52746,
+    SPELL_SPARK_DESPAWN                           = 52776,
 
     // Spark of Ionar
-    SPELL_SPARK_VISUAL_TRIGGER = 52667
+    SPELL_SPARK_VISUAL_TRIGGER                    = 52667
 };
 
 enum Yells
 {
-    SAY_AGGRO = 0,
-    SAY_SPLIT = 1,
-    SAY_SLAY = 2,
-    SAY_DEATH = 3
+    SAY_AGGRO                                     = 0,
+    SAY_SPLIT                                     = 1,
+    SAY_SLAY                                      = 2,
+    SAY_DEATH                                     = 3
 };
 
 enum Creatures
 {
-    NPC_SPARK_OF_IONAR = 28926
+    NPC_SPARK_OF_IONAR                            = 28926
 };
 
 enum Misc
 {
-    DATA_MAX_SPARKS = 5,
-    DATA_MAX_SPARK_DISTANCE = 90, // Distance to boss - prevent runs through the whole instance
-    DATA_POINT_CALLBACK = 0
+    DATA_MAX_SPARKS                               = 5,
+    DATA_MAX_SPARK_DISTANCE                       = 90, // Distance to boss - prevent runs through the whole instance
+    DATA_POINT_CALLBACK                           = 0
 };
 
 /*######
@@ -113,7 +113,7 @@ public:
 
             Initialize();
 
-            me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE | UNIT_FLAG_NOT_SELECTABLE | UNIT_FLAG_DISABLE_MOVE);
+            me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE|UNIT_FLAG_NOT_SELECTABLE|UNIT_FLAG_DISABLE_MOVE);
 
             if (!me->IsVisible())
                 me->SetVisible(true);
@@ -152,7 +152,7 @@ public:
 
                 me->AttackStop();
                 me->SetVisible(false);
-                me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE | UNIT_FLAG_NOT_SELECTABLE | UNIT_FLAG_DISABLE_MOVE);
+                me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE|UNIT_FLAG_NOT_SELECTABLE|UNIT_FLAG_DISABLE_MOVE);
 
                 me->GetMotionMaster()->Clear();
                 me->GetMotionMaster()->MoveIdle();
@@ -236,11 +236,11 @@ public:
                     else if (lSparkList.empty())
                     {
                         me->SetVisible(true);
-                        me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE | UNIT_FLAG_NOT_SELECTABLE | UNIT_FLAG_DISABLE_MOVE);
+                        me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE|UNIT_FLAG_NOT_SELECTABLE|UNIT_FLAG_DISABLE_MOVE);
 
                         DoCast(me, SPELL_SPARK_DESPAWN, false);
 
-                        uiSplitTimer = 25 * IN_MILLISECONDS;
+                        uiSplitTimer = 25*IN_MILLISECONDS;
                         bIsSplitPhase = true;
 
                         if (me->GetVictim())
@@ -258,7 +258,7 @@ public:
                 if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
                     DoCast(target, SPELL_STATIC_OVERLOAD);
 
-                uiStaticOverloadTimer = urand(5 * IN_MILLISECONDS, 6 * IN_MILLISECONDS);
+                uiStaticOverloadTimer = urand(5*IN_MILLISECONDS, 6*IN_MILLISECONDS);
             }
             else
                 uiStaticOverloadTimer -= uiDiff;
@@ -266,7 +266,7 @@ public:
             if (uiBallLightningTimer <= uiDiff)
             {
                 DoCastVictim(SPELL_BALL_LIGHTNING);
-                uiBallLightningTimer = urand(10 * IN_MILLISECONDS, 11 * IN_MILLISECONDS);
+                uiBallLightningTimer = urand(10*IN_MILLISECONDS, 11*IN_MILLISECONDS);
             }
             else
                 uiBallLightningTimer -= uiDiff;
@@ -362,7 +362,7 @@ public:
                 }
                 else
                     me->DespawnOrUnsummon();
-                uiCheckTimer = 2 * IN_MILLISECONDS;
+                uiCheckTimer = 2*IN_MILLISECONDS;
             }
             else
                 uiCheckTimer -= uiDiff;

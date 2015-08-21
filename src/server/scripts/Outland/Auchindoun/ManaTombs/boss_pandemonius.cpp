@@ -21,10 +21,10 @@
 
 enum Texts
 {
-    SAY_AGGRO = 0,
-    SAY_KILL = 1,
-    SAY_DEATH = 2,
-    EMOTE_DARK_SHELL = 3
+    SAY_AGGRO                       = 0,
+    SAY_KILL                        = 1,
+    SAY_DEATH                       = 2,
+    EMOTE_DARK_SHELL                = 3
 };
 
 enum Spells
@@ -79,38 +79,38 @@ public:
         {
             switch (eventId)
             {
-            case EVENT_VOID_BLAST:
-                if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0, 100.0f, true))
-                {
-                    DoCast(target, SPELL_VOID_BLAST);
-                    ++VoidBlastCounter;
-                }
+                case EVENT_VOID_BLAST:
+                    if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0, 100.0f, true))
+                    {
+                        DoCast(target, SPELL_VOID_BLAST);
+                        ++VoidBlastCounter;
+                    }
 
-                if (VoidBlastCounter == 5)
-                {
-                    VoidBlastCounter = 0;
-                    events.ScheduleEvent(EVENT_VOID_BLAST, urand(15000, 25000));
-                }
-                else
-                {
-                    events.ScheduleEvent(EVENT_VOID_BLAST, 500);
-                    events.DelayEvents(EVENT_DARK_SHELL, 500);
-                }
-                break;
-            case EVENT_DARK_SHELL:
-                if (me->IsNonMeleeSpellCast(false))
-                    me->InterruptNonMeleeSpells(true);
-                Talk(EMOTE_DARK_SHELL);
-                DoCast(me, SPELL_DARK_SHELL);
-                events.ScheduleEvent(EVENT_DARK_SHELL, 20000);
-                break;
-            default:
-                break;
+                    if (VoidBlastCounter == 5)
+                    {
+                        VoidBlastCounter = 0;
+                        events.ScheduleEvent(EVENT_VOID_BLAST, urand(15000, 25000));
+                    }
+                    else
+                    {
+                        events.ScheduleEvent(EVENT_VOID_BLAST, 500);
+                        events.DelayEvents(EVENT_DARK_SHELL, 500);
+                    }
+                    break;
+                case EVENT_DARK_SHELL:
+                    if (me->IsNonMeleeSpellCast(false))
+                        me->InterruptNonMeleeSpells(true);
+                    Talk(EMOTE_DARK_SHELL);
+                    DoCast(me, SPELL_DARK_SHELL);
+                    events.ScheduleEvent(EVENT_DARK_SHELL, 20000);
+                    break;
+                default:
+                    break;
             }
         }
 
-    private:
-        uint32 VoidBlastCounter;
+        private:
+            uint32 VoidBlastCounter;
     };
 
     CreatureAI* GetAI(Creature* creature) const override

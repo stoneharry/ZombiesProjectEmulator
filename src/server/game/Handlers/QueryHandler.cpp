@@ -34,7 +34,7 @@ void WorldSession::SendNameQueryOpcode(ObjectGuid guid)
     Player* player = ObjectAccessor::FindConnectedPlayer(guid);
     CharacterNameData const* nameData = sWorld->GetCharacterNameData(guid);
 
-    WorldPacket data(SMSG_NAME_QUERY_RESPONSE, (8 + 1 + 1 + 1 + 1 + 1 + 10));
+    WorldPacket data(SMSG_NAME_QUERY_RESPONSE, (8+1+1+1+1+1+10));
     data << guid.WriteAsPacked();
     if (!nameData)
     {
@@ -80,7 +80,7 @@ void WorldSession::HandleQueryTimeOpcode(WorldPacket & /*recvData*/)
 
 void WorldSession::SendQueryTimeResponse()
 {
-    WorldPacket data(SMSG_QUERY_TIME_RESPONSE, 4 + 4);
+    WorldPacket data(SMSG_QUERY_TIME_RESPONSE, 4+4);
     data << uint32(time(NULL));
     data << uint32(sWorld->GetNextDailyQuestsResetTime() - time(NULL));
     SendPacket(&data);
@@ -111,7 +111,7 @@ void WorldSession::HandleCreatureQueryOpcode(WorldPacket& recvData)
             }
         }
         TC_LOG_DEBUG("network", "WORLD: CMSG_CREATURE_QUERY '%s' - Entry: %u.", ci->Name.c_str(), entry);
-        // guess size
+                                                            // guess size
         WorldPacket data(SMSG_CREATURE_QUERY_RESPONSE, 100);
         data << uint32(entry);                              // creature entry
         data << Name;
@@ -177,7 +177,7 @@ void WorldSession::HandleGameObjectQueryOpcode(WorldPacket& recvData)
             }
         }
         TC_LOG_DEBUG("network", "WORLD: CMSG_GAMEOBJECT_QUERY '%s' - Entry: %u. ", info->name.c_str(), entry);
-        WorldPacket data(SMSG_GAMEOBJECT_QUERY_RESPONSE, 150);
+        WorldPacket data (SMSG_GAMEOBJECT_QUERY_RESPONSE, 150);
         data << uint32(entry);
         data << uint32(info->type);
         data << uint32(info->displayId);
@@ -197,7 +197,7 @@ void WorldSession::HandleGameObjectQueryOpcode(WorldPacket& recvData)
     {
         TC_LOG_DEBUG("network", "WORLD: CMSG_GAMEOBJECT_QUERY - Missing gameobject info for (%s, ENTRY: %u)",
             guid.ToString().c_str(), entry);
-        WorldPacket data(SMSG_GAMEOBJECT_QUERY_RESPONSE, 4);
+        WorldPacket data (SMSG_GAMEOBJECT_QUERY_RESPONSE, 4);
         data << uint32(entry | 0x80000000);
         SendPacket(&data);
         TC_LOG_DEBUG("network", "WORLD: Sent SMSG_GAMEOBJECT_QUERY_RESPONSE");
@@ -244,7 +244,7 @@ void WorldSession::HandleCorpseQueryOpcode(WorldPacket & /*recvData*/)
         }
     }
 
-    WorldPacket data(MSG_CORPSE_QUERY, 1 + (6 * 4));
+    WorldPacket data(MSG_CORPSE_QUERY, 1+(6*4));
     data << uint8(1);                                       // corpse found
     data << int32(mapid);
     data << float(x);
@@ -353,7 +353,7 @@ void WorldSession::HandlePageTextQueryOpcode(WorldPacket& recvData)
     while (pageID)
     {
         PageText const* pageText = sObjectMgr->GetPageText(pageID);
-        // guess size
+                                                            // guess size
         WorldPacket data(SMSG_PAGE_TEXT_QUERY_RESPONSE, 50);
         data << pageID;
 
@@ -369,8 +369,8 @@ void WorldSession::HandlePageTextQueryOpcode(WorldPacket& recvData)
 
             int loc_idx = GetSessionDbLocaleIndex();
             if (loc_idx >= 0)
-            if (PageTextLocale const* player = sObjectMgr->GetPageTextLocale(pageID))
-                ObjectMgr::GetLocaleString(player->Text, loc_idx, Text);
+                if (PageTextLocale const* player = sObjectMgr->GetPageTextLocale(pageID))
+                    ObjectMgr::GetLocaleString(player->Text, loc_idx, Text);
 
             data << Text;
             data << uint32(pageText->NextPage);
@@ -389,7 +389,7 @@ void WorldSession::HandleCorpseMapPositionQuery(WorldPacket& recvData)
     uint32 unk;
     recvData >> unk;
 
-    WorldPacket data(SMSG_CORPSE_MAP_POSITION_QUERY_RESPONSE, 4 + 4 + 4 + 4);
+    WorldPacket data(SMSG_CORPSE_MAP_POSITION_QUERY_RESPONSE, 4+4+4+4);
     data << float(0);
     data << float(0);
     data << float(0);
@@ -425,7 +425,7 @@ void WorldSession::HandleQuestPOIQuery(WorldPacket& recvData)
         uint16 questSlot = _player->FindQuestSlot(questId);
 
         if (questSlot != MAX_QUEST_LOG_SIZE)
-            questOk = _player->GetQuestSlotQuestId(questSlot) == questId;
+            questOk =_player->GetQuestSlotQuestId(questSlot) == questId;
 
         if (questOk)
         {

@@ -55,7 +55,7 @@
 using namespace boost::program_options;
 
 #ifndef _TRINITY_CORE_CONFIG
-#define _TRINITY_CORE_CONFIG  "worldserver.conf"
+    #define _TRINITY_CORE_CONFIG  "worldserver.conf"
 #endif
 
 #define WORLD_SLEEP_CONST 50
@@ -310,7 +310,7 @@ void ShutdownCLIThread(std::thread* cliThread)
             LPSTR errorBuffer;
 
             DWORD formatReturnCode = FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_IGNORE_INSERTS,
-                nullptr, errorCode, 0, (LPTSTR)&errorBuffer, 0, nullptr);
+                                                   nullptr, errorCode, 0, (LPTSTR)&errorBuffer, 0, nullptr);
             if (!formatReturnCode)
                 errorBuffer = "Unknown error";
 

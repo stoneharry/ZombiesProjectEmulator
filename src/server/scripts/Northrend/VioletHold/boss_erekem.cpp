@@ -21,25 +21,25 @@
 
 enum Spells
 {
-    SPELL_BLOODLUST = 54516,
-    SPELL_BREAK_BONDS = 59463,
-    SPELL_CHAIN_HEAL = 54481,
-    H_SPELL_CHAIN_HEAL = 59473,
-    SPELL_EARTH_SHIELD = 54479,
-    H_SPELL_EARTH_SHIELD = 59471,
-    SPELL_EARTH_SHOCK = 54511,
-    SPELL_LIGHTNING_BOLT = 53044,
-    SPELL_STORMSTRIKE = 51876
+    SPELL_BLOODLUST                             = 54516,
+    SPELL_BREAK_BONDS                           = 59463,
+    SPELL_CHAIN_HEAL                            = 54481,
+    H_SPELL_CHAIN_HEAL                          = 59473,
+    SPELL_EARTH_SHIELD                          = 54479,
+    H_SPELL_EARTH_SHIELD                        = 59471,
+    SPELL_EARTH_SHOCK                           = 54511,
+    SPELL_LIGHTNING_BOLT                        = 53044,
+    SPELL_STORMSTRIKE                           = 51876
 };
 
 enum Yells
 {
-    SAY_AGGRO = 0,
-    SAY_SLAY = 1,
-    SAY_DEATH = 2,
-    SAY_SPAWN = 3,
-    SAY_ADD_KILLED = 4,
-    SAY_BOTH_ADDS_KILLED = 5
+    SAY_AGGRO                                   = 0,
+    SAY_SLAY                                    = 1,
+    SAY_DEATH                                   = 2,
+    SAY_SPAWN                                   = 3,
+    SAY_ADD_KILLED                              = 4,
+    SAY_BOTH_ADDS_KILLED                        = 5
 };
 
 class boss_erekem : public CreatureScript
@@ -130,11 +130,11 @@ public:
             DoCast(me, SPELL_EARTH_SHIELD);
 
             if (GameObject* pDoor = instance->instance->GetGameObject(instance->GetGuidData(DATA_EREKEM_CELL)))
-            if (pDoor->GetGoState() == GO_STATE_READY)
-            {
-                EnterEvadeMode();
-                return;
-            }
+                if (pDoor->GetGoState() == GO_STATE_READY)
+                {
+                    EnterEvadeMode();
+                    return;
+                }
 
             if (instance->GetData(DATA_WAVE_COUNT) == 6)
                 instance->SetData(DATA_1ST_BOSS_EVENT, IN_PROGRESS);
@@ -168,8 +168,7 @@ public:
             {
                 DoCast(me, SPELL_EARTH_SHIELD);
                 uiEarthShieldTimer = 20000;
-            }
-            else uiEarthShieldTimer -= diff;
+            } else uiEarthShieldTimer -= diff;
 
             if (uiChainHealTimer <= diff)
             {
@@ -183,30 +182,26 @@ public:
                     Creature* pGuard2 = ObjectAccessor::GetCreature(*me, instance->GetGuidData(DATA_EREKEM_GUARD_2));
                     uiChainHealTimer = ((pGuard1 && !pGuard1->IsAlive()) || (pGuard2 && !pGuard2->IsAlive()) ? 3000 : 8000) + rand32() % 3000;
                 }
-            }
-            else uiChainHealTimer -= diff;
+            } else uiChainHealTimer -= diff;
 
             if (uiBloodlustTimer <= diff)
             {
                 DoCast(me, SPELL_BLOODLUST);
                 uiBloodlustTimer = urand(35000, 45000);
-            }
-            else uiBloodlustTimer -= diff;
+            } else uiBloodlustTimer -= diff;
 
             if (uiEarthShockTimer <= diff)
             {
                 DoCastVictim(SPELL_EARTH_SHOCK);
                 uiEarthShockTimer = urand(8000, 13000);
-            }
-            else uiEarthShockTimer -= diff;
+            } else uiEarthShockTimer -= diff;
 
             if (uiLightningBoltTimer <= diff)
             {
                 if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
                     DoCast(target, SPELL_LIGHTNING_BOLT);
                 uiLightningBoltTimer = urand(18000, 24000);
-            }
-            else uiLightningBoltTimer -= diff;
+            } else uiLightningBoltTimer -= diff;
 
             DoMeleeAttackIfReady();
         }
@@ -256,9 +251,9 @@ public:
 
 enum GuardSpells
 {
-    SPELL_GUSHING_WOUND = 39215,
-    SPELL_HOWLING_SCREECH = 54462,
-    SPELL_STRIKE = 14516
+    SPELL_GUSHING_WOUND                   = 39215,
+    SPELL_HOWLING_SCREECH                 = 54462,
+    SPELL_STRIKE                          = 14516
 };
 
 class npc_erekem_guard : public CreatureScript
@@ -325,22 +320,19 @@ public:
             {
                 DoCastVictim(SPELL_STRIKE);
                 uiStrikeTimer = urand(4000, 8000);
-            }
-            else uiStrikeTimer -= diff;
+            } else uiStrikeTimer -= diff;
 
             if (uiHowlingScreechTimer <= diff)
             {
                 DoCastVictim(SPELL_HOWLING_SCREECH);
                 uiHowlingScreechTimer = urand(8000, 13000);
-            }
-            else uiHowlingScreechTimer -= diff;
+            } else uiHowlingScreechTimer -= diff;
 
             if (uiGushingWoundTimer <= diff)
             {
                 DoCastVictim(SPELL_GUSHING_WOUND);
                 uiGushingWoundTimer = urand(7000, 12000);
-            }
-            else uiGushingWoundTimer -= diff;
+            } else uiGushingWoundTimer -= diff;
         }
     };
 

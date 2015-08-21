@@ -50,12 +50,12 @@ void BattlegroundBE::HandleAreaTrigger(Player* player, uint32 trigger)
 
     switch (trigger)
     {
-    case 4538:                                          // buff trigger?
-    case 4539:                                          // buff trigger?
-        break;
-    default:
-        Battleground::HandleAreaTrigger(player, trigger);
-        break;
+        case 4538:                                          // buff trigger?
+        case 4539:                                          // buff trigger?
+            break;
+        default:
+            Battleground::HandleAreaTrigger(player, trigger);
+            break;
     }
 }
 

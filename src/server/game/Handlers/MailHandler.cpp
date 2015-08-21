@@ -63,9 +63,9 @@ void WorldSession::HandleSendMail(WorldPacket& recvData)
     uint8 unk4;
     uint8 items_count;
     recvData >> mailbox >> receiverName >> subject >> body
-        >> stationery                                 // stationery?
-        >> package                                    // 0x00000000
-        >> items_count;                               // attached items count
+             >> stationery                                 // stationery?
+             >> package                                    // 0x00000000
+             >> items_count;                               // attached items count
 
     if (items_count > MAX_MAIL_ITEMS)                      // client limit
     {
@@ -612,7 +612,7 @@ void WorldSession::HandleGetMailList(WorldPacket& recvData)
     const uint32 maxPacketSize = 32767;
 
     uint32 mailsCount = 0;                                 // real send to client mails amount
-    uint32 realCount = 0;                                 // real mails amount
+    uint32 realCount  = 0;                                 // real mails amount
 
     WorldPacket data(SMSG_MAIL_LIST_RESULT, (200));         // guess size
     data << uint32(0);                                      // real mail's count
@@ -634,9 +634,9 @@ void WorldSession::HandleGetMailList(WorldPacket& recvData)
 
         uint8 item_count = (*itr)->items.size();            // max count is MAX_MAIL_ITEMS (12)
 
-        size_t next_mail_size = 2 + 4 + 1 + ((*itr)->messageType == MAIL_NORMAL ? 8 : 4) + 4 * 8 + ((*itr)->subject.size() + 1) + ((*itr)->body.size() + 1) + 1 + item_count*(1 + 4 + 4 + MAX_INSPECTED_ENCHANTMENT_SLOT * 3 * 4 + 4 + 4 + 4 + 4 + 4 + 4 + 1);
+        size_t next_mail_size = 2+4+1+((*itr)->messageType == MAIL_NORMAL ? 8 : 4)+4*8+((*itr)->subject.size()+1)+((*itr)->body.size()+1)+1+item_count*(1+4+4+MAX_INSPECTED_ENCHANTMENT_SLOT*3*4+4+4+4+4+4+4+1);
 
-        if (data.wpos() + next_mail_size > maxPacketSize)
+        if (data.wpos()+next_mail_size > maxPacketSize)
         {
             realCount += 1;
             continue;
@@ -648,15 +648,15 @@ void WorldSession::HandleGetMailList(WorldPacket& recvData)
 
         switch ((*itr)->messageType)
         {
-        case MAIL_NORMAL:                               // sender guid
-            data << ObjectGuid(HIGHGUID_PLAYER, (*itr)->sender);
-            break;
-        case MAIL_CREATURE:
-        case MAIL_GAMEOBJECT:
-        case MAIL_AUCTION:
-        case MAIL_CALENDAR:
-            data << uint32((*itr)->sender);            // creature/gameobject entry, auction id, calendar event id?
-            break;
+            case MAIL_NORMAL:                               // sender guid
+                data << ObjectGuid(HIGHGUID_PLAYER, (*itr)->sender);
+                break;
+            case MAIL_CREATURE:
+            case MAIL_GAMEOBJECT:
+            case MAIL_AUCTION:
+            case MAIL_CALENDAR:
+                data << uint32((*itr)->sender);            // creature/gameobject entry, auction id, calendar event id?
+                break;
         }
 
         data << uint32((*itr)->COD);                         // COD
@@ -664,7 +664,7 @@ void WorldSession::HandleGetMailList(WorldPacket& recvData)
         data << uint32((*itr)->stationery);                  // stationery (Stationery.dbc)
         data << uint32((*itr)->money);                       // Gold
         data << uint32((*itr)->checked);                     // flags
-        data << float(float((*itr)->expire_time - time(NULL)) / DAY); // Time
+        data << float(float((*itr)->expire_time-time(NULL))/DAY); // Time
         data << uint32((*itr)->mailTemplateId);              // mail template (MailTemplate.dbc)
         data << (*itr)->subject;                             // Subject string - once 00, when mail type = 3, max 256
         data << (*itr)->body;                                // message? max 8000

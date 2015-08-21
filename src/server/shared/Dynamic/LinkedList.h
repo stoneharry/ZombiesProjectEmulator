@@ -27,229 +27,229 @@ class LinkedListHead;
 
 class LinkedListElement
 {
-private:
-    friend class LinkedListHead;
+    private:
+        friend class LinkedListHead;
 
-    LinkedListElement* iNext;
-    LinkedListElement* iPrev;
-public:
-    LinkedListElement() : iNext(NULL), iPrev(NULL) { }
-    virtual ~LinkedListElement() { delink(); }
+        LinkedListElement* iNext;
+        LinkedListElement* iPrev;
+    public:
+        LinkedListElement() : iNext(NULL), iPrev(NULL) { }
+        virtual ~LinkedListElement() { delink(); }
 
-    bool hasNext() const { return(iNext && iNext->iNext != NULL); }
-    bool hasPrev() const { return(iPrev && iPrev->iPrev != NULL); }
-    bool isInList() const { return(iNext != NULL && iPrev != NULL); }
+        bool hasNext() const { return(iNext && iNext->iNext != NULL); }
+        bool hasPrev() const { return(iPrev && iPrev->iPrev != NULL); }
+        bool isInList() const { return(iNext != NULL && iPrev != NULL); }
 
-    LinkedListElement      * next()       { return hasNext() ? iNext : NULL; }
-    LinkedListElement const* next() const { return hasNext() ? iNext : NULL; }
-    LinkedListElement      * prev()       { return hasPrev() ? iPrev : NULL; }
-    LinkedListElement const* prev() const { return hasPrev() ? iPrev : NULL; }
+        LinkedListElement      * next()       { return hasNext() ? iNext : NULL; }
+        LinkedListElement const* next() const { return hasNext() ? iNext : NULL; }
+        LinkedListElement      * prev()       { return hasPrev() ? iPrev : NULL; }
+        LinkedListElement const* prev() const { return hasPrev() ? iPrev : NULL; }
 
-    LinkedListElement      * nocheck_next()       { return iNext; }
-    LinkedListElement const* nocheck_next() const { return iNext; }
-    LinkedListElement      * nocheck_prev()       { return iPrev; }
-    LinkedListElement const* nocheck_prev() const { return iPrev; }
+        LinkedListElement      * nocheck_next()       { return iNext; }
+        LinkedListElement const* nocheck_next() const { return iNext; }
+        LinkedListElement      * nocheck_prev()       { return iPrev; }
+        LinkedListElement const* nocheck_prev() const { return iPrev; }
 
-    void delink()
-    {
-        if (isInList())
+        void delink()
         {
-            iNext->iPrev = iPrev; iPrev->iNext = iNext; iNext = NULL; iPrev = NULL;
+            if (isInList())
+            {
+                iNext->iPrev = iPrev; iPrev->iNext = iNext; iNext = NULL; iPrev = NULL;
+            }
         }
-    }
 
-    void insertBefore(LinkedListElement* pElem)
-    {
-        pElem->iNext = this;
-        pElem->iPrev = iPrev;
-        iPrev->iNext = pElem;
-        iPrev = pElem;
-    }
+        void insertBefore(LinkedListElement* pElem)
+        {
+            pElem->iNext = this;
+            pElem->iPrev = iPrev;
+            iPrev->iNext = pElem;
+            iPrev = pElem;
+        }
 
-    void insertAfter(LinkedListElement* pElem)
-    {
-        pElem->iPrev = this;
-        pElem->iNext = iNext;
-        iNext->iPrev = pElem;
-        iNext = pElem;
-    }
+        void insertAfter(LinkedListElement* pElem)
+        {
+            pElem->iPrev = this;
+            pElem->iNext = iNext;
+            iNext->iPrev = pElem;
+            iNext = pElem;
+        }
 
-private:
-    LinkedListElement(LinkedListElement const&);
-    LinkedListElement& operator=(LinkedListElement const&);
+    private:
+        LinkedListElement(LinkedListElement const&);
+        LinkedListElement& operator=(LinkedListElement const&);
 };
 
 //============================================
 
 class LinkedListHead
 {
-private:
-    LinkedListElement iFirst;
-    LinkedListElement iLast;
-    uint32 iSize;
+    private:
+        LinkedListElement iFirst;
+        LinkedListElement iLast;
+        uint32 iSize;
 
-public:
-    LinkedListHead() : iSize(0)
-    {
-        // create empty list
-
-        iFirst.iNext = &iLast;
-        iLast.iPrev = &iFirst;
-    }
-
-    virtual ~LinkedListHead() { }
-
-    bool isEmpty() const { return(!iFirst.iNext->isInList()); }
-
-    LinkedListElement      * getFirst()       { return(isEmpty() ? NULL : iFirst.iNext); }
-    LinkedListElement const* getFirst() const { return(isEmpty() ? NULL : iFirst.iNext); }
-
-    LinkedListElement      * getLast() { return(isEmpty() ? NULL : iLast.iPrev); }
-    LinkedListElement const* getLast() const  { return(isEmpty() ? NULL : iLast.iPrev); }
-
-    void insertFirst(LinkedListElement* pElem)
-    {
-        iFirst.insertAfter(pElem);
-    }
-
-    void insertLast(LinkedListElement* pElem)
-    {
-        iLast.insertBefore(pElem);
-    }
-
-    uint32 getSize() const
-    {
-        if (!iSize)
-        {
-            uint32 result = 0;
-            LinkedListElement const* e = getFirst();
-            while (e)
-            {
-                ++result;
-                e = e->next();
-            }
-            return result;
-        }
-        else
-            return iSize;
-    }
-
-    void incSize() { ++iSize; }
-    void decSize() { --iSize; }
-
-    template<class _Ty>
-    class Iterator
-    {
     public:
-        typedef std::bidirectional_iterator_tag     iterator_category;
-        typedef _Ty                                 value_type;
-        typedef ptrdiff_t                           difference_type;
-        typedef ptrdiff_t                           distance_type;
-        typedef _Ty*                                pointer;
-        typedef _Ty const*                          const_pointer;
-        typedef _Ty&                                reference;
-        typedef _Ty const &                         const_reference;
-
-        Iterator() : _Ptr(nullptr)
-        {                                           // construct with null node pointer
-        }
-
-        Iterator(pointer _Pnode) : _Ptr(_Pnode)
-        {                                           // construct with node pointer _Pnode
-        }
-
-        Iterator& operator=(Iterator const &_Right)
+        LinkedListHead(): iSize(0)
         {
-            _Ptr = _Right._Ptr;
-            return *this;
+            // create empty list
+
+            iFirst.iNext = &iLast;
+            iLast.iPrev = &iFirst;
         }
 
-        Iterator& operator=(const_pointer const &_Right)
+        virtual ~LinkedListHead() { }
+
+        bool isEmpty() const { return(!iFirst.iNext->isInList()); }
+
+        LinkedListElement      * getFirst()       { return(isEmpty() ? NULL : iFirst.iNext); }
+        LinkedListElement const* getFirst() const { return(isEmpty() ? NULL : iFirst.iNext); }
+
+        LinkedListElement      * getLast() { return(isEmpty() ? NULL : iLast.iPrev); }
+        LinkedListElement const* getLast() const  { return(isEmpty() ? NULL : iLast.iPrev); }
+
+        void insertFirst(LinkedListElement* pElem)
         {
-            _Ptr = pointer(_Right);
-            return *this;
+            iFirst.insertAfter(pElem);
         }
 
-        reference operator*()
-        {                                           // return designated value
-            return *_Ptr;
+        void insertLast(LinkedListElement* pElem)
+        {
+            iLast.insertBefore(pElem);
         }
 
-        pointer operator->()
-        {                                           // return pointer to class object
-            return _Ptr;
+        uint32 getSize() const
+        {
+            if (!iSize)
+            {
+                uint32 result = 0;
+                LinkedListElement const* e = getFirst();
+                while (e)
+                {
+                    ++result;
+                    e = e->next();
+                }
+                return result;
+            }
+            else
+                return iSize;
         }
 
-        Iterator& operator++()
-        {                                           // preincrement
-            _Ptr = _Ptr->next();
-            return (*this);
-        }
+        void incSize() { ++iSize; }
+        void decSize() { --iSize; }
 
-        Iterator operator++(int)
-        {                                           // postincrement
-            iterator _Tmp = *this;
-            ++*this;
-            return (_Tmp);
-        }
+        template<class _Ty>
+            class Iterator
+        {
+            public:
+                typedef std::bidirectional_iterator_tag     iterator_category;
+                typedef _Ty                                 value_type;
+                typedef ptrdiff_t                           difference_type;
+                typedef ptrdiff_t                           distance_type;
+                typedef _Ty*                                pointer;
+                typedef _Ty const*                          const_pointer;
+                typedef _Ty&                                reference;
+                typedef _Ty const &                         const_reference;
 
-        Iterator& operator--()
-        {                                           // predecrement
-            _Ptr = _Ptr->prev();
-            return (*this);
-        }
+                Iterator() : _Ptr(nullptr)
+                {                                           // construct with null node pointer
+                }
 
-        Iterator operator--(int)
-        {                                           // postdecrement
-            iterator _Tmp = *this;
-            --*this;
-            return (_Tmp);
-        }
+                Iterator(pointer _Pnode) : _Ptr(_Pnode)
+                {                                           // construct with node pointer _Pnode
+                }
 
-        bool operator==(Iterator const &_Right) const
-        {                                           // test for iterator equality
-            return (_Ptr == _Right._Ptr);
-        }
+                Iterator& operator=(Iterator const &_Right)
+                {
+                    _Ptr = _Right._Ptr;
+                    return *this;
+                }
 
-        bool operator!=(Iterator const &_Right) const
-        {                                           // test for iterator inequality
-            return (!(*this == _Right));
-        }
+                Iterator& operator=(const_pointer const &_Right)
+                {
+                    _Ptr = pointer(_Right);
+                    return *this;
+                }
 
-        bool operator==(pointer const &_Right) const
-        {                                           // test for pointer equality
-            return (_Ptr != _Right);
-        }
+                reference operator*()
+                {                                           // return designated value
+                    return *_Ptr;
+                }
 
-        bool operator!=(pointer const &_Right) const
-        {                                           // test for pointer equality
-            return (!(*this == _Right));
-        }
+                pointer operator->()
+                {                                           // return pointer to class object
+                    return _Ptr;
+                }
 
-        bool operator==(const_reference _Right) const
-        {                                           // test for reference equality
-            return (_Ptr == &_Right);
-        }
+                Iterator& operator++()
+                {                                           // preincrement
+                    _Ptr = _Ptr->next();
+                    return (*this);
+                }
 
-        bool operator!=(const_reference _Right) const
-        {                                           // test for reference equality
-            return (_Ptr != &_Right);
-        }
+                Iterator operator++(int)
+                {                                           // postincrement
+                    iterator _Tmp = *this;
+                    ++*this;
+                    return (_Tmp);
+                }
 
-        pointer _Mynode()
-        {                                           // return node pointer
-            return (_Ptr);
-        }
+                Iterator& operator--()
+                {                                           // predecrement
+                    _Ptr = _Ptr->prev();
+                    return (*this);
+                }
 
-    protected:
-        pointer _Ptr;                               // pointer to node
-    };
+                Iterator operator--(int)
+                {                                           // postdecrement
+                    iterator _Tmp = *this;
+                    --*this;
+                    return (_Tmp);
+                }
 
-    typedef Iterator<LinkedListElement> iterator;
+                bool operator==(Iterator const &_Right) const
+                {                                           // test for iterator equality
+                    return (_Ptr == _Right._Ptr);
+                }
 
-private:
-    LinkedListHead(LinkedListHead const&);
-    LinkedListHead& operator=(LinkedListHead const&);
+                bool operator!=(Iterator const &_Right) const
+                {                                           // test for iterator inequality
+                    return (!(*this == _Right));
+                }
+
+                bool operator==(pointer const &_Right) const
+                {                                           // test for pointer equality
+                    return (_Ptr != _Right);
+                }
+
+                bool operator!=(pointer const &_Right) const
+                {                                           // test for pointer equality
+                    return (!(*this == _Right));
+                }
+
+                bool operator==(const_reference _Right) const
+                {                                           // test for reference equality
+                    return (_Ptr == &_Right);
+                }
+
+                bool operator!=(const_reference _Right) const
+                {                                           // test for reference equality
+                    return (_Ptr != &_Right);
+                }
+
+                pointer _Mynode()
+                {                                           // return node pointer
+                    return (_Ptr);
+                }
+
+            protected:
+                pointer _Ptr;                               // pointer to node
+        };
+
+        typedef Iterator<LinkedListElement> iterator;
+
+    private:
+        LinkedListHead(LinkedListHead const&);
+        LinkedListHead& operator=(LinkedListHead const&);
 };
 
 //============================================

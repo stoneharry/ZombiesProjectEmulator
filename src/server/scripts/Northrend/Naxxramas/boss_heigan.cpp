@@ -23,14 +23,14 @@
 
 enum Heigan
 {
-    SPELL_DECREPIT_FEVER = 29998, // 25-man: 55011
-    SPELL_SPELL_DISRUPTION = 29310,
-    SPELL_PLAGUE_CLOUD = 29350,
+    SPELL_DECREPIT_FEVER        = 29998, // 25-man: 55011
+    SPELL_SPELL_DISRUPTION      = 29310,
+    SPELL_PLAGUE_CLOUD          = 29350,
 
-    SAY_AGGRO = 0,
-    SAY_SLAY = 1,
-    SAY_TAUNT = 2,
-    SAY_DEATH = 3
+    SAY_AGGRO                   = 0,
+    SAY_SLAY                    = 1,
+    SAY_TAUNT                   = 2,
+    SAY_DEATH                   = 3
 };
 
 enum Events
@@ -50,8 +50,8 @@ enum Phases
 
 enum Misc
 {
-    ACTION_SAFETY_DANCE_FAIL = 1,
-    DATA_SAFETY_DANCE = 19962139
+    ACTION_SAFETY_DANCE_FAIL        = 1,
+    DATA_SAFETY_DANCE               = 19962139
 };
 
 class boss_heigan : public CreatureScript
@@ -153,31 +153,31 @@ public:
             {
                 switch (eventId)
                 {
-                case EVENT_DISRUPT:
-                    DoCastAOE(SPELL_SPELL_DISRUPTION);
-                    events.ScheduleEvent(EVENT_DISRUPT, urand(5000, 10000));
-                    break;
-                case EVENT_FEVER:
-                    DoCastAOE(SPELL_DECREPIT_FEVER);
-                    events.ScheduleEvent(EVENT_FEVER, urand(20000, 25000));
-                    break;
-                case EVENT_PHASE:
-                    /// @todo Add missing texts for both phase switches
-                    EnterPhase(phase == PHASE_FIGHT ? PHASE_DANCE : PHASE_FIGHT);
-                    break;
-                case EVENT_ERUPT:
-                    instance->SetData(DATA_HEIGAN_ERUPT, eruptSection);
-                    TeleportCheaters();
+                    case EVENT_DISRUPT:
+                        DoCastAOE(SPELL_SPELL_DISRUPTION);
+                        events.ScheduleEvent(EVENT_DISRUPT, urand(5000, 10000));
+                        break;
+                    case EVENT_FEVER:
+                        DoCastAOE(SPELL_DECREPIT_FEVER);
+                        events.ScheduleEvent(EVENT_FEVER, urand(20000, 25000));
+                        break;
+                    case EVENT_PHASE:
+                        /// @todo Add missing texts for both phase switches
+                        EnterPhase(phase == PHASE_FIGHT ? PHASE_DANCE : PHASE_FIGHT);
+                        break;
+                    case EVENT_ERUPT:
+                        instance->SetData(DATA_HEIGAN_ERUPT, eruptSection);
+                        TeleportCheaters();
 
-                    if (eruptSection == 0)
-                        eruptDirection = true;
-                    else if (eruptSection == 3)
-                        eruptDirection = false;
+                        if (eruptSection == 0)
+                            eruptDirection = true;
+                        else if (eruptSection == 3)
+                            eruptDirection = false;
 
-                    eruptDirection ? ++eruptSection : --eruptSection;
+                        eruptDirection ? ++eruptSection : --eruptSection;
 
-                    events.ScheduleEvent(EVENT_ERUPT, phase == PHASE_FIGHT ? 10000 : 3000);
-                    break;
+                        events.ScheduleEvent(EVENT_ERUPT, phase == PHASE_FIGHT ? 10000 : 3000);
+                        break;
                 }
             }
 
@@ -189,55 +189,55 @@ public:
 
 class spell_heigan_eruption : public SpellScriptLoader
 {
-public:
-    spell_heigan_eruption() : SpellScriptLoader("spell_heigan_eruption") { }
+    public:
+        spell_heigan_eruption() : SpellScriptLoader("spell_heigan_eruption") { }
 
-    class spell_heigan_eruption_SpellScript : public SpellScript
-    {
-        PrepareSpellScript(spell_heigan_eruption_SpellScript);
-
-        void HandleScript(SpellEffIndex /*eff*/)
+        class spell_heigan_eruption_SpellScript : public SpellScript
         {
-            Unit* caster = GetCaster();
-            if (!caster || !GetHitPlayer())
-                return;
+            PrepareSpellScript(spell_heigan_eruption_SpellScript);
 
-            if (GetHitDamage() >= int32(GetHitPlayer()->GetHealth()))
-            if (InstanceScript* instance = caster->GetInstanceScript())
-            if (Creature* Heigan = ObjectAccessor::GetCreature(*caster, instance->GetGuidData(DATA_HEIGAN)))
-                Heigan->AI()->SetData(DATA_SAFETY_DANCE, 0);
-        }
+            void HandleScript(SpellEffIndex /*eff*/)
+            {
+                Unit* caster = GetCaster();
+                if (!caster || !GetHitPlayer())
+                    return;
 
-        void Register() override
+                if (GetHitDamage() >= int32(GetHitPlayer()->GetHealth()))
+                    if (InstanceScript* instance = caster->GetInstanceScript())
+                        if (Creature* Heigan = ObjectAccessor::GetCreature(*caster, instance->GetGuidData(DATA_HEIGAN)))
+                            Heigan->AI()->SetData(DATA_SAFETY_DANCE, 0);
+            }
+
+            void Register() override
+            {
+                OnEffectHitTarget += SpellEffectFn(spell_heigan_eruption_SpellScript::HandleScript, EFFECT_0, SPELL_EFFECT_SCHOOL_DAMAGE);
+            }
+        };
+
+        SpellScript* GetSpellScript() const override
         {
-            OnEffectHitTarget += SpellEffectFn(spell_heigan_eruption_SpellScript::HandleScript, EFFECT_0, SPELL_EFFECT_SCHOOL_DAMAGE);
+            return new spell_heigan_eruption_SpellScript();
         }
-    };
-
-    SpellScript* GetSpellScript() const override
-    {
-        return new spell_heigan_eruption_SpellScript();
-    }
 };
 
 class achievement_safety_dance : public AchievementCriteriaScript
 {
-public:
-    achievement_safety_dance() : AchievementCriteriaScript("achievement_safety_dance")
-    {
-    }
+    public:
+        achievement_safety_dance() : AchievementCriteriaScript("achievement_safety_dance")
+        {
+        }
 
-    bool OnCheck(Player* /*player*/, Unit* target) override
-    {
-        if (!target)
+        bool OnCheck(Player* /*player*/, Unit* target) override
+        {
+            if (!target)
+                return false;
+
+            if (Creature* Heigan = target->ToCreature())
+                if (Heigan->AI()->GetData(DATA_SAFETY_DANCE))
+                    return true;
+
             return false;
-
-        if (Creature* Heigan = target->ToCreature())
-        if (Heigan->AI()->GetData(DATA_SAFETY_DANCE))
-            return true;
-
-        return false;
-    }
+        }
 };
 
 void AddSC_boss_heigan()

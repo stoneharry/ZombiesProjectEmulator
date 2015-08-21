@@ -39,12 +39,12 @@ EndContentData */
 
 enum TapokeSlim
 {
-    QUEST_MISSING_DIPLO_PT11 = 1249,
-    FACTION_ENEMY = 168,
-    SPELL_STEALTH = 1785,
-    SPELL_CALL_FRIENDS = 16457,                    //summons 1x friend
-    NPC_SLIMS_FRIEND = 4971,
-    NPC_TAPOKE_SLIM_JAHN = 4962
+    QUEST_MISSING_DIPLO_PT11    = 1249,
+    FACTION_ENEMY               = 168,
+    SPELL_STEALTH               = 1785,
+    SPELL_CALL_FRIENDS          = 16457,                    //summons 1x friend
+    NPC_SLIMS_FRIEND            = 4971,
+    NPC_TAPOKE_SLIM_JAHN        = 4962
 };
 
 class npc_tapoke_slim_jahn : public CreatureScript
@@ -81,12 +81,12 @@ public:
         {
             switch (waypointId)
             {
-            case 2:
-                if (me->HasStealthAura())
-                    me->RemoveAurasByType(SPELL_AURA_MOD_STEALTH);
-                SetRun();
-                me->setFaction(FACTION_ENEMY);
-                break;
+                case 2:
+                    if (me->HasStealthAura())
+                        me->RemoveAurasByType(SPELL_AURA_MOD_STEALTH);
+                    SetRun();
+                    me->setFaction(FACTION_ENEMY);
+                    break;
             }
         }
 

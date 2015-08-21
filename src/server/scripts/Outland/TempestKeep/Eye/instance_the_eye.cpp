@@ -38,155 +38,155 @@ EndScriptData */
 
 class instance_the_eye : public InstanceMapScript
 {
-public:
-    instance_the_eye()
-        : InstanceMapScript("instance_the_eye", 550)
-    {
-    }
-
-    struct instance_the_eye_InstanceMapScript : public InstanceScript
-    {
-        instance_the_eye_InstanceMapScript(Map* map) : InstanceScript(map)
+    public:
+        instance_the_eye()
+            : InstanceMapScript("instance_the_eye", 550)
         {
-            SetHeaders(DataHeader);
-            memset(&m_auiEncounter, 0, sizeof(m_auiEncounter));
-
-            KaelthasEventPhase = 0;
-            AlarEventPhase = 0;
         }
 
-        ObjectGuid ThaladredTheDarkener;
-        ObjectGuid LordSanguinar;
-        ObjectGuid GrandAstromancerCapernian;
-        ObjectGuid MasterEngineerTelonicus;
-        ObjectGuid Kaelthas;
-        ObjectGuid Astromancer;
-        ObjectGuid Alar;
-        uint8 KaelthasEventPhase;
-        uint8 AlarEventPhase;
-
-        uint32 m_auiEncounter[MAX_ENCOUNTER];
-
-        bool IsEncounterInProgress() const override
+        struct instance_the_eye_InstanceMapScript : public InstanceScript
         {
-            for (uint8 i = 0; i < MAX_ENCOUNTER; ++i)
-            if (m_auiEncounter[i] == IN_PROGRESS)
-                return true;
-
-            return false;
-        }
-
-        void OnCreatureCreate(Creature* creature) override
-        {
-            switch (creature->GetEntry())
+            instance_the_eye_InstanceMapScript(Map* map) : InstanceScript(map)
             {
-            case 20064:
-                ThaladredTheDarkener = creature->GetGUID();
-                break;
-            case 20063:
-                MasterEngineerTelonicus = creature->GetGUID();
-                break;
-            case 20062:
-                GrandAstromancerCapernian = creature->GetGUID();
-                break;
-            case 20060:
-                LordSanguinar = creature->GetGUID();
-                break;
-            case 19622:
-                Kaelthas = creature->GetGUID();
-                break;
-            case 18805:
-                Astromancer = creature->GetGUID();
-                break;
-            case 19514:
-                Alar = creature->GetGUID();
-                break;
-            }
-        }
+                SetHeaders(DataHeader);
+                memset(&m_auiEncounter, 0, sizeof(m_auiEncounter));
 
-        ObjectGuid GetGuidData(uint32 identifier) const override
-        {
-            switch (identifier)
+                KaelthasEventPhase = 0;
+                AlarEventPhase = 0;
+            }
+
+            ObjectGuid ThaladredTheDarkener;
+            ObjectGuid LordSanguinar;
+            ObjectGuid GrandAstromancerCapernian;
+            ObjectGuid MasterEngineerTelonicus;
+            ObjectGuid Kaelthas;
+            ObjectGuid Astromancer;
+            ObjectGuid Alar;
+            uint8 KaelthasEventPhase;
+            uint8 AlarEventPhase;
+
+            uint32 m_auiEncounter[MAX_ENCOUNTER];
+
+            bool IsEncounterInProgress() const override
             {
-            case DATA_THALADREDTHEDARKENER:         return ThaladredTheDarkener;
-            case DATA_LORDSANGUINAR:                return LordSanguinar;
-            case DATA_GRANDASTROMANCERCAPERNIAN:    return GrandAstromancerCapernian;
-            case DATA_MASTERENGINEERTELONICUS:      return MasterEngineerTelonicus;
-            case DATA_KAELTHAS:                     return Kaelthas;
-            case DATA_ASTROMANCER:                  return Astromancer;
-            case DATA_ALAR:                         return Alar;
-            }
-            return ObjectGuid::Empty;
-        }
+                for (uint8 i = 0; i < MAX_ENCOUNTER; ++i)
+                    if (m_auiEncounter[i] == IN_PROGRESS)
+                        return true;
 
-        void SetData(uint32 type, uint32 data) override
-        {
-            switch (type)
+                return false;
+            }
+
+            void OnCreatureCreate(Creature* creature) override
             {
-            case DATA_ALAREVENT:
-                AlarEventPhase = data;
-                m_auiEncounter[0] = data;
-                break;
-            case DATA_HIGHASTROMANCERSOLARIANEVENT:
-                m_auiEncounter[1] = data;
-                break;
-            case DATA_VOIDREAVEREVENT:
-                m_auiEncounter[2] = data;
-                break;
-            case DATA_KAELTHASEVENT:
-                KaelthasEventPhase = data;
-                m_auiEncounter[3] = data;
-                break;
+                switch (creature->GetEntry())
+                {
+                case 20064:
+                    ThaladredTheDarkener = creature->GetGUID();
+                    break;
+                case 20063:
+                    MasterEngineerTelonicus = creature->GetGUID();
+                    break;
+                case 20062:
+                    GrandAstromancerCapernian = creature->GetGUID();
+                    break;
+                case 20060:
+                    LordSanguinar = creature->GetGUID();
+                    break;
+                case 19622:
+                    Kaelthas = creature->GetGUID();
+                    break;
+                case 18805:
+                    Astromancer = creature->GetGUID();
+                    break;
+                case 19514:
+                    Alar = creature->GetGUID();
+                    break;
+                }
             }
-            if (data == DONE)
-                SaveToDB();
-        }
 
-        uint32 GetData(uint32 type) const override
-        {
-            switch (type)
+            ObjectGuid GetGuidData(uint32 identifier) const override
             {
-            case DATA_ALAREVENT:                        return AlarEventPhase;
-            case DATA_HIGHASTROMANCERSOLARIANEVENT:     return m_auiEncounter[1];
-            case DATA_VOIDREAVEREVENT:                  return m_auiEncounter[2];
-            case DATA_KAELTHASEVENT:                    return KaelthasEventPhase;
+                switch (identifier)
+                {
+                case DATA_THALADREDTHEDARKENER:         return ThaladredTheDarkener;
+                case DATA_LORDSANGUINAR:                return LordSanguinar;
+                case DATA_GRANDASTROMANCERCAPERNIAN:    return GrandAstromancerCapernian;
+                case DATA_MASTERENGINEERTELONICUS:      return MasterEngineerTelonicus;
+                case DATA_KAELTHAS:                     return Kaelthas;
+                case DATA_ASTROMANCER:                  return Astromancer;
+                case DATA_ALAR:                         return Alar;
+                }
+                return ObjectGuid::Empty;
             }
-            return 0;
-        }
 
-        std::string GetSaveData() override
-        {
-            OUT_SAVE_INST_DATA;
-
-            std::ostringstream stream;
-            stream << m_auiEncounter[0] << ' ' << m_auiEncounter[1] << ' ' << m_auiEncounter[2] << ' ' << m_auiEncounter[3];
-
-            OUT_SAVE_INST_DATA_COMPLETE;
-            return stream.str();
-        }
-
-        void Load(const char* in) override
-        {
-            if (!in)
+            void SetData(uint32 type, uint32 data) override
             {
-                OUT_LOAD_INST_DATA_FAIL;
-                return;
+                switch (type)
+                {
+                case DATA_ALAREVENT:
+                    AlarEventPhase = data;
+                    m_auiEncounter[0] = data;
+                    break;
+                case DATA_HIGHASTROMANCERSOLARIANEVENT:
+                    m_auiEncounter[1] = data;
+                    break;
+                case DATA_VOIDREAVEREVENT:
+                    m_auiEncounter[2] = data;
+                    break;
+                case DATA_KAELTHASEVENT:
+                    KaelthasEventPhase = data;
+                    m_auiEncounter[3] = data;
+                    break;
+                }
+                if (data == DONE)
+                    SaveToDB();
             }
-            OUT_LOAD_INST_DATA(in);
 
-            std::istringstream stream(in);
-            stream >> m_auiEncounter[0] >> m_auiEncounter[1] >> m_auiEncounter[2] >> m_auiEncounter[3];
-            for (uint8 i = 0; i < MAX_ENCOUNTER; ++i)
-            if (m_auiEncounter[i] == IN_PROGRESS)                // Do not load an encounter as "In Progress" - reset it instead.
-                m_auiEncounter[i] = NOT_STARTED;
-            OUT_LOAD_INST_DATA_COMPLETE;
+            uint32 GetData(uint32 type) const override
+            {
+                switch (type)
+                {
+                case DATA_ALAREVENT:                        return AlarEventPhase;
+                case DATA_HIGHASTROMANCERSOLARIANEVENT:     return m_auiEncounter[1];
+                case DATA_VOIDREAVEREVENT:                  return m_auiEncounter[2];
+                case DATA_KAELTHASEVENT:                    return KaelthasEventPhase;
+                }
+                return 0;
+            }
+
+            std::string GetSaveData() override
+            {
+                OUT_SAVE_INST_DATA;
+
+                std::ostringstream stream;
+                stream << m_auiEncounter[0] << ' ' << m_auiEncounter[1] << ' ' << m_auiEncounter[2] << ' ' << m_auiEncounter[3];
+
+                OUT_SAVE_INST_DATA_COMPLETE;
+                return stream.str();
+            }
+
+            void Load(const char* in) override
+            {
+                if (!in)
+                {
+                    OUT_LOAD_INST_DATA_FAIL;
+                    return;
+                }
+                OUT_LOAD_INST_DATA(in);
+
+                std::istringstream stream(in);
+                stream >> m_auiEncounter[0] >> m_auiEncounter[1] >> m_auiEncounter[2] >> m_auiEncounter[3];
+                for (uint8 i = 0; i < MAX_ENCOUNTER; ++i)
+                    if (m_auiEncounter[i] == IN_PROGRESS)                // Do not load an encounter as "In Progress" - reset it instead.
+                        m_auiEncounter[i] = NOT_STARTED;
+                OUT_LOAD_INST_DATA_COMPLETE;
+            }
+        };
+
+        InstanceScript* GetInstanceScript(InstanceMap* map) const override
+        {
+            return new instance_the_eye_InstanceMapScript(map);
         }
-    };
-
-    InstanceScript* GetInstanceScript(InstanceMap* map) const override
-    {
-        return new instance_the_eye_InstanceMapScript(map);
-    }
 };
 void AddSC_instance_the_eye()
 {

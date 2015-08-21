@@ -31,17 +31,17 @@ public:
     {
         static ChatCommand sendCommandTable[] =
         {
-            { "items", rbac::RBAC_PERM_COMMAND_SEND_ITEMS, true, &HandleSendItemsCommand, "", NULL },
-            { "mail", rbac::RBAC_PERM_COMMAND_SEND_MAIL, true, &HandleSendMailCommand, "", NULL },
+            { "items",   rbac::RBAC_PERM_COMMAND_SEND_ITEMS,   true, &HandleSendItemsCommand,   "", NULL },
+            { "mail",    rbac::RBAC_PERM_COMMAND_SEND_MAIL,    true, &HandleSendMailCommand,    "", NULL },
             { "message", rbac::RBAC_PERM_COMMAND_SEND_MESSAGE, true, &HandleSendMessageCommand, "", NULL },
-            { "money", rbac::RBAC_PERM_COMMAND_SEND_MONEY, true, &HandleSendMoneyCommand, "", NULL },
-            { NULL, 0, false, NULL, "", NULL }
+            { "money",   rbac::RBAC_PERM_COMMAND_SEND_MONEY,   true, &HandleSendMoneyCommand,   "", NULL },
+            { NULL,      0,                             false, NULL,                      "", NULL }
         };
 
         static ChatCommand commandTable[] =
         {
             { "send", rbac::RBAC_PERM_COMMAND_SEND, false, NULL, "", sendCommandTable },
-            { NULL, 0, false, NULL, "", NULL }
+            { NULL,   0,                      false, NULL, "", NULL }
         };
         return commandTable;
     }
@@ -74,7 +74,7 @@ public:
 
         // msgSubject, msgText isn't NUL after prev. check
         std::string subject = msgSubject;
-        std::string text = msgText;
+        std::string text    = msgText;
 
         // from console show not existed sender
         MailSender sender(MAIL_NORMAL, handler->GetSession() ? handler->GetSession()->GetPlayer()->GetGUIDLow() : 0, MAIL_STATIONERY_GM);
@@ -119,7 +119,7 @@ public:
 
         // msgSubject, msgText isn't NUL after prev. check
         std::string subject = msgSubject;
-        std::string text = msgText;
+        std::string text    = msgText;
 
         // extract items
         typedef std::pair<uint32, uint32> ItemPair;
@@ -233,7 +233,7 @@ public:
 
         // msgSubject, msgText isn't NUL after prev. check
         std::string subject = msgSubject;
-        std::string text = msgText;
+        std::string text    = msgText;
 
         // from console show not existed sender
         MailSender sender(MAIL_NORMAL, handler->GetSession() ? handler->GetSession()->GetPlayer()->GetGUIDLow() : 0, MAIL_STATIONERY_GM);

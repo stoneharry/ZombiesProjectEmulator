@@ -25,10 +25,10 @@ using G3D::Ray;
 
 namespace VMAP
 {
-    ModelInstance::ModelInstance(const ModelSpawn &spawn, WorldModel* model) : ModelSpawn(spawn), iModel(model)
+    ModelInstance::ModelInstance(const ModelSpawn &spawn, WorldModel* model): ModelSpawn(spawn), iModel(model)
     {
-        iInvRot = G3D::Matrix3::fromEulerAnglesZYX(G3D::pif()*iRot.y / 180.f, G3D::pif()*iRot.x / 180.f, G3D::pif()*iRot.z / 180.f).inverse();
-        iInvScale = 1.f / iScale;
+        iInvRot = G3D::Matrix3::fromEulerAnglesZYX(G3D::pif()*iRot.y/180.f, G3D::pif()*iRot.x/180.f, G3D::pif()*iRot.z/180.f).inverse();
+        iInvScale = 1.f/iScale;
     }
 
     bool ModelInstance::intersectRay(const G3D::Ray& pRay, float& pMaxDist, bool pStopAtFirstHit) const
@@ -41,16 +41,16 @@ namespace VMAP
         float time = pRay.intersectionTime(iBound);
         if (time == G3D::finf())
         {
-            //            std::cout << "Ray does not hit '" << name << "'\n";
+//            std::cout << "Ray does not hit '" << name << "'\n";
 
             return false;
         }
-        //        std::cout << "Ray crosses bound of '" << name << "'\n";
-        /*        std::cout << "ray from:" << pRay.origin().x << ", " << pRay.origin().y << ", " << pRay.origin().z
-                          << " dir:" << pRay.direction().x << ", " << pRay.direction().y << ", " << pRay.direction().z
-                          << " t/tmax:" << time << '/' << pMaxDist;
-                          std::cout << "\nBound lo:" << iBound.low().x << ", " << iBound.low().y << ", " << iBound.low().z << " hi: "
-                          << iBound.high().x << ", " << iBound.high().y << ", " << iBound.high().z << std::endl; */
+//        std::cout << "Ray crosses bound of '" << name << "'\n";
+/*        std::cout << "ray from:" << pRay.origin().x << ", " << pRay.origin().y << ", " << pRay.origin().z
+                  << " dir:" << pRay.direction().x << ", " << pRay.direction().y << ", " << pRay.direction().z
+                  << " t/tmax:" << time << '/' << pMaxDist;
+        std::cout << "\nBound lo:" << iBound.low().x << ", " << iBound.low().y << ", " << iBound.low().z << " hi: "
+                  << iBound.high().x << ", " << iBound.high().y << ", " << iBound.high().z << std::endl; */
         // child bounds are defined in object space:
         Vector3 p = iInvRot * (pRay.origin() - iPos) * iInvScale;
         Ray modRay(p, iInvRot * pRay.direction());
@@ -198,7 +198,7 @@ namespace VMAP
 
     bool ModelSpawn::writeToFile(FILE* wf, const ModelSpawn &spawn)
     {
-        uint32 check = 0;
+        uint32 check=0;
         check += fwrite(&spawn.flags, sizeof(uint32), 1, wf);
         check += fwrite(&spawn.adtId, sizeof(uint16), 1, wf);
         check += fwrite(&spawn.ID, sizeof(uint32), 1, wf);

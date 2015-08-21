@@ -45,61 +45,61 @@ public:
     {
         static ChatCommand debugPlayCommandTable[] =
         {
-            { "cinematic", rbac::RBAC_PERM_COMMAND_DEBUG_PLAY_CINEMATIC, false, &HandleDebugPlayCinematicCommand, "", NULL },
-            { "movie", rbac::RBAC_PERM_COMMAND_DEBUG_PLAY_MOVIE, false, &HandleDebugPlayMovieCommand, "", NULL },
-            { "sound", rbac::RBAC_PERM_COMMAND_DEBUG_PLAY_SOUND, false, &HandleDebugPlaySoundCommand, "", NULL },
-            { NULL, 0, false, NULL, "", NULL }
+            { "cinematic",     rbac::RBAC_PERM_COMMAND_DEBUG_PLAY_CINEMATIC, false, &HandleDebugPlayCinematicCommand,   "", NULL },
+            { "movie",         rbac::RBAC_PERM_COMMAND_DEBUG_PLAY_MOVIE,     false, &HandleDebugPlayMovieCommand,       "", NULL },
+            { "sound",         rbac::RBAC_PERM_COMMAND_DEBUG_PLAY_SOUND,     false, &HandleDebugPlaySoundCommand,       "", NULL },
+            { NULL,            0,                                      false, NULL,                               "", NULL }
         };
         static ChatCommand debugSendCommandTable[] =
         {
-            { "buyerror", rbac::RBAC_PERM_COMMAND_DEBUG_SEND_BUYERROR, false, &HandleDebugSendBuyErrorCommand, "", NULL },
-            { "channelnotify", rbac::RBAC_PERM_COMMAND_DEBUG_SEND_CHANNELNOTIFY, false, &HandleDebugSendChannelNotifyCommand, "", NULL },
-            { "chatmessage", rbac::RBAC_PERM_COMMAND_DEBUG_SEND_CHATMESSAGE, false, &HandleDebugSendChatMsgCommand, "", NULL },
-            { "equiperror", rbac::RBAC_PERM_COMMAND_DEBUG_SEND_EQUIPERROR, false, &HandleDebugSendEquipErrorCommand, "", NULL },
-            { "largepacket", rbac::RBAC_PERM_COMMAND_DEBUG_SEND_LARGEPACKET, false, &HandleDebugSendLargePacketCommand, "", NULL },
-            { "opcode", rbac::RBAC_PERM_COMMAND_DEBUG_SEND_OPCODE, false, &HandleDebugSendOpcodeCommand, "", NULL },
-            { "qpartymsg", rbac::RBAC_PERM_COMMAND_DEBUG_SEND_QPARTYMSG, false, &HandleDebugSendQuestPartyMsgCommand, "", NULL },
-            { "qinvalidmsg", rbac::RBAC_PERM_COMMAND_DEBUG_SEND_QINVALIDMSG, false, &HandleDebugSendQuestInvalidMsgCommand, "", NULL },
-            { "sellerror", rbac::RBAC_PERM_COMMAND_DEBUG_SEND_SELLERROR, false, &HandleDebugSendSellErrorCommand, "", NULL },
-            { "setphaseshift", rbac::RBAC_PERM_COMMAND_DEBUG_SEND_SETPHASESHIFT, false, &HandleDebugSendSetPhaseShiftCommand, "", NULL },
-            { "spellfail", rbac::RBAC_PERM_COMMAND_DEBUG_SEND_SPELLFAIL, false, &HandleDebugSendSpellFailCommand, "", NULL },
-            { NULL, 0, false, NULL, "", NULL }
+            { "buyerror",      rbac::RBAC_PERM_COMMAND_DEBUG_SEND_BUYERROR,      false, &HandleDebugSendBuyErrorCommand,        "", NULL },
+            { "channelnotify", rbac::RBAC_PERM_COMMAND_DEBUG_SEND_CHANNELNOTIFY, false, &HandleDebugSendChannelNotifyCommand,   "", NULL },
+            { "chatmessage",   rbac::RBAC_PERM_COMMAND_DEBUG_SEND_CHATMESSAGE,   false, &HandleDebugSendChatMsgCommand,         "", NULL },
+            { "equiperror",    rbac::RBAC_PERM_COMMAND_DEBUG_SEND_EQUIPERROR,    false, &HandleDebugSendEquipErrorCommand,      "", NULL },
+            { "largepacket",   rbac::RBAC_PERM_COMMAND_DEBUG_SEND_LARGEPACKET,   false, &HandleDebugSendLargePacketCommand,     "", NULL },
+            { "opcode",        rbac::RBAC_PERM_COMMAND_DEBUG_SEND_OPCODE,        false, &HandleDebugSendOpcodeCommand,          "", NULL },
+            { "qpartymsg",     rbac::RBAC_PERM_COMMAND_DEBUG_SEND_QPARTYMSG,     false, &HandleDebugSendQuestPartyMsgCommand,   "", NULL },
+            { "qinvalidmsg",   rbac::RBAC_PERM_COMMAND_DEBUG_SEND_QINVALIDMSG,   false, &HandleDebugSendQuestInvalidMsgCommand, "", NULL },
+            { "sellerror",     rbac::RBAC_PERM_COMMAND_DEBUG_SEND_SELLERROR,     false, &HandleDebugSendSellErrorCommand,       "", NULL },
+            { "setphaseshift", rbac::RBAC_PERM_COMMAND_DEBUG_SEND_SETPHASESHIFT, false, &HandleDebugSendSetPhaseShiftCommand,   "", NULL },
+            { "spellfail",     rbac::RBAC_PERM_COMMAND_DEBUG_SEND_SPELLFAIL,     false, &HandleDebugSendSpellFailCommand,       "", NULL },
+            { NULL,            0,                                          false, NULL,                                   "", NULL }
         };
         static ChatCommand debugCommandTable[] =
         {
-            { "setbit", rbac::RBAC_PERM_COMMAND_DEBUG_SETBIT, false, &HandleDebugSet32BitCommand, "", NULL },
-            { "threat", rbac::RBAC_PERM_COMMAND_DEBUG_THREAT, false, &HandleDebugThreatListCommand, "", NULL },
-            { "hostil", rbac::RBAC_PERM_COMMAND_DEBUG_HOSTIL, false, &HandleDebugHostileRefListCommand, "", NULL },
-            { "anim", rbac::RBAC_PERM_COMMAND_DEBUG_ANIM, false, &HandleDebugAnimCommand, "", NULL },
-            { "arena", rbac::RBAC_PERM_COMMAND_DEBUG_ARENA, false, &HandleDebugArenaCommand, "", NULL },
-            { "bg", rbac::RBAC_PERM_COMMAND_DEBUG_BG, false, &HandleDebugBattlegroundCommand, "", NULL },
-            { "getitemstate", rbac::RBAC_PERM_COMMAND_DEBUG_GETITEMSTATE, false, &HandleDebugGetItemStateCommand, "", NULL },
+            { "setbit",        rbac::RBAC_PERM_COMMAND_DEBUG_SETBIT,        false, &HandleDebugSet32BitCommand,         "", NULL },
+            { "threat",        rbac::RBAC_PERM_COMMAND_DEBUG_THREAT,        false, &HandleDebugThreatListCommand,       "", NULL },
+            { "hostil",        rbac::RBAC_PERM_COMMAND_DEBUG_HOSTIL,        false, &HandleDebugHostileRefListCommand,   "", NULL },
+            { "anim",          rbac::RBAC_PERM_COMMAND_DEBUG_ANIM,          false, &HandleDebugAnimCommand,             "", NULL },
+            { "arena",         rbac::RBAC_PERM_COMMAND_DEBUG_ARENA,         false, &HandleDebugArenaCommand,            "", NULL },
+            { "bg",            rbac::RBAC_PERM_COMMAND_DEBUG_BG,            false, &HandleDebugBattlegroundCommand,     "", NULL },
+            { "getitemstate",  rbac::RBAC_PERM_COMMAND_DEBUG_GETITEMSTATE,  false, &HandleDebugGetItemStateCommand,     "", NULL },
             { "lootrecipient", rbac::RBAC_PERM_COMMAND_DEBUG_LOOTRECIPIENT, false, &HandleDebugGetLootRecipientCommand, "", NULL },
-            { "getvalue", rbac::RBAC_PERM_COMMAND_DEBUG_GETVALUE, false, &HandleDebugGetValueCommand, "", NULL },
-            { "getitemvalue", rbac::RBAC_PERM_COMMAND_DEBUG_GETITEMVALUE, false, &HandleDebugGetItemValueCommand, "", NULL },
-            { "Mod32Value", rbac::RBAC_PERM_COMMAND_DEBUG_MOD32VALUE, false, &HandleDebugMod32ValueCommand, "", NULL },
-            { "play", rbac::RBAC_PERM_COMMAND_DEBUG_PLAY, false, NULL, "", debugPlayCommandTable },
-            { "send", rbac::RBAC_PERM_COMMAND_DEBUG_SEND, false, NULL, "", debugSendCommandTable },
-            { "setaurastate", rbac::RBAC_PERM_COMMAND_DEBUG_SETAURASTATE, false, &HandleDebugSetAuraStateCommand, "", NULL },
-            { "setitemvalue", rbac::RBAC_PERM_COMMAND_DEBUG_SETITEMVALUE, false, &HandleDebugSetItemValueCommand, "", NULL },
-            { "setvalue", rbac::RBAC_PERM_COMMAND_DEBUG_SETVALUE, false, &HandleDebugSetValueCommand, "", NULL },
-            { "spawnvehicle", rbac::RBAC_PERM_COMMAND_DEBUG_SPAWNVEHICLE, false, &HandleDebugSpawnVehicleCommand, "", NULL },
-            { "setvid", rbac::RBAC_PERM_COMMAND_DEBUG_SETVID, false, &HandleDebugSetVehicleIdCommand, "", NULL },
-            { "entervehicle", rbac::RBAC_PERM_COMMAND_DEBUG_ENTERVEHICLE, false, &HandleDebugEnterVehicleCommand, "", NULL },
-            { "uws", rbac::RBAC_PERM_COMMAND_DEBUG_UWS, false, &HandleDebugUpdateWorldStateCommand, "", NULL },
-            { "update", rbac::RBAC_PERM_COMMAND_DEBUG_UPDATE, false, &HandleDebugUpdateCommand, "", NULL },
-            { "itemexpire", rbac::RBAC_PERM_COMMAND_DEBUG_ITEMEXPIRE, false, &HandleDebugItemExpireCommand, "", NULL },
-            { "areatriggers", rbac::RBAC_PERM_COMMAND_DEBUG_AREATRIGGERS, false, &HandleDebugAreaTriggersCommand, "", NULL },
-            { "los", rbac::RBAC_PERM_COMMAND_DEBUG_LOS, false, &HandleDebugLoSCommand, "", NULL },
-            { "moveflags", rbac::RBAC_PERM_COMMAND_DEBUG_MOVEFLAGS, false, &HandleDebugMoveflagsCommand, "", NULL },
-            { "transport", rbac::RBAC_PERM_COMMAND_DEBUG_TRANSPORT, false, &HandleDebugTransportCommand, "", NULL },
-            { NULL, 0, false, NULL, "", NULL }
+            { "getvalue",      rbac::RBAC_PERM_COMMAND_DEBUG_GETVALUE,      false, &HandleDebugGetValueCommand,         "", NULL },
+            { "getitemvalue",  rbac::RBAC_PERM_COMMAND_DEBUG_GETITEMVALUE,  false, &HandleDebugGetItemValueCommand,     "", NULL },
+            { "Mod32Value",    rbac::RBAC_PERM_COMMAND_DEBUG_MOD32VALUE,    false, &HandleDebugMod32ValueCommand,       "", NULL },
+            { "play",          rbac::RBAC_PERM_COMMAND_DEBUG_PLAY,          false, NULL,              "", debugPlayCommandTable },
+            { "send",          rbac::RBAC_PERM_COMMAND_DEBUG_SEND,          false, NULL,              "", debugSendCommandTable },
+            { "setaurastate",  rbac::RBAC_PERM_COMMAND_DEBUG_SETAURASTATE,  false, &HandleDebugSetAuraStateCommand,     "", NULL },
+            { "setitemvalue",  rbac::RBAC_PERM_COMMAND_DEBUG_SETITEMVALUE,  false, &HandleDebugSetItemValueCommand,     "", NULL },
+            { "setvalue",      rbac::RBAC_PERM_COMMAND_DEBUG_SETVALUE,      false, &HandleDebugSetValueCommand,         "", NULL },
+            { "spawnvehicle",  rbac::RBAC_PERM_COMMAND_DEBUG_SPAWNVEHICLE,  false, &HandleDebugSpawnVehicleCommand,     "", NULL },
+            { "setvid",        rbac::RBAC_PERM_COMMAND_DEBUG_SETVID,        false, &HandleDebugSetVehicleIdCommand,     "", NULL },
+            { "entervehicle",  rbac::RBAC_PERM_COMMAND_DEBUG_ENTERVEHICLE,  false, &HandleDebugEnterVehicleCommand,     "", NULL },
+            { "uws",           rbac::RBAC_PERM_COMMAND_DEBUG_UWS,           false, &HandleDebugUpdateWorldStateCommand, "", NULL },
+            { "update",        rbac::RBAC_PERM_COMMAND_DEBUG_UPDATE,        false, &HandleDebugUpdateCommand,           "", NULL },
+            { "itemexpire",    rbac::RBAC_PERM_COMMAND_DEBUG_ITEMEXPIRE,    false, &HandleDebugItemExpireCommand,       "", NULL },
+            { "areatriggers",  rbac::RBAC_PERM_COMMAND_DEBUG_AREATRIGGERS,  false, &HandleDebugAreaTriggersCommand,     "", NULL },
+            { "los",           rbac::RBAC_PERM_COMMAND_DEBUG_LOS,           false, &HandleDebugLoSCommand,              "", NULL },
+            { "moveflags",     rbac::RBAC_PERM_COMMAND_DEBUG_MOVEFLAGS,     false, &HandleDebugMoveflagsCommand,        "", NULL },
+            { "transport",     rbac::RBAC_PERM_COMMAND_DEBUG_TRANSPORT,     false, &HandleDebugTransportCommand,        "", NULL },
+            { NULL,            0,                                     false, NULL,                                "", NULL }
         };
         static ChatCommand commandTable[] =
         {
-            { "debug", rbac::RBAC_PERM_COMMAND_DEBUG, true, NULL, "", debugCommandTable },
-            { "wpgps", rbac::RBAC_PERM_COMMAND_WPGPS, false, &HandleWPGPSCommand, "", NULL },
-            { NULL, 0, false, NULL, "", NULL }
+            { "debug",         rbac::RBAC_PERM_COMMAND_DEBUG,   true,  NULL,               "", debugCommandTable },
+            { "wpgps",         rbac::RBAC_PERM_COMMAND_WPGPS,  false, &HandleWPGPSCommand, "", NULL },
+            { NULL,            0,                        false, NULL,                "", NULL }
         };
         return commandTable;
     }
@@ -463,7 +463,7 @@ public:
         char const* name = "test";
         uint8 code = atoi(args);
 
-        WorldPacket data(SMSG_CHANNEL_NOTIFY, (1 + 10));
+        WorldPacket data(SMSG_CHANNEL_NOTIFY, (1+10));
         data << code;                                           // notify type
         data << name;                                           // channel name
         data << uint32(0);
@@ -556,9 +556,9 @@ public:
                     if (Bag* bag = item->ToBag())
                     {
                         for (uint8 j = 0; j < bag->GetBagSize(); ++j)
-                        if (Item* item2 = bag->GetItemByPos(j))
-                        if (item2->GetState() == state)
-                            handler->PSendSysMessage("bag: 255 slot: %d %s owner: %s", item2->GetSlot(), item2->GetGUID().ToString().c_str(), item2->GetOwnerGUID().ToString().c_str());
+                            if (Item* item2 = bag->GetItemByPos(j))
+                                if (item2->GetState() == state)
+                                    handler->PSendSysMessage("bag: 255 slot: %d %s owner: %s", item2->GetSlot(), item2->GetGUID().ToString().c_str(), item2->GetOwnerGUID().ToString().c_str());
                     }
                     else if (item->GetState() == state)
                         handler->PSendSysMessage("bag: 255 slot: %d %s owner: %s", item->GetSlot(), item->GetGUID().ToString().c_str(), item->GetOwnerGUID().ToString().c_str());
@@ -581,18 +581,18 @@ public:
                 std::string st;
                 switch (item->GetState())
                 {
-                case ITEM_UNCHANGED:
-                    st = "unchanged";
-                    break;
-                case ITEM_CHANGED:
-                    st = "changed";
-                    break;
-                case ITEM_NEW:
-                    st = "new";
-                    break;
-                case ITEM_REMOVED:
-                    st = "removed";
-                    break;
+                    case ITEM_UNCHANGED:
+                        st = "unchanged";
+                        break;
+                    case ITEM_CHANGED:
+                        st = "changed";
+                        break;
+                    case ITEM_NEW:
+                        st = "new";
+                        break;
+                    case ITEM_REMOVED:
+                        st = "removed";
+                        break;
                 }
 
                 handler->PSendSysMessage("bag: %d slot: %d guid: %d - state: %s", bagSlot, item->GetSlot(), item->GetGUIDLow(), st.c_str());
@@ -1285,7 +1285,7 @@ public:
             return false;
 
         uint32 value = val ? 1 << (val - 1) : 0;
-        target->SetUInt32Value(opcode, value);
+        target->SetUInt32Value(opcode,  value);
 
         handler->PSendSysMessage(LANG_SET_32BIT_FIELD, opcode, value);
         return true;
@@ -1313,8 +1313,8 @@ public:
             uint32 moveFlags = (uint32)atoi(mask1);
 
             static uint32 const FlagsWithHandlers = MOVEMENTFLAG_MASK_HAS_PLAYER_STATUS_OPCODE |
-                MOVEMENTFLAG_WALKING | MOVEMENTFLAG_SWIMMING |
-                MOVEMENTFLAG_SPLINE_ENABLED;
+                                                    MOVEMENTFLAG_WALKING | MOVEMENTFLAG_SWIMMING |
+                                                    MOVEMENTFLAG_SPLINE_ENABLED;
 
             bool unhandledFlag = ((moveFlags ^ target->GetUnitMovementFlags()) & ~FlagsWithHandlers) != 0;
 

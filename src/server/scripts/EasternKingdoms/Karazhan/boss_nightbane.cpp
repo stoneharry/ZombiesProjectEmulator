@@ -30,38 +30,38 @@ EndScriptData */
 enum Spells
 {
     // phase 1
-    SPELL_BELLOWING_ROAR = 39427,
-    SPELL_CHARRED_EARTH = 30129,
-    SPELL_DISTRACTING_ASH = 30130,
-    SPELL_SMOLDERING_BREATH = 30210,
-    SPELL_TAIL_SWEEP = 25653,
+    SPELL_BELLOWING_ROAR        = 39427,
+    SPELL_CHARRED_EARTH         = 30129,
+    SPELL_DISTRACTING_ASH       = 30130,
+    SPELL_SMOLDERING_BREATH     = 30210,
+    SPELL_TAIL_SWEEP            = 25653,
     // phase 2
-    SPELL_RAIN_OF_BONES = 37098,
-    SPELL_SMOKING_BLAST = 37057,
-    SPELL_FIREBALL_BARRAGE = 30282,
-    SPELL_SEARING_CINDERS = 30127,
-    SPELL_SUMMON_SKELETON = 30170
+    SPELL_RAIN_OF_BONES         = 37098,
+    SPELL_SMOKING_BLAST         = 37057,
+    SPELL_FIREBALL_BARRAGE      = 30282,
+    SPELL_SEARING_CINDERS       = 30127,
+    SPELL_SUMMON_SKELETON       = 30170
 };
 
 enum Says
 {
-    EMOTE_SUMMON = 0, // Not used in script
-    YELL_AGGRO = 1,
-    YELL_FLY_PHASE = 2,
-    YELL_LAND_PHASE = 3,
-    EMOTE_BREATH = 4
+    EMOTE_SUMMON                = 0, // Not used in script
+    YELL_AGGRO                  = 1,
+    YELL_FLY_PHASE              = 2,
+    YELL_LAND_PHASE             = 3,
+    EMOTE_BREATH                = 4
 };
 
 float IntroWay[8][3] =
 {
-    { -11053.37f, -1794.48f, 149.00f },
-    { -11141.07f, -1841.40f, 125.00f },
-    { -11187.28f, -1890.23f, 125.00f },
-    { -11189.20f, -1931.25f, 125.00f },
-    { -11153.76f, -1948.93f, 125.00f },
-    { -11128.73f, -1929.75f, 125.00f },
-    { -11140.00f, -1915.00f, 122.00f },
-    { -11163.00f, -1903.00f, 91.473f }
+    {-11053.37f, -1794.48f, 149.00f},
+    {-11141.07f, -1841.40f, 125.00f},
+    {-11187.28f, -1890.23f, 125.00f},
+    {-11189.20f, -1931.25f, 125.00f},
+    {-11153.76f, -1948.93f, 125.00f},
+    {-11128.73f, -1929.75f, 125.00f},
+    {-11140.00f, -1915.00f, 122.00f},
+    {-11163.00f, -1903.00f, 91.473f}
 };
 
 class boss_nightbane : public CreatureScript
@@ -168,7 +168,7 @@ public:
             instance->SetData(TYPE_NIGHTBANE, IN_PROGRESS);
 
             HandleTerraceDoors(false);
-            Talk(YELL_AGGRO);
+           Talk(YELL_AGGRO);
         }
 
         void AttackStart(Unit* who) override
@@ -260,43 +260,43 @@ public:
             RainofBonesTimer = 5000; //timer wrong (maybe)
             RainBones = false;
             Skeletons = false;
-        }
+         }
 
         void UpdateAI(uint32 diff) override
         {
             /* The timer for this was never setup apparently, not sure if the code works properly:
             if (WaitTimer <= diff)
             {
-            if (Intro)
-            {
-            if (MovePhase >= 7)
-            {
-            me->SetLevitate(false);
-            me->HandleEmoteCommand(EMOTE_ONESHOT_LAND);
-            me->GetMotionMaster()->MovePoint(8, IntroWay[7][0], IntroWay[7][1], IntroWay[7][2]);
-            }
-            else
-            {
-            me->GetMotionMaster()->MovePoint(MovePhase, IntroWay[MovePhase][0], IntroWay[MovePhase][1], IntroWay[MovePhase][2]);
-            ++MovePhase;
-            }
-            }
-            if (Flying)
-            {
-            if (MovePhase >= 7)
-            {
-            me->SetLevitate(false);
-            me->HandleEmoteCommand(EMOTE_ONESHOT_LAND);
-            me->GetMotionMaster()->MovePoint(8, IntroWay[7][0], IntroWay[7][1], IntroWay[7][2]);
-            }
-            else
-            {
-            me->GetMotionMaster()->MovePoint(MovePhase, IntroWay[MovePhase][0], IntroWay[MovePhase][1], IntroWay[MovePhase][2]);
-            ++MovePhase;
-            }
-            }
+                if (Intro)
+                {
+                    if (MovePhase >= 7)
+                    {
+                        me->SetLevitate(false);
+                        me->HandleEmoteCommand(EMOTE_ONESHOT_LAND);
+                        me->GetMotionMaster()->MovePoint(8, IntroWay[7][0], IntroWay[7][1], IntroWay[7][2]);
+                    }
+                    else
+                    {
+                        me->GetMotionMaster()->MovePoint(MovePhase, IntroWay[MovePhase][0], IntroWay[MovePhase][1], IntroWay[MovePhase][2]);
+                        ++MovePhase;
+                    }
+                }
+                if (Flying)
+                {
+                    if (MovePhase >= 7)
+                    {
+                        me->SetLevitate(false);
+                        me->HandleEmoteCommand(EMOTE_ONESHOT_LAND);
+                        me->GetMotionMaster()->MovePoint(8, IntroWay[7][0], IntroWay[7][1], IntroWay[7][2]);
+                    }
+                    else
+                    {
+                        me->GetMotionMaster()->MovePoint(MovePhase, IntroWay[MovePhase][0], IntroWay[MovePhase][1], IntroWay[MovePhase][2]);
+                        ++MovePhase;
+                    }
+                }
 
-            WaitTimer = 0;
+                WaitTimer = 0;
             } else WaitTimer -= diff;
             */
 
@@ -319,40 +319,35 @@ public:
                 {
                     DoCastVictim(SPELL_BELLOWING_ROAR);
                     BellowingRoarTimer = urand(30000, 40000);
-                }
-                else BellowingRoarTimer -= diff;
+                } else BellowingRoarTimer -= diff;
 
                 if (SmolderingBreathTimer <= diff)
                 {
                     DoCastVictim(SPELL_SMOLDERING_BREATH);
                     SmolderingBreathTimer = 20000;
-                }
-                else SmolderingBreathTimer -= diff;
+                } else SmolderingBreathTimer -= diff;
 
                 if (CharredEarthTimer <= diff)
                 {
                     if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
                         DoCast(target, SPELL_CHARRED_EARTH);
                     CharredEarthTimer = 20000;
-                }
-                else CharredEarthTimer -= diff;
+                } else CharredEarthTimer -= diff;
 
                 if (TailSweepTimer <= diff)
                 {
                     if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
-                    if (!me->HasInArc(float(M_PI), target))
-                        DoCast(target, SPELL_TAIL_SWEEP);
+                        if (!me->HasInArc(float(M_PI), target))
+                            DoCast(target, SPELL_TAIL_SWEEP);
                     TailSweepTimer = 15000;
-                }
-                else TailSweepTimer -= diff;
+                } else TailSweepTimer -= diff;
 
                 if (SearingCindersTimer <= diff)
                 {
                     if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
                         DoCast(target, SPELL_SEARING_CINDERS);
                     SearingCindersTimer = 10000;
-                }
-                else SearingCindersTimer -= diff;
+                } else SearingCindersTimer -= diff;
 
                 uint32 Prozent = uint32(me->GetHealthPct());
 
@@ -387,26 +382,23 @@ public:
                         DoCastVictim(SPELL_RAIN_OF_BONES);
                         RainBones = true;
                         SmokingBlastTimer = 20000;
-                    }
-                    else RainofBonesTimer -= diff;
+                    } else RainofBonesTimer -= diff;
 
                     if (DistractingAshTimer <= diff)
                     {
                         if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
                             DoCast(target, SPELL_DISTRACTING_ASH);
                         DistractingAshTimer = 2000; //timer wrong
-                    }
-                    else DistractingAshTimer -= diff;
+                    } else DistractingAshTimer -= diff;
                 }
 
                 if (RainBones)
                 {
                     if (SmokingBlastTimer <= diff)
-                    {
+                     {
                         DoCastVictim(SPELL_SMOKING_BLAST);
                         SmokingBlastTimer = 1500; //timer wrong
-                    }
-                    else SmokingBlastTimer -= diff;
+                     } else SmokingBlastTimer -= diff;
                 }
 
                 if (FireballBarrageTimer <= diff)
@@ -414,8 +406,7 @@ public:
                     if (Unit* target = SelectTarget(SELECT_TARGET_FARTHEST, 0))
                         DoCast(target, SPELL_FIREBALL_BARRAGE);
                     FireballBarrageTimer = 20000;
-                }
-                else FireballBarrageTimer -= diff;
+                } else FireballBarrageTimer -= diff;
 
                 if (FlyTimer <= diff) //landing
                 {
@@ -425,8 +416,7 @@ public:
                     me->GetMotionMaster()->MovePoint(3, IntroWay[3][0], IntroWay[3][1], IntroWay[3][2]);
 
                     Flying = true;
-                }
-                else FlyTimer -= diff;
+                } else FlyTimer -= diff;
             }
         }
     };

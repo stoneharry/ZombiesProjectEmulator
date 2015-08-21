@@ -35,15 +35,15 @@ namespace VMAP
 
     class MapRayCallback
     {
-    public:
-        MapRayCallback(ModelInstance* val) : prims(val), hit(false) { }
-        bool operator()(const G3D::Ray& ray, uint32 entry, float& distance, bool pStopAtFirstHit = true)
-        {
-            bool result = prims[entry].intersectRay(ray, distance, pStopAtFirstHit);
-            if (result)
-                hit = true;
-            return result;
-        }
+        public:
+            MapRayCallback(ModelInstance* val): prims(val), hit(false) { }
+            bool operator()(const G3D::Ray& ray, uint32 entry, float& distance, bool pStopAtFirstHit=true)
+            {
+                bool result = prims[entry].intersectRay(ray, distance, pStopAtFirstHit);
+                if (result)
+                    hit = true;
+                return result;
+            }
         bool didHit() { return hit; }
     protected:
         ModelInstance* prims;
@@ -52,36 +52,36 @@ namespace VMAP
 
     class AreaInfoCallback
     {
-    public:
-        AreaInfoCallback(ModelInstance* val) : prims(val) { }
-        void operator()(const Vector3& point, uint32 entry)
-        {
+        public:
+            AreaInfoCallback(ModelInstance* val): prims(val) { }
+            void operator()(const Vector3& point, uint32 entry)
+            {
 #ifdef VMAP_DEBUG
-            TC_LOG_DEBUG("maps", "AreaInfoCallback: trying to intersect '%s'", prims[entry].name.c_str());
+                TC_LOG_DEBUG("maps", "AreaInfoCallback: trying to intersect '%s'", prims[entry].name.c_str());
 #endif
-            prims[entry].intersectPoint(point, aInfo);
-        }
+                prims[entry].intersectPoint(point, aInfo);
+            }
 
-        ModelInstance* prims;
-        AreaInfo aInfo;
+            ModelInstance* prims;
+            AreaInfo aInfo;
     };
 
     class LocationInfoCallback
     {
-    public:
-        LocationInfoCallback(ModelInstance* val, LocationInfo &info) : prims(val), locInfo(info), result(false) { }
-        void operator()(const Vector3& point, uint32 entry)
-        {
+        public:
+            LocationInfoCallback(ModelInstance* val, LocationInfo &info): prims(val), locInfo(info), result(false) { }
+            void operator()(const Vector3& point, uint32 entry)
+            {
 #ifdef VMAP_DEBUG
-            TC_LOG_DEBUG("maps", "LocationInfoCallback: trying to intersect '%s'", prims[entry].name.c_str());
+                TC_LOG_DEBUG("maps", "LocationInfoCallback: trying to intersect '%s'", prims[entry].name.c_str());
 #endif
-            if (prims[entry].GetLocationInfo(point, locInfo))
-                result = true;
-        }
+                if (prims[entry].GetLocationInfo(point, locInfo))
+                    result = true;
+            }
 
-        ModelInstance* prims;
-        LocationInfo &locInfo;
-        bool result;
+            ModelInstance* prims;
+            LocationInfo &locInfo;
+            bool result;
     };
 
     //=========================================================
@@ -123,7 +123,7 @@ namespace VMAP
         iMapID(mapID), iIsTiled(false), iTreeValues(NULL),
         iNTreeValues(0), iBasePath(basePath)
     {
-        if (iBasePath.length() > 0 && iBasePath[iBasePath.length() - 1] != '/' && iBasePath[iBasePath.length() - 1] != '\\')
+        if (iBasePath.length() > 0 && iBasePath[iBasePath.length()-1] != '/' && iBasePath[iBasePath.length()-1] != '\\')
         {
             iBasePath.push_back('/');
         }
@@ -166,7 +166,7 @@ namespace VMAP
         if (maxDist < 1e-10f)
             return true;
         // direction with length of 1
-        G3D::Ray ray = G3D::Ray::fromOriginAndDirection(pos1, (pos2 - pos1) / maxDist);
+        G3D::Ray ray = G3D::Ray::fromOriginAndDirection(pos1, (pos2 - pos1)/maxDist);
         if (getIntersectionTime(ray, maxDist, true))
             return false;
 
@@ -180,7 +180,7 @@ namespace VMAP
 
     bool StaticMapTree::getObjectHitPos(const Vector3& pPos1, const Vector3& pPos2, Vector3& pResultHitPos, float pModifyDist) const
     {
-        bool result = false;
+        bool result=false;
         float maxDist = (pPos2 - pPos1).magnitude();
         // valid map coords should *never ever* produce float overflow, but this would produce NaNs too
         ASSERT(maxDist < std::numeric_limits<float>::max());
@@ -190,7 +190,7 @@ namespace VMAP
             pResultHitPos = pPos2;
             return false;
         }
-        Vector3 dir = (pPos2 - pPos1) / maxDist;              // direction with length of 1
+        Vector3 dir = (pPos2 - pPos1)/maxDist;              // direction with length of 1
         G3D::Ray ray(pPos1, dir);
         float dist = maxDist;
         if (getIntersectionTime(ray, dist, false))
@@ -241,7 +241,7 @@ namespace VMAP
     bool StaticMapTree::CanLoadMap(const std::string &vmapPath, uint32 mapID, uint32 tileX, uint32 tileY)
     {
         std::string basePath = vmapPath;
-        if (basePath.length() > 0 && basePath[basePath.length() - 1] != '/' && basePath[basePath.length() - 1] != '\\')
+        if (basePath.length() > 0 && basePath[basePath.length()-1] != '/' && basePath[basePath.length()-1] != '\\')
             basePath.push_back('/');
         std::string fullname = basePath + VMapManager2::getMapFileName(mapID);
         bool success = true;
@@ -367,7 +367,7 @@ namespace VMAP
             uint32 numSpawns = 0;
             if (result && fread(&numSpawns, sizeof(uint32), 1, tf) != 1)
                 result = false;
-            for (uint32 i = 0; i < numSpawns && result; ++i)
+            for (uint32 i=0; i<numSpawns && result; ++i)
             {
                 // read model spawns
                 ModelSpawn spawn;
@@ -435,14 +435,14 @@ namespace VMAP
             FILE* tf = fopen(tilefile.c_str(), "rb");
             if (tf)
             {
-                bool result = true;
+                bool result=true;
                 char chunk[8];
                 if (!readChunk(tf, chunk, VMAP_MAGIC, 8))
                     result = false;
                 uint32 numSpawns;
                 if (fread(&numSpawns, sizeof(uint32), 1, tf) != 1)
                     result = false;
-                for (uint32 i = 0; i < numSpawns && result; ++i)
+                for (uint32 i=0; i<numSpawns && result; ++i)
                 {
                     // read model spawns
                     ModelSpawn spawn;
@@ -460,7 +460,7 @@ namespace VMAP
                         else
                         {
                             if (!iLoadedSpawns.count(referencedNode))
-                                VMAP_ERROR_LOG("misc", "StaticMapTree::UnloadMapTile() : trying to unload non-referenced model '%s' (ID:%u)", spawn.name.c_str(), spawn.ID);
+                            VMAP_ERROR_LOG("misc", "StaticMapTree::UnloadMapTile() : trying to unload non-referenced model '%s' (ID:%u)", spawn.name.c_str(), spawn.ID);
                             else if (--iLoadedSpawns[referencedNode] == 0)
                             {
                                 iTreeValues[referencedNode].setUnloaded();

@@ -1,20 +1,20 @@
-/*
-* Copyright (C) 2008-2015 TrinityCore <http://www.trinitycore.org/>
-* Copyright (C) 2006-2009 ScriptDev2 <https://scriptdev2.svn.sourceforge.net/>
-*
-* This program is free software; you can redistribute it and/or modify it
-* under the terms of the GNU General Public License as published by the
-* Free Software Foundation; either version 2 of the License, or (at your
-* option) any later version.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT
-* ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-* FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
-* more details.
-*
-* You should have received a copy of the GNU General Public License along
-* with this program. If not, see <http://www.gnu.org/licenses/>.
-*/
+ /*
+ * Copyright (C) 2008-2015 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2006-2009 ScriptDev2 <https://scriptdev2.svn.sourceforge.net/>
+ *
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the
+ * Free Software Foundation; either version 2 of the License, or (at your
+ * option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
 
 /* ScriptData
 SDName: Instance_Mount_Hyjal
@@ -44,7 +44,7 @@ enum Yells
 ObjectData const creatureData[] =
 {
     { NPC_CHANNEL_TARGET, DATA_CHANNEL_TARGET },
-    { 0, 0 } // END
+    { 0,                  0                   } // END
 };
 
 class instance_hyjal : public InstanceMapScript
@@ -76,8 +76,8 @@ public:
         bool IsEncounterInProgress() const override
         {
             for (uint8 i = 0; i < EncounterCount; ++i)
-            if (m_auiEncounter[i] == IN_PROGRESS)
-                return true;
+                if (m_auiEncounter[i] == IN_PROGRESS)
+                    return true;
 
             return false;
         }
@@ -86,23 +86,23 @@ public:
         {
             switch (go->GetEntry())
             {
-            case GO_HORDE_ENCAMPMENT_PORTAL:
-                HordeGate = go->GetGUID();
-                if (allianceRetreat)
-                    HandleGameObject(ObjectGuid::Empty, true, go);
-                else
-                    HandleGameObject(ObjectGuid::Empty, false, go);
-                break;
-            case GO_NIGHT_ELF_VILLAGE_PORTAL:
-                ElfGate = go->GetGUID();
-                if (hordeRetreat)
-                    HandleGameObject(ObjectGuid::Empty, true, go);
-                else
-                    HandleGameObject(ObjectGuid::Empty, false, go);
-                break;
-            case GO_ANCIENT_GEM:
-                m_uiAncientGemGUID.push_back(go->GetGUID());
-                break;
+                case GO_HORDE_ENCAMPMENT_PORTAL:
+                    HordeGate = go->GetGUID();
+                    if (allianceRetreat)
+                        HandleGameObject(ObjectGuid::Empty, true, go);
+                    else
+                        HandleGameObject(ObjectGuid::Empty, false, go);
+                    break;
+                case GO_NIGHT_ELF_VILLAGE_PORTAL:
+                    ElfGate = go->GetGUID();
+                    if (hordeRetreat)
+                        HandleGameObject(ObjectGuid::Empty, true, go);
+                    else
+                        HandleGameObject(ObjectGuid::Empty, false, go);
+                    break;
+                case GO_ANCIENT_GEM:
+                    m_uiAncientGemGUID.push_back(go->GetGUID());
+                    break;
             }
         }
 
@@ -110,32 +110,32 @@ public:
         {
             switch (creature->GetEntry())
             {
-            case RAGE_WINTERCHILL:
-                RageWinterchill = creature->GetGUID();
-                break;
-            case ANETHERON:
-                Anetheron = creature->GetGUID();
-                break;
-            case KAZROGAL:
-                Kazrogal = creature->GetGUID();
-                break;
-            case AZGALOR:
-                Azgalor = creature->GetGUID();
-                break;
-            case ARCHIMONDE:
-                Archimonde = creature->GetGUID();
-                if (GetData(DATA_AZGALOREVENT) != DONE)
-                    creature->SetVisible(false);
-                break;
-            case JAINA:
-                JainaProudmoore = creature->GetGUID();
-                break;
-            case THRALL:
-                Thrall = creature->GetGUID();
-                break;
-            case TYRANDE:
-                TyrandeWhisperwind = creature->GetGUID();
-                break;
+                case RAGE_WINTERCHILL:
+                    RageWinterchill = creature->GetGUID();
+                    break;
+                case ANETHERON:
+                    Anetheron = creature->GetGUID();
+                    break;
+                case KAZROGAL:
+                    Kazrogal = creature->GetGUID();
+                    break;
+                case AZGALOR:
+                    Azgalor = creature->GetGUID();
+                    break;
+                case ARCHIMONDE:
+                    Archimonde = creature->GetGUID();
+                    if (GetData(DATA_AZGALOREVENT) != DONE)
+                        creature->SetVisible(false);
+                    break;
+                case JAINA:
+                    JainaProudmoore = creature->GetGUID();
+                    break;
+                case THRALL:
+                    Thrall = creature->GetGUID();
+                    break;
+                case TYRANDE:
+                    TyrandeWhisperwind = creature->GetGUID();
+                    break;
             }
 
             InstanceScript::OnCreatureCreate(creature);
@@ -145,14 +145,14 @@ public:
         {
             switch (identifier)
             {
-            case DATA_RAGEWINTERCHILL:    return RageWinterchill;
-            case DATA_ANETHERON:          return Anetheron;
-            case DATA_KAZROGAL:           return Kazrogal;
-            case DATA_AZGALOR:            return Azgalor;
-            case DATA_ARCHIMONDE:         return Archimonde;
-            case DATA_JAINAPROUDMOORE:    return JainaProudmoore;
-            case DATA_THRALL:             return Thrall;
-            case DATA_TYRANDEWHISPERWIND: return TyrandeWhisperwind;
+                case DATA_RAGEWINTERCHILL:    return RageWinterchill;
+                case DATA_ANETHERON:          return Anetheron;
+                case DATA_KAZROGAL:           return Kazrogal;
+                case DATA_AZGALOR:            return Azgalor;
+                case DATA_ARCHIMONDE:         return Archimonde;
+                case DATA_JAINAPROUDMOORE:    return JainaProudmoore;
+                case DATA_THRALL:             return Thrall;
+                case DATA_TYRANDEWHISPERWIND: return TyrandeWhisperwind;
             }
 
             return ObjectGuid::Empty;
@@ -162,79 +162,79 @@ public:
         {
             switch (type)
             {
-            case DATA_RAGEWINTERCHILLEVENT:
-                m_auiEncounter[0] = data;
-                break;
-            case DATA_ANETHERONEVENT:
-                m_auiEncounter[1] = data;
-                break;
-            case DATA_KAZROGALEVENT:
-                m_auiEncounter[2] = data;
-                break;
-            case DATA_AZGALOREVENT:
-                m_auiEncounter[3] = data;
-                if (data == DONE)
-                {
-                    instance->LoadGrid(5581.49f, -3445.63f);
-                    if (Creature* archimonde = instance->GetCreature(Archimonde))
+                case DATA_RAGEWINTERCHILLEVENT:
+                    m_auiEncounter[0] = data;
+                    break;
+                case DATA_ANETHERONEVENT:
+                    m_auiEncounter[1] = data;
+                    break;
+                case DATA_KAZROGALEVENT:
+                    m_auiEncounter[2] = data;
+                    break;
+                case DATA_AZGALOREVENT:
+                    m_auiEncounter[3] = data;
+                    if (data == DONE)
                     {
-                        archimonde->SetVisible(true);
+                        instance->LoadGrid(5581.49f, -3445.63f);
+                        if (Creature* archimonde = instance->GetCreature(Archimonde))
+                        {
+                            archimonde->SetVisible(true);
 
-                        if (!ArchiYell)
-                        {
-                            ArchiYell = true;
-                            archimonde->AI()->Talk(YELL_ARCHIMONDE_INTRO);
+                            if (!ArchiYell)
+                            {
+                                ArchiYell = true;
+                                archimonde->AI()->Talk(YELL_ARCHIMONDE_INTRO);
+                            }
                         }
                     }
-                }
-                break;
-            case DATA_ARCHIMONDEEVENT:
-                m_auiEncounter[4] = data;
-                break;
-            case DATA_RESET_TRASH_COUNT:
-                Trash = 0;
-                break;
-            case DATA_TRASH:
-                if (data)
-                    Trash = data;
-                else
-                    Trash--;
-                DoUpdateWorldState(WORLD_STATE_ENEMYCOUNT, Trash);
-                break;
-            case TYPE_RETREAT:
-                if (data == SPECIAL)
-                {
-                    if (!m_uiAncientGemGUID.empty())
+                    break;
+                case DATA_ARCHIMONDEEVENT:
+                    m_auiEncounter[4] = data;
+                    break;
+                case DATA_RESET_TRASH_COUNT:
+                    Trash = 0;
+                    break;
+                case DATA_TRASH:
+                    if (data)
+                        Trash = data;
+                    else
+                        Trash--;
+                    DoUpdateWorldState(WORLD_STATE_ENEMYCOUNT, Trash);
+                    break;
+                case TYPE_RETREAT:
+                    if (data == SPECIAL)
                     {
-                        for (GuidList::const_iterator itr = m_uiAncientGemGUID.begin(); itr != m_uiAncientGemGUID.end(); ++itr)
+                        if (!m_uiAncientGemGUID.empty())
                         {
-                            //don't know how long it expected
-                            DoRespawnGameObject(*itr, DAY);
+                            for (GuidList::const_iterator itr = m_uiAncientGemGUID.begin(); itr != m_uiAncientGemGUID.end(); ++itr)
+                            {
+                                //don't know how long it expected
+                                DoRespawnGameObject(*itr, DAY);
+                            }
                         }
                     }
-                }
-                break;
-            case DATA_ALLIANCE_RETREAT:
-                allianceRetreat = data;
-                HandleGameObject(HordeGate, true);
-                SaveToDB();
-                break;
-            case DATA_HORDE_RETREAT:
-                hordeRetreat = data;
-                HandleGameObject(ElfGate, true);
-                SaveToDB();
-                break;
-            case DATA_RAIDDAMAGE:
-                RaidDamage += data;
-                if (RaidDamage >= MINRAIDDAMAGE)
-                    RaidDamage = MINRAIDDAMAGE;
-                break;
-            case DATA_RESET_RAIDDAMAGE:
-                RaidDamage = 0;
-                break;
+                    break;
+                case DATA_ALLIANCE_RETREAT:
+                    allianceRetreat = data;
+                    HandleGameObject(HordeGate, true);
+                    SaveToDB();
+                    break;
+                case DATA_HORDE_RETREAT:
+                    hordeRetreat = data;
+                    HandleGameObject(ElfGate, true);
+                    SaveToDB();
+                    break;
+                case DATA_RAIDDAMAGE:
+                    RaidDamage += data;
+                    if (RaidDamage >= MINRAIDDAMAGE)
+                        RaidDamage = MINRAIDDAMAGE;
+                    break;
+                case DATA_RESET_RAIDDAMAGE:
+                    RaidDamage = 0;
+                    break;
             }
 
-            TC_LOG_DEBUG("scripts", "Instance Hyjal: Instance data updated for event %u (Data=%u)", type, data);
+             TC_LOG_DEBUG("scripts", "Instance Hyjal: Instance data updated for event %u (Data=%u)", type, data);
 
             if (data == DONE)
             {
@@ -258,15 +258,15 @@ public:
         {
             switch (type)
             {
-            case DATA_RAGEWINTERCHILLEVENT: return m_auiEncounter[0];
-            case DATA_ANETHERONEVENT:       return m_auiEncounter[1];
-            case DATA_KAZROGALEVENT:        return m_auiEncounter[2];
-            case DATA_AZGALOREVENT:         return m_auiEncounter[3];
-            case DATA_ARCHIMONDEEVENT:      return m_auiEncounter[4];
-            case DATA_TRASH:                return Trash;
-            case DATA_ALLIANCE_RETREAT:     return allianceRetreat;
-            case DATA_HORDE_RETREAT:        return hordeRetreat;
-            case DATA_RAIDDAMAGE:           return RaidDamage;
+                case DATA_RAGEWINTERCHILLEVENT: return m_auiEncounter[0];
+                case DATA_ANETHERONEVENT:       return m_auiEncounter[1];
+                case DATA_KAZROGALEVENT:        return m_auiEncounter[2];
+                case DATA_AZGALOREVENT:         return m_auiEncounter[3];
+                case DATA_ARCHIMONDEEVENT:      return m_auiEncounter[4];
+                case DATA_TRASH:                return Trash;
+                case DATA_ALLIANCE_RETREAT:     return allianceRetreat;
+                case DATA_HORDE_RETREAT:        return hordeRetreat;
+                case DATA_RAIDDAMAGE:           return RaidDamage;
             }
             return 0;
         }
@@ -288,30 +288,30 @@ public:
             std::istringstream loadStream(in);
             loadStream >> m_auiEncounter[0] >> m_auiEncounter[1] >> m_auiEncounter[2] >> m_auiEncounter[3] >> m_auiEncounter[4] >> allianceRetreat >> hordeRetreat >> RaidDamage;
             for (uint8 i = 0; i < EncounterCount; ++i)
-            if (m_auiEncounter[i] == IN_PROGRESS)                // Do not load an encounter as IN_PROGRESS - reset it instead.
-                m_auiEncounter[i] = NOT_STARTED;
+                if (m_auiEncounter[i] == IN_PROGRESS)                // Do not load an encounter as IN_PROGRESS - reset it instead.
+                    m_auiEncounter[i] = NOT_STARTED;
             OUT_LOAD_INST_DATA_COMPLETE;
         }
 
-    protected:
-        uint32 m_auiEncounter[EncounterCount];
-        std::string str_data;
-        GuidList m_uiAncientGemGUID;
-        ObjectGuid RageWinterchill;
-        ObjectGuid Anetheron;
-        ObjectGuid Kazrogal;
-        ObjectGuid Azgalor;
-        ObjectGuid Archimonde;
-        ObjectGuid JainaProudmoore;
-        ObjectGuid Thrall;
-        ObjectGuid TyrandeWhisperwind;
-        ObjectGuid HordeGate;
-        ObjectGuid ElfGate;
-        uint32 Trash;
-        uint32 hordeRetreat;
-        uint32 allianceRetreat;
-        uint32 RaidDamage;
-        bool ArchiYell;
+        protected:
+            uint32 m_auiEncounter[EncounterCount];
+            std::string str_data;
+            GuidList m_uiAncientGemGUID;
+            ObjectGuid RageWinterchill;
+            ObjectGuid Anetheron;
+            ObjectGuid Kazrogal;
+            ObjectGuid Azgalor;
+            ObjectGuid Archimonde;
+            ObjectGuid JainaProudmoore;
+            ObjectGuid Thrall;
+            ObjectGuid TyrandeWhisperwind;
+            ObjectGuid HordeGate;
+            ObjectGuid ElfGate;
+            uint32 Trash;
+            uint32 hordeRetreat;
+            uint32 allianceRetreat;
+            uint32 RaidDamage;
+            bool ArchiYell;
     };
 };
 

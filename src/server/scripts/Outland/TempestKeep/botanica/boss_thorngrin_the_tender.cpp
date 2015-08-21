@@ -21,33 +21,33 @@
 
 enum Says
 {
-    SAY_AGGRO = 0,
-    SAY_20_PERCENT_HP = 1,
-    SAY_KILL = 2,
-    SAY_CAST_SACRIFICE = 3,
-    SAY_50_PERCENT_HP = 4,
-    SAY_CAST_HELLFIRE = 5,
-    SAY_DEATH = 6,
-    EMOTE_ENRAGE = 7
+    SAY_AGGRO                   = 0,
+    SAY_20_PERCENT_HP           = 1,
+    SAY_KILL                    = 2,
+    SAY_CAST_SACRIFICE          = 3,
+    SAY_50_PERCENT_HP           = 4,
+    SAY_CAST_HELLFIRE           = 5,
+    SAY_DEATH                   = 6,
+    EMOTE_ENRAGE                = 7
 };
 
 enum Spells
 {
-    SPELL_SACRIFICE = 34661,
-    SPELL_HELLFIRE = 34659,
-    SPELL_ENRAGE = 34670
+    SPELL_SACRIFICE             = 34661,
+    SPELL_HELLFIRE              = 34659,
+    SPELL_ENRAGE                = 34670
 };
 
 enum Events
 {
-    EVENT_SACRIFICE = 1,
-    EVENT_HELLFIRE = 2,
-    EVENT_ENRAGE = 3
+    EVENT_SACRIFICE             = 1,
+    EVENT_HELLFIRE              = 2,
+    EVENT_ENRAGE                = 3
 };
 
 class boss_thorngrin_the_tender : public CreatureScript
 {
-public: boss_thorngrin_the_tender() : CreatureScript("thorngrin_the_tender") { }
+    public: boss_thorngrin_the_tender() : CreatureScript("thorngrin_the_tender") { }
 
         struct boss_thorngrin_the_tenderAI : public BossAI
         {
@@ -116,26 +116,26 @@ public: boss_thorngrin_the_tender() : CreatureScript("thorngrin_the_tender") { }
                 {
                     switch (eventId)
                     {
-                    case EVENT_SACRIFICE:
-                        if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 1, 0.0f, true))
-                        {
-                            Talk(SAY_CAST_SACRIFICE);
-                            DoCast(target, SPELL_SACRIFICE, true);
-                        }
-                        events.ScheduleEvent(EVENT_SACRIFICE, 29400);
-                        break;
-                    case EVENT_HELLFIRE:
-                        Talk(SAY_CAST_HELLFIRE);
-                        DoCastVictim(SPELL_HELLFIRE, true);
-                        events.ScheduleEvent(EVENT_HELLFIRE, IsHeroic() ? urand(17400, 19300) : 18000);
-                        break;
-                    case EVENT_ENRAGE:
-                        Talk(EMOTE_ENRAGE);
-                        DoCast(me, SPELL_ENRAGE);
-                        events.ScheduleEvent(EVENT_ENRAGE, 33000);
-                        break;
-                    default:
-                        break;
+                        case EVENT_SACRIFICE:
+                            if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 1, 0.0f, true))
+                            {
+                                Talk(SAY_CAST_SACRIFICE);
+                                DoCast(target, SPELL_SACRIFICE, true);
+                            }
+                            events.ScheduleEvent(EVENT_SACRIFICE, 29400);
+                            break;
+                        case EVENT_HELLFIRE:
+                            Talk(SAY_CAST_HELLFIRE);
+                            DoCastVictim(SPELL_HELLFIRE, true);
+                            events.ScheduleEvent(EVENT_HELLFIRE, IsHeroic() ? urand(17400, 19300) : 18000);
+                            break;
+                        case EVENT_ENRAGE:
+                            Talk(EMOTE_ENRAGE);
+                            DoCast(me, SPELL_ENRAGE);
+                            events.ScheduleEvent(EVENT_ENRAGE, 33000);
+                            break;
+                        default:
+                            break;
                     }
                 }
 

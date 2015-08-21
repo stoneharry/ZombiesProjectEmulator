@@ -48,8 +48,8 @@ namespace Trinity
             //! First use predicate filter
             std::list<T> listCopy;
             for (typename std::list<T>::iterator itr = list.begin(); itr != list.end(); ++itr)
-            if (predicate(*itr))
-                listCopy.push_back(*itr);
+                if (predicate(*itr))
+                    listCopy.push_back(*itr);
 
             if (size)
                 RandomResizeList(listCopy, size);

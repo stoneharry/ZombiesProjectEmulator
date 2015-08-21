@@ -25,16 +25,16 @@
 #include "AccountMgr.h"
 #include "Player.h"
 
-Channel::Channel(std::string const& name, uint32 channelId, uint32 team) :
-_announce(true),
-_ownership(true),
-_IsSaved(false),
-_flags(0),
-_channelId(channelId),
-_Team(team),
-_ownerGUID(),
-_name(name),
-_password("")
+Channel::Channel(std::string const& name, uint32 channelId, uint32 team):
+    _announce(true),
+    _ownership(true),
+    _IsSaved(false),
+    _flags(0),
+    _channelId(channelId),
+    _Team(team),
+    _ownerGUID(),
+    _name(name),
+    _password("")
 {
     // set special flags if built-in channel
     if (ChatChannelsEntry const* ch = sChatChannelsStore.LookupEntry(channelId)) // check whether it's a built-in channel
@@ -72,7 +72,7 @@ _password("")
                 Field* fields = result->Fetch();
                 _announce = fields[0].GetBool();
                 _ownership = fields[1].GetBool();
-                _password = fields[2].GetString();
+                _password  = fields[2].GetString();
                 const char* db_BannedList = fields[3].GetCString();
 
                 if (db_BannedList)
@@ -530,7 +530,7 @@ void Channel::List(Player const* player)
     TC_LOG_DEBUG("chat.system", "SMSG_CHANNEL_LIST %s Channel: %s",
         player->GetSession()->GetPlayerInfo().c_str(), GetName().c_str());
 
-    WorldPacket data(SMSG_CHANNEL_LIST, 1 + (GetName().size() + 1) + 1 + 4 + playersStore.size()*(8 + 1));
+    WorldPacket data(SMSG_CHANNEL_LIST, 1+(GetName().size()+1)+1+4+playersStore.size()*(8+1));
     data << uint8(1);                                   // channel type?
     data << GetName();                                  // channel name
     data << uint8(GetFlags());                          // channel flags?
@@ -540,7 +540,7 @@ void Channel::List(Player const* player)
 
     uint32 gmLevelInWhoList = sWorld->getIntConfig(CONFIG_GM_LEVEL_IN_WHO_LIST);
 
-    uint32 count = 0;
+    uint32 count  = 0;
     for (PlayerContainer::const_iterator i = playersStore.begin(); i != playersStore.end(); ++i)
     {
         Player* member = ObjectAccessor::FindConnectedPlayer(i->first);
@@ -549,7 +549,7 @@ void Channel::List(Player const* player)
         // MODERATOR, GAME MASTER, ADMINISTRATOR can see all
         if (member &&
             (player->GetSession()->HasPermission(rbac::RBAC_PERM_WHO_SEE_ALL_SEC_LEVELS) ||
-            member->GetSession()->GetSecurity() <= AccountTypes(gmLevelInWhoList)) &&
+             member->GetSession()->GetSecurity() <= AccountTypes(gmLevelInWhoList)) &&
             member->IsVisibleGloballyFor(player))
         {
             data << uint64(i->first);
@@ -723,17 +723,17 @@ void Channel::SetOwner(ObjectGuid guid, bool exclaim)
 void Channel::SendToAll(WorldPacket* data, ObjectGuid guid)
 {
     for (PlayerContainer::const_iterator i = playersStore.begin(); i != playersStore.end(); ++i)
-    if (Player* player = ObjectAccessor::FindConnectedPlayer(i->first))
-    if (!guid || !player->GetSocial()->HasIgnore(guid.GetCounter()))
-        player->GetSession()->SendPacket(data);
+        if (Player* player = ObjectAccessor::FindConnectedPlayer(i->first))
+            if (!guid || !player->GetSocial()->HasIgnore(guid.GetCounter()))
+                player->GetSession()->SendPacket(data);
 }
 
 void Channel::SendToAllButOne(WorldPacket* data, ObjectGuid who)
 {
     for (PlayerContainer::const_iterator i = playersStore.begin(); i != playersStore.end(); ++i)
-    if (i->first != who)
-    if (Player* player = ObjectAccessor::FindConnectedPlayer(i->first))
-        player->GetSession()->SendPacket(data);
+        if (i->first != who)
+            if (Player* player = ObjectAccessor::FindConnectedPlayer(i->first))
+                player->GetSession()->SendPacket(data);
 }
 
 void Channel::SendToOne(WorldPacket* data, ObjectGuid who)

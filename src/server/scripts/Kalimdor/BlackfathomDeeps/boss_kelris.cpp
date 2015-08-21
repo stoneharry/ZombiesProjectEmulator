@@ -21,15 +21,15 @@
 
 enum Spells
 {
-    SPELL_MIND_BLAST = 15587,
-    SPELL_SLEEP = 8399,
+    SPELL_MIND_BLAST    = 15587,
+    SPELL_SLEEP         = 8399,
 };
 
 enum Texts
 {
-    SAY_AGGRO = 0,
-    SAY_SLEEP = 1,
-    SAY_DEATH = 2
+    SAY_AGGRO    = 0,
+    SAY_SLEEP    = 1,
+    SAY_DEATH    = 2
 };
 
 enum Events
@@ -75,20 +75,20 @@ public:
             {
                 switch (eventId)
                 {
-                case EVENT_MIND_BLAST:
-                    DoCastVictim(SPELL_MIND_BLAST);
-                    events.ScheduleEvent(EVENT_MIND_BLAST, urand(7000, 9000));
-                    break;
-                case EVENT_SLEEP:
-                    if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
-                    {
-                        Talk(SAY_SLEEP);
-                        DoCast(target, SPELL_SLEEP);
-                    }
-                    events.ScheduleEvent(EVENT_SLEEP, urand(15000, 20000));
-                    break;
-                default:
-                    break;
+                    case EVENT_MIND_BLAST:
+                        DoCastVictim(SPELL_MIND_BLAST);
+                        events.ScheduleEvent(EVENT_MIND_BLAST, urand(7000, 9000));
+                        break;
+                    case EVENT_SLEEP:
+                        if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
+                        {
+                            Talk(SAY_SLEEP);
+                            DoCast(target, SPELL_SLEEP);
+                        }
+                        events.ScheduleEvent(EVENT_SLEEP, urand(15000, 20000));
+                        break;
+                    default:
+                        break;
                 }
             }
 

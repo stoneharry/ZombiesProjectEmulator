@@ -72,23 +72,23 @@ class Warden;
 
 class WardenWin : public Warden
 {
-public:
-    WardenWin();
-    ~WardenWin();
+    public:
+        WardenWin();
+        ~WardenWin();
 
-    void Init(WorldSession* session, BigNumber* K) override;
-    ClientWardenModule* GetModuleForClient() override;
-    void InitializeModule() override;
-    void RequestHash() override;
-    void HandleHashResult(ByteBuffer &buff) override;
-    void RequestData() override;
-    void HandleData(ByteBuffer &buff) override;
+        void Init(WorldSession* session, BigNumber* K) override;
+        ClientWardenModule* GetModuleForClient() override;
+        void InitializeModule() override;
+        void RequestHash() override;
+        void HandleHashResult(ByteBuffer &buff) override;
+        void RequestData() override;
+        void HandleData(ByteBuffer &buff) override;
 
-private:
-    uint32 _serverTicks;
-    std::list<uint16> _otherChecksTodo;
-    std::list<uint16> _memChecksTodo;
-    std::list<uint16> _currentChecks;
+    private:
+        uint32 _serverTicks;
+        std::list<uint16> _otherChecksTodo;
+        std::list<uint16> _memChecksTodo;
+        std::list<uint16> _currentChecks;
 };
 
 #endif

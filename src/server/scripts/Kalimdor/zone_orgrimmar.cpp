@@ -39,7 +39,7 @@ EndContentData */
 
 enum Shenthul
 {
-    QUEST_SHATTERED_SALUTE = 2460
+    QUEST_SHATTERED_SALUTE  = 2460
 };
 
 class npc_shenthul : public CreatureScript
@@ -103,8 +103,7 @@ public:
                             player->FailQuest(QUEST_SHATTERED_SALUTE);
                     }
                     Reset();
-                }
-                else ResetTimer -= diff;
+                } else ResetTimer -= diff;
             }
 
             if (CanTalk && !CanEmote)
@@ -114,8 +113,7 @@ public:
                     me->HandleEmoteCommand(EMOTE_ONESHOT_SALUTE);
                     CanEmote = true;
                     ResetTimer = 60000;
-                }
-                else SaluteTimer -= diff;
+                } else SaluteTimer -= diff;
             }
 
             if (!UpdateVictim())
@@ -145,10 +143,10 @@ public:
 
 enum ThrallWarchief
 {
-    QUEST_6566 = 6566,
+    QUEST_6566              = 6566,
 
-    SPELL_CHAIN_LIGHTNING = 16033,
-    SPELL_SHOCK = 16034
+    SPELL_CHAIN_LIGHTNING   = 16033,
+    SPELL_SHOCK             = 16034
 };
 
 #define GOSSIP_HTW "Please share your wisdom with me, Warchief."
@@ -170,34 +168,34 @@ public:
         player->PlayerTalkClass->ClearMenus();
         switch (action)
         {
-        case GOSSIP_ACTION_INFO_DEF + 1:
-            player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_STW1, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 2);
-            player->SEND_GOSSIP_MENU(5733, creature->GetGUID());
-            break;
-        case GOSSIP_ACTION_INFO_DEF + 2:
-            player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_STW2, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 3);
-            player->SEND_GOSSIP_MENU(5734, creature->GetGUID());
-            break;
-        case GOSSIP_ACTION_INFO_DEF + 3:
-            player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_STW3, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 4);
-            player->SEND_GOSSIP_MENU(5735, creature->GetGUID());
-            break;
-        case GOSSIP_ACTION_INFO_DEF + 4:
-            player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_STW4, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 5);
-            player->SEND_GOSSIP_MENU(5736, creature->GetGUID());
-            break;
-        case GOSSIP_ACTION_INFO_DEF + 5:
-            player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_STW5, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 6);
-            player->SEND_GOSSIP_MENU(5737, creature->GetGUID());
-            break;
-        case GOSSIP_ACTION_INFO_DEF + 6:
-            player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_STW6, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 7);
-            player->SEND_GOSSIP_MENU(5738, creature->GetGUID());
-            break;
-        case GOSSIP_ACTION_INFO_DEF + 7:
-            player->CLOSE_GOSSIP_MENU();
-            player->AreaExploredOrEventHappens(QUEST_6566);
-            break;
+            case GOSSIP_ACTION_INFO_DEF+1:
+                player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_STW1, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+2);
+                player->SEND_GOSSIP_MENU(5733, creature->GetGUID());
+                break;
+            case GOSSIP_ACTION_INFO_DEF+2:
+                player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_STW2, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+3);
+                player->SEND_GOSSIP_MENU(5734, creature->GetGUID());
+                break;
+            case GOSSIP_ACTION_INFO_DEF+3:
+                player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_STW3, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+4);
+                player->SEND_GOSSIP_MENU(5735, creature->GetGUID());
+                break;
+            case GOSSIP_ACTION_INFO_DEF+4:
+                player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_STW4, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+5);
+                player->SEND_GOSSIP_MENU(5736, creature->GetGUID());
+                break;
+            case GOSSIP_ACTION_INFO_DEF+5:
+                player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_STW5, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+6);
+                player->SEND_GOSSIP_MENU(5737, creature->GetGUID());
+                break;
+            case GOSSIP_ACTION_INFO_DEF+6:
+                player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_STW6, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+7);
+                player->SEND_GOSSIP_MENU(5738, creature->GetGUID());
+                break;
+            case GOSSIP_ACTION_INFO_DEF+7:
+                player->CLOSE_GOSSIP_MENU();
+                player->AreaExploredOrEventHappens(QUEST_6566);
+                break;
         }
         return true;
     }
@@ -208,7 +206,7 @@ public:
             player->PrepareQuestMenu(creature->GetGUID());
 
         if (player->GetQuestStatus(QUEST_6566) == QUEST_STATUS_INCOMPLETE)
-            player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_HTW, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
+            player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_HTW, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
 
         player->SEND_GOSSIP_MENU(player->GetGossipTextId(creature), creature->GetGUID());
         return true;
@@ -251,15 +249,13 @@ public:
             {
                 DoCastVictim(SPELL_CHAIN_LIGHTNING);
                 ChainLightningTimer = 9000;
-            }
-            else ChainLightningTimer -= diff;
+            } else ChainLightningTimer -= diff;
 
             if (ShockTimer <= diff)
             {
                 DoCastVictim(SPELL_SHOCK);
                 ShockTimer = 15000;
-            }
-            else ShockTimer -= diff;
+            } else ShockTimer -= diff;
 
             DoMeleeAttackIfReady();
         }

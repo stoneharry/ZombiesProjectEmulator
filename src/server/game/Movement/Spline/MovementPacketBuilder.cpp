@@ -35,11 +35,11 @@ namespace Movement
 
     enum MonsterMoveType
     {
-        MonsterMoveNormal = 0,
-        MonsterMoveStop = 1,
-        MonsterMoveFacingSpot = 2,
+        MonsterMoveNormal       = 0,
+        MonsterMoveStop         = 1,
+        MonsterMoveFacingSpot   = 2,
         MonsterMoveFacingTarget = 3,
-        MonsterMoveFacingAngle = 4
+        MonsterMoveFacingAngle  = 4
     };
 
     void PacketBuilder::WriteCommonMonsterMovePart(const MoveSpline& move_spline, ByteBuffer& data)
@@ -52,21 +52,21 @@ namespace Movement
 
         switch (splineflags & MoveSplineFlag::Mask_Final_Facing)
         {
-        case MoveSplineFlag::Final_Target:
-            data << uint8(MonsterMoveFacingTarget);
-            data << move_spline.facing.target;
-            break;
-        case MoveSplineFlag::Final_Angle:
-            data << uint8(MonsterMoveFacingAngle);
-            data << move_spline.facing.angle;
-            break;
-        case MoveSplineFlag::Final_Point:
-            data << uint8(MonsterMoveFacingSpot);
-            data << move_spline.facing.f.x << move_spline.facing.f.y << move_spline.facing.f.z;
-            break;
-        default:
-            data << uint8(MonsterMoveNormal);
-            break;
+            case MoveSplineFlag::Final_Target:
+                data << uint8(MonsterMoveFacingTarget);
+                data << move_spline.facing.target;
+                break;
+            case MoveSplineFlag::Final_Angle:
+                data << uint8(MonsterMoveFacingAngle);
+                data << move_spline.facing.angle;
+                break;
+            case MoveSplineFlag::Final_Point:
+                data << uint8(MonsterMoveFacingSpot);
+                data << move_spline.facing.f.x << move_spline.facing.f.y << move_spline.facing.f.z;
+                break;
+            default:
+                data << uint8(MonsterMoveNormal);
+                break;
         }
 
         // add fake Enter_Cycle flag - needed for client-side cyclic movement (client will erase first spline vertex after first cycle done)

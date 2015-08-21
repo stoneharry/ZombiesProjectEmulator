@@ -23,39 +23,39 @@
 
 enum Texts
 {
-    SAY_AGGRO = 0,
-    SAY_NEEDLE = 1,
-    SAY_SLAY = 2,
-    SAY_SPECIAL = 3,
-    SAY_ENRAGE = 4,
-    SAY_DEATH = 5
+    SAY_AGGRO                       = 0,
+    SAY_NEEDLE                      = 1,
+    SAY_SLAY                        = 2,
+    SAY_SPECIAL                     = 3,
+    SAY_ENRAGE                      = 4,
+    SAY_DEATH                       = 5
 };
 
 enum Spells
 {
-    SPELL_NEEDLE_SPINE = 39992,
-    SPELL_TIDAL_BURST = 39878,
-    SPELL_TIDAL_SHIELD = 39872,
-    SPELL_IMPALING_SPINE = 39837,
-    SPELL_CREATE_NAJENTUS_SPINE = 39956,
-    SPELL_HURL_SPINE = 39948,
-    SPELL_BERSERK = 26662
+    SPELL_NEEDLE_SPINE              = 39992,
+    SPELL_TIDAL_BURST               = 39878,
+    SPELL_TIDAL_SHIELD              = 39872,
+    SPELL_IMPALING_SPINE            = 39837,
+    SPELL_CREATE_NAJENTUS_SPINE     = 39956,
+    SPELL_HURL_SPINE                = 39948,
+    SPELL_BERSERK                   = 26662
 
 };
 
 enum Events
 {
-    EVENT_BERSERK = 1,
-    EVENT_YELL = 2,
-    EVENT_NEEDLE = 3,
-    EVENT_SPINE = 4,
-    EVENT_SHIELD = 5
+    EVENT_BERSERK                   = 1,
+    EVENT_YELL                      = 2,
+    EVENT_NEEDLE                    = 3,
+    EVENT_SPINE                     = 4,
+    EVENT_SHIELD                    = 5
 };
 
 enum EventGroups
 {
-    GCD_CAST = 1,
-    GCD_YELL = 2
+    GCD_CAST                        = 1,
+    GCD_YELL                        = 2
 };
 
 class boss_najentus : public CreatureScript
@@ -129,53 +129,53 @@ public:
         {
             switch (eventId)
             {
-            case EVENT_SHIELD:
-                DoCast(me, SPELL_TIDAL_SHIELD, true);
-                ResetTimer(45000);
-                break;
-            case EVENT_BERSERK:
-                Talk(SAY_ENRAGE);
-                DoCast(me, SPELL_BERSERK, true);
-                events.DelayEvents(15000, GCD_YELL);
-                break;
-            case EVENT_SPINE:
-            {
-                                Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 1);
+                case EVENT_SHIELD:
+                    DoCast(me, SPELL_TIDAL_SHIELD, true);
+                    ResetTimer(45000);
+                    break;
+                case EVENT_BERSERK:
+                    Talk(SAY_ENRAGE);
+                    DoCast(me, SPELL_BERSERK, true);
+                    events.DelayEvents(15000, GCD_YELL);
+                    break;
+                case EVENT_SPINE:
+                {
+                    Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 1);
 
-                                if (!target)
-                                    target = me->GetVictim();
+                    if (!target)
+                        target = me->GetVictim();
 
-                                if (target)
-                                {
-                                    DoCast(target, SPELL_IMPALING_SPINE, true);
-                                    SpineTargetGUID = target->GetGUID();
-                                    //must let target summon, otherwise you cannot click the spine
-                                    target->SummonGameObject(GO_NAJENTUS_SPINE, target->GetPositionX(), target->GetPositionY(), target->GetPositionZ(), me->GetOrientation(), 0, 0, 0, 0, 30);
-                                    Talk(SAY_NEEDLE);
-                                    events.DelayEvents(1500, GCD_CAST);
-                                    events.DelayEvents(15000, GCD_YELL);
-                                }
-                                events.ScheduleEvent(EVENT_SPINE, 21000, GCD_CAST);
-                                return;
-            }
-            case EVENT_NEEDLE:
-            {
-                                 //DoCast(me, SPELL_NEEDLE_SPINE, true);
-                                 std::list<Unit*> targets;
-                                 SelectTargetList(targets, 3, SELECT_TARGET_RANDOM, 80, true);
-                                 for (std::list<Unit*>::const_iterator i = targets.begin(); i != targets.end(); ++i)
-                                     DoCast(*i, 39835, true);
-                                 events.ScheduleEvent(EVENT_NEEDLE, urand(15000, 25000), GCD_CAST);
-                                 events.DelayEvents(1500, GCD_CAST);
-                                 return;
-            }
-            case EVENT_YELL:
-                Talk(SAY_SPECIAL);
-                events.ScheduleEvent(EVENT_YELL, urand(25000, 100000), GCD_YELL);
-                events.DelayEvents(15000, GCD_YELL);
-                break;
-            default:
-                break;
+                    if (target)
+                    {
+                        DoCast(target, SPELL_IMPALING_SPINE, true);
+                        SpineTargetGUID = target->GetGUID();
+                        //must let target summon, otherwise you cannot click the spine
+                        target->SummonGameObject(GO_NAJENTUS_SPINE, target->GetPositionX(), target->GetPositionY(), target->GetPositionZ(), me->GetOrientation(), 0, 0, 0, 0, 30);
+                        Talk(SAY_NEEDLE);
+                        events.DelayEvents(1500, GCD_CAST);
+                        events.DelayEvents(15000, GCD_YELL);
+                    }
+                    events.ScheduleEvent(EVENT_SPINE, 21000, GCD_CAST);
+                    return;
+                }
+                case EVENT_NEEDLE:
+                    {
+                        //DoCast(me, SPELL_NEEDLE_SPINE, true);
+                        std::list<Unit*> targets;
+                        SelectTargetList(targets, 3, SELECT_TARGET_RANDOM, 80, true);
+                        for (std::list<Unit*>::const_iterator i = targets.begin(); i != targets.end(); ++i)
+                            DoCast(*i, 39835, true);
+                        events.ScheduleEvent(EVENT_NEEDLE, urand(15000, 25000), GCD_CAST);
+                        events.DelayEvents(1500, GCD_CAST);
+                        return;
+                    }
+                case EVENT_YELL:
+                    Talk(SAY_SPECIAL);
+                    events.ScheduleEvent(EVENT_YELL, urand(25000, 100000), GCD_YELL);
+                    events.DelayEvents(15000, GCD_YELL);
+                    break;
+                default:
+                    break;
             }
         }
 
@@ -197,12 +197,12 @@ public:
     bool OnGossipHello(Player* player, GameObject* go) override
     {
         if (InstanceScript* instance = go->GetInstanceScript())
-        if (Creature* Najentus = ObjectAccessor::GetCreature(*go, instance->GetGuidData(DATA_HIGH_WARLORD_NAJENTUS)))
-        if (ENSURE_AI(boss_najentus::boss_najentusAI, Najentus->AI())->RemoveImpalingSpine())
-        {
-            player->CastSpell(player, SPELL_CREATE_NAJENTUS_SPINE, true);
-            go->Delete();
-        }
+            if (Creature* Najentus = ObjectAccessor::GetCreature(*go, instance->GetGuidData(DATA_HIGH_WARLORD_NAJENTUS)))
+                if (ENSURE_AI(boss_najentus::boss_najentusAI, Najentus->AI())->RemoveImpalingSpine())
+                {
+                    player->CastSpell(player, SPELL_CREATE_NAJENTUS_SPINE, true);
+                    go->Delete();
+                }
         return true;
     }
 

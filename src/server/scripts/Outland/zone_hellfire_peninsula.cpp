@@ -43,12 +43,12 @@ EndContentData */
 
 enum Aeranas
 {
-    SAY_SUMMON = 0,
-    SAY_FREE = 1,
-    FACTION_HOSTILE = 16,
-    FACTION_FRIENDLY = 35,
-    SPELL_ENVELOPING_WINDS = 15535,
-    SPELL_SHOCK = 12553
+    SAY_SUMMON                  = 0,
+    SAY_FREE                    = 1,
+    FACTION_HOSTILE             = 16,
+    FACTION_FRIENDLY            = 35,
+    SPELL_ENVELOPING_WINDS      = 15535,
+    SPELL_SHOCK                 = 12553
 };
 
 class npc_aeranas : public CreatureScript
@@ -88,8 +88,7 @@ public:
                 {
                     me->setFaction(FACTION_HOSTILE);
                     faction_Timer = 0;
-                }
-                else faction_Timer -= diff;
+                } else faction_Timer -= diff;
             }
 
             if (!UpdateVictim())
@@ -110,15 +109,13 @@ public:
             {
                 DoCastVictim(SPELL_SHOCK);
                 shock_Timer = 10000;
-            }
-            else shock_Timer -= diff;
+            } else shock_Timer -= diff;
 
             if (envelopingWinds_Timer <= diff)
             {
                 DoCastVictim(SPELL_ENVELOPING_WINDS);
                 envelopingWinds_Timer = 25000;
-            }
-            else envelopingWinds_Timer -= diff;
+            } else envelopingWinds_Timer -= diff;
 
             DoMeleeAttackIfReady();
         }
@@ -141,11 +138,11 @@ public:
 
 enum AncestralWolf
 {
-    EMOTE_WOLF_LIFT_HEAD = 0,
-    EMOTE_WOLF_HOWL = 1,
-    SAY_WOLF_WELCOME = 0,
-    SPELL_ANCESTRAL_WOLF_BUFF = 29938,
-    NPC_RYGA = 17123
+    EMOTE_WOLF_LIFT_HEAD        = 0,
+    EMOTE_WOLF_HOWL             = 1,
+    SAY_WOLF_WELCOME            = 0,
+    SPELL_ANCESTRAL_WOLF_BUFF   = 29938,
+    NPC_RYGA                    = 17123
 };
 
 class npc_ancestral_wolf : public CreatureScript
@@ -181,8 +178,8 @@ public:
         void MoveInLineOfSight(Unit* who) override
         {
             if (!ryga && who->GetEntry() == NPC_RYGA && me->IsWithinDistInMap(who, 15.0f))
-            if (Creature* temp = who->ToCreature())
-                ryga = temp;
+                if (Creature* temp = who->ToCreature())
+                    ryga = temp;
 
             npc_escortAI::MoveInLineOfSight(who);
         }
@@ -191,54 +188,54 @@ public:
         {
             switch (waypointId)
             {
-            case 0:
-                Talk(EMOTE_WOLF_LIFT_HEAD);
-                break;
-            case 2:
-                Talk(EMOTE_WOLF_HOWL);
-                DoCast(me, SPELL_ANCESTRAL_WOLF_BUFF, true);
-                break;
+                case 0:
+                    Talk(EMOTE_WOLF_LIFT_HEAD);
+                    break;
+                case 2:
+                    Talk(EMOTE_WOLF_HOWL);
+                    DoCast(me, SPELL_ANCESTRAL_WOLF_BUFF, true);
+                    break;
                 // Move Ryga into position
-            case 48:
-                if (Creature* ryga = me->FindNearestCreature(NPC_RYGA, 70))
-                {
-                    if (ryga->IsAlive() && !ryga->IsInCombat())
+                case 48:
+                    if (Creature* ryga = me->FindNearestCreature(NPC_RYGA,70))
                     {
-                        ryga->SetWalk(true);
-                        ryga->SetSpeed(MOVE_WALK, 1.5f);
-                        ryga->GetMotionMaster()->MovePoint(0, 517.340698f, 3885.03975f, 190.455978f, true);
-                        Reset();
+                        if (ryga->IsAlive() && !ryga->IsInCombat())
+                        {
+                            ryga->SetWalk(true);
+                            ryga->SetSpeed(MOVE_WALK, 1.5f);
+                            ryga->GetMotionMaster()->MovePoint(0, 517.340698f, 3885.03975f, 190.455978f, true);
+                            Reset();
+                        }
                     }
-                }
-                break;
+                    break;
                 // Ryga Kneels and welcomes spirit wolf
-            case 50:
-                if (Creature* ryga = me->FindNearestCreature(NPC_RYGA, 70))
-                {
-                    if (ryga->IsAlive() && !ryga->IsInCombat())
+                case 50:
+                    if (Creature* ryga = me->FindNearestCreature(NPC_RYGA,70))
                     {
-                        ryga->SetFacingTo(0.776773f);
-                        ryga->SetStandState(UNIT_STAND_STATE_KNEEL);
-                        ryga->AI()->Talk(SAY_WOLF_WELCOME);
-                        Reset();
+                        if (ryga->IsAlive() && !ryga->IsInCombat())
+                        {
+                            ryga->SetFacingTo(0.776773f);
+                            ryga->SetStandState(UNIT_STAND_STATE_KNEEL);
+                            ryga->AI()->Talk(SAY_WOLF_WELCOME);
+                            Reset();
+                        }
                     }
-                }
-                break;
+                    break;
                 // Ryga returns to spawn point
-            case 51:
-                if (Creature* ryga = me->FindNearestCreature(NPC_RYGA, 70))
-                {
-                    if (ryga->IsAlive() && !ryga->IsInCombat())
+                case 51:
+                    if (Creature* ryga = me->FindNearestCreature(NPC_RYGA,70))
                     {
-                        float fRetX, fRetY, fRetZ, fRetO;
-                        ryga->GetRespawnPosition(fRetX, fRetY, fRetZ, &fRetO);
-                        ryga->SetHomePosition(fRetX, fRetY, fRetZ, fRetO);
-                        ryga->SetStandState(UNIT_STAND_STATE_STAND);
-                        ryga->GetMotionMaster()->MoveTargetedHome();
-                        Reset();
+                        if (ryga->IsAlive() && !ryga->IsInCombat())
+                        {
+                            float fRetX, fRetY, fRetZ, fRetO;
+                            ryga->GetRespawnPosition(fRetX, fRetY, fRetZ, &fRetO);
+                            ryga->SetHomePosition(fRetX, fRetY, fRetZ, fRetO);
+                            ryga->SetStandState(UNIT_STAND_STATE_STAND);
+                            ryga->GetMotionMaster()->MoveTargetedHome();
+                            Reset();
+                        }
                     }
-                }
-                break;
+                    break;
             }
         }
 
@@ -258,16 +255,16 @@ public:
 
 enum WoundedBloodElf
 {
-    SAY_ELF_START = 0,
-    SAY_ELF_SUMMON1 = 1,
-    SAY_ELF_RESTING = 2,
-    SAY_ELF_SUMMON2 = 3,
-    SAY_ELF_COMPLETE = 4,
-    SAY_ELF_AGGRO = 5,
-    QUEST_ROAD_TO_FALCON_WATCH = 9375,
-    NPC_HAALESHI_WINDWALKER = 16966,
-    NPC_HAALESHI_TALONGUARD = 16967,
-    FACTION_FALCON_WATCH_QUEST = 775
+    SAY_ELF_START               = 0,
+    SAY_ELF_SUMMON1             = 1,
+    SAY_ELF_RESTING             = 2,
+    SAY_ELF_SUMMON2             = 3,
+    SAY_ELF_COMPLETE            = 4,
+    SAY_ELF_AGGRO               = 5,
+    QUEST_ROAD_TO_FALCON_WATCH  = 9375,
+    NPC_HAALESHI_WINDWALKER     = 16966,
+    NPC_HAALESHI_TALONGUARD     = 16967,
+    FACTION_FALCON_WATCH_QUEST  = 775
 };
 
 class npc_wounded_blood_elf : public CreatureScript
@@ -309,29 +306,29 @@ public:
 
             switch (waypointId)
             {
-            case 0:
-                Talk(SAY_ELF_START, player);
-                break;
-            case 9:
-                Talk(SAY_ELF_SUMMON1, player);
-                // Spawn two Haal'eshi Talonguard
-                DoSpawnCreature(NPC_HAALESHI_TALONGUARD, -15, -15, 0, 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000);
-                DoSpawnCreature(NPC_HAALESHI_TALONGUARD, -17, -17, 0, 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000);
-                break;
-            case 13:
-                Talk(SAY_ELF_RESTING, player);
-                break;
-            case 14:
-                Talk(SAY_ELF_SUMMON2, player);
-                // Spawn two Haal'eshi Windwalker
-                DoSpawnCreature(NPC_HAALESHI_WINDWALKER, -15, -15, 0, 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000);
-                DoSpawnCreature(NPC_HAALESHI_WINDWALKER, -17, -17, 0, 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000);
-                break;
-            case 27:
-                Talk(SAY_ELF_COMPLETE, player);
-                // Award quest credit
-                player->GroupEventHappens(QUEST_ROAD_TO_FALCON_WATCH, me);
-                break;
+                case 0:
+                    Talk(SAY_ELF_START, player);
+                    break;
+                case 9:
+                    Talk(SAY_ELF_SUMMON1, player);
+                    // Spawn two Haal'eshi Talonguard
+                    DoSpawnCreature(NPC_HAALESHI_TALONGUARD, -15, -15, 0, 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000);
+                    DoSpawnCreature(NPC_HAALESHI_TALONGUARD, -17, -17, 0, 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000);
+                    break;
+                case 13:
+                    Talk(SAY_ELF_RESTING, player);
+                    break;
+                case 14:
+                    Talk(SAY_ELF_SUMMON2, player);
+                    // Spawn two Haal'eshi Windwalker
+                    DoSpawnCreature(NPC_HAALESHI_WINDWALKER, -15, -15, 0, 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000);
+                    DoSpawnCreature(NPC_HAALESHI_WINDWALKER, -17, -17, 0, 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000);
+                    break;
+                case 27:
+                    Talk(SAY_ELF_COMPLETE, player);
+                    // Award quest credit
+                    player->GroupEventHappens(QUEST_ROAD_TO_FALCON_WATCH, me);
+                    break;
             }
         }
     };
@@ -348,8 +345,8 @@ public:
 
 enum FelGuard
 {
-    SPELL_SUMMON_POO = 37688,
-    NPC_DERANGED_HELBOAR = 16863
+    SPELL_SUMMON_POO            = 37688,
+    NPC_DERANGED_HELBOAR        = 16863
 };
 
 class npc_fel_guard_hound : public CreatureScript

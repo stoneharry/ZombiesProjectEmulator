@@ -32,66 +32,66 @@ enum ReliquaryOfSouls
 {
     //Sound'n'speech
     //Suffering
-    SUFF_SAY_FREED = 0,
-    SUFF_SAY_AGGRO = 1,
-    SUFF_SAY_SLAY = 2,
-    SUFF_SAY_RECAP = 3,
-    SUFF_SAY_AFTER = 4,
-    SUFF_EMOTE_ENRAGE = 5,
+    SUFF_SAY_FREED                  = 0,
+    SUFF_SAY_AGGRO                  = 1,
+    SUFF_SAY_SLAY                   = 2,
+    SUFF_SAY_RECAP                  = 3,
+    SUFF_SAY_AFTER                  = 4,
+    SUFF_EMOTE_ENRAGE               = 5,
 
     //Desire
-    DESI_SAY_FREED = 0,
-    DESI_SAY_SLAY = 1,
-    DESI_SAY_SPEC = 2,
-    DESI_SAY_RECAP = 3,
-    DESI_SAY_AFTER = 4,
+    DESI_SAY_FREED                  = 0,
+    DESI_SAY_SLAY                   = 1,
+    DESI_SAY_SPEC                   = 2,
+    DESI_SAY_RECAP                  = 3,
+    DESI_SAY_AFTER                  = 4,
 
     //Anger
-    ANGER_SAY_FREED = 0,
-    ANGER_SAY_SLAY = 1,
-    ANGER_SAY_SPEC = 2,
-    ANGER_SAY_BEFORE = 3,
-    ANGER_SAY_DEATH = 4,
+    ANGER_SAY_FREED                 = 0,
+    ANGER_SAY_SLAY                  = 1,
+    ANGER_SAY_SPEC                  = 2,
+    ANGER_SAY_BEFORE                = 3,
+    ANGER_SAY_DEATH                 = 4,
 
     //Spells
-    AURA_OF_SUFFERING = 41292,
-    AURA_OF_SUFFERING_ARMOR = 42017, // linked aura, need core support
-    ESSENCE_OF_SUFFERING_PASSIVE = 41296, // periodic trigger 41294
-    ESSENCE_OF_SUFFERING_PASSIVE2 = 41623,
-    SPELL_FIXATE_TARGET = 41294, // dummy, select target
-    SPELL_FIXATE_TAUNT = 41295, // force taunt
-    SPELL_ENRAGE = 41305,
-    SPELL_SOUL_DRAIN = 41303,
+    AURA_OF_SUFFERING               = 41292,
+    AURA_OF_SUFFERING_ARMOR         = 42017, // linked aura, need core support
+    ESSENCE_OF_SUFFERING_PASSIVE    = 41296, // periodic trigger 41294
+    ESSENCE_OF_SUFFERING_PASSIVE2   = 41623,
+    SPELL_FIXATE_TARGET             = 41294, // dummy, select target
+    SPELL_FIXATE_TAUNT              = 41295, // force taunt
+    SPELL_ENRAGE                    = 41305,
+    SPELL_SOUL_DRAIN                = 41303,
 
-    AURA_OF_DESIRE = 41350,
-    AURA_OF_DESIRE_DAMAGE = 41352,
-    SPELL_RUNE_SHIELD = 41431,
-    SPELL_DEADEN = 41410,
-    SPELL_SOUL_SHOCK = 41426,
+    AURA_OF_DESIRE                  = 41350,
+    AURA_OF_DESIRE_DAMAGE           = 41352,
+    SPELL_RUNE_SHIELD               = 41431,
+    SPELL_DEADEN                    = 41410,
+    SPELL_SOUL_SHOCK                = 41426,
 
-    AURA_OF_ANGER = 41337,
-    SPELL_SELF_SEETHE = 41364, // force cast 41520
-    SPELL_ENEMY_SEETHE = 41520,
-    SPELL_SOUL_SCREAM = 41545,
-    SPELL_SPITE_TARGET = 41376, // cast 41377 after 6 sec
-    SPELL_SPITE_DAMAGE = 41377,
+    AURA_OF_ANGER                   = 41337,
+    SPELL_SELF_SEETHE               = 41364, // force cast 41520
+    SPELL_ENEMY_SEETHE              = 41520,
+    SPELL_SOUL_SCREAM               = 41545,
+    SPELL_SPITE_TARGET              = 41376, // cast 41377 after 6 sec
+    SPELL_SPITE_DAMAGE              = 41377,
 
-    ENSLAVED_SOUL_PASSIVE = 41535,
-    SPELL_SOUL_RELEASE = 41542,
-    SPELL_SUBMERGE = 37550, //dropout 'head'
+    ENSLAVED_SOUL_PASSIVE           = 41535,
+    SPELL_SOUL_RELEASE              = 41542,
+    SPELL_SUBMERGE                  = 37550, //dropout 'head'
 
-    CREATURE_ENSLAVED_SOUL = 23469,
-    NUMBER_ENSLAVED_SOUL = 8
+    CREATURE_ENSLAVED_SOUL          = 23469,
+    NUMBER_ENSLAVED_SOUL            = 8
 };
 
-G3D::Vector2 const Coords[] =
+G3D::Vector2 const Coords[]=
 {
-    { 450.4f, 212.3f },
-    { 542.1f, 212.3f },
-    { 542.1f, 168.3f },
-    { 542.1f, 137.4f },
-    { 450.4f, 137.4f },
-    { 450.4f, 168.3f }
+    {450.4f, 212.3f},
+    {542.1f, 212.3f},
+    {542.1f, 168.3f},
+    {542.1f, 137.4f},
+    {450.4f, 137.4f},
+    {450.4f, 168.3f}
 };
 
 class npc_enslaved_soul : public CreatureScript
@@ -224,8 +224,7 @@ public:
             {
                 ENSURE_AI(npc_enslaved_soul::npc_enslaved_soulAI, Soul->AI())->ReliquaryGUID = me->GetGUID();
                 Soul->AI()->AttackStart(target);
-            }
-            else EnterEvadeMode();
+            } else EnterEvadeMode();
             return true;
         }
 
@@ -291,14 +290,13 @@ public:
                     break;
                 case 2:
                     Timer = 5000;
-                    if (Creature* Summon = DoSpawnCreature(23417 + Phase, 0, 0, 0, 0, TEMPSUMMON_DEAD_DESPAWN, 0))
+                    if (Creature* Summon = DoSpawnCreature(23417+Phase, 0, 0, 0, 0, TEMPSUMMON_DEAD_DESPAWN, 0))
                     {
                         me->SetUInt32Value(UNIT_NPC_EMOTESTATE, EMOTE_STATE_SUBMERGED);  // Ribs: open
                         Summon->AI()->AttackStart(SelectTarget(SELECT_TARGET_TOPAGGRO, 0));
                         EssenceGUID = Summon->GetGUID();
                         DoStartNoMovement(me);
-                    }
-                    else EnterEvadeMode();
+                    } else EnterEvadeMode();
                     break;
                 case 3:
                     Timer = 1000;
@@ -316,8 +314,7 @@ public:
                             Essence->RemoveAllAuras();
                             Essence->DeleteThreatList();
                             Essence->GetMotionMaster()->MoveFollow(me, 0.0f, 0.0f);
-                        }
-                        else return;
+                        } else return;
                     }
                     break;
                 case 4:
@@ -378,8 +375,7 @@ public:
                     break;
                 }
                 ++Counter;
-            }
-            else Timer -= diff;
+            } else Timer -= diff;
         }
     };
 };
@@ -387,8 +383,8 @@ public:
 void npc_enslaved_soul::npc_enslaved_soulAI::JustDied(Unit* /*killer*/)
 {
     if (ReliquaryGUID)
-    if (Creature* Reliquary = (ObjectAccessor::GetCreature((*me), ReliquaryGUID)))
-        ++(ENSURE_AI(boss_reliquary_of_souls::boss_reliquary_of_soulsAI, Reliquary->AI())->SoulDeathCount);
+        if (Creature* Reliquary = (ObjectAccessor::GetCreature((*me), ReliquaryGUID)))
+            ++(ENSURE_AI(boss_reliquary_of_souls::boss_reliquary_of_soulsAI, Reliquary->AI())->SoulDeathCount);
 
     DoCast(me, SPELL_SOUL_RELEASE, true);
 }
@@ -495,8 +491,7 @@ public:
                     {
                         Talk(SUFF_SAY_AGGRO);
                     }
-                }
-                else FixateTimer -= diff;
+                } else FixateTimer -= diff;
             }
 
             //Return since we have no target
@@ -508,15 +503,13 @@ public:
                 DoCast(me, SPELL_ENRAGE);
                 EnrageTimer = 60000;
                 Talk(SUFF_EMOTE_ENRAGE);
-            }
-            else EnrageTimer -= diff;
+            } else EnrageTimer -= diff;
 
             if (SoulDrainTimer <= diff)
             {
                 DoCast(SelectTarget(SELECT_TARGET_RANDOM, 0), SPELL_SOUL_DRAIN);
                 SoulDrainTimer = 60000;
-            }
-            else SoulDrainTimer -= diff;
+            } else SoulDrainTimer -= diff;
 
             DoMeleeAttackIfReady();
         }
@@ -579,11 +572,11 @@ public:
         void SpellHit(Unit* /*caster*/, const SpellInfo* spell) override
         {
             if (me->GetCurrentSpell(CURRENT_GENERIC_SPELL))
-            for (uint8 i = 0; i < 3; ++i)
-            if (spell->Effects[i].Effect == SPELL_EFFECT_INTERRUPT_CAST)
-            if (me->GetCurrentSpell(CURRENT_GENERIC_SPELL)->m_spellInfo->Id == SPELL_SOUL_SHOCK
-                || me->GetCurrentSpell(CURRENT_GENERIC_SPELL)->m_spellInfo->Id == SPELL_DEADEN)
-                me->InterruptSpell(CURRENT_GENERIC_SPELL, false);
+                for (uint8 i = 0; i < 3; ++i)
+                    if (spell->Effects[i].Effect == SPELL_EFFECT_INTERRUPT_CAST)
+                        if (me->GetCurrentSpell(CURRENT_GENERIC_SPELL)->m_spellInfo->Id == SPELL_SOUL_SHOCK
+                            || me->GetCurrentSpell(CURRENT_GENERIC_SPELL)->m_spellInfo->Id == SPELL_DEADEN)
+                            me->InterruptSpell(CURRENT_GENERIC_SPELL, false);
         }
 
         void EnterCombat(Unit* /*who*/) override
@@ -610,15 +603,13 @@ public:
                 SoulShockTimer += 2000;
                 DeadenTimer += 2000;
                 RuneShieldTimer = 60000;
-            }
-            else RuneShieldTimer -= diff;
+            } else RuneShieldTimer -= diff;
 
             if (SoulShockTimer <= diff)
             {
                 DoCastVictim(SPELL_SOUL_SHOCK);
                 SoulShockTimer = 5000;
-            }
-            else SoulShockTimer -= diff;
+            } else SoulShockTimer -= diff;
 
             if (DeadenTimer <= diff)
             {
@@ -629,8 +620,7 @@ public:
                 {
                     Talk(DESI_SAY_SPEC);
                 }
-            }
-            else DeadenTimer -= diff;
+            } else DeadenTimer -= diff;
 
             DoMeleeAttackIfReady();
         }
@@ -717,8 +707,7 @@ public:
                     AggroTargetGUID = me->EnsureVictim()->GetGUID();
                 }
                 CheckTankTimer = 2000;
-            }
-            else CheckTankTimer -= diff;
+            } else CheckTankTimer -= diff;
 
             if (SoulScreamTimer <= diff)
             {
@@ -728,16 +717,14 @@ public:
                 {
                     Talk(ANGER_SAY_SPEC);
                 }
-            }
-            else SoulScreamTimer -= diff;
+            } else SoulScreamTimer -= diff;
 
             if (SpiteTimer <= diff)
             {
                 DoCast(me, SPELL_SPITE_TARGET);
                 SpiteTimer = 30000;
                 Talk(ANGER_SAY_SPEC);
-            }
-            else SpiteTimer -= diff;
+            } else SpiteTimer -= diff;
 
             DoMeleeAttackIfReady();
         }

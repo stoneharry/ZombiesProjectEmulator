@@ -81,9 +81,9 @@ ChatCommand* ChatHandler::getCommandTable()
 
             // cache top-level commands
             size_t added = 0;
-            commandTableCache = (ChatCommand*)malloc(sizeof(ChatCommand)* total);
+            commandTableCache = (ChatCommand*)malloc(sizeof(ChatCommand) * total);
             ASSERT(commandTableCache);
-            memset(commandTableCache, 0, sizeof(ChatCommand)* total);
+            memset(commandTableCache, 0, sizeof(ChatCommand) * total);
             for (std::vector<ChatCommand*>::const_iterator it = dynamic.begin(); it != dynamic.end(); ++it)
                 added += appendCommandTable(commandTableCache + added, *it);
         }
@@ -98,7 +98,8 @@ ChatCommand* ChatHandler::getCommandTable()
                 std::string name = fields[0].GetString();
 
                 SetDataForCommandInTable(commandTableCache, name.c_str(), fields[1].GetUInt16(), fields[2].GetString(), name);
-            } while (result->NextRow());
+            }
+            while (result->NextRow());
         }
     }
 
@@ -395,7 +396,7 @@ bool ChatHandler::SetDataForCommandInTable(ChatCommand* table, char const* text,
             TC_LOG_INFO("misc", "Table `command` overwrite for command '%s' default permission (%u) by %u", fullcommand.c_str(), table[i].Permission, permission);
 
         table[i].Permission = permission;
-        table[i].Help = help;
+        table[i].Help          = help;
         return true;
     }
 
@@ -455,19 +456,19 @@ bool ChatHandler::ParseCommands(char const* text)
 
 bool ChatHandler::isValidChatMessage(char const* message)
 {
-    /*
-    Valid examples:
-    |cffa335ee|Hitem:812:0:0:0:0:0:0:0:70|h[Glowing Brightwood Staff]|h|r
-    |cff808080|Hquest:2278:47|h[The Platinum Discs]|h|r
-    |cffffd000|Htrade:4037:1:150:1:6AAAAAAAAAAAAAAAAAAAAAAOAADAAAAAAAAAAAAAAAAIAAAAAAAAA|h[Engineering]|h|r
-    |cff4e96f7|Htalent:2232:-1|h[Taste for Blood]|h|r
-    |cff71d5ff|Hspell:21563|h[Command]|h|r
-    |cffffd000|Henchant:3919|h[Engineering: Rough Dynamite]|h|r
-    |cffffff00|Hachievement:546:0000000000000001:0:0:0:-1:0:0:0:0|h[Safe Deposit]|h|r
-    |cff66bbff|Hglyph:21:762|h[Glyph of Bladestorm]|h|r
+/*
+Valid examples:
+|cffa335ee|Hitem:812:0:0:0:0:0:0:0:70|h[Glowing Brightwood Staff]|h|r
+|cff808080|Hquest:2278:47|h[The Platinum Discs]|h|r
+|cffffd000|Htrade:4037:1:150:1:6AAAAAAAAAAAAAAAAAAAAAAOAADAAAAAAAAAAAAAAAAIAAAAAAAAA|h[Engineering]|h|r
+|cff4e96f7|Htalent:2232:-1|h[Taste for Blood]|h|r
+|cff71d5ff|Hspell:21563|h[Command]|h|r
+|cffffd000|Henchant:3919|h[Engineering: Rough Dynamite]|h|r
+|cffffff00|Hachievement:546:0000000000000001:0:0:0:-1:0:0:0:0|h[Safe Deposit]|h|r
+|cff66bbff|Hglyph:21:762|h[Glyph of Bladestorm]|h|r
 
-    | will be escaped to ||
-    */
+| will be escaped to ||
+*/
 
     if (strlen(message) > 255)
         return false;
@@ -577,8 +578,8 @@ bool ChatHandler::ShowHelpForCommand(ChatCommand* table, const char* cmd)
                 SendSysMessage(table[i].Help.c_str());
 
             if (table[i].ChildCommands)
-            if (ShowHelpForSubCommands(table[i].ChildCommands, table[i].Name, subcmd ? subcmd : ""))
-                return true;
+                if (ShowHelpForSubCommands(table[i].ChildCommands, table[i].Name, subcmd ? subcmd : ""))
+                    return true;
 
             return !table[i].Help.empty();
         }
@@ -598,8 +599,8 @@ bool ChatHandler::ShowHelpForCommand(ChatCommand* table, const char* cmd)
                 SendSysMessage(table[i].Help.c_str());
 
             if (table[i].ChildCommands)
-            if (ShowHelpForSubCommands(table[i].ChildCommands, "", ""))
-                return true;
+                if (ShowHelpForSubCommands(table[i].ChildCommands, "", ""))
+                    return true;
 
             return !table[i].Help.empty();
         }
@@ -609,8 +610,8 @@ bool ChatHandler::ShowHelpForCommand(ChatCommand* table, const char* cmd)
 }
 
 size_t ChatHandler::BuildChatPacket(WorldPacket& data, ChatMsg chatType, Language language, ObjectGuid senderGUID, ObjectGuid receiverGUID, std::string const& message, uint8 chatTag,
-    std::string const& senderName /*= ""*/, std::string const& receiverName /*= ""*/,
-    uint32 achievementId /*= 0*/, bool gmMessage /*= false*/, std::string const& channelName /*= ""*/)
+                                  std::string const& senderName /*= ""*/, std::string const& receiverName /*= ""*/,
+                                  uint32 achievementId /*= 0*/, bool gmMessage /*= false*/, std::string const& channelName /*= ""*/)
 {
     size_t receiverGUIDPos = 0;
     data.Initialize(!gmMessage ? SMSG_MESSAGECHAT : SMSG_GM_MESSAGECHAT);
@@ -620,62 +621,62 @@ size_t ChatHandler::BuildChatPacket(WorldPacket& data, ChatMsg chatType, Languag
     data << uint32(0);  // some flags
     switch (chatType)
     {
-    case CHAT_MSG_MONSTER_SAY:
-    case CHAT_MSG_MONSTER_PARTY:
-    case CHAT_MSG_MONSTER_YELL:
-    case CHAT_MSG_MONSTER_WHISPER:
-    case CHAT_MSG_MONSTER_EMOTE:
-    case CHAT_MSG_RAID_BOSS_EMOTE:
-    case CHAT_MSG_RAID_BOSS_WHISPER:
-    case CHAT_MSG_BATTLENET:
-        data << uint32(senderName.length() + 1);
-        data << senderName;
-        receiverGUIDPos = data.wpos();
-        data << uint64(receiverGUID);
-        if (receiverGUID && !receiverGUID.IsPlayer() && !receiverGUID.IsPet())
-        {
-            data << uint32(receiverName.length() + 1);
-            data << receiverName;
-        }
-        break;
-    case CHAT_MSG_WHISPER_FOREIGN:
-        data << uint32(senderName.length() + 1);
-        data << senderName;
-        receiverGUIDPos = data.wpos();
-        data << uint64(receiverGUID);
-        break;
-    case CHAT_MSG_BG_SYSTEM_NEUTRAL:
-    case CHAT_MSG_BG_SYSTEM_ALLIANCE:
-    case CHAT_MSG_BG_SYSTEM_HORDE:
-        receiverGUIDPos = data.wpos();
-        data << uint64(receiverGUID);
-        if (receiverGUID && !receiverGUID.IsPlayer())
-        {
-            data << uint32(receiverName.length() + 1);
-            data << receiverName;
-        }
-        break;
-    case CHAT_MSG_ACHIEVEMENT:
-    case CHAT_MSG_GUILD_ACHIEVEMENT:
-        receiverGUIDPos = data.wpos();
-        data << uint64(receiverGUID);
-        break;
-    default:
-        if (gmMessage)
-        {
+        case CHAT_MSG_MONSTER_SAY:
+        case CHAT_MSG_MONSTER_PARTY:
+        case CHAT_MSG_MONSTER_YELL:
+        case CHAT_MSG_MONSTER_WHISPER:
+        case CHAT_MSG_MONSTER_EMOTE:
+        case CHAT_MSG_RAID_BOSS_EMOTE:
+        case CHAT_MSG_RAID_BOSS_WHISPER:
+        case CHAT_MSG_BATTLENET:
             data << uint32(senderName.length() + 1);
             data << senderName;
-        }
+            receiverGUIDPos = data.wpos();
+            data << uint64(receiverGUID);
+            if (receiverGUID && !receiverGUID.IsPlayer() && !receiverGUID.IsPet())
+            {
+                data << uint32(receiverName.length() + 1);
+                data << receiverName;
+            }
+            break;
+        case CHAT_MSG_WHISPER_FOREIGN:
+            data << uint32(senderName.length() + 1);
+            data << senderName;
+            receiverGUIDPos = data.wpos();
+            data << uint64(receiverGUID);
+            break;
+        case CHAT_MSG_BG_SYSTEM_NEUTRAL:
+        case CHAT_MSG_BG_SYSTEM_ALLIANCE:
+        case CHAT_MSG_BG_SYSTEM_HORDE:
+            receiverGUIDPos = data.wpos();
+            data << uint64(receiverGUID);
+            if (receiverGUID && !receiverGUID.IsPlayer())
+            {
+                data << uint32(receiverName.length() + 1);
+                data << receiverName;
+            }
+            break;
+        case CHAT_MSG_ACHIEVEMENT:
+        case CHAT_MSG_GUILD_ACHIEVEMENT:
+            receiverGUIDPos = data.wpos();
+            data << uint64(receiverGUID);
+            break;
+        default:
+            if (gmMessage)
+            {
+                data << uint32(senderName.length() + 1);
+                data << senderName;
+            }
 
-        if (chatType == CHAT_MSG_CHANNEL)
-        {
-            ASSERT(channelName.length() > 0);
-            data << channelName;
-        }
+            if (chatType == CHAT_MSG_CHANNEL)
+            {
+                ASSERT(channelName.length() > 0);
+                data << channelName;
+            }
 
-        receiverGUIDPos = data.wpos();
-        data << uint64(receiverGUID);
-        break;
+            receiverGUIDPos = data.wpos();
+            data << uint64(receiverGUID);
+            break;
     }
 
     data << uint32(message.length() + 1);
@@ -689,7 +690,7 @@ size_t ChatHandler::BuildChatPacket(WorldPacket& data, ChatMsg chatType, Languag
 }
 
 size_t ChatHandler::BuildChatPacket(WorldPacket& data, ChatMsg chatType, Language language, WorldObject const* sender, WorldObject const* receiver, std::string const& message,
-    uint32 achievementId /*= 0*/, std::string const& channelName /*= ""*/, LocaleConstant locale /*= DEFAULT_LOCALE*/)
+                                  uint32 achievementId /*= 0*/, std::string const& channelName /*= ""*/, LocaleConstant locale /*= DEFAULT_LOCALE*/)
 {
     ObjectGuid senderGUID;
     std::string senderName = "";
@@ -700,7 +701,7 @@ size_t ChatHandler::BuildChatPacket(WorldPacket& data, ChatMsg chatType, Languag
     if (sender)
     {
         senderGUID = sender->GetGUID();
-        senderName = sender->GetName();
+		senderName = sender->GetName();
         if (Player const* playerSender = sender->ToPlayer())
         {
             chatTag = playerSender->GetChatTag();
@@ -786,7 +787,7 @@ char* ChatHandler::extractKeyFromLink(char* text, char const* linkType, char** s
         return NULL;
 
     // skip spaces
-    while (*text == ' ' || *text == '\t' || *text == '\b')
+    while (*text == ' '||*text == '\t'||*text == '\b')
         ++text;
 
     if (!*text)
@@ -834,7 +835,7 @@ char* ChatHandler::extractKeyFromLink(char* text, char const* const* linkTypes, 
         return NULL;
 
     // skip spaces
-    while (*text == ' ' || *text == '\t' || *text == '\b')
+    while (*text == ' '||*text == '\t'||*text == '\b')
         ++text;
 
     if (!*text)
@@ -861,7 +862,7 @@ char* ChatHandler::extractKeyFromLink(char* text, char const* const* linkTypes, 
         tail = strtok(NULL, "");                            // tail
     }
     else
-        tail = text + 1;                                      // skip first |
+        tail = text+1;                                      // skip first |
 
     char* cLinkType = strtok(tail, ":");                    // linktype
     if (!cLinkType)
@@ -931,11 +932,11 @@ GameObject* ChatHandler::GetObjectGlobalyWithGuidOrNearWithDbGuid(uint32 lowguid
 
 enum SpellLinkType
 {
-    SPELL_LINK_SPELL = 0,
-    SPELL_LINK_TALENT = 1,
+    SPELL_LINK_SPELL   = 0,
+    SPELL_LINK_TALENT  = 1,
     SPELL_LINK_ENCHANT = 2,
-    SPELL_LINK_TRADE = 3,
-    SPELL_LINK_GLYPH = 4
+    SPELL_LINK_TRADE   = 3,
+    SPELL_LINK_GLYPH   = 4
 };
 
 static char const* const spellKeys[] =
@@ -965,34 +966,34 @@ uint32 ChatHandler::extractSpellIdFromLink(char* text)
 
     switch (type)
     {
-    case SPELL_LINK_SPELL:
-        return id;
-    case SPELL_LINK_TALENT:
-    {
-                              // talent
-                              TalentEntry const* talentEntry = sTalentStore.LookupEntry(id);
-                              if (!talentEntry)
-                                  return 0;
+        case SPELL_LINK_SPELL:
+            return id;
+        case SPELL_LINK_TALENT:
+        {
+            // talent
+            TalentEntry const* talentEntry = sTalentStore.LookupEntry(id);
+            if (!talentEntry)
+                return 0;
 
-                              uint32 rank = param1_str ? atol(param1_str) : 0u;
-                              if (rank >= MAX_TALENT_RANK)
-                                  return 0;
+            uint32 rank = param1_str ? atol(param1_str) : 0u;
+            if (rank >= MAX_TALENT_RANK)
+                return 0;
 
-                              return talentEntry->RankID[rank];
-    }
-    case SPELL_LINK_ENCHANT:
-    case SPELL_LINK_TRADE:
-        return id;
-    case SPELL_LINK_GLYPH:
-    {
-                             uint32 glyph_prop_id = param1_str ? atoul(param1_str) : 0;
+            return talentEntry->RankID[rank];
+        }
+        case SPELL_LINK_ENCHANT:
+        case SPELL_LINK_TRADE:
+            return id;
+        case SPELL_LINK_GLYPH:
+        {
+            uint32 glyph_prop_id = param1_str ? atoul(param1_str) : 0;
 
-                             GlyphPropertiesEntry const* glyphPropEntry = sGlyphPropertiesStore.LookupEntry(glyph_prop_id);
-                             if (!glyphPropEntry)
-                                 return 0;
+            GlyphPropertiesEntry const* glyphPropEntry = sGlyphPropertiesStore.LookupEntry(glyph_prop_id);
+            if (!glyphPropEntry)
+                return 0;
 
-                             return glyphPropEntry->SpellId;
-    }
+            return glyphPropEntry->SpellId;
+        }
     }
 
     // unknown type?
@@ -1008,16 +1009,16 @@ GameTele const* ChatHandler::extractGameTeleFromLink(char* text)
 
     // id case (explicit or from shift link)
     if (cId[0] >= '0' || cId[0] >= '9')
-    if (uint32 id = atoi(cId))
-        return sObjectMgr->GetGameTele(id);
+        if (uint32 id = atoi(cId))
+            return sObjectMgr->GetGameTele(id);
 
     return sObjectMgr->GetGameTele(cId);
 }
 
 enum GuidLinkType
 {
-    SPELL_LINK_PLAYER = 0,                              // must be first for selection in not link case
-    SPELL_LINK_CREATURE = 1,
+    SPELL_LINK_PLAYER     = 0,                              // must be first for selection in not link case
+    SPELL_LINK_CREATURE   = 1,
     SPELL_LINK_GAMEOBJECT = 2
 };
 
@@ -1042,38 +1043,38 @@ ObjectGuid ChatHandler::extractGuidFromLink(char* text)
 
     switch (type)
     {
-    case SPELL_LINK_PLAYER:
-    {
-                              std::string name = idS;
-                              if (!normalizePlayerName(name))
-                                  return ObjectGuid::Empty;
+        case SPELL_LINK_PLAYER:
+        {
+            std::string name = idS;
+            if (!normalizePlayerName(name))
+                return ObjectGuid::Empty;
 
-                              if (Player* player = ObjectAccessor::FindPlayerByName(name))
-                                  return player->GetGUID();
+            if (Player* player = ObjectAccessor::FindPlayerByName(name))
+                return player->GetGUID();
 
-                              if (ObjectGuid guid = sObjectMgr->GetPlayerGUIDByName(name))
-                                  return guid;
+            if (ObjectGuid guid = sObjectMgr->GetPlayerGUIDByName(name))
+                return guid;
 
-                              return ObjectGuid::Empty;
-    }
-    case SPELL_LINK_CREATURE:
-    {
-                                uint32 lowguid = atoul(idS);
+            return ObjectGuid::Empty;
+        }
+        case SPELL_LINK_CREATURE:
+        {
+            uint32 lowguid = atoul(idS);
 
-                                if (CreatureData const* data = sObjectMgr->GetCreatureData(lowguid))
-                                    return ObjectGuid(HIGHGUID_UNIT, data->id, lowguid);
-                                else
-                                    return ObjectGuid::Empty;
-    }
-    case SPELL_LINK_GAMEOBJECT:
-    {
-                                  uint32 lowguid = atoul(idS);
+            if (CreatureData const* data = sObjectMgr->GetCreatureData(lowguid))
+                return ObjectGuid(HIGHGUID_UNIT, data->id, lowguid);
+            else
+                return ObjectGuid::Empty;
+        }
+        case SPELL_LINK_GAMEOBJECT:
+        {
+            uint32 lowguid = atoul(idS);
 
-                                  if (GameObjectData const* data = sObjectMgr->GetGOData(lowguid))
-                                      return ObjectGuid(HIGHGUID_GAMEOBJECT, data->id, lowguid);
-                                  else
-                                      return ObjectGuid::Empty;
-    }
+            if (GameObjectData const* data = sObjectMgr->GetGOData(lowguid))
+                return ObjectGuid(HIGHGUID_GAMEOBJECT, data->id, lowguid);
+            else
+                return ObjectGuid::Empty;
+        }
     }
 
     // unknown type?
@@ -1171,7 +1172,7 @@ char* ChatHandler::extractQuotedArg(char* args)
         return NULL;
 
     if (*args == '"')
-        return strtok(args + 1, "\"");
+        return strtok(args+1, "\"");
     else
     {
         // skip spaces
@@ -1290,7 +1291,7 @@ bool ChatHandler::GetPlayerGroupAndGUIDByName(const char* cname, Player*& player
             player = m_session->GetPlayer();
 
         if (!guid || !offline)
-            guid = player->GetGUID();
+            guid  = player->GetGUID();
         group = player->GetGroup();
     }
 

@@ -30,24 +30,24 @@ EndScriptData */
 
 enum Points
 {
-    POINT_LAST_POINT = 0xFFFFFF,
-    POINT_HOME = 0xFFFFFE
+    POINT_LAST_POINT    = 0xFFFFFF,
+    POINT_HOME          = 0xFFFFFE
 };
 
 npc_escortAI::npc_escortAI(Creature* creature) : ScriptedAI(creature),
-m_uiWPWaitTimer(2500),
-m_uiPlayerCheckTimer(1000),
-m_uiEscortState(STATE_ESCORT_NONE),
-MaxPlayerDistance(DEFAULT_MAX_PLAYER_DISTANCE),
-m_pQuestForEscort(NULL),
-m_bIsActiveAttacker(true),
-m_bIsRunning(false),
-m_bCanInstantRespawn(false),
-m_bCanReturnToStart(false),
-DespawnAtEnd(true),
-DespawnAtFar(true),
-ScriptWP(false),
-HasImmuneToNPCFlags(false)
+    m_uiWPWaitTimer(2500),
+    m_uiPlayerCheckTimer(1000),
+    m_uiEscortState(STATE_ESCORT_NONE),
+    MaxPlayerDistance(DEFAULT_MAX_PLAYER_DISTANCE),
+    m_pQuestForEscort(NULL),
+    m_bIsActiveAttacker(true),
+    m_bIsRunning(false),
+    m_bCanInstantRespawn(false),
+    m_bCanReturnToStart(false),
+    DespawnAtEnd(true),
+    DespawnAtFar(true),
+    ScriptWP(false),
+    HasImmuneToNPCFlags(false)
 { }
 
 void npc_escortAI::AttackStart(Unit* who)
@@ -143,9 +143,9 @@ void npc_escortAI::JustDied(Unit* /*killer*/)
         if (Group* group = player->GetGroup())
         {
             for (GroupReference* groupRef = group->GetFirstMember(); groupRef != NULL; groupRef = groupRef->next())
-            if (Player* member = groupRef->GetSource())
-            if (member->GetQuestStatus(m_pQuestForEscort->GetQuestId()) == QUEST_STATUS_INCOMPLETE)
-                member->FailQuest(m_pQuestForEscort->GetQuestId());
+                if (Player* member = groupRef->GetSource())
+                    if (member->GetQuestStatus(m_pQuestForEscort->GetQuestId()) == QUEST_STATUS_INCOMPLETE)
+                        member->FailQuest(m_pQuestForEscort->GetQuestId());
         }
         else
         {
@@ -207,9 +207,9 @@ bool npc_escortAI::IsPlayerOrGroupInRange()
         if (Group* group = player->GetGroup())
         {
             for (GroupReference* groupRef = group->GetFirstMember(); groupRef != NULL; groupRef = groupRef->next())
-            if (Player* member = groupRef->GetSource())
-            if (me->IsWithinDistInMap(member, GetMaxPlayerDistance()))
-                return true;
+                if (Player* member = groupRef->GetSource())
+                    if (me->IsWithinDistInMap(member, GetMaxPlayerDistance()))
+                        return true;
         }
         else if (me->IsWithinDistInMap(player, GetMaxPlayerDistance()))
             return true;
@@ -360,19 +360,19 @@ void npc_escortAI::MovementInform(uint32 moveType, uint32 pointId)
 /*
 void npc_escortAI::OnPossess(bool apply)
 {
-// We got possessed in the middle of being escorted, store the point
-// where we left off to come back to when possess is removed
-if (HasEscortState(STATE_ESCORT_ESCORTING))
-{
-if (apply)
-me->GetPosition(LastPos.x, LastPos.y, LastPos.z);
-else
-{
-Returning = true;
-me->GetMotionMaster()->MovementExpired();
-me->GetMotionMaster()->MovePoint(WP_LAST_POINT, LastPos.x, LastPos.y, LastPos.z);
-}
-}
+    // We got possessed in the middle of being escorted, store the point
+    // where we left off to come back to when possess is removed
+    if (HasEscortState(STATE_ESCORT_ESCORTING))
+    {
+        if (apply)
+            me->GetPosition(LastPos.x, LastPos.y, LastPos.z);
+        else
+        {
+            Returning = true;
+            me->GetMotionMaster()->MovementExpired();
+            me->GetMotionMaster()->MovePoint(WP_LAST_POINT, LastPos.x, LastPos.y, LastPos.z);
+        }
+    }
 }
 */
 
@@ -539,7 +539,8 @@ bool npc_escortAI::SetNextWaypoint(uint32 pointId, bool setPosition, bool resetW
             CurrentWP = WaypointList.begin();
             return true;
         }
-    } while (!WaypointList.empty());
+    }
+    while (!WaypointList.empty());
 
     // we failed.
     // we reset the waypoints in the start; if we pulled any, reset it again

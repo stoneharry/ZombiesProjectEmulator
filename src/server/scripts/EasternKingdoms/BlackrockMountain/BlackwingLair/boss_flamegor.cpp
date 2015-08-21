@@ -22,21 +22,21 @@
 
 enum Emotes
 {
-    EMOTE_FRENZY = 0,
+    EMOTE_FRENZY            = 0,
 };
 
 enum Spells
 {
-    SPELL_SHADOWFLAME = 22539,
-    SPELL_WINGBUFFET = 23339,
-    SPELL_FRENZY = 23342  //This spell periodically triggers fire nova
+    SPELL_SHADOWFLAME        = 22539,
+    SPELL_WINGBUFFET         = 23339,
+    SPELL_FRENZY             = 23342  //This spell periodically triggers fire nova
 };
 
 enum Events
 {
-    EVENT_SHADOWFLAME = 1,
-    EVENT_WINGBUFFET = 2,
-    EVENT_FRENZY = 3
+    EVENT_SHADOWFLAME       = 1,
+    EVENT_WINGBUFFET        = 2,
+    EVENT_FRENZY            = 3
 };
 
 class boss_flamegor : public CreatureScript
@@ -76,21 +76,21 @@ public:
             {
                 switch (eventId)
                 {
-                case EVENT_SHADOWFLAME:
-                    DoCastVictim(SPELL_SHADOWFLAME);
-                    events.ScheduleEvent(EVENT_SHADOWFLAME, urand(10000, 20000));
-                    break;
-                case EVENT_WINGBUFFET:
-                    DoCastVictim(SPELL_WINGBUFFET);
-                    if (DoGetThreat(me->GetVictim()))
-                        DoModifyThreatPercent(me->GetVictim(), -75);
-                    events.ScheduleEvent(EVENT_WINGBUFFET, 30000);
-                    break;
-                case EVENT_FRENZY:
-                    Talk(EMOTE_FRENZY);
-                    DoCast(me, SPELL_FRENZY);
-                    events.ScheduleEvent(EVENT_FRENZY, urand(8000, 10000));
-                    break;
+                    case EVENT_SHADOWFLAME:
+                        DoCastVictim(SPELL_SHADOWFLAME);
+                        events.ScheduleEvent(EVENT_SHADOWFLAME, urand(10000, 20000));
+                        break;
+                    case EVENT_WINGBUFFET:
+                        DoCastVictim(SPELL_WINGBUFFET);
+                        if (DoGetThreat(me->GetVictim()))
+                            DoModifyThreatPercent(me->GetVictim(), -75);
+                        events.ScheduleEvent(EVENT_WINGBUFFET, 30000);
+                        break;
+                    case EVENT_FRENZY:
+                        Talk(EMOTE_FRENZY);
+                        DoCast(me, SPELL_FRENZY);
+                        events.ScheduleEvent(EVENT_FRENZY, urand(8000, 10000));
+                        break;
                 }
             }
 

@@ -29,10 +29,10 @@ EndScriptData */
 
 enum Spells
 {
-    SPELL_DUSTFIELD = 21909,
-    SPELL_BOULDER = 21832,
-    SPELL_THRASH = 3391,
-    SPELL_REPULSIVEGAZE = 21869
+    SPELL_DUSTFIELD             = 21909,
+    SPELL_BOULDER               = 21832,
+    SPELL_THRASH                = 3391,
+    SPELL_REPULSIVEGAZE         = 21869
 };
 
 class boss_princess_theradras : public CreatureScript

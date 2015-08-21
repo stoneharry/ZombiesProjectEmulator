@@ -21,22 +21,22 @@
 
 enum Spells
 {
-    SPELL_REND = 16509,
-    SPELL_STRIKE = 15580,
-    SPELL_INTIMIDATING_ROAR = 16508
+    SPELL_REND                      = 16509,
+    SPELL_STRIKE                    = 15580,
+    SPELL_INTIMIDATING_ROAR         = 16508
 };
 
 enum Says
 {
-    SAY_SUMMON = 0,
-    SAY_AGGRO = 1,
+    SAY_SUMMON                      = 0,
+    SAY_AGGRO                       = 1,
 };
 
 enum Events
 {
-    EVENT_REND = 1,
-    EVENT_STRIKE = 2,
-    EVENT_INTIMIDATING_ROAR = 3
+    EVENT_REND                      = 1,
+    EVENT_STRIKE                    = 2,
+    EVENT_INTIMIDATING_ROAR         = 3
 };
 
 class boss_urok_doomhowl : public CreatureScript
@@ -56,8 +56,8 @@ public:
         void EnterCombat(Unit* /*who*/) override
         {
             _EnterCombat();
-            events.ScheduleEvent(SPELL_REND, urand(17000, 20000));
-            events.ScheduleEvent(SPELL_STRIKE, urand(10000, 12000));
+            events.ScheduleEvent(SPELL_REND, urand(17000,20000));
+            events.ScheduleEvent(SPELL_STRIKE, urand(10000,12000));
             Talk(SAY_AGGRO);
         }
 
@@ -80,16 +80,16 @@ public:
             {
                 switch (eventId)
                 {
-                case SPELL_REND:
-                    DoCastVictim(SPELL_REND);
-                    events.ScheduleEvent(SPELL_REND, urand(8000, 10000));
-                    break;
-                case SPELL_STRIKE:
-                    DoCastVictim(SPELL_STRIKE);
-                    events.ScheduleEvent(SPELL_STRIKE, urand(8000, 10000));
-                    break;
-                default:
-                    break;
+                    case SPELL_REND:
+                        DoCastVictim(SPELL_REND);
+                        events.ScheduleEvent(SPELL_REND, urand(8000,10000));
+                        break;
+                    case SPELL_STRIKE:
+                        DoCastVictim(SPELL_STRIKE);
+                        events.ScheduleEvent(SPELL_STRIKE, urand(8000,10000));
+                        break;
+                    default:
+                        break;
                 }
             }
             DoMeleeAttackIfReady();

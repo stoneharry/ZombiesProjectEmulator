@@ -40,18 +40,18 @@ public:
         static ChatCommand resetCommandTable[] =
         {
             { "achievements", rbac::RBAC_PERM_COMMAND_RESET_ACHIEVEMENTS, true, &HandleResetAchievementsCommand, "", NULL },
-            { "honor", rbac::RBAC_PERM_COMMAND_RESET_HONOR, true, &HandleResetHonorCommand, "", NULL },
-            { "level", rbac::RBAC_PERM_COMMAND_RESET_LEVEL, true, &HandleResetLevelCommand, "", NULL },
-            { "spells", rbac::RBAC_PERM_COMMAND_RESET_SPELLS, true, &HandleResetSpellsCommand, "", NULL },
-            { "stats", rbac::RBAC_PERM_COMMAND_RESET_STATS, true, &HandleResetStatsCommand, "", NULL },
-            { "talents", rbac::RBAC_PERM_COMMAND_RESET_TALENTS, true, &HandleResetTalentsCommand, "", NULL },
-            { "all", rbac::RBAC_PERM_COMMAND_RESET_ALL, true, &HandleResetAllCommand, "", NULL },
-            { NULL, 0, false, NULL, "", NULL }
+            { "honor",        rbac::RBAC_PERM_COMMAND_RESET_HONOR,        true, &HandleResetHonorCommand,        "", NULL },
+            { "level",        rbac::RBAC_PERM_COMMAND_RESET_LEVEL,        true, &HandleResetLevelCommand,        "", NULL },
+            { "spells",       rbac::RBAC_PERM_COMMAND_RESET_SPELLS,       true, &HandleResetSpellsCommand,       "", NULL },
+            { "stats",        rbac::RBAC_PERM_COMMAND_RESET_STATS,        true, &HandleResetStatsCommand,        "", NULL },
+            { "talents",      rbac::RBAC_PERM_COMMAND_RESET_TALENTS,      true, &HandleResetTalentsCommand,      "", NULL },
+            { "all",          rbac::RBAC_PERM_COMMAND_RESET_ALL,          true, &HandleResetAllCommand,          "", NULL },
+            { NULL,           0,                                   false, NULL,                            "", NULL }
         };
         static ChatCommand commandTable[] =
         {
             { "reset", rbac::RBAC_PERM_COMMAND_RESET, true, NULL, "", resetCommandTable },
-            { NULL, 0, false, NULL, "", NULL }
+            { NULL,    0,                      false, NULL, "", NULL }
         };
         return commandTable;
     }
@@ -284,7 +284,7 @@ public:
             atLogin = AtLoginFlags(AT_LOGIN_RESET_TALENTS | AT_LOGIN_RESET_PET_TALENTS);
             sWorld->SendWorldText(LANG_RESETALL_TALENTS);
             if (!handler->GetSession())
-                handler->SendSysMessage(LANG_RESETALL_TALENTS);
+               handler->SendSysMessage(LANG_RESETALL_TALENTS);
         }
         else
         {

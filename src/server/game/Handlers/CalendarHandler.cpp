@@ -246,8 +246,8 @@ void WorldSession::HandleCalendarAddEvent(WorldPacket& recvData)
         time_t(eventPackedTime), flags, time_t(unkPackedTime), title, description);
 
     if (calendarEvent->IsGuildEvent() || calendarEvent->IsGuildAnnouncement())
-    if (Player* creator = ObjectAccessor::FindPlayer(guid))
-        calendarEvent->SetGuildId(creator->GetGuildId());
+        if (Player* creator = ObjectAccessor::FindPlayer(guid))
+            calendarEvent->SetGuildId(creator->GetGuildId());
 
     if (calendarEvent->IsGuildAnnouncement())
     {
@@ -692,13 +692,13 @@ void WorldSession::HandleSetSavedInstanceExtend(WorldPacket& recvData)
 {
     uint32 mapId, difficulty;
     uint8 toggleExtend;
-    recvData >> mapId >> difficulty >> toggleExtend;
+    recvData >> mapId >> difficulty>> toggleExtend;
     TC_LOG_DEBUG("network", "CMSG_SET_SAVED_INSTANCE_EXTEND - MapId: %u, Difficulty: %u, ToggleExtend: %s", mapId, difficulty, toggleExtend ? "On" : "Off");
 
     /*
     InstancePlayerBind* instanceBind = _player->GetBoundInstance(mapId, Difficulty(difficulty));
     if (!instanceBind || !instanceBind->save)
-    return;
+        return;
 
     InstanceSave* save = instanceBind->save;
     // http://www.wowwiki.com/Instance_Lock_Extension

@@ -102,20 +102,20 @@ void Corpse::SaveToDB()
     PreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_INS_CORPSE);
     stmt->setUInt32(index++, GetGUIDLow());                                           // corpseGuid
     stmt->setUInt32(index++, GetOwnerGUID().GetCounter());                            // guid
-    stmt->setFloat(index++, GetPositionX());                                         // posX
-    stmt->setFloat(index++, GetPositionY());                                         // posY
-    stmt->setFloat(index++, GetPositionZ());                                         // posZ
-    stmt->setFloat(index++, GetOrientation());                                       // orientation
+    stmt->setFloat (index++, GetPositionX());                                         // posX
+    stmt->setFloat (index++, GetPositionY());                                         // posY
+    stmt->setFloat (index++, GetPositionZ());                                         // posZ
+    stmt->setFloat (index++, GetOrientation());                                       // orientation
     stmt->setUInt16(index++, GetMapId());                                             // mapId
     stmt->setUInt32(index++, GetUInt32Value(CORPSE_FIELD_DISPLAY_ID));                // displayId
     stmt->setString(index++, _ConcatFields(CORPSE_FIELD_ITEM, EQUIPMENT_SLOT_END));   // itemCache
     stmt->setUInt32(index++, GetUInt32Value(CORPSE_FIELD_BYTES_1));                   // bytes1
     stmt->setUInt32(index++, GetUInt32Value(CORPSE_FIELD_BYTES_2));                   // bytes2
     stmt->setUInt32(index++, GetUInt32Value(CORPSE_FIELD_GUILD));                     // guildId
-    stmt->setUInt8(index++, GetUInt32Value(CORPSE_FIELD_FLAGS));                     // flags
-    stmt->setUInt8(index++, GetUInt32Value(CORPSE_FIELD_DYNAMIC_FLAGS));             // dynFlags
+    stmt->setUInt8 (index++, GetUInt32Value(CORPSE_FIELD_FLAGS));                     // flags
+    stmt->setUInt8 (index++, GetUInt32Value(CORPSE_FIELD_DYNAMIC_FLAGS));             // dynFlags
     stmt->setUInt32(index++, uint32(m_time));                                         // time
-    stmt->setUInt8(index++, GetType());                                              // corpseType
+    stmt->setUInt8 (index++, GetType());                                              // corpseType
     stmt->setUInt32(index++, GetInstanceId());                                        // instanceId
     stmt->setUInt32(index++, GetPhaseMask());                                         // phaseMask
     trans->Append(stmt);
@@ -161,10 +161,10 @@ bool Corpse::LoadCorpseFromDB(uint32 guid, Field* fields)
     // SELECT posX, posY, posZ, orientation, mapId, displayId, itemCache, bytes1, bytes2, guildId, flags, dynFlags, time, corpseType, instanceId, phaseMask, corpseGuid, guid FROM corpse WHERE corpseType <> 0
 
     uint32 ownerGuid = fields[17].GetUInt32();
-    float posX = fields[0].GetFloat();
-    float posY = fields[1].GetFloat();
-    float posZ = fields[2].GetFloat();
-    float o = fields[3].GetFloat();
+    float posX   = fields[0].GetFloat();
+    float posY   = fields[1].GetFloat();
+    float posZ   = fields[2].GetFloat();
+    float o      = fields[3].GetFloat();
     uint32 mapId = fields[4].GetUInt16();
 
     Object::_Create(guid, 0, HIGHGUID_CORPSE);
@@ -180,8 +180,8 @@ bool Corpse::LoadCorpseFromDB(uint32 guid, Field* fields)
 
     m_time = time_t(fields[12].GetUInt32());
 
-    uint32 instanceId = fields[14].GetUInt32();
-    uint32 phaseMask = fields[15].GetUInt32();
+    uint32 instanceId  = fields[14].GetUInt32();
+    uint32 phaseMask   = fields[15].GetUInt32();
 
     // place
     SetLocationInstanceId(instanceId);

@@ -29,7 +29,7 @@
 #include "AccountMgr.h"
 
 Warden::Warden() : _session(NULL), _inputCrypto(16), _outputCrypto(16), _checkTimer(10000/*10 sec*/), _clientResponseTimer(0),
-_dataSent(false), _previousTimestamp(0), _module(NULL), _initialized(false)
+                   _dataSent(false), _previousTimestamp(0), _module(NULL), _initialized(false)
 {
     memset(_inputKey, 0, sizeof(_inputKey));
     memset(_outputKey, 0, sizeof(_outputKey));
@@ -108,7 +108,7 @@ void Warden::Update()
                 if (_clientResponseTimer > maxClientResponseDelay * IN_MILLISECONDS)
                 {
                     TC_LOG_WARN("warden", "%s (latency: %u, IP: %s) exceeded Warden module response delay for more than %s - disconnecting client",
-                        _session->GetPlayerInfo().c_str(), _session->GetLatency(), _session->GetRemoteAddress().c_str(), secsToTimeString(maxClientResponseDelay, true).c_str());
+                                   _session->GetPlayerInfo().c_str(), _session->GetLatency(), _session->GetRemoteAddress().c_str(), secsToTimeString(maxClientResponseDelay, true).c_str());
                     _session->KickPlayer();
                 }
                 else
@@ -198,21 +198,21 @@ std::string Warden::Penalty(WardenCheck* check /*= NULL*/)
         return "Kick";
         break;
     case WARDEN_ACTION_BAN:
-    {
-                              std::stringstream duration;
-                              duration << sWorld->getIntConfig(CONFIG_WARDEN_CLIENT_BAN_DURATION) << "s";
-                              std::string accountName;
-                              AccountMgr::GetName(_session->GetAccountId(), accountName);
-                              std::stringstream banReason;
-                              banReason << "Warden Anticheat Violation";
-                              // Check can be NULL, for example if the client sent a wrong signature in the warden packet (CHECKSUM FAIL)
-                              if (check)
-                                  banReason << ": " << check->Comment << " (CheckId: " << check->CheckId << ")";
+        {
+            std::stringstream duration;
+            duration << sWorld->getIntConfig(CONFIG_WARDEN_CLIENT_BAN_DURATION) << "s";
+            std::string accountName;
+            AccountMgr::GetName(_session->GetAccountId(), accountName);
+            std::stringstream banReason;
+            banReason << "Warden Anticheat Violation";
+            // Check can be NULL, for example if the client sent a wrong signature in the warden packet (CHECKSUM FAIL)
+            if (check)
+                banReason << ": " << check->Comment << " (CheckId: " << check->CheckId << ")";
 
-                              sWorld->BanAccount(BAN_ACCOUNT, accountName, duration.str(), banReason.str(), "Server");
+            sWorld->BanAccount(BAN_ACCOUNT, accountName, duration.str(), banReason.str(),"Server");
 
-                              return "Ban";
-    }
+            return "Ban";
+        }
     default:
         break;
     }
@@ -232,27 +232,27 @@ void WorldSession::HandleWardenDataOpcode(WorldPacket& recvData)
 
     switch (opcode)
     {
-    case WARDEN_CMSG_MODULE_MISSING:
-        _warden->SendModuleToClient();
-        break;
-    case WARDEN_CMSG_MODULE_OK:
-        _warden->RequestHash();
-        break;
-    case WARDEN_CMSG_CHEAT_CHECKS_RESULT:
-        _warden->HandleData(recvData);
-        break;
-    case WARDEN_CMSG_MEM_CHECKS_RESULT:
-        TC_LOG_DEBUG("warden", "NYI WARDEN_CMSG_MEM_CHECKS_RESULT received!");
-        break;
-    case WARDEN_CMSG_HASH_RESULT:
-        _warden->HandleHashResult(recvData);
-        _warden->InitializeModule();
-        break;
-    case WARDEN_CMSG_MODULE_FAILED:
-        TC_LOG_DEBUG("warden", "NYI WARDEN_CMSG_MODULE_FAILED received!");
-        break;
-    default:
-        TC_LOG_DEBUG("warden", "Got unknown warden opcode %02X of size %u.", opcode, uint32(recvData.size() - 1));
-        break;
+        case WARDEN_CMSG_MODULE_MISSING:
+            _warden->SendModuleToClient();
+            break;
+        case WARDEN_CMSG_MODULE_OK:
+            _warden->RequestHash();
+            break;
+        case WARDEN_CMSG_CHEAT_CHECKS_RESULT:
+            _warden->HandleData(recvData);
+            break;
+        case WARDEN_CMSG_MEM_CHECKS_RESULT:
+            TC_LOG_DEBUG("warden", "NYI WARDEN_CMSG_MEM_CHECKS_RESULT received!");
+            break;
+        case WARDEN_CMSG_HASH_RESULT:
+            _warden->HandleHashResult(recvData);
+            _warden->InitializeModule();
+            break;
+        case WARDEN_CMSG_MODULE_FAILED:
+            TC_LOG_DEBUG("warden", "NYI WARDEN_CMSG_MODULE_FAILED received!");
+            break;
+        default:
+            TC_LOG_DEBUG("warden", "Got unknown warden opcode %02X of size %u.", opcode, uint32(recvData.size() - 1));
+            break;
     }
 }

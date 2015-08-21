@@ -47,9 +47,9 @@ EndContentData */
 
 enum Raliq
 {
-    SPELL_UPPERCUT = 10966,
-    QUEST_CRACK_SKULLS = 10009,
-    FACTION_HOSTILE_RD = 45
+    SPELL_UPPERCUT          = 10966,
+    QUEST_CRACK_SKULLS      = 10009,
+    FACTION_HOSTILE_RD      = 45
 };
 
 class npc_raliq_the_drunk : public CreatureScript
@@ -60,7 +60,7 @@ public:
     bool OnGossipSelect(Player* player, Creature* creature, uint32 /*sender*/, uint32 action) override
     {
         player->PlayerTalkClass->ClearMenus();
-        if (action == GOSSIP_ACTION_INFO_DEF + 1)
+        if (action == GOSSIP_ACTION_INFO_DEF+1)
         {
             player->CLOSE_GOSSIP_MENU();
             creature->setFaction(FACTION_HOSTILE_RD);
@@ -72,7 +72,7 @@ public:
     bool OnGossipHello(Player* player, Creature* creature) override
     {
         if (player->GetQuestStatus(QUEST_CRACK_SKULLS) == QUEST_STATUS_INCOMPLETE)
-            player->ADD_GOSSIP_ITEM(GOSSIP_ICON_VENDOR, GOSSIP_RALIQ, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
+            player->ADD_GOSSIP_ITEM(GOSSIP_ICON_VENDOR, GOSSIP_RALIQ, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
 
         player->SEND_GOSSIP_MENU(9440, creature->GetGUID());
         return true;
@@ -112,8 +112,7 @@ public:
             {
                 DoCastVictim(SPELL_UPPERCUT);
                 Uppercut_Timer = 15000;
-            }
-            else Uppercut_Timer -= diff;
+            } else Uppercut_Timer -= diff;
 
             DoMeleeAttackIfReady();
         }
@@ -127,14 +126,14 @@ public:
 enum Salsalabim
 {
     // Factions
-    FACTION_HOSTILE_SA = 90,
-    FACTION_FRIENDLY_SA = 35,
+    FACTION_HOSTILE_SA             = 90,
+    FACTION_FRIENDLY_SA            = 35,
 
     // Quests
-    QUEST_10004 = 10004,
+    QUEST_10004                    = 10004,
 
     // Spells
-    SPELL_MAGNETIC_PULL = 31705
+    SPELL_MAGNETIC_PULL            = 31705
 
 };
 
@@ -203,8 +202,7 @@ public:
             {
                 DoCastVictim(SPELL_MAGNETIC_PULL);
                 MagneticPull_Timer = 15000;
-            }
-            else MagneticPull_Timer -= diff;
+            } else MagneticPull_Timer -= diff;
 
             DoMeleeAttackIfReady();
         }
@@ -284,7 +282,7 @@ public:
     bool OnGossipSelect(Player* player, Creature* /*creature*/, uint32 /*sender*/, uint32 action) override
     {
         player->PlayerTalkClass->ClearMenus();
-        if (action == GOSSIP_ACTION_INFO_DEF + 1)
+        if (action == GOSSIP_ACTION_INFO_DEF+1)
             player->CastSpell(player, 37778, false);
 
         return true;
@@ -293,7 +291,7 @@ public:
     bool OnGossipHello(Player* player, Creature* creature) override
     {
         if (player->GetReputationRank(989) >= REP_REVERED)
-            player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_HZ, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
+            player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_HZ, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
 
         player->SEND_GOSSIP_MENU(player->GetGossipTextId(creature), creature->GetGUID());
 
@@ -307,28 +305,28 @@ public:
 
 enum KServant
 {
-    SAY1 = 0,
-    WHISP1 = 1,
-    WHISP2 = 2,
-    WHISP3 = 3,
-    WHISP4 = 4,
-    WHISP5 = 5,
-    WHISP6 = 6,
-    WHISP7 = 7,
-    WHISP8 = 8,
-    WHISP9 = 9,
-    WHISP10 = 10,
-    WHISP11 = 11,
-    WHISP12 = 12,
-    WHISP13 = 13,
-    WHISP14 = 14,
-    WHISP15 = 15,
-    WHISP16 = 16,
-    WHISP17 = 17,
-    WHISP18 = 18,
-    WHISP19 = 19,
-    WHISP20 = 20,
-    WHISP21 = 21
+    SAY1       = 0,
+    WHISP1     = 1,
+    WHISP2     = 2,
+    WHISP3     = 3,
+    WHISP4     = 4,
+    WHISP5     = 5,
+    WHISP6     = 6,
+    WHISP7     = 7,
+    WHISP8     = 8,
+    WHISP9     = 9,
+    WHISP10    = 10,
+    WHISP11    = 11,
+    WHISP12    = 12,
+    WHISP13    = 13,
+    WHISP14    = 14,
+    WHISP15    = 15,
+    WHISP16    = 16,
+    WHISP17    = 17,
+    WHISP18    = 18,
+    WHISP19    = 19,
+    WHISP20    = 20,
+    WHISP21    = 21
 };
 
 class npc_kservant : public CreatureScript
@@ -354,73 +352,73 @@ public:
 
             switch (waypointId)
             {
-            case 0:
-                Talk(SAY1, player);
-                break;
-            case 4:
-                Talk(WHISP1, player);
-                break;
-            case 6:
-                Talk(WHISP2, player);
-                break;
-            case 7:
-                Talk(WHISP3, player);
-                break;
-            case 8:
-                Talk(WHISP4, player);
-                break;
-            case 17:
-                Talk(WHISP5, player);
-                break;
-            case 18:
-                Talk(WHISP6, player);
-                break;
-            case 19:
-                Talk(WHISP7, player);
-                break;
-            case 33:
-                Talk(WHISP8, player);
-                break;
-            case 34:
-                Talk(WHISP9, player);
-                break;
-            case 35:
-                Talk(WHISP10, player);
-                break;
-            case 36:
-                Talk(WHISP11, player);
-                break;
-            case 43:
-                Talk(WHISP12, player);
-                break;
-            case 44:
-                Talk(WHISP13, player);
-                break;
-            case 49:
-                Talk(WHISP14, player);
-                break;
-            case 50:
-                Talk(WHISP15, player);
-                break;
-            case 51:
-                Talk(WHISP16, player);
-                break;
-            case 52:
-                Talk(WHISP17, player);
-                break;
-            case 53:
-                Talk(WHISP18, player);
-                break;
-            case 54:
-                Talk(WHISP19, player);
-                break;
-            case 55:
-                Talk(WHISP20, player);
-                break;
-            case 56:
-                Talk(WHISP21, player);
-                player->GroupEventHappens(10211, me);
-                break;
+                case 0:
+                    Talk(SAY1, player);
+                    break;
+                case 4:
+                    Talk(WHISP1, player);
+                    break;
+                case 6:
+                    Talk(WHISP2, player);
+                    break;
+                case 7:
+                    Talk(WHISP3, player);
+                    break;
+                case 8:
+                    Talk(WHISP4, player);
+                    break;
+                case 17:
+                    Talk(WHISP5, player);
+                    break;
+                case 18:
+                    Talk(WHISP6, player);
+                    break;
+                case 19:
+                    Talk(WHISP7, player);
+                    break;
+                case 33:
+                    Talk(WHISP8, player);
+                    break;
+                case 34:
+                    Talk(WHISP9, player);
+                    break;
+                case 35:
+                    Talk(WHISP10, player);
+                    break;
+                case 36:
+                    Talk(WHISP11, player);
+                    break;
+                case 43:
+                    Talk(WHISP12, player);
+                    break;
+                case 44:
+                    Talk(WHISP13, player);
+                    break;
+                case 49:
+                    Talk(WHISP14, player);
+                    break;
+                case 50:
+                    Talk(WHISP15, player);
+                    break;
+                case 51:
+                    Talk(WHISP16, player);
+                    break;
+                case 52:
+                    Talk(WHISP17, player);
+                    break;
+                case 53:
+                    Talk(WHISP18, player);
+                    break;
+                case 54:
+                    Talk(WHISP19, player);
+                    break;
+                case 55:
+                    Talk(WHISP20, player);
+                    break;
+                case 56:
+                    Talk(WHISP21, player);
+                    player->GroupEventHappens(10211, me);
+                    break;
             }
         }
 
@@ -460,9 +458,9 @@ public:
     bool OnGossipSelect(Player* player, Creature* creature, uint32 /*sender*/, uint32 action) override
     {
         player->PlayerTalkClass->ClearMenus();
-        if (action == GOSSIP_ACTION_INFO_DEF + 1)
+        if (action == GOSSIP_ACTION_INFO_DEF+1)
             player->SEND_GOSSIP_MENU(9458, creature->GetGUID());
-        else if (action == GOSSIP_ACTION_INFO_DEF + 2)
+        else if (action == GOSSIP_ACTION_INFO_DEF+2)
             player->SEND_GOSSIP_MENU(9459, creature->GetGUID());
 
         return true;
@@ -473,8 +471,8 @@ public:
         if (creature->IsQuestGiver())
             player->PrepareQuestMenu(creature->GetGUID());
 
-        player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, ISANAH_GOSSIP_1, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
-        player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, ISANAH_GOSSIP_2, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 2);
+        player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, ISANAH_GOSSIP_1, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
+        player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, ISANAH_GOSSIP_2, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+2);
 
         player->SEND_GOSSIP_MENU(player->GetGossipTextId(creature), creature->GetGUID());
 

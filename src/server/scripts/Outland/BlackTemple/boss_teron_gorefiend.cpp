@@ -30,25 +30,25 @@ EndScriptData */
 enum DoomBlossom
 {
     //Speech'n'sound
-    SAY_INTRO = 0,
-    SAY_AGGRO = 1,
-    SAY_SLAY = 2,
-    SAY_SPELL = 3,
-    SAY_SPECIAL = 4,
-    SAY_ENRAGE = 5,
-    SAY_DEATH = 6,
+    SAY_INTRO                       = 0,
+    SAY_AGGRO                       = 1,
+    SAY_SLAY                        = 2,
+    SAY_SPELL                       = 3,
+    SAY_SPECIAL                     = 4,
+    SAY_ENRAGE                      = 5,
+    SAY_DEATH                       = 6,
 
     //Spells
-    SPELL_INCINERATE = 40239,
-    SPELL_CRUSHING_SHADOWS = 40243,
-    SPELL_SHADOWBOLT = 40185,
-    SPELL_PASSIVE_SHADOWFORM = 40326,
-    SPELL_SHADOW_OF_DEATH = 40251,
-    SPELL_BERSERK = 45078,
-    SPELL_ATROPHY = 40327,               // Shadowy Constructs use this when they get within melee range of a player
+    SPELL_INCINERATE                = 40239,
+    SPELL_CRUSHING_SHADOWS          = 40243,
+    SPELL_SHADOWBOLT                = 40185,
+    SPELL_PASSIVE_SHADOWFORM        = 40326,
+    SPELL_SHADOW_OF_DEATH           = 40251,
+    SPELL_BERSERK                   = 45078,
+    SPELL_ATROPHY                   = 40327,               // Shadowy Constructs use this when they get within melee range of a player
 
-    CREATURE_DOOM_BLOSSOM = 23123,
-    CREATURE_SHADOWY_CONSTRUCT = 23111
+    CREATURE_DOOM_BLOSSOM           = 23123,
+    CREATURE_SHADOWY_CONSTRUCT      = 23111
 };
 
 class npc_doom_blossom : public CreatureScript
@@ -111,15 +111,13 @@ public:
                     Despawn();
 
                 CheckTeronTimer = 5000;
-            }
-            else CheckTeronTimer -= diff;
+            } else CheckTeronTimer -= diff;
 
             if (ShadowBoltTimer < diff && me->IsInCombat())
             {
                 DoCast(SelectTarget(SELECT_TARGET_RANDOM, 0), SPELL_SHADOWBOLT);
                 ShadowBoltTimer = 10000;
-            }
-            else ShadowBoltTimer -= diff;
+            } else ShadowBoltTimer -= diff;
             return;
         }
 
@@ -178,13 +176,13 @@ public:
             ScriptedAI::MoveInLineOfSight(who);
         }
 
-        /* Comment it out for now. NOTE TO FUTURE DEV: UNCOMMENT THIS OUT ONLY AFTER MIND CONTROL IS IMPLEMENTED
-            void DamageTaken(Unit* done_by, uint32 &damage) override
-            {
+    /* Comment it out for now. NOTE TO FUTURE DEV: UNCOMMENT THIS OUT ONLY AFTER MIND CONTROL IS IMPLEMENTED
+        void DamageTaken(Unit* done_by, uint32 &damage) override
+        {
             if (done_by->GetGUID() != GhostGUID)
             damage = 0;                                         // Only the ghost can deal damage.
-            }
-            */
+        }
+     */
 
         void CheckPlayers()
         {
@@ -214,8 +212,7 @@ public:
             {
                 CheckPlayers();
                 CheckPlayerTimer = 3000;
-            }
-            else CheckPlayerTimer -= diff;
+            } else CheckPlayerTimer -= diff;
 
             if (CheckTeronTimer <= diff)
             {
@@ -224,8 +221,7 @@ public:
                     me->DealDamage(me, me->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
 
                 CheckTeronTimer = 5000;
-            }
-            else CheckTeronTimer -= diff;
+            } else CheckTeronTimer -= diff;
         }
     };
 };
@@ -330,12 +326,12 @@ public:
             float coord = Loc;
             switch (urand(0, 1))
             {
-            case 0:
-                coord += rand32() % radius;
-                break;
-            case 1:
-                coord -= rand32() % radius;
-                break;
+                case 0:
+                    coord += rand32() % radius;
+                    break;
+                case 1:
+                    coord -= rand32() % radius;
+                    break;
             }
             return coord;
         }
@@ -376,9 +372,9 @@ public:
                 ghost->GetPosition(x, y, z);
                 if (Creature* control = me->SummonCreature(CREATURE_GHOST, x, y, z, 0, TEMPSUMMON_TIMED_DESAWN, 30000))
                 {
-                if (Player* player = ghost->ToPlayer())
-                player->Possess(control);
-                ghost->DealDamage(ghost, ghost->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL,
+                    if (Player* player = ghost->ToPlayer())
+                        player->Possess(control);
+                    ghost->DealDamage(ghost, ghost->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL,
                 false);
                 }*/
                 for (uint8 i = 0; i < 4; ++i)
@@ -427,8 +423,7 @@ public:
                         EnterEvadeMode();
                         return;
                     }
-                }
-                else AggroTimer -= diff;
+                } else AggroTimer -= diff;
             }
 
             if (!UpdateVictim() || !Done)
@@ -454,8 +449,7 @@ public:
                     }
                 }
                 SummonShadowsTimer = 60000;
-            }
-            else SummonShadowsTimer -= diff;
+            } else SummonShadowsTimer -= diff;
 
             if (SummonDoomBlossomTimer <= diff)
             {
@@ -477,8 +471,7 @@ public:
                         SummonDoomBlossomTimer = 35000;
                     }
                 }
-            }
-            else SummonDoomBlossomTimer -= diff;
+            } else SummonDoomBlossomTimer -= diff;
 
             if (IncinerateTimer <= diff)
             {
@@ -492,49 +485,45 @@ public:
                     DoCast(target, SPELL_INCINERATE);
                     IncinerateTimer = urand(20, 51) * 1000;
                 }
-            }
-            else IncinerateTimer -= diff;
+            } else IncinerateTimer -= diff;
 
             if (CrushingShadowsTimer <= diff)
             {
                 if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
                     DoCast(target, SPELL_CRUSHING_SHADOWS);
                 CrushingShadowsTimer = urand(10, 26) * 1000;
-            }
-            else CrushingShadowsTimer -= diff;
+            } else CrushingShadowsTimer -= diff;
 
             /*** NOTE FOR FUTURE DEV: UNCOMMENT BELOW ONLY IF MIND CONTROL IS FULLY IMPLEMENTED **/
             /*if (ShadowOfDeathTimer <= diff)
             {
-            Unit* target = SelectUnit(SELECT_TARGET_RANDOM, 1);
+                Unit* target = SelectUnit(SELECT_TARGET_RANDOM, 1);
 
-            if (!target)
-            target = me->GetVictim();
+                if (!target)
+                   target = me->GetVictim();
 
-            if (target && target->IsAlive() && target->GetTypeId() == TYPEID_PLAYER)
-            {
-            DoCast(target, SPELL_SHADOW_OF_DEATH);
-            GhostGUID = target->GetGUID();
-            ShadowOfDeathTimer = 30000;
-            SummonShadowsTimer = 53000; // Make it VERY close but slightly less so that we can check if the aura is still on the player
-            }
+                if (target && target->IsAlive() && target->GetTypeId() == TYPEID_PLAYER)
+                {
+                    DoCast(target, SPELL_SHADOW_OF_DEATH);
+                    GhostGUID = target->GetGUID();
+                    ShadowOfDeathTimer = 30000;
+                    SummonShadowsTimer = 53000; // Make it VERY close but slightly less so that we can check if the aura is still on the player
+                }
             } else ShadowOfDeathTimer -= diff;*/
 
             if (RandomYellTimer <= diff)
             {
                 Talk(SAY_SPELL);
                 RandomYellTimer = urand(50, 101) * 1000;
-            }
-            else RandomYellTimer -= diff;
+            } else RandomYellTimer -= diff;
 
             if (!me->HasAura(SPELL_BERSERK))
             {
                 if (EnrageTimer <= diff)
-                {
-                    DoCast(me, SPELL_BERSERK);
-                    Talk(SAY_ENRAGE);
-                }
-                else EnrageTimer -= diff;
+            {
+                DoCast(me, SPELL_BERSERK);
+                Talk(SAY_ENRAGE);
+            } else EnrageTimer -= diff;
             }
 
             DoMeleeAttackIfReady();

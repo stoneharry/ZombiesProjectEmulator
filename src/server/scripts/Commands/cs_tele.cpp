@@ -39,17 +39,17 @@ public:
     {
         static ChatCommand teleCommandTable[] =
         {
-            { "add", rbac::RBAC_PERM_COMMAND_TELE_ADD, false, &HandleTeleAddCommand, "", NULL },
-            { "del", rbac::RBAC_PERM_COMMAND_TELE_DEL, true, &HandleTeleDelCommand, "", NULL },
-            { "name", rbac::RBAC_PERM_COMMAND_TELE_NAME, true, &HandleTeleNameCommand, "", NULL },
+            { "add",   rbac::RBAC_PERM_COMMAND_TELE_ADD,   false, &HandleTeleAddCommand,   "", NULL },
+            { "del",   rbac::RBAC_PERM_COMMAND_TELE_DEL,    true, &HandleTeleDelCommand,   "", NULL },
+            { "name",  rbac::RBAC_PERM_COMMAND_TELE_NAME,   true, &HandleTeleNameCommand,  "", NULL },
             { "group", rbac::RBAC_PERM_COMMAND_TELE_GROUP, false, &HandleTeleGroupCommand, "", NULL },
-            { "", rbac::RBAC_PERM_COMMAND_TELE, false, &HandleTeleCommand, "", NULL },
-            { NULL, 0, false, NULL, "", NULL }
+            { "",      rbac::RBAC_PERM_COMMAND_TELE,       false, &HandleTeleCommand,      "", NULL },
+            { NULL,    0,                            false, NULL,                    "", NULL }
         };
         static ChatCommand commandTable[] =
         {
             { "tele", rbac::RBAC_PERM_COMMAND_TELE, false, NULL, "", teleCommandTable },
-            { NULL, 0, false, NULL, "", NULL }
+            { NULL,   0,                      false, NULL, "", NULL }
         };
         return commandTable;
     }
@@ -73,12 +73,12 @@ public:
         }
 
         GameTele tele;
-        tele.position_x = player->GetPositionX();
-        tele.position_y = player->GetPositionY();
-        tele.position_z = player->GetPositionZ();
+        tele.position_x  = player->GetPositionX();
+        tele.position_y  = player->GetPositionY();
+        tele.position_z  = player->GetPositionZ();
         tele.orientation = player->GetOrientation();
-        tele.mapId = player->GetMapId();
-        tele.name = name;
+        tele.mapId       = player->GetMapId();
+        tele.name        = name;
 
         if (sObjectMgr->AddGameTele(tele))
         {
@@ -99,7 +99,7 @@ public:
         if (!*args)
             return false;
 
-        // id, or string, or [name] Shift-click form |color|Htele:id|h[name]|h|r
+         // id, or string, or [name] Shift-click form |color|Htele:id|h[name]|h|r
         GameTele const* tele = handler->extractGameTeleFromLink((char*)args);
         if (!tele)
         {

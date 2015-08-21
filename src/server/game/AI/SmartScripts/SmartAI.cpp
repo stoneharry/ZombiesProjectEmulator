@@ -84,8 +84,7 @@ void SmartAI::UpdateDespawn(const uint32 diff)
         }
         else
             me->DespawnOrUnsummon();
-    }
-    else mDespawnTime -= diff;
+    } else mDespawnTime -= diff;
 }
 
 WayPoint* SmartAI::GetNextWayPoint()
@@ -117,8 +116,8 @@ void SmartAI::StartPath(bool run, uint32 path, bool repeat, Unit* /*invoker*/)
     if (HasEscortState(SMART_ESCORT_ESCORTING))
         StopPath();
     if (path)
-    if (!LoadPath(path))
-        return;
+        if (!LoadPath(path))
+            return;
     if (!mWayPoints || mWayPoints->empty())
         return;
 
@@ -227,8 +226,7 @@ void SmartAI::EndPath(bool fail)
                         groupGuy->FailQuest(mEscortQuestID);
                 }
             }
-        }
-        else
+        }else
         {
             for (ObjectList::iterator iter = targets->begin(); iter != targets->end(); ++iter)
             {
@@ -272,8 +270,7 @@ void SmartAI::UpdatePath(const uint32 diff)
             StopPath(mDespawnTime, mEscortQuestID, true);
         }
         mEscortInvokerCheckTimer = 1000;
-    }
-    else mEscortInvokerCheckTimer -= diff;
+    } else mEscortInvokerCheckTimer -= diff;
     // handle pause
     if (HasEscortState(SMART_ESCORT_PAUSED))
     {
@@ -293,8 +290,7 @@ void SmartAI::UpdatePath(const uint32 diff)
                     mWPReached = true;
             }
             mWPPauseTimer = 0;
-        }
-        else {
+        } else {
             mWPPauseTimer -= diff;
         }
     }
@@ -365,7 +361,7 @@ bool SmartAI::IsEscortInvokerInRange()
         {
             Player* player = (*targets->begin())->ToPlayer();
             if (me->GetDistance(player) <= SMART_ESCORT_MAX_PLAYER_DIST)
-                return true;
+                        return true;
 
             if (Group* group = player->GetGroup())
             {
@@ -377,8 +373,7 @@ bool SmartAI::IsEscortInvokerInRange()
                         return true;
                 }
             }
-        }
-        else
+        }else
         {
             for (ObjectList::iterator iter = targets->begin(); iter != targets->end(); ++iter)
             {
@@ -417,8 +412,8 @@ void SmartAI::EnterEvadeMode()
 {
     if (!me->IsAlive() || me->IsInEvadeMode())
         return;
-    if (me->GetPhaseMask() >= 32) // Hackfix, Harry
-        return;
+	if (me->GetPhaseMask() >= 32) // Hackfix, Harry
+		return;
 
     me->RemoveAllAurasExceptType(SPELL_AURA_CONTROL_VEHICLE, SPELL_AURA_CLONE_CASTER);
 
@@ -668,7 +663,7 @@ void SmartAI::InitializeAI()
 {
     GetScript()->OnInitialize(me);
     if (!me->isDead())
-        mJustReset = true;
+    mJustReset = true;
     JustReachedHome();
     GetScript()->ProcessEventsFor(SMART_EVENT_RESPAWN);
 }
@@ -678,8 +673,8 @@ void SmartAI::OnCharmed(bool apply)
     GetScript()->ProcessEventsFor(SMART_EVENT_CHARMED, NULL, 0, 0, apply);
 
     if (!apply && !me->IsInEvadeMode() && me->GetCharmerGUID())
-    if (Unit* charmer = ObjectAccessor::GetUnit(*me, me->GetCharmerGUID()))
-        AttackStart(charmer);
+        if (Unit* charmer = ObjectAccessor::GetUnit(*me, me->GetCharmerGUID()))
+            AttackStart(charmer);
 }
 
 void SmartAI::DoAction(int32 param)
@@ -930,21 +925,21 @@ void SmartGameObjectAI::EventInform(uint32 eventId)
 
 class SmartTrigger : public AreaTriggerScript
 {
-public:
+    public:
 
-    SmartTrigger() : AreaTriggerScript("SmartTrigger") { }
+        SmartTrigger() : AreaTriggerScript("SmartTrigger") { }
 
-    bool OnTrigger(Player* player, AreaTriggerEntry const* trigger) override
-    {
-        if (!player->IsAlive())
-            return false;
+        bool OnTrigger(Player* player, AreaTriggerEntry const* trigger) override
+        {
+            if (!player->IsAlive())
+                return false;
 
-        TC_LOG_DEBUG("scripts.ai", "AreaTrigger %u is using SmartTrigger script", trigger->id);
-        SmartScript script;
-        script.OnInitialize(NULL, trigger);
-        script.ProcessEventsFor(SMART_EVENT_AREATRIGGER_ONTRIGGER, player, trigger->id);
-        return true;
-    }
+            TC_LOG_DEBUG("scripts.ai", "AreaTrigger %u is using SmartTrigger script", trigger->id);
+            SmartScript script;
+            script.OnInitialize(NULL, trigger);
+            script.ProcessEventsFor(SMART_EVENT_AREATRIGGER_ONTRIGGER, player, trigger->id);
+            return true;
+        }
 };
 
 void AddSC_SmartScripts()

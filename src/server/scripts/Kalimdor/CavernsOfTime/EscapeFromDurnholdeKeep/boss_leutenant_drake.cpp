@@ -58,20 +58,20 @@ public:
 
 enum LieutenantDrake
 {
-    SAY_ENTER = 0,
-    SAY_AGGRO = 1,
-    SAY_SLAY = 2,
-    SAY_MORTAL = 3,
-    SAY_SHOUT = 4,
-    SAY_DEATH = 5,
+    SAY_ENTER               = 0,
+    SAY_AGGRO               = 1,
+    SAY_SLAY                = 2,
+    SAY_MORTAL              = 3,
+    SAY_SHOUT               = 4,
+    SAY_DEATH               = 5,
 
-    SPELL_WHIRLWIND = 31909,
-    SPELL_HAMSTRING = 9080,
-    SPELL_MORTAL_STRIKE = 31911,
+    SPELL_WHIRLWIND         = 31909,
+    SPELL_HAMSTRING         = 9080,
+    SPELL_MORTAL_STRIKE     = 31911,
     SPELL_FRIGHTENING_SHOUT = 33789
 };
 
-G3D::Vector3 const DrakeWP[] =
+G3D::Vector3 const DrakeWP[]=
 {
     { 2125.84f, 88.2535f, 54.8830f },
     { 2111.01f, 93.8022f, 52.6356f },
@@ -168,8 +168,7 @@ public:
             {
                 DoCastVictim(SPELL_WHIRLWIND);
                 Whirlwind_Timer = 20000 + rand32() % 5000;
-            }
-            else Whirlwind_Timer -= diff;
+            } else Whirlwind_Timer -= diff;
 
             //Fear
             if (Fear_Timer <= diff)
@@ -177,8 +176,7 @@ public:
                 Talk(SAY_SHOUT);
                 DoCastVictim(SPELL_FRIGHTENING_SHOUT);
                 Fear_Timer = 25000 + rand32() % 10000;
-            }
-            else Fear_Timer -= diff;
+            } else Fear_Timer -= diff;
 
             //Mortal Strike
             if (MortalStrike_Timer <= diff)
@@ -186,8 +184,7 @@ public:
                 Talk(SAY_MORTAL);
                 DoCastVictim(SPELL_MORTAL_STRIKE);
                 MortalStrike_Timer = 20000 + rand32() % 10000;
-            }
-            else MortalStrike_Timer -= diff;
+            } else MortalStrike_Timer -= diff;
 
             DoMeleeAttackIfReady();
         }

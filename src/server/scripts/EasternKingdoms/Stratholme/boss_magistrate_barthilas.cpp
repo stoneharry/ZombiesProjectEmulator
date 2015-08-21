@@ -29,16 +29,16 @@ EndScriptData */
 
 enum Spells
 {
-    SPELL_DRAININGBLOW = 16793,
-    SPELL_CROWDPUMMEL = 10887,
-    SPELL_MIGHTYBLOW = 14099,
-    SPELL_FURIOUS_ANGER = 16791
+    SPELL_DRAININGBLOW      = 16793,
+    SPELL_CROWDPUMMEL       = 10887,
+    SPELL_MIGHTYBLOW        = 14099,
+    SPELL_FURIOUS_ANGER     = 16791
 };
 
 enum Models
 {
-    MODEL_NORMAL = 10433,
-    MODEL_HUMAN = 3637
+    MODEL_NORMAL            = 10433,
+    MODEL_HUMAN             = 3637
 };
 
 class boss_magistrate_barthilas : public CreatureScript
@@ -114,32 +114,28 @@ public:
 
                 ++AngerCount;
                 DoCast(me, SPELL_FURIOUS_ANGER, false);
-            }
-            else FuriousAnger_Timer -= diff;
+            } else FuriousAnger_Timer -= diff;
 
             //DrainingBlow
             if (DrainingBlow_Timer <= diff)
             {
                 DoCastVictim(SPELL_DRAININGBLOW);
                 DrainingBlow_Timer = 15000;
-            }
-            else DrainingBlow_Timer -= diff;
+            } else DrainingBlow_Timer -= diff;
 
             //CrowdPummel
             if (CrowdPummel_Timer <= diff)
             {
                 DoCastVictim(SPELL_CROWDPUMMEL);
                 CrowdPummel_Timer = 15000;
-            }
-            else CrowdPummel_Timer -= diff;
+            } else CrowdPummel_Timer -= diff;
 
             //MightyBlow
             if (MightyBlow_Timer <= diff)
             {
                 DoCastVictim(SPELL_MIGHTYBLOW);
                 MightyBlow_Timer = 20000;
-            }
-            else MightyBlow_Timer -= diff;
+            } else MightyBlow_Timer -= diff;
 
             DoMeleeAttackIfReady();
         }

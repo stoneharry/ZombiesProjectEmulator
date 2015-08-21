@@ -21,80 +21,80 @@
 
 enum Yells
 {
-    SAY_AGGRO = 0,
-    SAY_SPECIAL_1 = 1,
-    SAY_SPECIAL_2 = 2,
-    SAY_SPECIAL_3 = 3,
-    SAY_JUMPDOWN = 4,
-    SAY_SLAY = 5,
-    SAY_BERSERK = 6,
-    SAY_WIPE = 7,
-    SAY_DEATH = 8,
-    SAY_END_NORMAL_1 = 9,
-    SAY_END_NORMAL_2 = 10,
-    SAY_END_NORMAL_3 = 11,
-    SAY_END_HARD_1 = 12,
-    SAY_END_HARD_2 = 13,
-    SAY_END_HARD_3 = 14
+    SAY_AGGRO                                   = 0,
+    SAY_SPECIAL_1                               = 1,
+    SAY_SPECIAL_2                               = 2,
+    SAY_SPECIAL_3                               = 3,
+    SAY_JUMPDOWN                                = 4,
+    SAY_SLAY                                    = 5,
+    SAY_BERSERK                                 = 6,
+    SAY_WIPE                                    = 7,
+    SAY_DEATH                                   = 8,
+    SAY_END_NORMAL_1                            = 9,
+    SAY_END_NORMAL_2                            = 10,
+    SAY_END_NORMAL_3                            = 11,
+    SAY_END_HARD_1                              = 12,
+    SAY_END_HARD_2                              = 13,
+    SAY_END_HARD_3                              = 14
 };
 
 class boss_thorim : public CreatureScript
 {
-public:
-    boss_thorim() : CreatureScript("boss_thorim") { }
+    public:
+        boss_thorim() : CreatureScript("boss_thorim") { }
 
-    struct boss_thorimAI : public BossAI
-    {
-        boss_thorimAI(Creature* creature) : BossAI(creature, BOSS_THORIM)
+        struct boss_thorimAI : public BossAI
         {
-        }
+            boss_thorimAI(Creature* creature) : BossAI(creature, BOSS_THORIM)
+            {
+            }
 
-        void Reset() override
+            void Reset() override
+            {
+                _Reset();
+            }
+
+            void EnterEvadeMode() override
+            {
+                Talk(SAY_WIPE);
+                _EnterEvadeMode();
+            }
+
+            void KilledUnit(Unit* who) override
+            {
+                if (who->GetTypeId() == TYPEID_PLAYER)
+                    Talk(SAY_SLAY);
+            }
+
+            void JustDied(Unit* /*killer*/) override
+            {
+                Talk(SAY_DEATH);
+                _JustDied();
+            }
+
+            void EnterCombat(Unit* /*who*/) override
+            {
+                Talk(SAY_AGGRO);
+                _EnterCombat();
+            }
+
+            void UpdateAI(uint32 diff) override
+            {
+                if (!UpdateVictim())
+                    return;
+                //SPELLS @todo
+
+                //
+                DoMeleeAttackIfReady();
+
+                EnterEvadeIfOutOfCombatArea(diff);
+            }
+        };
+
+        CreatureAI* GetAI(Creature* creature) const override
         {
-            _Reset();
+            return GetUlduarAI<boss_thorimAI>(creature);
         }
-
-        void EnterEvadeMode() override
-        {
-            Talk(SAY_WIPE);
-            _EnterEvadeMode();
-        }
-
-        void KilledUnit(Unit* who) override
-        {
-            if (who->GetTypeId() == TYPEID_PLAYER)
-                Talk(SAY_SLAY);
-        }
-
-        void JustDied(Unit* /*killer*/) override
-        {
-            Talk(SAY_DEATH);
-            _JustDied();
-        }
-
-        void EnterCombat(Unit* /*who*/) override
-        {
-            Talk(SAY_AGGRO);
-            _EnterCombat();
-        }
-
-        void UpdateAI(uint32 diff) override
-        {
-            if (!UpdateVictim())
-                return;
-            //SPELLS @todo
-
-            //
-            DoMeleeAttackIfReady();
-
-            EnterEvadeIfOutOfCombatArea(diff);
-        }
-    };
-
-    CreatureAI* GetAI(Creature* creature) const override
-    {
-        return GetUlduarAI<boss_thorimAI>(creature);
-    }
 };
 
 void AddSC_boss_thorim()

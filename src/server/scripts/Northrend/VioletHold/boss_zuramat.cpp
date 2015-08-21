@@ -21,31 +21,31 @@
 
 enum Spells
 {
-    SPELL_SHROUD_OF_DARKNESS = 54524,
-    H_SPELL_SHROUD_OF_DARKNESS = 59745,
-    SPELL_SUMMON_VOID_SENTRY = 54369,
-    SPELL_VOID_SHIFT = 54361,
-    H_SPELL_VOID_SHIFT = 59743,
+    SPELL_SHROUD_OF_DARKNESS                    = 54524,
+    H_SPELL_SHROUD_OF_DARKNESS                  = 59745,
+    SPELL_SUMMON_VOID_SENTRY                    = 54369,
+    SPELL_VOID_SHIFT                            = 54361,
+    H_SPELL_VOID_SHIFT                          = 59743,
 };
 
 enum Creatures
 {
-    NPC_VOID_SENTRY = 29364
+    NPC_VOID_SENTRY                        = 29364
 };
 
 enum Yells
 {
-    SAY_AGGRO = 0,
-    SAY_SLAY = 1,
-    SAY_DEATH = 2,
-    SAY_SPAWN = 3,
-    SAY_SHIELD = 4,
-    SAY_WHISPER = 5
+    SAY_AGGRO                                   = 0,
+    SAY_SLAY                                    = 1,
+    SAY_DEATH                                   = 2,
+    SAY_SPAWN                                   = 3,
+    SAY_SHIELD                                  = 4,
+    SAY_WHISPER                                 = 5
 };
 
 enum Misc
 {
-    DATA_VOID_DANCE = 2153
+    DATA_VOID_DANCE                             = 2153
 };
 
 class boss_zuramat : public CreatureScript
@@ -109,11 +109,11 @@ public:
         {
             Talk(SAY_AGGRO);
             if (GameObject* pDoor = instance->instance->GetGameObject(instance->GetGuidData(DATA_ZURAMAT_CELL)))
-            if (pDoor->GetGoState() == GO_STATE_READY)
-            {
-                EnterEvadeMode();
-                return;
-            }
+                if (pDoor->GetGoState() == GO_STATE_READY)
+                {
+                    EnterEvadeMode();
+                    return;
+                }
             if (instance->GetData(DATA_WAVE_COUNT) == 6)
                 instance->SetData(DATA_1ST_BOSS_EVENT, IN_PROGRESS);
             else if (instance->GetData(DATA_WAVE_COUNT) == 12)
@@ -133,23 +133,20 @@ public:
             {
                 DoCastVictim(SPELL_SUMMON_VOID_SENTRY, false);
                 SpellSummonVoidTimer = 20000;
-            }
-            else SpellSummonVoidTimer -= diff;
+            } else SpellSummonVoidTimer -=diff;
 
             if (SpellVoidShiftTimer <= diff)
             {
-                if (Unit* unit = SelectTarget(SELECT_TARGET_RANDOM, 0))
+                 if (Unit* unit = SelectTarget(SELECT_TARGET_RANDOM, 0))
                     DoCast(unit, SPELL_VOID_SHIFT);
                 SpellVoidShiftTimer = 20000;
-            }
-            else SpellVoidShiftTimer -= diff;
+            } else SpellVoidShiftTimer -=diff;
 
             if (SpellShroudOfDarknessTimer <= diff)
             {
                 DoCastVictim(SPELL_SHROUD_OF_DARKNESS);
                 SpellShroudOfDarknessTimer = 20000;
-            }
-            else SpellShroudOfDarknessTimer -= diff;
+            } else SpellShroudOfDarknessTimer -=diff;
 
             DoMeleeAttackIfReady();
         }
@@ -198,22 +195,22 @@ public:
 
 class achievement_void_dance : public AchievementCriteriaScript
 {
-public:
-    achievement_void_dance() : AchievementCriteriaScript("achievement_void_dance")
-    {
-    }
+    public:
+        achievement_void_dance() : AchievementCriteriaScript("achievement_void_dance")
+        {
+        }
 
-    bool OnCheck(Player* /*player*/, Unit* target) override
-    {
-        if (!target)
+        bool OnCheck(Player* /*player*/, Unit* target) override
+        {
+            if (!target)
+                return false;
+
+            if (Creature* Zuramat = target->ToCreature())
+                if (Zuramat->AI()->GetData(DATA_VOID_DANCE))
+                    return true;
+
             return false;
-
-        if (Creature* Zuramat = target->ToCreature())
-        if (Zuramat->AI()->GetData(DATA_VOID_DANCE))
-            return true;
-
-        return false;
-    }
+        }
 };
 
 void AddSC_boss_zuramat()

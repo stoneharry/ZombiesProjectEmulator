@@ -23,21 +23,21 @@
 class SQLQueryHolder
 {
     friend class SQLQueryHolderTask;
-private:
-    typedef std::pair<SQLElementData, SQLResultSetUnion> SQLResultPair;
-    std::vector<SQLResultPair> m_queries;
-public:
-    SQLQueryHolder() { }
-    ~SQLQueryHolder();
-    bool SetQuery(size_t index, const char* sql);
-    template<typename... Args>
-    bool SetPQuery(size_t index, const char* sql, Args const&... args) { return SetQuery(index, Trinity::StringFormat(sql, args...).c_str()); }
-    bool SetPreparedQuery(size_t index, PreparedStatement* stmt);
-    void SetSize(size_t size);
-    QueryResult GetResult(size_t index);
-    PreparedQueryResult GetPreparedResult(size_t index);
-    void SetResult(size_t index, ResultSet* result);
-    void SetPreparedResult(size_t index, PreparedResultSet* result);
+    private:
+        typedef std::pair<SQLElementData, SQLResultSetUnion> SQLResultPair;
+        std::vector<SQLResultPair> m_queries;
+    public:
+        SQLQueryHolder() { }
+        ~SQLQueryHolder();
+        bool SetQuery(size_t index, const char* sql);
+        template<typename... Args>
+        bool SetPQuery(size_t index, const char* sql, Args const&... args) { return SetQuery(index, Trinity::StringFormat(sql, args...).c_str()); }
+        bool SetPreparedQuery(size_t index, PreparedStatement* stmt);
+        void SetSize(size_t size);
+        QueryResult GetResult(size_t index);
+        PreparedQueryResult GetPreparedResult(size_t index);
+        void SetResult(size_t index, ResultSet* result);
+        void SetPreparedResult(size_t index, PreparedResultSet* result);
 };
 
 typedef std::future<SQLQueryHolder*> QueryResultHolderFuture;
@@ -45,19 +45,19 @@ typedef std::promise<SQLQueryHolder*> QueryResultHolderPromise;
 
 class SQLQueryHolderTask : public SQLOperation
 {
-private:
-    SQLQueryHolder* m_holder;
-    QueryResultHolderPromise m_result;
-    bool m_executed;
+    private:
+        SQLQueryHolder* m_holder;
+        QueryResultHolderPromise m_result;
+        bool m_executed;
 
-public:
-    SQLQueryHolderTask(SQLQueryHolder* holder)
-        : m_holder(holder), m_executed(false) { }
+    public:
+        SQLQueryHolderTask(SQLQueryHolder* holder)
+            : m_holder(holder), m_executed(false) { }
 
-    ~SQLQueryHolderTask();
+        ~SQLQueryHolderTask();
 
-    bool Execute() override;
-    QueryResultHolderFuture GetFuture() { return m_result.get_future(); }
+        bool Execute() override;
+        QueryResultHolderFuture GetFuture() { return m_result.get_future(); }
 };
 
 #endif

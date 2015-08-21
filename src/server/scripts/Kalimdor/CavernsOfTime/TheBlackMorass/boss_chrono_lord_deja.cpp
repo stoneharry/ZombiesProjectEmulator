@@ -29,26 +29,26 @@ Category: Caverns of Time, The Black Morass
 
 enum Enums
 {
-    SAY_ENTER = 0,
-    SAY_AGGRO = 1,
-    SAY_BANISH = 2,
-    SAY_SLAY = 3,
-    SAY_DEATH = 4,
+    SAY_ENTER                   = 0,
+    SAY_AGGRO                   = 1,
+    SAY_BANISH                  = 2,
+    SAY_SLAY                    = 3,
+    SAY_DEATH                   = 4,
 
-    SPELL_ARCANE_BLAST = 31457,
-    H_SPELL_ARCANE_BLAST = 38538,
-    SPELL_ARCANE_DISCHARGE = 31472,
-    H_SPELL_ARCANE_DISCHARGE = 38539,
-    SPELL_TIME_LAPSE = 31467,
-    SPELL_ATTRACTION = 38540                       //Not Implemented (Heroic mode)
+    SPELL_ARCANE_BLAST          = 31457,
+    H_SPELL_ARCANE_BLAST        = 38538,
+    SPELL_ARCANE_DISCHARGE      = 31472,
+    H_SPELL_ARCANE_DISCHARGE    = 38539,
+    SPELL_TIME_LAPSE            = 31467,
+    SPELL_ATTRACTION            = 38540                       //Not Implemented (Heroic mode)
 };
 
 enum Events
 {
-    EVENT_ARCANE_BLAST = 1,
-    EVENT_TIME_LAPSE = 2,
-    EVENT_ARCANE_DISCHARGE = 3,
-    EVENT_ATTRACTION = 4
+    EVENT_ARCANE_BLAST          = 1,
+    EVENT_TIME_LAPSE            = 2,
+    EVENT_ARCANE_DISCHARGE      = 3,
+    EVENT_ATTRACTION            = 4
 };
 
 class boss_chrono_lord_deja : public CreatureScript
@@ -115,26 +115,26 @@ public:
             {
                 switch (eventId)
                 {
-                case EVENT_ARCANE_BLAST:
-                    DoCastVictim(SPELL_ARCANE_BLAST);
-                    events.ScheduleEvent(EVENT_ARCANE_BLAST, urand(15000, 25000));
-                    break;
-                case EVENT_TIME_LAPSE:
-                    Talk(SAY_BANISH);
-                    DoCast(me, SPELL_TIME_LAPSE);
-                    events.ScheduleEvent(EVENT_TIME_LAPSE, urand(15000, 25000));
-                    break;
-                case EVENT_ARCANE_DISCHARGE:
-                    if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
-                        DoCast(target, SPELL_ARCANE_DISCHARGE);
-                    events.ScheduleEvent(EVENT_ARCANE_DISCHARGE, urand(20000, 30000));
-                    break;
-                case EVENT_ATTRACTION: // Only in Heroic
-                    DoCast(me, SPELL_ATTRACTION);
-                    events.ScheduleEvent(EVENT_ATTRACTION, urand(25000, 35000));
-                    break;
-                default:
-                    break;
+                    case EVENT_ARCANE_BLAST:
+                        DoCastVictim(SPELL_ARCANE_BLAST);
+                        events.ScheduleEvent(EVENT_ARCANE_BLAST, urand(15000, 25000));
+                        break;
+                    case EVENT_TIME_LAPSE:
+                        Talk(SAY_BANISH);
+                        DoCast(me, SPELL_TIME_LAPSE);
+                        events.ScheduleEvent(EVENT_TIME_LAPSE, urand(15000, 25000));
+                        break;
+                    case EVENT_ARCANE_DISCHARGE:
+                        if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
+                            DoCast(target, SPELL_ARCANE_DISCHARGE);
+                        events.ScheduleEvent(EVENT_ARCANE_DISCHARGE, urand(20000, 30000));
+                        break;
+                    case EVENT_ATTRACTION: // Only in Heroic
+                        DoCast(me, SPELL_ATTRACTION);
+                        events.ScheduleEvent(EVENT_ATTRACTION, urand(25000, 35000));
+                        break;
+                    default:
+                        break;
                 }
             }
 

@@ -28,8 +28,8 @@ EndScriptData */
 
 enum Spells
 {
-    SPELL_TOXICVOLLEY = 21687,
-    SPELL_UPPERCUT = 22916
+    SPELL_TOXICVOLLEY           = 21687,
+    SPELL_UPPERCUT              = 22916
 };
 
 class boss_noxxion : public CreatureScript

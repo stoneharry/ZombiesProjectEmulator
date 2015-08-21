@@ -35,98 +35,98 @@ EndScriptData */
 //this texts are already used by 3975 and 3976
 enum Says
 {
-    SAY_LOST_HEAD = 0,
-    SAY_PLAYER_DEATH = 1,
+    SAY_LOST_HEAD               = 0,
+    SAY_PLAYER_DEATH            = 1,
 
-    SAY_ENTRANCE = 0,
-    SAY_REJOINED = 1,
-    SAY_CONFLAGRATION = 2,
-    SAY_SPROUTING_PUMPKINS = 3,
-    SAY_DEATH = 4,
+    SAY_ENTRANCE                = 0,
+    SAY_REJOINED                = 1,
+    SAY_CONFLAGRATION           = 2,
+    SAY_SPROUTING_PUMPKINS      = 3,
+    SAY_DEATH                   = 4,
 };
 
-uint32 RandomLaugh[] = { 11965, 11975, 11976 };
+uint32 RandomLaugh[] = {11965, 11975, 11976};
 
 enum Entry
 {
-    HH_MOUNTED = 23682,
-    HH_DISMOUNTED = 23800,
-    HEAD = 23775,
-    PULSING_PUMPKIN = 23694,
-    PUMPKIN_FIEND = 23545,
-    HELPER = 23686,
-    WISP_INVIS = 24034
+    HH_MOUNTED                  = 23682,
+    HH_DISMOUNTED               = 23800,
+    HEAD                        = 23775,
+    PULSING_PUMPKIN             = 23694,
+    PUMPKIN_FIEND               = 23545,
+    HELPER                      = 23686,
+    WISP_INVIS                  = 24034
 };
 
 enum Spells
 {
-    SPELL_CLEAVE = 42587,
-    SPELL_CONFLAGRATION = 42380,       //Phase 2, can't find real spell(Dim Fire?)
-    // SPELL_CONFL_SPEED           = 22587,       //8% increase speed, value 22587 from SPELL_CONFLAGRATION mains that spell?
-    SPELL_SUMMON_PUMPKIN = 42394,
+    SPELL_CLEAVE                = 42587,
+    SPELL_CONFLAGRATION         = 42380,       //Phase 2, can't find real spell(Dim Fire?)
+ // SPELL_CONFL_SPEED           = 22587,       //8% increase speed, value 22587 from SPELL_CONFLAGRATION mains that spell?
+    SPELL_SUMMON_PUMPKIN        = 42394,
 
-    SPELL_WHIRLWIND = 43116,
-    SPELL_IMMUNE = 42556,
-    SPELL_BODY_REGEN = 42403,
-    SPELL_CONFUSE = 43105,
+    SPELL_WHIRLWIND             = 43116,
+    SPELL_IMMUNE                = 42556,
+    SPELL_BODY_REGEN            = 42403,
+    SPELL_CONFUSE               = 43105,
 
-    SPELL_FLYING_HEAD = 42399,       //visual flying head
-    SPELL_HEAD = 42413,       //visual buff, "head"
-    SPELL_HEAD_IS_DEAD = 42428,       //at killing head, Phase 3
+    SPELL_FLYING_HEAD           = 42399,       //visual flying head
+    SPELL_HEAD                  = 42413,       //visual buff, "head"
+    SPELL_HEAD_IS_DEAD          = 42428,       //at killing head, Phase 3
 
-    SPELL_PUMPKIN_AURA = 42280,
-    SPELL_PUMPKIN_AURA_GREEN = 42294,
-    SPELL_SQUASH_SOUL = 42514,
-    SPELL_SPROUTING = 42281,
-    SPELL_SPROUT_BODY = 42285,
+    SPELL_PUMPKIN_AURA          = 42280,
+    SPELL_PUMPKIN_AURA_GREEN    = 42294,
+    SPELL_SQUASH_SOUL           = 42514,
+    SPELL_SPROUTING             = 42281,
+    SPELL_SPROUT_BODY           = 42285,
 
     //Effects
-    SPELL_RHYME_BIG = 42909,
-    // SPELL_RHYME_SMALL           = 42910,
-    SPELL_HEAD_SPEAKS = 43129,
-    SPELL_HEAD_LANDS = 42400,
-    SPELL_BODY_FLAME = 42074,
-    SPELL_HEAD_FLAME = 42971,
-    // SPELL_ENRAGE_VISUAL         = 42438,       // he uses this spell?
-    SPELL_WISP_BLUE = 42821,
-    SPELL_WISP_FLIGHT_PORT = 42818,
-    // SPELL_WISP_INVIS            = 42823,
-    SPELL_SMOKE = 42355,
-    SPELL_DEATH = 42566       //not correct spell
+    SPELL_RHYME_BIG             = 42909,
+ // SPELL_RHYME_SMALL           = 42910,
+    SPELL_HEAD_SPEAKS           = 43129,
+    SPELL_HEAD_LANDS            = 42400,
+    SPELL_BODY_FLAME            = 42074,
+    SPELL_HEAD_FLAME            = 42971,
+ // SPELL_ENRAGE_VISUAL         = 42438,       // he uses this spell?
+    SPELL_WISP_BLUE             = 42821,
+    SPELL_WISP_FLIGHT_PORT      = 42818,
+ // SPELL_WISP_INVIS            = 42823,
+    SPELL_SMOKE                 = 42355,
+    SPELL_DEATH                 = 42566       //not correct spell
 };
 
-G3D::Vector3 const FlightPoint[] =
+G3D::Vector3 const FlightPoint[]=
 {
-    { 1754.00f, 1346.00f, 17.50f },
-    { 1765.00f, 1347.00f, 19.00f },
-    { 1784.00f, 1346.80f, 25.40f },
-    { 1803.30f, 1347.60f, 33.00f },
-    { 1824.00f, 1350.00f, 42.60f },
-    { 1838.80f, 1353.20f, 49.80f },
-    { 1852.00f, 1357.60f, 55.70f },
-    { 1861.30f, 1364.00f, 59.40f },
-    { 1866.30f, 1374.80f, 61.70f },
-    { 1864.00f, 1387.30f, 63.20f },
-    { 1854.80f, 1399.40f, 64.10f },
-    { 1844.00f, 1406.90f, 64.10f },
-    { 1824.30f, 1411.40f, 63.30f },
-    { 1801.00f, 1412.30f, 60.40f },
-    { 1782.00f, 1410.10f, 55.50f },
-    { 1770.50f, 1405.20f, 50.30f },
-    { 1765.20f, 1400.70f, 46.60f },
-    { 1761.40f, 1393.40f, 41.70f },
-    { 1759.10f, 1386.70f, 36.60f },
-    { 1757.80f, 1378.20f, 29.00f },
-    { 1758.00f, 1367.00f, 19.51f }
+    {1754.00f, 1346.00f, 17.50f},
+    {1765.00f, 1347.00f, 19.00f},
+    {1784.00f, 1346.80f, 25.40f},
+    {1803.30f, 1347.60f, 33.00f},
+    {1824.00f, 1350.00f, 42.60f},
+    {1838.80f, 1353.20f, 49.80f},
+    {1852.00f, 1357.60f, 55.70f},
+    {1861.30f, 1364.00f, 59.40f},
+    {1866.30f, 1374.80f, 61.70f},
+    {1864.00f, 1387.30f, 63.20f},
+    {1854.80f, 1399.40f, 64.10f},
+    {1844.00f, 1406.90f, 64.10f},
+    {1824.30f, 1411.40f, 63.30f},
+    {1801.00f, 1412.30f, 60.40f},
+    {1782.00f, 1410.10f, 55.50f},
+    {1770.50f, 1405.20f, 50.30f},
+    {1765.20f, 1400.70f, 46.60f},
+    {1761.40f, 1393.40f, 41.70f},
+    {1759.10f, 1386.70f, 36.60f},
+    {1757.80f, 1378.20f, 29.00f},
+    {1758.00f, 1367.00f, 19.51f}
 };
 
-G3D::Vector3 const Spawn[] =
+G3D::Vector3 const Spawn[]=
 {
-    { 1776.27f, 1348.74f, 19.20f },       //spawn point for pumpkin shrine mob
-    { 1765.28f, 1347.46f, 17.55f }     //spawn point for smoke
+    {1776.27f, 1348.74f, 19.20f},       //spawn point for pumpkin shrine mob
+    {1765.28f, 1347.46f, 17.55f}     //spawn point for smoke
 };
 
-static char const* Text[] =
+static char const* Text[]=
 {
     "Horseman rise...",
     "Your time is nigh...",
@@ -163,22 +163,22 @@ public:
         {
             switch (Creaturetype = _type)
             {
-            case 1:
-                _spell = SPELL_PUMPKIN_AURA_GREEN;
-                break;
-            case 2:
-                delay = 15000;
-                _spell = SPELL_BODY_FLAME;
-                _spell2 = SPELL_DEATH;
-                break;
-            case 3:
-                delay = 15000;
-                _spell = SPELL_SMOKE;
-                break;
-            case 4:
-                delay = 7000;
-                _spell2 = SPELL_WISP_BLUE;
-                break;
+                case 1:
+                    _spell = SPELL_PUMPKIN_AURA_GREEN;
+                    break;
+                case 2:
+                    delay = 15000;
+                    _spell = SPELL_BODY_FLAME;
+                    _spell2 = SPELL_DEATH;
+                    break;
+                case 3:
+                    delay = 15000;
+                    _spell = SPELL_SMOKE;
+                    break;
+                case 4:
+                    delay = 7000;
+                    _spell2 = SPELL_WISP_BLUE;
+                    break;
             }
             if (_spell)
                 DoCast(me, _spell);
@@ -209,8 +209,7 @@ public:
                     if (_spell2)
                         DoCast(me, _spell2);
                     delay = 0;
-                }
-                else delay -= diff;
+                } else delay -= diff;
             }
         }
     };
@@ -276,27 +275,27 @@ public:
 
             switch (Phase)
             {
-            case 1:
-                if (me->HealthBelowPctDamaged(67, damage))
-                    Disappear();
-                break;
-            case 2:
-                if (me->HealthBelowPctDamaged(34, damage))
-                    Disappear();
-                break;
-            case 3:
-                if (damage >= me->GetHealth())
-                {
-                    die = true;
-                    withbody = true;
-                    wait = 300;
-                    damage = me->GetHealth() - me->CountPctFromMaxHealth(1);
-                    me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
-                    me->StopMoving();
-                    //me->GetMotionMaster()->MoveIdle();
-                    DoCast(me, SPELL_HEAD_IS_DEAD);
-                }
-                break;
+                case 1:
+                    if (me->HealthBelowPctDamaged(67, damage))
+                        Disappear();
+                    break;
+                case 2:
+                    if (me->HealthBelowPctDamaged(34, damage))
+                        Disappear();
+                    break;
+                case 3:
+                    if (damage >= me->GetHealth())
+                    {
+                        die = true;
+                        withbody = true;
+                        wait = 300;
+                        damage = me->GetHealth() - me->CountPctFromMaxHealth(1);
+                        me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
+                        me->StopMoving();
+                        //me->GetMotionMaster()->MoveIdle();
+                        DoCast(me, SPELL_HEAD_IS_DEAD);
+                    }
+                    break;
             }
         }
 
@@ -471,33 +470,33 @@ public:
 
             switch (id)
             {
-            case 0:
-                me->SetVisible(true);
-                break;
-            case 1:
-            {
-                      if (Creature* smoke = me->SummonCreature(HELPER, Spawn[1].x, Spawn[1].y, Spawn[1].z, 0, TEMPSUMMON_TIMED_DESPAWN, 20000))
-                          ENSURE_AI(npc_wisp_invis::npc_wisp_invisAI, smoke->AI())->SetType(3);
-                      DoCast(me, SPELL_RHYME_BIG);
-                      break;
-            }
-            case 6:
-                instance->SetData(DATA_PUMPKIN_SHRINE, 0);   //hide gameobject
-                break;
-            case 19:
-                me->SetDisableGravity(false);
-                break;
-            case 20:
-            {
-                       Phase = 1;
-                       IsFlying = false;
-                       wp_reached = false;
-                       me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
-                       SaySound(SAY_ENTRANCE);
-                       if (Unit* player = ObjectAccessor::GetUnit(*me, PlayerGUID))
-                           DoStartMovement(player);
-                       break;
-            }
+                case 0:
+                    me->SetVisible(true);
+                    break;
+                case 1:
+                {
+                    if (Creature* smoke = me->SummonCreature(HELPER, Spawn[1].x, Spawn[1].y, Spawn[1].z, 0, TEMPSUMMON_TIMED_DESPAWN, 20000))
+                        ENSURE_AI(npc_wisp_invis::npc_wisp_invisAI, smoke->AI())->SetType(3);
+                    DoCast(me, SPELL_RHYME_BIG);
+                    break;
+                }
+                case 6:
+                    instance->SetData(DATA_PUMPKIN_SHRINE, 0);   //hide gameobject
+                    break;
+                case 19:
+                    me->SetDisableGravity(false);
+                    break;
+                case 20:
+                {
+                    Phase = 1;
+                    IsFlying = false;
+                    wp_reached = false;
+                    me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
+                    SaySound(SAY_ENTRANCE);
+                    if (Unit* player = ObjectAccessor::GetUnit(*me, PlayerGUID))
+                        DoStartMovement(player);
+                    break;
+                }
             }
             ++id;
         }
@@ -549,9 +548,9 @@ public:
 
             std::list<Player*> temp;
             for (Map::PlayerList::const_iterator i = PlayerList.begin(); i != PlayerList.end(); ++i)
-            if ((me->IsWithinLOSInMap(i->GetSource()) || !checkLoS) && me->GetVictim() != i->GetSource() &&
-                me->IsWithinDistInMap(i->GetSource(), range) && i->GetSource()->IsAlive())
-                temp.push_back(i->GetSource());
+                if ((me->IsWithinLOSInMap(i->GetSource()) || !checkLoS) && me->GetVictim() != i->GetSource() &&
+                    me->IsWithinDistInMap(i->GetSource(), range) && i->GetSource()->IsAlive())
+                    temp.push_back(i->GetSource());
 
             if (!temp.empty())
             {
@@ -583,8 +582,8 @@ public:
             if (!players.isEmpty())
             {
                 if (Group* group = players.begin()->GetSource()->GetGroup())
-                if (group->isLFGGroup())
-                    sLFGMgr->FinishDungeon(group->GetGUID(), 285);
+                    if (group->isLFGGroup())
+                        sLFGMgr->FinishDungeon(group->GetGUID(), 285);
             }
         }
 
@@ -653,77 +652,77 @@ public:
             {
                 switch (Phase)
                 {
-                case 0:
-                {
-                          if (!IsFlying)
-                          {
-                              if (say_timer <= diff)
-                              {
-                                  say_timer = 3000;
-                                  Player* player = SelectRandomPlayer(100.0f, false);
-                                  if (count < 3)
-                                  {
-                                      if (player)
-                                          player->Say(Text[count], LANG_UNIVERSAL);
-                                  }
-                                  else
-                                  {
-                                      DoCast(me, SPELL_RHYME_BIG);
-                                      if (player)
-                                      {
-                                          player->Say(Text[count], LANG_UNIVERSAL);
-                                          player->HandleEmoteCommand(ANIM_EMOTE_SHOUT);
-                                      }
-                                      wp_reached = true;
-                                      IsFlying = true;
-                                      count = 0;
-                                      break;
-                                  }
-                                  ++count;
-                              }
-                              else say_timer -= diff;
-                          }
-                          else
-                          {
-                              if (wp_reached)
-                              {
-                                  wp_reached = false;
-                                  me->GetMotionMaster()->Clear(false);
-                                  me->GetMotionMaster()->MovePoint(id, FlightPoint[id].x, FlightPoint[id].y, FlightPoint[id].z);
-                              }
-                          }
-                }
+                    case 0:
+                    {
+                        if (!IsFlying)
+                        {
+                            if (say_timer <= diff)
+                            {
+                                say_timer = 3000;
+                                Player* player = SelectRandomPlayer(100.0f, false);
+                                if (count < 3)
+                                {
+                                    if (player)
+                                        player->Say(Text[count], LANG_UNIVERSAL);
+                                }
+                                else
+                                {
+                                    DoCast(me, SPELL_RHYME_BIG);
+                                    if (player)
+                                    {
+                                        player->Say(Text[count], LANG_UNIVERSAL);
+                                        player->HandleEmoteCommand(ANIM_EMOTE_SHOUT);
+                                    }
+                                    wp_reached = true;
+                                    IsFlying = true;
+                                    count = 0;
+                                    break;
+                                }
+                                ++count;
+                            }
+                            else say_timer -= diff;
+                        }
+                        else
+                        {
+                            if (wp_reached)
+                            {
+                                wp_reached = false;
+                                me->GetMotionMaster()->Clear(false);
+                                me->GetMotionMaster()->MovePoint(id, FlightPoint[id].x, FlightPoint[id].y, FlightPoint[id].z);
+                            }
+                        }
+                    }
                     break;
-                case 1:
-                    if (burned)
+                    case 1:
+                        if (burned)
+                            break;
+                        if (burn <= diff)
+                        {
+                            if (Creature* flame = me->SummonCreature(HELPER, Spawn[0].x, Spawn[0].y, Spawn[0].z, 0, TEMPSUMMON_TIMED_DESPAWN, 17000))
+                                ENSURE_AI(npc_wisp_invis::npc_wisp_invisAI, flame->AI())->SetType(2);
+                            burned = true;
+                        }
+                        else burn -= diff;
                         break;
-                    if (burn <= diff)
-                    {
-                        if (Creature* flame = me->SummonCreature(HELPER, Spawn[0].x, Spawn[0].y, Spawn[0].z, 0, TEMPSUMMON_TIMED_DESPAWN, 17000))
-                            ENSURE_AI(npc_wisp_invis::npc_wisp_invisAI, flame->AI())->SetType(2);
-                        burned = true;
-                    }
-                    else burn -= diff;
-                    break;
-                case 2:
-                    if (conflagrate <= diff)
-                    {
-                        if (Unit* player = SelectRandomPlayer(30.0f))
-                            DoCast(player, SPELL_CONFLAGRATION, false);
-                        conflagrate = urand(10000, 16000);
-                    }
-                    else conflagrate -= diff;
-                    break;
-                case 3:
-                    if (summonadds <= diff)
-                    {
-                        me->InterruptNonMeleeSpells(false);
-                        DoCast(me, SPELL_SUMMON_PUMPKIN);
-                        SaySound(SAY_SPROUTING_PUMPKINS);
-                        summonadds = urand(25000, 35000);
-                    }
-                    else summonadds -= diff;
-                    break;
+                    case 2:
+                        if (conflagrate <= diff)
+                        {
+                            if (Unit* player = SelectRandomPlayer(30.0f))
+                                DoCast(player, SPELL_CONFLAGRATION, false);
+                            conflagrate = urand(10000, 16000);
+                        }
+                        else conflagrate -= diff;
+                        break;
+                    case 3:
+                        if (summonadds <= diff)
+                        {
+                            me->InterruptNonMeleeSpells(false);
+                            DoCast(me, SPELL_SUMMON_PUMPKIN);
+                            SaySound(SAY_SPROUTING_PUMPKINS);
+                            summonadds = urand(25000, 35000);
+                        }
+                        else summonadds -= diff;
+                        break;
                 }
 
                 if (laugh <= diff)
@@ -891,8 +890,8 @@ public:
     bool OnGossipHello(Player* player, GameObject* /*go*/) override
     {
         if (InstanceScript* instance = player->GetInstanceScript())
-        if (instance->GetBossState(DATA_HORSEMAN_EVENT) == IN_PROGRESS || player->GetQuestStatus(QUEST_CALL_THE_HEADLESS_HORSEMAN) != QUEST_STATUS_COMPLETE)
-            return true;
+            if (instance->GetBossState(DATA_HORSEMAN_EVENT) == IN_PROGRESS || player->GetQuestStatus(QUEST_CALL_THE_HEADLESS_HORSEMAN) != QUEST_STATUS_COMPLETE)
+                return true;
 
         return false;
     }
@@ -900,15 +899,15 @@ public:
     bool OnQuestReward(Player* player, GameObject* go, Quest const* /*quest*/, uint32 /*opt*/) override
     {
         if (InstanceScript* instance = go->GetInstanceScript())
-        if (instance->GetBossState(DATA_HORSEMAN_EVENT) == IN_PROGRESS)
-            return false;
+            if (instance->GetBossState(DATA_HORSEMAN_EVENT) == IN_PROGRESS)
+                return false;
 
-        player->AreaExploredOrEventHappens(11405);
-        if (Creature* horseman = go->SummonCreature(HH_MOUNTED, FlightPoint[20].x, FlightPoint[20].y, FlightPoint[20].z, 0, TEMPSUMMON_MANUAL_DESPAWN, 0))
-        {
-            ENSURE_AI(boss_headless_horseman::boss_headless_horsemanAI, horseman->AI())->PlayerGUID = player->GetGUID();
-            ENSURE_AI(boss_headless_horseman::boss_headless_horsemanAI, horseman->AI())->FlyMode();
-        }
+            player->AreaExploredOrEventHappens(11405);
+            if (Creature* horseman = go->SummonCreature(HH_MOUNTED, FlightPoint[20].x, FlightPoint[20].y, FlightPoint[20].z, 0, TEMPSUMMON_MANUAL_DESPAWN, 0))
+            {
+                ENSURE_AI(boss_headless_horseman::boss_headless_horsemanAI, horseman->AI())->PlayerGUID = player->GetGUID();
+                ENSURE_AI(boss_headless_horseman::boss_headless_horsemanAI, horseman->AI())->FlyMode();
+            }
         return true;
     }
 };

@@ -20,24 +20,24 @@
 
 enum Spells
 {
-    SPELL_ARCANE_EXPLOSION = 46608,
-    SPELL_CONE_OF_COLD = 38384,
-    SPELL_FIREBALL = 46988,
-    SPELL_FROSTBOLT = 46987,
-    SPELL_SUMMON_WATER_ELEMENTAL = 45067,
-    SPELL_ICEBLOCK = 46604
+    SPELL_ARCANE_EXPLOSION                  = 46608,
+    SPELL_CONE_OF_COLD                      = 38384,
+    SPELL_FIREBALL                          = 46988,
+    SPELL_FROSTBOLT                         = 46987,
+    SPELL_SUMMON_WATER_ELEMENTAL            = 45067,
+    SPELL_ICEBLOCK                          = 46604
 };
 
 enum Texts
 {
-    SAY_AGGRO = 0,
-    SAY_EVADE = 1,
-    SAY_SALVATION = 2,
+    SAY_AGGRO                              = 0,
+    SAY_EVADE                              = 1,
+    SAY_SALVATION                          = 2,
 };
 
 enum Action
 {
-    ACTION_BUFF_YELL = -30001 // shared from Battleground
+    ACTION_BUFF_YELL                        = -30001 // shared from Battleground
 };
 
 enum Events
@@ -134,40 +134,40 @@ public:
             {
                 switch (eventId)
                 {
-                case EVENT_ARCANE_EXPLOSION:
-                    DoCastVictim(SPELL_ARCANE_EXPLOSION);
-                    events.ScheduleEvent(EVENT_ARCANE_EXPLOSION, urand(5 * IN_MILLISECONDS, 15 * IN_MILLISECONDS));
-                    break;
-                case EVENT_CONE_OF_COLD:
-                    DoCastVictim(SPELL_CONE_OF_COLD);
-                    events.ScheduleEvent(EVENT_CONE_OF_COLD, urand(10 * IN_MILLISECONDS, 20 * IN_MILLISECONDS));
-                    break;
-                case EVENT_FIREBOLT:
-                    DoCastVictim(SPELL_FIREBALL);
-                    events.ScheduleEvent(EVENT_FIREBOLT, urand(5 * IN_MILLISECONDS, 9 * IN_MILLISECONDS));
-                    break;
-                case EVENT_FROSTBOLT:
-                    DoCastVictim(SPELL_FROSTBOLT);
-                    events.ScheduleEvent(EVENT_FROSTBOLT, urand(4 * IN_MILLISECONDS, 12 * IN_MILLISECONDS));
-                    break;
-                case EVENT_SUMMON_WATER_ELEMENTAL:
-                    if (summons.empty())
-                        DoCast(SPELL_SUMMON_WATER_ELEMENTAL);
-                    events.ScheduleEvent(EVENT_SUMMON_WATER_ELEMENTAL, 50 * IN_MILLISECONDS);
-                    break;
-                case EVENT_CHECK_RESET:
-                    if (me->GetDistance2d(me->GetHomePosition().GetPositionX(), me->GetHomePosition().GetPositionY()) > 50)
-                    {
-                        EnterEvadeMode();
-                        Talk(SAY_EVADE);
-                    }
-                    if (Creature* elemental = ObjectAccessor::GetCreature(*me, WaterElementalGUID))
-                    if (elemental->GetDistance2d(me->GetHomePosition().GetPositionX(), me->GetHomePosition().GetPositionY()) > 50)
-                        elemental->AI()->EnterEvadeMode();
-                    events.ScheduleEvent(EVENT_CHECK_RESET, 5 * IN_MILLISECONDS);
-                    break;
-                default:
-                    break;
+                    case EVENT_ARCANE_EXPLOSION:
+                        DoCastVictim(SPELL_ARCANE_EXPLOSION);
+                        events.ScheduleEvent(EVENT_ARCANE_EXPLOSION, urand(5 * IN_MILLISECONDS, 15 * IN_MILLISECONDS));
+                        break;
+                    case EVENT_CONE_OF_COLD:
+                        DoCastVictim(SPELL_CONE_OF_COLD);
+                        events.ScheduleEvent(EVENT_CONE_OF_COLD, urand(10 * IN_MILLISECONDS, 20 * IN_MILLISECONDS));
+                        break;
+                    case EVENT_FIREBOLT:
+                        DoCastVictim(SPELL_FIREBALL);
+                        events.ScheduleEvent(EVENT_FIREBOLT, urand(5 * IN_MILLISECONDS, 9 * IN_MILLISECONDS));
+                        break;
+                    case EVENT_FROSTBOLT:
+                        DoCastVictim(SPELL_FROSTBOLT);
+                        events.ScheduleEvent(EVENT_FROSTBOLT, urand(4 * IN_MILLISECONDS, 12 * IN_MILLISECONDS));
+                        break;
+                    case EVENT_SUMMON_WATER_ELEMENTAL:
+                        if (summons.empty())
+                            DoCast(SPELL_SUMMON_WATER_ELEMENTAL);
+                        events.ScheduleEvent(EVENT_SUMMON_WATER_ELEMENTAL, 50 * IN_MILLISECONDS);
+                        break;
+                    case EVENT_CHECK_RESET:
+                        if (me->GetDistance2d(me->GetHomePosition().GetPositionX(), me->GetHomePosition().GetPositionY()) > 50)
+                        {
+                            EnterEvadeMode();
+                            Talk(SAY_EVADE);
+                        }
+                        if (Creature* elemental = ObjectAccessor::GetCreature(*me, WaterElementalGUID))
+                            if (elemental->GetDistance2d(me->GetHomePosition().GetPositionX(), me->GetHomePosition().GetPositionY()) > 50)
+                                elemental->AI()->EnterEvadeMode();
+                        events.ScheduleEvent(EVENT_CHECK_RESET, 5 * IN_MILLISECONDS);
+                        break;
+                    default:
+                        break;
                 }
             }
 

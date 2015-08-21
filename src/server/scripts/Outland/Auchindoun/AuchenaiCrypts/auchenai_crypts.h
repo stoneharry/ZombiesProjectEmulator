@@ -26,8 +26,8 @@ uint32 const EncounterCount = 2;
 enum DataTypes
 {
     // Encounter States/Boss GUIDs
-    DATA_SHIRRAK_THE_DEAD_WATCHER = 0,
-    DATA_EXARCH_MALADAAR = 1
+    DATA_SHIRRAK_THE_DEAD_WATCHER   = 0,
+    DATA_EXARCH_MALADAAR            = 1
 };
 
 enum CreatureIds

@@ -41,33 +41,33 @@ public:
     {
         static ChatCommand gobjectAddCommandTable[] =
         {
-            { "temp", rbac::RBAC_PERM_COMMAND_GOBJECT_ADD_TEMP, false, &HandleGameObjectAddTempCommand, "", NULL },
-            { "", rbac::RBAC_PERM_COMMAND_GOBJECT_ADD, false, &HandleGameObjectAddCommand, "", NULL },
-            { NULL, 0, false, NULL, "", NULL }
+            { "temp", rbac::RBAC_PERM_COMMAND_GOBJECT_ADD_TEMP, false, &HandleGameObjectAddTempCommand,   "", NULL },
+            { "",     rbac::RBAC_PERM_COMMAND_GOBJECT_ADD,      false, &HandleGameObjectAddCommand,       "", NULL },
+            { NULL,   0,                                  false, NULL,                              "", NULL }
         };
         static ChatCommand gobjectSetCommandTable[] =
         {
-            { "phase", rbac::RBAC_PERM_COMMAND_GOBJECT_SET_PHASE, false, &HandleGameObjectSetPhaseCommand, "", NULL },
-            { "state", rbac::RBAC_PERM_COMMAND_GOBJECT_SET_STATE, false, &HandleGameObjectSetStateCommand, "", NULL },
-            { NULL, 0, false, NULL, "", NULL }
+            { "phase", rbac::RBAC_PERM_COMMAND_GOBJECT_SET_PHASE, false, &HandleGameObjectSetPhaseCommand,  "", NULL },
+            { "state", rbac::RBAC_PERM_COMMAND_GOBJECT_SET_STATE, false, &HandleGameObjectSetStateCommand,  "", NULL },
+            { NULL,    0,                                   false, NULL,                              "", NULL }
         };
         static ChatCommand gobjectCommandTable[] =
         {
-            { "activate", rbac::RBAC_PERM_COMMAND_GOBJECT_ACTIVATE, false, &HandleGameObjectActivateCommand, "", NULL },
-            { "delete", rbac::RBAC_PERM_COMMAND_GOBJECT_DELETE, false, &HandleGameObjectDeleteCommand, "", NULL },
-            { "info", rbac::RBAC_PERM_COMMAND_GOBJECT_INFO, false, &HandleGameObjectInfoCommand, "", NULL },
-            { "move", rbac::RBAC_PERM_COMMAND_GOBJECT_MOVE, false, &HandleGameObjectMoveCommand, "", NULL },
-            { "near", rbac::RBAC_PERM_COMMAND_GOBJECT_NEAR, false, &HandleGameObjectNearCommand, "", NULL },
-            { "target", rbac::RBAC_PERM_COMMAND_GOBJECT_TARGET, false, &HandleGameObjectTargetCommand, "", NULL },
-            { "turn", rbac::RBAC_PERM_COMMAND_GOBJECT_TURN, false, &HandleGameObjectTurnCommand, "", NULL },
-            { "add", rbac::RBAC_PERM_COMMAND_GOBJECT_ADD, false, NULL, "", gobjectAddCommandTable },
-            { "set", rbac::RBAC_PERM_COMMAND_GOBJECT_SET, false, NULL, "", gobjectSetCommandTable },
-            { NULL, 0, false, NULL, "", NULL }
+            { "activate", rbac::RBAC_PERM_COMMAND_GOBJECT_ACTIVATE, false, &HandleGameObjectActivateCommand,  "", NULL },
+            { "delete",   rbac::RBAC_PERM_COMMAND_GOBJECT_DELETE,   false, &HandleGameObjectDeleteCommand,    "", NULL },
+            { "info",     rbac::RBAC_PERM_COMMAND_GOBJECT_INFO,     false, &HandleGameObjectInfoCommand,      "", NULL },
+            { "move",     rbac::RBAC_PERM_COMMAND_GOBJECT_MOVE,     false, &HandleGameObjectMoveCommand,      "", NULL },
+            { "near",     rbac::RBAC_PERM_COMMAND_GOBJECT_NEAR,     false, &HandleGameObjectNearCommand,      "", NULL },
+            { "target",   rbac::RBAC_PERM_COMMAND_GOBJECT_TARGET,   false, &HandleGameObjectTargetCommand,    "", NULL },
+            { "turn",     rbac::RBAC_PERM_COMMAND_GOBJECT_TURN,     false, &HandleGameObjectTurnCommand,      "", NULL },
+            { "add",      rbac::RBAC_PERM_COMMAND_GOBJECT_ADD,      false, NULL,            "", gobjectAddCommandTable },
+            { "set",      rbac::RBAC_PERM_COMMAND_GOBJECT_SET,      false, NULL,            "", gobjectSetCommandTable },
+            { NULL,       0,                                  false, NULL,                              "", NULL }
         };
         static ChatCommand commandTable[] =
         {
             { "gobject", rbac::RBAC_PERM_COMMAND_GOBJECT, false, NULL, "", gobjectCommandTable },
-            { NULL, 0, false, NULL, "", NULL }
+            { NULL,      0,                         false, NULL, "", NULL }
         };
         return commandTable;
     }
@@ -208,8 +208,8 @@ public:
         float z = player->GetPositionZ();
         float ang = player->GetOrientation();
 
-        float rot2 = std::sin(ang / 2);
-        float rot3 = std::cos(ang / 2);
+        float rot2 = std::sin(ang/2);
+        float rot3 = std::cos(ang/2);
 
         uint32 objectId = atoi(id);
 
@@ -263,7 +263,7 @@ public:
             {
                 if (initString)
                 {
-                    eventFilter << "OR eventEntry IN (" << *itr;
+                    eventFilter  <<  "OR eventEntry IN (" << *itr;
                     initString = false;
                 }
                 else
@@ -298,14 +298,14 @@ public:
         {
             Field* fields = result->Fetch();
             guidLow = fields[0].GetUInt32();
-            id = fields[1].GetUInt32();
-            x = fields[2].GetFloat();
-            y = fields[3].GetFloat();
-            z = fields[4].GetFloat();
-            o = fields[5].GetFloat();
-            mapId = fields[6].GetUInt16();
-            phase = fields[7].GetUInt32();
-            poolId = sPoolMgr->IsPartOfAPool<GameObject>(guidLow);
+            id =      fields[1].GetUInt32();
+            x =       fields[2].GetFloat();
+            y =       fields[3].GetFloat();
+            z =       fields[4].GetFloat();
+            o =       fields[5].GetFloat();
+            mapId =   fields[6].GetUInt16();
+            phase =   fields[7].GetUInt32();
+            poolId =  sPoolMgr->IsPartOfAPool<GameObject>(guidLow);
             if (!poolId || sPoolMgr->IsSpawnedObject<GameObject>(guidLow))
                 found = true;
         } while (result->NextRow() && !found);
@@ -529,7 +529,7 @@ public:
             return false;
         }
 
-        char* phase = strtok(NULL, " ");
+        char* phase = strtok (NULL, " ");
         uint32 phaseMask = phase ? atoi(phase) : 0;
         if (phaseMask == 0)
         {
@@ -603,9 +603,8 @@ public:
                 entry = object->GetEntry();
             else
                 entry = atoi((char*)args);
-        }
-        else
-            entry = atoi((char*)args);
+        } else
+                entry = atoi((char*)args);
 
         GameObjectTemplate const* gameObjectInfo = sObjectMgr->GetGameObjectTemplate(entry);
 
@@ -676,7 +675,7 @@ public:
             object->SetByteValue(GAMEOBJECT_BYTES_1, objectType, objectState);
         else if (objectType == 4)
         {
-            WorldPacket data(SMSG_GAMEOBJECT_CUSTOM_ANIM, 8 + 4);
+            WorldPacket data(SMSG_GAMEOBJECT_CUSTOM_ANIM, 8+4);
             data << object->GetGUID();
             data << (uint32)(objectState);
             object->SendMessageToSet(&data, true);

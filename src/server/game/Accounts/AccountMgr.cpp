@@ -364,13 +364,13 @@ uint32 AccountMgr::GetCharactersCount(uint32 accountId)
 
 bool AccountMgr::normalizeString(std::string& utf8String)
 {
-    wchar_t buffer[MAX_ACCOUNT_STR + 1];
+    wchar_t buffer[MAX_ACCOUNT_STR+1];
 
     size_t maxLength = MAX_ACCOUNT_STR;
     if (!Utf8toWStr(utf8String, buffer, maxLength))
         return false;
 
-    std::transform(&buffer[0], buffer + maxLength, &buffer[0], wcharToUpperOnlyLatin);
+    std::transform(&buffer[0], buffer+maxLength, &buffer[0], wcharToUpperOnlyLatin);
 
     return WStrToUtf8(buffer, maxLength, utf8String);
 }
@@ -426,7 +426,8 @@ void AccountMgr::LoadRBAC()
         uint32 id = field[0].GetUInt32();
         _permissions[id] = new rbac::RBACPermission(id, field[1].GetString());
         ++count1;
-    } while (result->NextRow());
+    }
+    while (result->NextRow());
 
     TC_LOG_DEBUG("rbac", "AccountMgr::LoadRBAC: Loading linked permissions");
     result = LoginDatabase.Query("SELECT id, linkedId FROM rbac_linked_permissions ORDER BY id ASC");
@@ -457,7 +458,8 @@ void AccountMgr::LoadRBAC()
         }
         permission->AddLinkedPermission(linkedPermissionId);
         ++count2;
-    } while (result->NextRow());
+    }
+    while (result->NextRow());
 
     TC_LOG_DEBUG("rbac", "AccountMgr::LoadRBAC: Loading default permissions");
     result = LoginDatabase.PQuery("SELECT secId, permissionId FROM rbac_default_permissions WHERE (realmId = %u OR realmId = -1) ORDER BY secId ASC", realmID);
@@ -481,7 +483,8 @@ void AccountMgr::LoadRBAC()
 
         permissions->insert(field[1].GetUInt32());
         ++count3;
-    } while (result->NextRow());
+    }
+    while (result->NextRow());
 
     TC_LOG_INFO("server.loading", ">> Loaded %u permission definitions, %u linked permissions and %u default permissions in %u ms", count1, count2, count3, GetMSTimeDiffToNow(oldMSTime));
 }
@@ -540,7 +543,7 @@ bool AccountMgr::HasPermission(uint32 accountId, uint32 permissionId, uint32 rea
     bool hasPermission = rbac.HasPermission(permissionId);
 
     TC_LOG_DEBUG("rbac", "AccountMgr::HasPermission [AccountId: %u, PermissionId: %u, realmId: %d]: %u",
-        accountId, permissionId, realmId, hasPermission);
+                   accountId, permissionId, realmId, hasPermission);
     return hasPermission;
 }
 

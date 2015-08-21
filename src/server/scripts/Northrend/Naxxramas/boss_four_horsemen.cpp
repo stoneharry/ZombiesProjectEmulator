@@ -31,7 +31,7 @@ enum Horsemen
 
 enum Spells
 {
-    SPELL_MARK_DAMAGE = 28836
+    SPELL_MARK_DAMAGE   = 28836
 };
 
 enum Events
@@ -45,41 +45,41 @@ enum Events
 const Position WaypointPositions[12] =
 {
     // Thane waypoints
-    { 2542.3f, -2984.1f, 241.49f, 5.362f },
-    { 2547.6f, -2999.4f, 241.34f, 5.049f },
-    { 2542.9f, -3015.0f, 241.35f, 4.654f },
+    {2542.3f, -2984.1f, 241.49f, 5.362f},
+    {2547.6f, -2999.4f, 241.34f, 5.049f},
+    {2542.9f, -3015.0f, 241.35f, 4.654f},
     // Lady waypoints
-    { 2498.3f, -2961.8f, 241.28f, 3.267f },
-    { 2487.7f, -2959.2f, 241.28f, 2.890f },
-    { 2469.4f, -2947.6f, 241.28f, 2.576f },
+    {2498.3f, -2961.8f, 241.28f, 3.267f},
+    {2487.7f, -2959.2f, 241.28f, 2.890f},
+    {2469.4f, -2947.6f, 241.28f, 2.576f},
     // Baron waypoints
-    { 2553.8f, -2968.4f, 241.33f, 5.757f },
-    { 2564.3f, -2972.5f, 241.33f, 5.890f },
-    { 2583.9f, -2971.67f, 241.35f, 0.008f },
+    {2553.8f, -2968.4f, 241.33f, 5.757f},
+    {2564.3f, -2972.5f, 241.33f, 5.890f},
+    {2583.9f, -2971.67f, 241.35f, 0.008f},
     // Sir waypoints
-    { 2534.5f, -2921.7f, 241.53f, 1.363f },
-    { 2523.5f, -2902.8f, 241.28f, 2.095f },
-    { 2517.8f, -2896.6f, 241.28f, 2.315f },
+    {2534.5f, -2921.7f, 241.53f, 1.363f},
+    {2523.5f, -2902.8f, 241.28f, 2.095f},
+    {2517.8f, -2896.6f, 241.28f, 2.315f},
 };
 
-const uint32 NPC_HORSEMEN[] = { 16064, 16065, 30549, 16063 };
-const uint32 SPELL_MARK[] = { 28832, 28833, 28834, 28835 };
+const uint32 NPC_HORSEMEN[]     =   {16064, 16065, 30549, 16063};
+const uint32 SPELL_MARK[]       =   {28832, 28833, 28834, 28835};
 #define SPELL_PRIMARY(i)            RAID_MODE(SPELL_PRIMARY_N[i], SPELL_PRIMARY_H[i])
-const uint32 SPELL_PRIMARY_N[] = { 28884, 28863, 28882, 28883 };
-const uint32 SPELL_PRIMARY_H[] = { 57467, 57463, 57369, 57466 };
+const uint32 SPELL_PRIMARY_N[]  =   {28884, 28863, 28882, 28883};
+const uint32 SPELL_PRIMARY_H[]  =   {57467, 57463, 57369, 57466};
 #define SPELL_SECONDARY(i)          RAID_MODE(SPELL_SECONDARY_N[i], SPELL_SECONDARY_H[i])
-const uint32 SPELL_SECONDARY_N[] = { 0, 57374, 0, 57376 };
-const uint32 SPELL_SECONDARY_H[] = { 0, 57464, 0, 57465 };
-const uint32 SPELL_PUNISH[] = { 0, 57381, 0, 57377 };
+const uint32 SPELL_SECONDARY_N[]=   {0, 57374, 0, 57376};
+const uint32 SPELL_SECONDARY_H[]=   {0, 57464, 0, 57465};
+const uint32 SPELL_PUNISH[]     =   {0, 57381, 0, 57377};
 #define SPELL_BERSERK               26662
 
 enum FourHorsemen
 {
-    SAY_AGGRO = 0,
-    SAY_TAUNT = 1,
-    SAY_SPECIAL = 2,
-    SAY_SLAY = 3,
-    SAY_DEATH = 4
+    SAY_AGGRO       = 0,
+    SAY_TAUNT       = 1,
+    SAY_SPECIAL     = 2,
+    SAY_SLAY        = 3,
+    SAY_DEATH       = 4
 };
 
 class boss_four_horsemen : public CreatureScript
@@ -99,8 +99,8 @@ public:
             Initialize();
             id = Horsemen(0);
             for (uint8 i = 0; i < 4; ++i)
-            if (me->GetEntry() == NPC_HORSEMEN[i])
-                id = Horsemen(i);
+                if (me->GetEntry() == NPC_HORSEMEN[i])
+                    id = Horsemen(i);
             caster = (id == HORSEMEN_LADY || id == HORSEMEN_SIR);
         }
 
@@ -206,18 +206,18 @@ public:
 
             switch (id)
             {
-            case HORSEMEN_THANE:
-                me->GetMotionMaster()->MovePoint(0, WaypointPositions[0]);
-                break;
-            case HORSEMEN_LADY:
-                me->GetMotionMaster()->MovePoint(3, WaypointPositions[3]);
-                break;
-            case HORSEMEN_BARON:
-                me->GetMotionMaster()->MovePoint(6, WaypointPositions[6]);
-                break;
-            case HORSEMEN_SIR:
-                me->GetMotionMaster()->MovePoint(9, WaypointPositions[9]);
-                break;
+                case HORSEMEN_THANE:
+                    me->GetMotionMaster()->MovePoint(0, WaypointPositions[0]);
+                    break;
+                case HORSEMEN_LADY:
+                    me->GetMotionMaster()->MovePoint(3, WaypointPositions[3]);
+                    break;
+                case HORSEMEN_BARON:
+                    me->GetMotionMaster()->MovePoint(6, WaypointPositions[6]);
+                    break;
+                case HORSEMEN_SIR:
+                    me->GetMotionMaster()->MovePoint(9, WaypointPositions[9]);
+                    break;
             }
         }
 
@@ -324,7 +324,7 @@ public:
 
             events.ScheduleEvent(EVENT_MARK, 15000);
             events.ScheduleEvent(EVENT_CAST, 20000 + rand32() % 5000);
-            events.ScheduleEvent(EVENT_BERSERK, 15 * 100 * 1000);
+            events.ScheduleEvent(EVENT_BERSERK, 15*100*1000);
         }
 
         void UpdateAI(uint32 diff) override
@@ -347,30 +347,30 @@ public:
             {
                 switch (eventId)
                 {
-                case EVENT_MARK:
-                    if (!(rand32() % 5))
+                    case EVENT_MARK:
+                        if (!(rand32() % 5))
+                            Talk(SAY_SPECIAL);
+                        DoCastAOE(SPELL_MARK[id]);
+                        events.ScheduleEvent(EVENT_MARK, 15000);
+                        break;
+                    case EVENT_CAST:
+                        if (!(rand32() % 5))
+                            Talk(SAY_TAUNT);
+
+                        if (caster)
+                        {
+                            if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0, 45.0f, true))
+                                DoCast(target, SPELL_PRIMARY(id));
+                        }
+                        else
+                            DoCastVictim(SPELL_PRIMARY(id));
+
+                        events.ScheduleEvent(EVENT_CAST, 15000);
+                        break;
+                    case EVENT_BERSERK:
                         Talk(SAY_SPECIAL);
-                    DoCastAOE(SPELL_MARK[id]);
-                    events.ScheduleEvent(EVENT_MARK, 15000);
-                    break;
-                case EVENT_CAST:
-                    if (!(rand32() % 5))
-                        Talk(SAY_TAUNT);
-
-                    if (caster)
-                    {
-                        if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0, 45.0f, true))
-                            DoCast(target, SPELL_PRIMARY(id));
-                    }
-                    else
-                        DoCastVictim(SPELL_PRIMARY(id));
-
-                    events.ScheduleEvent(EVENT_CAST, 15000);
-                    break;
-                case EVENT_BERSERK:
-                    Talk(SAY_SPECIAL);
-                    DoCast(me, EVENT_BERSERK);
-                    break;
+                        DoCast(me, EVENT_BERSERK);
+                        break;
                 }
             }
 
@@ -382,8 +382,7 @@ public:
                     doDelayPunish = false;
                 }
                 punishTimer = 2000;
-            }
-            else punishTimer -= diff;
+            } else punishTimer -= diff;
 
             if (!caster)
                 DoMeleeAttackIfReady();
@@ -396,57 +395,57 @@ public:
 
 class spell_four_horsemen_mark : public SpellScriptLoader
 {
-public:
-    spell_four_horsemen_mark() : SpellScriptLoader("spell_four_horsemen_mark") { }
+    public:
+        spell_four_horsemen_mark() : SpellScriptLoader("spell_four_horsemen_mark") { }
 
-    class spell_four_horsemen_mark_AuraScript : public AuraScript
-    {
-        PrepareAuraScript(spell_four_horsemen_mark_AuraScript);
-
-        void OnApply(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/)
+        class spell_four_horsemen_mark_AuraScript : public AuraScript
         {
-            if (Unit* caster = GetCaster())
+            PrepareAuraScript(spell_four_horsemen_mark_AuraScript);
+
+            void OnApply(AuraEffect const* /*aurEff*/, AuraEffectHandleModes /*mode*/)
             {
-                int32 damage;
-                switch (GetStackAmount())
+                if (Unit* caster = GetCaster())
                 {
-                case 1:
-                    damage = 0;
-                    break;
-                case 2:
-                    damage = 500;
-                    break;
-                case 3:
-                    damage = 1000;
-                    break;
-                case 4:
-                    damage = 1500;
-                    break;
-                case 5:
-                    damage = 4000;
-                    break;
-                case 6:
-                    damage = 12000;
-                    break;
-                default:
-                    damage = 20000 + 1000 * (GetStackAmount() - 7);
-                    break;
+                    int32 damage;
+                    switch (GetStackAmount())
+                    {
+                        case 1:
+                            damage = 0;
+                            break;
+                        case 2:
+                            damage = 500;
+                            break;
+                        case 3:
+                            damage = 1000;
+                            break;
+                        case 4:
+                            damage = 1500;
+                            break;
+                        case 5:
+                            damage = 4000;
+                            break;
+                        case 6:
+                            damage = 12000;
+                            break;
+                        default:
+                            damage = 20000 + 1000 * (GetStackAmount() - 7);
+                            break;
+                    }
+                    if (damage)
+                        caster->CastCustomSpell(SPELL_MARK_DAMAGE, SPELLVALUE_BASE_POINT0, damage, GetTarget());
                 }
-                if (damage)
-                    caster->CastCustomSpell(SPELL_MARK_DAMAGE, SPELLVALUE_BASE_POINT0, damage, GetTarget());
             }
-        }
 
-        void Register() override
+            void Register() override
+            {
+                AfterEffectApply += AuraEffectApplyFn(spell_four_horsemen_mark_AuraScript::OnApply, EFFECT_0, SPELL_AURA_DUMMY, AURA_EFFECT_HANDLE_REAL_OR_REAPPLY_MASK);
+            }
+        };
+
+        AuraScript* GetAuraScript() const override
         {
-            AfterEffectApply += AuraEffectApplyFn(spell_four_horsemen_mark_AuraScript::OnApply, EFFECT_0, SPELL_AURA_DUMMY, AURA_EFFECT_HANDLE_REAL_OR_REAPPLY_MASK);
+            return new spell_four_horsemen_mark_AuraScript();
         }
-    };
-
-    AuraScript* GetAuraScript() const override
-    {
-        return new spell_four_horsemen_mark_AuraScript();
-    }
 };
 
 void AddSC_boss_four_horsemen()

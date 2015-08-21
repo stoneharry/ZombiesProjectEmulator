@@ -34,10 +34,10 @@
 // Charters ID in item_template
 enum CharterItemIDs
 {
-    GUILD_CHARTER = 5863,
-    ARENA_TEAM_CHARTER_2v2 = 23560,
-    ARENA_TEAM_CHARTER_3v3 = 23561,
-    ARENA_TEAM_CHARTER_5v5 = 23562
+    GUILD_CHARTER                                 = 5863,
+    ARENA_TEAM_CHARTER_2v2                        = 23560,
+    ARENA_TEAM_CHARTER_3v3                        = 23561,
+    ARENA_TEAM_CHARTER_5v5                        = 23562
 };
 
 void WorldSession::HandlePetitionBuyOpcode(WorldPacket& recvData)
@@ -110,24 +110,24 @@ void WorldSession::HandlePetitionBuyOpcode(WorldPacket& recvData)
 
         switch (clientIndex)                                 // arenaSlot+1 as received from client (1 from 3 case)
         {
-        case 1:
-            charterid = ARENA_TEAM_CHARTER_2v2;
-            cost = sWorld->getIntConfig(CONFIG_CHARTER_COST_ARENA_2v2);
-            type = ARENA_TEAM_CHARTER_2v2_TYPE;
-            break;
-        case 2:
-            charterid = ARENA_TEAM_CHARTER_3v3;
-            cost = sWorld->getIntConfig(CONFIG_CHARTER_COST_ARENA_3v3);
-            type = ARENA_TEAM_CHARTER_3v3_TYPE;
-            break;
-        case 3:
-            charterid = ARENA_TEAM_CHARTER_5v5;
-            cost = sWorld->getIntConfig(CONFIG_CHARTER_COST_ARENA_5v5);
-            type = ARENA_TEAM_CHARTER_5v5_TYPE;
-            break;
-        default:
-            TC_LOG_DEBUG("network", "unknown selection at buy arena petition: %u", clientIndex);
-            return;
+            case 1:
+                charterid = ARENA_TEAM_CHARTER_2v2;
+                cost = sWorld->getIntConfig(CONFIG_CHARTER_COST_ARENA_2v2);
+                type = ARENA_TEAM_CHARTER_2v2_TYPE;
+                break;
+            case 2:
+                charterid = ARENA_TEAM_CHARTER_3v3;
+                cost = sWorld->getIntConfig(CONFIG_CHARTER_COST_ARENA_3v3);
+                type = ARENA_TEAM_CHARTER_3v3_TYPE;
+                break;
+            case 3:
+                charterid = ARENA_TEAM_CHARTER_5v5;
+                cost = sWorld->getIntConfig(CONFIG_CHARTER_COST_ARENA_5v5);
+                type = ARENA_TEAM_CHARTER_5v5_TYPE;
+                break;
+            default:
+                TC_LOG_DEBUG("network", "unknown selection at buy arena petition: %u", clientIndex);
+                return;
         }
 
         if (_player->GetArenaTeamId(clientIndex - 1))        // arenaSlot+1 as received from client
@@ -222,7 +222,7 @@ void WorldSession::HandlePetitionBuyOpcode(WorldPacket& recvData)
     TC_LOG_DEBUG("network", "Invalid petition GUIDs: %s", ssInvalidPetitionGUIDs.str().c_str());
     CharacterDatabase.EscapeString(name);
     SQLTransaction trans = CharacterDatabase.BeginTransaction();
-    trans->PAppend("DELETE FROM petition WHERE petitionguid IN (%s)", ssInvalidPetitionGUIDs.str().c_str());
+    trans->PAppend("DELETE FROM petition WHERE petitionguid IN (%s)",  ssInvalidPetitionGUIDs.str().c_str());
     trans->PAppend("DELETE FROM petition_sign WHERE petitionguid IN (%s)", ssInvalidPetitionGUIDs.str().c_str());
 
     stmt = CharacterDatabase.GetPreparedStatement(CHAR_INS_PETITION);
@@ -275,7 +275,7 @@ void WorldSession::HandlePetitionShowSignOpcode(WorldPacket& recvData)
 
     TC_LOG_DEBUG("network", "CMSG_PETITION_SHOW_SIGNATURES petition entry: '%u'", petitionGuidLow);
 
-    WorldPacket data(SMSG_PETITION_SHOW_SIGNATURES, (8 + 8 + 4 + 1 + signs * 12));
+    WorldPacket data(SMSG_PETITION_SHOW_SIGNATURES, (8+8+4+1+signs*12));
     data << uint64(petitionguid);                           // petition guid
     data << uint64(_player->GetGUID());                     // owner guid
     data << uint32(petitionGuidLow);                        // guild guid
@@ -323,8 +323,8 @@ void WorldSession::SendPetitionQueryOpcode(ObjectGuid petitionguid)
     {
         Field* fields = result->Fetch();
         ownerguid = ObjectGuid(HIGHGUID_PLAYER, fields[0].GetUInt32());
-        name = fields[1].GetString();
-        type = fields[2].GetUInt8();
+        name      = fields[1].GetString();
+        type      = fields[2].GetUInt8();
     }
     else
     {
@@ -332,7 +332,7 @@ void WorldSession::SendPetitionQueryOpcode(ObjectGuid petitionguid)
         return;
     }
 
-    WorldPacket data(SMSG_PETITION_QUERY_RESPONSE, (4 + 8 + name.size() + 1 + 1 + 4 * 12 + 2 + 10));
+    WorldPacket data(SMSG_PETITION_QUERY_RESPONSE, (4+8+name.size()+1+1+4*12+2+10));
     data << uint32(petitionguid.GetCounter());              // guild/team guid (in Trinity always same as GUID_LOPART(petition guid)
     data << uint64(ownerguid);                              // charter owner guid
     data << name;                                           // name (guild/arena team)
@@ -346,8 +346,8 @@ void WorldSession::SendPetitionQueryOpcode(ObjectGuid petitionguid)
     }
     else
     {
-        data << uint32(type - 1);
-        data << uint32(type - 1);
+        data << uint32(type-1);
+        data << uint32(type-1);
         data << uint32(type);                               // bypass client - side limitation, a different value is needed here for each petition
     }
     data << uint32(0);                                      // 5
@@ -436,7 +436,7 @@ void WorldSession::HandlePetitionRenameOpcode(WorldPacket& recvData)
     CharacterDatabase.Execute(stmt);
 
     TC_LOG_DEBUG("network", "Petition %s renamed to '%s'", petitionGuid.ToString().c_str(), newName.c_str());
-    WorldPacket data(MSG_PETITION_RENAME, (8 + newName.size() + 1));
+    WorldPacket data(MSG_PETITION_RENAME, (8+newName.size()+1));
     data << uint64(petitionGuid);
     data << newName;
     SendPacket(&data);
@@ -536,7 +536,7 @@ void WorldSession::HandlePetitionSignOpcode(WorldPacket& recvData)
 
     if (result)
     {
-        WorldPacket data(SMSG_PETITION_SIGN_RESULTS, (8 + 8 + 4));
+        WorldPacket data(SMSG_PETITION_SIGN_RESULTS, (8+8+4));
         data << uint64(petitionGuid);
         data << uint64(_player->GetGUID());
         data << (uint32)PETITION_SIGN_ALREADY_SIGNED;
@@ -561,7 +561,7 @@ void WorldSession::HandlePetitionSignOpcode(WorldPacket& recvData)
 
     TC_LOG_DEBUG("network", "PETITION SIGN: %s by player: %s (GUID: %u Account: %u)", petitionGuid.ToString().c_str(), _player->GetName().c_str(), playerGuid, GetAccountId());
 
-    WorldPacket data(SMSG_PETITION_SIGN_RESULTS, (8 + 8 + 4));
+    WorldPacket data(SMSG_PETITION_SIGN_RESULTS, (8+8+4));
     data << uint64(petitionGuid);
     data << uint64(_player->GetGUID());
     data << uint32(PETITION_SIGN_OK);
@@ -699,7 +699,7 @@ void WorldSession::HandleOfferPetitionOpcode(WorldPacket& recvData)
     if (result)
         signs = uint8(result->GetRowCount());
 
-    WorldPacket data(SMSG_PETITION_SHOW_SIGNATURES, (8 + 8 + 4 + signs + signs * 12));
+    WorldPacket data(SMSG_PETITION_SHOW_SIGNATURES, (8+8+4+signs+signs*12));
     data << uint64(petitionguid);                           // petition guid
     data << uint64(_player->GetGUID());                     // owner guid
     data << uint32(petitionguid.GetCounter());              // guild guid
@@ -817,7 +817,7 @@ void WorldSession::HandleTurnInPetitionOpcode(WorldPacket& recvData)
     if (type == GUILD_CHARTER_TYPE)
         requiredSignatures = sWorld->getIntConfig(CONFIG_MIN_PETITION_SIGNS);
     else
-        requiredSignatures = type - 1;
+        requiredSignatures = type-1;
 
     // Notify player if signatures are missing
     if (signatures < requiredSignatures)
@@ -926,7 +926,7 @@ void WorldSession::SendPetitionShowList(ObjectGuid guid)
         return;
     }
 
-    WorldPacket data(SMSG_PETITION_SHOWLIST, 8 + 1 + 4 * 6);
+    WorldPacket data(SMSG_PETITION_SHOWLIST, 8+1+4*6);
     data << guid;                                           // npc guid
 
     if (creature->IsTabardDesigner())

@@ -21,12 +21,12 @@
 
 enum Spells
 {
-    SPELL_NET = 6533
+    SPELL_NET         = 6533
 };
 
 enum Events
 {
-    EVENT_THROW_NET = 1
+    EVENT_THROW_NET   = 1
 };
 
 class boss_gelihast : public CreatureScript

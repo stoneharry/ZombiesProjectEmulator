@@ -28,12 +28,12 @@ EndScriptData */
 
 enum Spells
 {
-    SPELL_FOUL_SPORES = 31673,
-    SPELL_ACID_GEYSER = 38739,
+    SPELL_FOUL_SPORES           = 31673,
+    SPELL_ACID_GEYSER           = 38739,
 
-    SPELL_SPORE_CLOUD = 34168,
-    SPELL_PUTRID_MUSHROOM = 31690,
-    SPELL_GROW = 31698
+    SPELL_SPORE_CLOUD           = 34168,
+    SPELL_PUTRID_MUSHROOM       = 31690,
+    SPELL_GROW                  = 31698
 };
 
 class boss_hungarfen : public CreatureScript
@@ -95,16 +95,14 @@ public:
                     me->SummonCreature(17990, me->GetPositionX() + (rand32() % 8), me->GetPositionY() + (rand32() % 8), me->GetPositionZ(), float(rand32() % 5), TEMPSUMMON_TIMED_DESPAWN, 22000);
 
                 Mushroom_Timer = 10000;
-            }
-            else Mushroom_Timer -= diff;
+            } else Mushroom_Timer -= diff;
 
             if (AcidGeyser_Timer <= diff)
             {
                 if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
                     DoCast(target, SPELL_ACID_GEYSER);
                 AcidGeyser_Timer = 10000 + rand32() % 7500;
-            }
-            else AcidGeyser_Timer -= diff;
+            } else AcidGeyser_Timer -= diff;
 
             DoMeleeAttackIfReady();
         }
@@ -164,15 +162,13 @@ public:
             {
                 DoCast(me, SPELL_GROW);
                 Grow_Timer = 3000;
-            }
-            else Grow_Timer -= diff;
+            } else Grow_Timer -= diff;
 
             if (Shrink_Timer <= diff)
             {
                 me->RemoveAurasDueToSpell(SPELL_GROW);
                 Stop = true;
-            }
-            else Shrink_Timer -= diff;
+            } else Shrink_Timer -= diff;
         }
     };
 

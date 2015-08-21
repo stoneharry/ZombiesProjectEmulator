@@ -26,7 +26,7 @@
 
 enum CorpseType
 {
-    CORPSE_BONES = 0,
+    CORPSE_BONES             = 0,
     CORPSE_RESURRECTABLE_PVE = 1,
     CORPSE_RESURRECTABLE_PVP = 2
 };
@@ -37,51 +37,51 @@ enum CorpseType
 
 enum CorpseFlags
 {
-    CORPSE_FLAG_NONE = 0x00,
-    CORPSE_FLAG_BONES = 0x01,
-    CORPSE_FLAG_UNK1 = 0x02,
-    CORPSE_FLAG_UNK2 = 0x04,
-    CORPSE_FLAG_HIDE_HELM = 0x08,
-    CORPSE_FLAG_HIDE_CLOAK = 0x10,
-    CORPSE_FLAG_LOOTABLE = 0x20
+    CORPSE_FLAG_NONE        = 0x00,
+    CORPSE_FLAG_BONES       = 0x01,
+    CORPSE_FLAG_UNK1        = 0x02,
+    CORPSE_FLAG_UNK2        = 0x04,
+    CORPSE_FLAG_HIDE_HELM   = 0x08,
+    CORPSE_FLAG_HIDE_CLOAK  = 0x10,
+    CORPSE_FLAG_LOOTABLE    = 0x20
 };
 
 class Corpse : public WorldObject, public GridObject<Corpse>
 {
-public:
-    explicit Corpse(CorpseType type = CORPSE_BONES);
-    ~Corpse();
+    public:
+        explicit Corpse(CorpseType type = CORPSE_BONES);
+        ~Corpse();
 
-    void AddToWorld() override;
-    void RemoveFromWorld() override;
+        void AddToWorld() override;
+        void RemoveFromWorld() override;
 
-    bool Create(uint32 guidlow, Map* map);
-    bool Create(uint32 guidlow, Player* owner);
+        bool Create(uint32 guidlow, Map* map);
+        bool Create(uint32 guidlow, Player* owner);
 
-    void SaveToDB();
-    bool LoadCorpseFromDB(uint32 guid, Field* fields);
+        void SaveToDB();
+        bool LoadCorpseFromDB(uint32 guid, Field* fields);
 
-    void DeleteBonesFromWorld();
-    void DeleteFromDB(SQLTransaction& trans);
+        void DeleteBonesFromWorld();
+        void DeleteFromDB(SQLTransaction& trans);
 
-    ObjectGuid GetOwnerGUID() const { return GetGuidValue(CORPSE_FIELD_OWNER); }
+        ObjectGuid GetOwnerGUID() const { return GetGuidValue(CORPSE_FIELD_OWNER); }
 
-    time_t const& GetGhostTime() const { return m_time; }
-    void ResetGhostTime() { m_time = time(NULL); }
-    CorpseType GetType() const { return m_type; }
+        time_t const& GetGhostTime() const { return m_time; }
+        void ResetGhostTime() { m_time = time(NULL); }
+        CorpseType GetType() const { return m_type; }
 
-    GridCoord const& GetGridCoord() const { return _gridCoord; }
-    void SetGridCoord(GridCoord const& gridCoord) { _gridCoord = gridCoord; }
+        GridCoord const& GetGridCoord() const { return _gridCoord; }
+        void SetGridCoord(GridCoord const& gridCoord) { _gridCoord = gridCoord; }
 
-    Loot loot;                                          // remove insignia ONLY at BG
-    Player* lootRecipient;
-    bool lootForBody;
+        Loot loot;                                          // remove insignia ONLY at BG
+        Player* lootRecipient;
+        bool lootForBody;
 
-    bool IsExpired(time_t t) const;
+        bool IsExpired(time_t t) const;
 
-private:
-    CorpseType m_type;
-    time_t m_time;
-    GridCoord _gridCoord;                                    // gride for corpse position for fast search
+    private:
+        CorpseType m_type;
+        time_t m_time;
+        GridCoord _gridCoord;                                    // gride for corpse position for fast search
 };
 #endif

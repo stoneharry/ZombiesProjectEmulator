@@ -22,30 +22,30 @@
 
 enum Yells
 {
-    SAY_AGGRO = 0,
-    SAY_KILL = 1,
-    SAY_DEATH = 2,
-    SAY_SUMMONING_ADDS = 3, // unused
-    SAY_ARCANE_FIELD = 4,
-    EMOTE_SUMMONING_ADDS = 5  // unused
+    SAY_AGGRO                       = 0,
+    SAY_KILL                        = 1,
+    SAY_DEATH                       = 2,
+    SAY_SUMMONING_ADDS              = 3, // unused
+    SAY_ARCANE_FIELD                = 4,
+    EMOTE_SUMMONING_ADDS            = 5  // unused
 };
 
 enum Spells
 {
-    SPELL_BEAM_CHANNEL = 52106,
-    SPELL_ARCANE_FIELD = 47346,
+    SPELL_BEAM_CHANNEL              = 52106,
+    SPELL_ARCANE_FIELD              = 47346,
 
     SPELL_SUMMON_RISEN_SHADOWCASTER = 49105,
     SPELL_SUMMON_FETID_TROLL_CORPSE = 49103,
-    SPELL_SUMMON_HULKING_CORPSE = 49104,
-    SPELL_SUMMON_CRYSTAL_HANDLER = 49179,
-    SPELL_SUMMON_COPY_OF_MINIONS = 59933,
+    SPELL_SUMMON_HULKING_CORPSE     = 49104,
+    SPELL_SUMMON_CRYSTAL_HANDLER    = 49179,
+    SPELL_SUMMON_COPY_OF_MINIONS    = 59933,
 
-    SPELL_ARCANE_BLAST = 49198,
-    SPELL_BLIZZARD = 49034,
-    SPELL_FROSTBOLT = 49037,
-    SPELL_WRATH_OF_MISERY = 50089,
-    SPELL_SUMMON_MINIONS = 59910
+    SPELL_ARCANE_BLAST              = 49198,
+    SPELL_BLIZZARD                  = 49034,
+    SPELL_FROSTBOLT                 = 49037,
+    SPELL_WRATH_OF_MISERY           = 50089,
+    SPELL_SUMMON_MINIONS            = 59910
 };
 
 enum Misc
@@ -147,17 +147,17 @@ public:
             {
                 switch (eventId)
                 {
-                case EVENT_SUMMON_MINIONS:
-                    DoCast(SPELL_SUMMON_MINIONS);
-                    events.ScheduleEvent(EVENT_SUMMON_MINIONS, 15000);
-                    break;
-                case EVENT_ATTACK:
-                    if (Unit* victim = SelectTarget(SELECT_TARGET_RANDOM))
-                        DoCast(victim, RAND(SPELL_ARCANE_BLAST, SPELL_BLIZZARD, SPELL_FROSTBOLT, SPELL_WRATH_OF_MISERY));
-                    events.ScheduleEvent(EVENT_ATTACK, 3000);
-                    break;
-                default:
-                    break;
+                    case EVENT_SUMMON_MINIONS:
+                        DoCast(SPELL_SUMMON_MINIONS);
+                        events.ScheduleEvent(EVENT_SUMMON_MINIONS, 15000);
+                        break;
+                    case EVENT_ATTACK:
+                        if (Unit* victim = SelectTarget(SELECT_TARGET_RANDOM))
+                            DoCast(victim, RAND(SPELL_ARCANE_BLAST, SPELL_BLIZZARD, SPELL_FROSTBOLT, SPELL_WRATH_OF_MISERY));
+                        events.ScheduleEvent(EVENT_ATTACK, 3000);
+                        break;
+                    default:
+                        break;
                 }
             }
         }
@@ -216,22 +216,22 @@ public:
         void SetSummonerStatus(bool active)
         {
             for (uint8 i = 0; i < 4; i++)
-            if (ObjectGuid guid = instance->GetGuidData(summoners[i].data))
-            if (Creature* crystalChannelTarget = ObjectAccessor::GetCreature(*me, guid))
-            {
-                if (active)
-                    crystalChannelTarget->AI()->SetData(summoners[i].spell, summoners[i].timer);
-                else
-                    crystalChannelTarget->AI()->Reset();
-            }
+                if (ObjectGuid guid = instance->GetGuidData(summoners[i].data))
+                    if (Creature* crystalChannelTarget = ObjectAccessor::GetCreature(*me, guid))
+                    {
+                        if (active)
+                            crystalChannelTarget->AI()->SetData(summoners[i].spell, summoners[i].timer);
+                        else
+                            crystalChannelTarget->AI()->Reset();
+                    }
         }
 
         void SetCrystalsStatus(bool active)
         {
             for (uint8 i = 0; i < 4; i++)
-            if (ObjectGuid guid = instance->GetGuidData(DATA_NOVOS_CRYSTAL_1 + i))
-            if (GameObject* crystal = ObjectAccessor::GetGameObject(*me, guid))
-                SetCrystalStatus(crystal, active);
+                if (ObjectGuid guid = instance->GetGuidData(DATA_NOVOS_CRYSTAL_1 + i))
+                    if (GameObject* crystal = ObjectAccessor::GetGameObject(*me, guid))
+                        SetCrystalStatus(crystal, active);
         }
 
         void SetCrystalStatus(GameObject* crystal, bool active)
@@ -249,13 +249,13 @@ public:
         void CrystalHandlerDied()
         {
             for (uint8 i = 0; i < 4; i++)
-            if (ObjectGuid guid = instance->GetGuidData(DATA_NOVOS_CRYSTAL_1 + i))
-            if (GameObject* crystal = ObjectAccessor::GetGameObject(*me, guid))
-            if (crystal->GetGoState() == GO_STATE_ACTIVE)
-            {
-                SetCrystalStatus(crystal, false);
-                break;
-            }
+                if (ObjectGuid guid = instance->GetGuidData(DATA_NOVOS_CRYSTAL_1 + i))
+                    if (GameObject* crystal = ObjectAccessor::GetGameObject(*me, guid))
+                        if (crystal->GetGoState() == GO_STATE_ACTIVE)
+                        {
+                            SetCrystalStatus(crystal, false);
+                            break;
+                        }
 
             if (++_crystalHandlerCount >= 4)
             {
@@ -267,8 +267,8 @@ public:
                     events.ScheduleEvent(EVENT_SUMMON_MINIONS, 15000);
             }
             else if (ObjectGuid guid = instance->GetGuidData(DATA_NOVOS_SUMMONER_4))
-            if (Creature* crystalChannelTarget = ObjectAccessor::GetCreature(*me, guid))
-                crystalChannelTarget->AI()->SetData(SPELL_SUMMON_CRYSTAL_HANDLER, 15000);
+                if (Creature* crystalChannelTarget = ObjectAccessor::GetCreature(*me, guid))
+                    crystalChannelTarget->AI()->SetData(SPELL_SUMMON_CRYSTAL_HANDLER, 15000);
         }
 
         uint8 _crystalHandlerCount;
@@ -330,9 +330,9 @@ public:
         void JustSummoned(Creature* summon) override
         {
             if (InstanceScript* instance = me->GetInstanceScript())
-            if (ObjectGuid guid = instance->GetGuidData(DATA_NOVOS))
-            if (Creature* novos = ObjectAccessor::GetCreature(*me, guid))
-                novos->AI()->JustSummoned(summon);
+                if (ObjectGuid guid = instance->GetGuidData(DATA_NOVOS))
+                    if (Creature* novos = ObjectAccessor::GetCreature(*me, guid))
+                        novos->AI()->JustSummoned(summon);
 
             if (summon)
                 summon->GetMotionMaster()->MovePath(summon->GetEntry() * 100, false);
@@ -366,36 +366,36 @@ public:
 
 class spell_novos_summon_minions : public SpellScriptLoader
 {
-public:
-    spell_novos_summon_minions() : SpellScriptLoader("spell_novos_summon_minions") { }
+    public:
+        spell_novos_summon_minions() : SpellScriptLoader("spell_novos_summon_minions") { }
 
-    class spell_novos_summon_minions_SpellScript : public SpellScript
-    {
-        PrepareSpellScript(spell_novos_summon_minions_SpellScript);
-
-        bool Validate(SpellInfo const* /*spellInfo*/) override
+        class spell_novos_summon_minions_SpellScript : public SpellScript
         {
-            if (!sSpellMgr->GetSpellInfo(SPELL_SUMMON_COPY_OF_MINIONS))
-                return false;
-            return true;
-        }
+            PrepareSpellScript(spell_novos_summon_minions_SpellScript);
 
-        void HandleScript(SpellEffIndex /*effIndex*/)
+            bool Validate(SpellInfo const* /*spellInfo*/) override
+            {
+                if (!sSpellMgr->GetSpellInfo(SPELL_SUMMON_COPY_OF_MINIONS))
+                    return false;
+                return true;
+            }
+
+            void HandleScript(SpellEffIndex /*effIndex*/)
+            {
+                for (uint8 i = 0; i < 2; ++i)
+                    GetCaster()->CastSpell((Unit*)NULL, SPELL_SUMMON_COPY_OF_MINIONS, true);
+            }
+
+            void Register() override
+            {
+                OnEffectHitTarget += SpellEffectFn(spell_novos_summon_minions_SpellScript::HandleScript, EFFECT_0, SPELL_EFFECT_SCRIPT_EFFECT);
+            }
+        };
+
+        SpellScript* GetSpellScript() const override
         {
-            for (uint8 i = 0; i < 2; ++i)
-                GetCaster()->CastSpell((Unit*)NULL, SPELL_SUMMON_COPY_OF_MINIONS, true);
+            return new spell_novos_summon_minions_SpellScript();
         }
-
-        void Register() override
-        {
-            OnEffectHitTarget += SpellEffectFn(spell_novos_summon_minions_SpellScript::HandleScript, EFFECT_0, SPELL_EFFECT_SCRIPT_EFFECT);
-        }
-    };
-
-    SpellScript* GetSpellScript() const override
-    {
-        return new spell_novos_summon_minions_SpellScript();
-    }
 };
 
 void AddSC_boss_novos()

@@ -28,25 +28,25 @@ EndScriptData */
 
 enum Spells
 {
-    SPELL_CALLOFGRAVES = 17831,
-    SPELL_CORRUPTION = 11672,
-    SPELL_FLASHHEAL = 10917,
-    SPELL_RENEW = 10929,
-    SPELL_HEALINGTOUCH = 9889
+    SPELL_CALLOFGRAVES          = 17831,
+    SPELL_CORRUPTION            = 11672,
+    SPELL_FLASHHEAL             = 10917,
+    SPELL_RENEW                 = 10929,
+    SPELL_HEALINGTOUCH          = 9889
 };
 
 enum Events
 {
-    EVENT_CALLOFGRAVES = 1,
-    EVENT_CORRUPTION = 2,
-    EVENT_FLASHHEAL = 3,
-    EVENT_RENEW = 4,
-    EVENT_HEALINGTOUCH = 5
+    EVENT_CALLOFGRAVES          = 1,
+    EVENT_CORRUPTION            = 2,
+    EVENT_FLASHHEAL             = 3,
+    EVENT_RENEW                 = 4,
+    EVENT_HEALINGTOUCH          = 5
 };
 
 class boss_instructor_malicia : public CreatureScript
 {
-public: boss_instructor_malicia() : CreatureScript("boss_instructor_malicia") { }
+    public: boss_instructor_malicia() : CreatureScript("boss_instructor_malicia") { }
 
         struct boss_instructormaliciaAI : public BossAI
         {
@@ -94,48 +94,48 @@ public: boss_instructor_malicia() : CreatureScript("boss_instructor_malicia") { 
                 {
                     switch (eventId)
                     {
-                    case EVENT_CALLOFGRAVES:
-                        DoCastVictim(SPELL_CALLOFGRAVES, true);
-                        events.ScheduleEvent(EVENT_CALLOFGRAVES, 65000);
-                        break;
-                    case EVENT_CORRUPTION:
-                        DoCast(SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true), SPELL_CORRUPTION, true);
-                        events.ScheduleEvent(EVENT_CORRUPTION, 24000);
-                        break;
-                    case EVENT_RENEW:
-                        DoCast(me, SPELL_RENEW);
-                        events.ScheduleEvent(EVENT_RENEW, 10000);
-                        break;
-                    case EVENT_FLASHHEAL:
-                        //5 Flashheals will be cast
-                        DoCast(me, SPELL_FLASHHEAL);
-                        if (FlashCounter < 2)
-                        {
-                            events.ScheduleEvent(EVENT_FLASHHEAL, 5000);
-                            ++FlashCounter;
-                        }
-                        else
-                        {
-                            FlashCounter = 0;
-                            events.ScheduleEvent(EVENT_FLASHHEAL, 30000);
-                        }
-                        break;
-                    case EVENT_HEALINGTOUCH:
-                        //3 Healing Touch will be cast
-                        DoCast(me, SPELL_HEALINGTOUCH);
-                        if (TouchCounter < 2)
-                        {
-                            events.ScheduleEvent(EVENT_HEALINGTOUCH, 5500);
-                            ++TouchCounter;
-                        }
-                        else
-                        {
-                            TouchCounter = 0;
-                            events.ScheduleEvent(EVENT_HEALINGTOUCH, 30000);
-                        }
-                        break;
-                    default:
-                        break;
+                        case EVENT_CALLOFGRAVES:
+                            DoCastVictim(SPELL_CALLOFGRAVES, true);
+                            events.ScheduleEvent(EVENT_CALLOFGRAVES, 65000);
+                            break;
+                        case EVENT_CORRUPTION:
+                            DoCast(SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true), SPELL_CORRUPTION, true);
+                            events.ScheduleEvent(EVENT_CORRUPTION, 24000);
+                            break;
+                        case EVENT_RENEW:
+                            DoCast(me, SPELL_RENEW);
+                            events.ScheduleEvent(EVENT_RENEW, 10000);
+                            break;
+                        case EVENT_FLASHHEAL:
+                            //5 Flashheals will be cast
+                            DoCast(me, SPELL_FLASHHEAL);
+                            if (FlashCounter < 2)
+                            {
+                                events.ScheduleEvent(EVENT_FLASHHEAL, 5000);
+                                ++FlashCounter;
+                            }
+                            else
+                            {
+                                FlashCounter=0;
+                                events.ScheduleEvent(EVENT_FLASHHEAL, 30000);
+                            }
+                            break;
+                        case EVENT_HEALINGTOUCH:
+                            //3 Healing Touch will be cast
+                            DoCast(me, SPELL_HEALINGTOUCH);
+                            if (TouchCounter < 2)
+                            {
+                                events.ScheduleEvent(EVENT_HEALINGTOUCH, 5500);
+                                ++TouchCounter;
+                            }
+                            else
+                            {
+                                TouchCounter=0;
+                                events.ScheduleEvent(EVENT_HEALINGTOUCH, 30000);
+                            }
+                            break;
+                        default:
+                            break;
                     }
                 }
 

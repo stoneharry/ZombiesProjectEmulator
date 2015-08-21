@@ -39,39 +39,39 @@ public:
     {
         static ChatCommand pdumpCommandTable[] =
         {
-            { "load", rbac::RBAC_PERM_COMMAND_PDUMP_LOAD, true, &HandlePDumpLoadCommand, "", NULL },
-            { "write", rbac::RBAC_PERM_COMMAND_PDUMP_WRITE, true, &HandlePDumpWriteCommand, "", NULL },
-            { NULL, 0, false, NULL, "", NULL }
+            { "load",          rbac::RBAC_PERM_COMMAND_PDUMP_LOAD,                true,  &HandlePDumpLoadCommand,               "", NULL },
+            { "write",         rbac::RBAC_PERM_COMMAND_PDUMP_WRITE,               true,  &HandlePDumpWriteCommand,              "", NULL },
+            { NULL,            0,                                           false, NULL,                                  "", NULL }
         };
         static ChatCommand characterDeletedCommandTable[] =
         {
-            { "delete", rbac::RBAC_PERM_COMMAND_CHARACTER_DELETED_DELETE, true, &HandleCharacterDeletedDeleteCommand, "", NULL },
-            { "list", rbac::RBAC_PERM_COMMAND_CHARACTER_DELETED_LIST, true, &HandleCharacterDeletedListCommand, "", NULL },
-            { "restore", rbac::RBAC_PERM_COMMAND_CHARACTER_DELETED_RESTORE, true, &HandleCharacterDeletedRestoreCommand, "", NULL },
-            { "old", rbac::RBAC_PERM_COMMAND_CHARACTER_DELETED_OLD, true, &HandleCharacterDeletedOldCommand, "", NULL },
-            { NULL, 0, false, NULL, "", NULL }
+            { "delete",        rbac::RBAC_PERM_COMMAND_CHARACTER_DELETED_DELETE,  true,  &HandleCharacterDeletedDeleteCommand,  "", NULL },
+            { "list",          rbac::RBAC_PERM_COMMAND_CHARACTER_DELETED_LIST,    true,  &HandleCharacterDeletedListCommand,    "", NULL },
+            { "restore",       rbac::RBAC_PERM_COMMAND_CHARACTER_DELETED_RESTORE, true,  &HandleCharacterDeletedRestoreCommand, "", NULL },
+            { "old",           rbac::RBAC_PERM_COMMAND_CHARACTER_DELETED_OLD,     true,  &HandleCharacterDeletedOldCommand,     "", NULL },
+            { NULL,            0,                                           false, NULL,                                  "", NULL }
         };
 
         static ChatCommand characterCommandTable[] =
         {
-            { "customize", rbac::RBAC_PERM_COMMAND_CHARACTER_CUSTOMIZE, true, &HandleCharacterCustomizeCommand, "", NULL },
-            { "changefaction", rbac::RBAC_PERM_COMMAND_CHARACTER_CHANGEFACTION, true, &HandleCharacterChangeFactionCommand, "", NULL },
-            { "changerace", rbac::RBAC_PERM_COMMAND_CHARACTER_CHANGERACE, true, &HandleCharacterChangeRaceCommand, "", NULL },
-            { "deleted", rbac::RBAC_PERM_COMMAND_CHARACTER_DELETED, true, NULL, "", characterDeletedCommandTable },
-            { "erase", rbac::RBAC_PERM_COMMAND_CHARACTER_ERASE, true, &HandleCharacterEraseCommand, "", NULL },
-            { "level", rbac::RBAC_PERM_COMMAND_CHARACTER_LEVEL, true, &HandleCharacterLevelCommand, "", NULL },
-            { "rename", rbac::RBAC_PERM_COMMAND_CHARACTER_RENAME, true, &HandleCharacterRenameCommand, "", NULL },
-            { "reputation", rbac::RBAC_PERM_COMMAND_CHARACTER_REPUTATION, true, &HandleCharacterReputationCommand, "", NULL },
-            { "titles", rbac::RBAC_PERM_COMMAND_CHARACTER_TITLES, true, &HandleCharacterTitlesCommand, "", NULL },
-            { NULL, 0, false, NULL, "", NULL }
+            { "customize",     rbac::RBAC_PERM_COMMAND_CHARACTER_CUSTOMIZE,       true,  &HandleCharacterCustomizeCommand,      "", NULL },
+            { "changefaction", rbac::RBAC_PERM_COMMAND_CHARACTER_CHANGEFACTION,   true,  &HandleCharacterChangeFactionCommand,  "", NULL },
+            { "changerace",    rbac::RBAC_PERM_COMMAND_CHARACTER_CHANGERACE,      true,  &HandleCharacterChangeRaceCommand,     "", NULL },
+            { "deleted",       rbac::RBAC_PERM_COMMAND_CHARACTER_DELETED,         true,  NULL,                                  "", characterDeletedCommandTable },
+            { "erase",         rbac::RBAC_PERM_COMMAND_CHARACTER_ERASE,           true,  &HandleCharacterEraseCommand,          "", NULL },
+            { "level",         rbac::RBAC_PERM_COMMAND_CHARACTER_LEVEL,           true,  &HandleCharacterLevelCommand,          "", NULL },
+            { "rename",        rbac::RBAC_PERM_COMMAND_CHARACTER_RENAME,          true,  &HandleCharacterRenameCommand,         "", NULL },
+            { "reputation",    rbac::RBAC_PERM_COMMAND_CHARACTER_REPUTATION,      true,  &HandleCharacterReputationCommand,     "", NULL },
+            { "titles",        rbac::RBAC_PERM_COMMAND_CHARACTER_TITLES,          true,  &HandleCharacterTitlesCommand,         "", NULL },
+            { NULL,            0,                                           false, NULL,                                  "", NULL }
         };
 
         static ChatCommand commandTable[] =
         {
-            { "character", rbac::RBAC_PERM_COMMAND_CHARACTER, true, NULL, "", characterCommandTable },
-            { "levelup", rbac::RBAC_PERM_COMMAND_LEVELUP, false, &HandleLevelUpCommand, "", NULL },
-            { "pdump", rbac::RBAC_PERM_COMMAND_PDUMP, true, NULL, "", pdumpCommandTable },
-            { NULL, 0, false, NULL, "", NULL }
+            { "character",     rbac::RBAC_PERM_COMMAND_CHARACTER,                 true,  NULL,                                  "", characterCommandTable },
+            { "levelup",       rbac::RBAC_PERM_COMMAND_LEVELUP,                   false, &HandleLevelUpCommand,                 "", NULL },
+            { "pdump",         rbac::RBAC_PERM_COMMAND_PDUMP,                     true,  NULL,                                  "", pdumpCommandTable },
+            { NULL,            0,                                           false, NULL,                                  "", NULL }
         };
         return commandTable;
     }
@@ -133,15 +133,16 @@ public:
 
                 DeletedInfo info;
 
-                info.guid = ObjectGuid(HIGHGUID_PLAYER, fields[0].GetUInt32());
-                info.name = fields[1].GetString();
-                info.accountId = fields[2].GetUInt32();
+                info.guid       = ObjectGuid(HIGHGUID_PLAYER, fields[0].GetUInt32());
+                info.name       = fields[1].GetString();
+                info.accountId  = fields[2].GetUInt32();
 
                 // account name will be empty for not existed account
                 AccountMgr::GetName(info.accountId, info.accountName);
                 info.deleteDate = time_t(fields[3].GetUInt32());
                 foundList.push_back(info);
-            } while (result->NextRow());
+            }
+            while (result->NextRow());
         }
 
         return true;
@@ -172,12 +173,12 @@ public:
 
             if (!handler->GetSession())
                 handler->PSendSysMessage(LANG_CHARACTER_DELETED_LIST_LINE_CONSOLE,
-                itr->guid.GetCounter(), itr->name.c_str(), itr->accountName.empty() ? "<Not existed>" : itr->accountName.c_str(),
-                itr->accountId, dateStr.c_str());
+                    itr->guid.GetCounter(), itr->name.c_str(), itr->accountName.empty() ? "<Not existed>" : itr->accountName.c_str(),
+                    itr->accountId, dateStr.c_str());
             else
                 handler->PSendSysMessage(LANG_CHARACTER_DELETED_LIST_LINE_CHAT,
-                itr->guid.GetCounter(), itr->name.c_str(), itr->accountName.empty() ? "<Not existed>" : itr->accountName.c_str(),
-                itr->accountId, dateStr.c_str());
+                    itr->guid.GetCounter(), itr->name.c_str(), itr->accountName.empty() ? "<Not existed>" : itr->accountName.c_str(),
+                    itr->accountId, dateStr.c_str());
         }
 
         if (!handler->GetSession())
@@ -281,8 +282,8 @@ public:
                     continue;
 
                 char const* activeStr = target->GetUInt32Value(PLAYER_CHOSEN_TITLE) == titleInfo->bit_index
-                    ? handler->GetTrinityString(LANG_ACTIVE)
-                    : "";
+                ? handler->GetTrinityString(LANG_ACTIVE)
+                : "";
 
                 char titleNameStr[80];
                 snprintf(titleNameStr, 80, name.c_str(), targetName);
@@ -595,16 +596,16 @@ public:
         return true;
     }
 
-    /**
-     * Handles the '.character deleted list' command, which shows all deleted characters which matches the given search string
-     *
-     * @see HandleCharacterDeletedListHelper
-     * @see HandleCharacterDeletedRestoreCommand
-     * @see HandleCharacterDeletedDeleteCommand
-     * @see DeletedInfoList
-     *
-     * @param args the search string which either contains a player GUID or a part fo the character-name
-     */
+   /**
+    * Handles the '.character deleted list' command, which shows all deleted characters which matches the given search string
+    *
+    * @see HandleCharacterDeletedListHelper
+    * @see HandleCharacterDeletedRestoreCommand
+    * @see HandleCharacterDeletedDeleteCommand
+    * @see DeletedInfoList
+    *
+    * @param args the search string which either contains a player GUID or a part fo the character-name
+    */
     static bool HandleCharacterDeletedListCommand(ChatHandler* handler, char const* args)
     {
         DeletedInfoList foundList;
@@ -930,25 +931,25 @@ public:
 
         switch (PlayerDumpReader().LoadDump(fileStr, accountId, name, guid))
         {
-        case DUMP_SUCCESS:
-            handler->PSendSysMessage(LANG_COMMAND_IMPORT_SUCCESS);
-            break;
-        case DUMP_FILE_OPEN_ERROR:
-            handler->PSendSysMessage(LANG_FILE_OPEN_FAIL, fileStr);
-            handler->SetSentErrorMessage(true);
-            return false;
-        case DUMP_FILE_BROKEN:
-            handler->PSendSysMessage(LANG_DUMP_BROKEN, fileStr);
-            handler->SetSentErrorMessage(true);
-            return false;
-        case DUMP_TOO_MANY_CHARS:
-            handler->PSendSysMessage(LANG_ACCOUNT_CHARACTER_LIST_FULL, accountName.c_str(), accountId);
-            handler->SetSentErrorMessage(true);
-            return false;
-        default:
-            handler->PSendSysMessage(LANG_COMMAND_IMPORT_FAILED);
-            handler->SetSentErrorMessage(true);
-            return false;
+            case DUMP_SUCCESS:
+                handler->PSendSysMessage(LANG_COMMAND_IMPORT_SUCCESS);
+                break;
+            case DUMP_FILE_OPEN_ERROR:
+                handler->PSendSysMessage(LANG_FILE_OPEN_FAIL, fileStr);
+                handler->SetSentErrorMessage(true);
+                return false;
+            case DUMP_FILE_BROKEN:
+                handler->PSendSysMessage(LANG_DUMP_BROKEN, fileStr);
+                handler->SetSentErrorMessage(true);
+                return false;
+            case DUMP_TOO_MANY_CHARS:
+                handler->PSendSysMessage(LANG_ACCOUNT_CHARACTER_LIST_FULL, accountName.c_str(), accountId);
+                handler->SetSentErrorMessage(true);
+                return false;
+            default:
+                handler->PSendSysMessage(LANG_COMMAND_IMPORT_FAILED);
+                handler->SetSentErrorMessage(true);
+                return false;
         }
 
         return true;
@@ -991,21 +992,21 @@ public:
 
         switch (PlayerDumpWriter().WriteDump(fileStr, uint32(guid)))
         {
-        case DUMP_SUCCESS:
-            handler->PSendSysMessage(LANG_COMMAND_EXPORT_SUCCESS);
-            break;
-        case DUMP_FILE_OPEN_ERROR:
-            handler->PSendSysMessage(LANG_FILE_OPEN_FAIL, fileStr);
-            handler->SetSentErrorMessage(true);
-            return false;
-        case DUMP_CHARACTER_DELETED:
-            handler->PSendSysMessage(LANG_COMMAND_EXPORT_DELETED_CHAR);
-            handler->SetSentErrorMessage(true);
-            return false;
-        default:
-            handler->PSendSysMessage(LANG_COMMAND_EXPORT_FAILED);
-            handler->SetSentErrorMessage(true);
-            return false;
+            case DUMP_SUCCESS:
+                handler->PSendSysMessage(LANG_COMMAND_EXPORT_SUCCESS);
+                break;
+            case DUMP_FILE_OPEN_ERROR:
+                handler->PSendSysMessage(LANG_FILE_OPEN_FAIL, fileStr);
+                handler->SetSentErrorMessage(true);
+                return false;
+            case DUMP_CHARACTER_DELETED:
+                handler->PSendSysMessage(LANG_COMMAND_EXPORT_DELETED_CHAR);
+                handler->SetSentErrorMessage(true);
+                return false;
+            default:
+                handler->PSendSysMessage(LANG_COMMAND_EXPORT_FAILED);
+                handler->SetSentErrorMessage(true);
+                return false;
         }
 
         return true;

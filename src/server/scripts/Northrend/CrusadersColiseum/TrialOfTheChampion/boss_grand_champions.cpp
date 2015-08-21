@@ -33,64 +33,64 @@ EndScriptData */
 enum Spells
 {
     //Vehicle
-    SPELL_CHARGE = 63010,
-    SPELL_SHIELD_BREAKER = 68504,
-    SPELL_SHIELD = 66482,
+    SPELL_CHARGE                    = 63010,
+    SPELL_SHIELD_BREAKER            = 68504,
+    SPELL_SHIELD                    = 66482,
 
     // Marshal Jacob Alerius && Mokra the Skullcrusher || Warrior
-    SPELL_MORTAL_STRIKE = 68783,
-    SPELL_MORTAL_STRIKE_H = 68784,
-    SPELL_BLADESTORM = 63784,
-    SPELL_INTERCEPT = 67540,
-    SPELL_ROLLING_THROW = 47115, //not implemented in the AI yet...
+    SPELL_MORTAL_STRIKE             = 68783,
+    SPELL_MORTAL_STRIKE_H           = 68784,
+    SPELL_BLADESTORM                = 63784,
+    SPELL_INTERCEPT                 = 67540,
+    SPELL_ROLLING_THROW             = 47115, //not implemented in the AI yet...
 
     // Ambrose Boltspark && Eressea Dawnsinger || Mage
-    SPELL_FIREBALL = 66042,
-    SPELL_FIREBALL_H = 68310,
-    SPELL_BLAST_WAVE = 66044,
-    SPELL_BLAST_WAVE_H = 68312,
-    SPELL_HASTE = 66045,
-    SPELL_POLYMORPH = 66043,
-    SPELL_POLYMORPH_H = 68311,
+    SPELL_FIREBALL                  = 66042,
+    SPELL_FIREBALL_H                = 68310,
+    SPELL_BLAST_WAVE                = 66044,
+    SPELL_BLAST_WAVE_H              = 68312,
+    SPELL_HASTE                     = 66045,
+    SPELL_POLYMORPH                 = 66043,
+    SPELL_POLYMORPH_H               = 68311,
 
     // Colosos && Runok Wildmane || Shaman
-    SPELL_CHAIN_LIGHTNING = 67529,
-    SPELL_CHAIN_LIGHTNING_H = 68319,
-    SPELL_EARTH_SHIELD = 67530,
-    SPELL_HEALING_WAVE = 67528,
-    SPELL_HEALING_WAVE_H = 68318,
-    SPELL_HEX_OF_MENDING = 67534,
+    SPELL_CHAIN_LIGHTNING           = 67529,
+    SPELL_CHAIN_LIGHTNING_H         = 68319,
+    SPELL_EARTH_SHIELD              = 67530,
+    SPELL_HEALING_WAVE              = 67528,
+    SPELL_HEALING_WAVE_H            = 68318,
+    SPELL_HEX_OF_MENDING            = 67534,
 
     // Jaelyne Evensong && Zul'tore || Hunter
-    SPELL_DISENGAGE = 68340, //not implemented in the AI yet...
-    SPELL_LIGHTNING_ARROWS = 66083,
-    SPELL_MULTI_SHOT = 66081,
-    SPELL_SHOOT = 65868,
-    SPELL_SHOOT_H = 67988,
+    SPELL_DISENGAGE                 = 68340, //not implemented in the AI yet...
+    SPELL_LIGHTNING_ARROWS          = 66083,
+    SPELL_MULTI_SHOT                = 66081,
+    SPELL_SHOOT                     = 65868,
+    SPELL_SHOOT_H                   = 67988,
 
     // Lana Stouthammer Evensong && Deathstalker Visceri || Rouge
-    SPELL_EVISCERATE = 67709,
-    SPELL_EVISCERATE_H = 68317,
-    SPELL_FAN_OF_KNIVES = 67706,
-    SPELL_POISON_BOTTLE = 67701
+    SPELL_EVISCERATE                = 67709,
+    SPELL_EVISCERATE_H              = 68317,
+    SPELL_FAN_OF_KNIVES             = 67706,
+    SPELL_POISON_BOTTLE             = 67701
 };
 
 enum Seats
 {
-    SEAT_ID_0 = 0
+    SEAT_ID_0                       = 0
 };
 
 /*
 struct Point
 {
-float x, y, z;
+    float x, y, z;
 };
 
 const Point MovementPoint[] =
 {
-{746.84f, 623.15f, 411.41f},
-{747.96f, 620.29f, 411.09f},
-{750.23f, 618.35f, 411.09f}
+  {746.84f, 623.15f, 411.41f},
+  {747.96f, 620.29f, 411.09f},
+  {750.23f, 618.35f, 411.09f}
 };
 */
 void AggroAllPlayers(Creature* temp)
@@ -98,7 +98,7 @@ void AggroAllPlayers(Creature* temp)
     Map::PlayerList const &PlList = temp->GetMap()->GetPlayers();
 
     if (PlList.isEmpty())
-        return;
+            return;
 
     for (Map::PlayerList::const_iterator i = PlList.begin(); i != PlList.end(); ++i)
     {
@@ -186,25 +186,25 @@ public:
         {
             switch (uiType)
             {
-            case 1:
-                AddWaypoint(0, 747.36f, 634.07f, 411.572f);
-                AddWaypoint(1, 780.43f, 607.15f, 411.82f);
-                AddWaypoint(2, 785.99f, 599.41f, 411.92f);
-                AddWaypoint(3, 778.44f, 601.64f, 411.79f);
-                uiWaypointPath = 1;
-                break;
-            case 2:
-                AddWaypoint(0, 747.35f, 634.07f, 411.57f);
-                AddWaypoint(1, 768.72f, 581.01f, 411.92f);
-                AddWaypoint(2, 763.55f, 590.52f, 411.71f);
-                uiWaypointPath = 2;
-                break;
-            case 3:
-                AddWaypoint(0, 747.35f, 634.07f, 411.57f);
-                AddWaypoint(1, 784.02f, 645.33f, 412.39f);
-                AddWaypoint(2, 775.67f, 641.91f, 411.91f);
-                uiWaypointPath = 3;
-                break;
+                case 1:
+                    AddWaypoint(0, 747.36f, 634.07f, 411.572f);
+                    AddWaypoint(1, 780.43f, 607.15f, 411.82f);
+                    AddWaypoint(2, 785.99f, 599.41f, 411.92f);
+                    AddWaypoint(3, 778.44f, 601.64f, 411.79f);
+                    uiWaypointPath = 1;
+                    break;
+                case 2:
+                    AddWaypoint(0, 747.35f, 634.07f, 411.57f);
+                    AddWaypoint(1, 768.72f, 581.01f, 411.92f);
+                    AddWaypoint(2, 763.55f, 590.52f, 411.71f);
+                    uiWaypointPath = 2;
+                    break;
+                case 3:
+                    AddWaypoint(0, 747.35f, 634.07f, 411.57f);
+                    AddWaypoint(1, 784.02f, 645.33f, 412.39f);
+                    AddWaypoint(2, 775.67f, 641.91f, 411.91f);
+                    uiWaypointPath = 3;
+                    break;
             }
 
             if (uiType <= 3)
@@ -215,13 +215,13 @@ public:
         {
             switch (waypointId)
             {
-            case 2:
-                if (uiWaypointPath == 3 || uiWaypointPath == 2)
-                    instance->SetData(DATA_MOVEMENT_DONE, instance->GetData(DATA_MOVEMENT_DONE) + 1);
-                break;
-            case 3:
-                instance->SetData(DATA_MOVEMENT_DONE, instance->GetData(DATA_MOVEMENT_DONE) + 1);
-                break;
+                case 2:
+                    if (uiWaypointPath == 3 || uiWaypointPath == 2)
+                        instance->SetData(DATA_MOVEMENT_DONE, instance->GetData(DATA_MOVEMENT_DONE)+1);
+                    break;
+                case 3:
+                    instance->SetData(DATA_MOVEMENT_DONE, instance->GetData(DATA_MOVEMENT_DONE)+1);
+                    break;
             }
         }
 
@@ -249,8 +249,7 @@ public:
                     DoCastSpellShield();
 
                 uiBuffTimer = urand(30000, 45000);
-            }
-            else uiBuffTimer -= uiDiff;
+            }else uiBuffTimer -= uiDiff;
 
             if (uiChargeTimer <= uiDiff)
             {
@@ -270,8 +269,7 @@ public:
                     }
                 }
                 uiChargeTimer = 5000;
-            }
-            else uiChargeTimer -= uiDiff;
+            }else uiChargeTimer -= uiDiff;
 
             //dosen't work at all
             if (uiShieldBreakerTimer <= uiDiff)
@@ -297,8 +295,7 @@ public:
                     }
                 }
                 uiShieldBreakerTimer = 7000;
-            }
-            else uiShieldBreakerTimer -= uiDiff;
+            }else uiShieldBreakerTimer -= uiDiff;
 
             DoMeleeAttackIfReady();
         }
@@ -395,8 +392,7 @@ public:
                     AggroAllPlayers(me);
                     uiPhase = 0;
                 }
-            }
-            else uiPhaseTimer -= uiDiff;
+            }else uiPhaseTimer -= uiDiff;
 
             if (!UpdateVictim() || me->HasUnitMovementFlag(MOVEMENTFLAG_ONTRANSPORT))
                 return;
@@ -419,22 +415,19 @@ public:
                     }
                 }
                 uiInterceptTimer = 7000;
-            }
-            else uiInterceptTimer -= uiDiff;
+            } else uiInterceptTimer -= uiDiff;
 
             if (uiBladeStormTimer <= uiDiff)
             {
                 DoCastVictim(SPELL_BLADESTORM);
                 uiBladeStormTimer = urand(15000, 20000);
-            }
-            else uiBladeStormTimer -= uiDiff;
+            } else uiBladeStormTimer -= uiDiff;
 
             if (uiMortalStrikeTimer <= uiDiff)
             {
                 DoCastVictim(SPELL_MORTAL_STRIKE);
                 uiMortalStrikeTimer = urand(8000, 12000);
-            }
-            else uiMortalStrikeTimer -= uiDiff;
+            } else uiMortalStrikeTimer -= uiDiff;
 
             DoMeleeAttackIfReady();
         }
@@ -540,16 +533,14 @@ public:
                     AggroAllPlayers(me);
                     uiPhase = 0;
                 }
-            }
-            else uiPhaseTimer -= uiDiff;
+            }else uiPhaseTimer -= uiDiff;
 
             if (uiFireBallTimer <= uiDiff)
             {
                 if (me->GetVictim())
                     DoCastVictim(SPELL_FIREBALL);
                 uiFireBallTimer = 5000;
-            }
-            else uiFireBallTimer -= uiDiff;
+            } else uiFireBallTimer -= uiDiff;
 
             if (!UpdateVictim() || me->HasUnitMovementFlag(MOVEMENTFLAG_ONTRANSPORT))
                 return;
@@ -558,23 +549,20 @@ public:
             {
                 DoCastVictim(SPELL_FIREBALL);
                 uiFireBallTimer = 5000;
-            }
-            else uiFireBallTimer -= uiDiff;
+            } else uiFireBallTimer -= uiDiff;
 
             if (uiPolymorphTimer <= uiDiff)
             {
                 if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
                     DoCast(target, SPELL_POLYMORPH);
                 uiPolymorphTimer = 8000;
-            }
-            else uiPolymorphTimer -= uiDiff;
+            } else uiPolymorphTimer -= uiDiff;
 
             if (uiBlastWaveTimer <= uiDiff)
             {
                 DoCastAOE(SPELL_BLAST_WAVE, false);
                 uiBlastWaveTimer = 13000;
-            }
-            else uiBlastWaveTimer -= uiDiff;
+            } else uiBlastWaveTimer -= uiDiff;
 
             if (uiHasteTimer <= uiDiff)
             {
@@ -582,8 +570,7 @@ public:
 
                 DoCast(me, SPELL_HASTE);
                 uiHasteTimer = 22000;
-            }
-            else uiHasteTimer -= uiDiff;
+            } else uiHasteTimer -= uiDiff;
 
             DoMeleeAttackIfReady();
         }
@@ -695,8 +682,7 @@ public:
                     AggroAllPlayers(me);
                     uiPhase = 0;
                 }
-            }
-            else uiPhaseTimer -= uiDiff;
+            }else uiPhaseTimer -= uiDiff;
 
             if (!UpdateVictim() || me->HasUnitMovementFlag(MOVEMENTFLAG_ONTRANSPORT))
                 return;
@@ -707,8 +693,7 @@ public:
                     DoCast(target, SPELL_CHAIN_LIGHTNING);
 
                 uiChainLightningTimer = 16000;
-            }
-            else uiChainLightningTimer -= uiDiff;
+            } else uiChainLightningTimer -= uiDiff;
 
             if (uiHealingWaveTimer <= uiDiff)
             {
@@ -718,29 +703,25 @@ public:
                 {
                     if (Unit* pFriend = DoSelectLowestHpFriendly(40))
                         DoCast(pFriend, SPELL_HEALING_WAVE);
-                }
-                else
+                } else
                     DoCast(me, SPELL_HEALING_WAVE);
 
                 uiHealingWaveTimer = 12000;
-            }
-            else uiHealingWaveTimer -= uiDiff;
+            } else uiHealingWaveTimer -= uiDiff;
 
             if (uiEartShieldTimer <= uiDiff)
             {
                 DoCast(me, SPELL_EARTH_SHIELD);
 
                 uiEartShieldTimer = urand(30000, 35000);
-            }
-            else uiEartShieldTimer -= uiDiff;
+            } else uiEartShieldTimer -= uiDiff;
 
             if (uiHexMendingTimer <= uiDiff)
             {
                 DoCastVictim(SPELL_HEX_OF_MENDING, true);
 
                 uiHexMendingTimer = urand(20000, 25000);
-            }
-            else uiHexMendingTimer -= uiDiff;
+            } else uiHexMendingTimer -= uiDiff;
 
             DoMeleeAttackIfReady();
         }
@@ -762,7 +743,7 @@ class boss_hunter_toc5 : public CreatureScript
 public:
     boss_hunter_toc5() : CreatureScript("boss_hunter_toc5") { }
 
-    // Jaelyne Evensong && Zul'tore || Hunter
+        // Jaelyne Evensong && Zul'tore || Hunter
     struct boss_hunter_toc5AI : public ScriptedAI
     {
         boss_hunter_toc5AI(Creature* creature) : ScriptedAI(creature)
@@ -851,8 +832,7 @@ public:
                     AggroAllPlayers(me);
                     uiPhase = 0;
                 }
-            }
-            else uiPhaseTimer -= uiDiff;
+            }else uiPhaseTimer -= uiDiff;
 
             if (!UpdateVictim() || me->HasUnitMovementFlag(MOVEMENTFLAG_ONTRANSPORT))
                 return;
@@ -861,8 +841,7 @@ public:
             {
                 DoCastAOE(SPELL_LIGHTNING_ARROWS, false);
                 uiLightningArrowsTimer = 7000;
-            }
-            else uiLightningArrowsTimer -= uiDiff;
+            } else uiLightningArrowsTimer -= uiDiff;
 
             if (uiShootTimer <= uiDiff)
             {
@@ -874,8 +853,7 @@ public:
                 uiShootTimer = 12000;
                 uiMultiShotTimer = 3000;
                 bShoot = true;
-            }
-            else uiShootTimer -= uiDiff;
+            } else uiShootTimer -= uiDiff;
 
             if (bShoot && uiMultiShotTimer <= uiDiff)
             {
@@ -903,8 +881,7 @@ public:
                     }
                 }
                 bShoot = false;
-            }
-            else uiMultiShotTimer -= uiDiff;
+            } else uiMultiShotTimer -= uiDiff;
 
             DoMeleeAttackIfReady();
         }
@@ -1007,8 +984,7 @@ public:
                     AggroAllPlayers(me);
                     uiPhase = 0;
                 }
-            }
-            else uiPhaseTimer -= uiDiff;
+            } else uiPhaseTimer -= uiDiff;
 
             if (!UpdateVictim() || me->HasUnitMovementFlag(MOVEMENTFLAG_ONTRANSPORT))
                 return;
@@ -1017,23 +993,20 @@ public:
             {
                 DoCastVictim(SPELL_EVISCERATE);
                 uiEviscerateTimer = 8000;
-            }
-            else uiEviscerateTimer -= uiDiff;
+            } else uiEviscerateTimer -= uiDiff;
 
             if (uiFanKivesTimer <= uiDiff)
             {
                 DoCastAOE(SPELL_FAN_OF_KNIVES, false);
                 uiFanKivesTimer = 14000;
-            }
-            else uiFanKivesTimer -= uiDiff;
+            } else uiFanKivesTimer -= uiDiff;
 
             if (uiPosionBottleTimer <= uiDiff)
             {
                 if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
                     DoCast(target, SPELL_POISON_BOTTLE);
                 uiPosionBottleTimer = 19000;
-            }
-            else uiPosionBottleTimer -= uiDiff;
+            } else uiPosionBottleTimer -= uiDiff;
 
             DoMeleeAttackIfReady();
         }

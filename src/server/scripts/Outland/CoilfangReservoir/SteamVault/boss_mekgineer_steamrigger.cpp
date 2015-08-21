@@ -28,26 +28,26 @@ EndScriptData */
 
 enum Yells
 {
-    SAY_MECHANICS = 0,
-    SAY_AGGRO = 1,
-    SAY_SLAY = 2,
-    SAY_DEATH = 3
+    SAY_MECHANICS               = 0,
+    SAY_AGGRO                   = 1,
+    SAY_SLAY                    = 2,
+    SAY_DEATH                   = 3
 };
 
 enum Spells
 {
-    SPELL_SUPER_SHRINK_RAY = 31485,
-    SPELL_SAW_BLADE = 31486,
-    SPELL_ELECTRIFIED_NET = 35107,
+    SPELL_SUPER_SHRINK_RAY      = 31485,
+    SPELL_SAW_BLADE             = 31486,
+    SPELL_ELECTRIFIED_NET       = 35107,
 
-    SPELL_DISPEL_MAGIC = 17201,
-    SPELL_REPAIR = 31532,
-    H_SPELL_REPAIR = 37936
+    SPELL_DISPEL_MAGIC          = 17201,
+    SPELL_REPAIR                = 31532,
+    H_SPELL_REPAIR              = 37936
 };
 
 enum Creatures
 {
-    NPC_STREAMRIGGER_MECHANIC = 17951
+    NPC_STREAMRIGGER_MECHANIC   = 17951
 };
 
 class boss_mekgineer_steamrigger : public CreatureScript
@@ -138,8 +138,7 @@ public:
             {
                 DoCastVictim(SPELL_SUPER_SHRINK_RAY);
                 Shrink_Timer = 20000;
-            }
-            else Shrink_Timer -= diff;
+            } else Shrink_Timer -= diff;
 
             if (Saw_Blade_Timer <= diff)
             {
@@ -149,8 +148,7 @@ public:
                     DoCastVictim(SPELL_SAW_BLADE);
 
                 Saw_Blade_Timer = 15000;
-            }
-            else Saw_Blade_Timer -= diff;
+            } else Saw_Blade_Timer -= diff;
 
             if (Electrified_Net_Timer <= diff)
             {
@@ -260,10 +258,8 @@ public:
                             //me->GetMotionMaster()->MoveFollow(pMekgineer, 0, 0);
                         }
                     }
-                }
-                else Repair_Timer = 5000;
-            }
-            else Repair_Timer -= diff;
+                } else Repair_Timer = 5000;
+            } else Repair_Timer -= diff;
 
             if (!UpdateVictim())
                 return;

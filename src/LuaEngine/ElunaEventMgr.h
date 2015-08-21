@@ -32,7 +32,7 @@ enum LuaEventState
 struct LuaEvent
 {
     LuaEvent(int _funcRef, uint32 _delay, uint32 _repeats) :
-    delay(_delay), repeats(_repeats), funcRef(_funcRef), state(LUAEVENT_STATE_RUN)
+        delay(_delay), repeats(_repeats), funcRef(_funcRef), state(LUAEVENT_STATE_RUN)
     {
     }
 

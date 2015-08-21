@@ -38,11 +38,11 @@ EndContentData */
 
 enum Mist
 {
-    SAY_AT_HOME = 0,
-    EMOTE_AT_HOME = 1,
-    QUEST_MIST = 938,
-    NPC_ARYNIA = 3519,
-    FACTION_DARNASSUS = 79
+    SAY_AT_HOME             = 0,
+    EMOTE_AT_HOME           = 1,
+    QUEST_MIST              = 938,
+    NPC_ARYNIA              = 3519,
+    FACTION_DARNASSUS       = 79
 };
 
 class npc_mist : public CreatureScript
@@ -53,8 +53,8 @@ public:
     bool OnQuestAccept(Player* player, Creature* creature, Quest const* quest) override
     {
         if (quest->GetQuestId() == QUEST_MIST)
-        if (npc_mistAI* pMistAI = CAST_AI(npc_mist::npc_mistAI, creature->AI()))
-            pMistAI->StartFollow(player, FACTION_DARNASSUS, quest);
+            if (npc_mistAI* pMistAI = CAST_AI(npc_mist::npc_mistAI, creature->AI()))
+                pMistAI->StartFollow(player, FACTION_DARNASSUS, quest);
 
         return true;
     }
@@ -100,10 +100,10 @@ public:
         //call not needed here, no known abilities
         /*void UpdateFollowerAI(const uint32 Diff) override
         {
-        if (!UpdateVictim())
-        return;
+            if (!UpdateVictim())
+                return;
 
-        DoMeleeAttackIfReady();
+            DoMeleeAttackIfReady();
         }*/
     };
 

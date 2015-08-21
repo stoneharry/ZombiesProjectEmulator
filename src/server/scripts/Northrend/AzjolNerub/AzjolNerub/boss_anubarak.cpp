@@ -21,49 +21,49 @@
 
 enum Spells
 {
-    SPELL_CARRION_BEETLES = 53520,
-    SPELL_SUMMON_CARRION_BEETLES = 53521,
-    SPELL_LEECHING_SWARM = 53467,
-    SPELL_POUND = 53472,
-    SPELL_SUBMERGE = 53421,
-    SPELL_IMPALE_DMG = 53454,
-    SPELL_IMPALE_SHAKEGROUND = 53455,
-    SPELL_IMPALE_SPIKE = 53539,   //this is not the correct visual effect
+    SPELL_CARRION_BEETLES                         = 53520,
+    SPELL_SUMMON_CARRION_BEETLES                  = 53521,
+    SPELL_LEECHING_SWARM                          = 53467,
+    SPELL_POUND                                   = 53472,
+    SPELL_SUBMERGE                                = 53421,
+    SPELL_IMPALE_DMG                              = 53454,
+    SPELL_IMPALE_SHAKEGROUND                      = 53455,
+    SPELL_IMPALE_SPIKE                            = 53539,   //this is not the correct visual effect
     //SPELL_IMPALE_TARGET                           = 53458,
 };
 
 enum Creatures
 {
-    CREATURE_GUARDIAN = 29216,
-    CREATURE_VENOMANCER = 29217,
-    CREATURE_DATTER = 29213,
-    CREATURE_IMPALE_TARGET = 89,
-    DISPLAY_INVISIBLE = 11686
+    CREATURE_GUARDIAN                             = 29216,
+    CREATURE_VENOMANCER                           = 29217,
+    CREATURE_DATTER                               = 29213,
+    CREATURE_IMPALE_TARGET                        = 89,
+    DISPLAY_INVISIBLE                             = 11686
 };
 
 // not in db
 enum Yells
 {
-    SAY_AGGRO = 0,
-    SAY_SLAY = 1,
-    SAY_DEATH = 2,
-    SAY_LOCUST = 3,
-    SAY_SUBMERGE = 4,
-    SAY_INTRO = 5
+    SAY_AGGRO                                     = 0,
+    SAY_SLAY                                      = 1,
+    SAY_DEATH                                     = 2,
+    SAY_LOCUST                                    = 3,
+    SAY_SUBMERGE                                  = 4,
+    SAY_INTRO                                     = 5
 };
 
 enum Misc
 {
-    ACHIEV_TIMED_START_EVENT = 20381,
+    ACHIEV_TIMED_START_EVENT                      = 20381,
 };
 
 enum Phases
 {
-    PHASE_MELEE = 0,
-    PHASE_UNDERGROUND = 1,
-    IMPALE_PHASE_TARGET = 0,
-    IMPALE_PHASE_ATTACK = 1,
-    IMPALE_PHASE_DMG = 2
+    PHASE_MELEE                                   = 0,
+    PHASE_UNDERGROUND                             = 1,
+    IMPALE_PHASE_TARGET                           = 0,
+    IMPALE_PHASE_ATTACK                           = 1,
+    IMPALE_PHASE_DMG                              = 2
 };
 
 const Position SpawnPoint[2] =
@@ -138,7 +138,7 @@ public:
         {
             Initialize();
 
-            me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE | UNIT_FLAG_NOT_SELECTABLE);
+            me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE|UNIT_FLAG_NOT_SELECTABLE);
             me->RemoveAura(SPELL_SUBMERGE);
 
             Summons.DespawnAll();
@@ -151,12 +151,12 @@ public:
         {
             Position targetPos = target->GetPosition();
 
-            if (TempSummon* impaleTarget = me->SummonCreature(CREATURE_IMPALE_TARGET, targetPos, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 6 * IN_MILLISECONDS))
+            if (TempSummon* impaleTarget = me->SummonCreature(CREATURE_IMPALE_TARGET, targetPos, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 6*IN_MILLISECONDS))
             {
                 ImpaleTarget = impaleTarget->GetGUID();
                 impaleTarget->SetReactState(REACT_PASSIVE);
                 impaleTarget->SetDisplayId(DISPLAY_INVISIBLE);
-                impaleTarget->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_DISABLE_MOVE | UNIT_FLAG_NON_ATTACKABLE | UNIT_FLAG_NOT_SELECTABLE);
+                impaleTarget->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_DISABLE_MOVE|UNIT_FLAG_NON_ATTACKABLE|UNIT_FLAG_NOT_SELECTABLE);
                 return impaleTarget;
             }
 
@@ -182,7 +182,7 @@ public:
 
             if (DelayTimer && DelayTimer > 5000)
                 DelayEventStart();
-            else DelayTimer += diff;
+            else DelayTimer+=diff;
 
             switch (Phase)
             {
@@ -196,7 +196,7 @@ public:
                         {
                             if (Creature* impaleTarget = DoSummonImpaleTarget(target))
                                 impaleTarget->CastSpell(impaleTarget, SPELL_IMPALE_SHAKEGROUND, true);
-                            ImpaleTimer = 3 * IN_MILLISECONDS;
+                            ImpaleTimer = 3*IN_MILLISECONDS;
                             ImpalePhase = IMPALE_PHASE_ATTACK;
                         }
                         break;
@@ -207,17 +207,16 @@ public:
                             impaleTarget->RemoveAurasDueToSpell(SPELL_IMPALE_SHAKEGROUND);
                         }
                         ImpalePhase = IMPALE_PHASE_DMG;
-                        ImpaleTimer = 1 * IN_MILLISECONDS;
+                        ImpaleTimer = 1*IN_MILLISECONDS;
                         break;
                     case IMPALE_PHASE_DMG:
                         if (Creature* impaleTarget = ObjectAccessor::GetCreature(*me, ImpaleTarget))
                             me->CastSpell(impaleTarget, SPELL_IMPALE_DMG, true);
                         ImpalePhase = IMPALE_PHASE_TARGET;
-                        ImpaleTimer = 9 * IN_MILLISECONDS;
+                        ImpaleTimer = 9*IN_MILLISECONDS;
                         break;
                     }
-                }
-                else ImpaleTimer -= diff;
+                } else ImpaleTimer -= diff;
 
                 if (!GuardianSummoned)
                 {
@@ -248,8 +247,7 @@ public:
                             }
                             VenomancerSummoned = true;
                         }
-                    }
-                    else VenomancerTimer -= diff;
+                    } else VenomancerTimer -= diff;
                 }
 
                 if (!DatterSummoned)
@@ -268,8 +266,7 @@ public:
                             }
                             DatterSummoned = true;
                         }
-                    }
-                    else DatterTimer -= diff;
+                    } else DatterTimer -= diff;
 
                     if (me->HasAura(SPELL_LEECHING_SWARM))
                         me->RemoveAurasDueToSpell(SPELL_LEECHING_SWARM);
@@ -278,10 +275,9 @@ public:
                 if (UndergroundTimer <= diff)
                 {
                     me->RemoveAura(SPELL_SUBMERGE);
-                    me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE | UNIT_FLAG_NOT_SELECTABLE);
+                    me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE|UNIT_FLAG_NOT_SELECTABLE);
                     Phase = PHASE_MELEE;
-                }
-                else UndergroundTimer -= diff;
+                } else UndergroundTimer -= diff;
                 break;
 
             case PHASE_MELEE:
@@ -294,15 +290,15 @@ public:
                     VenomancerSummoned = false;
                     DatterSummoned = false;
 
-                    UndergroundTimer = 40 * IN_MILLISECONDS;
-                    VenomancerTimer = 25 * IN_MILLISECONDS;
-                    DatterTimer = 32 * IN_MILLISECONDS;
+                    UndergroundTimer = 40*IN_MILLISECONDS;
+                    VenomancerTimer = 25*IN_MILLISECONDS;
+                    DatterTimer = 32*IN_MILLISECONDS;
 
                     ImpalePhase = 0;
-                    ImpaleTimer = 9 * IN_MILLISECONDS;
+                    ImpaleTimer = 9*IN_MILLISECONDS;
 
                     DoCast(me, SPELL_SUBMERGE, false);
-                    me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE | UNIT_FLAG_NOT_SELECTABLE);
+                    me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE|UNIT_FLAG_NOT_SELECTABLE);
 
                     Phase = PHASE_UNDERGROUND;
                     ++UndergroundPhase;
@@ -311,23 +307,21 @@ public:
                 if (Channeling == true)
                 {
                     for (uint8 i = 0; i < 8; ++i)
-                        DoCastVictim(SPELL_SUMMON_CARRION_BEETLES, true);
+                    DoCastVictim(SPELL_SUMMON_CARRION_BEETLES, true);
                     Channeling = false;
                 }
                 else if (CarrionBeetlesTimer <= diff)
                 {
                     Channeling = true;
                     DoCastVictim(SPELL_CARRION_BEETLES);
-                    CarrionBeetlesTimer = 25 * IN_MILLISECONDS;
-                }
-                else CarrionBeetlesTimer -= diff;
+                    CarrionBeetlesTimer = 25*IN_MILLISECONDS;
+                } else CarrionBeetlesTimer -= diff;
 
                 if (LeechingSwarmTimer <= diff)
                 {
                     DoCast(me, SPELL_LEECHING_SWARM, true);
-                    LeechingSwarmTimer = 19 * IN_MILLISECONDS;
-                }
-                else LeechingSwarmTimer -= diff;
+                    LeechingSwarmTimer = 19*IN_MILLISECONDS;
+                } else LeechingSwarmTimer -= diff;
 
                 if (PoundTimer <= diff)
                 {
@@ -337,8 +331,7 @@ public:
                             me->CastSpell(pImpaleTarget, SPELL_POUND, false);
                     }
                     PoundTimer = 16500;
-                }
-                else PoundTimer -= diff;
+                } else PoundTimer -= diff;
 
                 DoMeleeAttackIfReady();
                 break;

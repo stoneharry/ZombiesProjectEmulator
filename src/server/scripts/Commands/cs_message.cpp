@@ -39,24 +39,24 @@ public:
         static ChatCommand channelSetCommandTable[] =
         {
             { "ownership", rbac::RBAC_PERM_COMMAND_CHANNEL_SET_OWNERSHIP, false, &HandleChannelSetOwnership, "", NULL },
-            { NULL, 0, false, NULL, "", NULL }
+            { NULL,        0,                                       false, NULL,                       "", NULL }
         };
         static ChatCommand channelCommandTable[] =
         {
             { "set", rbac::RBAC_PERM_COMMAND_CHANNEL_SET, true, NULL, "", channelSetCommandTable },
-            { NULL, 0, false, NULL, "", NULL }
+            { NULL,  0,                            false, NULL, "", NULL }
         };
         static ChatCommand commandTable[] =
         {
-            { "channel", rbac::RBAC_PERM_COMMAND_CHANNEL, true, NULL, "", channelCommandTable },
-            { "nameannounce", rbac::RBAC_PERM_COMMAND_NAMEANNOUNCE, true, &HandleNameAnnounceCommand, "", NULL },
+            { "channel",        rbac::RBAC_PERM_COMMAND_CHANNEL,        true, NULL,                         "", channelCommandTable  },
+            { "nameannounce",   rbac::RBAC_PERM_COMMAND_NAMEANNOUNCE,   true, &HandleNameAnnounceCommand,   "", NULL },
             { "gmnameannounce", rbac::RBAC_PERM_COMMAND_GMNAMEANNOUNCE, true, &HandleGMNameAnnounceCommand, "", NULL },
-            { "announce", rbac::RBAC_PERM_COMMAND_ANNOUNCE, true, &HandleAnnounceCommand, "", NULL },
-            { "gmannounce", rbac::RBAC_PERM_COMMAND_GMANNOUNCE, true, &HandleGMAnnounceCommand, "", NULL },
-            { "notify", rbac::RBAC_PERM_COMMAND_NOTIFY, true, &HandleNotifyCommand, "", NULL },
-            { "gmnotify", rbac::RBAC_PERM_COMMAND_GMNOTIFY, true, &HandleGMNotifyCommand, "", NULL },
-            { "whispers", rbac::RBAC_PERM_COMMAND_WHISPERS, false, &HandleWhispersCommand, "", NULL },
-            { NULL, 0, false, NULL, "", NULL }
+            { "announce",       rbac::RBAC_PERM_COMMAND_ANNOUNCE,       true, &HandleAnnounceCommand,       "", NULL },
+            { "gmannounce",     rbac::RBAC_PERM_COMMAND_GMANNOUNCE,     true, &HandleGMAnnounceCommand,     "", NULL },
+            { "notify",         rbac::RBAC_PERM_COMMAND_NOTIFY,         true, &HandleNotifyCommand,         "", NULL },
+            { "gmnotify",       rbac::RBAC_PERM_COMMAND_GMNOTIFY,       true, &HandleGMNotifyCommand,       "", NULL },
+            { "whispers",       rbac::RBAC_PERM_COMMAND_WHISPERS,      false, &HandleWhispersCommand,       "", NULL },
+            { NULL,             0,                               false, NULL,                         "", NULL }
         };
         return commandTable;
     }
@@ -82,7 +82,7 @@ public:
             if (channcel)
                 channcel->SetOwnership(true);
             PreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_UPD_CHANNEL_OWNERSHIP);
-            stmt->setUInt8(0, 1);
+            stmt->setUInt8 (0, 1);
             stmt->setString(1, channelStr);
             CharacterDatabase.Execute(stmt);
             handler->PSendSysMessage(LANG_CHANNEL_ENABLE_OWNERSHIP, channelStr);
@@ -92,7 +92,7 @@ public:
             if (channcel)
                 channcel->SetOwnership(false);
             PreparedStatement* stmt = CharacterDatabase.GetPreparedStatement(CHAR_UPD_CHANNEL_OWNERSHIP);
-            stmt->setUInt8(0, 0);
+            stmt->setUInt8 (0, 0);
             stmt->setString(1, channelStr);
             CharacterDatabase.Execute(stmt);
             handler->PSendSysMessage(LANG_CHANNEL_DISABLE_OWNERSHIP, channelStr);
@@ -157,7 +157,7 @@ public:
         std::string str = handler->GetTrinityString(LANG_GLOBAL_NOTIFY);
         str += args;
 
-        WorldPacket data(SMSG_NOTIFICATION, (str.size() + 1));
+        WorldPacket data(SMSG_NOTIFICATION, (str.size()+1));
         data << str;
         sWorld->SendGlobalMessage(&data);
 
@@ -172,7 +172,7 @@ public:
         std::string str = handler->GetTrinityString(LANG_GM_NOTIFY);
         str += args;
 
-        WorldPacket data(SMSG_NOTIFICATION, (str.size() + 1));
+        WorldPacket data(SMSG_NOTIFICATION, (str.size()+1));
         data << str;
         sWorld->SendGlobalGMMessage(&data);
 
@@ -183,7 +183,7 @@ public:
     {
         if (!*args)
         {
-            handler->PSendSysMessage(LANG_COMMAND_WHISPERACCEPTING, handler->GetSession()->GetPlayer()->isAcceptWhispers() ? handler->GetTrinityString(LANG_ON) : handler->GetTrinityString(LANG_OFF));
+            handler->PSendSysMessage(LANG_COMMAND_WHISPERACCEPTING, handler->GetSession()->GetPlayer()->isAcceptWhispers() ?  handler->GetTrinityString(LANG_ON) : handler->GetTrinityString(LANG_OFF));
             return true;
         }
 

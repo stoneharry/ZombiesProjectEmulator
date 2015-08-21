@@ -33,8 +33,8 @@ UpdateFetcher::UpdateFetcher(Path const& sourceDirectory,
     std::function<void(std::string const&)> const& apply,
     std::function<void(Path const& path)> const& applyFile,
     std::function<QueryResult(std::string const&)> const& retrieve) :
-    _sourceDirectory(sourceDirectory), _apply(apply), _applyFile(applyFile),
-    _retrieve(retrieve)
+        _sourceDirectory(sourceDirectory), _apply(apply), _applyFile(applyFile),
+        _retrieve(retrieve)
 {
 }
 
@@ -131,7 +131,8 @@ UpdateFetcher::AppliedFileStorage UpdateFetcher::ReceiveAppliedFiles() const
             AppliedFileEntry::StateConvert(fields[2].GetString()), fields[3].GetUInt64() };
 
         map.insert(std::make_pair(entry.name, entry));
-    } while (result->NextRow());
+    }
+    while (result->NextRow());
 
     return map;
 }
@@ -210,13 +211,13 @@ uint32 UpdateFetcher::Update(bool const redundancyChecks, bool const allowRehash
                 for (localeIter = available.begin(); (localeIter != available.end()) &&
                     (localeIter->first.filename().string() != hashIter->second); ++localeIter);
 
-                    // Conflict!
+                // Conflict!
                 if (localeIter != available.end())
                 {
                     TC_LOG_WARN("sql.updates", ">> Seems like update \"%s\" \'%s\' was renamed, but the old file is still there! " \
                         "Trade it as a new file! (Probably its an unmodified copy of file \"%s\")",
-                        availableQuery.first.filename().string().c_str(), hash.substr(0, 7).c_str(),
-                        localeIter->first.filename().string().c_str());
+                            availableQuery.first.filename().string().c_str(), hash.substr(0, 7).c_str(),
+                                localeIter->first.filename().string().c_str());
                 }
                 // Its save to trade the file as renamed here
                 else
@@ -275,12 +276,12 @@ uint32 UpdateFetcher::Update(bool const redundancyChecks, bool const allowRehash
 
         switch (mode)
         {
-        case MODE_APPLY:
-            speed = Apply(availableQuery.first);
-            /*no break*/
-        case MODE_REHASH:
-            UpdateEntry(file, speed);
-            break;
+            case MODE_APPLY:
+                speed = Apply(availableQuery.first);
+                /*no break*/
+            case MODE_REHASH:
+                UpdateEntry(file, speed);
+                break;
         }
 
         if (iter != applied.end())
@@ -361,11 +362,11 @@ void UpdateFetcher::RenameEntry(std::string const& from, std::string const& to) 
 
     // Rename
     {
-    std::string const update = "UPDATE `updates` SET `name`=\"" + to + "\" WHERE `name`=\"" + from + "\"";
+        std::string const update = "UPDATE `updates` SET `name`=\"" + to + "\" WHERE `name`=\"" + from + "\"";
 
-    // Update database
-    _apply(update);
-}
+        // Update database
+        _apply(update);
+    }
 }
 
 void UpdateFetcher::CleanUp(AppliedFileStorage const& storage) const

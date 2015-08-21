@@ -22,37 +22,37 @@
 
 enum ArenaSpellIds
 {
-    SPELL_ALLIANCE_GOLD_FLAG = 32724,
-    SPELL_ALLIANCE_GREEN_FLAG = 32725,
-    SPELL_HORDE_GOLD_FLAG = 35774,
-    SPELL_HORDE_GREEN_FLAG = 35775,
+    SPELL_ALLIANCE_GOLD_FLAG                = 32724,
+    SPELL_ALLIANCE_GREEN_FLAG               = 32725,
+    SPELL_HORDE_GOLD_FLAG                   = 35774,
+    SPELL_HORDE_GREEN_FLAG                  = 35775,
 
-    SPELL_LAST_MAN_STANDING = 26549  // Achievement Credit
+    SPELL_LAST_MAN_STANDING                 = 26549  // Achievement Credit
 };
 
 enum ArenaWorldStates
 {
-    ARENA_WORLD_STATE_ALIVE_PLAYERS_GREEN = 3600,
-    ARENA_WORLD_STATE_ALIVE_PLAYERS_GOLD = 3601
+    ARENA_WORLD_STATE_ALIVE_PLAYERS_GREEN   = 3600,
+    ARENA_WORLD_STATE_ALIVE_PLAYERS_GOLD    = 3601
 };
 
 class Arena : public Battleground
 {
-protected:
-    Arena();
+    protected:
+        Arena();
 
-    void AddPlayer(Player* player) override;
-    void RemovePlayer(Player* /*player*/, ObjectGuid /*guid*/, uint32 /*team*/) override;
+        void AddPlayer(Player* player) override;
+        void RemovePlayer(Player* /*player*/, ObjectGuid /*guid*/, uint32 /*team*/) override;
 
-    void FillInitialWorldStates(WorldPacket& data) override;
-    void UpdateArenaWorldState();
+        void FillInitialWorldStates(WorldPacket& data) override;
+        void UpdateArenaWorldState();
 
-    void HandleKillPlayer(Player* player, Player* killer) override;
+        void HandleKillPlayer(Player* player, Player* killer) override;
 
-private:
-    void RemovePlayerAtLeave(ObjectGuid guid, bool transport, bool sendPacket) override;
-    void CheckWinConditions() override;
-    void EndBattleground(uint32 winner) override;
+    private:
+        void RemovePlayerAtLeave(ObjectGuid guid, bool transport, bool sendPacket) override;
+        void CheckWinConditions() override;
+        void EndBattleground(uint32 winner) override;
 };
 
 #endif // TRINITY_ARENA_H

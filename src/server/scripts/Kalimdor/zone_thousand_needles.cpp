@@ -44,13 +44,13 @@ EndContentData */
 
 enum Kanati
 {
-    SAY_KAN_START = 0,
+    SAY_KAN_START              = 0,
 
-    QUEST_PROTECT_KANATI = 4966,
-    NPC_GALAK_ASS = 10720
+    QUEST_PROTECT_KANATI        = 4966,
+    NPC_GALAK_ASS               = 10720
 };
 
-Position const GalakLoc = { -4867.387695f, -1357.353760f, -48.226f, 0.0f };
+Position const GalakLoc = {-4867.387695f, -1357.353760f, -48.226f, 0.0f};
 
 class npc_kanati : public CreatureScript
 {
@@ -60,8 +60,8 @@ public:
     bool OnQuestAccept(Player* player, Creature* creature, const Quest* quest) override
     {
         if (quest->GetQuestId() == QUEST_PROTECT_KANATI)
-        if (npc_kanatiAI* pEscortAI = CAST_AI(npc_kanati::npc_kanatiAI, creature->AI()))
-            pEscortAI->Start(false, false, player->GetGUID(), quest, true);
+            if (npc_kanatiAI* pEscortAI = CAST_AI(npc_kanati::npc_kanatiAI, creature->AI()))
+                pEscortAI->Start(false, false, player->GetGUID(), quest, true);
 
         return true;
     }
@@ -81,14 +81,14 @@ public:
         {
             switch (waypointId)
             {
-            case 0:
-                Talk(SAY_KAN_START);
-                DoSpawnGalak();
-                break;
-            case 1:
-                if (Player* player = GetPlayerForEscort())
-                    player->GroupEventHappens(QUEST_PROTECT_KANATI, me);
-                break;
+                case 0:
+                    Talk(SAY_KAN_START);
+                    DoSpawnGalak();
+                    break;
+                case 1:
+                    if (Player* player = GetPlayerForEscort())
+                        player->GroupEventHappens(QUEST_PROTECT_KANATI, me);
+                    break;
             }
         }
 
@@ -112,29 +112,29 @@ public:
 
 enum Lakota
 {
-    SAY_LAKO_START = 0,
-    SAY_LAKO_LOOK_OUT = 1,
-    SAY_LAKO_HERE_COME = 2,
-    SAY_LAKO_MORE = 3,
-    SAY_LAKO_END = 4,
+    SAY_LAKO_START              = 0,
+    SAY_LAKO_LOOK_OUT           = 1,
+    SAY_LAKO_HERE_COME          = 2,
+    SAY_LAKO_MORE               = 3,
+    SAY_LAKO_END                = 4,
 
-    QUEST_FREE_AT_LAST = 4904,
-    NPC_GRIM_BANDIT = 10758,
-    FACTION_ESCORTEE_LAKO = 232,                      //guessed
+    QUEST_FREE_AT_LAST          = 4904,
+    NPC_GRIM_BANDIT             = 10758,
+    FACTION_ESCORTEE_LAKO       = 232,                      //guessed
 
-    ID_AMBUSH_1 = 0,
-    ID_AMBUSH_2 = 2,
-    ID_AMBUSH_3 = 4
+    ID_AMBUSH_1                 = 0,
+    ID_AMBUSH_2                 = 2,
+    ID_AMBUSH_3                 = 4
 };
 
 Position const BanditLoc[6] =
 {
-    { -4905.479492f, -2062.732666f, 84.352f, 0.0f },
-    { -4915.201172f, -2073.528320f, 84.733f, 0.0f },
-    { -4878.883301f, -1986.947876f, 91.966f, 0.0f },
-    { -4877.503906f, -1966.113403f, 91.859f, 0.0f },
-    { -4767.985352f, -1873.169189f, 90.192f, 0.0f },
-    { -4788.861328f, -1888.007813f, 89.888f, 0.0f }
+    {-4905.479492f, -2062.732666f, 84.352f, 0.0f},
+    {-4915.201172f, -2073.528320f, 84.733f, 0.0f},
+    {-4878.883301f, -1986.947876f, 91.966f, 0.0f},
+    {-4877.503906f, -1966.113403f, 91.859f, 0.0f},
+    {-4767.985352f, -1873.169189f, 90.192f, 0.0f},
+    {-4788.861328f, -1888.007813f, 89.888f, 0.0f}
 };
 
 class npc_lakota_windsong : public CreatureScript
@@ -170,29 +170,29 @@ public:
         {
             switch (waypointId)
             {
-            case 8:
-                Talk(SAY_LAKO_LOOK_OUT);
-                DoSpawnBandits(ID_AMBUSH_1);
-                break;
-            case 14:
-                Talk(SAY_LAKO_HERE_COME);
-                DoSpawnBandits(ID_AMBUSH_2);
-                break;
-            case 21:
-                Talk(SAY_LAKO_MORE);
-                DoSpawnBandits(ID_AMBUSH_3);
-                break;
-            case 45:
-                if (Player* player = GetPlayerForEscort())
-                    player->GroupEventHappens(QUEST_FREE_AT_LAST, me);
-                break;
+                case 8:
+                    Talk(SAY_LAKO_LOOK_OUT);
+                    DoSpawnBandits(ID_AMBUSH_1);
+                    break;
+                case 14:
+                    Talk(SAY_LAKO_HERE_COME);
+                    DoSpawnBandits(ID_AMBUSH_2);
+                    break;
+                case 21:
+                    Talk(SAY_LAKO_MORE);
+                    DoSpawnBandits(ID_AMBUSH_3);
+                    break;
+                case 45:
+                    if (Player* player = GetPlayerForEscort())
+                        player->GroupEventHappens(QUEST_FREE_AT_LAST, me);
+                    break;
             }
         }
 
         void DoSpawnBandits(int AmbushId)
         {
             for (int i = 0; i < 2; ++i)
-                me->SummonCreature(NPC_GRIM_BANDIT, BanditLoc[i + AmbushId], TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, 60000);
+                me->SummonCreature(NPC_GRIM_BANDIT, BanditLoc[i+AmbushId], TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, 60000);
         }
     };
 
@@ -204,20 +204,20 @@ public:
 
 enum Packa
 {
-    SAY_START = 0,
-    SAY_WYVERN = 1,
-    SAY_COMPLETE = 2,
+    SAY_START           = 0,
+    SAY_WYVERN          = 1,
+    SAY_COMPLETE        = 2,
 
-    QUEST_HOMEWARD = 4770,
-    NPC_WYVERN = 4107,
-    FACTION_ESCORTEE = 232                               //guessed
+    QUEST_HOMEWARD      = 4770,
+    NPC_WYVERN          = 4107,
+    FACTION_ESCORTEE    = 232                               //guessed
 };
 
 Position const WyvernLoc[3] =
 {
-    { -4990.606f, -906.057f, -5.343f, 0.0f },
-    { -4970.241f, -927.378f, -4.951f, 0.0f },
-    { -4985.364f, -952.528f, -5.199f, 0.0f }
+    {-4990.606f, -906.057f, -5.343f, 0.0f},
+    {-4970.241f, -927.378f, -4.951f, 0.0f},
+    {-4985.364f, -952.528f, -5.199f, 0.0f}
 };
 
 class npc_paoka_swiftmountain : public CreatureScript
@@ -253,17 +253,17 @@ public:
         {
             switch (waypointId)
             {
-            case 15:
-                Talk(SAY_WYVERN);
-                DoSpawnWyvern();
-                break;
-            case 26:
-                Talk(SAY_COMPLETE);
-                break;
-            case 27:
-                if (Player* player = GetPlayerForEscort())
-                    player->GroupEventHappens(QUEST_HOMEWARD, me);
-                break;
+                case 15:
+                    Talk(SAY_WYVERN);
+                    DoSpawnWyvern();
+                    break;
+                case 26:
+                    Talk(SAY_COMPLETE);
+                    break;
+                case 27:
+                    if (Player* player = GetPlayerForEscort())
+                        player->GroupEventHappens(QUEST_HOMEWARD, me);
+                    break;
             }
         }
 
@@ -283,10 +283,10 @@ public:
 
 enum Plucky
 {
-    FACTION_FRIENDLY = 35,
-    QUEST_SCOOP = 1950,
-    SPELL_PLUCKY_HUMAN = 9192,
-    SPELL_PLUCKY_CHICKEN = 9220
+    FACTION_FRIENDLY        = 35,
+    QUEST_SCOOP             = 1950,
+    SPELL_PLUCKY_HUMAN      = 9192,
+    SPELL_PLUCKY_CHICKEN    = 9220
 };
 
 class npc_plucky : public CreatureScript
@@ -299,9 +299,9 @@ public:
         player->PlayerTalkClass->ClearMenus();
         switch (action)
         {
-        case GOSSIP_ACTION_INFO_DEF + 1:
-            player->CLOSE_GOSSIP_MENU();
-            player->CompleteQuest(QUEST_SCOOP);
+            case GOSSIP_ACTION_INFO_DEF+1:
+                player->CLOSE_GOSSIP_MENU();
+                player->CompleteQuest(QUEST_SCOOP);
             break;
         }
         return true;
@@ -310,7 +310,7 @@ public:
     bool OnGossipHello(Player* player, Creature* creature) override
     {
         if (player->GetQuestStatus(QUEST_SCOOP) == QUEST_STATUS_INCOMPLETE)
-            player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_P, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
+            player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_P, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
 
         player->SEND_GOSSIP_MENU(738, creature->GetGUID());
 

@@ -43,22 +43,22 @@ EndContentData */
 // The Speech of Dawnforge, Ardonis & Pathaleon
 enum CommanderDawnforgeData
 {
-    SAY_COMMANDER_DAWNFORGE_1 = 0,
-    SAY_COMMANDER_DAWNFORGE_2 = 1,
-    SAY_COMMANDER_DAWNFORGE_3 = 2,
-    SAY_COMMANDER_DAWNFORGE_4 = 3,
-    SAY_COMMANDER_DAWNFORGE_5 = 4,
+    SAY_COMMANDER_DAWNFORGE_1       = 0,
+    SAY_COMMANDER_DAWNFORGE_2       = 1,
+    SAY_COMMANDER_DAWNFORGE_3       = 2,
+    SAY_COMMANDER_DAWNFORGE_4       = 3,
+    SAY_COMMANDER_DAWNFORGE_5       = 4,
 
-    SAY_ARCANIST_ARDONIS_1 = 0,
-    SAY_ARCANIST_ARDONIS_2 = 1,
+    SAY_ARCANIST_ARDONIS_1          = 0,
+    SAY_ARCANIST_ARDONIS_2          = 1,
 
-    SAY_PATHALEON_CULATOR_IMAGE_1 = 0,
-    SAY_PATHALEON_CULATOR_IMAGE_2 = 1,
+    SAY_PATHALEON_CULATOR_IMAGE_1   = 0,
+    SAY_PATHALEON_CULATOR_IMAGE_2   = 1,
     SAY_PATHALEON_CULATOR_IMAGE_2_1 = 2,
     SAY_PATHALEON_CULATOR_IMAGE_2_2 = 3,
 
-    QUEST_INFO_GATHERING = 10198,
-    SPELL_SUNFURY_DISGUISE = 34603,
+    QUEST_INFO_GATHERING            = 10198,
+    SPELL_SUNFURY_DISGUISE          = 34603,
 };
 
 // Entries of Arcanist Ardonis, Commander Dawnforge, Pathaleon the Curators Image
@@ -306,7 +306,7 @@ public:
                 Reset();
                 break;
             }
-        }
+         }
     };
 };
 
@@ -339,12 +339,12 @@ public:
 ######*/
 enum ProfessorDabiriData
 {
-    SPELL_PHASE_DISTRUPTOR = 35780,
+    SPELL_PHASE_DISTRUPTOR  = 35780,
 
-    //WHISPER_DABIRI          = 0, not existing in database
+  //WHISPER_DABIRI          = 0, not existing in database
 
-    QUEST_DIMENSIUS = 10439,
-    QUEST_ON_NETHERY_WINGS = 10438,
+    QUEST_DIMENSIUS         = 10439,
+    QUEST_ON_NETHERY_WINGS  = 10438,
 };
 
 #define GOSSIP_ITEM "I need a new phase distruptor, Professor"
@@ -356,12 +356,12 @@ public:
 
     //OnQuestAccept:
     //if (quest->GetQuestId() == QUEST_DIMENSIUS)
-    //creature->AI()->Talk(WHISPER_DABIRI, player);
+        //creature->AI()->Talk(WHISPER_DABIRI, player);
 
     bool OnGossipSelect(Player* player, Creature* creature, uint32 /*sender*/, uint32 action) override
     {
         player->PlayerTalkClass->ClearMenus();
-        if (action == GOSSIP_ACTION_INFO_DEF + 1)
+        if (action == GOSSIP_ACTION_INFO_DEF+1)
         {
             creature->CastSpell(player, SPELL_PHASE_DISTRUPTOR, false);
             player->CLOSE_GOSSIP_MENU();
@@ -376,7 +376,7 @@ public:
             player->PrepareQuestMenu(creature->GetGUID());
 
         if (player->GetQuestStatus(QUEST_ON_NETHERY_WINGS) == QUEST_STATUS_INCOMPLETE && !player->HasItemCount(29778))
-            player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
+            player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
 
         player->SEND_GOSSIP_MENU(player->GetGossipTextId(creature), creature->GetGUID());
 
@@ -390,19 +390,19 @@ public:
 
 enum PhaseHunterData
 {
-    QUEST_RECHARGING_THE_BATTERIES = 10190,
+    QUEST_RECHARGING_THE_BATTERIES  = 10190,
 
-    NPC_PHASE_HUNTER_ENTRY = 18879,
-    NPC_DRAINED_PHASE_HUNTER_ENTRY = 19595,
+    NPC_PHASE_HUNTER_ENTRY          = 18879,
+    NPC_DRAINED_PHASE_HUNTER_ENTRY  = 19595,
 
-    EMOTE_WEAK = 0,
+    EMOTE_WEAK                      = 0,
 
     // Spells
-    SPELL_RECHARGING_BATTERY = 34219,
-    SPELL_PHASE_SLIP = 36574,
-    SPELL_MANA_BURN = 13321,
-    SPELL_MATERIALIZE = 34804,
-    SPELL_DE_MATERIALIZE = 34814,
+    SPELL_RECHARGING_BATTERY        = 34219,
+    SPELL_PHASE_SLIP                = 36574,
+    SPELL_MANA_BURN                 = 13321,
+    SPELL_MATERIALIZE               = 34804,
+    SPELL_DE_MATERIALIZE            = 34814,
 };
 
 class npc_phase_hunter : public CreatureScript
@@ -496,8 +496,7 @@ public:
                 }
                 else
                     ManaBurnTimer = 3500;
-            }
-            else ManaBurnTimer -= diff;
+            } else ManaBurnTimer -= diff;
 
             if (Player* player = ObjectAccessor::GetPlayer(*me, PlayerGUID)) // start: support for quest 10190
             {
@@ -530,12 +529,12 @@ public:
 ######*/
 enum BessyData
 {
-    Q_ALMABTRIEB = 10337,
-    N_THADELL = 20464,
-    SPAWN_FIRST = 20512,
-    SPAWN_SECOND = 19881,
-    SAY_THADELL_1 = 0,
-    SAY_THADELL_2 = 1,
+    Q_ALMABTRIEB    = 10337,
+    N_THADELL       = 20464,
+    SPAWN_FIRST     = 20512,
+    SPAWN_SECOND    = 19881,
+    SAY_THADELL_1   = 0,
+    SAY_THADELL_2   = 1,
 };
 
 class npc_bessy : public CreatureScript
@@ -577,24 +576,24 @@ public:
 
             switch (waypointId)
             {
-            case 3: //first spawn
-                me->SummonCreature(SPAWN_FIRST, 2449.67f, 2183.11f, 96.85f, 6.20f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 25000);
-                me->SummonCreature(SPAWN_FIRST, 2449.53f, 2184.43f, 96.36f, 6.27f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 25000);
-                me->SummonCreature(SPAWN_FIRST, 2449.85f, 2186.34f, 97.57f, 6.08f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 25000);
-                break;
-            case 7:
-                me->SummonCreature(SPAWN_SECOND, 2309.64f, 2186.24f, 92.25f, 6.06f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 25000);
-                me->SummonCreature(SPAWN_SECOND, 2309.25f, 2183.46f, 91.75f, 6.22f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 25000);
-                break;
-            case 12:
-                player->GroupEventHappens(Q_ALMABTRIEB, me);
-                if (me->FindNearestCreature(N_THADELL, 30))
-                    Talk(SAY_THADELL_1);
-                break;
-            case 13:
-                if (me->FindNearestCreature(N_THADELL, 30))
-                    Talk(SAY_THADELL_2, player);
-                break;
+                case 3: //first spawn
+                    me->SummonCreature(SPAWN_FIRST, 2449.67f, 2183.11f, 96.85f, 6.20f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 25000);
+                    me->SummonCreature(SPAWN_FIRST, 2449.53f, 2184.43f, 96.36f, 6.27f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 25000);
+                    me->SummonCreature(SPAWN_FIRST, 2449.85f, 2186.34f, 97.57f, 6.08f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 25000);
+                    break;
+                case 7:
+                    me->SummonCreature(SPAWN_SECOND, 2309.64f, 2186.24f, 92.25f, 6.06f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 25000);
+                    me->SummonCreature(SPAWN_SECOND, 2309.25f, 2183.46f, 91.75f, 6.22f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 25000);
+                    break;
+                case 12:
+                    player->GroupEventHappens(Q_ALMABTRIEB, me);
+                    if (me->FindNearestCreature(N_THADELL, 30))
+                        Talk(SAY_THADELL_1);
+                    break;
+                case 13:
+                    if (me->FindNearestCreature(N_THADELL, 30))
+                        Talk(SAY_THADELL_2, player);
+                    break;
             }
         }
 
@@ -616,8 +615,8 @@ public:
 
 enum MaxxAMillion
 {
-    QUEST_MARK_V_IS_ALIVE = 10191,
-    GO_DRAENEI_MACHINE = 183771
+    QUEST_MARK_V_IS_ALIVE   = 10191,
+    GO_DRAENEI_MACHINE      = 183771
 };
 
 class npc_maxx_a_million_escort : public CreatureScript
@@ -659,21 +658,21 @@ public:
 
             switch (waypointId)
             {
-            case 7:
-            case 17:
-            case 29:
-                //Find Object and "work"
-                if (GetClosestGameObjectWithEntry(me, GO_DRAENEI_MACHINE, INTERACTION_DISTANCE))
-                {
-                    // take the GO -> animation
-                    me->HandleEmoteCommand(EMOTE_STATE_LOOT);
-                    SetEscortPaused(true);
-                    bTake = true;
-                }
-                break;
-            case 36: //return and quest_complete
-                player->CompleteQuest(QUEST_MARK_V_IS_ALIVE);
-                break;
+                case 7:
+                case 17:
+                case 29:
+                    //Find Object and "work"
+                    if (GetClosestGameObjectWithEntry(me, GO_DRAENEI_MACHINE, INTERACTION_DISTANCE))
+                    {
+                        // take the GO -> animation
+                        me->HandleEmoteCommand(EMOTE_STATE_LOOT);
+                        SetEscortPaused(true);
+                        bTake=true;
+                    }
+                    break;
+                case 36: //return and quest_complete
+                    player->CompleteQuest(QUEST_MARK_V_IS_ALIVE);
+                    break;
             }
         }
 
@@ -695,7 +694,7 @@ public:
                     if (GameObject* go = GetClosestGameObjectWithEntry(me, GO_DRAENEI_MACHINE, INTERACTION_DISTANCE))
                     {
                         SetEscortPaused(false);
-                        bTake = false;
+                        bTake=false;
                         uiTakeTimer = 3000;
                         go->Delete();
                     }
@@ -727,26 +726,26 @@ public:
 
 enum CaptainTyralius
 {
-    NPC_CAPTAIN_TYRALIUS = 20787,
-    SAY_FREE = 0,
+    NPC_CAPTAIN_TYRALIUS    = 20787,
+    SAY_FREE                = 0,
 };
 
 class go_captain_tyralius_prison : public GameObjectScript
 {
-public:
-    go_captain_tyralius_prison() : GameObjectScript("go_captain_tyralius_prison") { }
+    public:
+        go_captain_tyralius_prison() : GameObjectScript("go_captain_tyralius_prison") { }
 
-    bool OnGossipHello(Player* player, GameObject* go) override
-    {
-        go->UseDoorOrButton();
-        if (Creature* tyralius = go->FindNearestCreature(NPC_CAPTAIN_TYRALIUS, 1.0f))
+        bool OnGossipHello(Player* player, GameObject* go) override
         {
-            player->KilledMonsterCredit(NPC_CAPTAIN_TYRALIUS);
-            tyralius->AI()->Talk(SAY_FREE);
-            tyralius->DespawnOrUnsummon(8000);
+            go->UseDoorOrButton();
+            if (Creature* tyralius = go->FindNearestCreature(NPC_CAPTAIN_TYRALIUS, 1.0f))
+            {
+                player->KilledMonsterCredit(NPC_CAPTAIN_TYRALIUS);
+                tyralius->AI()->Talk(SAY_FREE);
+                tyralius->DespawnOrUnsummon(8000);
+            }
+            return true;
         }
-        return true;
-    }
 };
 
 void AddSC_netherstorm()

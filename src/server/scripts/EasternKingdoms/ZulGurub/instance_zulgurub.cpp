@@ -30,12 +30,12 @@ EndScriptData */
 DoorData const doorData[] =
 {
     { GO_FORCEFIELD, DATA_ARLOKK, DOOR_TYPE_ROOM, BOUNDARY_NONE },
-    { 0, 0, DOOR_TYPE_ROOM, BOUNDARY_NONE } // END
+    { 0,             0,           DOOR_TYPE_ROOM, BOUNDARY_NONE } // END
 };
 
 class instance_zulgurub : public InstanceMapScript
 {
-public: instance_zulgurub() : InstanceMapScript(ZGScriptName, 309) { }
+    public: instance_zulgurub(): InstanceMapScript(ZGScriptName, 309) { }
 
         struct instance_zulgurub_InstanceMapScript : public InstanceScript
         {
@@ -56,24 +56,24 @@ public: instance_zulgurub() : InstanceMapScript(ZGScriptName, 309) { }
             {
                 switch (creature->GetEntry())
                 {
-                case NPC_ZEALOT_LORKHAN:
-                    _zealotLorkhanGUID = creature->GetGUID();
-                    break;
-                case NPC_ZEALOT_ZATH:
-                    _zealotZathGUID = creature->GetGUID();
-                    break;
-                case NPC_HIGH_PRIEST_THEKAL:
-                    _highPriestTekalGUID = creature->GetGUID();
-                    break;
-                case NPC_JINDO_THE_HEXXER:
-                    _jindoTheHexxerGUID = creature->GetGUID();
-                    break;
-                case NPC_VILEBRANCH_SPEAKER:
-                    _vilebranchSpeakerGUID = creature->GetGUID();
-                    break;
-                case NPC_ARLOKK:
-                    _arlokkGUID = creature->GetGUID();
-                    break;
+                    case NPC_ZEALOT_LORKHAN:
+                        _zealotLorkhanGUID = creature->GetGUID();
+                        break;
+                    case NPC_ZEALOT_ZATH:
+                        _zealotZathGUID = creature->GetGUID();
+                        break;
+                    case NPC_HIGH_PRIEST_THEKAL:
+                        _highPriestTekalGUID = creature->GetGUID();
+                        break;
+                    case NPC_JINDO_THE_HEXXER:
+                        _jindoTheHexxerGUID = creature->GetGUID();
+                        break;
+                    case NPC_VILEBRANCH_SPEAKER:
+                        _vilebranchSpeakerGUID = creature->GetGUID();
+                        break;
+                    case NPC_ARLOKK:
+                        _arlokkGUID = creature->GetGUID();
+                        break;
                 }
             }
 
@@ -81,18 +81,18 @@ public: instance_zulgurub() : InstanceMapScript(ZGScriptName, 309) { }
             {
                 switch (go->GetEntry())
                 {
-                case GO_FORCEFIELD:
-                    AddDoor(go, true);
-                    break;
-                case GO_GONG_OF_BETHEKK:
-                    _goGongOfBethekkGUID = go->GetGUID();
-                    if (GetBossState(DATA_ARLOKK) == DONE)
-                        go->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_NOT_SELECTABLE);
-                    else
-                        go->RemoveFlag(GAMEOBJECT_FLAGS, GO_FLAG_NOT_SELECTABLE);
-                    break;
-                default:
-                    break;
+                    case GO_FORCEFIELD:
+                        AddDoor(go, true);
+                        break;
+                    case GO_GONG_OF_BETHEKK:
+                        _goGongOfBethekkGUID = go->GetGUID();
+                        if (GetBossState(DATA_ARLOKK) == DONE)
+                            go->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_NOT_SELECTABLE);
+                        else
+                            go->RemoveFlag(GAMEOBJECT_FLAGS, GO_FLAG_NOT_SELECTABLE);
+                        break;
+                    default:
+                        break;
                 }
             }
 
@@ -100,11 +100,11 @@ public: instance_zulgurub() : InstanceMapScript(ZGScriptName, 309) { }
             {
                 switch (go->GetEntry())
                 {
-                case GO_FORCEFIELD:
-                    AddDoor(go, false);
-                    break;
-                default:
-                    break;
+                    case GO_FORCEFIELD:
+                        AddDoor(go, false);
+                        break;
+                    default:
+                        break;
                 }
             }
 
@@ -112,24 +112,24 @@ public: instance_zulgurub() : InstanceMapScript(ZGScriptName, 309) { }
             {
                 switch (uiData)
                 {
-                case DATA_LORKHAN:
-                    return _zealotLorkhanGUID;
-                    break;
-                case DATA_ZATH:
-                    return _zealotZathGUID;
-                    break;
-                case DATA_THEKAL:
-                    return _highPriestTekalGUID;
-                    break;
-                case DATA_JINDO:
-                    return _jindoTheHexxerGUID;
-                    break;
-                case NPC_ARLOKK:
-                    return _arlokkGUID;
-                    break;
-                case GO_GONG_OF_BETHEKK:
-                    return _goGongOfBethekkGUID;
-                    break;
+                    case DATA_LORKHAN:
+                        return _zealotLorkhanGUID;
+                        break;
+                    case DATA_ZATH:
+                        return _zealotZathGUID;
+                        break;
+                    case DATA_THEKAL:
+                        return _highPriestTekalGUID;
+                        break;
+                    case DATA_JINDO:
+                        return _jindoTheHexxerGUID;
+                        break;
+                    case NPC_ARLOKK:
+                        return _arlokkGUID;
+                        break;
+                    case GO_GONG_OF_BETHEKK:
+                        return _goGongOfBethekkGUID;
+                        break;
                 }
                 return ObjectGuid::Empty;
             }

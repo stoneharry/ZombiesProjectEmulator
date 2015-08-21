@@ -29,41 +29,41 @@ EndScriptData */
 
 enum HydrossTheUnstable
 {
-    SAY_AGGRO = 0,
-    SAY_SWITCH_TO_CLEAN = 1,
-    SAY_CLEAN_SLAY = 2,
-    SAY_CLEAN_DEATH = 3,
-    SAY_SWITCH_TO_CORRUPT = 4,
-    SAY_CORRUPT_SLAY = 5,
-    SAY_CORRUPT_DEATH = 6,
+    SAY_AGGRO                   = 0,
+    SAY_SWITCH_TO_CLEAN         = 1,
+    SAY_CLEAN_SLAY              = 2,
+    SAY_CLEAN_DEATH             = 3,
+    SAY_SWITCH_TO_CORRUPT       = 4,
+    SAY_CORRUPT_SLAY            = 5,
+    SAY_CORRUPT_DEATH           = 6,
 
-    SWITCH_RADIUS = 18,
+    SWITCH_RADIUS               = 18,
 
-    MODEL_CORRUPT = 20609,
-    MODEL_CLEAN = 20162,
+    MODEL_CORRUPT               = 20609,
+    MODEL_CLEAN                 = 20162,
 
-    SPELL_WATER_TOMB = 38235,
-    SPELL_MARK_OF_HYDROSS1 = 38215,
-    SPELL_MARK_OF_HYDROSS2 = 38216,
-    SPELL_MARK_OF_HYDROSS3 = 38217,
-    SPELL_MARK_OF_HYDROSS4 = 38218,
-    SPELL_MARK_OF_HYDROSS5 = 38231,
-    SPELL_MARK_OF_HYDROSS6 = 40584,
-    SPELL_MARK_OF_CORRUPTION1 = 38219,
-    SPELL_MARK_OF_CORRUPTION2 = 38220,
-    SPELL_MARK_OF_CORRUPTION3 = 38221,
-    SPELL_MARK_OF_CORRUPTION4 = 38222,
-    SPELL_MARK_OF_CORRUPTION5 = 38230,
-    SPELL_MARK_OF_CORRUPTION6 = 40583,
-    SPELL_VILE_SLUDGE = 38246,
-    SPELL_ENRAGE = 27680,                   //this spell need verification
-    SPELL_SUMMON_WATER_ELEMENT = 36459,                   //not in use yet(in use ever?)
-    SPELL_ELEMENTAL_SPAWNIN = 25035,
-    SPELL_BLUE_BEAM = 40227,                   //channeled Hydross Beam Helper (not in use yet)
+    SPELL_WATER_TOMB            = 38235,
+    SPELL_MARK_OF_HYDROSS1      = 38215,
+    SPELL_MARK_OF_HYDROSS2      = 38216,
+    SPELL_MARK_OF_HYDROSS3      = 38217,
+    SPELL_MARK_OF_HYDROSS4      = 38218,
+    SPELL_MARK_OF_HYDROSS5      = 38231,
+    SPELL_MARK_OF_HYDROSS6      = 40584,
+    SPELL_MARK_OF_CORRUPTION1   = 38219,
+    SPELL_MARK_OF_CORRUPTION2   = 38220,
+    SPELL_MARK_OF_CORRUPTION3   = 38221,
+    SPELL_MARK_OF_CORRUPTION4   = 38222,
+    SPELL_MARK_OF_CORRUPTION5   = 38230,
+    SPELL_MARK_OF_CORRUPTION6   = 40583,
+    SPELL_VILE_SLUDGE           = 38246,
+    SPELL_ENRAGE                = 27680,                   //this spell need verification
+    SPELL_SUMMON_WATER_ELEMENT  = 36459,                   //not in use yet(in use ever?)
+    SPELL_ELEMENTAL_SPAWNIN     = 25035,
+    SPELL_BLUE_BEAM             = 40227,                   //channeled Hydross Beam Helper (not in use yet)
 
-    ENTRY_PURE_SPAWN = 22035,
-    ENTRY_TAINTED_SPAWN = 22036,
-    ENTRY_BEAM_DUMMY = 21934
+    ENTRY_PURE_SPAWN            = 22035,
+    ENTRY_TAINTED_SPAWN         = 22036,
+    ENTRY_BEAM_DUMMY            = 21934
 };
 
 
@@ -220,7 +220,7 @@ public:
             if (!beam)
             {
                 SummonBeams();
-                beam = true;
+                beam=true;
             }
             //Return since we have no target
             if (!UpdateVictim())
@@ -238,29 +238,29 @@ public:
 
                         switch (MarkOfCorruption_Count)
                         {
-                        case 0:
-                            mark_spell = SPELL_MARK_OF_CORRUPTION1;
-                            break;
+                            case 0:
+                                mark_spell = SPELL_MARK_OF_CORRUPTION1;
+                                break;
 
-                        case 1:
-                            mark_spell = SPELL_MARK_OF_CORRUPTION2;
-                            break;
+                            case 1:
+                                mark_spell = SPELL_MARK_OF_CORRUPTION2;
+                                break;
 
-                        case 2:
-                            mark_spell = SPELL_MARK_OF_CORRUPTION3;
-                            break;
+                            case 2:
+                                mark_spell = SPELL_MARK_OF_CORRUPTION3;
+                                break;
 
-                        case 3:
-                            mark_spell = SPELL_MARK_OF_CORRUPTION4;
-                            break;
+                            case 3:
+                                mark_spell = SPELL_MARK_OF_CORRUPTION4;
+                                break;
 
-                        case 4:
-                            mark_spell = SPELL_MARK_OF_CORRUPTION5;
-                            break;
+                            case 4:
+                                mark_spell = SPELL_MARK_OF_CORRUPTION5;
+                                break;
 
-                        case 5:
-                            mark_spell = SPELL_MARK_OF_CORRUPTION6;
-                            break;
+                            case 5:
+                                mark_spell = SPELL_MARK_OF_CORRUPTION6;
+                                break;
                         }
 
                         DoCastVictim(mark_spell);
@@ -270,8 +270,7 @@ public:
                     }
 
                     MarkOfCorruption_Timer = 15000;
-                }
-                else MarkOfCorruption_Timer -= diff;
+                } else MarkOfCorruption_Timer -= diff;
 
                 //VileSludge_Timer
                 if (VileSludge_Timer <= diff)
@@ -280,8 +279,7 @@ public:
                         DoCast(target, SPELL_VILE_SLUDGE);
 
                     VileSludge_Timer = 15000;
-                }
-                else VileSludge_Timer -= diff;
+                } else VileSludge_Timer -= diff;
 
                 //PosCheck_Timer
                 if (PosCheck_Timer <= diff)
@@ -309,8 +307,7 @@ public:
                     }
 
                     PosCheck_Timer = 2500;
-                }
-                else PosCheck_Timer -= diff;
+                } else PosCheck_Timer -=diff;
             }
             // clean form
             else
@@ -324,29 +321,29 @@ public:
 
                         switch (MarkOfHydross_Count)
                         {
-                        case 0:
-                            mark_spell = SPELL_MARK_OF_HYDROSS1;
-                            break;
+                            case 0:
+                                mark_spell = SPELL_MARK_OF_HYDROSS1;
+                                break;
 
-                        case 1:
-                            mark_spell = SPELL_MARK_OF_HYDROSS2;
-                            break;
+                            case 1:
+                                mark_spell = SPELL_MARK_OF_HYDROSS2;
+                                break;
 
-                        case 2:
-                            mark_spell = SPELL_MARK_OF_HYDROSS3;
-                            break;
+                            case 2:
+                                mark_spell = SPELL_MARK_OF_HYDROSS3;
+                                break;
 
-                        case 3:
-                            mark_spell = SPELL_MARK_OF_HYDROSS4;
-                            break;
+                            case 3:
+                                mark_spell = SPELL_MARK_OF_HYDROSS4;
+                                break;
 
-                        case 4:
-                            mark_spell = SPELL_MARK_OF_HYDROSS5;
-                            break;
+                            case 4:
+                                mark_spell = SPELL_MARK_OF_HYDROSS5;
+                                break;
 
-                        case 5:
-                            mark_spell = SPELL_MARK_OF_HYDROSS6;
-                            break;
+                            case 5:
+                                mark_spell = SPELL_MARK_OF_HYDROSS6;
+                                break;
                         }
 
                         DoCastVictim(mark_spell);
@@ -356,8 +353,7 @@ public:
                     }
 
                     MarkOfHydross_Timer = 15000;
-                }
-                else MarkOfHydross_Timer -= diff;
+                } else MarkOfHydross_Timer -= diff;
 
                 //WaterTomb_Timer
                 if (WaterTomb_Timer <= diff)
@@ -367,8 +363,7 @@ public:
                         DoCast(target, SPELL_WATER_TOMB);
 
                     WaterTomb_Timer = 7000;
-                }
-                else WaterTomb_Timer -= diff;
+                } else WaterTomb_Timer -= diff;
 
                 //PosCheck_Timer
                 if (PosCheck_Timer <= diff)
@@ -396,8 +391,7 @@ public:
                     }
 
                     PosCheck_Timer = 2500;
-                }
-                else PosCheck_Timer -= diff;
+                } else PosCheck_Timer -=diff;
             }
 
             //EnrageTimer
@@ -405,8 +399,7 @@ public:
             {
                 DoCast(me, SPELL_ENRAGE);
                 EnrageTimer = 60000;
-            }
-            else EnrageTimer -= diff;
+            } else EnrageTimer -= diff;
 
             DoMeleeAttackIfReady();
         }

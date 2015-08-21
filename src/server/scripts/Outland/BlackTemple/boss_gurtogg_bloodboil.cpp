@@ -30,28 +30,28 @@ EndScriptData */
 enum Bloodboil
 {
     //Speech'n'Sound
-    SAY_AGGRO = 0,
-    SAY_SLAY = 1,
-    SAY_SPECIAL = 2,
-    SAY_ENRAGE = 3,
-    SAY_DEATH = 4,
+    SAY_AGGRO                   = 0,
+    SAY_SLAY                    = 1,
+    SAY_SPECIAL                 = 2,
+    SAY_ENRAGE                  = 3,
+    SAY_DEATH                   = 4,
 
     //Spells
-    SPELL_ACID_GEYSER = 40630,
-    SPELL_ACIDIC_WOUND = 40481,
-    SPELL_ARCING_SMASH = 40599,
-    SPELL_BLOODBOIL = 42005,                      // This spell is AoE whereas it shouldn't be
-    SPELL_FEL_ACID = 40508,
-    SPELL_FEL_RAGE_SELF = 40594,
-    SPELL_FEL_RAGE_TARGET = 40604,
-    SPELL_FEL_RAGE_2 = 40616,
-    SPELL_FEL_RAGE_3 = 41625,
-    SPELL_BEWILDERING_STRIKE = 40491,
-    SPELL_EJECT1 = 40486,                      // 1000 Physical damage + knockback + script effect (should handle threat reduction I think)
-    SPELL_EJECT2 = 40597,                      // 1000 Physical damage + Stun (used in phase 2?)
-    SPELL_TAUNT_GURTOGG = 40603,
-    SPELL_INSIGNIFIGANCE = 40618,
-    SPELL_BERSERK = 45078
+    SPELL_ACID_GEYSER           = 40630,
+    SPELL_ACIDIC_WOUND          = 40481,
+    SPELL_ARCING_SMASH          = 40599,
+    SPELL_BLOODBOIL             = 42005,                      // This spell is AoE whereas it shouldn't be
+    SPELL_FEL_ACID              = 40508,
+    SPELL_FEL_RAGE_SELF         = 40594,
+    SPELL_FEL_RAGE_TARGET       = 40604,
+    SPELL_FEL_RAGE_2            = 40616,
+    SPELL_FEL_RAGE_3            = 41625,
+    SPELL_BEWILDERING_STRIKE    = 40491,
+    SPELL_EJECT1                = 40486,                      // 1000 Physical damage + knockback + script effect (should handle threat reduction I think)
+    SPELL_EJECT2                = 40597,                      // 1000 Physical damage + Stun (used in phase 2?)
+    SPELL_TAUNT_GURTOGG         = 40603,
+    SPELL_INSIGNIFIGANCE        = 40618,
+    SPELL_BERSERK               = 45078
 };
 
 class boss_gurtogg_bloodboil : public CreatureScript
@@ -159,15 +159,13 @@ public:
             {
                 DoCastVictim(SPELL_ARCING_SMASH);
                 ArcingSmashTimer = 10000;
-            }
-            else ArcingSmashTimer -= diff;
+            } else ArcingSmashTimer -= diff;
 
             if (FelAcidTimer <= diff)
             {
                 DoCastVictim(SPELL_FEL_ACID);
                 FelAcidTimer = 25000;
-            }
-            else FelAcidTimer -= diff;
+            } else FelAcidTimer -= diff;
 
             if (!me->HasAura(SPELL_BERSERK))
             {
@@ -175,8 +173,7 @@ public:
                 {
                     DoCast(me, SPELL_BERSERK);
                     Talk(SAY_ENRAGE);
-                }
-                else EnrageTimer -= diff;
+                } else EnrageTimer -= diff;
             }
 
             if (Phase1)
@@ -188,23 +185,20 @@ public:
                     if (Unit* target = SelectTarget(SELECT_TARGET_TOPAGGRO, 1))
                         me->AddThreat(target, mt_threat);
                     BewilderingStrikeTimer = 20000;
-                }
-                else BewilderingStrikeTimer -= diff;
+                } else BewilderingStrikeTimer -= diff;
 
                 if (EjectTimer <= diff)
                 {
                     DoCastVictim(SPELL_EJECT1);
                     DoModifyThreatPercent(me->GetVictim(), -40);
                     EjectTimer = 15000;
-                }
-                else EjectTimer -= diff;
+                } else EjectTimer -= diff;
 
                 if (AcidicWoundTimer <= diff)
                 {
                     DoCastVictim(SPELL_ACIDIC_WOUND);
                     AcidicWoundTimer = 10000;
-                }
-                else AcidicWoundTimer -= diff;
+                } else AcidicWoundTimer -= diff;
 
                 if (BloodboilTimer <= diff)
                 {
@@ -212,10 +206,9 @@ public:
                     {
                         DoCastAOE(SPELL_BLOODBOIL);
                         ++BloodboilCount;
-                        BloodboilTimer = 10000 * BloodboilCount;
+                        BloodboilTimer = 10000*BloodboilCount;
                     }
-                }
-                else BloodboilTimer -= diff;
+                } else BloodboilTimer -= diff;
             }
 
             if (!Phase1)
@@ -224,15 +217,13 @@ public:
                 {
                     DoCastVictim(SPELL_ACID_GEYSER);
                     AcidGeyserTimer = 30000;
-                }
-                else AcidGeyserTimer -= diff;
+                } else AcidGeyserTimer -= diff;
 
                 if (EjectTimer <= diff)
                 {
                     DoCastVictim(SPELL_EJECT2);
                     EjectTimer = 15000;
-                }
-                else EjectTimer -= diff;
+                } else EjectTimer -= diff;
             }
 
             if (PhaseChangeTimer <= diff)
@@ -251,7 +242,7 @@ public:
                         me->AddThreat(target, 50000000.0f);
                         me->ApplySpellImmune(0, IMMUNITY_STATE, SPELL_AURA_MOD_TAUNT, true);
                         me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_ATTACK_ME, true);
-                        // If VMaps are disabled, this spell can call the whole instance
+                                                                // If VMaps are disabled, this spell can call the whole instance
                         DoCast(me, SPELL_INSIGNIFIGANCE, true);
                         DoCast(target, SPELL_FEL_RAGE_TARGET, true);
                         DoCast(target, SPELL_FEL_RAGE_2, true);
@@ -284,8 +275,7 @@ public:
                     me->ApplySpellImmune(0, IMMUNITY_STATE, SPELL_AURA_MOD_TAUNT, false);
                     me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_ATTACK_ME, false);
                 }
-            }
-            else PhaseChangeTimer -= diff;
+            } else PhaseChangeTimer -= diff;
 
             DoMeleeAttackIfReady();
         }
@@ -296,34 +286,34 @@ public:
 // 42005 - Bloodboil
 class spell_gurtogg_bloodboil_bloodboil : public SpellScriptLoader
 {
-public:
-    spell_gurtogg_bloodboil_bloodboil() : SpellScriptLoader("spell_gurtogg_bloodboil_bloodboil") { }
+    public:
+        spell_gurtogg_bloodboil_bloodboil() : SpellScriptLoader("spell_gurtogg_bloodboil_bloodboil") { }
 
-    class spell_gurtogg_bloodboil_bloodboil_SpellScript : public SpellScript
-    {
-        PrepareSpellScript(spell_gurtogg_bloodboil_bloodboil_SpellScript);
-
-        void FilterTargets(std::list<WorldObject*>& targets)
+        class spell_gurtogg_bloodboil_bloodboil_SpellScript : public SpellScript
         {
-            if (targets.size() <= 5)
-                return;
+            PrepareSpellScript(spell_gurtogg_bloodboil_bloodboil_SpellScript);
 
-            // Sort the list of players
-            targets.sort(Trinity::ObjectDistanceOrderPred(GetCaster(), false));
-            // Resize so we only get top 5
-            targets.resize(5);
-        }
+            void FilterTargets(std::list<WorldObject*>& targets)
+            {
+                if (targets.size() <= 5)
+                    return;
 
-        void Register() override
+                // Sort the list of players
+                targets.sort(Trinity::ObjectDistanceOrderPred(GetCaster(), false));
+                // Resize so we only get top 5
+                targets.resize(5);
+            }
+
+            void Register() override
+            {
+                OnObjectAreaTargetSelect += SpellObjectAreaTargetSelectFn(spell_gurtogg_bloodboil_bloodboil_SpellScript::FilterTargets, EFFECT_0, TARGET_UNIT_SRC_AREA_ENEMY);
+            }
+        };
+
+        SpellScript* GetSpellScript() const override
         {
-            OnObjectAreaTargetSelect += SpellObjectAreaTargetSelectFn(spell_gurtogg_bloodboil_bloodboil_SpellScript::FilterTargets, EFFECT_0, TARGET_UNIT_SRC_AREA_ENEMY);
+            return new spell_gurtogg_bloodboil_bloodboil_SpellScript();
         }
-    };
-
-    SpellScript* GetSpellScript() const override
-    {
-        return new spell_gurtogg_bloodboil_bloodboil_SpellScript();
-    }
 };
 
 void AddSC_boss_gurtogg_bloodboil()

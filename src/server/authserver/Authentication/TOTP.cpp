@@ -71,21 +71,21 @@ namespace TOTP
     unsigned int GenerateToken(const char* b32key)
     {
         size_t keySize = strlen(b32key);
-        int bufsize = (keySize + 7) / 8 * 5;
+        int bufsize = (keySize + 7)/8*5;
         char* encoded = new char[bufsize];
         memset(encoded, 0, bufsize);
         unsigned int hmacResSize = HMAC_RES_SIZE;
         unsigned char hmacRes[HMAC_RES_SIZE];
-        unsigned long timestamp = time(NULL) / 30;
+        unsigned long timestamp = time(NULL)/30;
         unsigned char challenge[8];
 
-        for (int i = 8; i--; timestamp >>= 8)
+        for (int i = 8; i--;timestamp >>= 8)
             challenge[i] = timestamp;
 
         base32_decode(b32key, encoded, bufsize);
         HMAC(EVP_sha1(), encoded, bufsize, challenge, 8, hmacRes, &hmacResSize);
         unsigned int offset = hmacRes[19] & 0xF;
-        unsigned int truncHash = (hmacRes[offset] << 24) | (hmacRes[offset + 1] << 16) | (hmacRes[offset + 2] << 8) | (hmacRes[offset + 3]);
+        unsigned int truncHash = (hmacRes[offset] << 24) | (hmacRes[offset+1] << 16 )| (hmacRes[offset+2] << 8) | (hmacRes[offset+3]);
         truncHash &= 0x7FFFFFFF;
 
         delete[] encoded;

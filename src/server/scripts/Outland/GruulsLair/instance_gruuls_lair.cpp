@@ -21,115 +21,115 @@
 
 DoorData const doorData[] =
 {
-    { GO_MAULGAR_DOOR, DATA_MAULGAR, DOOR_TYPE_PASSAGE, BOUNDARY_NONE },
-    { GO_GRUUL_DOOR, DATA_GRUUL, DOOR_TYPE_ROOM, BOUNDARY_NONE },
-    { 0, 0, DOOR_TYPE_ROOM, BOUNDARY_NONE } // END
+    { GO_MAULGAR_DOOR,  DATA_MAULGAR,   DOOR_TYPE_PASSAGE,  BOUNDARY_NONE },
+    { GO_GRUUL_DOOR,    DATA_GRUUL,     DOOR_TYPE_ROOM,     BOUNDARY_NONE },
+    { 0,                0,              DOOR_TYPE_ROOM,     BOUNDARY_NONE } // END
 };
 
 MinionData const minionData[] =
 {
-    { NPC_MAULGAR, DATA_MAULGAR },
-    { NPC_KROSH_FIREHAND, DATA_MAULGAR },
-    { NPC_OLM_THE_SUMMONER, DATA_MAULGAR },
-    { NPC_KIGGLER_THE_CRAZED, DATA_MAULGAR },
-    { NPC_BLINDEYE_THE_SEER, DATA_MAULGAR }
+    { NPC_MAULGAR,              DATA_MAULGAR },
+    { NPC_KROSH_FIREHAND,       DATA_MAULGAR },
+    { NPC_OLM_THE_SUMMONER,     DATA_MAULGAR },
+    { NPC_KIGGLER_THE_CRAZED,   DATA_MAULGAR },
+    { NPC_BLINDEYE_THE_SEER,    DATA_MAULGAR }
 };
 
 class instance_gruuls_lair : public InstanceMapScript
 {
-public:
-    instance_gruuls_lair() : InstanceMapScript(GLScriptName, 565) { }
+    public:
+        instance_gruuls_lair() : InstanceMapScript(GLScriptName, 565) { }
 
-    struct instance_gruuls_lair_InstanceMapScript : public InstanceScript
-    {
-        instance_gruuls_lair_InstanceMapScript(Map* map) : InstanceScript(map)
+        struct instance_gruuls_lair_InstanceMapScript : public InstanceScript
         {
-            SetHeaders(DataHeader);
-            SetBossNumber(EncounterCount);
-            LoadDoorData(doorData);
-            LoadMinionData(minionData);
-        }
-
-        void OnCreatureCreate(Creature* creature) override
-        {
-            switch (creature->GetEntry())
+            instance_gruuls_lair_InstanceMapScript(Map* map) : InstanceScript(map)
             {
-            case NPC_MAULGAR:
-                MaulgarGUID = creature->GetGUID();
-                // no break;
-            case NPC_KROSH_FIREHAND:
-            case NPC_OLM_THE_SUMMONER:
-            case NPC_KIGGLER_THE_CRAZED:
-            case NPC_BLINDEYE_THE_SEER:
-                AddMinion(creature, true);
-                break;
-            default:
-                break;
+                SetHeaders(DataHeader);
+                SetBossNumber(EncounterCount);
+                LoadDoorData(doorData);
+                LoadMinionData(minionData);
             }
-        }
 
-        void OnCreatureRemove(Creature* creature) override
-        {
-            switch (creature->GetEntry())
+            void OnCreatureCreate(Creature* creature) override
             {
-            case NPC_MAULGAR:
-            case NPC_KROSH_FIREHAND:
-            case NPC_OLM_THE_SUMMONER:
-            case NPC_KIGGLER_THE_CRAZED:
-            case NPC_BLINDEYE_THE_SEER:
-                AddMinion(creature, false);
-                break;
-            default:
-                break;
+                switch (creature->GetEntry())
+                {
+                    case NPC_MAULGAR:
+                        MaulgarGUID = creature->GetGUID();
+                        // no break;
+                    case NPC_KROSH_FIREHAND:
+                    case NPC_OLM_THE_SUMMONER:
+                    case NPC_KIGGLER_THE_CRAZED:
+                    case NPC_BLINDEYE_THE_SEER:
+                        AddMinion(creature, true);
+                        break;
+                    default:
+                        break;
+                }
             }
-        }
 
-        void OnGameObjectCreate(GameObject* go) override
-        {
-            switch (go->GetEntry())
+            void OnCreatureRemove(Creature* creature) override
             {
-            case GO_MAULGAR_DOOR:
-            case GO_GRUUL_DOOR:
-                AddDoor(go, true);
-                break;
-            default:
-                break;
+                switch (creature->GetEntry())
+                {
+                    case NPC_MAULGAR:
+                    case NPC_KROSH_FIREHAND:
+                    case NPC_OLM_THE_SUMMONER:
+                    case NPC_KIGGLER_THE_CRAZED:
+                    case NPC_BLINDEYE_THE_SEER:
+                        AddMinion(creature, false);
+                        break;
+                    default:
+                        break;
+                }
             }
-        }
 
-        void OnGameObjectRemove(GameObject* go) override
-        {
-            switch (go->GetEntry())
+            void OnGameObjectCreate(GameObject* go) override
             {
-            case GO_MAULGAR_DOOR:
-            case GO_GRUUL_DOOR:
-                AddDoor(go, false);
-                break;
-            default:
-                break;
+                switch (go->GetEntry())
+                {
+                    case GO_MAULGAR_DOOR:
+                    case GO_GRUUL_DOOR:
+                        AddDoor(go, true);
+                        break;
+                    default:
+                        break;
+                }
             }
-        }
 
-        ObjectGuid GetGuidData(uint32 type) const override
-        {
-            switch (type)
+            void OnGameObjectRemove(GameObject* go) override
             {
-            case DATA_MAULGAR:
-                return MaulgarGUID;
-            default:
-                break;
+                switch (go->GetEntry())
+                {
+                    case GO_MAULGAR_DOOR:
+                    case GO_GRUUL_DOOR:
+                        AddDoor(go, false);
+                        break;
+                    default:
+                        break;
+                }
             }
-            return ObjectGuid::Empty;
+
+            ObjectGuid GetGuidData(uint32 type) const override
+            {
+                switch (type)
+                {
+                    case DATA_MAULGAR:
+                        return MaulgarGUID;
+                    default:
+                        break;
+                }
+                return ObjectGuid::Empty;
+            }
+
+        protected:
+            ObjectGuid MaulgarGUID;
+        };
+
+        InstanceScript* GetInstanceScript(InstanceMap* map) const override
+        {
+            return new instance_gruuls_lair_InstanceMapScript(map);
         }
-
-    protected:
-        ObjectGuid MaulgarGUID;
-    };
-
-    InstanceScript* GetInstanceScript(InstanceMap* map) const override
-    {
-        return new instance_gruuls_lair_InstanceMapScript(map);
-    }
 };
 
 void AddSC_instance_gruuls_lair()

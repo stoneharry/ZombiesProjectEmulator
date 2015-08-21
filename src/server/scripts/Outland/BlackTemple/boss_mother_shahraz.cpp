@@ -29,32 +29,32 @@ EndScriptData */
 enum Texts
 {
     //Speech'n'Sounds
-    SAY_TAUNT = 0,
-    SAY_AGGRO = 1,
-    SAY_SPELL = 2,
-    SAY_SLAY = 3,
-    SAY_ENRAGE = 4,
-    SAY_DEATH = 5
+    SAY_TAUNT    = 0,
+    SAY_AGGRO    = 1,
+    SAY_SPELL    = 2,
+    SAY_SLAY     = 3,
+    SAY_ENRAGE   = 4,
+    SAY_DEATH    = 5
 };
 
 enum Spells
 {
-    SPELL_BEAM_SINISTER = 40859,
-    SPELL_BEAM_VILE = 40860,
-    SPELL_BEAM_WICKED = 40861,
-    SPELL_BEAM_SINFUL = 40827,
-    SPELL_ATTRACTION = 40871,
-    SPELL_SILENCING_SHRIEK = 40823,
-    SPELL_ENRAGE = 23537,
-    SPELL_SABER_LASH = 40810, //43267
-    SPELL_SABER_LASH_IMM = 43690,
-    SPELL_TELEPORT_VISUAL = 40869,
-    SPELL_BERSERK = 45078
+    SPELL_BEAM_SINISTER     = 40859,
+    SPELL_BEAM_VILE         = 40860,
+    SPELL_BEAM_WICKED       = 40861,
+    SPELL_BEAM_SINFUL       = 40827,
+    SPELL_ATTRACTION        = 40871,
+    SPELL_SILENCING_SHRIEK  = 40823,
+    SPELL_ENRAGE            = 23537,
+    SPELL_SABER_LASH        = 40810, //43267
+    SPELL_SABER_LASH_IMM    = 43690,
+    SPELL_TELEPORT_VISUAL   = 40869,
+    SPELL_BERSERK           = 45078
 };
 
 enum Events
 {
-    EVENT_RANDOM_BEAM = 1,
+    EVENT_RANDOM_BEAM       = 1,
     EVENT_PRISMATIC_SHIELD,
     EVENT_FATAL_ATTRACTION,
     EVENT_FATAL_ATTRACTION_EXPLOSION,
@@ -72,7 +72,7 @@ enum Beams
     SINFUL_BEAM
 };
 
-uint32 PrismaticAuras[] =
+uint32 PrismaticAuras[]=
 {
     40880,                                                  // Shadow
     40882,                                                  // Fire
@@ -82,15 +82,15 @@ uint32 PrismaticAuras[] =
     40897,                                                  // Holy
 };
 
-G3D::Vector3 const TeleportPoint[] =
+G3D::Vector3 const TeleportPoint[]=
 {
-    { 959.996f, 212.576f, 193.843f },
-    { 932.537f, 231.813f, 193.838f },
-    { 958.675f, 254.767f, 193.822f },
-    { 946.955f, 201.316f, 192.535f },
-    { 944.294f, 149.676f, 197.551f },
-    { 930.548f, 284.888f, 193.367f },
-    { 965.997f, 278.398f, 195.777f }
+    {959.996f, 212.576f, 193.843f},
+    {932.537f, 231.813f, 193.838f},
+    {958.675f, 254.767f, 193.822f},
+    {946.955f, 201.316f, 192.535f},
+    {944.294f, 149.676f, 197.551f},
+    {930.548f, 284.888f, 193.367f},
+    {965.997f, 278.398f, 195.777f}
 };
 
 class boss_mother_shahraz : public CreatureScript
@@ -156,12 +156,12 @@ public:
             for (uint8 i = 0; i < 3; ++i)
             {
                 if (Unit* unit = SelectTarget(SELECT_TARGET_RANDOM, 1))
-                if (unit->IsAlive() && unit->GetTypeId() == TYPEID_PLAYER)
-                {
-                    TargetGUID[i] = unit->GetGUID();
-                    unit->CastSpell(unit, SPELL_TELEPORT_VISUAL, true);
-                    DoTeleportPlayer(unit, X, Y, Z, unit->GetOrientation());
-                }
+                    if (unit->IsAlive() && unit->GetTypeId() == TYPEID_PLAYER)
+                    {
+                        TargetGUID[i] = unit->GetGUID();
+                        unit->CastSpell(unit, SPELL_TELEPORT_VISUAL, true);
+                        DoTeleportPlayer(unit, X, Y, Z, unit->GetOrientation());
+                    }
             }
         }
 
@@ -179,85 +179,85 @@ public:
         {
             switch (eventId)
             {
-            case EVENT_RANDOM_BEAM:
-                if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
-                {
-                    switch (CurrentBeam)
+                case EVENT_RANDOM_BEAM:
+                    if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
                     {
-                    case SINISTER_BEAM:
-                        DoCast(target, SPELL_BEAM_SINISTER);
-                        break;
-                    case VILE_BEAM:
-                        DoCast(target, SPELL_BEAM_VILE);
-                        break;
-                    case WICKED_BEAM:
-                        DoCast(target, SPELL_BEAM_WICKED);
-                        break;
-                    case SINFUL_BEAM:
-                        DoCast(target, SPELL_BEAM_SINFUL);
-                        break;
-                    default:
-                        break;
-                    }
-
-                    ++BeamCount;
-                    uint32 Beam = CurrentBeam;
-                    if (BeamCount > 3)
-                    while (CurrentBeam == Beam)
-                        CurrentBeam = urand(0, 3);
-                }
-                events.ScheduleEvent(EVENT_RANDOM_BEAM, 9000);
-                break;
-            case EVENT_PRISMATIC_SHIELD:
-                // Random Prismatic Shield every 15 seconds.
-                DoCast(me, PrismaticAuras[urand(0, 6)]);
-                events.ScheduleEvent(EVENT_PRISMATIC_SHIELD, 15000);
-                break;
-            case EVENT_FATAL_ATTRACTION:
-                // Select 3 random targets (can select same target more than once), teleport to a random location then make them cast explosions until they get away from each other.
-                ExplosionCount = 0;
-                TeleportPlayers();
-                Talk(SAY_SPELL);
-                events.ScheduleEvent(EVENT_FATAL_ATTRACTION_EXPLOSION, 2000);
-                events.ScheduleEvent(EVENT_FATAL_ATTRACTION, 40000, 71000);
-                break;
-            case EVENT_FATAL_ATTRACTION_EXPLOSION:
-                // Just make them explode three times... they're supposed to keep exploding while they are in range, but it'll take too much code. I'll try to think of an efficient way for it later.
-                if (ExplosionCount < 3)
-                {
-                    for (uint8 i = 0; i < 3; ++i)
-                    {
-                        if (TargetGUID[i])
+                        switch (CurrentBeam)
                         {
-                            if (Unit* unit = ObjectAccessor::GetUnit(*me, TargetGUID[i]))
-                                unit->CastSpell(unit, SPELL_ATTRACTION, true);
-                            TargetGUID[i].Clear();
+                            case SINISTER_BEAM:
+                                DoCast(target, SPELL_BEAM_SINISTER);
+                                break;
+                            case VILE_BEAM:
+                                DoCast(target, SPELL_BEAM_VILE);
+                                break;
+                            case WICKED_BEAM:
+                                DoCast(target, SPELL_BEAM_WICKED);
+                                break;
+                            case SINFUL_BEAM:
+                                DoCast(target, SPELL_BEAM_SINFUL);
+                                break;
+                            default:
+                                break;
                         }
+
+                        ++BeamCount;
+                        uint32 Beam = CurrentBeam;
+                        if (BeamCount > 3)
+                            while (CurrentBeam == Beam)
+                                CurrentBeam = urand(0, 3);
                     }
-                    ++ExplosionCount;
-                }
-                else
+                    events.ScheduleEvent(EVENT_RANDOM_BEAM, 9000);
+                    break;
+                case EVENT_PRISMATIC_SHIELD:
+                    // Random Prismatic Shield every 15 seconds.
+                    DoCast(me, PrismaticAuras[urand(0, 6)]);
+                    events.ScheduleEvent(EVENT_PRISMATIC_SHIELD, 15000);
+                    break;
+                case EVENT_FATAL_ATTRACTION:
+                    // Select 3 random targets (can select same target more than once), teleport to a random location then make them cast explosions until they get away from each other.
                     ExplosionCount = 0;
-                events.ScheduleEvent(EVENT_FATAL_ATTRACTION_EXPLOSION, ExplosionCount < 3 ? 1000 : events.GetTimeUntilEvent(EVENT_FATAL_ATTRACTION) + 2000);
-                break;
-            case EVENT_SILENCING_SHRIEK:
-                DoCastVictim(SPELL_SILENCING_SHRIEK);
-                events.ScheduleEvent(EVENT_SILENCING_SHRIEK, urand(25000, 35000));
-                break;
-            case EVENT_SABER_SLASH:
-                DoCastVictim(SPELL_SABER_LASH);
-                events.ScheduleEvent(EVENT_SABER_SLASH, urand(25000, 35000));
-                break;
-            case EVENT_RANDOM_TAUNT:
-                Talk(SAY_TAUNT);
-                events.ScheduleEvent(EVENT_RANDOM_TAUNT, urand(60000, 151000));
-                break;
-            case EVENT_BERSERK:
-                DoCast(me, SPELL_BERSERK);
-                Talk(SAY_ENRAGE);
-                break;
-            default:
-                break;
+                    TeleportPlayers();
+                    Talk(SAY_SPELL);
+                    events.ScheduleEvent(EVENT_FATAL_ATTRACTION_EXPLOSION, 2000);
+                    events.ScheduleEvent(EVENT_FATAL_ATTRACTION, 40000, 71000);
+                    break;
+                case EVENT_FATAL_ATTRACTION_EXPLOSION:
+                    // Just make them explode three times... they're supposed to keep exploding while they are in range, but it'll take too much code. I'll try to think of an efficient way for it later.
+                    if (ExplosionCount < 3)
+                    {
+                        for (uint8 i = 0; i < 3; ++i)
+                        {
+                            if (TargetGUID[i])
+                            {
+                                if (Unit* unit = ObjectAccessor::GetUnit(*me, TargetGUID[i]))
+                                    unit->CastSpell(unit, SPELL_ATTRACTION, true);
+                                TargetGUID[i].Clear();
+                            }
+                        }
+                        ++ExplosionCount;
+                    }
+                    else
+                        ExplosionCount = 0;
+                    events.ScheduleEvent(EVENT_FATAL_ATTRACTION_EXPLOSION, ExplosionCount < 3 ? 1000 : events.GetTimeUntilEvent(EVENT_FATAL_ATTRACTION) + 2000);
+                    break;
+                case EVENT_SILENCING_SHRIEK:
+                    DoCastVictim(SPELL_SILENCING_SHRIEK);
+                    events.ScheduleEvent(EVENT_SILENCING_SHRIEK, urand(25000, 35000));
+                    break;
+                case EVENT_SABER_SLASH:
+                    DoCastVictim(SPELL_SABER_LASH);
+                    events.ScheduleEvent(EVENT_SABER_SLASH, urand(25000, 35000));
+                    break;
+                case EVENT_RANDOM_TAUNT:
+                    Talk(SAY_TAUNT);
+                    events.ScheduleEvent(EVENT_RANDOM_TAUNT, urand(60000, 151000));
+                    break;
+                case EVENT_BERSERK:
+                    DoCast(me, SPELL_BERSERK);
+                    Talk(SAY_ENRAGE);
+                    break;
+                default:
+                    break;
             }
         }
 

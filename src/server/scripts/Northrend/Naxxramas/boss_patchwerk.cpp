@@ -21,19 +21,19 @@
 
 enum Spells
 {
-    SPELL_HATEFUL_STRIKE = 41926,
-    SPELL_FRENZY = 28131,
-    SPELL_BERSERK = 26662,
-    SPELL_SLIME_BOLT = 32309
+    SPELL_HATEFUL_STRIKE                        = 41926,
+    SPELL_FRENZY                                = 28131,
+    SPELL_BERSERK                               = 26662,
+    SPELL_SLIME_BOLT                            = 32309
 };
 
 enum Yells
 {
-    SAY_AGGRO = 0,
-    SAY_SLAY = 1,
-    SAY_DEATH = 2,
-    EMOTE_BERSERK = 3,
-    EMOTE_ENRAGE = 4
+    SAY_AGGRO                                   = 0,
+    SAY_SLAY                                    = 1,
+    SAY_DEATH                                   = 2,
+    EMOTE_BERSERK                               = 3,
+    EMOTE_ENRAGE                                = 4
 };
 
 enum Events
@@ -46,7 +46,7 @@ enum Events
 
 enum Misc
 {
-    ACHIEV_MAKE_QUICK_WERK_OF_HIM_STARTING_EVENT = 10286
+    ACHIEV_MAKE_QUICK_WERK_OF_HIM_STARTING_EVENT  = 10286
 };
 
 class boss_patchwerk : public CreatureScript
@@ -109,40 +109,40 @@ public:
             {
                 switch (eventId)
                 {
-                case EVENT_HATEFUL:
-                {
-                                      //Cast Hateful strike on the player with the highest
-                                      //amount of HP within melee distance
-                                      uint32 MostHP = 0;
-                                      Unit* pMostHPTarget = NULL;
-                                      std::list<HostileReference*>::const_iterator i = me->getThreatManager().getThreatList().begin();
-                                      for (; i != me->getThreatManager().getThreatList().end(); ++i)
-                                      {
-                                          Unit* target = (*i)->getTarget();
-                                          if (target->IsAlive() && target != me->GetVictim() && target->GetHealth() > MostHP && me->IsWithinMeleeRange(target))
-                                          {
-                                              MostHP = target->GetHealth();
-                                              pMostHPTarget = target;
-                                          }
-                                      }
+                    case EVENT_HATEFUL:
+                    {
+                        //Cast Hateful strike on the player with the highest
+                        //amount of HP within melee distance
+                        uint32 MostHP = 0;
+                        Unit* pMostHPTarget = NULL;
+                        std::list<HostileReference*>::const_iterator i = me->getThreatManager().getThreatList().begin();
+                        for (; i != me->getThreatManager().getThreatList().end(); ++i)
+                        {
+                            Unit* target = (*i)->getTarget();
+                            if (target->IsAlive() && target != me->GetVictim() && target->GetHealth() > MostHP && me->IsWithinMeleeRange(target))
+                            {
+                                MostHP = target->GetHealth();
+                                pMostHPTarget = target;
+                            }
+                        }
 
-                                      if (!pMostHPTarget)
-                                          pMostHPTarget = me->GetVictim();
+                        if (!pMostHPTarget)
+                            pMostHPTarget = me->GetVictim();
 
-                                      DoCast(pMostHPTarget, SPELL_HATEFUL_STRIKE, true);
+                        DoCast(pMostHPTarget, SPELL_HATEFUL_STRIKE, true);
 
-                                      events.ScheduleEvent(EVENT_HATEFUL, 1000);
-                                      break;
-                }
-                case EVENT_BERSERK:
-                    DoCast(me, SPELL_BERSERK, true);
-                    Talk(EMOTE_BERSERK);
-                    events.ScheduleEvent(EVENT_SLIME, 2000);
-                    break;
-                case EVENT_SLIME:
-                    DoCastVictim(SPELL_SLIME_BOLT, true);
-                    events.ScheduleEvent(EVENT_SLIME, 2000);
-                    break;
+                        events.ScheduleEvent(EVENT_HATEFUL, 1000);
+                        break;
+                    }
+                    case EVENT_BERSERK:
+                        DoCast(me, SPELL_BERSERK, true);
+                        Talk(EMOTE_BERSERK);
+                        events.ScheduleEvent(EVENT_SLIME, 2000);
+                        break;
+                    case EVENT_SLIME:
+                        DoCastVictim(SPELL_SLIME_BOLT, true);
+                        events.ScheduleEvent(EVENT_SLIME, 2000);
+                        break;
                 }
             }
 

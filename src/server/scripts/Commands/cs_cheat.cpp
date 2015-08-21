@@ -38,22 +38,22 @@ public:
 
         static ChatCommand cheatCommandTable[] =
         {
-            { "god", rbac::RBAC_PERM_COMMAND_CHEAT_GOD, false, &HandleGodModeCheatCommand, "", NULL },
-            { "casttime", rbac::RBAC_PERM_COMMAND_CHEAT_CASTTIME, false, &HandleCasttimeCheatCommand, "", NULL },
-            { "cooldown", rbac::RBAC_PERM_COMMAND_CHEAT_COOLDOWN, false, &HandleCoolDownCheatCommand, "", NULL },
-            { "power", rbac::RBAC_PERM_COMMAND_CHEAT_POWER, false, &HandlePowerCheatCommand, "", NULL },
-            { "waterwalk", rbac::RBAC_PERM_COMMAND_CHEAT_WATERWALK, false, &HandleWaterWalkCheatCommand, "", NULL },
-            { "status", rbac::RBAC_PERM_COMMAND_CHEAT_STATUS, false, &HandleCheatStatusCommand, "", NULL },
-            { "taxi", rbac::RBAC_PERM_COMMAND_CHEAT_TAXI, false, &HandleTaxiCheatCommand, "", NULL },
-            { "explore", rbac::RBAC_PERM_COMMAND_CHEAT_EXPLORE, false, &HandleExploreCheatCommand, "", NULL },
-            { NULL, 0, false, NULL, "", NULL }
+            { "god",            rbac::RBAC_PERM_COMMAND_CHEAT_GOD,       false, &HandleGodModeCheatCommand,   "", NULL },
+            { "casttime",       rbac::RBAC_PERM_COMMAND_CHEAT_CASTTIME,  false, &HandleCasttimeCheatCommand,  "", NULL },
+            { "cooldown",       rbac::RBAC_PERM_COMMAND_CHEAT_COOLDOWN,  false, &HandleCoolDownCheatCommand,  "", NULL },
+            { "power",          rbac::RBAC_PERM_COMMAND_CHEAT_POWER,     false, &HandlePowerCheatCommand,     "", NULL },
+            { "waterwalk",      rbac::RBAC_PERM_COMMAND_CHEAT_WATERWALK, false, &HandleWaterWalkCheatCommand, "", NULL },
+            { "status",         rbac::RBAC_PERM_COMMAND_CHEAT_STATUS,    false, &HandleCheatStatusCommand,    "", NULL },
+            { "taxi",           rbac::RBAC_PERM_COMMAND_CHEAT_TAXI,      false, &HandleTaxiCheatCommand,      "", NULL },
+            { "explore",        rbac::RBAC_PERM_COMMAND_CHEAT_EXPLORE,   false, &HandleExploreCheatCommand,   "", NULL },
+            { NULL,             0,                                 false, NULL,                         "", NULL }
 
         };
 
         static ChatCommand commandTable[] =
         {
-            { "cheat", rbac::RBAC_PERM_COMMAND_CHEAT, false, NULL, "", cheatCommandTable },
-            { NULL, 0, false, NULL, "", NULL }
+            { "cheat",          rbac::RBAC_PERM_COMMAND_CHEAT, false, NULL, "", cheatCommandTable },
+            { NULL,             0,                       false, NULL, "", NULL }
         };
         return commandTable;
     }
@@ -273,7 +273,7 @@ public:
         {
             handler->PSendSysMessage(LANG_YOU_SET_EXPLORE_ALL, handler->GetNameLink(chr).c_str());
             if (handler->needReportToTarget(chr))
-                ChatHandler(chr->GetSession()).PSendSysMessage(LANG_YOURS_EXPLORE_SET_ALL, handler->GetNameLink().c_str());
+            ChatHandler(chr->GetSession()).PSendSysMessage(LANG_YOURS_EXPLORE_SET_ALL, handler->GetNameLink().c_str());
         }
         else
         {
@@ -285,9 +285,9 @@ public:
         for (uint8 i = 0; i < PLAYER_EXPLORED_ZONES_SIZE; ++i)
         {
             if (flag != 0)
-                handler->GetSession()->GetPlayer()->SetFlag(PLAYER_EXPLORED_ZONES_1 + i, 0xFFFFFFFF);
+                handler->GetSession()->GetPlayer()->SetFlag(PLAYER_EXPLORED_ZONES_1+i, 0xFFFFFFFF);
             else
-                handler->GetSession()->GetPlayer()->SetFlag(PLAYER_EXPLORED_ZONES_1 + i, 0);
+                handler->GetSession()->GetPlayer()->SetFlag(PLAYER_EXPLORED_ZONES_1+i, 0);
         }
 
         return true;

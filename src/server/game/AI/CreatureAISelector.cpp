@@ -37,11 +37,11 @@ namespace FactorySelector
 
         //scriptname in db
         if (!ai_factory)
-        if (CreatureAI* scriptedAI = sScriptMgr->GetCreatureAI(creature))
-            return scriptedAI;
+            if (CreatureAI* scriptedAI = sScriptMgr->GetCreatureAI(creature))
+                return scriptedAI;
 
         // AIname in db
-        std::string ainame = creature->GetAIName();
+        std::string ainame=creature->GetAIName();
         if (!ai_factory && !ainame.empty())
             ai_factory = ai_registry.GetRegistryItem(ainame);
 
@@ -106,21 +106,21 @@ namespace FactorySelector
 
         /* if (mv_factory == NULL)
         {
-        int best_val = -1;
-        StringVector l;
-        mv_registry.GetRegisteredItems(l);
-        for (StringVector::iterator iter = l.begin(); iter != l.end(); ++iter)
-        {
-        const MovementGeneratorCreator *factory = mv_registry.GetRegistryItem((*iter).c_str());
-        const SelectableMovement *p = dynamic_cast<const SelectableMovement *>(factory);
-        ASSERT(p != NULL);
-        int val = p->Permit(creature);
-        if (val > best_val)
-        {
-        best_val = val;
-        mv_factory = p;
-        }
-        }
+            int best_val = -1;
+            StringVector l;
+            mv_registry.GetRegisteredItems(l);
+            for (StringVector::iterator iter = l.begin(); iter != l.end(); ++iter)
+            {
+            const MovementGeneratorCreator *factory = mv_registry.GetRegistryItem((*iter).c_str());
+            const SelectableMovement *p = dynamic_cast<const SelectableMovement *>(factory);
+            ASSERT(p != NULL);
+            int val = p->Permit(creature);
+            if (val > best_val)
+            {
+                best_val = val;
+                mv_factory = p;
+            }
+            }
         }*/
 
         return (mv_factory == NULL ? NULL : mv_factory->Create(creature));

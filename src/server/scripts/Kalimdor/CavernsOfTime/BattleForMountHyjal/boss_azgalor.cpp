@@ -22,23 +22,23 @@
 
 enum Spells
 {
-    SPELL_RAIN_OF_FIRE = 31340,
-    SPELL_DOOM = 31347,
-    SPELL_HOWL_OF_AZGALOR = 31344,
-    SPELL_CLEAVE = 31345,
-    SPELL_BERSERK = 26662,
+    SPELL_RAIN_OF_FIRE          = 31340,
+    SPELL_DOOM                  = 31347,
+    SPELL_HOWL_OF_AZGALOR       = 31344,
+    SPELL_CLEAVE                = 31345,
+    SPELL_BERSERK               = 26662,
 
-    SPELL_THRASH = 12787,
-    SPELL_CRIPPLE = 31406,
-    SPELL_WARSTOMP = 31408,
+    SPELL_THRASH                = 12787,
+    SPELL_CRIPPLE               = 31406,
+    SPELL_WARSTOMP              = 31408,
 };
 
 enum Texts
 {
-    SAY_ONDEATH = 0,
-    SAY_ONSLAY = 1,
-    SAY_DOOM = 2, // Not used?
-    SAY_ONAGGRO = 3,
+    SAY_ONDEATH             = 0,
+    SAY_ONSLAY              = 1,
+    SAY_DOOM                = 2, // Not used?
+    SAY_ONAGGRO             = 3,
 };
 
 class boss_azgalor : public CreatureScript
@@ -128,14 +128,14 @@ public:
                 if (!go)
                 {
                     go = true;
-                    AddWaypoint(0, 5492.91f, -2404.61f, 1462.63f);
-                    AddWaypoint(1, 5531.76f, -2460.87f, 1469.55f);
-                    AddWaypoint(2, 5554.58f, -2514.66f, 1476.12f);
-                    AddWaypoint(3, 5554.16f, -2567.23f, 1479.90f);
-                    AddWaypoint(4, 5540.67f, -2625.99f, 1480.89f);
-                    AddWaypoint(5, 5508.16f, -2659.2f, 1480.15f);
-                    AddWaypoint(6, 5489.62f, -2704.05f, 1482.18f);
-                    AddWaypoint(7, 5457.04f, -2726.26f, 1485.10f);
+                    AddWaypoint(0, 5492.91f,    -2404.61f,    1462.63f);
+                    AddWaypoint(1, 5531.76f,    -2460.87f,    1469.55f);
+                    AddWaypoint(2, 5554.58f,    -2514.66f,    1476.12f);
+                    AddWaypoint(3, 5554.16f,    -2567.23f,    1479.90f);
+                    AddWaypoint(4, 5540.67f,    -2625.99f,    1480.89f);
+                    AddWaypoint(5, 5508.16f,    -2659.2f,    1480.15f);
+                    AddWaypoint(6, 5489.62f,    -2704.05f,    1482.18f);
+                    AddWaypoint(7, 5457.04f,    -2726.26f,    1485.10f);
                     Start(false, true);
                     SetDespawnAtEnd(false);
                 }
@@ -149,29 +149,25 @@ public:
             {
                 DoCast(SelectTarget(SELECT_TARGET_RANDOM, 0, 30, true), SPELL_RAIN_OF_FIRE);
                 RainTimer = 20000 + rand32() % 15000;
-            }
-            else RainTimer -= diff;
+            } else RainTimer -= diff;
 
             if (DoomTimer <= diff)
             {
                 DoCast(SelectTarget(SELECT_TARGET_RANDOM, 1, 100, true), SPELL_DOOM);//never on tank
                 DoomTimer = 45000 + rand32() % 5000;
-            }
-            else DoomTimer -= diff;
+            } else DoomTimer -= diff;
 
             if (HowlTimer <= diff)
             {
                 DoCast(me, SPELL_HOWL_OF_AZGALOR);
                 HowlTimer = 30000;
-            }
-            else HowlTimer -= diff;
+            } else HowlTimer -= diff;
 
             if (CleaveTimer <= diff)
             {
                 DoCastVictim(SPELL_CLEAVE);
                 CleaveTimer = 10000 + rand32() % 5000;
-            }
-            else CleaveTimer -= diff;
+            } else CleaveTimer -= diff;
 
             if (EnrageTimer < diff && !enraged)
             {
@@ -179,8 +175,7 @@ public:
                 DoCast(me, SPELL_BERSERK, true);
                 enraged = true;
                 EnrageTimer = 600000;
-            }
-            else EnrageTimer -= diff;
+            } else EnrageTimer -= diff;
 
             DoMeleeAttackIfReady();
         }
@@ -261,8 +256,7 @@ public:
                     }
                 }
                 CheckTimer = 5000;
-            }
-            else CheckTimer -= diff;
+            } else CheckTimer -= diff;
 
             //Return since we have no target
             if (!UpdateVictim())
@@ -272,15 +266,13 @@ public:
             {
                 DoCast(me, SPELL_WARSTOMP);
                 WarstompTimer = 10000 + rand32() % 5000;
-            }
-            else WarstompTimer -= diff;
+            } else WarstompTimer -= diff;
 
             if (CrippleTimer <= diff)
             {
                 DoCast(SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true), SPELL_CRIPPLE);
                 CrippleTimer = 25000 + rand32() % 5000;
-            }
-            else CrippleTimer -= diff;
+            } else CrippleTimer -= diff;
 
             DoMeleeAttackIfReady();
         }

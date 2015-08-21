@@ -27,15 +27,15 @@ EndScriptData */
 
 enum Spels
 {
-    SPELL_TRASH = 3391,
-    SPELL_SMITE_STOMP = 6432,
-    SPELL_SMITE_SLAM = 6435,
-    SPELL_NIMBLE_REFLEXES = 6264,
+    SPELL_TRASH             = 3391,
+    SPELL_SMITE_STOMP       = 6432,
+    SPELL_SMITE_SLAM        = 6435,
+    SPELL_NIMBLE_REFLEXES   = 6264,
 
-    EQUIP_SWORD = 5191,
-    EQUIP_MACE = 7230,
+    EQUIP_SWORD             = 5191,
+    EQUIP_MACE              = 7230,
 
-    SAY_AGGRO = 0,
+    SAY_AGGRO               = 0,
 };
 
 class boss_mr_smite : public CreatureScript
@@ -88,7 +88,7 @@ public:
 
         void EnterCombat(Unit* /*who*/) override
         {
-            Talk(SAY_AGGRO);
+           Talk(SAY_AGGRO);
         }
 
         bool bCheckChances()
@@ -105,31 +105,28 @@ public:
             if (!UpdateVictim())
                 return;
 
-            /*START ACID-AI*/
+        /*START ACID-AI*/
             if (uiTrashTimer <= uiDiff)
             {
                 if (bCheckChances())
                     DoCast(me, SPELL_TRASH);
                 uiTrashTimer = urand(6000, 15500);
-            }
-            else uiTrashTimer -= uiDiff;
+            } else uiTrashTimer -= uiDiff;
 
             if (uiSlamTimer <= uiDiff)
             {
                 if (bCheckChances())
                     DoCastVictim(SPELL_SMITE_SLAM);
                 uiSlamTimer = 11000;
-            }
-            else uiSlamTimer -= uiDiff;
+            } else uiSlamTimer -= uiDiff;
 
             if (uiNimbleReflexesTimer <= uiDiff)
             {
                 if (bCheckChances())
                     DoCast(me, SPELL_NIMBLE_REFLEXES);
                 uiNimbleReflexesTimer = urand(27300, 60100);
-            }
-            else uiNimbleReflexesTimer -= uiDiff;
-            /*END ACID-AI*/
+            } else uiNimbleReflexesTimer -= uiDiff;
+        /*END ACID-AI*/
 
             if ((uiHealth == 0 && !HealthAbovePct(66)) || (uiHealth == 1 && !HealthAbovePct(33)))
             {
@@ -149,27 +146,26 @@ public:
                 {
                     switch (uiPhase)
                     {
-                    case 1:
-                        me->HandleEmoteCommand(EMOTE_STATE_KNEEL); //dosen't work?
-                        uiTimer = 1000;
-                        uiPhase = 2;
-                        break;
-                    case 2:
-                        if (uiHealth == 1)
-                            SetEquipmentSlots(false, EQUIP_SWORD, EQUIP_SWORD, EQUIP_NO_CHANGE);
-                        else
-                            SetEquipmentSlots(false, EQUIP_MACE, EQUIP_UNEQUIP, EQUIP_NO_CHANGE);
-                        uiTimer = 500;
-                        uiPhase = 3;
-                        break;
-                    case 3:
-                        SetCombatMovement(true);
-                        me->GetMotionMaster()->MoveChase(me->GetVictim(), me->m_CombatDistance);
-                        uiPhase = 0;
-                        break;
+                        case 1:
+                            me->HandleEmoteCommand(EMOTE_STATE_KNEEL); //dosen't work?
+                            uiTimer = 1000;
+                            uiPhase = 2;
+                            break;
+                        case 2:
+                            if (uiHealth == 1)
+                                SetEquipmentSlots(false, EQUIP_SWORD, EQUIP_SWORD, EQUIP_NO_CHANGE);
+                            else
+                                SetEquipmentSlots(false, EQUIP_MACE, EQUIP_UNEQUIP, EQUIP_NO_CHANGE);
+                            uiTimer = 500;
+                            uiPhase = 3;
+                            break;
+                        case 3:
+                            SetCombatMovement(true);
+                            me->GetMotionMaster()->MoveChase(me->GetVictim(), me->m_CombatDistance);
+                            uiPhase = 0;
+                            break;
                     }
-                }
-                else uiTimer -= uiDiff;
+                } else uiTimer -= uiDiff;
             }
 
             DoMeleeAttackIfReady();

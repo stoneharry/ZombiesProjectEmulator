@@ -81,8 +81,8 @@ struct Cell
     CellCoord GetCellCoord() const
     {
         return CellCoord(
-            data.Part.grid_x * MAX_NUMBER_OF_CELLS + data.Part.cell_x,
-            data.Part.grid_y * MAX_NUMBER_OF_CELLS + data.Part.cell_y);
+            data.Part.grid_x * MAX_NUMBER_OF_CELLS+data.Part.cell_x,
+            data.Part.grid_y * MAX_NUMBER_OF_CELLS+data.Part.cell_y);
     }
 
     Cell& operator=(Cell const& cell)

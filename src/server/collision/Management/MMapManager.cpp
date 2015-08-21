@@ -39,15 +39,15 @@ namespace MMAP
             return true;
 
         // load and init dtNavMesh - read parameters from file
-        uint32 pathLen = sWorld->GetDataPath().length() + strlen("mmaps/%03i.mmap") + 1;
+        uint32 pathLen = sWorld->GetDataPath().length() + strlen("mmaps/%03i.mmap")+1;
         char *fileName = new char[pathLen];
-        snprintf(fileName, pathLen, (sWorld->GetDataPath() + "mmaps/%03i.mmap").c_str(), mapId);
+        snprintf(fileName, pathLen, (sWorld->GetDataPath()+"mmaps/%03i.mmap").c_str(), mapId);
 
         FILE* file = fopen(fileName, "rb");
         if (!file)
         {
             TC_LOG_DEBUG("maps", "MMAP:loadMapData: Error: Could not open mmap file '%s'", fileName);
-            delete[] fileName;
+            delete [] fileName;
             return false;
         }
 
@@ -57,7 +57,7 @@ namespace MMAP
         if (count != 1)
         {
             TC_LOG_DEBUG("maps", "MMAP:loadMapData: Error: Could not read params from file '%s'", fileName);
-            delete[] fileName;
+            delete [] fileName;
             return false;
         }
 
@@ -67,11 +67,11 @@ namespace MMAP
         {
             dtFreeNavMesh(mesh);
             TC_LOG_ERROR("maps", "MMAP:loadMapData: Failed to initialize dtNavMesh for mmap %03u from file %s", mapId, fileName);
-            delete[] fileName;
+            delete [] fileName;
             return false;
         }
 
-        delete[] fileName;
+        delete [] fileName;
 
         TC_LOG_DEBUG("maps", "MMAP:loadMapData: Loaded %03i.mmap", mapId);
 
@@ -104,19 +104,19 @@ namespace MMAP
             return false;
 
         // load this tile :: mmaps/MMMXXYY.mmtile
-        uint32 pathLen = sWorld->GetDataPath().length() + strlen("mmaps/%03i%02i%02i.mmtile") + 1;
+        uint32 pathLen = sWorld->GetDataPath().length() + strlen("mmaps/%03i%02i%02i.mmtile")+1;
         char *fileName = new char[pathLen];
 
-        snprintf(fileName, pathLen, (sWorld->GetDataPath() + "mmaps/%03i%02i%02i.mmtile").c_str(), mapId, x, y);
+        snprintf(fileName, pathLen, (sWorld->GetDataPath()+"mmaps/%03i%02i%02i.mmtile").c_str(), mapId, x, y);
 
         FILE* file = fopen(fileName, "rb");
         if (!file)
         {
             TC_LOG_DEBUG("maps", "MMAP:loadMap: Could not open mmtile file '%s'", fileName);
-            delete[] fileName;
+            delete [] fileName;
             return false;
         }
-        delete[] fileName;
+        delete [] fileName;
 
         // read header
         MmapTileHeader fileHeader;

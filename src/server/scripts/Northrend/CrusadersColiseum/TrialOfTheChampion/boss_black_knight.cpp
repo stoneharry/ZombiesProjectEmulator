@@ -30,48 +30,48 @@ EndScriptData */
 enum Spells
 {
     //phase 1
-    SPELL_PLAGUE_STRIKE = 67884,
-    SPELL_PLAGUE_STRIKE_2 = 67724,
-    SPELL_ICY_TOUCH_H = 67881,
-    SPELL_ICY_TOUCH = 67718,
-    SPELL_DEATH_RESPITE = 67745,
-    SPELL_DEATH_RESPITE_2 = 68306,
-    SPELL_DEATH_RESPITE_3 = 66798,
-    SPELL_OBLITERATE_H = 67883,
-    SPELL_OBLITERATE = 67725,
+    SPELL_PLAGUE_STRIKE     = 67884,
+    SPELL_PLAGUE_STRIKE_2   = 67724,
+    SPELL_ICY_TOUCH_H       = 67881,
+    SPELL_ICY_TOUCH         = 67718,
+    SPELL_DEATH_RESPITE     = 67745,
+    SPELL_DEATH_RESPITE_2   = 68306,
+    SPELL_DEATH_RESPITE_3   = 66798,
+    SPELL_OBLITERATE_H      = 67883,
+    SPELL_OBLITERATE        = 67725,
     //in this phase should rise herald (the spell is missing)
 
     //phase 2 - During this phase, the Black Knight will use the same abilities as in phase 1, except for Death's Respite
-    SPELL_ARMY_DEAD = 67761,
-    SPELL_DESECRATION = 67778,
-    SPELL_DESECRATION_2 = 67778,
-    SPELL_GHOUL_EXPLODE = 67751,
+    SPELL_ARMY_DEAD         = 67761,
+    SPELL_DESECRATION       = 67778,
+    SPELL_DESECRATION_2     = 67778,
+    SPELL_GHOUL_EXPLODE     = 67751,
 
     //phase 3
-    SPELL_DEATH_BITE_H = 67875,
-    SPELL_DEATH_BITE = 67808,
-    SPELL_MARKED_DEATH = 67882,
-    SPELL_MARKED_DEATH_2 = 67823,
+    SPELL_DEATH_BITE_H      = 67875,
+    SPELL_DEATH_BITE        = 67808,
+    SPELL_MARKED_DEATH      = 67882,
+    SPELL_MARKED_DEATH_2    = 67823,
 
-    SPELL_BLACK_KNIGHT_RES = 67693,
+    SPELL_BLACK_KNIGHT_RES  = 67693,
 
-    SPELL_LEAP = 67749,
-    SPELL_LEAP_H = 67880,
+    SPELL_LEAP              = 67749,
+    SPELL_LEAP_H            = 67880,
 
-    SPELL_KILL_CREDIT = 68663
+    SPELL_KILL_CREDIT       = 68663
 };
 
 enum Models
 {
     MODEL_SKELETON = 29846,
-    MODEL_GHOST = 21300
+    MODEL_GHOST    = 21300
 };
 
 enum Phases
 {
-    PHASE_UNDEAD = 1,
-    PHASE_SKELETON = 2,
-    PHASE_GHOST = 3
+    PHASE_UNDEAD    = 1,
+    PHASE_SKELETON  = 2,
+    PHASE_GHOST     = 3
 };
 
 class boss_black_knight : public CreatureScript
@@ -166,109 +166,99 @@ public:
                     uiResurrectTimer = 4000;
                     bEventInProgress = false;
                     me->ClearUnitState(UNIT_STATE_ROOT | UNIT_STATE_STUNNED);
-                }
-                else uiResurrectTimer -= uiDiff;
+                } else uiResurrectTimer -= uiDiff;
             }
 
             switch (uiPhase)
             {
-            case PHASE_UNDEAD:
-            case PHASE_SKELETON:
-            {
-                                   if (uiIcyTouchTimer <= uiDiff)
-                                   {
-                                       DoCastVictim(SPELL_ICY_TOUCH);
-                                       uiIcyTouchTimer = urand(5000, 7000);
-                                   }
-                                   else uiIcyTouchTimer -= uiDiff;
-                                   if (uiPlagueStrikeTimer <= uiDiff)
-                                   {
-                                       DoCastVictim(SPELL_ICY_TOUCH);
-                                       uiPlagueStrikeTimer = urand(12000, 15000);
-                                   }
-                                   else uiPlagueStrikeTimer -= uiDiff;
-                                   if (uiObliterateTimer <= uiDiff)
-                                   {
-                                       DoCastVictim(SPELL_OBLITERATE);
-                                       uiObliterateTimer = urand(17000, 19000);
-                                   }
-                                   else uiObliterateTimer -= uiDiff;
-                                   switch (uiPhase)
-                                   {
-                                   case PHASE_UNDEAD:
-                                   {
-                                                        if (uiDeathRespiteTimer <= uiDiff)
-                                                        {
-                                                            if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
-                                                            {
-                                                                if (target && target->IsAlive())
-                                                                    DoCast(target, SPELL_DEATH_RESPITE);
-                                                            }
-                                                            uiDeathRespiteTimer = urand(15000, 16000);
-                                                        }
-                                                        else uiDeathRespiteTimer -= uiDiff;
-                                                        break;
-                                   }
-                                   case PHASE_SKELETON:
-                                   {
-                                                          if (!bSummonArmy)
-                                                          {
-                                                              bSummonArmy = true;
-                                                              me->AddUnitState(UNIT_STATE_ROOT | UNIT_STATE_STUNNED);
-                                                              DoCast(me, SPELL_ARMY_DEAD);
-                                                          }
-                                                          if (!bDeathArmyDone)
-                                                          {
-                                                              if (uiDeathArmyCheckTimer <= uiDiff)
-                                                              {
-                                                                  me->ClearUnitState(UNIT_STATE_ROOT | UNIT_STATE_STUNNED);
-                                                                  uiDeathArmyCheckTimer = 0;
-                                                                  bDeathArmyDone = true;
-                                                              }
-                                                              else uiDeathArmyCheckTimer -= uiDiff;
-                                                          }
-                                                          if (uiDesecration <= uiDiff)
-                                                          {
-                                                              if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
-                                                              {
-                                                                  if (target && target->IsAlive())
-                                                                      DoCast(target, SPELL_DESECRATION);
-                                                              }
-                                                              uiDesecration = urand(15000, 16000);
-                                                          }
-                                                          else uiDesecration -= uiDiff;
-                                                          if (uiGhoulExplodeTimer <= uiDiff)
-                                                          {
-                                                              DoCast(me, SPELL_GHOUL_EXPLODE);
-                                                              uiGhoulExplodeTimer = 8000;
-                                                          }
-                                                          else uiGhoulExplodeTimer -= uiDiff;
-                                                          break;
-                                   }
-                                       break;
-                                   }
-                                   break;
-            }
-            case PHASE_GHOST:
-            {
-                                if (uiDeathBiteTimer <= uiDiff)
+                case PHASE_UNDEAD:
+                case PHASE_SKELETON:
+                {
+                    if (uiIcyTouchTimer <= uiDiff)
+                    {
+                        DoCastVictim(SPELL_ICY_TOUCH);
+                        uiIcyTouchTimer = urand(5000, 7000);
+                    } else uiIcyTouchTimer -= uiDiff;
+                    if (uiPlagueStrikeTimer <= uiDiff)
+                    {
+                        DoCastVictim(SPELL_ICY_TOUCH);
+                        uiPlagueStrikeTimer = urand(12000, 15000);
+                    } else uiPlagueStrikeTimer -= uiDiff;
+                    if (uiObliterateTimer <= uiDiff)
+                    {
+                        DoCastVictim(SPELL_OBLITERATE);
+                        uiObliterateTimer = urand(17000, 19000);
+                    } else uiObliterateTimer -= uiDiff;
+                    switch (uiPhase)
+                    {
+                        case PHASE_UNDEAD:
+                        {
+                            if (uiDeathRespiteTimer <= uiDiff)
+                            {
+                                if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
                                 {
-                                    DoCastAOE(SPELL_DEATH_BITE);
-                                    uiDeathBiteTimer = urand(2000, 4000);
+                                    if (target && target->IsAlive())
+                                        DoCast(target, SPELL_DEATH_RESPITE);
                                 }
-                                else uiDeathBiteTimer -= uiDiff;
-                                if (uiMarkedDeathTimer <= uiDiff)
+                                uiDeathRespiteTimer = urand(15000, 16000);
+                            } else uiDeathRespiteTimer -= uiDiff;
+                            break;
+                        }
+                        case PHASE_SKELETON:
+                        {
+                            if (!bSummonArmy)
+                            {
+                                bSummonArmy = true;
+                                me->AddUnitState(UNIT_STATE_ROOT | UNIT_STATE_STUNNED);
+                                DoCast(me, SPELL_ARMY_DEAD);
+                            }
+                            if (!bDeathArmyDone)
+                            {
+                                if (uiDeathArmyCheckTimer <= uiDiff)
                                 {
-                                    if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
-                                    {
-                                        if (target && target->IsAlive())
-                                            DoCast(target, SPELL_MARKED_DEATH);
-                                    }
-                                    uiMarkedDeathTimer = urand(5000, 7000);
+                                    me->ClearUnitState(UNIT_STATE_ROOT | UNIT_STATE_STUNNED);
+                                    uiDeathArmyCheckTimer = 0;
+                                    bDeathArmyDone = true;
+                                } else uiDeathArmyCheckTimer -= uiDiff;
+                            }
+                            if (uiDesecration <= uiDiff)
+                            {
+                                if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
+                                {
+                                    if (target && target->IsAlive())
+                                        DoCast(target, SPELL_DESECRATION);
                                 }
-                                else uiMarkedDeathTimer -= uiDiff;
-                                break;
-            }
+                                uiDesecration = urand(15000, 16000);
+                            } else uiDesecration -= uiDiff;
+                            if (uiGhoulExplodeTimer <= uiDiff)
+                            {
+                                DoCast(me, SPELL_GHOUL_EXPLODE);
+                                uiGhoulExplodeTimer = 8000;
+                            } else uiGhoulExplodeTimer -= uiDiff;
+                            break;
+                        }
+                        break;
+                    }
+                    break;
+                }
+                case PHASE_GHOST:
+                {
+                    if (uiDeathBiteTimer <= uiDiff)
+                    {
+                        DoCastAOE(SPELL_DEATH_BITE);
+                        uiDeathBiteTimer = urand(2000, 4000);
+                    } else uiDeathBiteTimer -= uiDiff;
+                    if (uiMarkedDeathTimer <= uiDiff)
+                    {
+                        if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
+                        {
+                            if (target && target->IsAlive())
+                                DoCast(target, SPELL_MARKED_DEATH);
+                        }
+                        uiMarkedDeathTimer = urand(5000, 7000);
+                    } else uiMarkedDeathTimer -= uiDiff;
+                    break;
+                }
             }
 
             if (!me->HasUnitState(UNIT_STATE_ROOT) && !me->HealthBelowPct(1))
@@ -285,12 +275,12 @@ public:
                 summons.DespawnAll();
                 switch (uiPhase)
                 {
-                case PHASE_UNDEAD:
-                    me->SetDisplayId(MODEL_SKELETON);
-                    break;
-                case PHASE_SKELETON:
-                    me->SetDisplayId(MODEL_GHOST);
-                    break;
+                    case PHASE_UNDEAD:
+                        me->SetDisplayId(MODEL_SKELETON);
+                        break;
+                    case PHASE_SKELETON:
+                        me->SetDisplayId(MODEL_GHOST);
+                        break;
                 }
                 bEventInProgress = true;
             }
@@ -347,8 +337,7 @@ public:
                         DoCast(target, (SPELL_LEAP));
                 }
                 uiAttackTimer = 3500;
-            }
-            else uiAttackTimer -= uiDiff;
+            } else uiAttackTimer -= uiDiff;
 
             DoMeleeAttackIfReady();
         }
