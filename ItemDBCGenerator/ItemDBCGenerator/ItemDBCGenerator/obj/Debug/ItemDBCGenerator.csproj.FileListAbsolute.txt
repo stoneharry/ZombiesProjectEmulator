@@ -1,0 +1,7 @@
+C:\Users\Harry_\Desktop\ZombiesProjectEmulator\ItemDBCGenerator\ItemDBCGenerator\ItemDBCGenerator\bin\Debug\ItemDBCGenerator.exe.config
+C:\Users\Harry_\Desktop\ZombiesProjectEmulator\ItemDBCGenerator\ItemDBCGenerator\ItemDBCGenerator\bin\Debug\ItemDBCGenerator.exe
+C:\Users\Harry_\Desktop\ZombiesProjectEmulator\ItemDBCGenerator\ItemDBCGenerator\ItemDBCGenerator\bin\Debug\ItemDBCGenerator.pdb
+C:\Users\Harry_\Desktop\ZombiesProjectEmulator\ItemDBCGenerator\ItemDBCGenerator\ItemDBCGenerator\obj\Debug\ItemDBCGenerator.exe
+C:\Users\Harry_\Desktop\ZombiesProjectEmulator\ItemDBCGenerator\ItemDBCGenerator\ItemDBCGenerator\obj\Debug\ItemDBCGenerator.pdb
+C:\Users\Harry_\Desktop\ZombiesProjectEmulator\ItemDBCGenerator\ItemDBCGenerator\ItemDBCGenerator\bin\Debug\MySql.Data.dll
+C:\Users\Harry_\Desktop\ZombiesProjectEmulator\ItemDBCGenerator\ItemDBCGenerator\ItemDBCGenerator\obj\Debug\ItemDBCGenerator.csprojResolveAssemblyReference.cache

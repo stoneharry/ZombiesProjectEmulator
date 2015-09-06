@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<MySQL>
+  <host>62.92.37.202</host>
+  <username>harry</username>
+  <password>password</password>
+  <port>3306</port>
+  <database>eluna_world</database>
+  <table>tablesnotused</table>
+</MySQL>

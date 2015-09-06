@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ItemDBCGenerator", "ItemDBCGenerator\ItemDBCGenerator.csproj", "{A05A8A8E-ACC7-4848-BF11-6C73414A973C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A05A8A8E-ACC7-4848-BF11-6C73414A973C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A05A8A8E-ACC7-4848-BF11-6C73414A973C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A05A8A8E-ACC7-4848-BF11-6C73414A973C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A05A8A8E-ACC7-4848-BF11-6C73414A973C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
