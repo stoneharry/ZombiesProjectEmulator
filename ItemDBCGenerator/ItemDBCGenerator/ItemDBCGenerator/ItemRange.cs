@@ -13,11 +13,11 @@ namespace ItemDBCGenerator
         public Constants.WeaponSubclass weaponSubClass { get; set; }
         public Constants.ArmorSubclass armorSubClass { get; set; }
 
-        public ItemRange(UInt32[] range, Constants.ItemClass itemClass)
+        public ItemRange(UInt32[] range, Constants.ItemClass itemClass, Constants.ArmorSubclass armorSubclass)
         {
             this.range = range;
             this.itemClass = itemClass;
-            this.armorSubClass = Constants.ArmorSubclass.CLOTH; // TODO
+            this.armorSubClass = armorSubclass;
             this.weaponSubClass = Constants.WeaponSubclass.NULL;
         }
 

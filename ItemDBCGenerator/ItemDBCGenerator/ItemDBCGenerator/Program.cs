@@ -27,7 +27,7 @@ namespace ItemDBCGenerator
         private static UInt32[] WEAPON_DAGGER_RANGE = { 12474336, 13191481 };
         private static UInt32[] WEAPON_THROWN_RANGE = { 13191482, 13908627 };
         private static ItemRange[] RANGES = {
-            new ItemRange(ARMOR_RANGE, Constants.ItemClass.ARMOR),
+            new ItemRange(ARMOR_RANGE, Constants.ItemClass.ARMOR, Constants.ArmorSubclass.CLOTH),
             new ItemRange(WEAPON_AXE_RANGE, Constants.ItemClass.WEAPON, Constants.WeaponSubclass.AXE_ONEH),
             new ItemRange(WEAPON_AXE_2H_RANGE, Constants.ItemClass.WEAPON, Constants.WeaponSubclass.AXE_TWOH),
             new ItemRange(WEAPON_BOW_RANGE, Constants.ItemClass.WEAPON, Constants.WeaponSubclass.BOW),
@@ -78,16 +78,22 @@ namespace ItemDBCGenerator
                 Random rand = new Random();
                 foreach (ItemRange range in RANGES)
                 {
+                    int subClass = 0;
+                    if (range.itemClass == Constants.ItemClass.ARMOR)
+                        subClass = (int)range.armorSubClass;
+                    else
+                        subClass = (int)range.weaponSubClass;
                     print("Generating: {0}, {1}, {2}...", range.itemClass.ToString(), range.weaponSubClass.ToString(), range.armorSubClass.ToString());
                     String query = String.Format(@"
                         SELECT entry,class,subclass,SoundOverrideSubclass,displayid,inventoryType,Material,sheath FROM item_template WHERE
-	                        (class = '{0}' OR class = '{1}') AND
+	                        class = '{0}' AND
+                            subclass = '{1}' AND
 	                        itemlevel < '{2}' AND
 	                        itemlevel > '{3}' AND
 	                        quality < '{4}' AND
                             quality > '{5}'
 	                        ORDER BY entry;",
-                            2, 4, 58, 10, 4, 1);
+                            (int)range.itemClass, subClass, 58, 10, 4, 1);
                     UInt32[] ranges = range.range;
                     var resultSet = mySQL.query(query).Rows;
                     int count = resultSet.Count - 1;
