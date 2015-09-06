@@ -1,5 +1,6 @@
 #include "Define.h" // uint32 etc types
 #include "ItemPrototype.h" // Item enums
+#include "DBCStores.h" // Needed for item DBC lookup
 #include <map>
 #include <set>
 #include <vector>

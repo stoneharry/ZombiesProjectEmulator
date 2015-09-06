@@ -90,7 +90,7 @@ VirtualItemMgr & VirtualItemMgr::instance()
 VirtualItemMgr::VirtualItemMgr()
 {
     WriteGuard guard(lock);
-    const uint32 block = std::floor((double)(maxEntry - minEntry) / MAX_ITEM_SUBCLASS_WEAPON + 1);
+    const uint32 block = std::floor((double)(maxEntry - minEntry) / (MAX_ITEM_SUBCLASS_WEAPON + 1));
 
     armorGenerator = EntryGenerator(minEntry, minEntry + block - 1);
 
@@ -131,6 +131,12 @@ VirtualItemTemplate* VirtualItemMgr::GenerateVirtualTemplate(ItemTemplate const*
 
     WriteGuard guard(lock);
     uint32 entry = Generator(temp).GenerateEntry(store);
+
+    // Get the correct display ID
+    ItemEntry const* dbcitem = sItemStore.LookupEntry(entry);
+    if (dbcitem)
+        temp->DisplayInfoID = dbcitem->DisplayId;
+
     temp->ItemId = entry;
     delete store[entry];
     store[entry] = temp;
