@@ -6001,8 +6001,8 @@ WorldSafeLocsEntry const* ObjectMgr::GetClosestGraveYard(float x, float y, float
 
         // skip enemy faction graveyard
         // team == 0 case can be at call from .neargrave
-        if (data.team != 0 && team != 0 && data.team != team)
-            continue;
+        //if (data.team != 0 && team != 0 && data.team != team)
+            //continue;
 
         // find now nearest graveyard at other map
         if (MapId != entry->map_id)
