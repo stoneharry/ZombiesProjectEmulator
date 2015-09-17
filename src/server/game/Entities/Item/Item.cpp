@@ -266,11 +266,12 @@ bool Item::Create(uint32 guidlow, uint32 itemid, Player const* owner)
 
     if (VirtualItemMgr::IsVirtualTemplate(itemProto))
     {
-        itemProto = sVirtualItemMgr.GenerateVirtualTemplate(itemProto, BIND_ITEM);
-        itemid = itemProto->ItemId;
+        if (ItemTemplate const* newProto = sVirtualItemMgr.GenerateVirtualTemplate(itemProto))
+        {
+            itemProto = newProto;
+            itemid = itemProto->ItemId;
+        }
     }
-    else
-        sVirtualItemMgr.SetVirtualTemplateMemoryBind(itemid, BIND_ITEM);
 
     SetEntry(itemid);
     SetObjectScale(1.0f);
@@ -425,7 +426,6 @@ void Item::SaveToDB(SQLTransaction& trans)
             if (!loot.isLooted())
                 ItemContainerDeleteLootMoneyAndLootItemsFromDB();
 
-            sVirtualItemMgr.Remove(GetEntry());
             delete this;
             return;
         }
@@ -740,7 +740,6 @@ void Item::SetState(ItemUpdateState state, Player* forplayer)
             forplayer->DeleteRefundReference(GetGUID());
         }
 
-        sVirtualItemMgr.Remove(GetEntry());
         delete this;
         return;
     }
