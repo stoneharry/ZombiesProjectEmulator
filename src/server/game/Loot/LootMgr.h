@@ -28,7 +28,6 @@
 #include <map>
 #include <vector>
 #include <list>
-#include "..\Globals\VirtualItemMgr.h"
 
 enum RollType
 {

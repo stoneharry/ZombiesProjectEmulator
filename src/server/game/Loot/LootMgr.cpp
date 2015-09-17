@@ -477,7 +477,7 @@ bool Loot::FillLoot(uint32 lootId, LootStore const& store, Player* lootOwner, bo
 
     tab->Process(*this, store.IsRatesAllowed(), lootMode);          // Processing is done there, callback via Loot::AddItem()
 
-	if (globalTab)
+	if (globalTab && lootId != GLOBAL_LOOT_LOOTID)
 		globalTab->Process(*this, store.IsRatesAllowed(), lootMode, 0, true);
 
     // Setting access rights for group loot case
