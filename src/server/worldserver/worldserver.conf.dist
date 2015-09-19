@@ -3390,3 +3390,23 @@ PacketSpoof.BanDuration = 86400
 
 #
 ###################################################################################################
+
+###################################################################################################
+# Custom stuff below
+#
+# Item Generator Settings
+# 
+# Item quality generator chance
+# these are not percentage chances. They represent areas of a number line made from their total sum
+
+ItemGenerator.Poor = 0
+ItemGenerator.Common = 200
+ItemGenerator.Uncommon = 100
+ItemGenerator.Rare = 30
+ItemGenerator.Epic = 15
+ItemGenerator.Legendary = 0
+ItemGenerator.Artifact = 0
+ItemGenerator.Heirloom = 0
+
+#
+###################################################################################################

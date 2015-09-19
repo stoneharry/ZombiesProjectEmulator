@@ -1222,6 +1222,16 @@ void World::LoadConfigSettings(bool reload)
     m_int_configs[CONFIG_WARDEN_CLIENT_FAIL_ACTION]    = sConfigMgr->GetIntDefault("Warden.ClientCheckFailAction", 0);
     m_int_configs[CONFIG_WARDEN_CLIENT_RESPONSE_DELAY] = sConfigMgr->GetIntDefault("Warden.ClientResponseDelay", 600);
 
+    // Virtual Item Generator
+    m_int_configs[CONFIG_ITEMGEN_QUALITY_POOR]          = sConfigMgr->GetIntDefault("ItemGenerator.Poor", 0);
+    m_int_configs[CONFIG_ITEMGEN_QUALITY_COMMON]        = sConfigMgr->GetIntDefault("ItemGenerator.Common", 0);
+    m_int_configs[CONFIG_ITEMGEN_QUALITY_UNCOMMON]      = sConfigMgr->GetIntDefault("ItemGenerator.Uncommon", 0);
+    m_int_configs[CONFIG_ITEMGEN_QUALITY_RARE]          = sConfigMgr->GetIntDefault("ItemGenerator.Rare", 0);
+    m_int_configs[CONFIG_ITEMGEN_QUALITY_EPIC]          = sConfigMgr->GetIntDefault("ItemGenerator.Epic", 0);
+    m_int_configs[CONFIG_ITEMGEN_QUALITY_LEGENDARY]     = sConfigMgr->GetIntDefault("ItemGenerator.Legendary", 0);
+    m_int_configs[CONFIG_ITEMGEN_QUALITY_ARTIFACT]      = sConfigMgr->GetIntDefault("ItemGenerator.Artifact", 0);
+    m_int_configs[CONFIG_ITEMGEN_QUALITY_HEIRLOOM]      = sConfigMgr->GetIntDefault("ItemGenerator.Heirloom", 0);
+
     // Dungeon finder
     m_int_configs[CONFIG_LFG_OPTIONSMASK] = sConfigMgr->GetIntDefault("DungeonFinder.OptionsMask", 1);
 

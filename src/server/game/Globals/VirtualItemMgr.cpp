@@ -1,6 +1,7 @@
 #include "VirtualItemMgr.h"
 #include "Errors.h" // ASSERT macro
 #include "SharedDefines.h" // item quality enum
+#include "World.h" // config values
 #include <algorithm>
 #include <cstdlib>
 
@@ -210,14 +211,14 @@ void VirtualItemMgr::GenerateStats(ItemTemplate* output, VirtualModifier const& 
 
         // these are not percentage chances. They represent areas of a number line made from their sum
         static const float chances[MAX_ITEM_QUALITY] = {
-            0,      // poor
-            200,    // normal
-            100,    // uncommon
-            30,     // rare
-            15,     // epic
-            0,     // legendary
-            0,      // artifact
-            0,      // heirloom
+            sWorld->getIntConfig(CONFIG_ITEMGEN_QUALITY_POOR),
+            sWorld->getIntConfig(CONFIG_ITEMGEN_QUALITY_COMMON),
+            sWorld->getIntConfig(CONFIG_ITEMGEN_QUALITY_UNCOMMON),
+            sWorld->getIntConfig(CONFIG_ITEMGEN_QUALITY_RARE),
+            sWorld->getIntConfig(CONFIG_ITEMGEN_QUALITY_EPIC),
+            sWorld->getIntConfig(CONFIG_ITEMGEN_QUALITY_LEGENDARY),
+            sWorld->getIntConfig(CONFIG_ITEMGEN_QUALITY_ARTIFACT),
+            sWorld->getIntConfig(CONFIG_ITEMGEN_QUALITY_HEIRLOOM),
         };
 
         uint32 sum = 0;
