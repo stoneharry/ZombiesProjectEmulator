@@ -67,7 +67,6 @@
 #ifdef ELUNA
 #include "LuaEngine.h"
 #endif
-#include "VirtualItemMgr.h"
 
 
 std::atomic<bool> World::m_stopEvent(false);
@@ -1223,6 +1222,16 @@ void World::LoadConfigSettings(bool reload)
     m_int_configs[CONFIG_WARDEN_CLIENT_FAIL_ACTION]    = sConfigMgr->GetIntDefault("Warden.ClientCheckFailAction", 0);
     m_int_configs[CONFIG_WARDEN_CLIENT_RESPONSE_DELAY] = sConfigMgr->GetIntDefault("Warden.ClientResponseDelay", 600);
 
+    // Virtual Item Generator
+    m_int_configs[CONFIG_ITEMGEN_QUALITY_POOR]          = sConfigMgr->GetIntDefault("ItemGenerator.Poor", 0);
+    m_int_configs[CONFIG_ITEMGEN_QUALITY_COMMON]        = sConfigMgr->GetIntDefault("ItemGenerator.Common", 0);
+    m_int_configs[CONFIG_ITEMGEN_QUALITY_UNCOMMON]      = sConfigMgr->GetIntDefault("ItemGenerator.Uncommon", 0);
+    m_int_configs[CONFIG_ITEMGEN_QUALITY_RARE]          = sConfigMgr->GetIntDefault("ItemGenerator.Rare", 0);
+    m_int_configs[CONFIG_ITEMGEN_QUALITY_EPIC]          = sConfigMgr->GetIntDefault("ItemGenerator.Epic", 0);
+    m_int_configs[CONFIG_ITEMGEN_QUALITY_LEGENDARY]     = sConfigMgr->GetIntDefault("ItemGenerator.Legendary", 0);
+    m_int_configs[CONFIG_ITEMGEN_QUALITY_ARTIFACT]      = sConfigMgr->GetIntDefault("ItemGenerator.Artifact", 0);
+    m_int_configs[CONFIG_ITEMGEN_QUALITY_HEIRLOOM]      = sConfigMgr->GetIntDefault("ItemGenerator.Heirloom", 0);
+
     // Dungeon finder
     m_int_configs[CONFIG_LFG_OPTIONSMASK] = sConfigMgr->GetIntDefault("DungeonFinder.OptionsMask", 1);
 
@@ -2070,68 +2079,6 @@ void World::Update(uint32 diff)
     {
         sAuctionBot->Update();
         m_timers[WUPDATE_AHBOT].Reset();
-    }
-
-    {
-        static const uint32 interval = HOUR*IN_MILLISECONDS;;
-        static uint32 timer = interval;
-        if (diff >= timer)
-        {
-            // Timed clear of deleted virtual item entries
-            // The actual deletion is delayed to this point since scripts might be using pointers to the ItemTemplate
-            // even when the item object would be deleted
-            sVirtualItemMgr.ClearFreedEntries();
-            timer = interval;
-        }
-        else
-        {
-            timer -= diff;
-        }
-    }
-
-    {
-        static const uint32 interval = 3 * HOUR*IN_MILLISECONDS;;
-        static uint32 timer = interval;
-        if (diff >= timer)
-        {
-            // Timed check for space in the virtual entry stores
-            // If not enough space then saves everyone's inventory and sweeps unused item entries from virtual templates to free entries
-            sVirtualItemMgr.ClearFreedEntries();
-            if (!sVirtualItemMgr.HasSpaceFor(interval/IN_MILLISECONDS))
-            {
-                std::set<uint32> not_removed_entries;
-
-                SQLTransaction trans = CharacterDatabase.BeginTransaction();
-                {
-                    boost::shared_lock<boost::shared_mutex> lock(*HashMapHolder<Player>::GetLock());
-                    HashMapHolder<Player>::MapType const& m = ObjectAccessor::GetPlayers();
-                    for (HashMapHolder<Player>::MapType::const_iterator itr = m.begin(); itr != m.end(); ++itr)
-                    {
-                        itr->second->SaveInventoryAndGoldToDB(trans);
-
-                        // buyback items are deleted from database by saving above, but the template should not be deleted
-                        // from memory until the item is actually deleted as it can still be bought back and saved
-                        for (uint8 i = BUYBACK_SLOT_START; i < BUYBACK_SLOT_END; ++i)
-                        {
-                            if (Item* item = itr->second->GetItemFromBuyBackSlot(i))
-                                not_removed_entries.insert(item->GetEntry());
-                        }
-                    }
-                }
-                CharacterDatabase.DirectCommitTransaction(trans);
-
-                if (QueryResult result = CharacterDatabase.Query("SELECT entry FROM item_template_virtual"))
-                {
-                    not_removed_entries.insert(result->Fetch()[0].GetUInt32());
-                }
-                sVirtualItemMgr.RemoveExcludedItemBound(not_removed_entries);
-            }
-            timer = interval;
-        }
-        else
-        {
-            timer -= diff;
-        }
     }
 
     /// <li> Handle session updates when the timer has passed

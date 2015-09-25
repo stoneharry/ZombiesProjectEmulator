@@ -2890,7 +2890,7 @@ void ObjectMgr::LoadVirtualItemTemplates()
             continue;
 
         // only item bound templates are saved to DB
-        VirtualItemTemplate* itemTemplate = new VirtualItemTemplate(base, BIND_ITEM);
+        VirtualItemTemplate* itemTemplate = new VirtualItemTemplate(base);
 
         itemTemplate->ItemId = entry;
         itemTemplate->base_entry = base_entry;
@@ -2905,7 +2905,10 @@ void ObjectMgr::LoadVirtualItemTemplates()
         for (uint8 j = 0; j < MAX_ITEM_PROTO_SOCKETS; ++j)
             itemTemplate->Socket[j].Color = uint32(fields[i++].GetUInt8());
 
-        sVirtualItemMgr.InsertEntry(itemTemplate);
+        itemTemplate->UpdateDisplay();
+
+        if (!sVirtualItemMgr.InsertEntry(itemTemplate))
+            delete itemTemplate;
         ++count;
     } while (result->NextRow());
 
@@ -6001,8 +6004,8 @@ WorldSafeLocsEntry const* ObjectMgr::GetClosestGraveYard(float x, float y, float
 
         // skip enemy faction graveyard
         // team == 0 case can be at call from .neargrave
-        if (data.team != 0 && team != 0 && data.team != team)
-            continue;
+        //if (data.team != 0 && team != 0 && data.team != team)
+            //continue;
 
         // find now nearest graveyard at other map
         if (MapId != entry->map_id)

@@ -1,10 +1,55 @@
 #include "VirtualItemMgr.h"
 #include "Errors.h" // ASSERT macro
 #include "SharedDefines.h" // item quality enum
+#include "World.h" // config values
 #include <algorithm>
 #include <cstdlib>
 
 VirtualModifier::StatGroupData const VirtualModifier::premadeStatGroupData;
+
+const std::vector<ItemSubclassArmor> VirtualItemMgr::armorSubclasses = {
+    ITEM_SUBCLASS_ARMOR_MISC,
+    ITEM_SUBCLASS_ARMOR_CLOTH,
+    ITEM_SUBCLASS_ARMOR_LEATHER,
+    ITEM_SUBCLASS_ARMOR_MAIL,
+    ITEM_SUBCLASS_ARMOR_PLATE,
+    //ITEM_SUBCLASS_ARMOR_BUCKLER,
+    ITEM_SUBCLASS_ARMOR_SHIELD,
+    //ITEM_SUBCLASS_ARMOR_LIBRAM,
+    //ITEM_SUBCLASS_ARMOR_IDOL,
+    //ITEM_SUBCLASS_ARMOR_TOTEM,
+    //ITEM_SUBCLASS_ARMOR_SIGIL,
+};
+const std::vector<ItemSubclassWeapon> VirtualItemMgr::weaponSubclasses = {
+    ITEM_SUBCLASS_WEAPON_AXE,
+    ITEM_SUBCLASS_WEAPON_AXE2,
+    ITEM_SUBCLASS_WEAPON_BOW,
+    ITEM_SUBCLASS_WEAPON_GUN,
+    ITEM_SUBCLASS_WEAPON_MACE,
+    ITEM_SUBCLASS_WEAPON_MACE2,
+    ITEM_SUBCLASS_WEAPON_POLEARM,
+    ITEM_SUBCLASS_WEAPON_SWORD,
+    ITEM_SUBCLASS_WEAPON_SWORD2,
+    //ITEM_SUBCLASS_WEAPON_obsolete,
+    ITEM_SUBCLASS_WEAPON_STAFF,
+    //ITEM_SUBCLASS_WEAPON_EXOTIC,
+    //ITEM_SUBCLASS_WEAPON_EXOTIC2,
+    ITEM_SUBCLASS_WEAPON_FIST,
+    //ITEM_SUBCLASS_WEAPON_MISC,
+    ITEM_SUBCLASS_WEAPON_DAGGER,
+    //ITEM_SUBCLASS_WEAPON_THROWN,
+    //ITEM_SUBCLASS_WEAPON_SPEAR,
+    ITEM_SUBCLASS_WEAPON_CROSSBOW,
+    //ITEM_SUBCLASS_WEAPON_WAND,
+    //ITEM_SUBCLASS_WEAPON_FISHING_POLE,
+};
+
+void VirtualItemTemplate::UpdateDisplay()
+{
+    // Get the correct display ID
+    if (ItemEntry const* dbcitem = sItemStore.LookupEntry(ItemId))
+        DisplayInfoID = dbcitem->DisplayId;
+}
 
 VirtualModifier::VirtualModifier() : ilevel(0), quality(MAX_ITEM_QUALITY), statpool(-1), statgroup(STAT_GROUP_RANDOM)
 {
@@ -14,39 +59,39 @@ float VirtualModifier::GetSlotStatModifier(InventoryType invtype)
 {
     switch (invtype)
     {
-    case INVTYPE_HEAD:
-    case INVTYPE_CHEST:
-    case INVTYPE_ROBE:
-    case INVTYPE_LEGS:
-    case INVTYPE_2HWEAPON:
-        return 1.0f;
+        case INVTYPE_HEAD:
+        case INVTYPE_CHEST:
+        case INVTYPE_ROBE:
+        case INVTYPE_LEGS:
+        case INVTYPE_2HWEAPON:
+            return 1.0f;
 
-    case INVTYPE_SHOULDERS:
-    case INVTYPE_HANDS:
-    case INVTYPE_WAIST:
-    case INVTYPE_FEET:
-        return 0.75f;
+        case INVTYPE_SHOULDERS:
+        case INVTYPE_HANDS:
+        case INVTYPE_WAIST:
+        case INVTYPE_FEET:
+            return 0.75f;
 
-    case INVTYPE_WRISTS:
-    case INVTYPE_NECK:
-    case INVTYPE_CLOAK:
-    case INVTYPE_FINGER:
-    case INVTYPE_HOLDABLE:
-    case INVTYPE_SHIELD:
-        return 9.0f / 16.0f;
+        case INVTYPE_WRISTS:
+        case INVTYPE_NECK:
+        case INVTYPE_CLOAK:
+        case INVTYPE_FINGER:
+        case INVTYPE_HOLDABLE:
+        case INVTYPE_SHIELD:
+            return 9.0f / 16.0f;
 
-    case INVTYPE_WEAPON:
-    case INVTYPE_WEAPONMAINHAND:
-    case INVTYPE_WEAPONOFFHAND:
-        return 27.0f / 64.0f;
+        case INVTYPE_WEAPON:
+        case INVTYPE_WEAPONMAINHAND:
+        case INVTYPE_WEAPONOFFHAND:
+            return 27.0f / 64.0f;
 
-    case INVTYPE_RANGED:
-    case INVTYPE_RANGEDRIGHT:
-    case INVTYPE_THROWN:
-        return 81.0f / 256.0f;
+        case INVTYPE_RANGED:
+        case INVTYPE_RANGEDRIGHT:
+        case INVTYPE_THROWN:
+            return 81.0f / 256.0f;
 
-    default:
-        return 1.0f;
+        default:
+            return 1.0f;
     }
     return 1.0f;
 }
@@ -55,28 +100,28 @@ float VirtualModifier::GetStatRate(ItemModType stat)
 {
     switch (stat)
     {
-    case ITEM_MOD_RANGED_ATTACK_POWER:
-        return 0.4f;
-    case ITEM_MOD_ARMOR_PENETRATION_RATING:
-        return 0.14f;
-    case ITEM_MOD_ATTACK_POWER:
-        return 0.5f;
-    case ITEM_MOD_SPELL_HEALING_DONE:
-        return 0.45f;
-    case ITEM_MOD_MANA_REGENERATION:
-        return 2.0f;
-    case ITEM_MOD_HEALTH_REGEN:
-        return 2.5f;
-    case ITEM_MOD_SPELL_PENETRATION:
-        return 0.8f;
-    case ITEM_MOD_BLOCK_VALUE:
-        return 0.65f;
-    case ITEM_MOD_SPELL_POWER:
-        return 0.86f;
-    case ITEM_MOD_DEFENSE_SKILL_RATING:
-        return 1.2f;
-    default:
-        return 1.0f;
+        case ITEM_MOD_RANGED_ATTACK_POWER:
+            return 0.4f;
+        case ITEM_MOD_ARMOR_PENETRATION_RATING:
+            return 0.14f;
+        case ITEM_MOD_ATTACK_POWER:
+            return 0.5f;
+        case ITEM_MOD_SPELL_HEALING_DONE:
+            return 0.45f;
+        case ITEM_MOD_MANA_REGENERATION:
+            return 2.0f;
+        case ITEM_MOD_HEALTH_REGEN:
+            return 2.5f;
+        case ITEM_MOD_SPELL_PENETRATION:
+            return 0.8f;
+        case ITEM_MOD_BLOCK_VALUE:
+            return 0.65f;
+        case ITEM_MOD_SPELL_POWER:
+            return 0.86f;
+        case ITEM_MOD_DEFENSE_SKILL_RATING:
+            return 1.2f;
+        default:
+            return 1.0f;
     }
     return 1.0f;
 }
@@ -90,14 +135,23 @@ VirtualItemMgr & VirtualItemMgr::instance()
 VirtualItemMgr::VirtualItemMgr()
 {
     WriteGuard guard(lock);
-    const uint32 block = std::floor((double)(maxEntry - minEntry) / MAX_ITEM_SUBCLASS_WEAPON + 1);
 
-    armorGenerator = EntryGenerator(minEntry, minEntry + block - 1);
+    // Some basic code to divide the given entry range between all item types
+    const uint32 block = std::floor((double)(maxEntry - minEntry) / (weaponSubclasses.size() + armorSubclasses.size()));
+    size_t blockCounter = 0;
 
-    for (size_t i = 0; i < MAX_ITEM_SUBCLASS_WEAPON; ++i)
+    for (auto subclass : armorSubclasses)
     {
-        uint32 min = minEntry + block + (i*block);
-        weaponGenerator[i] = EntryGenerator(min, min + block - 1);
+        uint32 min = minEntry + (blockCounter*block);
+        armorGenerator[subclass] = EntryGenerator(min, min + block - 1);
+        ++blockCounter;
+    }
+
+    for (auto subclass : weaponSubclasses)
+    {
+        uint32 min = minEntry + (blockCounter*block);
+        weaponGenerator[subclass] = EntryGenerator(min, min + block - 1);
+        ++blockCounter;
     }
 }
 
@@ -122,18 +176,26 @@ VirtualItemTemplate const* VirtualItemMgr::GetVirtualTemplate(uint32 entry)
     return nullptr;
 }
 
-VirtualItemTemplate* VirtualItemMgr::GenerateVirtualTemplate(ItemTemplate const* base, MemoryBind binding, VirtualModifier const& modifier)
+VirtualItemTemplate* VirtualItemMgr::GenerateVirtualTemplate(ItemTemplate const* base, VirtualModifier const& modifier)
 {
-    ASSERT(base);
+    if (!base)
+        return nullptr;
 
-    VirtualItemTemplate* temp = new VirtualItemTemplate(base, binding);
+    VirtualItemTemplate* temp = new VirtualItemTemplate(base);
     GenerateStats(temp, modifier);
 
     WriteGuard guard(lock);
-    uint32 entry = Generator(temp).GenerateEntry(store);
+    EntryGenerator* generator = Generator(temp);
+    if (!generator)
+        return nullptr;
+
+    uint32 entry = generator->GenerateEntry(store);
     temp->ItemId = entry;
+    temp->UpdateDisplay();
+
     delete store[entry];
     store[entry] = temp;
+
     return temp;
 }
 
@@ -149,14 +211,14 @@ void VirtualItemMgr::GenerateStats(ItemTemplate* output, VirtualModifier const& 
 
         // these are not percentage chances. They represent areas of a number line made from their sum
         static const float chances[MAX_ITEM_QUALITY] = {
-            0,      // poor
-            200,    // normal
-            100,    // uncommon
-            30,     // rare
-            15,     // epic
-            0,     // legendary
-            0,      // artifact
-            0,      // heirloom
+            sWorld->getIntConfig(CONFIG_ITEMGEN_QUALITY_POOR),
+            sWorld->getIntConfig(CONFIG_ITEMGEN_QUALITY_COMMON),
+            sWorld->getIntConfig(CONFIG_ITEMGEN_QUALITY_UNCOMMON),
+            sWorld->getIntConfig(CONFIG_ITEMGEN_QUALITY_RARE),
+            sWorld->getIntConfig(CONFIG_ITEMGEN_QUALITY_EPIC),
+            sWorld->getIntConfig(CONFIG_ITEMGEN_QUALITY_LEGENDARY),
+            sWorld->getIntConfig(CONFIG_ITEMGEN_QUALITY_ARTIFACT),
+            sWorld->getIntConfig(CONFIG_ITEMGEN_QUALITY_HEIRLOOM),
         };
 
         uint32 sum = 0;
@@ -183,7 +245,7 @@ void VirtualItemMgr::GenerateStats(ItemTemplate* output, VirtualModifier const& 
     ASSERT(quality < MAX_ITEM_QUALITY);
 
     // decide stat amount
-    uint32 statscount = quality-1;
+    uint32 statscount = quality - 1;
     if (statscount < 0)
         statscount = 0;
     ASSERT(statscount <= MAX_ITEM_PROTO_STATS);
@@ -227,7 +289,7 @@ void VirtualItemMgr::GenerateStats(ItemTemplate* output, VirtualModifier const& 
         std::vector<StatGroup> const& statgroups = modifier.premadeStatGroupData.GetArmorSubclassStatGroups((ItemSubclassArmor)output->SubClass);
         if (!statgroups.empty())
             statgroupid = statgroups[urand(0, statgroups.size() - 1)];
-        }
+    }
     if (statgroupid == STAT_GROUP_RANDOM)
         statgroupid = static_cast<StatGroup>(urand(0, STAT_GROUP_COUNT - 1));
     ASSERT(statgroupid < STAT_GROUP_COUNT); // must not be random anymore
@@ -304,61 +366,28 @@ void VirtualItemMgr::GenerateStats(ItemTemplate* output, VirtualModifier const& 
     output->Armor = armor;
 }
 
-void VirtualItemMgr::SetVirtualTemplateMemoryBind(uint32 entry, MemoryBind binding)
-{
-    if (entry < minEntry || entry >= maxEntry)
-        return;
-    WriteGuard guard(lock);
-    auto it = store.find(entry);
-    if (it == store.end())
-        return;
-    it->second->memoryBinding = binding;
-}
-
 bool VirtualItemMgr::IsVirtualTemplate(ItemTemplate const * base)
 {
-    return (base->FlagsCu & ITEM_FLAGS_CU_VIRTUAL_ITEM_BASE) != 0 &&
+    if (!((base->FlagsCu & ITEM_FLAGS_CU_VIRTUAL_ITEM_BASE) != 0 &&
         (base->Class == ITEM_CLASS_WEAPON || base->Class == ITEM_CLASS_ARMOR) &&
         base->RandomProperty == 0 && base->RandomSuffix == 0 &&
-        base->ScalingStatDistribution == 0 && base->ScalingStatValue == 0;
-}
-
-// does not directly remove the item. Removing delayed until actual delete
-void VirtualItemMgr::Remove(uint32 entry)
-{
-    if (entry < minEntry || entry >= maxEntry)
-        return;
-    WriteGuard guard(lock);
-    freed_entries.push_back(entry);
-}
-
-bool VirtualItemMgr::HasSpaceFor(uint32 amount)
-{
-    ReadGuard guard(lock);
-    if (!armorGenerator.CanAllocate(amount, store))
+        base->ScalingStatDistribution == 0 && base->ScalingStatValue == 0))
         return false;
 
-    for (size_t i = 0; i < MAX_ITEM_SUBCLASS_WEAPON; ++i)
+    if (base->Class == ITEM_CLASS_ARMOR)
     {
-        if (!weaponGenerator[i].CanAllocate(amount, store))
-            return false;
+        for (auto subclass : armorSubclasses)
+            if (base->SubClass == subclass)
+                return true;
     }
 
-    return true;
-}
-
-// not thread safe
-void VirtualItemMgr::RemoveExcludedItemBound(std::set<uint32> not_removed_entries)
-{
-    for (auto entry : store)
+    if (base->Class == ITEM_CLASS_WEAPON)
     {
-        if (entry.second->memoryBinding != BIND_ITEM)
-            continue;
-        if (not_removed_entries.find(entry.first) == not_removed_entries.end())
-            Remove(entry.first);
+        for (auto subclass : weaponSubclasses)
+            if (base->SubClass == subclass)
+                return true;
     }
-
-    ClearFreedEntries();
+    return false;
 }
 
 uint32 VirtualItemMgr::EntryGenerator::GenerateEntry(VirtualItemMgr::Store const& store)
@@ -378,6 +407,8 @@ uint32 VirtualItemMgr::EntryGenerator::GenerateEntry(VirtualItemMgr::Store const
     }
 
     ASSERT(entry != nextEntry);
+    ASSERT(entry >= VirtualItemMgr::minEntry);
+    ASSERT(entry <= VirtualItemMgr::maxEntry);
     return entry;
 }
 
@@ -398,62 +429,39 @@ VirtualItemMgr::EntryGenerator::EntryGenerator(uint32 min, uint32 max) : minEntr
     nextEntry = minEntry;
 }
 
-bool VirtualItemMgr::EntryGenerator::CanAllocate(uint32 amount, VirtualItemMgr::Store const& store) const
-{
-    uint32 start = nextEntry;
-    uint32 current = start;
-    for (uint32 u = 0; u < amount; ++u)
-    {
-        for (++current; true; ++current)
-        {
-            if (current >= maxEntry)
-                current = minEntry;
-            if (current == start)
-                return false;
-            if (store.find(current) == store.end())
-                break;
-        }
-    }
-    return true;
-}
-
-VirtualItemMgr::EntryGenerator& VirtualItemMgr::Generator(ItemTemplate* temp)
+VirtualItemMgr::EntryGenerator* VirtualItemMgr::Generator(ItemTemplate* temp)
 {
     if (temp->Class == ITEM_CLASS_ARMOR)
-        return armorGenerator;
-    ASSERT(temp->Class == ITEM_CLASS_WEAPON);
-    return weaponGenerator[temp->SubClass];
+    {
+        auto it = armorGenerator.find((ItemSubclassArmor)temp->SubClass);
+        if (it != armorGenerator.end())
+            return &it->second;
+    }
+    if (temp->Class == ITEM_CLASS_WEAPON)
+    {
+        auto it = weaponGenerator.find((ItemSubclassWeapon)temp->SubClass);
+        if (it != weaponGenerator.end())
+            return &it->second;
+    }
+    return nullptr;
 }
 
-// used to insert virtual items on load, not thread safe
 bool VirtualItemMgr::InsertEntry(VirtualItemTemplate* virtualItem)
 {
-    ASSERT(virtualItem);
+    if (!virtualItem)
+        return false;
+    EntryGenerator* generator = Generator(virtualItem);
+    if (!generator)
+        return false;
+
     uint32 entry = virtualItem->ItemId;
     if (entry < minEntry || entry >= maxEntry || store.find(entry) != store.end())
-    {
-        delete virtualItem;
         return false;
-    }
     store[entry] = virtualItem;
-    if (entry == Generator(virtualItem).PeekNext())
-        Generator(virtualItem).GenerateEntry(store);
-    return true;
-}
 
-// used to free item entries, not thread safe
-void VirtualItemMgr::ClearFreedEntries()
-{
-    WriteGuard guard(lock);
-    for (uint32 entry : freed_entries)
-    {
-        auto it = store.find(entry);
-        if (it == store.end())
-            continue;
-        delete it->second;
-        store.erase(entry);
-    }
-    freed_entries.clear();
+    if (entry == generator->PeekNext())
+        generator->GenerateEntry(store);
+    return true;
 }
 
 VirtualModifier::StatGroupData::StatGroupData()
