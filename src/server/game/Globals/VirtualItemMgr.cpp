@@ -165,6 +165,50 @@ VirtualItemMgr::~VirtualItemMgr()
     store.clear();
 }
 
+void VirtualItemMgr::LoadNamesFromDB()
+{
+	WriteGuard guard(lock);
+
+	uint32 count = 0;
+	uint32 beginTime = getMSTime();
+
+	QueryResult result = WorldDatabase.Query("SELECT * `item_generator_names`");
+
+	if (!result)
+	{
+		TC_LOG_INFO("server.loading", "Loaded 0 available virtual item names, table item_generator_names is empty.");
+		return;
+	}
+
+	do{
+		Field* fields = result->Fetch();
+		uint32 itemType = fields[0].GetUInt32();
+		uint32 subclass = fields[1].GetUInt32();
+		uint32 array_id = fields[2].GetUInt32();
+		std::string name = fields[3].GetString();
+
+		availableNames.push_back(NameInfo(itemType, subclass, array_id, name));
+		++count;
+	} while (result->NextRow());
+
+	TC_LOG_INFO("server.loading", "Loaded %u available virtual item names in %u MS.", count, GetMSTimeDiffToNow(beginTime));
+}
+
+std::vector<std::string> VirtualItemMgr::GetNamesForNameInfo(NameInfo* info)
+{
+	if (!info)
+		return std::vector<std::string>();
+
+	ReadGuard guard(lock);
+	std::vector<std::string> names;
+	for (auto name : availableNames)
+	{
+		if (info->array_id == name.array_id && info->itemType == name.itemType && info->subclass == name.subclass)
+			names.push_back(name.name);
+	}
+	return names;
+}
+
 VirtualItemTemplate const* VirtualItemMgr::GetVirtualTemplate(uint32 entry)
 {
     if (entry < minEntry || entry >= maxEntry)

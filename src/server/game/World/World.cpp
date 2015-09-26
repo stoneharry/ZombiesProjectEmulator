@@ -59,6 +59,7 @@
 #include "TicketMgr.h"
 #include "TransportMgr.h"
 #include "Unit.h"
+#include "VirtualItemMgr.h"
 #include "VMapFactory.h"
 #include "WardenCheckMgr.h"
 #include "WaypointMovementGenerator.h"
@@ -1781,6 +1782,9 @@ void World::SetInitialWorldSettings()
 
     TC_LOG_INFO("server.loading", "Loading Calendar data...");
     sCalendarMgr->LoadFromDB();
+
+	TC_LOG_INFO("server.loading", "Loading Virtual ItemNames...");
+	sVirtualItemMgr.LoadNamesFromDB();
 
     ///- Initialize game time and timers
     TC_LOG_INFO("server.loading", "Initialize game time and timers");
