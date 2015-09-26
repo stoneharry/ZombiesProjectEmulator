@@ -194,12 +194,11 @@ void VirtualItemMgr::LoadNamesFromDB()
 	TC_LOG_INFO("server.loading", "Loaded %u available virtual item names in %u MS.", count, GetMSTimeDiffToNow(beginTime));
 }
 
-std::vector<std::string> VirtualItemMgr::GetNamesForNameInfo(NameInfo* info)
+std::vector<std::string> VirtualItemMgr::GetNamesForNameInfo(NameInfo* info) const
 {
 	if (!info)
 		return std::vector<std::string>();
 
-	ReadGuard guard(lock);
 	std::vector<std::string> names;
 	for (auto name : availableNames)
 	{
@@ -207,6 +206,75 @@ std::vector<std::string> VirtualItemMgr::GetNamesForNameInfo(NameInfo* info)
 			names.push_back(name.name);
 	}
 	return names;
+}
+
+std::string VirtualItemMgr::GenerateItemName(uint32 type, uint32 subclass, uint32 quality) const
+{
+    std::string fullName = "";
+
+    // TODO: Add armor case if this is something we need/want
+    if (type == ITEM_CLASS_WEAPON)
+    {
+        // Some subclasses like 1h and 2h swords use the same database values.
+        // No need to have duplicate db entries, so switch item subclass.
+        if (subclass == ITEM_SUBCLASS_WEAPON_SWORD2)
+            subclass = ITEM_SUBCLASS_WEAPON_SWORD;
+        else if (subclass == ITEM_SUBCLASS_WEAPON_MACE2)
+            subclass = ITEM_SUBCLASS_WEAPON_MACE;
+        else if (subclass == ITEM_SUBCLASS_WEAPON_AXE2)
+            subclass = ITEM_SUBCLASS_WEAPON_AXE;
+
+        // Temporary subclass override till I fix the checking of vectors below and/or fill up the database values :D
+        if ((subclass != ITEM_SUBCLASS_WEAPON_SWORD) && 
+            (subclass != ITEM_SUBCLASS_WEAPON_MACE) && 
+            (subclass != ITEM_SUBCLASS_WEAPON_AXE) &&
+            (subclass != ITEM_SUBCLASS_WEAPON_DAGGER))
+            return fullName;
+
+        // Retrieve all the string lists
+        std::map<uint32, std::vector<std::string>> nameLists;
+        for (size_t i = 1; i <= 7; ++i)
+        {
+            NameInfo nameInfo(type, subclass, i);
+            nameLists.insert(std::make_pair(i, GetNamesForNameInfo(&nameInfo)));
+        }
+
+        std::stringstream ss;
+        // Concat the correct full item name for the item quality
+        switch (quality)
+        {
+            case ITEM_QUALITY_NORMAL:
+            {
+                ss << nameLists[4][urand(0, nameLists[4].size() - 1)];
+                break;
+            }
+            case ITEM_QUALITY_UNCOMMON:
+            {
+                ss << nameLists[3][urand(0, nameLists[3].size() - 1)] << " " << nameLists[4][urand(0, nameLists[4].size() - 1)];
+                break;
+            }
+            case ITEM_QUALITY_RARE:
+            {
+                ss << nameLists[2][urand(0, nameLists[2].size() - 1)] << " " << nameLists[4][urand(0, nameLists[4].size() - 1)];
+                break;
+            }
+            case ITEM_QUALITY_EPIC:
+            {
+                ss << nameLists[1][urand(0, nameLists[1].size() - 1)];
+                break;
+            }
+            case ITEM_QUALITY_LEGENDARY:
+            {
+                ss << nameLists[7][urand(0, nameLists[7].size() - 1)] << ", " << nameLists[5][urand(0, nameLists[5].size() - 1)] << " " << nameLists[6][urand(0, nameLists[6].size() - 1)];
+                break;
+            }
+            default:
+                return fullName;
+        }
+        fullName = ss.str();
+    }
+
+    return fullName;
 }
 
 VirtualItemTemplate const* VirtualItemMgr::GetVirtualTemplate(uint32 entry)
@@ -402,6 +470,11 @@ void VirtualItemMgr::GenerateStats(ItemTemplate* output, VirtualModifier const& 
             output->Socket[i].Color = socketcolors[urand(0, socketcolors.size() - 1)];
         }
     }
+
+    // Generate random item name
+    std::string name = GenerateItemName(output->Class, output->SubClass, quality);
+    if (!name.empty())
+        output->Name1 = name;
 
     // apply other item data
     output->Quality = quality;
