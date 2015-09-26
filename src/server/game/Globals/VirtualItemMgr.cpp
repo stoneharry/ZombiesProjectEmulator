@@ -215,7 +215,7 @@ std::string VirtualItemMgr::GenerateItemName(uint32 type, uint32 subclass, uint3
     // TODO: Add armor case if this is something we need/want
     if (type == ITEM_CLASS_WEAPON)
     {
-        // Some subclasses like 1h and 2h swords use the same database values.
+        // Some subclasses use the same database name lists.
         // No need to have duplicate db entries, so switch item subclass.
         if (subclass == ITEM_SUBCLASS_WEAPON_SWORD2)
             subclass = ITEM_SUBCLASS_WEAPON_SWORD;
@@ -224,19 +224,18 @@ std::string VirtualItemMgr::GenerateItemName(uint32 type, uint32 subclass, uint3
         else if (subclass == ITEM_SUBCLASS_WEAPON_AXE2)
             subclass = ITEM_SUBCLASS_WEAPON_AXE;
 
-        // Temporary subclass override till I fix the checking of vectors below and/or fill up the database values :D
-        if ((subclass != ITEM_SUBCLASS_WEAPON_SWORD) && 
-            (subclass != ITEM_SUBCLASS_WEAPON_MACE) && 
-            (subclass != ITEM_SUBCLASS_WEAPON_AXE) &&
-            (subclass != ITEM_SUBCLASS_WEAPON_DAGGER))
-            return fullName;
-
         // Retrieve all the string lists
         std::map<uint32, std::vector<std::string>> nameLists;
         for (size_t i = 1; i <= 7; ++i)
         {
             NameInfo nameInfo(type, subclass, i);
-            nameLists.insert(std::make_pair(i, GetNamesForNameInfo(&nameInfo)));
+            auto list = GetNamesForNameInfo(&nameInfo);
+
+            // Make sure the current list is not empty. If it is, fall back to template item name.
+            if (list.empty())
+                return fullName;
+
+            nameLists.insert(std::make_pair(i, list));
         }
 
         std::stringstream ss;
