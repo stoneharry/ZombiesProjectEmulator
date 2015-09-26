@@ -172,7 +172,7 @@ void VirtualItemMgr::LoadNamesFromDB()
 	uint32 count = 0;
 	uint32 beginTime = getMSTime();
 
-	QueryResult result = WorldDatabase.Query("SELECT * `item_generator_names`");
+	QueryResult result = WorldDatabase.Query("SELECT * FROM `item_generator_names`");
 
 	if (!result)
 	{
