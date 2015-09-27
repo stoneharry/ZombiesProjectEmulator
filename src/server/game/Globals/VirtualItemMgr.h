@@ -143,11 +143,11 @@ public:
 	struct NameInfo
 	{
 		NameInfo() {}
-		NameInfo(uint32 type, uint32 sub, uint32 arrid) : itemType(type), subclass(sub), array_id(arrid) {}
-		NameInfo(uint32 type, uint32 sub, uint32 arrid, std::string n) : itemType(type), subclass(sub), array_id(arrid), name(n) {}
-		uint32 itemType;
-		uint32 subclass;
-		uint32 array_id;
+		NameInfo(int32 type, int32 sub, int32 arrid) : itemType(type), subclass(sub), array_id(arrid) {}
+		NameInfo(int32 type, int32 sub, int32 arrid, std::string n) : itemType(type), subclass(sub), array_id(arrid), name(n) {}
+		int32 itemType;
+		int32 subclass;
+		int32 array_id;
 		std::string name;
 	};
 

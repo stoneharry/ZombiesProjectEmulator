@@ -182,9 +182,9 @@ void VirtualItemMgr::LoadNamesFromDB()
 
 	do{
 		Field* fields = result->Fetch();
-		uint32 itemType = fields[0].GetUInt32();
-		uint32 subclass = fields[1].GetUInt32();
-		uint32 array_id = fields[2].GetUInt32();
+		int32 itemType = fields[0].GetInt32();
+		int32 subclass = fields[1].GetInt32();
+		int32 array_id = fields[2].GetInt32();
 		std::string name = fields[3].GetString();
 
 		availableNames.push_back(NameInfo(itemType, subclass, array_id, name));
@@ -203,8 +203,16 @@ std::vector<std::string> VirtualItemMgr::GetNamesForNameInfo(NameInfo* info)
 	std::vector<std::string> names;
 	for (auto name : availableNames)
 	{
-		if (info->array_id == name.array_id && info->itemType == name.itemType && info->subclass == name.subclass)
-			names.push_back(name.name);
+		if (info->array_id != name.array_id && name.array_id != -1)
+			continue;
+
+		if (info->itemType != name.itemType && name.itemType != -1)
+			continue;
+
+		if (info->subclass != name.subclass && name.subclass != -1)
+			continue;
+
+		names.push_back(name.name);
 	}
 	return names;
 }
