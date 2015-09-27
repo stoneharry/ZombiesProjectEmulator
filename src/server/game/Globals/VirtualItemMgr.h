@@ -135,9 +135,9 @@ public:
      */
     static VirtualItemMgr& instance();
 
-	/*
-	* Loads all possible names from the generator table into memory.
-	*/
+	/**
+	 * Loads all possible names from the generator table into memory.
+	 */
 	void LoadNamesFromDB();
 
 	struct NameInfo
@@ -151,10 +151,15 @@ public:
 		std::string name;
 	};
 
-	/*
-	* Return a vector of available names for the specified subclass.
-	*/
-	std::vector<std::string> GetNamesForNameInfo(NameInfo* info);
+    /**
+     * Returns a randomly generated item name depending on item type, subclass and quality
+     */
+    std::string GenerateItemName(uint32 type, uint32 subclass, uint32 quality) const;
+
+	/**
+	 * Return a vector of available names for the specified subclass.
+	 */
+	std::vector<std::string> GetNamesForNameInfo(NameInfo* info) const;
 
     /**
      * Creates all used generators and sets their entry ranges in addition to constructing the object itself.
