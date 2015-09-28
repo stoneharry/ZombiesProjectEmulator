@@ -136,6 +136,7 @@ public:
     static VirtualItemMgr& instance();
 
 	/**
+	 * Not thread safe.
 	 * Loads all possible names from the generator table into memory.
 	 */
 	void LoadNamesFromDB();
