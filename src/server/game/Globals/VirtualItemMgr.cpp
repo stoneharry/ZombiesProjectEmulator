@@ -231,6 +231,8 @@ std::string VirtualItemMgr::GenerateItemName(uint32 type, uint32 subclass, uint3
             subclass = ITEM_SUBCLASS_WEAPON_MACE;
         else if (subclass == ITEM_SUBCLASS_WEAPON_AXE2)
             subclass = ITEM_SUBCLASS_WEAPON_AXE;
+        else if (subclass == ITEM_SUBCLASS_WEAPON_CROSSBOW)
+            subclass = ITEM_SUBCLASS_WEAPON_BOW;
 
         // Retrieve all the string lists
         std::map<uint32, std::vector<std::string>> nameLists;
