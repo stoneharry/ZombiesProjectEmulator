@@ -113,6 +113,19 @@ namespace LuaAura
         return 1;
     }
 
+	int GetCharges(Eluna* /*E*/, lua_State* L, Aura* aura)
+	{
+		Eluna::Push(L, aura->GetCharges());
+		return 1;
+	}
+
+	int SetCharges(Eluna* /*E*/, lua_State* L, Aura* aura)
+	{
+		uint8 charges = Eluna::CHECKVAL<uint8>(L, 2);
+		aura->SetCharges(charges);
+		return 0;
+	}
+
     /**
      * Returns the [Unit] that the [Aura] has been applied to.
      *

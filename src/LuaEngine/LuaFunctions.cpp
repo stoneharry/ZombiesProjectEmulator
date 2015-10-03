@@ -980,12 +980,14 @@ ElunaRegister<Aura> AuraMethods[] =
     { "GetMaxDuration", &LuaAura::GetMaxDuration },
     { "GetAuraId", &LuaAura::GetAuraId },
     { "GetStackAmount", &LuaAura::GetStackAmount },
+	{ "GetCharges", &LuaAura::GetCharges },
     { "GetOwner", &LuaAura::GetOwner },
 
     // Setters
     { "SetDuration", &LuaAura::SetDuration },
     { "SetMaxDuration", &LuaAura::SetMaxDuration },
     { "SetStackAmount", &LuaAura::SetStackAmount },
+	{ "SetCharges", &LuaAura::SetCharges },
 
     // Other
     { "Remove", &LuaAura::Remove },
