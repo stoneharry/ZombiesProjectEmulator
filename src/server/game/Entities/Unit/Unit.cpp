@@ -566,6 +566,10 @@ void Unit::DealDamageMods(Unit* victim, uint32 &damage, uint32* absorb)
 
 uint32 Unit::DealDamage(Unit* victim, uint32 damage, CleanDamage const* cleanDamage, DamageEffectType damagetype, SpellSchoolMask damageSchoolMask, SpellInfo const* spellProto, bool durabilityLoss)
 {
+
+	if (victim->HasCustomFlag(CUSTOM_FLAG_DISABLE_DAMAGE))
+		damage = 0;
+
     if (victim->IsAIEnabled)
         victim->GetAI()->DamageTaken(this, damage);
 

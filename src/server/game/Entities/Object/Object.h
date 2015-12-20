@@ -72,6 +72,12 @@ enum NotifyFlags
     NOTIFY_ALL                      = 0xFF
 };
 
+enum CustomFlags
+{
+	CUSTOM_FLAG_DISABLE_AI = 0x01,
+	CUSTOM_FLAG_DISABLE_DAMAGE = 0x02
+};
+
 class Corpse;
 class Creature;
 class CreatureAI;
@@ -775,6 +781,8 @@ class WorldObject : public Object, public WorldLocation
         virtual bool IsInvisibleDueToDespawn() const { return false; }
         //difference from IsAlwaysVisibleFor: 1. after distance check; 2. use owner or charmer as seer
         virtual bool IsAlwaysDetectableFor(WorldObject const* /*seer*/) const { return false; }
+		bool HasCustomFlag(uint32 flags) { return customFlags & flags; }
+		void ToggleFlag(uint32 flag) { if (HasCustomFlag(flag)) customFlags = customFlags & ~flag; else customFlags |= flag; }
     private:
         Map* m_currMap;                                    //current object's Map location
 
@@ -791,6 +799,7 @@ class WorldObject : public Object, public WorldLocation
         bool CanDetect(WorldObject const* obj, bool ignoreStealth) const;
         bool CanDetectInvisibilityOf(WorldObject const* obj) const;
         bool CanDetectStealthOf(WorldObject const* obj) const;
+		uint32 customFlags;
 };
 
 namespace Trinity
