@@ -781,7 +781,7 @@ class WorldObject : public Object, public WorldLocation
         virtual bool IsInvisibleDueToDespawn() const { return false; }
         //difference from IsAlwaysVisibleFor: 1. after distance check; 2. use owner or charmer as seer
         virtual bool IsAlwaysDetectableFor(WorldObject const* /*seer*/) const { return false; }
-		bool HasCustomFlag(uint32 flags) { return customFlags & flags; }
+		bool HasCustomFlag(uint32 flags) { return (customFlags & flags) != 0; }
 		void ToggleFlag(uint32 flag) { if (HasCustomFlag(flag)) customFlags = customFlags & ~flag; else customFlags |= flag; }
     private:
         Map* m_currMap;                                    //current object's Map location

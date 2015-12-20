@@ -454,5 +454,27 @@ namespace LuaObject
         Eluna::Push(L, obj->ToPlayer());
         return 1;
     }
+
+	/**
+	* Todo:
+	* Some slave should document this.
+	*/
+	int HasCustomFlag(Eluna* /*E*/, lua_State* L, Object* obj)
+	{
+		uint32 flag= Eluna::CHECKVAL<uint32>(L, 2);
+		Eluna::Push(L, obj->HasCustomFlag(flag));
+		return 1;
+	}
+
+	/**
+	* Todo:
+	* Some slave should document this.
+	*/
+	int ToggleCustomFlag(Eluna* /*E*/, lua_State* L, Object* obj)
+	{
+		uint32 flag = Eluna::CHECKVAL<uint32>(L, 2);
+		obj->ToggleCustomFlag(flag);
+		return 0;
+	}
 };
 #endif

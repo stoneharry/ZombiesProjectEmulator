@@ -182,8 +182,9 @@ ElunaRegister<Object> ObjectMethods[] =
     { "ToPlayer", &LuaObject::ToPlayer },                     // :ToPlayer()
     { "ToCorpse", &LuaObject::ToCorpse },                     // :ToCorpse()
     { "RemoveFlag", &LuaObject::RemoveFlag },                 // :RemoveFlag(index, flag)
-
-    { NULL, NULL },
+	{ "HasCustomFlag", &LuaObject::HasCustomFlag },			  // :HasCustomFlag(flag)
+	{ "ToggleCustomFlag", &LuaObject::ToggleCustomFlag },	  // :ToggleCustomFlag(flag)
+	{ NULL, NULL },
 };
 
 ElunaRegister<WorldObject> WorldObjectMethods[] =
