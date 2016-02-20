@@ -428,8 +428,7 @@ void Loot::AddItem(LootStoreItem const& item)
     if (!proto)
         return;
     if (VirtualItemMgr::IsVirtualTemplate(proto))
-		if (ItemTemplate const* newProto = sVirtualItemMgr.GenerateVirtualTemplate(proto))
-			proto = newProto;
+        proto = sVirtualItemMgr.GenerateVirtualTemplate(proto, BIND_LOOT);
 
     uint32 count = urand(item.mincount, item.maxcount);
     uint32 stacks = count / proto->GetMaxStackSize() + ((count % proto->GetMaxStackSize()) ? 1 : 0);

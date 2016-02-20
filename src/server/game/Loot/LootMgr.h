@@ -363,6 +363,14 @@ struct Loot
             delete itr->second;
         PlayerNonQuestNonFFAConditionalItems.clear();
 
+        for (auto& item : items)
+            if (!item.is_looted)
+                sVirtualItemMgr.Remove(item.itemid);
+
+        for (auto& item : quest_items)
+            if (!item.is_looted)
+                sVirtualItemMgr.Remove(item.itemid);
+
         PlayersLooting.clear();
         items.clear();
         quest_items.clear();
