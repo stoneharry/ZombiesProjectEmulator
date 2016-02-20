@@ -28,7 +28,6 @@
 #include <map>
 #include <vector>
 #include <list>
-#include "..\Globals\VirtualItemMgr.h"
 
 enum RollType
 {
@@ -54,9 +53,6 @@ enum RollMask
 // note: the client cannot show more than 16 items total
 #define MAX_NR_QUEST_ITEMS 32
 // unrelated to the number of quest items shown, just for reserve
-
-#define GLOBAL_LOOT_LOOTID 250000
-//Loot id for all globally available lootitems
 
 enum LootMethod
 {
@@ -137,15 +133,12 @@ struct LootStoreItem
     uint8   mincount;                                       // mincount for drop items
     uint8   maxcount;                                       // max drop count for the item mincount or Ref multiplicator
     ConditionList conditions;                               // additional loot condition
-	uint16  minLevel;
-	uint16  maxLevel;
 
     // Constructor
     // displayid is filled in IsValid() which must be called after
-    LootStoreItem(uint32 _itemid, uint32 _reference, float _chance, bool _needs_quest, uint16 _lootmode, uint8 _groupid, int32 _mincount, uint8 _maxcount, uint16 _minLevel, 
-		uint16 _maxLevel)
+    LootStoreItem(uint32 _itemid, uint32 _reference, float _chance, bool _needs_quest, uint16 _lootmode, uint8 _groupid, int32 _mincount, uint8 _maxcount)
         : itemid(_itemid), reference(_reference), chance(_chance), lootmode(_lootmode),
-		needs_quest(_needs_quest), groupid(_groupid), mincount(_mincount), maxcount(_maxcount), minLevel(_minLevel), maxLevel(_maxLevel)
+        needs_quest(_needs_quest), groupid(_groupid), mincount(_mincount), maxcount(_maxcount)
          { }
 
     bool Roll(bool rate) const;                             // Checks if the entry takes it's chance (at loot generation)
@@ -258,7 +251,7 @@ class LootTemplate
         // Adds an entry to the group (at loading stage)
         void AddEntry(LootStoreItem* item);
         // Rolls for every item in the template and adds the rolled items the the loot
-        void Process(Loot& loot, bool rate, uint16 lootMode, uint8 groupId = 0, bool global = false) const;
+        void Process(Loot& loot, bool rate, uint16 lootMode, uint8 groupId = 0) const;
         void CopyConditions(const ConditionList& conditions);
         void CopyConditions(LootItem* li) const;
 
@@ -326,7 +319,6 @@ struct Loot
     std::vector<LootItem> quest_items;
     uint32 gold;
     uint8 unlootedCount;
-	uint16 lootLevel;
     ObjectGuid roundRobinPlayer;                            // GUID of the player having the Round-Robin ownership for the loot. If 0, round robin owner has released.
     LootType loot_type;                                     // required for achievement system
     uint8 maxDuplicates;                                    // Max amount of items with the same entry that can drop (default is 1; on 25 man raid mode 3)
@@ -335,7 +327,7 @@ struct Loot
     //  Only set for inventory items that can be right-click looted
     uint32 containerID;
 
-    Loot(uint32 _gold = 0) : gold(_gold), unlootedCount(0), roundRobinPlayer(), loot_type(LOOT_CORPSE), maxDuplicates(1), containerID(0), lootLevel(0) { }
+    Loot(uint32 _gold = 0) : gold(_gold), unlootedCount(0), roundRobinPlayer(), loot_type(LOOT_CORPSE), maxDuplicates(1), containerID(0) { }
     ~Loot() { clear(); }
 
     // For deleting items at loot removal since there is no backward interface to the Item()
@@ -363,14 +355,6 @@ struct Loot
             delete itr->second;
         PlayerNonQuestNonFFAConditionalItems.clear();
 
-        for (auto& item : items)
-            if (!item.is_looted)
-                sVirtualItemMgr.Remove(item.itemid);
-
-        for (auto& item : quest_items)
-            if (!item.is_looted)
-                sVirtualItemMgr.Remove(item.itemid);
-
         PlayersLooting.clear();
         items.clear();
         quest_items.clear();
@@ -391,7 +375,7 @@ struct Loot
     void RemoveLooter(ObjectGuid GUID) { PlayersLooting.erase(GUID); }
 
     void generateMoneyLoot(uint32 minAmount, uint32 maxAmount);
-    bool FillLoot(uint32 lootId, LootStore const& store, Player* lootOwner, bool personal, bool noEmptyError = false, uint16 lootMode = LOOT_MODE_DEFAULT, uint16 objectLevel = 0);
+    bool FillLoot(uint32 lootId, LootStore const& store, Player* lootOwner, bool personal, bool noEmptyError = false, uint16 lootMode = LOOT_MODE_DEFAULT);
 
     // Inserts the item into the loot (called by LootTemplate processors)
     void AddItem(LootStoreItem const & item);

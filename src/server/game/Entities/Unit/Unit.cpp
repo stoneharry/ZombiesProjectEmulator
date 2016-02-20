@@ -15338,10 +15338,7 @@ void Unit::Kill(Unit* victim, bool durabilityLoss)
 
             loot->clear();
             if (uint32 lootid = creature->GetCreatureTemplate()->lootid)
-                loot->FillLoot(lootid, LootTemplates_Creature, looter, false, false, creature->GetLootMode(), creature->getLevel());
-			else
-				//creatures can still have global loot
-				loot->FillLoot(GLOBAL_LOOT_LOOTID, LootTemplates_Creature, looter, false, false, creature->GetLootMode(), creature->getLevel());
+                loot->FillLoot(lootid, LootTemplates_Creature, looter, false, false, creature->GetLootMode());
 
             loot->generateMoneyLoot(creature->GetCreatureTemplate()->mingold, creature->GetCreatureTemplate()->maxgold);
 
