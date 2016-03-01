@@ -102,6 +102,13 @@ namespace LuaGlobalFunctions
         return 1;
     }
 
+	int GetCreatureByGUID(Eluna* /*E*/, lua_State* L)
+	{
+		uint64 guid = Eluna::CHECKVAL<uint64>(L, 1);
+		Eluna::Push(L, eObjectAccessor->FindCreature(ObjectGuid(guid)));
+		return 1;
+	}
+
     /**
      * Finds and Returns [Player] by name if found
      *

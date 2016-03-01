@@ -77,6 +77,7 @@ ElunaGlobal::ElunaRegister GlobalMethods[] =
     { "GetCoreExpansion", &LuaGlobalFunctions::GetCoreExpansion },
     { "GetQuest", &LuaGlobalFunctions::GetQuest },
     { "GetPlayerByGUID", &LuaGlobalFunctions::GetPlayerByGUID },
+	{ "GetCreatureByGUID", &LuaGlobalFunctions::GetCreatureByGUID },
     { "GetPlayerByName", &LuaGlobalFunctions::GetPlayerByName },
     { "GetGameTime", &LuaGlobalFunctions::GetGameTime },
     { "GetPlayersInWorld", &LuaGlobalFunctions::GetPlayersInWorld },
