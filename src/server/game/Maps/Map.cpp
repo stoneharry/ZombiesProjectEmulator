@@ -665,6 +665,15 @@ void Map::Update(const uint32 t_diff)
         player->Update(t_diff);
 
         VisitNearbyCellsOf(player, grid_object_update, world_object_update);
+
+		// If player is using far sight, visit that object too
+		if (WorldObject* viewPoint = player->GetViewpoint())
+		{
+			if (Creature* viewCreature = viewPoint->ToCreature())
+				VisitNearbyCellsOf(viewCreature, grid_object_update, world_object_update);
+			else if (DynamicObject* viewObject = viewPoint->ToDynObject())
+				VisitNearbyCellsOf(viewObject, grid_object_update, world_object_update);
+		}
     }
 
     // non-player active objects, increasing iterator in the loop in case of object removal
@@ -2494,8 +2503,8 @@ void Map::UpdateObjectsVisibilityFor(Player* player, Cell cell, CellCoord cellpa
     cell.SetNoCreate();
     TypeContainerVisitor<Trinity::VisibleNotifier, WorldTypeMapContainer > world_notifier(notifier);
     TypeContainerVisitor<Trinity::VisibleNotifier, GridTypeMapContainer  > grid_notifier(notifier);
-    cell.Visit(cellpair, world_notifier, *this, *player, player->GetSightRange());
-    cell.Visit(cellpair, grid_notifier,  *this, *player, player->GetSightRange());
+	cell.Visit(cellpair, world_notifier, *this, *player->m_seer, player->GetSightRange());
+	cell.Visit(cellpair, grid_notifier, *this, *player->m_seer, player->GetSightRange());
 
     // send data
     notifier.SendToSelf();

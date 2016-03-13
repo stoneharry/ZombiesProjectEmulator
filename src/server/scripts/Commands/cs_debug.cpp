@@ -110,19 +110,17 @@ public:
         // #cinematicid - ID decimal number from CinemaicSequences.dbc (1st column)
         if (!*args)
         {
+			for (uint32 i = 0; i < sCinematicCameraStore.GetNumRows(); i++)
+			{
+				if (CinematicCameraEntry const* camera = sCinematicCameraStore.LookupEntry(i))
+					handler->PSendSysMessage("Camera %u (%s) [%f, %f, %f]", camera->id, camera->filename, camera->base_x, camera->base_y, camera->base_z);
+			}
             handler->SendSysMessage(LANG_BAD_VALUE);
             handler->SetSentErrorMessage(true);
             return false;
         }
 
         uint32 id = atoi((char*)args);
-
-        if (!sCinematicSequencesStore.LookupEntry(id))
-        {
-            handler->PSendSysMessage(LANG_CINEMATIC_NOT_EXIST, id);
-            handler->SetSentErrorMessage(true);
-            return false;
-        }
 
         handler->GetSession()->GetPlayer()->SendCinematicStart(id);
         return true;

@@ -119,11 +119,13 @@ void VisibleChangesNotifier::Visit(CreatureMapType &m)
 
 void VisibleChangesNotifier::Visit(DynamicObjectMapType &m)
 {
-    for (DynamicObjectMapType::iterator iter = m.begin(); iter != m.end(); ++iter)
-        if (Unit* caster = iter->GetSource()->GetCaster())
-            if (Player* player = caster->ToPlayer())
-                if (player->m_seer == iter->GetSource())
-                    player->UpdateVisibilityOf(&i_object);
+	for (DynamicObjectMapType::iterator iter = m.begin(); iter != m.end(); ++iter)
+	{
+		if (Unit* caster = iter->GetSource()->GetCaster())
+			if (Player* player = caster->ToPlayer())
+				if (player->m_seer == iter->GetSource())
+					player->UpdateVisibilityOf(&i_object);
+	}
 }
 
 inline void CreatureUnitRelocationWorker(Creature* c, Unit* u)

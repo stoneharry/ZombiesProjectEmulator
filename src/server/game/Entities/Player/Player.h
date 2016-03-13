@@ -2344,6 +2344,14 @@ class Player : public Unit, public GridObject<Player>
         std::string GetMapAreaAndZoneString();
         std::string GetCoordsMapAreaAndZoneString();
 
+		// Cinematic camera data and remote sight functions
+		uint32 GetActiveCinematicCamera() const { return m_activeCinematicCameraId; }
+		void SetActiveCinematicCamera(uint32 cinematicCameraId = 0) { m_activeCinematicCameraId = cinematicCameraId; }
+		bool onCinematic() const { return (m_cinematicCamera != nullptr); }
+		void BeginCinematic();
+		void EndCinematic();
+		void UpdateCinematicLocation(uint32 diff);
+		
 		//Custom
 		void OnCharacterDeath(std::string causeOfDeath);
 		void LockCharacter();
@@ -2685,6 +2693,14 @@ class Player : public Unit, public GridObject<Player>
         uint32 _activeCheats;
 
 		int8 deathsLeft;
+
+		// Remote location information
+		uint32 m_cinematicDiff;
+		uint32 m_lastCinematicCheck;
+		uint32 m_activeCinematicCameraId;
+		FlyByCameraCollection* m_cinematicCamera;
+		Position m_remoteSightPosition;
+		Creature* m_CinematicObject;
 };
 
 void AddItemsSetItem(Player* player, Item* item);
