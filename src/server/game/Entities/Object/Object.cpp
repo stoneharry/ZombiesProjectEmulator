@@ -1669,12 +1669,23 @@ bool Position::IsPositionValid() const
 
 float WorldObject::GetGridActivationRange() const
 {
-    if (ToPlayer())
-        return GetMap()->GetVisibilityRange();
-    else if (ToCreature())
-        return ToCreature()->m_SightDistance;
-    else
-        return 0.0f;
+	if (ToPlayer())
+	{
+		if (ToPlayer()->onCinematic())
+			return DEFAULT_VISIBILITY_INSTANCE;
+		return GetMap()->GetVisibilityRange();
+	}
+	else if (ToCreature())
+		return ToCreature()->m_SightDistance;
+	else if (ToDynObject())
+	{
+		if (isActiveObject())
+			return GetMap()->GetVisibilityRange();
+		else
+			return 0.0f;
+	}
+	else
+		return 0.0f;
 }
 
 float WorldObject::GetVisibilityRange() const
@@ -1693,6 +1704,8 @@ float WorldObject::GetSightRange(const WorldObject* target) const
         {
             if (target && target->isActiveObject() && !target->ToPlayer())
                 return MAX_VISIBILITY_DISTANCE;
+			else if (ToPlayer()->onCinematic())
+				return DEFAULT_VISIBILITY_INSTANCE;
             else
                 return GetMap()->GetVisibilityRange();
         }
@@ -1701,6 +1714,12 @@ float WorldObject::GetSightRange(const WorldObject* target) const
         else
             return SIGHT_RANGE_UNIT;
     }
+
+	if (ToDynObject())
+	{
+		if (isActiveObject())
+			return GetMap()->GetVisibilityRange();
+	}
 
     return 0.0f;
 }

@@ -869,6 +869,8 @@ void WorldSession::HandlePlayerLogin(LoginQueryHolder* holder)
 
     pCurrChar->SendInitialPacketsBeforeAddToMap();
 
+	bool sentCinematic = false;
+
     //Show cinematic at the first time that player login
     if (!pCurrChar->getCinematic())
     {
@@ -876,10 +878,17 @@ void WorldSession::HandlePlayerLogin(LoginQueryHolder* holder)
 
         if (ChrClassesEntry const* cEntry = sChrClassesStore.LookupEntry(pCurrChar->getClass()))
         {
+			uint32 cinematicSequence = 0;
             if (cEntry->CinematicSequence)
-                pCurrChar->SendCinematicStart(cEntry->CinematicSequence);
+				cinematicSequence = cEntry->CinematicSequence;
             else if (ChrRacesEntry const* rEntry = sChrRacesStore.LookupEntry(pCurrChar->getRace()))
-                pCurrChar->SendCinematicStart(rEntry->CinematicSequence);
+				cinematicSequence = rEntry->CinematicSequence;
+			
+			if (cinematicSequence)
+			{
+				pCurrChar->SendCinematicStart(cinematicSequence);
+				sentCinematic = true;
+			}
 
             // send new char string if not empty
             if (!sWorld->GetNewCharString().empty())
