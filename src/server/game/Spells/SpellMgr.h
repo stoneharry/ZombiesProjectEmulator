@@ -321,6 +321,10 @@ struct SpellBonusEntry
     float  dot_damage;
     float  ap_bonus;
     float  ap_dot_bonus;
+	float  str_bonus;
+	float  str_dot_bonus;
+	float  int_bonus;
+	float  int_dot_bonus;
 };
 
 typedef std::unordered_map<uint32, SpellBonusEntry>     SpellBonusMap;

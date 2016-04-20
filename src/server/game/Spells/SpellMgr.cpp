@@ -2063,7 +2063,7 @@ void SpellMgr::LoadSpellBonusess()
     mSpellBonusMap.clear();                             // need for reload case
 
     //                                                0      1             2          3         4
-    QueryResult result = WorldDatabase.Query("SELECT entry, direct_bonus, dot_bonus, ap_bonus, ap_dot_bonus FROM spell_bonus_data");
+    QueryResult result = WorldDatabase.Query("SELECT entry, direct_bonus, dot_bonus, ap_bonus, ap_dot_bonus, str_bonus, str_dot_bonus, int_bonus, int_dot_bonus FROM spell_bonus_data");
     if (!result)
     {
         TC_LOG_INFO("server.loading", ">> Loaded 0 spell bonus data. DB table `spell_bonus_data` is empty.");
@@ -2088,6 +2088,10 @@ void SpellMgr::LoadSpellBonusess()
         sbe.dot_damage    = fields[2].GetFloat();
         sbe.ap_bonus      = fields[3].GetFloat();
         sbe.ap_dot_bonus   = fields[4].GetFloat();
+		sbe.str_bonus = fields[5].GetFloat();
+		sbe.str_dot_bonus = fields[6].GetFloat();
+		sbe.int_bonus = fields[7].GetFloat();
+		sbe.int_dot_bonus = fields[8].GetFloat();
 
         ++count;
     } while (result->NextRow());
