@@ -1588,6 +1588,6 @@ void WorldSession::UpdateAccountSpells()
 		return;
 	for (AccountSpellContainer::iterator itr = _accountSpell.begin(); itr != _accountSpell.end(); ++itr)
 	{
-		GetPlayer()->AddTemporarySpell(itr->first);
+		GetPlayer()->AddTemporarySpell(itr->first, true);
 	}
 }
