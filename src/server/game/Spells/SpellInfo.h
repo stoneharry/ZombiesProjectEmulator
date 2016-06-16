@@ -483,7 +483,7 @@ public:
     // unloading helpers
     void _UnloadImplicitTargetConditionLists();
 
-	bool IsAccountWide() const { return accountWide; } //ToDo: Make a way to mark these spells
+	bool IsAccountWide() const { return accountWide; }
 };
 
 #endif // _SPELLINFO_H
