@@ -3547,7 +3547,7 @@ bool Player::AddSpell(uint32 spellId, bool active, bool learning, bool dependent
 	if (acCheck && acCheck->IsAccountWide())
 	{
 		ModifyAccountSpell(true, spellId);
-		return;
+		return false;
 	}
 
     SpellInfo const* spellInfo = sSpellMgr->GetSpellInfo(spellId);
