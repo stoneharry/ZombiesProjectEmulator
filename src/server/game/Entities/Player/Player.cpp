@@ -3543,6 +3543,13 @@ bool Player::AddTalent(uint32 spellId, uint8 spec, bool learning)
 
 bool Player::AddSpell(uint32 spellId, bool active, bool learning, bool dependent, bool disabled, bool loading /*= false*/, bool fromSkill /*= false*/)
 {
+	SpellInfo const* acCheck = sSpellMgr->GetSpellInfo(spellId);
+	if (acCheck && acCheck->IsAccountWide())
+	{
+		ModifyAccountSpell(true, spellId);
+		return;
+	}
+
     SpellInfo const* spellInfo = sSpellMgr->GetSpellInfo(spellId);
     if (!spellInfo)
     {
@@ -3924,7 +3931,13 @@ bool Player::IsNeedCastPassiveSpellAtLearn(SpellInfo const* spellInfo) const
 
 void Player::LearnSpell(uint32 spell_id, bool dependent, bool fromSkill /*= false*/)
 {
-    PlayerSpellMap::iterator itr = m_spells.find(spell_id);
+	SpellInfo const* acCheck = sSpellMgr->GetSpellInfo(spell_id);
+	if (acCheck && acCheck->IsAccountWide())
+	{
+		ModifyAccountSpell(true, spell_id);
+		return;
+	}
+	PlayerSpellMap::iterator itr = m_spells.find(spell_id);
 
     bool disabled = (itr != m_spells.end()) ? itr->second->disabled : false;
     bool active = disabled ? itr->second->active : true;
@@ -3962,7 +3975,13 @@ void Player::LearnSpell(uint32 spell_id, bool dependent, bool fromSkill /*= fals
 
 void Player::RemoveSpell(uint32 spell_id, bool disabled, bool learn_low_rank)
 {
-    PlayerSpellMap::iterator itr = m_spells.find(spell_id);
+	SpellInfo const* acCheck = sSpellMgr->GetSpellInfo(spell_id);
+	if (acCheck && acCheck->IsAccountWide())
+	{
+		ModifyAccountSpell(false, spell_id);
+		return;
+	}
+	PlayerSpellMap::iterator itr = m_spells.find(spell_id);
     if (itr == m_spells.end())
         return;
 
@@ -17922,7 +17941,7 @@ bool Player::LoadFromDB(ObjectGuid guid, SQLQueryHolder *holder)
     m_achievementMgr->CheckAllAchievementCriteria();
 
     _LoadEquipmentSets(holder->GetPreparedResult(PLAYER_LOGIN_QUERY_LOAD_EQUIPMENT_SETS));
-
+	GetSession()->UpdateAccountSpells();
     return true;
 }
 
@@ -27309,4 +27328,13 @@ bool Player::IsAbleToFFA(uint32 areaid)
 		return false;
 
 	return true;
+}
+
+void Player::ModifyAccountSpell(bool learn, uint32 spell)
+{
+	GetSession()->ModifyAccountSpell(learn, spell);
+	if (learn)
+		AddTemporarySpell(spell, true);
+	else
+		RemoveTemporarySpell(spell, true);
 }

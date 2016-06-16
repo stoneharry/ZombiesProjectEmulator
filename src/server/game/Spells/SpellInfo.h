@@ -367,7 +367,7 @@ public:
     SpellEffectInfo Effects[MAX_SPELL_EFFECTS];
     uint32 ExplicitTargetMask;
     SpellChainNode const* ChainEntry;
-
+	bool accountWide;
     SpellInfo(SpellEntry const* spellEntry);
     ~SpellInfo();
 
@@ -482,6 +482,8 @@ public:
 
     // unloading helpers
     void _UnloadImplicitTargetConditionLists();
+
+	bool IsAccountWide() const { return accountWide; } //ToDo: Make a way to mark these spells
 };
 
 #endif // _SPELLINFO_H

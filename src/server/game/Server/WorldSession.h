@@ -245,6 +245,8 @@ struct PacketCounter
     uint32 amountCounter;
 };
 
+typedef std::unordered_map<uint32, bool> AccountSpellContainer;
+
 /// Player session in the World
 class WorldSession
 {
@@ -959,7 +961,9 @@ class WorldSession
         void HandleEnterPlayerVehicle(WorldPacket& data);
         void HandleUpdateProjectilePosition(WorldPacket& recvPacket);
         void HandleUpdateMissileTrajectory(WorldPacket& recvPacket);
-
+		void LoadAccountSpells();
+		void ModifyAccountSpell(bool learn, uint32 spell);
+		void UpdateAccountSpells();
     private:
         void InitializeQueryCallbackParameters();
         void ProcessQueryCallbacks();
@@ -1064,6 +1068,7 @@ class WorldSession
 
         WorldSession(WorldSession const& right) = delete;
         WorldSession& operator=(WorldSession const& right) = delete;
+		AccountSpellContainer _accountSpell;
 };
 #endif
 /// @}

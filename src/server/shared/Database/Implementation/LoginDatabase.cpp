@@ -114,4 +114,7 @@ void LoginDatabaseConnection::DoPrepareStatements()
     PrepareStatement(LOGIN_INS_ACCOUNT_MUTE, "INSERT INTO account_muted VALUES (?, UNIX_TIMESTAMP(), ?, ?, ?)", CONNECTION_ASYNC);
     PrepareStatement(LOGIN_SEL_ACCOUNT_MUTE_INFO, "SELECT mutedate, mutetime, mutereason, mutedby FROM account_muted WHERE guid = ? ORDER BY mutedate ASC", CONNECTION_SYNCH);
 	PrepareStatement(LOGIN_SEL_VERSIONS, "SELECT * FROM versions", CONNECTION_SYNCH);
+	PrepareStatement(LOGIN_SEL_ACCOUNT_SPELLS, "SELECT spell from account_spells WHERE account = ?", CONNECTION_SYNCH);
+	PrepareStatement(LOGIN_INS_ACCOUNT_MUTE, "INSERT INTO account_spells VALUES (?, ?)", CONNECTION_ASYNC);
+	PrepareStatement(LOGIN_DEL_ACCOUNT_SPELL, "DELETE FROM account_spells WHERE account = ? AND spell = ?", CONNECTION_ASYNC);
 }

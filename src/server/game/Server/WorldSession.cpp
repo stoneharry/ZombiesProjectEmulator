@@ -135,6 +135,7 @@ WorldSession::WorldSession(uint32 id, std::shared_ptr<WorldSocket> sock, Account
     }
 
     InitializeQueryCallbackParameters();
+	LoadAccountSpells();
 }
 
 /// WorldSession destructor
@@ -159,6 +160,7 @@ WorldSession::~WorldSession()
     while (_recvQueue.next(packet))
         delete packet;
 
+	_accountSpell.clear();
     LoginDatabase.PExecute("UPDATE account SET online = 0 WHERE id = %u;", GetAccountId());     // One-time query
 }
 
@@ -1543,4 +1545,49 @@ uint32 WorldSession::DosProtection::GetMaxPacketCounterAllowed(uint16 opcode) co
     }
 
     return maxPacketCounterAllowed;
+}
+
+void WorldSession::LoadAccountSpells()
+{
+	PreparedStatement* stmt = LoginDatabase.GetPreparedStatement(LOGIN_SEL_ACCOUNT_SPELLS);
+	stmt->setUInt32(0, GetAccountId());
+	if (PreparedQueryResult result = CharacterDatabase.Query(stmt))
+	{
+		do
+		{
+			uint32 spellId = result->Fetch()[0].GetUInt32();
+			_accountSpell[spellId] = true;
+		} while (result->NextRow());
+	}
+}
+
+void WorldSession::ModifyAccountSpell(bool learn, uint32 spell)
+{
+	if (learn && _accountSpell.find(spell) != _accountSpell.end())
+		return;
+
+	if (learn)
+		_accountSpell[spell] = true;
+	else
+	{
+		AccountSpellContainer::iterator itr = _accountSpell.find(spell);
+		if (itr == _accountSpell.end())
+			return;
+		_accountSpell.erase(itr);
+	}
+
+	PreparedStatement* stmt = LoginDatabase.GetPreparedStatement(learn ? LOGIN_INS_ACCOUNT_SPELL : LOGIN_DEL_ACCOUNT_SPELL);
+	stmt->setUInt32(0, GetAccountId());
+	stmt->setUInt32(1, spell);
+	LoginDatabase.Execute(stmt);
+}
+
+void WorldSession::UpdateAccountSpells()
+{
+	if (!GetPlayer())
+		return;
+	for (AccountSpellContainer::iterator itr = _accountSpell.begin(); itr != _accountSpell.end(); ++itr)
+	{
+		GetPlayer()->AddTemporarySpell(itr->first);
+	}
 }
