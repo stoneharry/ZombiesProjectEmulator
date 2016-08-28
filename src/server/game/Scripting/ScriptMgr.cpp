@@ -1355,6 +1355,30 @@ bool ScriptMgr::OnCriteriaCheck(uint32 scriptId, Player* source, Unit* target)
     return tmpscript->OnCheck(source, target);
 }
 
+void ScriptMgr::OnPlayerSpellCastStart(Player* player, Spell* spell)
+{
+#ifdef ELUNA
+	sEluna->OnSpellCastStart(player, spell);
+#endif
+	FOREACH_SCRIPT(PlayerScript)->OnSpellCastStart(player, spell);
+}
+
+void ScriptMgr::OnPlayerSpellCastSuccess(Player* player, Spell* spell)
+{
+#ifdef ELUNA
+	sEluna->OnSpellCastSuccess(player, spell);
+#endif
+	FOREACH_SCRIPT(PlayerScript)->OnSpellCastSuccess(player, spell);
+}
+
+void ScriptMgr::OnPlayerSpellLaunch(Player* player, Spell* spell)
+{
+#ifdef ELUNA
+	sEluna->OnSpellLaunch(player, spell);
+#endif
+	FOREACH_SCRIPT(PlayerScript)->OnSpellLaunch(player, spell);
+}
+
 // Player
 void ScriptMgr::OnPVPKill(Player* killer, Player* killed)
 {

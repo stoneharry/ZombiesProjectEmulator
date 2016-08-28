@@ -187,5 +187,12 @@ namespace LuaSpell
         spell->finish();
         return 0;
     }
+
+	int SendCastResult(Eluna* /*E*/, lua_State* L, Spell* spell)
+	{
+		SpellCastResult result = (SpellCastResult)Eluna::CHECKVAL<uint32>(L, 2);
+		spell->SendCastResult(result);
+		return 0;
+	}
 };
 #endif

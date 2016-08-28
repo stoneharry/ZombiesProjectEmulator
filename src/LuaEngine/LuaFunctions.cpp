@@ -1019,6 +1019,7 @@ ElunaRegister<Spell> SpellMethods[] =
     { "Cancel", &LuaSpell::Cancel },
     { "Cast", &LuaSpell::Cast },
     { "Finish", &LuaSpell::Finish },
+	{ "SendCastResult", &LuaSpell::SendCastResult },
 
     { NULL, NULL },
 };

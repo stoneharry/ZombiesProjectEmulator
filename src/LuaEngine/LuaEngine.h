@@ -415,6 +415,9 @@ public:
     bool OnChat(Player* pPlayer, uint32 type, uint32 lang, std::string& msg, Player* pReceiver);
     void OnEmote(Player* pPlayer, uint32 emote);
     void OnTextEmote(Player* pPlayer, uint32 textEmote, uint32 emoteNum, uint64 guid);
+	bool OnSpellCastStart(Player* pPlayer, Spell* pSpell);
+	bool OnSpellCastSuccess(Player* pPlayer, Spell* pSpell);
+	void OnSpellLaunch(Player* pPlayer, Spell* pSpell);
     void OnSpellCast(Player* pPlayer, Spell* pSpell, bool skipCheck);
     void OnLogin(Player* pPlayer);
     void OnLogout(Player* pPlayer);

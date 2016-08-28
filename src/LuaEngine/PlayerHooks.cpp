@@ -730,4 +730,56 @@ bool Eluna::OnChat(Player* pPlayer, uint32 type, uint32 lang, std::string& msg, 
     return result;
 }
 
+bool Eluna::OnSpellCastStart(Player* pPlayer, Spell* pSpell)
+{
+	START_HOOK_WITH_RETVAL(PLAYER_EVENT_ON_SPELL_CAST_START, true);
+	bool result = true;
+	Push(pPlayer);
+	Push(pSpell);
+	int n = SetupStack(PlayerEventBindings, key, 2);
+
+	while (n > 0)
+	{
+		int r = CallOneFunction(n--, 2, 1);
+
+		if (lua_isboolean(L, r + 0) && !lua_toboolean(L, r + 0))
+			result = false;
+
+		lua_pop(L, 1);
+	}
+
+	CleanUpStack(2);
+	return result;
+}
+
+bool Eluna::OnSpellCastSuccess(Player* pPlayer, Spell* pSpell)
+{
+	START_HOOK_WITH_RETVAL(PLAYER_EVENT_ON_SPELL_CAST_SUCCESS, true);
+	bool result = true;
+	Push(pPlayer);
+	Push(pSpell);
+	int n = SetupStack(PlayerEventBindings, key, 2);
+
+	while (n > 0)
+	{
+		int r = CallOneFunction(n--, 2, 1);
+
+		if (lua_isboolean(L, r + 0) && !lua_toboolean(L, r + 0))
+			result = false;
+
+		lua_pop(L, 1);
+	}
+
+	CleanUpStack(2);
+	return result;
+}
+
+void Eluna::OnSpellLaunch(Player* pPlayer, Spell* pSpell)
+{
+	START_HOOK(PLAYER_EVENT_ON_SPELL_LAUNCH);
+	Push(pPlayer);
+	Push(pSpell);
+	CallAllFunctions(PlayerEventBindings, key);
+}
+
 #endif // _PLAYER_HOOKS_H

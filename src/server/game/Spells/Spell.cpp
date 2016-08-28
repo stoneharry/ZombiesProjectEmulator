@@ -2817,6 +2817,17 @@ bool Spell::UpdateChanneledTargetList()
 
 void Spell::prepare(SpellCastTargets const* targets, AuraEffect const* triggeredByAura)
 {
+#ifdef ELUNA
+	if (Player* playerCaster = m_caster->ToPlayer())
+	{
+		if (!sEluna->OnSpellCastStart(playerCaster, this))
+		{
+			finish(false);
+			return;
+		}
+	}
+#endif
+
     if (m_CastItem)
     {
         m_castItemGUID = m_CastItem->GetGUID();
@@ -3149,6 +3160,28 @@ void Spell::cast(bool skipCheck)
     PrepareTriggersExecutedOnHit();
 
     CallScriptOnCastHandlers();
+
+#ifdef ELUNA
+	if (Player* playerCaster = m_caster->ToPlayer())
+	{
+		if (!sEluna->OnSpellCastSuccess(playerCaster, this))
+		{
+			SendInterrupted(0);
+
+			if (playerCaster->GetTypeId() == TYPEID_PLAYER)
+			{
+				playerCaster->RestoreSpellMods(this);
+				// cleanup after mod system
+				// triggered spell pointer can be not removed in some cases
+				playerCaster->SetSpellModTakingSpell(this, false);
+			}
+			finish(false);
+			SetExecutedCurrently(false);
+
+			return;
+		}
+	}
+#endif
 
     // traded items have trade slot instead of guid in m_itemTargetGUID
     // set to real guid to be sent later to the client
@@ -6679,6 +6712,11 @@ bool Spell::IsValidDeadOrAliveTarget(Unit const* target) const
 
 void Spell::HandleLaunchPhase()
 {
+	if (Player* playerCaster = m_caster->ToPlayer())
+	{
+		sScriptMgr->OnPlayerSpellLaunch(playerCaster, this);
+	}
+
     // handle effects with SPELL_EFFECT_HANDLE_LAUNCH mode
     for (uint32 i = 0; i < MAX_SPELL_EFFECTS; ++i)
     {
