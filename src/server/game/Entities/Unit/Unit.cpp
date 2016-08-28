@@ -9968,7 +9968,15 @@ uint32 Unit::SpellDamageBonusDone(Unit* victim, SpellInfo const* spellProto, uin
                 APbonus += GetTotalAttackPowerValue(attType);
                 DoneTotal += int32(bonus->ap_dot_bonus * stack * ApCoeffMod * APbonus);
             }
-        }
+			if (bonus->str_dot_bonus > 0)
+			{
+				DoneTotal += int32(bonus->str_dot_bonus * stack * GetStat(STAT_STRENGTH));
+			}
+			if (bonus->int_dot_bonus > 0)
+			{
+				DoneTotal += int32(bonus->int_dot_bonus * stack * GetStat(STAT_INTELLECT));
+			}
+		}
         else
         {
             coeff = bonus->direct_damage;
@@ -9979,7 +9987,15 @@ uint32 Unit::SpellDamageBonusDone(Unit* victim, SpellInfo const* spellProto, uin
                 APbonus += GetTotalAttackPowerValue(attType);
                 DoneTotal += int32(bonus->ap_bonus * stack * ApCoeffMod * APbonus);
             }
-        }
+			if (bonus->str_bonus > 0)
+			{
+				DoneTotal += int32(bonus->str_bonus * stack * GetStat(STAT_STRENGTH));
+			}
+			if (bonus->int_bonus > 0)
+			{
+				DoneTotal += int32(bonus->int_bonus * stack * GetStat(STAT_INTELLECT));
+			}
+		}
     }
     // Default calculation
     if (DoneAdvertisedBenefit)
@@ -10394,7 +10410,32 @@ uint32 Unit::SpellDamageBonusTaken(Unit* caster, SpellInfo const* spellProto, ui
                 modOwner->ApplySpellMod(spellProto->Id, SPELLMOD_BONUS_MULTIPLIER, coeff);
                 coeff /= 100.0f;
             }
-            TakenTotal += int32(TakenAdvertisedBenefit * coeff * factorMod);
+			if (bonus)
+			{
+				if (damagetype == DOT)
+				{
+					if (bonus->str_dot_bonus > 0)
+					{
+						TakenTotal += int32(TakenAdvertisedBenefit * bonus->str_dot_bonus * GetStat(STAT_STRENGTH));
+					}
+					if (bonus->int_dot_bonus > 0)
+					{
+						TakenTotal += int32(TakenAdvertisedBenefit * bonus->int_dot_bonus * GetStat(STAT_INTELLECT));
+					}
+				}
+				else
+				{
+					if (bonus->str_bonus > 0)
+					{
+						TakenTotal += int32(TakenAdvertisedBenefit * bonus->str_bonus * GetStat(STAT_STRENGTH));
+					}
+					if (bonus->int_bonus > 0)
+					{
+						TakenTotal += int32(TakenAdvertisedBenefit * bonus->int_bonus * GetStat(STAT_INTELLECT));
+					}
+				}
+			}
+			TakenTotal += int32(TakenAdvertisedBenefit * coeff * factorMod);
         }
     }
 
@@ -10790,14 +10831,30 @@ uint32 Unit::SpellHealingBonusDone(Unit* victim, SpellInfo const* spellProto, ui
             if (bonus->ap_dot_bonus > 0)
                 DoneTotal += int32(bonus->ap_dot_bonus * stack * GetTotalAttackPowerValue(
                     (spellProto->IsRangedWeaponSpell() && spellProto->DmgClass !=SPELL_DAMAGE_CLASS_MELEE) ? RANGED_ATTACK : BASE_ATTACK));
-        }
+			if (bonus->str_dot_bonus > 0)
+			{
+				DoneTotal += int32(bonus->str_dot_bonus * stack * GetStat(STAT_STRENGTH));
+			}
+			if (bonus->int_dot_bonus > 0)
+			{
+				DoneTotal += int32(bonus->int_dot_bonus * stack * GetStat(STAT_INTELLECT));
+			}
+		}
         else
         {
             coeff = bonus->direct_damage;
             if (bonus->ap_bonus > 0)
                 DoneTotal += int32(bonus->ap_bonus * stack * GetTotalAttackPowerValue(
                     (spellProto->IsRangedWeaponSpell() && spellProto->DmgClass !=SPELL_DAMAGE_CLASS_MELEE) ? RANGED_ATTACK : BASE_ATTACK));
-        }
+			if (bonus->str_bonus > 0)
+			{
+				DoneTotal += int32(bonus->str_bonus * stack * GetStat(STAT_STRENGTH));
+			}
+			if (bonus->int_bonus > 0)
+			{
+				DoneTotal += int32(bonus->int_bonus * stack * GetStat(STAT_INTELLECT));
+			}
+		}
     }
     else
     {
@@ -11000,6 +11057,31 @@ uint32 Unit::SpellHealingBonusTaken(Unit* caster, SpellInfo const* spellProto, u
         if (spellProto->SpellFamilyName == SPELLFAMILY_SHAMAN && spellProto->SpellFamilyFlags[1] & 0x80000)
             factorMod *= 0.45f;
 
+		if (bonus)
+		{
+			if (damagetype == DOT)
+			{
+				if (bonus->str_dot_bonus > 0)
+				{
+					TakenTotal += int32(TakenAdvertisedBenefit * bonus->str_dot_bonus * GetStat(STAT_STRENGTH));
+				}
+				if (bonus->int_dot_bonus > 0)
+				{
+					TakenTotal += int32(TakenAdvertisedBenefit * bonus->int_dot_bonus * GetStat(STAT_INTELLECT));
+				}
+			}
+			else
+			{
+				if (bonus->str_bonus > 0)
+				{
+					TakenTotal += int32(TakenAdvertisedBenefit * bonus->str_bonus * GetStat(STAT_STRENGTH));
+				}
+				if (bonus->int_bonus > 0)
+				{
+					TakenTotal += int32(TakenAdvertisedBenefit * bonus->int_bonus * GetStat(STAT_INTELLECT));
+				}
+			}
+		}
         TakenTotal += int32(TakenAdvertisedBenefit * coeff * factorMod);
     }
 

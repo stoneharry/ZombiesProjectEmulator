@@ -854,6 +854,7 @@ SpellInfo::SpellInfo(SpellEntry const* spellEntry)
 
     ChainEntry = NULL;
     ExplicitTargetMask = 0;
+	accountWide = false;
 }
 
 SpellInfo::~SpellInfo()

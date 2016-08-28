@@ -2063,7 +2063,7 @@ void SpellMgr::LoadSpellBonusess()
     mSpellBonusMap.clear();                             // need for reload case
 
     //                                                0      1             2          3         4
-    QueryResult result = WorldDatabase.Query("SELECT entry, direct_bonus, dot_bonus, ap_bonus, ap_dot_bonus FROM spell_bonus_data");
+    QueryResult result = WorldDatabase.Query("SELECT entry, direct_bonus, dot_bonus, ap_bonus, ap_dot_bonus, str_bonus, str_dot_bonus, int_bonus, int_dot_bonus FROM spell_bonus_data");
     if (!result)
     {
         TC_LOG_INFO("server.loading", ">> Loaded 0 spell bonus data. DB table `spell_bonus_data` is empty.");
@@ -2088,6 +2088,10 @@ void SpellMgr::LoadSpellBonusess()
         sbe.dot_damage    = fields[2].GetFloat();
         sbe.ap_bonus      = fields[3].GetFloat();
         sbe.ap_dot_bonus   = fields[4].GetFloat();
+		sbe.str_bonus = fields[5].GetFloat();
+		sbe.str_dot_bonus = fields[6].GetFloat();
+		sbe.int_bonus = fields[7].GetFloat();
+		sbe.int_dot_bonus = fields[8].GetFloat();
 
         ++count;
     } while (result->NextRow());
@@ -2761,7 +2765,7 @@ void SpellMgr::LoadSpellInfoCustomAttributes()
     uint32 oldMSTime2 = oldMSTime;
     SpellInfo* spellInfo = NULL;
 
-    QueryResult result = WorldDatabase.Query("SELECT entry, attributes FROM spell_custom_attr");
+    QueryResult result = WorldDatabase.Query("SELECT entry, attributes, accountWide FROM spell_custom_attr");
 
     if (!result)
         TC_LOG_INFO("server.loading", ">> Loaded 0 spell custom attributes from DB. DB table `spell_custom_attr` is empty.");
@@ -2774,7 +2778,7 @@ void SpellMgr::LoadSpellInfoCustomAttributes()
 
             uint32 spellId = fields[0].GetUInt32();
             uint32 attributes = fields[1].GetUInt32();
-
+			bool accountWide = fields[2].GetBool();
             spellInfo = _GetSpellInfo(spellId);
             if (!spellInfo)
             {
@@ -2783,8 +2787,9 @@ void SpellMgr::LoadSpellInfoCustomAttributes()
             }
 
             // TODO: validate attributes
-
-            spellInfo->AttributesCu |= attributes;
+			if (attributes != 0)
+			  spellInfo->AttributesCu |= attributes;
+			spellInfo->accountWide = accountWide;
             ++count;
         } while (result->NextRow());
 

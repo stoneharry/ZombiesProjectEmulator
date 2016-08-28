@@ -2359,6 +2359,7 @@ class Player : public Unit, public GridObject<Player>
 		bool IsAbleToFFA(uint32 areaid);
 		uint8 GetDeathsLeft() { return deathsLeft; }
 		void SetDeathsLeft(uint8 deaths) { deathsLeft = deaths; }
+		void ModifyAccountSpell(bool learn, uint32 spell);
     protected:
         // Gamemaster whisper whitelist
         GuidList WhisperList;
