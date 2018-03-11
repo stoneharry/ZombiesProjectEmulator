@@ -14,10 +14,12 @@ namespace ItemDBCGenerator
 
         private static ItemRange[] RANGES = {
             new ItemRange(new UInt32[] { 1000000, 1830378 }, Constants.ItemClass.ARMOR, Constants.ArmorSubclass.MISC),
-            new ItemRange(new UInt32[] { 1830379, 2660757 }, Constants.ItemClass.ARMOR, Constants.ArmorSubclass.CLOTH),
-            new ItemRange(new UInt32[] { 2660758, 3491136 }, Constants.ItemClass.ARMOR, Constants.ArmorSubclass.LEATHER),
-            new ItemRange(new UInt32[] { 3491137, 4321515 }, Constants.ItemClass.ARMOR, Constants.ArmorSubclass.MAIL),
-            new ItemRange(new UInt32[] { 4321516, 5151894 }, Constants.ItemClass.ARMOR, Constants.ArmorSubclass.PLATE),
+
+            // 63875
+            new ItemRange(new UInt32[] { 1830379, 2830374 }, Constants.ItemClass.ARMOR, Constants.ArmorSubclass.CLOTH, Constants.InventoryType.INVTYPE_HEAD),
+            new ItemRange(new UInt32[] { 2830375, 3830376 }, Constants.ItemClass.ARMOR, Constants.ArmorSubclass.CLOTH, Constants.InventoryType.INVTYPE_NECK),
+            new ItemRange(new UInt32[] { 3830377, 4830378 }, Constants.ItemClass.ARMOR, Constants.ArmorSubclass.CLOTH, Constants.InventoryType.INVTYPE_SHOULDERS),
+            new ItemRange(new UInt32[] { 4830379, 5151894 }, Constants.ItemClass.ARMOR, Constants.ArmorSubclass.CLOTH, Constants.InventoryType.INVTYPE_CHEST),
             new ItemRange(new UInt32[] { 5151895, 5982273 }, Constants.ItemClass.ARMOR, Constants.ArmorSubclass.SHIELD),
             new ItemRange(new UInt32[] { 5982274, 6812652 }, Constants.ItemClass.WEAPON, Constants.WeaponSubclass.AXE_ONEH),
             new ItemRange(new UInt32[] { 6812653, 7643031 }, Constants.ItemClass.WEAPON, Constants.WeaponSubclass.AXE_TWOH),
@@ -75,16 +77,18 @@ namespace ItemDBCGenerator
                     else
                         subClass = (int)range.weaponSubClass;
                     print("Generating: {0}, {1}, {2}...", range.itemClass.ToString(), range.weaponSubClass.ToString(), range.armorSubClass.ToString());
-                    String query = String.Format(@"
+                    String query = $@"
                         SELECT entry,class,subclass,SoundOverrideSubclass,displayid,inventoryType,Material,sheath FROM item_template WHERE
-	                        class = '{0}' AND
-                            subclass = '{1}' AND
-	                        itemlevel < '{2}' AND
-	                        itemlevel > '{3}' AND
-	                        quality < '{4}' AND
-                            quality > '{5}'
-	                        ORDER BY entry;",
-                            (int)range.itemClass, subClass, 58, 10, 4, 1);
+	                        class = '{ (int)range.itemClass} ' AND
+                            subclass = '{ subClass }' AND
+	                        itemlevel < '{ 58 }' AND
+	                        itemlevel > '{ 10 }' AND
+	                        quality < '{ 4 }' AND
+                            quality > '{ 1 }'";
+                    if (range.containsInventoryType)
+                        query += $" AND inventoryType = '{ range.inventoryType }'";
+                    query += " ORDER BY entry;";
+
                     UInt32[] ranges = range.range;
                     var resultSet = mySQL.query(query).Rows;
                     int count = resultSet.Count - 1;
